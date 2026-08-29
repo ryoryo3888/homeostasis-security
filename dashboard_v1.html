@@ -1424,7 +1424,7 @@ body {
 
       <section class="turn-panel">
         <div class="turn-label">ターン</div>
-        <div class="turn-number"><span id="turnNumber">1</span> / 5</div>
+        <div class="turn-number"><span id="turnNumber">1</span> / <span id="turnTotal">5</span></div>
         <div id="sceneTitle" class="turn-title"></div>
         <div id="sceneSub" class="turn-sub"></div>
       </section>
@@ -1560,7 +1560,7 @@ body {
       <aside class="event-panel">
         <h2>イベントログ</h2>
 
-        <div class="event-list">
+        <div id="eventList" class="event-list">
           <div class="event-item">国境付近で軍事演習を検知</div>
           <div class="event-item">外交ルートで接触</div>
           <div class="event-item">警戒上昇</div>
@@ -1673,6 +1673,7 @@ const loading = document.getElementById("loading");
 const content = document.getElementById("content");
 
 const turnNumber = document.getElementById("turnNumber");
+const turnTotal = document.getElementById("turnTotal");
 const actionA = document.getElementById("actionA");
 const actionB = document.getElementById("actionB");
 const reasonA = document.getElementById("reasonA");
@@ -1689,6 +1690,7 @@ const prev = document.getElementById("prev");
 const next = document.getElementById("next");
 const play = document.getElementById("play");
 const dots = document.getElementById("dots");
+const eventList = document.getElementById("eventList");
 
 const scenes = {
   1: {
@@ -1733,6 +1735,29 @@ function metricsFor(item) {
   return { ...fallbackMetrics[item.turn], ...(item.metrics || {}) };
 }
 
+function sceneFor(item) {
+  const fallback = scenes[item.turn] || {};
+  const event = item.external_event || {};
+
+  return {
+    tension: item.metrics?.tension ?? fallback.tension ?? 0,
+    title: event.title || fallback.title || `TURN ${item.turn}`,
+    sub: event.observable_description || fallback.sub || item.world_state || ""
+  };
+}
+
+function renderEventLog() {
+  const events = data.results
+    .map(item => item.external_event)
+    .filter(Boolean);
+
+  if (!events.length) return;
+
+  eventList.innerHTML = events
+    .map(event => `<div class="event-item">${event.title}</div>`)
+    .join("");
+}
+
 function makeDots() {
   dots.innerHTML = "";
 
@@ -1751,7 +1776,7 @@ function makeDots() {
 
 function render() {
   const item = data.results[index];
-  const scene = scenes[item.turn];
+  const scene = sceneFor(item);
   const m = metricsFor(item);
 
   cinema.className = "dashboard turn" + item.turn;
@@ -1904,6 +1929,8 @@ async function boot() {
 
     data = await response.json();
 
+    turnTotal.textContent = data.turn_count || data.results.length;
+    renderEventLog();
     makeDots();
     render();
 
