@@ -706,6 +706,25 @@ body {
 
 .country-panel {
   padding: 13px;
+  max-height: 590px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(101,230,247,.45) rgba(4,17,27,.45);
+}
+
+.country-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.country-panel::-webkit-scrollbar-track {
+  background: rgba(4,17,27,.45);
+  border-radius: 999px;
+}
+
+.country-panel::-webkit-scrollbar-thumb {
+  background: rgba(101,230,247,.45);
+  border-radius: 999px;
 }
 
 .country-a {
