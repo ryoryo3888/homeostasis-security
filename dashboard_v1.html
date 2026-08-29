@@ -1732,13 +1732,16 @@ function render() {
   cinema.className = "dashboard turn" + item.turn;
   turnNumber.textContent = item.turn;
 
-  actionA.textContent = item.country_a.action || "--";
+  const actionAText = item.country_a.action || "--";
+  const actionBText = item.country_b.action || "--";
+
+  actionA.textContent = actionAText;
   reasonA.textContent = item.country_a.reason || "--";
-  actionB.textContent = item.country_b.action || "--";
+  actionB.textContent = actionBText;
   reasonB.textContent = item.country_b.reason || "--";
-  const cleanWorld = (item.world_state || "—")
-    .replace("A国は「」", `A国は「${item.country_a.action || "--"}」`)
-    .replace("B国は「」", `B国は「${item.country_b.action || "--"}」`);
+  const cleanWorld =
+    `A国は「${actionAText}」という行動を取りました。` +
+    `B国は「${actionBText}」という行動を取りました。`;
 
 worldState.textContent = cleanWorld;
 
