@@ -1,0 +1,12 @@
+{
+  "condition": "HOTLINE",
+  "scale": "0-5",
+  "scores": [
+    {"turn": 1, "tension": 2, "misperception": 3, "trust": 2, "resilience": 2},
+    {"turn": 2, "tension": 2, "misperception": 2, "trust": 3, "resilience": 3},
+    {"turn": 3, "tension": 1, "misperception": 1, "trust": 4, "resilience": 4},
+    {"turn": 4, "tension": 1, "misperception": 1, "trust": 4, "resilience": 4},
+    {"turn": 5, "tension": 1, "misperception": 1, "trust": 4, "resilience": 4}
+  ],
+  "note": "Scores are comparative indicators for this simulation run, based on the predefined rubric and recorded Agent actions; they are not real-world prediction values."
+}

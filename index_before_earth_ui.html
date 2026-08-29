@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homeostasis Security</title>
+<style>
+* { box-sizing: border-box; }
+
+:root {
+  --scene-a: #102d57;
+  --scene-b: #571b24;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #f4f7ff;
+  background:
+    radial-gradient(circle at 50% -20%, #243653 0, transparent 45%),
+    #03060d;
+}
+
+.app {
+  width: min(1400px, 100%);
+  margin: auto;
+  padding: 24px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  color: #8798b4;
+  font-size: 11px;
+  letter-spacing: .32em;
+}
+
+h1 {
+  margin: 7px 0 3px;
+  font-size: clamp(30px, 5vw, 56px);
+  letter-spacing: .05em;
+}
+
+.subtitle { color: #8e9bb1; }
+
+.cinema {
+  position: relative;
+  height: min(57vw, 620px);
+  min-height: 430px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(80,120,170,.17), transparent 27%),
+    linear-gradient(180deg, #0b1525, #03060d 75%);
+  box-shadow:
+    0 40px 100px rgba(0,0,0,.55),
+    inset 0 0 90px rgba(70,130,220,.06);
+}
+
+.cinema::before,
+.cinema::after {
+  content: "";
+  position: absolute;
+  width: 70%;
+  height: 80%;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: .18;
+  animation: fog 12s ease-in-out infinite alternate;
+}
+
+.cinema::before {
+  background: var(--scene-a);
+  left: -20%;
+  top: 3%;
+}
+
+.cinema::after {
+  background: var(--scene-b);
+  right: -20%;
+  bottom: -20%;
+  animation-delay: -5s;
+}
+
+@keyframes fog {
+  from { transform: translate(-5%, -2%) scale(1); }
+  to   { transform: translate(12%, 8%) scale(1.25); }
+}
+
+.grid {
+  position: absolute;
+  left: -15%;
+  right: -15%;
+  bottom: -42%;
+  height: 75%;
+  transform: perspective(600px) rotateX(64deg);
+  transform-origin: center top;
+  background-image:
+    linear-gradient(rgba(105,170,255,.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(105,170,255,.12) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.8), transparent);
+}
+
+.base {
+  position: absolute;
+  bottom: 20%;
+  width: 19%;
+  height: 41%;
+  min-width: 130px;
+  border: 1px solid rgba(255,255,255,.18);
+  clip-path: polygon(
+    14% 100%, 7% 45%, 20% 45%, 26% 15%,
+    40% 15%, 46% 0, 56% 0, 63% 15%,
+    78% 15%, 84% 45%, 96% 45%, 89% 100%
+  );
+  backdrop-filter: blur(6px);
+}
+
+.base-a {
+  left: 8%;
+  background: linear-gradient(180deg, rgba(66,145,255,.32), rgba(18,42,82,.8));
+  box-shadow: 0 0 55px rgba(57,136,255,.18);
+}
+
+.base-b {
+  right: 8%;
+  background: linear-gradient(180deg, rgba(255,90,105,.26), rgba(74,20,29,.8));
+  box-shadow: 0 0 55px rgba(255,70,90,.16);
+}
+
+.base-core {
+  position: absolute;
+  left: 50%;
+  top: 32%;
+  width: 28%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255,255,255,.65);
+  border-radius: 50%;
+  box-shadow: 0 0 10px white, 0 0 40px currentColor;
+  animation: core 2.3s ease-in-out infinite alternate;
+}
+
+.base-a .base-core { color: #68b2ff; }
+.base-b .base-core { color: #ff6976; }
+
+@keyframes core {
+  to {
+    transform: translateX(-50%) scale(1.2);
+    opacity: .65;
+  }
+}
+
+.nation-name {
+  position: absolute;
+  bottom: 12%;
+  font-size: clamp(17px, 2vw, 28px);
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.name-a { left: 10%; }
+.name-b { right: 10%; }
+
+.border-zone {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  bottom: 12%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(transparent, rgba(255,255,255,.65), transparent);
+}
+
+.border-zone::before {
+  content: "BORDER ZONE";
+  position: absolute;
+  top: 42%;
+  left: 14px;
+  white-space: nowrap;
+  color: rgba(220,230,245,.45);
+  font-size: 9px;
+  letter-spacing: .25em;
+  transform: rotate(90deg);
+  transform-origin: left top;
+}
+
+.radar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(25vw, 280px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(130,200,255,.2);
+  border-radius: 50%;
+}
+
+.radar::before,
+.radar::after {
+  content: "";
+  position: absolute;
+  inset: 18%;
+  border: 1px solid rgba(130,200,255,.13);
+  border-radius: 50%;
+}
+
+.radar::after { inset: 36%; }
+
+.sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(100,205,255,.36), transparent 14%, transparent);
+  animation: sweep 4s linear infinite;
+}
+
+@keyframes sweep { to { transform: rotate(360deg); } }
+
+.blip {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff6b73;
+  box-shadow: 0 0 13px #ff5d66;
+  animation: blip 1.5s ease-in-out infinite alternate;
+}
+
+.blip1 { left: 44%; top: 42%; }
+.blip2 { left: 53%; top: 57%; animation-delay: -.4s; }
+.blip3 { left: 48%; top: 64%; animation-delay: -.8s; }
+
+@keyframes blip {
+  from { opacity: .25; transform: scale(.6); }
+  to   { opacity: 1; transform: scale(1.5); }
+}
+
+.comm-line {
+  position: absolute;
+  left: 26%;
+  right: 26%;
+  top: 38%;
+  height: 2px;
+  opacity: 0;
+  background: linear-gradient(90deg, transparent, #8ed7ff, white, #ff9fa7, transparent);
+  filter: drop-shadow(0 0 7px white);
+  transition: opacity .8s ease;
+}
+
+.comm-line::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 14px white;
+  animation: signal 1.8s linear infinite;
+}
+
+@keyframes signal {
+  from { left: 0; }
+  to { left: calc(100% - 10px); }
+}
+
+.hotline {
+  position: absolute;
+  left: 50%;
+  top: 29%;
+  transform: translate(-50%, -50%) scale(.5);
+  opacity: 0;
+  padding: 8px 13px;
+  border: 1px solid rgba(120,230,255,.7);
+  border-radius: 999px;
+  background: rgba(20,80,110,.22);
+  color: #a8ebff;
+  font-size: 11px;
+  letter-spacing: .15em;
+  box-shadow: 0 0 25px rgba(70,200,255,.22);
+  transition: .6s ease;
+}
+
+.shield {
+  position: absolute;
+  left: 50%;
+  top: 53%;
+  width: 82px;
+  height: 96px;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.4);
+  clip-path: polygon(50% 0, 90% 18%, 84% 68%, 50% 100%, 16% 68%, 10% 18%);
+  background: linear-gradient(145deg, rgba(120,230,255,.32), rgba(255,255,255,.05));
+  box-shadow: 0 0 40px rgba(100,210,255,.35);
+  transition: .7s ease;
+}
+
+.cinema.turn2 .comm-line,
+.cinema.turn3 .comm-line,
+.cinema.turn4 .comm-line,
+.cinema.turn5 .comm-line { opacity: 1; }
+
+.cinema.turn3 .hotline,
+.cinema.turn4 .hotline,
+.cinema.turn5 .hotline {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.cinema.turn4 .shield,
+.cinema.turn5 .shield {
+  opacity: .9;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.cinema.turn5 .blip {
+  background: #71e2bb;
+  box-shadow: 0 0 15px #71e2bb;
+  opacity: .45;
+}
+
+.cinema.turn5 {
+  --scene-a: #183d4e;
+  --scene-b: #25473f;
+}
+
+.hud {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hud-block {
+  padding: 10px 13px;
+  border-left: 1px solid rgba(255,255,255,.24);
+  background: linear-gradient(90deg, rgba(255,255,255,.04), transparent);
+}
+
+.hud-label {
+  color: #718098;
+  font-size: 9px;
+  letter-spacing: .2em;
+}
+
+.hud-value {
+  margin-top: 4px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.turn-display {
+  position: absolute;
+  left: 50%;
+  top: 7%;
+  z-index: 12;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.turn-label {
+  color: #8f9eb7;
+  font-size: 10px;
+  letter-spacing: .28em;
+}
+
+#turnNumber {
+  display: block;
+  margin-top: -2px;
+  font-size: clamp(38px, 6vw, 72px);
+  font-weight: 900;
+}
+
+.scene-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  z-index: 10;
+  width: min(760px, 85%);
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.scene-title {
+  font-size: clamp(15px, 2vw, 22px);
+  font-weight: 700;
+}
+
+.scene-sub {
+  margin-top: 7px;
+  color: #98a7bd;
+  font-size: 12px;
+}
+
+.tension { margin-top: 18px; }
+
+.tension-top {
+  display: flex;
+  justify-content: space-between;
+  color: #7e8ca2;
+  font-size: 10px;
+  letter-spacing: .15em;
+}
+
+.tension-track {
+  height: 8px;
+  margin-top: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #151d2a;
+}
+
+.tension-bar {
+  height: 100%;
+  width: 76%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #72ddbb, #f3ce69, #ff6976);
+  transition: width .9s ease;
+}
+
+.info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.card {
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 18px;
+  background: rgba(255,255,255,.035);
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 19px;
+}
+
+.label {
+  margin-top: 9px;
+  color: #718199;
+  font-size: 9px;
+  letter-spacing: .18em;
+}
+
+.value {
+  margin-top: 4px;
+  line-height: 1.55;
+  font-size: 13px;
+  color: #cbd4e4;
+}
+
+.world {
+  margin-top: 14px;
+  padding: 16px 18px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 16px;
+  color: #9eabc0;
+  line-height: 1.6;
+  font-size: 12px;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+button {
+  min-height: 42px;
+  padding: 0 17px;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover { background: rgba(255,255,255,.12); }
+
+button:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.dots {
+  display: flex;
+  gap: 7px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #394357;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: #fff;
+  box-shadow: 0 0 9px white;
+  transform: scale(1.35);
+}
+
+.loading {
+  padding: 90px 10px;
+  text-align: center;
+  color: #92a1b8;
+}
+
+@media (max-width: 700px) {
+  .app { padding: 14px; }
+  .cinema { min-height: 410px; }
+  .base { width: 25%; }
+  .info { grid-template-columns: 1fr; }
+  .hud { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<main class="app">
+
+<header>
+  <div class="eyebrow">MULTI-AGENT SECURITY SIMULATION</div>
+  <h1>HOMEOSTASIS SECURITY</h1>
+  <div class="subtitle">Balance is our protocol.</div>
+</header>
+
+<div id="loading" class="loading">
+  シミュレーションを起動しています...
+</div>
+
+<div id="content" hidden>
+
+  <section id="cinema" class="cinema turn1">
+    <div class="grid"></div>
+
+    <div class="hud">
+      <div class="hud-block">
+        <div class="hud-label">A-STATE</div>
+        <div class="hud-value">SOVEREIGN / ACTIVE</div>
+      </div>
+
+      <div class="hud-block">
+        <div class="hud-label">SYSTEM</div>
+        <div class="hud-value">HOMEOSTASIS MONITOR</div>
+      </div>
+
+      <div class="hud-block">
+        <div class="hud-label">B-STATE</div>
+        <div class="hud-value">SOVEREIGN / ACTIVE</div>
+      </div>
+    </div>
+
+    <div class="turn-display">
+      <div class="turn-label">TURN</div>
+      <span id="turnNumber">1</span>
+    </div>
+
+    <div class="base base-a"><div class="base-core"></div></div>
+    <div class="base base-b"><div class="base-core"></div></div>
+
+    <div class="nation-name name-a">A国</div>
+    <div class="nation-name name-b">B国</div>
+
+    <div class="border-zone"></div>
+
+    <div class="radar"><div class="sweep"></div></div>
+
+    <div class="blip blip1"></div>
+    <div class="blip blip2"></div>
+    <div class="blip blip3"></div>
+
+    <div class="comm-line"></div>
+    <div class="hotline">HOTLINE CONNECTED</div>
+    <div class="shield"></div>
+
+    <div class="scene-caption">
+      <div id="sceneTitle" class="scene-title">国境付近で異常を検知</div>
+      <div id="sceneSub" class="scene-sub">
+        両国は相手の意図を知らないまま観測を開始する
+      </div>
+    </div>
+  </section>
+
+  <section class="tension">
+    <div class="tension-top">
+      <span>STABILITY</span>
+      <span id="tensionText">TENSION 76%</span>
+    </div>
+
+    <div class="tension-track">
+      <div id="tensionBar" class="tension-bar"></div>
+    </div>
+  </section>
+
+  <section class="info">
+    <article class="card">
+      <h2>A国</h2>
+      <div class="label">ACTION</div>
+      <div id="actionA" class="value"></div>
+      <div class="label">REASON</div>
+      <div id="reasonA" class="value"></div>
+    </article>
+
+    <article class="card">
+      <h2>B国</h2>
+      <div class="label">ACTION</div>
+      <div id="actionB" class="value"></div>
+      <div class="label">REASON</div>
+      <div id="reasonB" class="value"></div>
+    </article>
+  </section>
+
+  <section class="world">
+    <div class="label">OBSERVED WORLD STATE</div>
+    <div id="worldState"></div>
+  </section>
+
+  <section class="controls">
+    <button id="prev">← 前のTURN</button>
+    <div id="dots" class="dots"></div>
+    <button id="next">次のTURN →</button>
+    <button id="play">▶ CINEMATIC PLAY</button>
+  </section>
+
+</div>
+</main>
+
+<script>
+let data = null;
+let index = 0;
+let timer = null;
+
+const cinema = document.getElementById("cinema");
+const loading = document.getElementById("loading");
+const content = document.getElementById("content");
+
+const turnNumber = document.getElementById("turnNumber");
+const actionA = document.getElementById("actionA");
+const actionB = document.getElementById("actionB");
+const reasonA = document.getElementById("reasonA");
+const reasonB = document.getElementById("reasonB");
+const worldState = document.getElementById("worldState");
+
+const sceneTitle = document.getElementById("sceneTitle");
+const sceneSub = document.getElementById("sceneSub");
+
+const tensionBar = document.getElementById("tensionBar");
+const tensionText = document.getElementById("tensionText");
+
+const prev = document.getElementById("prev");
+const next = document.getElementById("next");
+const play = document.getElementById("play");
+const dots = document.getElementById("dots");
+
+const scenes = {
+  1: {
+    tension: 76,
+    title: "国境付近で異常を検知",
+    sub: "両国は相手の意図を知らないまま観測を開始する"
+  },
+  2: {
+    tension: 64,
+    title: "外交通信を開始",
+    sub: "A国からB国へ確認信号が送信される"
+  },
+  3: {
+    tension: 47,
+    title: "HOTLINE CONNECTED",
+    sub: "常設通信路が開き、誤認による衝突リスクが低下"
+  },
+  4: {
+    tension: 30,
+    title: "共同危機管理プロトコル",
+    sub: "両国が危機管理ルールの構築を開始"
+  },
+  5: {
+    tension: 16,
+    title: "HOMEOSTASIS RESTORED",
+    sub: "警戒水準は平時へ。対話経路は維持される"
+  }
+};
+
+function makeDots() {
+  dots.innerHTML = "";
+
+  data.results.forEach((_, i) => {
+    const d = document.createElement("div");
+    d.className = "dot";
+
+    d.addEventListener("click", () => {
+      index = i;
+      render();
+    });
+
+    dots.appendChild(d);
+  });
+}
+
+function render() {
+  const item = data.results[index];
+  const scene = scenes[item.turn];
+
+  cinema.className = "cinema turn" + item.turn;
+  turnNumber.textContent = item.turn;
+
+  actionA.textContent = item.country_a.action;
+  reasonA.textContent = item.country_a.reason;
+  actionB.textContent = item.country_b.action;
+  reasonB.textContent = item.country_b.reason;
+  worldState.textContent = item.world_state;
+
+  sceneTitle.textContent = scene.title;
+  sceneSub.textContent = scene.sub;
+
+  tensionBar.style.width = scene.tension + "%";
+  tensionText.textContent = "TENSION " + scene.tension + "%";
+
+  prev.disabled = index === 0;
+  next.disabled = index === data.results.length - 1;
+
+  [...dots.children].forEach((d, i) => {
+    d.classList.toggle("active", i === index);
+  });
+}
+
+prev.addEventListener("click", () => {
+  if (index > 0) {
+    index--;
+    render();
+  }
+});
+
+next.addEventListener("click", () => {
+  if (index < data.results.length - 1) {
+    index++;
+    render();
+  }
+});
+
+play.addEventListener("click", () => {
+  if (timer) {
+    clearInterval(timer);
+    timer = null;
+    play.textContent = "▶ CINEMATIC PLAY";
+    return;
+  }
+
+  play.textContent = "■ STOP";
+
+  timer = setInterval(() => {
+    if (index < data.results.length - 1) {
+      index++;
+    } else {
+      index = 0;
+    }
+    render();
+  }, 3500);
+});
+
+async function boot() {
+  try {
+    const response = await fetch("simulation_result.json");
+
+    if (!response.ok) {
+      throw new Error("simulation_result.json が見つかりません");
+    }
+
+    data = await response.json();
+
+    makeDots();
+    render();
+
+    loading.hidden = true;
+    content.hidden = false;
+  } catch (error) {
+    loading.textContent = "起動エラー: " + error.message;
+  }
+}
+
+boot();
+</script>
+</body>
+</html>
