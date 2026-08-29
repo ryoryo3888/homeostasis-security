@@ -701,7 +701,7 @@ body {
   display: grid;
   grid-template-columns: 300px minmax(520px, 1fr) 300px 290px;
   gap: 10px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .country-panel {
@@ -1024,7 +1024,8 @@ body {
 }
 
 .flow-card {
-  min-height: 76px;
+  min-width: 0;
+  height: 118px;
   padding: 10px;
   border: 1px solid rgba(77,219,245,.16);
   border-radius: 9px;
@@ -1032,7 +1033,8 @@ body {
   background: rgba(5,17,27,.74);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  overflow: hidden;
 }
 
 .flow-card span {
@@ -1042,6 +1044,10 @@ body {
 }
 
 .flow-card strong {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
   color: #e2edf1;
   font-size: 11px;
   line-height: 1.4;
