@@ -1540,8 +1540,8 @@ body {
           <div class="event-item">外交ルートで接触</div>
           <div class="event-item">警戒上昇</div>
           <div class="event-item">通常外交で確認を継続</div>
-          <div class="event-item">情報共有の拡大</div>
-          <div class="event-item">緊張緩和・安定へ</div>
+          <div class="event-item">通常通信で確認継続</div>
+          <div class="event-item">通常外交による安定維持</div>
         </div>
       </aside>
     </section>
@@ -1736,7 +1736,9 @@ function render() {
   reasonA.textContent = item.country_a.reason || "--";
   actionB.textContent = item.country_b.action || "--";
   reasonB.textContent = item.country_b.reason || "--";
-  const cleanWorld = item.world_state || "—";
+  const cleanWorld = (item.world_state || "—")
+    .replace("A国は「」", `A国は「${item.country_a.action || "--"}」`)
+    .replace("B国は「」", `B国は「${item.country_b.action || "--"}」`);
 
 worldState.textContent = cleanWorld;
 
