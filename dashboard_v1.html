@@ -1693,6 +1693,21 @@ const scenes = {
   }
 };
 
+// Older simulation result files do not contain a metrics object. Prefer the
+// simulator output, but fill any missing values so every dashboard surface
+// (status cards, earth status, feedback flow, and charts) stays consistent.
+const fallbackMetrics = {
+  1: { homeostasis: 47, tension: 76, misperception_risk: 60, trust: 40, resilience: 40 },
+  2: { homeostasis: 39, tension: 64, misperception_risk: 40, trust: 60, resilience: 60 },
+  3: { homeostasis: 55, tension: 47, misperception_risk: 20, trust: 80, resilience: 80 },
+  4: { homeostasis: 73, tension: 30, misperception_risk: 20, trust: 80, resilience: 80 },
+  5: { homeostasis: 88, tension: 16, misperception_risk: 20, trust: 80, resilience: 80 }
+};
+
+function metricsFor(item) {
+  return { ...fallbackMetrics[item.turn], ...(item.metrics || {}) };
+}
+
 function makeDots() {
   dots.innerHTML = "";
 
@@ -1712,7 +1727,7 @@ function makeDots() {
 function render() {
   const item = data.results[index];
   const scene = scenes[item.turn];
-const m = item.metrics || {};
+  const m = metricsFor(item);
 
   cinema.className = "dashboard turn" + item.turn;
   turnNumber.textContent = item.turn;
@@ -1770,15 +1785,13 @@ worldState.textContent = cleanWorld;
   document.getElementById("flowBPerception").textContent = item.country_b.reason || "--";
   document.getElementById("flowB").textContent = item.country_b.action || "--";
   document.getElementById("flowImpact").textContent =
-    item.metrics?.overall_impact || cleanWorld || "—";
+    m.overall_impact || cleanWorld || "—";
   document.getElementById("flowEarth").textContent =
-    m.homeostasis != null
-      ? "恒常性 " + m.homeostasis + "% / 緊張 " + m.tension + "% / 信頼 " + m.trust + "% / 回復力 " + m.resilience + "%"
-      : item.world_state || "--";
+    "恒常性 " + m.homeostasis + "% / 緊張 " + m.tension + "% / 信頼 " + m.trust + "% / 回復力 " + m.resilience + "%";
 
     const makeMiniChart = (metricName) => {
       const items = data.results.map((r, i) => {
-        const value = r.metrics?.[metricName];
+        const value = metricsFor(r)[metricName];
         const pct = typeof value === "number" ? value : 0;
 
         return `
