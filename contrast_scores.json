@@ -1,0 +1,87 @@
+{
+  "experiment": "HOTLINE vs NO_HOTLINE",
+  "scale": "0-5",
+  "conditions": {
+    "hotline": [
+      {
+        "turn": 1,
+        "tension": 2,
+        "misperception": 3,
+        "trust": 2,
+        "resilience": 2
+      },
+      {
+        "turn": 2,
+        "tension": 2,
+        "misperception": 2,
+        "trust": 3,
+        "resilience": 3
+      },
+      {
+        "turn": 3,
+        "tension": 1,
+        "misperception": 1,
+        "trust": 4,
+        "resilience": 4
+      },
+      {
+        "turn": 4,
+        "tension": 1,
+        "misperception": 1,
+        "trust": 4,
+        "resilience": 4
+      },
+      {
+        "turn": 5,
+        "tension": 1,
+        "misperception": 1,
+        "trust": 4,
+        "resilience": 4
+      }
+    ],
+    "no_hotline": [
+      {
+        "turn": 1,
+        "tension": 2,
+        "misperception": 3,
+        "trust": 1,
+        "resilience": 2
+      },
+      {
+        "turn": 2,
+        "tension": 2,
+        "misperception": 2,
+        "trust": 2,
+        "resilience": 2
+      },
+      {
+        "turn": 3,
+        "tension": 2,
+        "misperception": 2,
+        "trust": 3,
+        "resilience": 3
+      },
+      {
+        "turn": 4,
+        "tension": 2,
+        "misperception": 2,
+        "trust": 3,
+        "resilience": 3
+      },
+      {
+        "turn": 5,
+        "tension": 1,
+        "misperception": 2,
+        "trust": 3,
+        "resilience": 3
+      }
+    ]
+  },
+  "metrics": {
+    "tension": "緊張レベル",
+    "misperception": "誤認リスク",
+    "trust": "信頼度",
+    "resilience": "回復力"
+  },
+  "note": "同一初期危機・同一Agent目標で、通信条件のみを変更した今回のシミュレーション内比較。現実世界の予測値ではない。"
+}
