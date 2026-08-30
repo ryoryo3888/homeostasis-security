@@ -1,10 +1,12 @@
 from dataclasses import dataclass, field
 from getpass import getpass
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
+import random
 import time
 
 from google import genai
+from google.genai import types
 
 
 MODEL_NAME = "gemini-3.6-flash"
@@ -230,6 +232,54 @@ class Agent:
 """.strip()
 
 
+def generate_content_with_retry(client: genai.Client, **kwargs):
+    max_attempts = 3
+    unavailable_retries = 0
+    rate_limit_retries = 0
+
+    for attempt in range(max_attempts):
+        try:
+            return client.models.generate_content(**kwargs)
+        except Exception as error:
+            error_text = str(error)
+            error_code = getattr(error, "code", None)
+            error_status = getattr(error, "status", None)
+
+            if "GenerateRequestsPerDayPerProjectPerModel" in error_text:
+                print("Geminiの日次上限に到達しました。本日は再試行しても通らないため停止します。")
+                raise
+
+            is_unavailable = (
+                error_code == 503
+                or error_status == "UNAVAILABLE"
+                or ("503" in error_text and "UNAVAILABLE" in error_text)
+            )
+            if is_unavailable:
+                if unavailable_retries >= 2 or attempt == max_attempts - 1:
+                    raise
+                base_delay = 30 * (2 ** unavailable_retries)
+                unavailable_retries += 1
+                wait_seconds = base_delay + random.uniform(0, 3)
+                print(
+                    f"Gemini 503: 約{base_delay}秒待って再試行します "
+                    f"({unavailable_retries}/2)"
+                )
+                time.sleep(wait_seconds)
+                continue
+
+            if "429" in error_text or "RESOURCE_EXHAUSTED" in error_text:
+                if rate_limit_retries >= 1 or attempt == max_attempts - 1:
+                    raise
+                rate_limit_retries += 1
+                print("Geminiの一時的な利用制限です。60秒待って1回だけ再試行します...")
+                time.sleep(60)
+                continue
+
+            raise
+
+    raise RuntimeError("Gemini APIの最大試行回数に到達しました。")
+
+
 def call_agent(
     client: genai.Client,
     agent: Agent,
@@ -279,30 +329,12 @@ def call_agent(
 理由には、観測情報、国家利益、リーダー特性、法的制約のうち、実際に判断へ影響したものを自然な文章で含めてください。
 """.strip()
 
-    while True:
-        try:
-            response = client.models.generate_content(
-                model=MODEL_NAME,
-                contents=prompt,
-            )
-            return response.text.strip()
-        except Exception as e:
-            error_text = str(e)
-
-            if "GenerateRequestsPerDayPerProjectPerModel" in error_text:
-                print("Geminiの日次上限に到達しました。本日は再試行しても通らないため停止します。")
-                raise
-
-            if "429" in error_text or "RESOURCE_EXHAUSTED" in error_text:
-                print("Geminiの一時的な利用制限です。60秒待って1回だけ再試行します...")
-                time.sleep(60)
-                response = client.models.generate_content(
-                    model=MODEL_NAME,
-                    contents=prompt,
-                )
-                return response.text.strip()
-
-            raise
+    response = generate_content_with_retry(
+        client,
+        model=MODEL_NAME,
+        contents=prompt,
+    )
+    return response.text.strip()
 
 
 EVALUATION_FIELDS = (
@@ -414,7 +446,8 @@ B国:
 }}
 """.strip()
 
-    response = client.models.generate_content(
+    response = generate_content_with_retry(
+        client,
         model=MODEL_NAME,
         contents=prompt,
         config={"response_mime_type": "application/json"},
@@ -428,7 +461,7 @@ def _bounded_update(previous: int, target: float, max_delta: int = 15) -> int:
     return clamp_score(previous + delta)
 
 
-def calculate_metrics(evaluation: dict, previous_metrics: dict | None = None) -> dict:
+def calculate_metrics(evaluation: dict, previous_metrics: Optional[dict] = None) -> dict:
     """Evaluatorの事実寄り成分から、公開指標を決定的に計算する。"""
     actual = clamp_score(evaluation["actual_threat_level"])
     perceived_a = clamp_score(evaluation["perceived_threat_a"])
@@ -530,7 +563,7 @@ def evaluate_metrics(
     reason_b: str,
     belief_b: str,
     international_law: InternationalLaw,
-    previous_metrics: dict | None = None,
+    previous_metrics: Optional[dict] = None,
 ) -> tuple[dict, dict]:
     evaluation = call_evaluator(
         client=client,
@@ -720,7 +753,12 @@ def main():
 
     if USE_GEMINI:
         api_key = getpass("Gemini API Key: ")
-        client = genai.Client(api_key=api_key)
+        client = genai.Client(
+            api_key=api_key,
+            http_options=types.HttpOptions(
+                retry_options=types.HttpRetryOptions(attempts=1),
+            ),
+        )
 
     country_a = Agent(
         name="A国",
@@ -728,7 +766,7 @@ def main():
         relationships={
             "B国": "中立",
         },
-        leader_profile=SECURITY_HARDLINER,
+        leader_profile=CAUTIOUS_DIPLOMAT,
         national_interests=[
             "領土と主権の維持",
             "国民および国境地域の安全",
