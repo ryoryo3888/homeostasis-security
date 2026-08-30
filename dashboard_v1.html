@@ -645,6 +645,19 @@ body {
   gap: 8px;
 }
 
+.metric-grid.research-metrics {
+  grid-template-columns: repeat(6, 1fr);
+  margin-top: 8px;
+}
+
+.research-metrics .metric-card {
+  padding: 8px 6px;
+}
+
+.research-metrics .metric-card strong {
+  font-size: 20px;
+}
+
 .metric-card {
   min-width: 0;
   padding: 10px 8px;
@@ -1028,6 +1041,12 @@ body {
   top: 11px;
   color: #6eeaff;
   font-size: 10px;
+}
+
+.event-item.active {
+  border-color: rgba(110,234,255,.55);
+  background: rgba(22,67,82,.55);
+  box-shadow: 0 0 14px rgba(70,220,255,.12);
 }
 
 .feedback-panel {
@@ -1420,11 +1439,38 @@ body {
             <strong id="metricResilience">--</strong>
           </div>
         </div>
+
+        <div class="metric-grid research-metrics">
+          <div class="metric-card">
+            <span>実脅威</span>
+            <strong id="metricThreat">--</strong>
+          </div>
+          <div class="metric-card">
+            <span>免疫反応</span>
+            <strong id="metricImmuneResponse">--</strong>
+          </div>
+          <div class="metric-card">
+            <span>過剰反応</span>
+            <strong id="metricOverreaction">--</strong>
+          </div>
+          <div class="metric-card">
+            <span>過小反応</span>
+            <strong id="metricUnderreaction">--</strong>
+          </div>
+          <div class="metric-card">
+            <span>反応適合度</span>
+            <strong id="metricResponseFit">--</strong>
+          </div>
+          <div class="metric-card">
+            <span>法的整合性</span>
+            <strong id="metricLegalAlignment">--</strong>
+          </div>
+        </div>
       </section>
 
       <section class="turn-panel">
         <div class="turn-label">ターン</div>
-        <div class="turn-number"><span id="turnNumber">1</span> / <span id="turnTotal">5</span></div>
+        <div class="turn-number"><span id="turnNumber">1</span> / <span id="turnTotal">--</span></div>
         <div id="sceneTitle" class="turn-title"></div>
         <div id="sceneSub" class="turn-sub"></div>
       </section>
@@ -1793,7 +1839,7 @@ function render() {
     `A国は「${actionAText}」という行動を取りました。` +
     `B国は「${actionBText}」という行動を取りました。`;
 
-worldState.textContent = cleanWorld;
+  worldState.textContent = item.world_state || cleanWorld;
 
   sceneTitle.textContent = scene.title;
   sceneSub.textContent = scene.sub;
@@ -1806,16 +1852,22 @@ worldState.textContent = cleanWorld;
   document.getElementById("metricMisperception").textContent = (m.misperception_risk ?? "--") + (m.misperception_risk != null ? "%" : "");
   document.getElementById("metricTrust").textContent = (m.trust ?? "--") + (m.trust != null ? "%" : "");
   document.getElementById("metricResilience").textContent = (m.resilience ?? "--") + (m.resilience != null ? "%" : "");
+  document.getElementById("metricThreat").textContent = (m.threat_level ?? "--") + (m.threat_level != null ? "%" : "");
+  document.getElementById("metricImmuneResponse").textContent = (m.immune_response_strength ?? "--") + (m.immune_response_strength != null ? "%" : "");
+  document.getElementById("metricOverreaction").textContent = (m.overreaction ?? "--") + (m.overreaction != null ? "%" : "");
+  document.getElementById("metricUnderreaction").textContent = (m.underreaction ?? "--") + (m.underreaction != null ? "%" : "");
+  document.getElementById("metricResponseFit").textContent = (m.response_fit ?? "--") + (m.response_fit != null ? "%" : "");
+  document.getElementById("metricLegalAlignment").textContent = (m.legal_alignment ?? "--") + (m.legal_alignment != null ? "%" : "");
 
   document.getElementById("earthTrust").textContent = (m.trust ?? "--") + (m.trust != null ? "%" : "");
   document.getElementById("earthResilience").textContent = (m.resilience ?? "--") + (m.resilience != null ? "%" : "");
 
-  document.getElementById("aObservation").textContent = cleanWorld;
+  document.getElementById("aObservation").textContent = item.world_state_before || cleanWorld;
   document.getElementById("aBelief").textContent = item.country_a.belief || "相手国の意図は未確認";
   document.getElementById("aConcern").textContent = item.country_a.concern || "--";
   document.getElementById("aExpected").textContent = item.country_a.action || "--";
 
-  document.getElementById("bObservation").textContent = cleanWorld;
+  document.getElementById("bObservation").textContent = item.world_state_before || cleanWorld;
   document.getElementById("bBelief").textContent = item.country_b.belief || "相手国の意図は未確認";
   document.getElementById("bConcern").textContent = item.country_b.concern || "--";
   document.getElementById("bExpected").textContent = item.country_b.action || "--";
@@ -1883,6 +1935,10 @@ worldState.textContent = cleanWorld;
   [...dots.children].forEach((d, i) => {
     d.classList.toggle("active", i === index);
   });
+
+  [...eventList.children].forEach((event, i) => {
+    event.classList.toggle("active", i === index);
+  });
 }
 
 prev.addEventListener("click", () => {
@@ -1921,7 +1977,7 @@ play.addEventListener("click", () => {
 
 async function boot() {
   try {
-    const response = await fetch("simulation_result_independent_agents_no_hotline.json");
+    const response = await fetch("simulation_result_cautious_cautious_law_hotline_run1.json");
 
     if (!response.ok) {
       throw new Error("simulation_result.json が見つかりません");
