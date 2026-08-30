@@ -23,6 +23,8 @@ HOMEOSTASIS SECURITYは、Geminiを用いたマルチエージェントシミュ
 リポジトリには開発過程、比較実験、バックアップのファイルも含まれていますが、提出対象の完成版は上記Dashboardと本番結果JSONです。
 
 ## 完成版を見る
+🌐 公開デモはこちら：
+https://ryoryo3888.github.io/homeostasis-security/
 
 ```bash
 git clone https://github.com/ryoryo3888/homeostasis-security.git
