@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>HOMEOSTASIS SECURITY | Presentation</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #050d1d;
+      color: #eef4fc;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Hiragino Sans",
+        "Yu Gothic",
+        "Segoe UI",
+        sans-serif;
+      line-height: 1.9;
+    }
+
+    .top {
+      padding: 18px 28px;
+      border-bottom: 1px solid #1a3048;
+      background: #050d1d;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .top-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+
+    .links a {
+      color: #00e1ee;
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: auto;
+      padding: 90px 24px 70px;
+      text-align: center;
+    }
+
+    .hero .sub {
+      color: #00e1ee;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 7vw, 76px);
+      line-height: 1.05;
+      margin: 20px 0 16px;
+    }
+
+    .hero h1 span {
+      color: #00e1ee;
+    }
+
+    .hero h2 {
+      margin: 0 0 18px;
+      font-size: clamp(20px, 3vw, 32px);
+    }
+
+    .hero p {
+      color: #aebbcf;
+      font-size: 17px;
+    }
+
+    .buttons {
+      margin-top: 35px;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 13px 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid #00e1ee;
+      color: #00e1ee;
+    }
+
+    .button.primary {
+      background: #00e1ee;
+      color: #04111e;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px 24px 90px;
+    }
+
+    .slide {
+      background: #081326;
+      border: 1px solid #1b324e;
+      border-radius: 20px;
+      padding: 60px 65px;
+      margin-bottom: 34px;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.28);
+    }
+
+    .kicker {
+      color: #00e1ee;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+    }
+
+    .slide.question .kicker {
+      color: #ff209c;
+    }
+
+    .slide.future .kicker {
+      color: #b14fff;
+    }
+
+    .slide h2 {
+      text-align: center;
+      font-size: clamp(27px, 4vw, 40px);
+      line-height: 1.4;
+      margin: 15px 0 35px;
+    }
+
+    .text {
+      max-width: 850px;
+      margin: auto;
+      font-size: 18px;
+      color: #dce5f1;
+      white-space: pre-line;
+      text-align: center;
+    }
+
+    .highlight {
+      color: #00e1ee;
+      font-weight: 800;
+    }
+
+    .question .highlight {
+      color: #ff6ab7;
+    }
+
+    .future .highlight {
+      color: #c68cff;
+    }
+
+    footer {
+      text-align: center;
+      color: #8495ac;
+      padding: 0 20px 60px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+      .slide {
+        padding: 40px 24px;
+      }
+
+      .text {
+        font-size: 16px;
+        text-align: left;
+      }
+
+      .top-inner {
+        display: block;
+        text-align: center;
+      }
+
+      .links {
+        margin-top: 10px;
+      }
+
+      .links a {
+        margin: 0 7px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="top">
+    <div class="top-inner">
+
+      <div class="brand">
+        HOMEOSTASIS SECURITY
+      </div>
+
+      <div class="links">
+        <a href="./">公開デモ</a>
+        <a href="https://github.com/ryoryo3888/homeostasis-security">
+          GitHub
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+
+  <section class="hero">
+
+    <div class="sub">
+      WORLD HOMEOSTASIS SIMULATION
+    </div>
+
+    <h1>
+      HOMEOSTASIS<br>
+      <span>SECURITY</span>
+    </h1>
+
+    <h2>
+      世界の恒常性シミュレーション
+    </h2>
+
+    <p>
+      〜 対話と協調による平衡の維持 〜
+    </p>
+
+    <div class="buttons">
+
+      <a
+        class="button primary"
+        href="./homeostasis_security_presentation(2).pptx"
+      >
+        PowerPointを開く
+      </a>
+
+      <a
+        class="button"
+        href="https://ryoryo3888.github.io/homeostasis-security/"
+      >
+        公開デモを見る
+      </a>
+
+      <a
+        class="button"
+        href="https://youtu.be/lq-h5Diak4A"
+      >
+        デモ動画を見る
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <main class="container">
+
+
+    <section class="slide">
+
+      <div class="kicker">
+        CONCEPT & VISION
+      </div>
+
+      <h2>
+        世界を「ひとつの生命システム」として見る
+      </h2>
+
+      <div class="text">
+人間の身体には、外部環境が変化しても、
+その変化を感知し、調整しながら安定状態へ戻ろうとする
+<span class="highlight">「恒常性（Homeostasis）」</span>があります。
+
+そこで本作品では、この考え方を
+国家と国家の関係、そして世界全体の安全保障へ応用しました。
+
+国家による警戒・防衛・対抗措置は、
+生命体でいえば外部の脅威から身体を守る
+<span class="highlight">「免疫反応」</span>に似ています。
+
+しかし、免疫反応が強すぎれば自らの身体を傷つけるように、
+国家の過剰な警戒や防衛も、
+相手国には新たな脅威として観測され、
+さらなる警戒や対抗措置を生み出します。
+
+一国だけが安全であればいいのではない。
+
+国家と国家の関係そのものが、
+変化や対立を受けても破壊されず、
+再び安定へ戻ることができるのか。
+
+本作品は、世界の安全保障を
+<span class="highlight">「勝敗」ではなく「恒常性」から捉え直す試み</span>です。
+      </div>
+
+    </section>
+
+
+    <section class="slide question">
+
+      <div class="kicker">
+        RESEARCH QUESTION
+      </div>
+
+      <h2>
+        結末を決めない。AI Agentに判断させる。
+      </h2>
+
+      <div class="text">
+本作品では、AIに
+「平和を選べ」「戦争を避けろ」といった
+望ましい結末を命令していません。
+
+設定するのは、
+<span class="highlight">「条件と環境」だけ</span>です。
+
+国家利益、リーダーの性格、
+過去の記憶、認識した脅威。
+
+そして、
+国際法・Hotline・外交といった制度。
+
+その世界の中で、
+独立した国家AI Agentが状況を認識し、
+懸念を持ち、自ら次の行動を判断します。
+
+結末を脚本化せず、
+AI Agent同士の相互作用から
+どのような行動パターンが生まれるのかを観測する。
+
+<span class="highlight">
+リーダーが変われば、世界の運命は変わるのか？
+</span>
+
+性格も利害も異なる国家が存在する世界で、
+法・通信・外交という制度は、
+国家の暴走や誤認をどこまで吸収し、
+世界を再び平衡状態へ戻すことができるのか。
+
+対立そのものをなくすのではなく、
+
+<span class="highlight">
+「対立が起きても破壊へ向かわず、
+関係を回復できるのか？」
+</span>
+
+これが、
+HOMEOSTASIS SECURITYの問いです。
+      </div>
+
+    </section>
+
+
+    <section class="slide future">
+
+      <div class="kicker">
+        FUTURE VISION
+      </div>
+
+      <h2>
+        地球の恒常性から、宇宙規模の統合安全保障へ
+      </h2>
+
+      <div class="text">
+これからの新しい時代。
+
+人が身体性と他者とのつながりを取り戻していくように、
+国家もまた、孤立ではなく
+対話と相互理解によってつながっていく。
+
+守るべきものを、
+一国だけの安全から、
+<span class="highlight">
+国家と国家の「関係そのものの健全性」
+</span>
+へ広げていく。
+
+そして、その考え方を国家間だけで終わらせず、
+
+地球環境、社会、経済、情報、テクノロジーなど、
+互いに影響し合うシステム全体へ。
+
+さらに人類の活動領域が宇宙へ広がれば、
+安全保障の対象も、国境を越えて拡張していきます。
+
+対立を完全になくす世界ではなく、
+
+<span class="highlight">
+変化や衝突が起きても、
+壊れず、調整し、
+再び平衡へ戻れる世界。
+</span>
+
+HOMEOSTASIS SECURITYが目指す先は、
+
+<span class="highlight">
+地球の恒常性から、
+宇宙規模の統合安全保障へ。
+</span>
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <footer>
+    HOMEOSTASIS SECURITY — 世界の恒常性シミュレーション
+  </footer>
+
+</body>
+</html>
