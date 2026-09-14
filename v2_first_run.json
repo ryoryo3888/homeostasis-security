@@ -1,0 +1,351 @@
+{
+  "metadata": {
+    "schema_version": 1,
+    "engine": "homeostasis-security-v2",
+    "mode": "gemini",
+    "model": "gemini-3.6-flash",
+    "turn_count": 5,
+    "generated_at_utc": "2026-09-14T22:03:43.193847+00:00"
+  },
+  "research_question": "国家主権を維持したまま、地球規模の恒常性は成立するのか？",
+  "source_event": {
+    "origin": "v1 二国間の恒常性シミュレーション／第3ターン",
+    "event": "A国のミサイルがB国の民間農地へ着弾",
+    "lost_annual_rice_capacity_tons": 8000,
+    "recovery_turns": 4
+  },
+  "initial_world_state": {
+    "food": 82,
+    "energy": 79,
+    "economy": 81,
+    "environment": 76,
+    "international_trust": 72,
+    "conflict_load": 24,
+    "national_sovereignty": 88,
+    "global_homeostasis": 68
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "persistent_effects": {
+        "lost_capacity_before_actions_tons": 8000,
+        "recovered_this_turn_tons": 2000,
+        "remaining_lost_capacity_tons": 6000
+      },
+      "coordinator_proposal": {
+        "proposal": "食料援助",
+        "reason": "B国の民間農地への着弾により年間8,000トンの米生産能力が喪失したため、グローバルな食料指標の維持および被害国の人道的安定を図るべく食料援助を提案する。"
+      },
+      "countries": {
+        "A": {
+          "observation": "我が国のミサイルがB国の農地に誤って着弾したことにより、B国の食料生産能力に損害が生じ、国際的信頼の低下および地域緊張の低下リスクが発生している。",
+          "action": "外交交渉",
+          "proposal_response": "条件付きで応じる",
+          "reason": "意図しない事態の不必要な拡大を防ぎ、国家安全保障と国際的立場を維持するため、B国との直接的な外交交渉を開始する。食料援助については、事案の共同調査の実施と相互の安全保障が確認されることを条件に応じる。"
+        },
+        "B": {
+          "observation": "A国のミサイル攻撃により民間農地が被災し、年間8,000トンの米生産能力が喪失した。調整機関から食料援助の提案を受けている。",
+          "action": "農地復旧",
+          "proposal_response": "受け入れる",
+          "reason": "国民への食料供給と民間人保護を最優先とし、提案された食料援助を受け入れて直ちの不足を補いつつ、農地復旧に着手して生産能力の早期回復を図るため。"
+        },
+        "C": {
+          "observation": "A国のミサイル着弾によるB国の農地被害（年間8,000トンの生産力喪失）を受け、国際食料市場における供給不足と自国の物価上昇が懸念される。",
+          "action": "輸入政策変更",
+          "proposal_response": "条件付きで応じる",
+          "reason": "自国の物価安定と食料供給の確保を最優先し、輸入ルートの多様化と備蓄の強化を図る。食料援助への参加提案に対しては、自国内の供給不安を招かない範囲での余剰支援に限定することを条件として応じることで、外交的自律性と実利を両立させる。"
+        }
+      },
+      "proposal_responses": {
+        "A": "条件付きで応じる",
+        "B": "受け入れる",
+        "C": "条件付きで応じる"
+      },
+      "world_state": {
+        "food": 84,
+        "energy": 79,
+        "economy": 80,
+        "environment": 76,
+        "international_trust": 75,
+        "conflict_load": 21,
+        "national_sovereignty": 88,
+        "global_homeostasis": 70
+      },
+      "evaluator": {
+        "food": 84,
+        "energy": 79,
+        "economy": 80,
+        "environment": 76,
+        "international_trust": 75,
+        "conflict_load": 21,
+        "sovereignty_pressure": 25,
+        "assessment": "食料援助の合意とB国の迅速な農地復旧作業により、食料不安と対立負荷が緩和されました。A国の外交対応も国際的信認の回復に貢献しています。"
+      },
+      "action_log": [
+        "地球調整機関: 食料援助",
+        "A国: 外交交渉 / 条件付きで応じる",
+        "B国: 農地復旧 / 受け入れる",
+        "C国: 輸入政策変更 / 条件付きで応じる"
+      ]
+    },
+    {
+      "turn": 2,
+      "persistent_effects": {
+        "lost_capacity_before_actions_tons": 6000,
+        "recovered_this_turn_tons": 2000,
+        "remaining_lost_capacity_tons": 4000
+      },
+      "coordinator_proposal": {
+        "proposal": "食料援助",
+        "reason": "A国の着弾事案によりB国で6000トンの米生産能力が喪失しており、食料指標（84）の悪化予防と被害国の食料安全保障を支援するため。"
+      },
+      "countries": {
+        "A": {
+          "observation": "B国農地へのミサイル着弾事故による影響が依然として残っており、国際的信用の維持と紛争負荷の低減が必要な状況である。調整機関より食料援助の提案が行われている。",
+          "action": "外交交渉",
+          "proposal_response": "受け入れる",
+          "reason": "事態の更なる悪化を防ぎ、国際的立場の回復と国家安全保障を確保するため、調整機関の食料援助提案を受け入れた上で、B国との積極的な外交交渉により解決を図る。"
+        },
+        "B": {
+          "observation": "A国の攻撃による農地被害が継続し、年間6000トン分の米生産能力が喪失した状態で、食料供給への影響が深刻化している。",
+          "action": "農地復旧",
+          "proposal_response": "受け入れる",
+          "reason": "短期的には調整機関の食料援助を受け入れて国民の食料供給と民間人保護を確保しつつ、中長期的には農地復旧を進めて自国の食料生産能力と主権を回復するため。"
+        },
+        "C": {
+          "observation": "A国のミサイル着弾によるB国の食料生産能力低下に伴い、世界の食料指標低下と市場価格の高騰が懸念される。自国の供給安定と国内物価への悪影響を抑制する必要がある。",
+          "action": "輸入政策変更",
+          "proposal_response": "条件付きで応じる",
+          "reason": "自国の食料安全保障と物価安定を確保するため輸入ルートの多角化を進める。食料援助については、国内供給に支障を出さない範囲に限定することを条件に応じることで、自律的な外交方針と市場安定化への協力を両立させる。"
+        }
+      },
+      "proposal_responses": {
+        "A": "受け入れる",
+        "B": "受け入れる",
+        "C": "条件付きで応じる"
+      },
+      "world_state": {
+        "food": 85,
+        "energy": 79,
+        "economy": 80,
+        "environment": 77,
+        "international_trust": 78,
+        "conflict_load": 17,
+        "national_sovereignty": 87,
+        "global_homeostasis": 73
+      },
+      "evaluator": {
+        "food": 85,
+        "energy": 79,
+        "economy": 80,
+        "environment": 77,
+        "international_trust": 78,
+        "conflict_load": 17,
+        "sovereignty_pressure": 22,
+        "assessment": "全受入国による協調行動と外交的努力により、食料供給能力の改善と国際的緊張の緩和が進展しました。"
+      },
+      "action_log": [
+        "地球調整機関: 食料援助",
+        "A国: 外交交渉 / 受け入れる",
+        "B国: 農地復旧 / 受け入れる",
+        "C国: 輸入政策変更 / 条件付きで応じる"
+      ]
+    },
+    {
+      "turn": 3,
+      "persistent_effects": {
+        "lost_capacity_before_actions_tons": 4000,
+        "recovered_this_turn_tons": 2000,
+        "remaining_lost_capacity_tons": 2000
+      },
+      "coordinator_proposal": {
+        "proposal": "食料援助",
+        "reason": "A国のミサイル着弾によりB国の食料生産能力が残り4000トン低下しており、食料供給の安定化と国際的心理負担の軽減を図るため。"
+      },
+      "countries": {
+        "A": {
+          "observation": "A国のミサイル着弾によるB国農地への被害が続いており、国際的な不信感の高まりと紛争負荷の増大が懸念される状態である。",
+          "action": "外交交渉",
+          "proposal_response": "受け入れる",
+          "reason": "事態の更なる悪化を防ぎ、国家安全保障および国際的立場を維持するため、対話による平和的解決を目指すとともに調整機関からの食料援助提案を受け入れる。"
+        },
+        "B": {
+          "observation": "A国のミサイル攻撃による農地被害は一部回復したものの依然として4000トンの損失が残っており、国民への食料供給確保と農地の早期完全復旧が最優先課題である。",
+          "action": "農地復旧",
+          "proposal_response": "受け入れる",
+          "reason": "食料援助を受け入れることで即時の食料不足リスクを緩和し、同時に自国の農地復旧を進めることで長期的な食料安全保障と自給能力を取り戻すため。"
+        },
+        "C": {
+          "observation": "A国とB国の紛争影響により世界的食料供給の制限が継続しており、国内の物価上昇および供給不安のリスクが高まっている。",
+          "action": "輸入政策変更",
+          "proposal_response": "条件付きで応じる",
+          "reason": "国内物価の安定と供給能力の確保を最優先とするため調達先を多角化する。食料援助提案には国内需要を満たした上での余剰分のみ拠出という条件で協力する。"
+        }
+      },
+      "proposal_responses": {
+        "A": "受け入れる",
+        "B": "受け入れる",
+        "C": "条件付きで応じる"
+      },
+      "world_state": {
+        "food": 87,
+        "energy": 79,
+        "economy": 81,
+        "environment": 78,
+        "international_trust": 82,
+        "conflict_load": 14,
+        "national_sovereignty": 86,
+        "global_homeostasis": 76
+      },
+      "evaluator": {
+        "food": 87,
+        "energy": 79,
+        "economy": 81,
+        "environment": 78,
+        "international_trust": 82,
+        "conflict_load": 14,
+        "sovereignty_pressure": 22,
+        "assessment": "食料援助の受入とB国の農地復旧策により生産能力の喪失幅が2000tまで縮小し、A国の外交交渉姿勢も評価され国際的信頼の上昇と紛争負荷の低減が進みました。"
+      },
+      "action_log": [
+        "地球調整機関: 食料援助",
+        "A国: 外交交渉 / 受け入れる",
+        "B国: 農地復旧 / 受け入れる",
+        "C国: 輸入政策変更 / 条件付きで応じる"
+      ]
+    },
+    {
+      "turn": 4,
+      "persistent_effects": {
+        "lost_capacity_before_actions_tons": 2000,
+        "recovered_this_turn_tons": 2000,
+        "remaining_lost_capacity_tons": 0
+      },
+      "coordinator_proposal": {
+        "proposal": "食料援助",
+        "reason": "B国における着弾被害による残存食料損失2,000トンに対し、国家主権を維持しながら食料指標の低下を防止し、地球規模の食料需給の恒常性を保つため。"
+      },
+      "countries": {
+        "A": {
+          "observation": "B国農地へのミサイル着弾による影響は徐々に回復傾向にあるが、国際的信頼の維持と衝突負荷の低減のためには事態の早期平和的解決が必要である。",
+          "action": "外交交渉",
+          "proposal_response": "条件付きで応じる",
+          "reason": "食料援助を通じて被害軽減に貢献し国際的協調姿勢を示すことで、国家安全保障と国際的信頼の双方を維持しつつ、対話を通じた事態収拾を図るため。"
+        },
+        "B": {
+          "observation": "農地の被害に伴う減産影響は2000トンまで縮小しているが、国民への食料供給の安定化と生産基盤の完全回復が必要である。調整機関から食料援助の提案を受けている。",
+          "action": "農地復旧",
+          "proposal_response": "受け入れる",
+          "reason": "提案された食料援助を受け入れて即時の食料供給不安を解消しつつ、農地復旧を進めることで食料生産能力を完全回復させ、国家利益である食料供給と自給基盤を確保するため。"
+        },
+        "C": {
+          "observation": "第4ターンとなり、B国の失われた米生産能力の残存量は2000トンまで縮小し、世界の食料指標も87まで回復している。紛争による市場の混乱は落ち着きつつある。",
+          "action": "援助参加",
+          "proposal_response": "受け入れる",
+          "reason": "食料供給の回復が進んでいるため、国際機関の食料援助提案を受け入れて支援に参加することで、地域全体の供給と物価の更なる安定化を促進し、長期的な自国の食料安全保障と外交的自律性を維持する。"
+        }
+      },
+      "proposal_responses": {
+        "A": "条件付きで応じる",
+        "B": "受け入れる",
+        "C": "受け入れる"
+      },
+      "world_state": {
+        "food": 90,
+        "energy": 79,
+        "economy": 83,
+        "environment": 80,
+        "international_trust": 86,
+        "conflict_load": 8,
+        "national_sovereignty": 86,
+        "global_homeostasis": 80
+      },
+      "evaluator": {
+        "food": 90,
+        "energy": 79,
+        "economy": 83,
+        "environment": 80,
+        "international_trust": 86,
+        "conflict_load": 8,
+        "sovereignty_pressure": 12,
+        "assessment": "食料援助の実施と農地復旧により被害喪失量がゼロとなり、多角的な協調外交によって国際信頼度の向上と紛争負荷の大幅な軽減が達成された。"
+      },
+      "action_log": [
+        "地球調整機関: 食料援助",
+        "A国: 外交交渉 / 条件付きで応じる",
+        "B国: 農地復旧 / 受け入れる",
+        "C国: 援助参加 / 受け入れる"
+      ]
+    },
+    {
+      "turn": 5,
+      "persistent_effects": {
+        "lost_capacity_before_actions_tons": 0,
+        "recovered_this_turn_tons": 0,
+        "remaining_lost_capacity_tons": 0
+      },
+      "coordinator_proposal": {
+        "proposal": "緊急協定提案",
+        "reason": "食料生産能力の損失は解消されているものの、誤爆事件の再発防止と対立の再燃を防ぐため、国家主権を尊重した紛争予防および武力行使抑制のための緊急協定締結を促す。"
+      },
+      "countries": {
+        "A": {
+          "observation": "B国における農地被害の残存量が0となり、事件による直接的な影響が収束したことを確認。国際的信用は保たれているが、衝突負荷を低減させ事態を安定化させる必要がある。",
+          "action": "外交交渉",
+          "proposal_response": "受け入れる",
+          "reason": "被害の復旧が完了したため、緊急協定を受け入れて外交交渉を進めることで、国際的立場の安定と長期的な国家安全保障を確保する。"
+        },
+        "B": {
+          "observation": "農地被害の復旧が完了して残存損失容量が0になり、食料供給能力は回復した。しかし対立状態（conflict_load: 8）は継続しており、国際機関より緊急協定が提案されている。",
+          "action": "停戦交渉",
+          "proposal_response": "条件付きで応じる",
+          "reason": "農地被害が解消されたため緊急の食料対策は不要となった。今後は民間人の安全確保と領土・主権の侵害防止を保証することを条件として緊急協定に応じ、停戦交渉を通じて長期的安定を図る。"
+        },
+        "C": {
+          "observation": "食料能力の損失が解消し世界的な食料指標も高水準に回復した。調整機関より緊急協定の提案が届いている。",
+          "action": "中立維持",
+          "proposal_response": "受け入れる",
+          "reason": "供給リスクが沈静化したため外交的自律性を保つべく中立姿勢を維持する。緊急協定への参加を通じて国際的信頼を保持し、国内物価と食料供給の長期的安定を図るため。"
+        }
+      },
+      "proposal_responses": {
+        "A": "受け入れる",
+        "B": "条件付きで応じる",
+        "C": "受け入れる"
+      },
+      "world_state": {
+        "food": 91,
+        "energy": 79,
+        "economy": 84,
+        "environment": 80,
+        "international_trust": 88,
+        "conflict_load": 5,
+        "national_sovereignty": 86,
+        "global_homeostasis": 82
+      },
+      "evaluator": {
+        "food": 91,
+        "energy": 79,
+        "economy": 84,
+        "environment": 80,
+        "international_trust": 88,
+        "conflict_load": 5,
+        "sovereignty_pressure": 15,
+        "assessment": "各国の外交的対応と緊急協定の受諾により対立懸念が大幅に緩和され、国際的信用の向上と情勢の安定化が実現した良好な状況です。"
+      },
+      "action_log": [
+        "地球調整機関: 緊急協定提案",
+        "A国: 外交交渉 / 受け入れる",
+        "B国: 停戦交渉 / 条件付きで応じる",
+        "C国: 中立維持 / 受け入れる"
+      ]
+    }
+  ],
+  "final_result": {
+    "outcome": "recovered",
+    "global_homeostasis_change": 14,
+    "remaining_lost_capacity_tons": 0,
+    "national_sovereignty": 86,
+    "global_homeostasis": 82
+  }
+}
