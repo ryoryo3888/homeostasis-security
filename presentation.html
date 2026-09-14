@@ -165,41 +165,12 @@
       font-weight: 800;
     }
 
-    .condition-matrix {
-      width: 100%;
-      margin: 18px auto 26px;
-      border-collapse: collapse;
-      font-size: 15px;
-      line-height: 1.45;
-    }
-
-    .condition-matrix th,
-    .condition-matrix td {
-      padding: 10px 8px;
-      border: 1px solid #294966;
-      text-align: center;
-    }
-
-    .condition-matrix th {
-      color: #ff6ab7;
-      background: #0b1c33;
-    }
-
-    .condition-matrix td:first-child {
-      color: #00e1ee;
-      font-weight: 800;
-    }
-
     .question .highlight {
       color: #ff6ab7;
     }
 
     .future .highlight {
       color: #c68cff;
-    }
-
-    .result-line {
-      margin: 14px 0;
     }
 
     footer {
@@ -271,7 +242,7 @@
     </h2>
 
     <p>
-      〜 独立したAI Agentの相互作用から、平衡回復の条件を観測する 〜
+      〜 対話と協調による平衡の維持 〜
     </p>
 
     <div class="buttons">
@@ -308,27 +279,38 @@
     <section class="slide">
 
       <div class="kicker">
-        CONCEPT & PURPOSE
+        CONCEPT & VISION
       </div>
 
       <h2>
-        HOMEOSTASIS SECURITY
+        世界を「ひとつの生命システム」として見る
       </h2>
 
       <div class="text">
+人間の身体には、外部環境が変化しても、
+その変化を感知し、調整しながら安定状態へ戻ろうとする
+<span class="highlight">「恒常性（Homeostasis）」</span>があります。
+
+そこで本作品では、この考え方を
+国家と国家の関係、そして世界全体の安全保障へ応用しました。
+
 国家による警戒・防衛・対抗措置は、
-生命体が外部の脅威から身体を守る<span class="highlight">「免疫反応」</span>に似ています。
+生命体でいえば外部の脅威から身体を守る
+<span class="highlight">「免疫反応」</span>に似ています。
 
-反応が強すぎれば相手国の警戒を高め、さらなる対抗措置を招く。
-弱すぎれば、必要な防衛を欠く。
+しかし、免疫反応が強すぎれば自らの身体を傷つけるように、
+国家の過剰な警戒や防衛も、
+相手国には新たな脅威として観測され、
+さらなる警戒や対抗措置を生み出します。
 
-本作品は、独立した国家AI Agentに望ましい結末を指示しません。
-各Agentは国家利益と認識した脅威をもとに行動を判断します。
+一国だけが安全であればいいのではない。
 
-Agent同士の相互作用を観測し、対立が起きても破壊へ向かわず、
-<span class="highlight">平衡を回復できる条件</span>を探ります。
+国家と国家の関係そのものが、
+変化や対立を受けても破壊されず、
+再び安定へ戻ることができるのか。
 
-安全保障を<span class="highlight">「勝敗」ではなく「恒常性」から捉え直す試み</span>です。
+本作品は、世界の安全保障を
+<span class="highlight">「勝敗」ではなく「恒常性」から捉え直す試み</span>です。
       </div>
 
     </section>
@@ -337,30 +319,53 @@ Agent同士の相互作用を観測し、対立が起きても破壊へ向かわ
     <section class="slide question">
 
       <div class="kicker">
-        EXPERIMENT DESIGN
+        RESEARCH QUESTION
       </div>
 
       <h2>
-        A〜P 16条件・36 run比較
+        結末を決めない。AI Agentに判断させる。
       </h2>
 
       <div class="text">
-4つの国家タイプ組合せ × 4つの制度設定 = 16条件
+本作品では、AIに
+「平和を選べ」「戦争を避けろ」といった
+望ましい結末を命令していません。
 
-<table class="condition-matrix" aria-label="AからPの16実験条件">
-  <thead><tr><th>国家タイプ A国 × B国</th><th>法ON<br>HL ON</th><th>法ON<br>HL OFF</th><th>法OFF<br>HL ON</th><th>法OFF<br>HL OFF</th></tr></thead>
-  <tbody>
-    <tr><td>慎重 × 慎重</td><td>A</td><td>D</td><td>C</td><td>H</td></tr>
-    <tr><td>強硬 × 強硬</td><td>B</td><td>G</td><td>F</td><td>E</td></tr>
-    <tr><td>強硬 × 慎重</td><td>I</td><td>J</td><td>K</td><td>L</td></tr>
-    <tr><td>慎重 × 強硬</td><td>M</td><td>N</td><td>O</td><td>P</td></tr>
-  </tbody>
-</table>
-<span class="highlight">A=5 run、D=3 run、その他14条件=各2 run　合計36 run</span>
-各runは8 TURN
+設定するのは、
+<span class="highlight">「条件と環境」だけ</span>です。
 
-独立したA国・B国Agentが行動を判断。
-中立Evaluatorが推定脅威、反応強度、エスカレーション圧、回復力を評価。
+国家利益、リーダーの性格、
+過去の記憶、認識した脅威。
+
+そして、
+国際法・Hotline・外交といった制度。
+
+その世界の中で、
+独立した国家AI Agentが状況を認識し、
+懸念を持ち、自ら次の行動を判断します。
+
+結末を脚本化せず、
+AI Agent同士の相互作用から
+どのような行動パターンが生まれるのかを観測する。
+
+<span class="highlight">
+リーダーが変われば、世界の運命は変わるのか？
+</span>
+
+性格も利害も異なる国家が存在する世界で、
+法・通信・外交という制度は、
+国家の暴走や誤認をどこまで吸収し、
+世界を再び平衡状態へ戻すことができるのか。
+
+対立そのものをなくすのではなく、
+
+<span class="highlight">
+「対立が起きても破壊へ向かわず、
+関係を回復できるのか？」
+</span>
+
+これが、
+HOMEOSTASIS SECURITYの問いです。
       </div>
 
     </section>
@@ -369,26 +374,49 @@ Agent同士の相互作用を観測し、対立が起きても破壊へ向かわ
     <section class="slide future">
 
       <div class="kicker">
-        OBSERVED RESULTS
+        FUTURE VISION
       </div>
 
       <h2>
-        制度と国家タイプで反応傾向が変化
+        地球の恒常性から、宇宙規模の統合安全保障へ
       </h2>
 
       <div class="text">
-<div class="result-line"><span class="highlight">強硬 × 強硬・制度OFFのE</span><br>
-過剰反応 87.5%　平均エスカレーション圧 37.188　平均回復力 68.375</div>
+これからの新しい時代。
 
-<div class="result-line"><span class="highlight">強硬型同士の比較</span><br>
-国際法やHotlineがある条件では、Eよりエスカレーション圧が低く、回復力が高い方向を観測。</div>
+人が身体性と他者とのつながりを取り戻していくように、
+国家もまた、孤立ではなく
+対話と相互理解によってつながっていく。
 
-<div class="result-line"><span class="highlight">慎重 × 慎重でも過少反応</span><br>
-D 16.667%　H 12.5%</div>
+守るべきものを、
+一国だけの安全から、
+<span class="highlight">
+国家と国家の「関係そのものの健全性」
+</span>
+へ広げていく。
 
-<div class="result-line"><span class="highlight">研究上の制約</span><br>
-seed記録は26 / 36 run。条件ごとのrun数は少なく不均等。<br>
-結果は探索的な観測であり、因果関係や実世界への一般性を断定しません。</div>
+そして、その考え方を国家間だけで終わらせず、
+
+地球環境、社会、経済、情報、テクノロジーなど、
+互いに影響し合うシステム全体へ。
+
+さらに人類の活動領域が宇宙へ広がれば、
+安全保障の対象も、国境を越えて拡張していきます。
+
+対立を完全になくす世界ではなく、
+
+<span class="highlight">
+変化や衝突が起きても、
+壊れず、調整し、
+再び平衡へ戻れる世界。
+</span>
+
+HOMEOSTASIS SECURITYが目指す先は、
+
+<span class="highlight">
+地球の恒常性から、
+宇宙規模の統合安全保障へ。
+</span>
       </div>
 
     </section>
