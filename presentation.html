@@ -431,3 +431,146 @@ HOMEOSTASIS SECURITYが目指す先は、
 
 </body>
 </html>
+
+<style id="homeostasis-research-extension">
+  .slide.experiment .kicker { color: #00e1ee; }
+  .slide.results .kicker { color: #ff209c; }
+  .slide.reading .kicker { color: #00e1ee; }
+  .experiment-meta,
+  .result-note,
+  .reading-note {
+    max-width: 900px;
+    margin: 0 auto 26px;
+    color: #dce5f1;
+    text-align: center;
+    font-size: 18px;
+  }
+  .condition-matrix,
+  .limits-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px auto;
+    color: #eef4fc;
+    font-size: 15px;
+  }
+  .condition-matrix th,
+  .condition-matrix td,
+  .limits-table th,
+  .limits-table td {
+    border: 1px solid #24415b;
+    padding: 12px 10px;
+    text-align: center;
+  }
+  .condition-matrix th,
+  .limits-table th {
+    background: #123047;
+    color: #00e1ee;
+  }
+  .condition-matrix td { background: #0d1728; }
+  .condition-matrix td:not(:first-child) {
+    font-size: 22px;
+    font-weight: 800;
+  }
+  .metric-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 25px 0 35px;
+  }
+  .metric {
+    text-align: center;
+    padding: 18px 10px;
+    border-top: 1px solid #24415b;
+    border-bottom: 1px solid #24415b;
+  }
+  .metric strong {
+    display: block;
+    color: #ff6ab7;
+    font-size: 34px;
+    line-height: 1.3;
+  }
+  .metric:nth-child(2) strong { color: #00e1ee; }
+  .metric:nth-child(3) strong { color: #eef4fc; }
+  .result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 34px;
+    align-items: center;
+  }
+  .result-grid .text { font-size: 17px; }
+  .limits-table th { width: 28%; }
+  @media (max-width: 700px) {
+    .condition-matrix { font-size: 12px; }
+    .condition-matrix th,
+    .condition-matrix td { padding: 8px 5px; }
+    .condition-matrix td:not(:first-child) { font-size: 17px; }
+    .metric-row,
+    .result-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<main class="container" id="research-extension">
+  <section class="slide experiment">
+    <div class="kicker">EXPERIMENT DESIGN</div>
+    <h2>16条件比較実験</h2>
+    <p class="experiment-meta">
+      A〜Pの16条件、全36run、各8TURN。独立AI Agentの相互作用を中立Evaluatorが評価。
+    </p>
+    <table class="condition-matrix">
+      <thead>
+        <tr>
+          <th>国家タイプの組合せ</th>
+          <th>国際法ON<br>Hotline ON</th>
+          <th>国際法OFF<br>Hotline ON</th>
+          <th>国際法ON<br>Hotline OFF</th>
+          <th>国際法OFF<br>Hotline OFF</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th>慎重外交型×慎重外交型</th><td>A</td><td>C</td><td>D</td><td>H</td></tr>
+        <tr><th>強硬型×強硬型</th><td>B</td><td>F</td><td>G</td><td>E</td></tr>
+        <tr><th>強硬型×慎重外交型</th><td>I</td><td>K</td><td>J</td><td>L</td></tr>
+        <tr><th>慎重外交型×強硬型</th><td>M</td><td>O</td><td>N</td><td>P</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="slide results">
+    <div class="kicker">OBSERVED RESULTS</div>
+    <h2>観測された結果</h2>
+    <p class="result-note">E条件：強硬型×強硬型、国際法OFF、Hotline OFF</p>
+    <div class="metric-row">
+      <div class="metric"><strong>87.5%</strong>過剰反応率</div>
+      <div class="metric"><strong>37.188</strong>平均エスカレーション圧</div>
+      <div class="metric"><strong>68.375</strong>平均回復力</div>
+    </div>
+    <div class="result-grid">
+      <div class="text">
+        強硬型比較では、国際法・Hotlineがある条件で、<br>
+        <span class="highlight">エスカレーション圧の低下と回復力の上昇</span>が観測されました。
+      </div>
+      <div class="text">
+        慎重外交型でも過少反応を観測。<br>
+        <span class="highlight">D条件 16.667%　H条件 12.5%</span><br><br>
+        因果関係ではなく、この36runで観測された関連です。
+      </div>
+    </div>
+  </section>
+
+  <section class="slide reading">
+    <div class="kicker">RESEARCH INTERPRETATION</div>
+    <h2>研究としての読み方</h2>
+    <div class="text">
+      脅威に対して反応が強すぎても弱すぎても、恒常性を損なう。<br><br>
+      <span class="highlight">国際法やHotlineが、エスカレーション抑制と回復力に関連した可能性</span><br><br>
+      慎重さも常に適応的とは限りません。
+    </div>
+    <table class="limits-table">
+      <tbody>
+        <tr><th>run構成</th><td>全36run。条件ごとに2〜5runで不均等</td></tr>
+        <tr><th>seed記録</th><td>26/36run</td></tr>
+        <tr><th>結論の範囲</th><td>探索的観測であり、一般性や因果関係を断定できない</td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
