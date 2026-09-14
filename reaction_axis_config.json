@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "adaptive_tolerance": 10,
+  "labels": {
+    "overreaction": "過剰反応",
+    "adaptive": "適応反応",
+    "underreaction": "過少反応"
+  }
+}
