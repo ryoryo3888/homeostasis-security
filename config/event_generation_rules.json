@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "limits": {"max_generated_per_turn": 3},
+  "rules": [
+    {"rule_id":"food-shortage","source_type":"farmland_damage","generated_type":"import_demand","threshold_damage":10,"cooldown_turns":1,"max_occurrences":2,"effect_scale":50},
+    {"rule_id":"market-pressure","source_type":"import_demand","generated_type":"market_pressure","threshold_damage":5,"cooldown_turns":1,"max_occurrences":2,"effect_scale":60},
+    {"rule_id":"third-country","source_type":"market_pressure","generated_type":"domestic_pressure","threshold_damage":3,"cooldown_turns":1,"max_occurrences":2,"effect_scale":50}
+  ]
+}
