@@ -1,6 +1,27 @@
 """Extensible, API-independent foundations for HOMEOSTASIS SECURITY."""
 
 from .engine import TurnEngine, TurnServices
+from .coordination import (
+    OUTCOME_TYPES,
+    PROPOSAL_TYPES,
+    RESPONSE_TYPES,
+    ConfiguredProposalCoordinator,
+    CoordinationPipeline,
+    CoordinationTurnResult,
+    CountryResponse,
+    CountryResponsePolicy,
+    DeterministicResponsePolicy,
+    GlobalProposal,
+    GovernanceEvaluation,
+    GovernanceEvaluator,
+    IndependentGovernanceEvaluator,
+    ProposalExecutionResult,
+    ProposedResourceTransfer,
+    ResponseConditions,
+    build_proposal_catalog,
+    build_response_map,
+    execute_proposal,
+)
 from .metrics import clamp, global_homeostasis, sovereignty_summary
 from .resources import (
     NATIONAL_INDICATORS,
@@ -34,6 +55,11 @@ from .models import (
 )
 
 __all__ = [
+    "OUTCOME_TYPES", "PROPOSAL_TYPES", "RESPONSE_TYPES", "ConfiguredProposalCoordinator",
+    "CoordinationPipeline", "CoordinationTurnResult", "CountryResponse", "CountryResponsePolicy",
+    "DeterministicResponsePolicy", "GlobalProposal", "GovernanceEvaluation", "GovernanceEvaluator",
+    "IndependentGovernanceEvaluator", "ProposalExecutionResult", "ProposedResourceTransfer",
+    "ResponseConditions", "build_proposal_catalog", "build_response_map", "execute_proposal",
     "CoordinatorProposal", "CountryConfiguration", "CountryDecision", "CountryProfile", "CountryState",
     "DamageRecord", "EnergyPortfolio", "EventDefinition", "EventInstance",
     "ExperimentMetadata", "PerceivedState", "ResourcePortfolio", "ScenarioConfiguration", "TurnEngine", "TurnRecord",
