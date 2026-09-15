@@ -24,6 +24,7 @@ main{max-width:none;width:min(1780px,calc(100vw - 24px));margin:12px auto 28px;p
 .brand-en{color:#70efff;font-weight:800;font-size:20px;letter-spacing:.025em;margin-bottom:8px}
 .brand-panel h1{margin:0;font-size:21px;line-height:1.35}
 .brand-panel p{margin:13px 0 0;color:#b7c7cf;font-size:13px}
+.version-switch{display:flex;gap:6px;margin-top:12px;max-width:100%;white-space:nowrap}.version-switch span,.version-switch a{min-width:0;padding:6px 8px;border:1px solid #28445f;border-radius:7px;color:#b9ced7;text-decoration:none;font-size:11px;font-weight:700;line-height:1.2}.version-switch span{background:#0e4556;color:#eaffff;border-color:#67e8f9;box-shadow:0 0 12px rgba(103,232,249,.16)}.version-switch a:hover,.version-switch a:focus-visible{border-color:#67e8f9;color:#eaffff}
 .global-status{padding:12px}
 .global-status h2,.event-panel h2{margin:0 0 10px;color:#6deaff;font-size:15px;letter-spacing:.04em}
 .metric-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
@@ -260,6 +261,10 @@ main{max-width:none;width:min(1780px,calc(100vw - 24px));margin:12px auto 28px;p
     <div class="brand-en">HOMEOSTASIS SECURITY</div>
     <h1>世界の恒常性シミュレーション</h1>
     <p>〜 対話と協調による平衡の維持 〜</p>
+    <nav class="version-switch" aria-label="バージョン切替">
+      <span aria-current="page">v1：二国間の恒常性</span>
+      <a href="dashboard_v2.html">v2：地球規模の恒常性</a>
+    </nav>
   </section>
 
   <section class="global-status">
