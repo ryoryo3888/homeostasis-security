@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "result_file": "gemini-run-20260915-03.json",
+  "result_sha256": "db389ff672aa44f096a2c7f8c9022346a0ab197f198b6ced0381482d3c08680a",
+  "classification": "資源保存監査不合格pilot",
+  "status": "rejected",
+  "include_in_research_aggregation": false,
+  "include_in_dashboard": false,
+  "reasons": ["world_poolがターン間で非持続", "PHASE 2資源ネットワーク未接続", "物流・資金行動の状態反映不足"]
+}
