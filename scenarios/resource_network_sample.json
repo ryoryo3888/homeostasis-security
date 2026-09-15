@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "resource_types": ["food", "fossil_fuel", "renewable_energy", "nuclear", "grid_storage_resilience", "funds_economy", "logistics"],
+  "links": [
+    {"link_id": "res-food-fossil", "source": "RES", "target": "FOOD", "resource": "fossil_fuel", "supply_amount": 18, "transport_capacity": 95, "reliability": 92, "active": true},
+    {"link_id": "neutral-food-food", "source": "NEUTRAL", "target": "FOOD", "resource": "food", "supply_amount": 16, "transport_capacity": 90, "reliability": 95, "active": true},
+    {"link_id": "econ-food-food", "source": "ECON", "target": "FOOD", "resource": "food", "supply_amount": 10, "transport_capacity": 85, "reliability": 90, "active": true},
+    {"link_id": "island-small-renewable", "source": "ISLAND", "target": "SMALL", "resource": "renewable_energy", "supply_amount": 12, "transport_capacity": 80, "reliability": 88, "active": true},
+    {"link_id": "econ-fragile-funds", "source": "ECON", "target": "FRAGILE", "resource": "funds_economy", "supply_amount": 14, "transport_capacity": 100, "reliability": 85, "active": true},
+    {"link_id": "mil-fragile-logistics", "source": "MIL", "target": "FRAGILE", "resource": "logistics", "supply_amount": 10, "transport_capacity": 75, "reliability": 80, "active": true}
+  ],
+  "demands": {
+    "FOOD": {"food": 20, "fossil_fuel": 14},
+    "SMALL": {"renewable_energy": 8},
+    "FRAGILE": {"funds_economy": 10, "logistics": 8}
+  }
+}

@@ -163,6 +163,35 @@ class EnergyPortfolio(JsonModel):
             raise ValueError("energy source shares cannot total more than 100")
         object.__setattr__(self, "sources", _freeze(self.sources))
 
+    def calculate_stability(self, resources: ResourcePortfolio) -> int:
+        """Derive public stability from the energy mix, resilience and import exposure."""
+        if not isinstance(resources, ResourcePortfolio):
+            raise ValueError("resources must be a ResourcePortfolio")
+        energy_sources = ("fossil_fuel", "renewable_energy", "nuclear")
+        weights = {name: self.sources.get(name, 0) for name in energy_sources}
+        total_weight = sum(weights.values())
+        if total_weight <= 0:
+            raise ValueError("energy portfolio must define a supported energy source")
+        generation = sum(resources.levels.get(name, 0) * weight for name, weight in weights.items()) / total_weight
+        resilience = resources.levels.get("grid_storage_resilience", 0)
+        score = 0.75 * generation + 0.25 * resilience - 0.20 * self.import_dependency
+        return int(round(max(0, min(100, score))))
+
+
+@dataclass(frozen=True)
+class ResourcePortfolio(JsonModel):
+    """Extensible country resource levels, each represented on a 0..100 scale."""
+
+    levels: dict[str, float] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.levels, Mapping):
+            raise ValueError("resource levels must be an object")
+        for resource, level in self.levels.items():
+            _nonempty("resource name", resource)
+            _score(f"resources[{resource}]", level)
+        object.__setattr__(self, "levels", _freeze(self.levels))
+
 
 @dataclass(frozen=True)
 class CountryProfile(JsonModel):
@@ -172,6 +201,8 @@ class CountryProfile(JsonModel):
     allowed_actions: tuple[str, ...] = ()
     initial_indicators: dict[str, float] = field(default_factory=dict)
     energy_portfolio: EnergyPortfolio = field(default_factory=EnergyPortfolio)
+    archetype: str | None = None
+    initial_resources: ResourcePortfolio = field(default_factory=ResourcePortfolio)
 
     def __post_init__(self) -> None:
         _nonempty("code", self.code)
@@ -187,6 +218,10 @@ class CountryProfile(JsonModel):
             _score(f"initial_indicators[{name}]", value)
         if not isinstance(self.energy_portfolio, EnergyPortfolio):
             raise ValueError("energy_portfolio must be an EnergyPortfolio")
+        if self.archetype is not None:
+            _nonempty("archetype", self.archetype)
+        if not isinstance(self.initial_resources, ResourcePortfolio):
+            raise ValueError("initial_resources must be a ResourcePortfolio")
         object.__setattr__(self, "interests", tuple(self.interests))
         object.__setattr__(self, "allowed_actions", tuple(self.allowed_actions))
         object.__setattr__(self, "initial_indicators", _freeze(self.initial_indicators))
@@ -199,6 +234,7 @@ class CountryState(JsonModel):
     indicators: dict[str, float] = field(default_factory=dict)
     energy_portfolio: EnergyPortfolio = field(default_factory=EnergyPortfolio)
     attributes: dict[str, Any] = field(default_factory=dict)
+    resources: ResourcePortfolio = field(default_factory=ResourcePortfolio)
 
     def __post_init__(self) -> None:
         _nonempty("code", self.code)
@@ -210,6 +246,8 @@ class CountryState(JsonModel):
             _score(f"indicators[{name}]", value)
         if not isinstance(self.energy_portfolio, EnergyPortfolio):
             raise ValueError("energy_portfolio must be an EnergyPortfolio")
+        if not isinstance(self.resources, ResourcePortfolio):
+            raise ValueError("resources must be a ResourcePortfolio")
         object.__setattr__(self, "indicators", _freeze(self.indicators))
         object.__setattr__(self, "attributes", _freeze(self.attributes))
 
@@ -474,21 +512,28 @@ def load_country_configuration(path: str | Path) -> CountryConfiguration:
             raise ValueError(f"country {code} must be an object")
         _exact_keys(
             raw, {"role", "interests", "allowed_actions", "initial_indicators"},
-            {"energy_portfolio"}, context=f"country {code}",
+            {"energy_portfolio", "archetype", "initial_resources"}, context=f"country {code}",
         )
         try:
             portfolio = EnergyPortfolio.from_dict(raw.get("energy_portfolio", {}))
+            resources = ResourcePortfolio.from_dict(raw.get("initial_resources", {}))
+            initial_indicators = dict(raw["initial_indicators"])
+            if portfolio.sources:
+                if "energy_stability" in initial_indicators:
+                    raise ValueError(f"country {code} energy_stability must be derived, not configured")
+                initial_indicators["energy_stability"] = portfolio.calculate_stability(resources)
             profile = CountryProfile(
                 code=code, role=raw["role"], interests=raw["interests"],
                 allowed_actions=raw["allowed_actions"],
-                initial_indicators=raw["initial_indicators"], energy_portfolio=portfolio,
+                initial_indicators=initial_indicators, energy_portfolio=portfolio,
+                archetype=raw.get("archetype"), initial_resources=resources,
             )
         except TypeError as error:
             raise ValueError(f"invalid country {code}: {error}") from error
         sovereignty = profile.initial_indicators["sovereignty"]
         indicators = {name: value for name, value in profile.initial_indicators.items() if name != "sovereignty"}
         profiles[code] = profile
-        states[code] = CountryState(code, sovereignty, indicators, portfolio)
+        states[code] = CountryState(code, sovereignty, indicators, portfolio, resources=resources)
     return CountryConfiguration(data["schema_version"], profiles, states)
 
 
@@ -540,7 +585,7 @@ def load_scenario_configuration(
     states = {
         code: CountryState(
             code, raw_world["national_sovereignty"], state.indicators,
-            state.energy_portfolio, state.attributes,
+            state.energy_portfolio, state.attributes, state.resources,
         )
         for code, state in countries.initial_states.items()
     }

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "countries": {
+    "MIL": {
+      "archetype": "軍事大国",
+      "role": "軍事力と安全保障影響力を持つ国家",
+      "interests": ["軍事安全保障", "国際的影響力"],
+      "allowed_actions": ["防衛強化", "外交交渉"],
+      "initial_indicators": {"sovereignty": 90, "food_reserves": 68, "economy": 82, "military_security": 95, "domestic_stability": 76, "recovery_capacity": 80, "international_trust": 62, "diplomatic_posture": 58},
+      "energy_portfolio": {"sources": {"fossil_fuel": 55, "renewable_energy": 20, "nuclear": 25}, "import_dependency": 35},
+      "initial_resources": {"levels": {"food": 68, "fossil_fuel": 70, "renewable_energy": 55, "nuclear": 82, "grid_storage_resilience": 78, "funds_economy": 84, "logistics": 88}}
+    },
+    "RES": {
+      "archetype": "資源輸出国",
+      "role": "一次エネルギーを域外へ供給する国家",
+      "interests": ["輸出収入", "供給路維持"],
+      "allowed_actions": ["供給維持", "輸出調整"],
+      "initial_indicators": {"sovereignty": 88, "food_reserves": 72, "economy": 76, "military_security": 72, "domestic_stability": 70, "recovery_capacity": 68, "international_trust": 66, "diplomatic_posture": 55},
+      "energy_portfolio": {"sources": {"fossil_fuel": 75, "renewable_energy": 20, "nuclear": 5}, "import_dependency": 8},
+      "initial_resources": {"levels": {"food": 72, "fossil_fuel": 96, "renewable_energy": 67, "nuclear": 40, "grid_storage_resilience": 70, "funds_economy": 78, "logistics": 82}}
+    },
+    "FOOD": {
+      "archetype": "食料輸入国",
+      "role": "国外食料供給への依存が高い国家",
+      "interests": ["食料確保", "物流安定"],
+      "allowed_actions": ["輸入拡大", "備蓄放出"],
+      "initial_indicators": {"sovereignty": 76, "food_reserves": 42, "economy": 72, "military_security": 58, "domestic_stability": 67, "recovery_capacity": 60, "international_trust": 74, "diplomatic_posture": 72},
+      "energy_portfolio": {"sources": {"fossil_fuel": 60, "renewable_energy": 30, "nuclear": 10}, "import_dependency": 72},
+      "initial_resources": {"levels": {"food": 42, "fossil_fuel": 58, "renewable_energy": 60, "nuclear": 45, "grid_storage_resilience": 64, "funds_economy": 70, "logistics": 74}}
+    },
+    "SMALL": {
+      "archetype": "小国",
+      "role": "限定的な規模と交渉資源を持つ国家",
+      "interests": ["主権維持", "安定的交易"],
+      "allowed_actions": ["協調参加", "中立維持"],
+      "initial_indicators": {"sovereignty": 73, "food_reserves": 58, "economy": 60, "military_security": 42, "domestic_stability": 72, "recovery_capacity": 52, "international_trust": 78, "diplomatic_posture": 80},
+      "energy_portfolio": {"sources": {"fossil_fuel": 50, "renewable_energy": 45, "nuclear": 5}, "import_dependency": 78},
+      "initial_resources": {"levels": {"food": 58, "fossil_fuel": 48, "renewable_energy": 66, "nuclear": 18, "grid_storage_resilience": 55, "funds_economy": 58, "logistics": 62}}
+    },
+    "ISLAND": {
+      "archetype": "島嶼国",
+      "role": "海上物流と気候影響に敏感な国家",
+      "interests": ["海上物流", "気候耐性"],
+      "allowed_actions": ["物流確保", "再エネ投資"],
+      "initial_indicators": {"sovereignty": 75, "food_reserves": 50, "economy": 64, "military_security": 48, "domestic_stability": 74, "recovery_capacity": 58, "international_trust": 82, "diplomatic_posture": 84},
+      "energy_portfolio": {"sources": {"fossil_fuel": 35, "renewable_energy": 60, "nuclear": 5}, "import_dependency": 68},
+      "initial_resources": {"levels": {"food": 50, "fossil_fuel": 42, "renewable_energy": 82, "nuclear": 20, "grid_storage_resilience": 70, "funds_economy": 62, "logistics": 55}}
+    },
+    "ECON": {
+      "archetype": "経済大国",
+      "role": "資金と市場規模で影響する国家",
+      "interests": ["市場安定", "資金循環"],
+      "allowed_actions": ["資金供給", "市場調整"],
+      "initial_indicators": {"sovereignty": 87, "food_reserves": 75, "economy": 96, "military_security": 78, "domestic_stability": 84, "recovery_capacity": 92, "international_trust": 80, "diplomatic_posture": 76},
+      "energy_portfolio": {"sources": {"fossil_fuel": 35, "renewable_energy": 40, "nuclear": 25}, "import_dependency": 48},
+      "initial_resources": {"levels": {"food": 75, "fossil_fuel": 65, "renewable_energy": 86, "nuclear": 84, "grid_storage_resilience": 90, "funds_economy": 98, "logistics": 94}}
+    },
+    "FRAGILE": {
+      "archetype": "紛争脆弱国",
+      "role": "対立と供給途絶の影響を受けやすい国家",
+      "interests": ["国内安定", "人道供給"],
+      "allowed_actions": ["援助要請", "復興着手"],
+      "initial_indicators": {"sovereignty": 60, "food_reserves": 35, "economy": 40, "military_security": 35, "domestic_stability": 32, "recovery_capacity": 38, "international_trust": 52, "diplomatic_posture": 46},
+      "energy_portfolio": {"sources": {"fossil_fuel": 70, "renewable_energy": 25, "nuclear": 5}, "import_dependency": 85},
+      "initial_resources": {"levels": {"food": 35, "fossil_fuel": 32, "renewable_energy": 40, "nuclear": 10, "grid_storage_resilience": 30, "funds_economy": 35, "logistics": 28}}
+    },
+    "NEUTRAL": {
+      "archetype": "中立国",
+      "role": "非同盟姿勢と仲介能力を持つ国家",
+      "interests": ["中立維持", "国際仲介"],
+      "allowed_actions": ["仲介", "限定支援"],
+      "initial_indicators": {"sovereignty": 85, "food_reserves": 82, "economy": 80, "military_security": 65, "domestic_stability": 88, "recovery_capacity": 78, "international_trust": 94, "diplomatic_posture": 95},
+      "energy_portfolio": {"sources": {"fossil_fuel": 25, "renewable_energy": 50, "nuclear": 25}, "import_dependency": 30},
+      "initial_resources": {"levels": {"food": 88, "fossil_fuel": 62, "renewable_energy": 88, "nuclear": 80, "grid_storage_resilience": 86, "funds_economy": 82, "logistics": 86}}
+    }
+  }
+}
