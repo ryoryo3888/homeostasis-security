@@ -1,7 +1,7 @@
 import hashlib,json,tempfile,unittest
 from pathlib import Path
 from homeostasis_core.gemini_agents import (
-    apply_structured_actions,build_private_views,derive_event,eligible_result_paths,parse_country_json,pilot_is_eligible,
+    GeminiGateway,apply_structured_actions,build_private_views,derive_event,eligible_result_paths,parse_country_json,pilot_is_eligible,
 )
 
 class AuditFixTests(unittest.TestCase):
@@ -21,13 +21,13 @@ class AuditFixTests(unittest.TestCase):
         bad=self.response("MIL","UNKNOWN","ACCEPT")
         with self.assertRaises(ValueError):parse_country_json(json.dumps(bad))
     def test_structured_resource_action_conserves_and_recomputes_world(self):
-        answers={"MIL":self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"resource":"food","amount":10,"target_country":"FOOD"}),"FOOD":self.response("FOOD")}
+        answers={"MIL":self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"country","resource":"food","amount":10,"target_country":"FOOD"}),"FOOD":self.response("FOOD")}
         out=apply_structured_actions(self.states,answers,{"food":55,"energy":60,"economy":65,"environment":70,"international_trust":60,"conflict_load":30},8000)
         self.assertAlmostEqual(out["country_states"]["MIL"]["resources"]["food"],58);self.assertAlmostEqual(out["country_states"]["FOOD"]["resources"]["food"],52)
         self.assertEqual(out["research_metrics"]["global_homeostasis"],out["true_world"]["global_homeostasis"])
         self.assertTrue(out["transfers"])
     def test_conditional_and_reject_are_not_forced(self):
-        answers={"MIL":self.response("MIL","PROVIDE_RESOURCE","CONDITIONAL",{"resource":"food","amount":10,"target_country":"FOOD"}),"FOOD":self.response("FOOD")}
+        answers={"MIL":self.response("MIL","PROVIDE_RESOURCE","CONDITIONAL",{"recipient_type":"country","resource":"food","amount":10,"target_country":"FOOD"}),"FOOD":self.response("FOOD")}
         answers["MIL"]["conditions"]["required_countries"]=["FOOD"]
         out=apply_structured_actions(self.states,answers,{"food":55,"energy":60,"economy":65,"environment":70,"international_trust":60,"conflict_load":30},8000)
         self.assertFalse(out["transfers"]);self.assertIn("MIL",out["condition_unmet"]);self.assertIn("FOOD",out["rejected"])
@@ -41,5 +41,43 @@ class AuditFixTests(unittest.TestCase):
         root=Path(__file__).parents[2];result=root/"results/final/gemini-run-20260915-01.json";manifest=root/"results/final/gemini-run-20260915-01.audit.json"
         audit=json.loads(manifest.read_text());self.assertEqual(hashlib.sha256(result.read_bytes()).hexdigest(),audit["result_sha256"])
         self.assertTrue(result.exists());self.assertFalse(pilot_is_eligible(result,manifest));self.assertNotIn(result,eligible_result_paths(result.parent));self.assertNotIn(result.name,(root/"dashboard_final.html").read_text())
+    def test_recipient_schema_rejects_global_and_unknown_country(self):
+        for target in ("GLOBAL","UNKNOWN","世界"):
+            bad=self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"country","resource":"food","amount":10,"target_country":target})
+            with self.assertRaises(ValueError):parse_country_json(json.dumps(bad),{"MIL","FOOD"})
+    def test_world_pool_and_none_are_distinct(self):
+        pool=self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"world_pool","resource":"food","amount":10,"target_country":None})
+        none=self.response("FOOD","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"none","resource":"food","amount":0,"target_country":None})
+        parse_country_json(json.dumps(pool),{"MIL","FOOD"});parse_country_json(json.dumps(none),{"MIL","FOOD"})
+        out=apply_structured_actions(self.states,{"MIL":pool,"FOOD":none},{"food":55,"energy":60,"economy":65,"environment":70,"international_trust":60,"conflict_load":30},0)
+        self.assertEqual(out["world_pool"]["food"],10);self.assertEqual(out["country_states"]["MIL"]["resources"]["food"],58)
+    def test_invalid_action_cannot_partially_apply_turn(self):
+        before=json.loads(json.dumps(self.states));valid=self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"country","resource":"food","amount":10,"target_country":"FOOD"});invalid=self.response("FOOD","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"country","resource":"food","amount":5,"target_country":"GLOBAL"})
+        with self.assertRaises(ValueError):apply_structured_actions(self.states,{"MIL":valid,"FOOD":invalid},{"food":55,"energy":60,"economy":65,"environment":70,"international_trust":60,"conflict_load":30},0)
+        self.assertEqual(self.states,before)
+    def test_aborted_second_pilot_manifest_preserves_checkpoint(self):
+        root=Path(__file__).parents[2];cp=root/"results/final/gemini-run-20260915-02.json.checkpoint";manifest=root/"results/final/gemini-run-20260915-02.audit.json";audit=json.loads(manifest.read_text())
+        self.assertEqual(hashlib.sha256(cp.read_bytes()).hexdigest(),audit["checkpoint_sha256"]);self.assertEqual(audit["status"],"aborted");self.assertEqual(audit["stopped_at"],"turn_2_action_validation");self.assertFalse(audit["include_in_research_aggregation"]);self.assertFalse(audit["include_in_dashboard"])
+    def test_invalid_target_is_retried_with_feedback_then_accepted(self):
+        valid=self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"country","resource":"food","amount":5,"target_country":"FOOD"});invalid=json.loads(json.dumps(valid));invalid["action"]["parameters"]["target_country"]="GLOBAL"
+        class R:
+            usage_metadata=None
+            def __init__(self,x):self.text=json.dumps(x)
+        class M:
+            def __init__(self):self.payloads=[]
+            def generate_content(s,**kw):s.payloads.append(json.loads(kw["contents"]));return R(invalid if len(s.payloads)==1 else valid)
+        client=type("C",(),{})();client.models=M();g=GeminiGateway(client,retry_limit=2,sleep_fn=lambda _:None)
+        got=g.call("MIL",1,1,{},lambda text:parse_country_json(text,{"MIL","FOOD"}))
+        self.assertEqual(got["action"]["parameters"]["target_country"],"FOOD");self.assertIn("validation_feedback",client.models.payloads[1])
+    def test_invalid_target_stops_after_retry_limit(self):
+        invalid=self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"country","resource":"food","amount":5,"target_country":"GLOBAL"})
+        class R:
+            usage_metadata=None
+            def __init__(self):self.text=json.dumps(invalid)
+        class M:
+            def generate_content(self,**kw):return R()
+        client=type("C",(),{})();client.models=M();g=GeminiGateway(client,retry_limit=2,sleep_fn=lambda _:None)
+        with self.assertRaises(RuntimeError):g.call("MIL",1,1,{},lambda text:parse_country_json(text,{"MIL","FOOD"}))
+        self.assertEqual(len(g.calls),2)
 
 if __name__=='__main__':unittest.main()

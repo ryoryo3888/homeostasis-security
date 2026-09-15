@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "checkpoint_file": "gemini-run-20260915-02.json.checkpoint",
+  "checkpoint_sha256": "11d992990786595aa1fa98e017c86825108aa37197fed96b2e09768c98f65db8",
+  "classification": "ターン2で安全停止した不採用pilot",
+  "status": "aborted",
+  "stopped_at": "turn_2_action_validation",
+  "include_in_research_aggregation": false,
+  "include_in_dashboard": false,
+  "resume_allowed": false,
+  "reason": "NEUTRAL returned target_country GLOBAL, which is not a configured country ID"
+}
