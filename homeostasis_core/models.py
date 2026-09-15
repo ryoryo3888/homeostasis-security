@@ -286,6 +286,7 @@ class WorldState(JsonModel):
     countries: dict[str, CountryState]
     damages: tuple[DamageRecord, ...] = ()
     global_homeostasis: float | None = None
+    executed_proposal_ids: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         _integer("turn", self.turn)
@@ -295,6 +296,7 @@ class WorldState(JsonModel):
             _score(f"indicators[{name}]", value)
         if self.global_homeostasis is not None:
             _score("global_homeostasis", self.global_homeostasis)
+        _strings("executed_proposal_ids", self.executed_proposal_ids)
         if not self.countries:
             raise ValueError("countries cannot be empty")
         for code, state in self.countries.items():
@@ -309,6 +311,7 @@ class WorldState(JsonModel):
         object.__setattr__(self, "indicators", _freeze(self.indicators))
         object.__setattr__(self, "countries", _freeze(self.countries))
         object.__setattr__(self, "damages", tuple(self.damages))
+        object.__setattr__(self, "executed_proposal_ids", tuple(sorted(self.executed_proposal_ids)))
 
 
 @dataclass(frozen=True)
