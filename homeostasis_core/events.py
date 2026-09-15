@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from typing import Mapping
 
 from .metrics import clamp
-from .models import JsonModel, _freeze, _integer, _nonempty, _score, _strings
+from .models import JsonModel, _freeze, _integer, _nonempty, _number, _score, _strings
 
 
 @dataclass(frozen=True)
@@ -23,7 +23,7 @@ class CausalEvent(JsonModel):
     def __post_init__(self):
         _nonempty("event_id", self.event_id); _nonempty("event_type", self.event_type)
         _integer("turn_created", self.turn_created); _integer("duration_turns", self.duration_turns, minimum=1)
-        _score("remaining_damage", self.remaining_damage); _score("recovery_per_turn", self.recovery_per_turn)
+        _number("remaining_damage", self.remaining_damage); _number("recovery_per_turn", self.recovery_per_turn)
         _strings("cause_event_ids", self.cause_event_ids); _strings("affected_countries", self.affected_countries, required=True)
         if self.event_id in self.cause_event_ids: raise ValueError("event cannot cause itself")
         for key, value in self.effects.items(): _nonempty("effect", key); _score(f"effects[{key}]", value)
@@ -44,7 +44,7 @@ class EventRule(JsonModel):
 
     def __post_init__(self):
         for name in ("rule_id", "source_type", "generated_type"): _nonempty(name, getattr(self, name))
-        _score("threshold_damage", self.threshold_damage); _integer("cooldown_turns", self.cooldown_turns)
+        _number("threshold_damage", self.threshold_damage); _integer("cooldown_turns", self.cooldown_turns)
         _integer("max_occurrences", self.max_occurrences, minimum=1); _score("effect_scale", self.effect_scale)
         if self.source_type == self.generated_type: raise ValueError("event rule cannot directly self-reference")
 
@@ -88,7 +88,7 @@ def advance_events(ledger: EventLedger, rules: tuple[EventRule, ...], *, max_gen
                 candidates.append((key, source, rule))
     for key, source, rule in candidates[:max_generated_per_turn]:
         eid=f"auto-{rule.rule_id}-{next_turn}-{source.event_id}"
-        damage=clamp(source.remaining_damage*rule.effect_scale/100)
+        damage=max(0,source.remaining_damage*rule.effect_scale/100)
         active.append(CausalEvent(eid,rule.generated_type,next_turn,2,damage,damage,(source.event_id,),source.affected_countries,{"magnitude":damage}))
         keys.add(key); counts[rule.rule_id]+=1; last[rule.rule_id]=next_turn
     return EventLedger(next_turn,tuple(active),ledger.history+tuple(recovered),tuple(keys))

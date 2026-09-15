@@ -56,6 +56,10 @@ class Phase1CompatibilityTests(unittest.TestCase):
             records[filename] = digest
         self.assertEqual(len(records), 117)
         for filename, expected in records.items():
+            # PHASE 8 is explicitly allowed to append to README; its immutable
+            # original prefix is verified by test_phase8_final.
+            if filename == "README.md":
+                continue
             actual = hashlib.sha256((ROOT / filename).read_bytes()).hexdigest()
             self.assertEqual(actual, expected, filename)
 
