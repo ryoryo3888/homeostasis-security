@@ -11,6 +11,15 @@ class Phase8Tests(unittest.TestCase):
         saved=json.loads((ROOT/"results/final/deterministic_prototype.json").read_text());html=(ROOT/"dashboard_final.html").read_text();sim=run_final_simulation();self.assertEqual(saved["global_homeostasis"],[t["world"]["global_homeostasis"] for t in sim["turns"]]);self.assertEqual(saved["farmland_damage_tons"],[t["farmland_damage_tons"] for t in sim["turns"]]);self.assertIn(json.dumps(saved["global_homeostasis"],separators=(",",":")),html);self.assertIn(json.dumps(saved["farmland_damage_tons"],separators=(",",":")),html)
     def test_dashboard_is_self_contained_and_responsive(self):
         html=(ROOT/"dashboard_final.html").read_text();self.assertIn('name="viewport"',html);self.assertNotIn("https://",html);self.assertIn("@media",html)
+    def test_every_dashboard_tab_has_scrollable_substantive_content(self):
+        html=(ROOT/"dashboard_final.html").read_text()
+        for label in ("概要","国家","地球","統治","資源","ログ／研究結果"):
+            self.assertIn(f"'{label}'",html)
+        for branch in range(6): self.assertIn(f"if(tab==={branch})content.innerHTML",html)
+        for heading in ("自動生成イベントと因果","国家Agentの認識と判断","地球調整機関","統治ルール","有向資源ネットワーク","因果・行動ログ","指標推移"):
+            self.assertIn(heading,html)
+        self.assertIn("#content{min-height:72vh",html)
+        self.assertNotIn("overflow:hidden",html.replace(" ",""))
     def test_v1_bridge_is_explicit_and_nonexecuting(self):
         event=convert_v1_event({"actor":"A","target":"B","turn":3});self.assertEqual(event["origin"]["system"],"v1");out=export_local_security_input({"country":"MIL","action":"de-escalate","turn":5});self.assertTrue(out["requires_manual_v1_execution"])
     def test_reproducible(self):self.assertEqual(run_final_simulation(),run_final_simulation())
