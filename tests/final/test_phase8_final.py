@@ -20,6 +20,15 @@ class Phase8Tests(unittest.TestCase):
             self.assertIn(heading,html)
         self.assertIn("#content{min-height:72vh",html)
         self.assertNotIn("overflow:hidden",html.replace(" ",""))
+    def test_dashboard_uses_required_japanese_display_labels_without_changing_ids(self):
+        html=(ROOT/"dashboard_final.html").read_text()
+        for label in ("再現可能な恒常性研究シミュレーション","軍事大国","資源輸出国","食料輸入国","小国","島嶼国","経済大国","紛争脆弱国","中立国","独立評価機関（Evaluator）","1回実行"):
+            self.assertIn(label,html)
+        self.assertIn("`ターン${i+1}`",html)
+        self.assertNotIn("DETERMINISTIC RESEARCH PROTOTYPE",html)
+        self.assertNotIn("`Turn ${i+1}`",html)
+        data=json.loads(html.split('<script id="data" type="application/json">',1)[1].split('</script>',1)[0])
+        self.assertEqual(data["countries"],["MIL","RES","FOOD","SMALL","ISLAND","ECON","FRAGILE","NEUTRAL"])
     def test_v1_bridge_is_explicit_and_nonexecuting(self):
         event=convert_v1_event({"actor":"A","target":"B","turn":3});self.assertEqual(event["origin"]["system"],"v1");out=export_local_security_input({"country":"MIL","action":"de-escalate","turn":5});self.assertTrue(out["requires_manual_v1_execution"])
     def test_reproducible(self):self.assertEqual(run_final_simulation(),run_final_simulation())
