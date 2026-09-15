@@ -25,7 +25,7 @@ def _conditions(c):
         if k in c:_score(k,c[k])
     if "mutual_performance" in c and not isinstance(c["mutual_performance"],bool):raise ValueError("mutual_performance must be bool")
     if "deadline_turn" in c and (isinstance(c["deadline_turn"],bool) or not isinstance(c["deadline_turn"],int) or c["deadline_turn"]<1):raise ValueError("invalid deadline")
-def parse_country_json(text):
+def parse_country_json(text,allowed_countries=None):
     d=_object(text,{"country_id","proposal_id","response_id","response_label","reason","conditions","self_interest","sovereignty_burden","perceived_global_effect","action"})
     for k in ("country_id","proposal_id","reason"):_text(k,d[k])
     if d["response_id"] not in RESPONSE_IDS or d["response_label"]!=RESPONSE_IDS[d["response_id"]]:raise ValueError("invalid response enum")
@@ -36,8 +36,14 @@ def parse_country_json(text):
     if not isinstance(a,dict) or set(a)!={"action_id","description","parameters"} or a["action_id"] not in ACTION_IDS or not isinstance(a["parameters"],dict):raise ValueError("invalid structured action")
     _text("action.description",a["description"])
     if a["action_id"]=="PROVIDE_RESOURCE":
-        if set(a["parameters"])!={"resource","amount","target_country"} or a["parameters"]["resource"] not in RESOURCE_TYPES:raise ValueError("invalid resource action")
-        _score("amount",a["parameters"]["amount"]);_text("target_country",a["parameters"]["target_country"])
+        p=a["parameters"]
+        if set(p)!={"recipient_type","resource","amount","target_country"} or p["resource"] not in RESOURCE_TYPES or p["recipient_type"] not in ("country","world_pool","none"):raise ValueError("invalid resource action")
+        _score("amount",p["amount"])
+        if p["recipient_type"]=="country":
+            _text("target_country",p["target_country"])
+            if allowed_countries is not None and p["target_country"] not in set(allowed_countries):raise ValueError(f"target_country must be one of {sorted(allowed_countries)}")
+        elif p["target_country"] is not None:raise ValueError("target_country must be null unless recipient_type is country")
+        if p["recipient_type"]=="none" and p["amount"]!=0:raise ValueError("none recipient requires amount 0")
     elif a["parameters"]:raise ValueError("only PROVIDE_RESOURCE accepts parameters")
     return d
 def parse_coordinator_json(text):
@@ -66,11 +72,13 @@ class GeminiGateway:
         error=None
         for attempt in range(1,self.retry_limit+1):
             if len(self.calls)>=self.max_calls:raise RuntimeError("API call limit reached")
-            audit={"run":run,"turn":turn,"agent_id":agent_name,"agent_type":agent_type,"agent_archetype":archetype,"snapshot_id":snapshot_id,"observation_digest":_digest(payload),"public_observation_payload":json.loads(json.dumps(payload)),"structured_response":None,"model":self.model,"schema_version":SCHEMA_VERSION,"attempt":attempt,"token_usage":{"input_tokens":None,"output_tokens":None,"total_tokens":None}}
+            attempt_payload=json.loads(json.dumps(payload))
+            if error is not None:attempt_payload["validation_feedback"]={"error":str(error),"instruction":"Return a new JSON object using only the enumerated allowed values; do not guess or translate IDs."}
+            audit={"run":run,"turn":turn,"agent_id":agent_name,"agent_type":agent_type,"agent_archetype":archetype,"snapshot_id":snapshot_id,"observation_digest":_digest(attempt_payload),"public_observation_payload":attempt_payload,"structured_response":None,"model":self.model,"schema_version":SCHEMA_VERSION,"attempt":attempt,"token_usage":{"input_tokens":None,"output_tokens":None,"total_tokens":None}}
             self.calls.append(audit)
             if self.audit_hook:self.audit_hook(self.calls)
             try:
-                r=self.client.models.generate_content(model=self.model,contents=json.dumps(payload,ensure_ascii=False),config={"response_mime_type":"application/json"});parsed=parser(r.text);audit["structured_response"]=parsed;audit["token_usage"]=_usage(r)
+                r=self.client.models.generate_content(model=self.model,contents=json.dumps(attempt_payload,ensure_ascii=False),config={"response_mime_type":"application/json"});parsed=parser(r.text);audit["structured_response"]=parsed;audit["token_usage"]=_usage(r)
                 if self.audit_hook:self.audit_hook(self.calls)
                 return parsed
             except Exception as exc:
@@ -102,17 +110,27 @@ def apply_structured_actions(country_states,answers,previous_world,damage,turn=1
     unmet=sorted(c for c,a in answers.items() if a["response_id"]=="CONDITIONAL" and c not in eligible);counts={k:0 for k in ACTION_IDS};requests=[]
     for c in sorted(eligible):
         a=answers[c]["action"];counts[a["action_id"]]+=1
-        if a["action_id"]=="PROVIDE_RESOURCE":requests.append((c,a["parameters"]["target_country"],a["parameters"]["resource"],a["parameters"]["amount"]))
-    transfers=[]
-    for source,target,resource,amount in sorted(requests):
-        if source not in states or target not in states or source==target:raise ValueError("unknown or invalid transfer country")
-        if resource not in states[source]["resources"] or resource not in states[target]["resources"]:raise ValueError("unregistered resource")
-        delivered=min(amount,states[source]["resources"][resource],100-states[target]["resources"][resource]);states[source]["resources"][resource]-=delivered;states[target]["resources"][resource]+=delivered;transfers.append({"source":source,"target":target,"resource":resource,"requested":amount,"delivered":delivered})
+        if a["action_id"]=="PROVIDE_RESOURCE":requests.append((c,a["parameters"]["recipient_type"],a["parameters"]["target_country"],a["parameters"]["resource"],a["parameters"]["amount"]))
+    # Validate the whole turn before changing the copied state; no partial application.
+    for source,recipient,target,resource,amount in requests:
+        if source not in states or recipient not in ("country","world_pool","none"):raise ValueError("invalid resource recipient")
+        if recipient=="country" and (target not in states or source==target):raise ValueError("unknown or invalid transfer country")
+        if resource not in states[source]["resources"] or (recipient=="country" and resource not in states[target]["resources"]):raise ValueError("unregistered resource")
+        if recipient!="country" and target is not None:raise ValueError("non-country recipient cannot have target_country")
+        if recipient=="none" and amount!=0:raise ValueError("none recipient requires zero amount")
+    transfers=[];world_pool={r:0.0 for r in RESOURCE_TYPES}
+    for source,recipient,target,resource,amount in sorted(requests,key=lambda x:(x[0],x[1],str(x[2]),x[3])):
+        if recipient=="none":continue
+        headroom=100-states[target]["resources"][resource] if recipient=="country" else 100-world_pool[resource]
+        delivered=min(amount,states[source]["resources"][resource],headroom);states[source]["resources"][resource]-=delivered
+        if recipient=="country":states[target]["resources"][resource]+=delivered
+        else:world_pool[resource]+=delivered
+        transfers.append({"source":source,"recipient_type":recipient,"target_country":target,"resource":resource,"requested":amount,"delivered":delivered})
     for c,s in states.items():
         s["indicators"]["food_reserves"]=s["resources"]["food"];s["indicators"]["energy_stability"]=clamp(.25*s["resources"]["fossil_fuel"]+.25*s["resources"]["renewable_energy"]+.2*s["resources"]["nuclear"]+.3*s["resources"]["grid_storage_resilience"]);s["indicators"]["economy"]=clamp(s["indicators"]["economy"]-.02*damage/1000);s["indicators"]["international_trust"]=clamp(s["indicators"]["international_trust"]+.2*counts["MEDIATE"]+.05*len(eligible));s["sovereignty"]=clamp(s["sovereignty"]-(answers[c]["sovereignty_burden"]*.03 if c in eligible else 0))
     n=len(states);w={"food":sum(s["resources"]["food"] for s in states.values())/n,"energy":sum(s["indicators"]["energy_stability"] for s in states.values())/n,"economy":sum(s["indicators"]["economy"] for s in states.values())/n,"environment":clamp(previous_world["environment"]-.01*damage/1000),"international_trust":sum(s["indicators"]["international_trust"] for s in states.values())/n,"conflict_load":clamp(previous_world["conflict_load"]-.8*counts["MEDIATE"]-.35*counts["DEFENSIVE_ESCORT"]+.25*counts["PROTECT_RESERVES"]+.01*damage/1000)};w["global_homeostasis"]=global_homeostasis(w)
     research={"global_homeostasis":w["global_homeostasis"],"national_sovereignty":sum(s["sovereignty"] for s in states.values())/n,"resource_stability":sum(sum(s["resources"].values())/len(s["resources"]) for s in states.values())/n,"resilience":sum(s["indicators"]["recovery_capacity"] for s in states.values())/n,"conflict_load":w["conflict_load"]}
-    return {"true_world":w,"country_states":states,"transfers":transfers,"research_metrics":research,"action_counts":counts,"participants":sorted(eligible),"rejected":sorted(c for c,a in answers.items() if a["response_id"]=="REJECT"),"condition_unmet":unmet}
+    return {"true_world":w,"country_states":states,"world_pool":world_pool,"transfers":transfers,"research_metrics":research,"action_counts":counts,"participants":sorted(eligible),"rejected":sorted(c for c,a in answers.items() if a["response_id"]=="REJECT"),"condition_unmet":unmet}
 def derive_event(world,history,counts):
     pressure=(100-world["food"])+(100-world["international_trust"])+world["conflict_load"]+history["reserve_gap"]+history["alertness"]
     if counts.get("MEDIATE",0)>=2 and world["conflict_load"]<35:return "外交信頼回復"
@@ -131,8 +149,8 @@ def eligible_result_paths(directory):
 def run_gemini_turn(gateway,run,turn,snapshot,private_views,history,country_order,*,country_states=None):
     sid=snapshot.get("snapshot_id");proposal=gateway.call("地球調整機関",run,turn,{"role":"neutral proposal-only coordinator; describe tradeoffs and do not advocate acceptance","observable_world":snapshot,"public_history":snapshot.get("public_history",[]),"response_contract":{"exact_fields":["proposal_id","proposal_type","reason","predicted_global_effect","predicted_sovereignty_burden","requested_action"],"proposal_type":list(PROPOSAL_TYPES),"scores":"numbers 0..100","text":"non-empty"}},parse_coordinator_json,agent_type="coordinator",snapshot_id=sid);answers={}
     for c in sorted(country_order):
-        payload={"role":"independent sovereign country; acceptance, rejection and conditional acceptance are equally valid; decide from own state, burden, resources, diplomacy and domestic stability","turn_start_observation":private_views[c],"memory":list(history.get(c,())),"current_proposal":proposal,"response_contract":{"exact_fields":["country_id","proposal_id","response_id","response_label","reason","conditions","self_interest","sovereignty_burden","perceived_global_effect","action"],"response_ids":RESPONSE_IDS,"conditions":"empty object unless CONDITIONAL; otherwise structured required_countries/minimum_aid_amount/maximum_sovereignty_burden/mutual_performance/deadline_turn","action":{"exact_fields":["action_id","description","parameters"],"action_ids":ACTION_IDS,"PROVIDE_RESOURCE_parameters":["resource","amount","target_country"],"other_parameters":"empty object"},"scores":"numbers 0..100","schema_version":SCHEMA_VERSION}}
-        a=gateway.call(c,run,turn,payload,parse_country_json,agent_type="country",archetype=private_views[c].get("archetype"),snapshot_id=sid)
+        allowed=sorted(country_order);payload={"role":"independent sovereign country; acceptance, rejection and conditional acceptance are equally valid; decide from own state, burden, resources, diplomacy and domestic stability","turn_start_observation":private_views[c],"memory":list(history.get(c,())),"current_proposal":proposal,"allowed_country_ids":allowed,"recipient_rules":{"country":"target_country is required and must be one allowed_country_id","world_pool":"target_country must be null; use for shared global reserve","none":"target_country must be null and amount must be 0","forbidden_target_examples":["GLOBAL","WORLD","日本語国名"]},"response_contract":{"exact_fields":["country_id","proposal_id","response_id","response_label","reason","conditions","self_interest","sovereignty_burden","perceived_global_effect","action"],"response_ids":RESPONSE_IDS,"conditions":"empty object unless CONDITIONAL; otherwise structured required_countries/minimum_aid_amount/maximum_sovereignty_burden/mutual_performance/deadline_turn","action":{"exact_fields":["action_id","description","parameters"],"action_ids":ACTION_IDS,"PROVIDE_RESOURCE_parameters":["recipient_type","resource","amount","target_country"],"recipient_type":["country","world_pool","none"],"other_parameters":"empty object"},"scores":"numbers 0..100","schema_version":SCHEMA_VERSION}}
+        a=gateway.call(c,run,turn,payload,lambda text,ids=set(allowed):parse_country_json(text,ids),agent_type="country",archetype=private_views[c].get("archetype"),snapshot_id=sid)
         if a["country_id"]!=c or a["proposal_id"]!=proposal["proposal_id"]:raise RuntimeError("country response identity mismatch")
         answers[c]=a
     convergence=len({a["response_id"] for a in answers.values()})==1
