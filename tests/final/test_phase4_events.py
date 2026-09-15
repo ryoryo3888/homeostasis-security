@@ -6,6 +6,7 @@ class Phase4EventTests(unittest.TestCase):
         self.event=CausalEvent("missile","farmland_damage",0,5,80,20,(),("B",),{"food":80})
         self.rules=(EventRule("food","farmland_damage","import_demand",10,0,2,50),)
     def test_five_turn_recovery_history(self): self.assertEqual(farmland_recovery_history(),(8000,6000,4000,2000,0))
+    def test_physical_damage_is_not_score_clamped(self): self.assertEqual(CausalEvent("farm","farmland_damage",0,5,8000,2000,(),("B",),{}).remaining_damage,8000)
     def test_causal_generation(self):
         out=advance_events(EventLedger(0,(self.event,)),self.rules)
         generated=[e for e in out.active_events if e.event_id!="missile"][0]
