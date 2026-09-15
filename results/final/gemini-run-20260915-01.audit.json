@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "result_file": "gemini-run-20260915-01.json",
+  "result_sha256": "ca5e4290ecc9afcb154a74d808845c13817aa7d8a8309a259306ea2c60fad428",
+  "classification": "接続確認pilot・監査不合格",
+  "status": "rejected",
+  "include_in_research_aggregation": false,
+  "include_in_dashboard": false,
+  "reasons": [
+    "国家行動と物理・資源状態の接続不足",
+    "決定論的世界指標とEvaluator評価の不一致",
+    "国家類型・内部状態のAgent入力不足",
+    "全64回答が受諾へ偏重",
+    "ターン6〜8の派生イベント判定不備"
+  ]
+}

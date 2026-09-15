@@ -1,0 +1,1914 @@
+{
+  "metadata": {
+    "mode": "gemini",
+    "model": "gemini-3.6-flash",
+    "seed": 20260915,
+    "runs": 1,
+    "turns": 8,
+    "provider": "GeminiGateway"
+  },
+  "runs": [
+    {
+      "recovered": true,
+      "final_homeostasis": 74.8,
+      "sovereignty_maintenance": 72.5,
+      "recovery_turns": 5,
+      "details": {
+        "run": 1,
+        "seed": 20260915,
+        "model": "gemini-3.6-flash",
+        "turns": [
+          {
+            "turn": 1,
+            "proposal": {
+              "proposal_id": "prop-run1-turn1-001",
+              "proposal_type": "復興支援",
+              "reason": "A国ミサイル着弾に伴う巨大被害の収束と、経済失速および地域不安定化を回避するための包括的復興支援枠組みを提案します。",
+              "predicted_global_effect": 75.0,
+              "predicted_sovereignty_burden": 20.0,
+              "requested_action": "被災地への緊急復興資材の供給およびインフラ修復支援の即時実施"
+            },
+            "country_responses": {
+              "ECON": {
+                "country_id": "ECON",
+                "proposal_id": "prop-run1-turn1-001",
+                "response": "受け入れる",
+                "reason": "被災地域の迅速なインフラ修復と経済復興は、地域全体の経済的安定とサプライチェーンの維持に直結し、我が国の長期的な経済益および国際的信頼の向上に合致するため。",
+                "conditions": {},
+                "self_interest": 80.0,
+                "sovereignty_burden": 15.0,
+                "perceived_global_effect": 75.0,
+                "policy_action": "被災地に対する緊急復興資材の供給支援およびインフラ修復支援プログラムへの協調参加を行う。"
+              },
+              "FOOD": {
+                "country_id": "FOOD",
+                "proposal_id": "prop-run1-turn1-001",
+                "response": "受け入れる",
+                "reason": "地域失速および紛争負荷の軽減を図り、国際秩序の安定とサプライチェーン維持に貢献するため支援策を承認します。",
+                "conditions": {},
+                "self_interest": 72.0,
+                "sovereignty_burden": 15.0,
+                "perceived_global_effect": 75.0,
+                "policy_action": "被災地域への緊急支援物資の提供および物流ルート確保のための技術協力実施"
+              },
+              "FRAGILE": {
+                "country_id": "FRAGILE",
+                "proposal_id": "prop-run1-turn1-001",
+                "response": "受け入れる",
+                "reason": "ミサイル被害に伴う地域経済の混乱を急速に防ぎ、全般的な国際秩序の安定と信頼醸成に資するため本提案を受け入れます。",
+                "conditions": {},
+                "self_interest": 80.0,
+                "sovereignty_burden": 20.0,
+                "perceived_global_effect": 75.0,
+                "policy_action": "緊急復興資材の円滑な輸送ルートの確保と現地調整窓口の設置協力を行ないます。"
+              },
+              "ISLAND": {
+                "country_id": "ISLAND",
+                "proposal_id": "prop-run1-turn1-001",
+                "response": "受け入れる",
+                "reason": "地域経済の失速および紛争負荷の拡大を防ぎ、国際的信頼とグローバルホームオスタシスの維持に貢献するため、提案された包括的復興支援枠組みを受け入れます。",
+                "conditions": {},
+                "self_interest": 75.0,
+                "sovereignty_burden": 15.0,
+                "perceived_global_effect": 78.0,
+                "policy_action": "被災地への緊急復興資材の海上輸送手配およびインフラ修復に関する技術支援チームの派遣準備を進めます。"
+              },
+              "MIL": {
+                "country_id": "MIL",
+                "proposal_id": "prop-run1-turn1-001",
+                "response": "受け入れる",
+                "reason": "地域の安定化と国際協力の強化は我が国の長期的利益に一致するため、被災地域への復興支援枠組みを承認します。",
+                "conditions": {},
+                "self_interest": 72.0,
+                "sovereignty_burden": 18.0,
+                "perceived_global_effect": 75.0,
+                "policy_action": "緊急復興資材の拠出およびインフラ修復に関する技術支援チームの即時派遣手続を開始する。"
+              },
+              "NEUTRAL": {
+                "country_id": "NEUTRAL",
+                "proposal_id": "prop-run1-turn1-001",
+                "response": "受け入れる",
+                "reason": "地域の安定化および国際協調の観点から、被災地域の迅速な復興支援とインフラ修復は世界的な安定（グローバル・ホームオスタシス）の維持に寄与すると判断するため。",
+                "conditions": {},
+                "self_interest": 70.0,
+                "sovereignty_burden": 15.0,
+                "perceived_global_effect": 75.0,
+                "policy_action": "被災地への資材搬送ルートの確保および人道支援物資の提供手続きを速やかに開始する。"
+              },
+              "RES": {
+                "country_id": "RES",
+                "proposal_id": "prop-run1-turn1-001",
+                "response": "受け入れる",
+                "reason": "ミサイル被害に伴う地域経済の失速および人道危機を回避することは、当国の安全保障環境の維持と国際情勢の安定に資するため。",
+                "conditions": {},
+                "self_interest": 70.0,
+                "sovereignty_burden": 20.0,
+                "perceived_global_effect": 75.0,
+                "policy_action": "緊急復興資材の供給体制を迅速に整備し、被災地域へのロジスティクス支援を実施する。"
+              },
+              "SMALL": {
+                "country_id": "SMALL",
+                "proposal_id": "prop-run1-turn1-001",
+                "response": "受け入れる",
+                "reason": "地域紛争の拡大防止と経済安定化は、小国である我が国の安全保障および国際的信頼の向上に資するため。",
+                "conditions": {},
+                "self_interest": 72.0,
+                "sovereignty_burden": 15.0,
+                "perceived_global_effect": 75.0,
+                "policy_action": "被災地域への緊急支援資材の拠出および技術支援チームの即時派遣手配"
+              }
+            },
+            "evaluation": {
+              "national_sovereignty": 80.0,
+              "global_homeostasis": 76.5,
+              "resource_stability": 71.0,
+              "resilience": 78.0,
+              "conflict_load": 26.5,
+              "history_effect": 72.0,
+              "assessment": "全加盟国が即時受け入れを表明し、被災地に対する include 供給および技術支援の協調体制が確立されました。国際的な連帯によって地域紛争の過度なエスカレーションが抑止され、危機からの迅速な回復力とグローバル・ホームオスタシスの安定化が期待されます。"
+            },
+            "snapshot": {
+              "snapshot_id": "run-1-turn-1-start",
+              "turn": 1,
+              "world": {
+                "food": 70.4448,
+                "energy": 79,
+                "economy": 72.27,
+                "environment": 76.0,
+                "international_trust": 67.4104,
+                "conflict_load": 29.892,
+                "global_homeostasis": 67.135
+              },
+              "damage": 8000,
+              "event": "A国ミサイル着弾",
+              "history_state": {
+                "economic_loss": 17.3,
+                "reserve_gap": 19.44,
+                "trust_loss": 21.58,
+                "alertness": 23.65
+              },
+              "public_history": []
+            },
+            "executed_world": {
+              "snapshot_id": "run-1-turn-1-start",
+              "turn": 1,
+              "world": {
+                "food": 71.0948,
+                "energy": 79,
+                "economy": 72.92,
+                "environment": 76.0,
+                "international_trust": 68.0604,
+                "conflict_load": 29.142,
+                "global_homeostasis": 67.135
+              },
+              "damage": 8000,
+              "event": "A国ミサイル着弾",
+              "history_state": {
+                "economic_loss": 17.3,
+                "reserve_gap": 19.44,
+                "trust_loss": 21.58,
+                "alertness": 23.65
+              },
+              "public_history": [],
+              "participation_ratio": 1.0
+            }
+          },
+          {
+            "turn": 2,
+            "proposal": {
+              "proposal_id": "prop-turn-2-food-aid",
+              "proposal_type": "食料援助",
+              "reason": "食料供給の低下に伴い、人道危機を防止しグローバル・ホームオスタシスを安定化させるため、影響地域への緊急食料援助を提案します。",
+              "predicted_global_effect": 72.5,
+              "predicted_sovereignty_burden": 15.0,
+              "requested_action": "加盟国による予備食料庫からの迅速な食料搬出と緊急輸送ルートの確保"
+            },
+            "country_responses": {
+              "ECON": {
+                "country_id": "ECON",
+                "proposal_id": "prop-turn-2-food-aid",
+                "response": "受け入れる",
+                "reason": "グローバル・ホームオスタシスの安定化と国際的信頼の向上は、長期的な世界経済の安定および市場の円滑な維持において利益となるため提案を承認します。",
+                "conditions": {},
+                "self_interest": 65.0,
+                "sovereignty_burden": 15.0,
+                "perceived_global_effect": 72.0,
+                "policy_action": "食料拠出に伴う国内経済への影響を最小限に抑えつつ、緊急輸送ルートのロジスティクス支援と予備食料の搬出を実施する。"
+              },
+              "FOOD": {
+                "country_id": "FOOD",
+                "proposal_id": "prop-turn-2-food-aid",
+                "response": "受け入れる",
+                "reason": "食料安全保障を専門とする自国の役割として、グローバル・ホームオスタシスの安定化と人道危機の回避に向け本提案に合意します。",
+                "conditions": {},
+                "self_interest": 75.0,
+                "sovereignty_burden": 15.0,
+                "perceived_global_effect": 72.5,
+                "policy_action": "予備食料の迅速な放出準備と物流ルート確保のための関係国間協議を開始する"
+              },
+              "FRAGILE": {
+                "country_id": "FRAGILE",
+                "proposal_id": "prop-turn-2-food-aid",
+                "response": "受け入れる",
+                "reason": "食料危機の防止とグローバル・ホームオスタシスの維持は我が国の安定にも直結するため、自国の輸送ルートを提供し食料援助提案を全面的に受諾します。",
+                "conditions": {},
+                "self_interest": 75.0,
+                "sovereignty_burden": 12.0,
+                "perceived_global_effect": 72.5,
+                "policy_action": "緊急輸送ルートの開放および食料搬出に伴う現地調整窓口の本格運用を行なう。"
+              },
+              "ISLAND": {
+                "country_id": "ISLAND",
+                "proposal_id": "prop-turn-2-food-aid",
+                "response": "受け入れる",
+                "reason": "グローバルな食料安全保障の維持と人道危機の回避は国際社会全体の安定に不可欠であり、島嶼国としての物流ネットワークを活用して食料輸送に貢献できるため。",
+                "conditions": {},
+                "self_interest": 75.0,
+                "sovereignty_burden": 12.0,
+                "perceived_global_effect": 74.0,
+                "policy_action": "自国の主要港湾施設および海上輸送ルートの優先開放を行い、緊急食料支援物資のスムーズな中継・輸送を支援する。"
+              },
+              "MIL": {
+                "country_id": "MIL",
+                "proposal_id": "prop-turn-2-food-aid",
+                "response": "受け入れる",
+                "reason": "食料不足による人道危機の発生を防ぎ、国際的な安定と信頼関係の向上に寄与するため、本提案を受け入れます。",
+                "conditions": {},
+                "self_interest": 75.0,
+                "sovereignty_burden": 12.0,
+                "perceived_global_effect": 74.0,
+                "policy_action": "予備食料の拠出と輸送ルート確保のための兵站支援を実施する。"
+              },
+              "NEUTRAL": {
+                "country_id": "NEUTRAL",
+                "proposal_id": "prop-turn-2-food-aid",
+                "response": "受け入れる",
+                "reason": "前ターンの決定に従い、人道支援物資の搬送ルート確保と予備食料の拠出を進めることで、国際的信頼の維持とグローバル・ホームオスタシスの安定化を図るため。",
+                "conditions": {},
+                "self_interest": 65.0,
+                "sovereignty_burden": 15.0,
+                "perceived_global_effect": 72.0,
+                "policy_action": "国内の予備食料の開示と搬出準備を進め、人道支援物資のための緊急優先輸送ルートを開放・確保する。"
+              },
+              "RES": {
+                "country_id": "RES",
+                "proposal_id": "prop-turn-2-food-aid",
+                "response": "受け入れる",
+                "reason": "食料不足による人道的リスクを回避し、グローバル・ホームオスタシスを向上させるため、本提案を承認します。",
+                "conditions": {},
+                "self_interest": 75.0,
+                "sovereignty_burden": 12.0,
+                "perceived_global_effect": 72.5,
+                "policy_action": "国内の食料備蓄管理体制を確認し、緊急輸送ルートの確保に向けた国際協調体制を整備する。"
+              },
+              "SMALL": {
+                "country_id": "SMALL",
+                "proposal_id": "prop-turn-2-food-aid",
+                "response": "受け入れる",
+                "reason": "食料不足は国際社会全体の安定に関わる緊急性の高い問題であり、グローバル・ホームオスタシスの改善および国際的信頼の向上に繋がるため、本提案を承認します。",
+                "conditions": {},
+                "self_interest": 65.0,
+                "sovereignty_burden": 12.0,
+                "perceived_global_effect": 72.5,
+                "policy_action": "予備食料の迅速な搬出調整および輸送ルート確保に向けたロジスティクス支援の開始"
+              }
+            },
+            "evaluation": {
+              "national_sovereignty": 80.5,
+              "global_homeostasis": 73.2,
+              "resource_stability": 71.8,
+              "resilience": 78.0,
+              "conflict_load": 25.4,
+              "history_effect": 68.5,
+              "assessment": "全加盟国が食料援助提案を全面的に「受け入れる」と表明したことで、緊急ロジスティクスおよび食料放出体制が極めて迅速に確立されました。これにより食料供給低下に伴う人道危機のリスクが大幅に緩和され、グローバル・ホームオスタシスの安定化が進んでいます。全会一致の合意は国際的信頼の修復に大きく貢献した一方で、各国の備蓄放出や輸送ルート開放に伴う主権的・経済的負担への配慮と、今後の資源安定供給体制の維持が重要な課題となります。"
+            },
+            "snapshot": {
+              "snapshot_id": "run-1-turn-2-start",
+              "turn": 2,
+              "world": {
+                "food": 71.0948,
+                "energy": 79,
+                "economy": 72.92,
+                "environment": 76.0,
+                "international_trust": 68.0604,
+                "conflict_load": 29.142,
+                "global_homeostasis": 67.135
+              },
+              "damage": 6000,
+              "event": "食料供給低下",
+              "history_state": {
+                "economic_loss": 16.6,
+                "reserve_gap": 18.880000000000003,
+                "trust_loss": 21.159999999999997,
+                "alertness": 23.299999999999997
+              },
+              "public_history": [
+                "A国ミサイル着弾"
+              ]
+            },
+            "executed_world": {
+              "snapshot_id": "run-1-turn-2-start",
+              "turn": 2,
+              "world": {
+                "food": 71.74480000000001,
+                "energy": 79,
+                "economy": 73.57000000000001,
+                "environment": 76.0,
+                "international_trust": 68.7104,
+                "conflict_load": 28.392,
+                "global_homeostasis": 67.135
+              },
+              "damage": 6000,
+              "event": "食料供給低下",
+              "history_state": {
+                "economic_loss": 16.6,
+                "reserve_gap": 18.880000000000003,
+                "trust_loss": 21.159999999999997,
+                "alertness": 23.299999999999997
+              },
+              "public_history": [
+                "A国ミサイル着弾"
+              ],
+              "participation_ratio": 1.0
+            }
+          },
+          {
+            "turn": 3,
+            "proposal": {
+              "proposal_id": "prop-turn3-market-01",
+              "proposal_type": "緊急協定",
+              "reason": "世界市場圧力および食料供給低下による世界規模の経済混乱を防ぐため、市場安定化と輸出制限解除に向けた協定を締結する。",
+              "predicted_global_effect": 72,
+              "predicted_sovereignty_burden": 30,
+              "requested_action": "国際市場における価格安定化協定の締結と緊急食料流動性の確保"
+            },
+            "country_responses": {
+              "ECON": {
+                "country_id": "ECON",
+                "proposal_id": "prop-turn3-market-01",
+                "response": "受け入れる",
+                "reason": "国際市場の価格安定化と緊急食料の流動性確保は、世界経済の急激な混乱を防止し、経済重視国である自国の交易・経済安定にも大きく貢献するため。",
+                "conditions": {},
+                "self_interest": 82,
+                "sovereignty_burden": 30,
+                "perceived_global_effect": 75,
+                "policy_action": "市場安定化協定に署名し、国際物流のスムーズな運用支援と自国関税・市場規制の柔軟な運用を行う。"
+              },
+              "FOOD": {
+                "country_id": "FOOD",
+                "proposal_id": "prop-turn3-market-01",
+                "response": "受け入れる",
+                "reason": "世界的な価格安定と食料流動性の確保は、食料安全保障の維持および世界経済の混乱防止に著しく貢献するため賛同する。",
+                "conditions": {},
+                "self_interest": 80,
+                "sovereignty_burden": 28,
+                "perceived_global_effect": 75,
+                "policy_action": "価格安定化協定への署名および優先物流チャネルを通じた緊急食料流動性確保策の実行"
+              },
+              "FRAGILE": {
+                "country_id": "FRAGILE",
+                "proposal_id": "prop-turn3-market-01",
+                "response": "受け入れる",
+                "reason": "食料流動性の確保と市場の安定化は我が国の経済回復および食料安全保障にとって極めて重要であり、国際協力を円滑に進めるため本提案を受け入れます。",
+                "conditions": {},
+                "self_interest": 75,
+                "sovereignty_burden": 28,
+                "perceived_global_effect": 72,
+                "policy_action": "価格安定化協定への署名および国内食料流動性維持に向けた調整措置の実施"
+              },
+              "ISLAND": {
+                "country_id": "ISLAND",
+                "proposal_id": "prop-turn3-market-01",
+                "response": "受け入れる",
+                "reason": "海上輸送と食料輸入に依存する島嶼国として、国際市場の安定化と食料輸出制限の解除は自国の経済安定および食料安全保障に直結するため。",
+                "conditions": {},
+                "self_interest": 85,
+                "sovereignty_burden": 25,
+                "perceived_global_effect": 75,
+                "policy_action": "価格安定化協定を迅速に批准し、自国港湾ロジスティクスを活用して緊急食料物資の流通円滑化に寄与する。"
+              },
+              "MIL": {
+                "country_id": "MIL",
+                "proposal_id": "prop-turn3-market-01",
+                "response": "受け入れる",
+                "reason": "世界市場の安定化と食料流動性の確保は、グローバルな経済混乱を最小限に抑え、自国の経済・食料安全保障の安定にも寄与するため提案に合意する。",
+                "conditions": {},
+                "self_interest": 75,
+                "sovereignty_burden": 30,
+                "perceived_global_effect": 72,
+                "policy_action": "価格安定化協定の批准手続を進めるとともに、透明性の高い市場供給メカニズムへの参画を推進する。"
+              },
+              "NEUTRAL": {
+                "country_id": "NEUTRAL",
+                "proposal_id": "prop-turn3-market-01",
+                "response": "受け入れる",
+                "reason": "国際市場における食料価格の安定化と緊急流動性の確保は、世界経済のさらなる混乱を防ぎ、中立国としての食料安全保障および経済的安定に合致するため。",
+                "conditions": {},
+                "self_interest": 75,
+                "sovereignty_burden": 30,
+                "perceived_global_effect": 72,
+                "policy_action": "価格安定化協定の早期批准を進め、国内市場の変動を注視しながら市場開放と食料流動性確保に向けた運用方針を策定する。"
+              },
+              "RES": {
+                "country_id": "RES",
+                "proposal_id": "prop-turn3-market-01",
+                "response": "受け入れる",
+                "reason": "食料流動性の確保および国際市場の安定化は、自国のサプライチェーン維持と世界規模の経済混乱抑止に資するため。",
+                "conditions": {},
+                "self_interest": 78,
+                "sovereignty_burden": 25,
+                "perceived_global_effect": 74,
+                "policy_action": "国内における主要食料・資材の流通監視を強化し、緊急時の市場供給および国際協調の迅速な実行に向けた調整を開始する。"
+              },
+              "SMALL": {
+                "country_id": "SMALL",
+                "proposal_id": "prop-turn3-market-01",
+                "response": "受け入れる",
+                "reason": "国際市場における価格安定化と食料流動性の確保は、自国の食料・経済安全保障の維持および世界全体の秩序安定にとって極めて有効であるため。",
+                "conditions": {},
+                "self_interest": 75,
+                "sovereignty_burden": 30,
+                "perceived_global_effect": 72,
+                "policy_action": "協定への即時署名および国内食料市場の流動性確保策の実施"
+              }
+            },
+            "evaluation": {
+              "national_sovereignty": 68.5,
+              "global_homeostasis": 73.2,
+              "resource_stability": 74.5,
+              "resilience": 72.0,
+              "conflict_load": 23.5,
+              "history_effect": 28.0,
+              "assessment": "全国家が市場安定化および緊急食料流動性確保の協定を受け入れたことで、世界市場の価格高騰および流通混乱のリスクが大幅に緩和されました。協定受容に伴う主権上の制約はあるものの、国際共同対処により資源安定性とグローバル恒常性が著しく改善しています。"
+            },
+            "snapshot": {
+              "snapshot_id": "run-1-turn-3-start",
+              "turn": 3,
+              "world": {
+                "food": 71.74480000000001,
+                "energy": 79,
+                "economy": 73.57000000000001,
+                "environment": 76.0,
+                "international_trust": 68.7104,
+                "conflict_load": 28.392,
+                "global_homeostasis": 67.135
+              },
+              "damage": 4000,
+              "event": "世界市場圧力",
+              "history_state": {
+                "economic_loss": 15.900000000000002,
+                "reserve_gap": 18.320000000000004,
+                "trust_loss": 20.739999999999995,
+                "alertness": 22.949999999999996
+              },
+              "public_history": [
+                "A国ミサイル着弾",
+                "食料供給低下"
+              ]
+            },
+            "executed_world": {
+              "snapshot_id": "run-1-turn-3-start",
+              "turn": 3,
+              "world": {
+                "food": 72.39480000000002,
+                "energy": 79,
+                "economy": 74.22000000000001,
+                "environment": 76.0,
+                "international_trust": 69.36040000000001,
+                "conflict_load": 27.642,
+                "global_homeostasis": 67.135
+              },
+              "damage": 4000,
+              "event": "世界市場圧力",
+              "history_state": {
+                "economic_loss": 15.900000000000002,
+                "reserve_gap": 18.320000000000004,
+                "trust_loss": 20.739999999999995,
+                "alertness": 22.949999999999996
+              },
+              "public_history": [
+                "A国ミサイル着弾",
+                "食料供給低下"
+              ],
+              "participation_ratio": 1.0
+            }
+          },
+          {
+            "turn": 4,
+            "proposal": {
+              "proposal_id": "prop-run1-turn4-001",
+              "proposal_type": "緊急協定",
+              "reason": "輸出・物流圧力による供給網の分断と経済的損失の拡大を回避するため、国際的な物流ルートの優先確保と関税・規制の一時緩和を行う緊急協定を提案する。",
+              "predicted_global_effect": 74.0,
+              "predicted_sovereignty_burden": 32.5,
+              "requested_action": "重要港湾・主要物流ルートの優先運用および主要物資に対する一時的な輸出規制の解除に関する加盟国間の合意形成"
+            },
+            "country_responses": {
+              "ECON": {
+                "country_id": "ECON",
+                "proposal_id": "prop-run1-turn4-001",
+                "response": "受け入れる",
+                "reason": "サプライチェーンの寸断を回避し、主要港湾での物流活性化と関税規制の柔軟化を進めることは、自国の経済活動支援および世界的な安定に直接寄与するため。",
+                "conditions": {},
+                "self_interest": 82.0,
+                "sovereignty_burden": 30.0,
+                "perceived_global_effect": 75.0,
+                "policy_action": "主要港湾における重要物資の優先通関手続きを適用し、一時的な関税緩和と物流インフラの開放措置を迅速に導入する。"
+              },
+              "FOOD": {
+                "country_id": "FOOD",
+                "proposal_id": "prop-run1-turn4-001",
+                "response": "受け入れる",
+                "reason": "主要物流ルートの優先運用と流通規制の緩和は、食料および重要物資の安定供給を維持し、自国の経済・貿易活動および国際信頼の向上に直接寄与するため。",
+                "conditions": {},
+                "self_interest": 82.0,
+                "sovereignty_burden": 28.0,
+                "perceived_global_effect": 74.5,
+                "policy_action": "主要港湾における優先物流レーンの確保および輸出入手続きの迅速化に向けた国内運用ガイドラインの策定"
+              },
+              "FRAGILE": {
+                "country_id": "FRAGILE",
+                "proposal_id": "prop-run1-turn4-001",
+                "response": "受け入れる",
+                "reason": "国際的な物流ルートの優先確保および緊急物資の流動性向上は、当国のサプライチェーン回復と経済安定に資するため提案を受け入れます。",
+                "conditions": {},
+                "self_interest": 75.0,
+                "sovereignty_burden": 30.0,
+                "perceived_global_effect": 74.0,
+                "policy_action": "港湾・主要物流ルートにおける優先運用手続きの整備および関係国との関税・規制一時緩和に向けた手続の実施"
+              },
+              "ISLAND": {
+                "country_id": "ISLAND",
+                "proposal_id": "prop-run1-turn4-001",
+                "response": "受け入れる",
+                "reason": "当国の港湾インフラおよび海上輸送ルートの活用方針と完全に一致しており、グローバルサプライチェーンの安定化と自国の経済・物流利益の向上に寄与するため。",
+                "conditions": {},
+                "self_interest": 82.5,
+                "sovereignty_burden": 28.0,
+                "perceived_global_effect": 76.5,
+                "policy_action": "主要港湾の優先運用体制を即時確立し、加盟国間での緊急物資ルートの開拓と関税手続きの迅速化を推し進める。"
+              },
+              "MIL": {
+                "country_id": "MIL",
+                "proposal_id": "prop-run1-turn4-001",
+                "response": "受け入れる",
+                "reason": "物流ルートの優先確保および一時的な規制緩和は、我が国の供給網安定化と経済活動の円滑化に寄与するため、本提案を受諾する。",
+                "conditions": {},
+                "self_interest": 75.0,
+                "sovereignty_burden": 30.0,
+                "perceived_global_effect": 74.0,
+                "policy_action": "自国港湾における緊急物資輸送の優先レーン開設および一時的な税関手続の簡素化を実施する。"
+              },
+              "NEUTRAL": {
+                "country_id": "NEUTRAL",
+                "proposal_id": "prop-run1-turn4-001",
+                "response": "受け入れる",
+                "reason": "サプライチェーンの分断を防ぎ、物流ルートを優先確保することは、国内の食料・経済の流動性を維持し、グローバルな安定にも寄与するため提案を支持する。",
+                "conditions": {},
+                "self_interest": 78.0,
+                "sovereignty_burden": 30.0,
+                "perceived_global_effect": 74.0,
+                "policy_action": "主要港湾および国内物流インフラの優先運用手順を整備し、支援物資や重要物資の流通円滑化を推進する。"
+              },
+              "RES": {
+                "country_id": "RES",
+                "proposal_id": "prop-run1-turn4-001",
+                "response": "受け入れる",
+                "reason": "提案内容は本国が推進してきた緊急資材の輸送ルート確保および国際的な物流協調体制の整備方針に合致しており、サプライチェーンの寸断防止と経済安定化に大きく貢献するため。",
+                "conditions": {},
+                "self_interest": 78.0,
+                "sovereignty_burden": 30.0,
+                "perceived_global_effect": 75.0,
+                "policy_action": "本国の主要港湾における優先通関レーンの開設および国際物流協調ネットワークへの積極的参加を実行する。"
+              },
+              "SMALL": {
+                "country_id": "SMALL",
+                "proposal_id": "prop-run1-turn4-001",
+                "response": "受け入れる",
+                "reason": "国際的な物流ルートの確保および一時的な規制緩和は、国際供給網に依存する当国の経済安定と食料・物資の流通維持にとって極めて有益であり、世界全体の安定にも資するため。",
+                "conditions": {},
+                "self_interest": 78.0,
+                "sovereignty_burden": 32.5,
+                "perceived_global_effect": 74.0,
+                "policy_action": "国内主要通関窓口における緊急物流の優先処理手続の導入および関連規制の一時的緩和の実施"
+              }
+            },
+            "evaluation": {
+              "national_sovereignty": 67.5,
+              "global_homeostasis": 74.0,
+              "resource_stability": 75.0,
+              "resilience": 72.0,
+              "conflict_load": 22.0,
+              "history_effect": 25.0,
+              "assessment": "全加盟国が優先通関手続および関税・規制の一時緩和を受け入れたことで、物流圧力による供給網分断の懸念が大幅に解消された。主権に対する負担は一定程度発生するものの、全社一致の国際協調体制が確立され、グローバルなホメオスタシスとリソースの安定性が著しく向上した。"
+            },
+            "snapshot": {
+              "snapshot_id": "run-1-turn-4-start",
+              "turn": 4,
+              "world": {
+                "food": 72.39480000000002,
+                "energy": 79,
+                "economy": 74.22000000000001,
+                "environment": 76.0,
+                "international_trust": 69.36040000000001,
+                "conflict_load": 27.642,
+                "global_homeostasis": 67.135
+              },
+              "damage": 2000,
+              "event": "輸出・物流圧力",
+              "history_state": {
+                "economic_loss": 15.200000000000003,
+                "reserve_gap": 17.760000000000005,
+                "trust_loss": 20.319999999999993,
+                "alertness": 22.599999999999994
+              },
+              "public_history": [
+                "A国ミサイル着弾",
+                "食料供給低下",
+                "世界市場圧力"
+              ]
+            },
+            "executed_world": {
+              "snapshot_id": "run-1-turn-4-start",
+              "turn": 4,
+              "world": {
+                "food": 73.04480000000002,
+                "energy": 79,
+                "economy": 74.87000000000002,
+                "environment": 76.0,
+                "international_trust": 70.01040000000002,
+                "conflict_load": 26.892,
+                "global_homeostasis": 67.135
+              },
+              "damage": 2000,
+              "event": "輸出・物流圧力",
+              "history_state": {
+                "economic_loss": 15.200000000000003,
+                "reserve_gap": 17.760000000000005,
+                "trust_loss": 20.319999999999993,
+                "alertness": 22.599999999999994
+              },
+              "public_history": [
+                "A国ミサイル着弾",
+                "食料供給低下",
+                "世界市場圧力"
+              ],
+              "participation_ratio": 1.0
+            }
+          },
+          {
+            "turn": 5,
+            "proposal": {
+              "proposal_id": "PROP-2026-005",
+              "proposal_type": "緊急協定",
+              "reason": "調整機関介入に伴い、物流圧力や食料供給低下による市場混乱を緩和するための国際協力枠組みの緊急構築が必要であるため。",
+              "predicted_global_effect": 72.0,
+              "predicted_sovereignty_burden": 28.5,
+              "requested_action": "主要貿易ルートの共同護衛および緊急食料備蓄の相互融通に関する即時協定調印"
+            },
+            "country_responses": {
+              "ECON": {
+                "country_id": "ECON",
+                "proposal_id": "PROP-2026-005",
+                "response": "受け入れる",
+                "reason": "主要貿易ルートの安全確保と食料供給の安定化は、世界経済および自国市場の混乱を防ぐために不可欠であり、提案内容の利益が主権上の負担を十分上回ると判断するため。",
+                "conditions": {},
+                "self_interest": 82.5,
+                "sovereignty_burden": 28.5,
+                "perceived_global_effect": 74.0,
+                "policy_action": "共同護衛体制への港湾・ロジスティクス拠点の連携支援と、国内食料備蓄の相互融通枠組みへの迅速な参加手続を開始する。"
+              },
+              "FOOD": {
+                "country_id": "FOOD",
+                "proposal_id": "PROP-2026-005",
+                "response": "受け入れる",
+                "reason": "主要貿易ルートの安全確保と食料備蓄の相互融通枠組みは、自国の食料安全保障および国際市場の価格・物流安定に大きく寄与するため。",
+                "conditions": {},
+                "self_interest": 88.0,
+                "sovereignty_burden": 28.5,
+                "perceived_global_effect": 72.0,
+                "policy_action": "主要貿易ルートにおける共同護衛枠組みへの同意手続きおよび緊急食料融通運用の取決め策定"
+              },
+              "FRAGILE": {
+                "country_id": "FRAGILE",
+                "proposal_id": "PROP-2026-005",
+                "response": "受け入れる",
+                "reason": "主要貿易ルートの安全性確保および緊急食料備蓄の融通枠組み構築は、国内の食料供給および経済の安定に大きく貢献するため。",
+                "conditions": {},
+                "self_interest": 78.0,
+                "sovereignty_burden": 28.5,
+                "perceived_global_effect": 72.0,
+                "policy_action": "共同護衛体制への参加手続きの実施および緊急食料相互融通に向けた国内受入・準備体制の構築"
+              },
+              "ISLAND": {
+                "country_id": "ISLAND",
+                "proposal_id": "PROP-2026-005",
+                "response": "受け入れる",
+                "reason": "主要貿易ルートの護衛強化と食料相互融通は、島嶼国である自国の補給線安全確保および地域全体の食料・市場安定に極めて有効であるため。",
+                "conditions": {},
+                "self_interest": 85.0,
+                "sovereignty_burden": 28.5,
+                "perceived_global_effect": 72.0,
+                "policy_action": "自国海上保安能力を活用した主要交易ルートの護衛哨戒活動への参加および緊急食料受入・分配ハブの運用開始。"
+              },
+              "MIL": {
+                "country_id": "MIL",
+                "proposal_id": "PROP-2026-005",
+                "response": "受け入れる",
+                "reason": "主要貿易ルートの共同護衛と緊急食料備蓄の相互融通は、物流圧力の緩和と食料供給の安定化に極めて有効であり、我が国の防衛・兵站能力を活用してグローバルな安定に貢献できるため。",
+                "conditions": {},
+                "self_interest": 75.0,
+                "sovereignty_burden": 28.5,
+                "perceived_global_effect": 72.0,
+                "policy_action": "共同護衛ミッションへの海上部隊の派遣準備および食料相互融通プロトコルの早期運用開始手続を行う。"
+              },
+              "NEUTRAL": {
+                "country_id": "NEUTRAL",
+                "proposal_id": "PROP-2026-005",
+                "response": "受け入れる",
+                "reason": "主要貿易ルートの安全確保と食料備蓄の相互融通は、供給網の混乱回避と市場安定化に極めて有効であり、当国の食料安全保障および物流インフラ優先運用方針とも合致するため。",
+                "conditions": {},
+                "self_interest": 78.0,
+                "sovereignty_burden": 28.5,
+                "perceived_global_effect": 72.0,
+                "policy_action": "主要貿易ルートの共同護衛体制への技術・後方支援の実施と、相互融通に伴う緊急食料備蓄の管理運用手順の確定に向けた実務協議の着手。"
+              },
+              "RES": {
+                "country_id": "RES",
+                "proposal_id": "PROP-2026-005",
+                "response": "受け入れる",
+                "reason": "主要貿易ルートの安全性確保と食料備蓄の相互融通体制は、国際物流の正常化および本国の食料・経済安全保障の維持に直結するため、全面的に支持する。",
+                "conditions": {},
+                "self_interest": 78.0,
+                "sovereignty_burden": 28.5,
+                "perceived_global_effect": 74.0,
+                "policy_action": "主要通関・港湾部局における共同護衛運用マニュアルの策定および緊急融通可能な食料備蓄枠の確保手続きを開始する。"
+              },
+              "SMALL": {
+                "country_id": "SMALL",
+                "proposal_id": "PROP-2026-005",
+                "response": "受け入れる",
+                "reason": "主要貿易ルートの保護と緊急食料備蓄の相互融通は、小国の食料安全保障と経済的安定を維持するために極めて有益であり、予測される主権負担を上回る実益があると判断したため。",
+                "conditions": {},
+                "self_interest": 78.0,
+                "sovereignty_burden": 28.5,
+                "perceived_global_effect": 72.0,
+                "policy_action": "協定への即時署名手続きを実施し、国内食料備蓄管理機関および港湾物流当局に対して融通スキーム構築の運用準備を指示する。"
+              }
+            },
+            "evaluation": {
+              "national_sovereignty": 71.5,
+              "global_homeostasis": 72.0,
+              "resource_stability": 75.4,
+              "resilience": 74.1,
+              "conflict_load": 23.2,
+              "history_effect": 18.9,
+              "assessment": "調整機関の介入に伴う緊急協定（PROP-2026-005）に対し、全参加国が即座に受容の意思を示した。主要貿易ルートにおける共同護衛体制の確立と緊急食料相互融通枠組みの発効により、物流停滞や食料不安に対する市場の不確実性が大幅に解消された。主権負担（28.5）を受け入れた協調介入の成果により、世界全体のホメオスタシスおよび資源安定性は明確な回復軌道へと向かっている。"
+            },
+            "snapshot": {
+              "snapshot_id": "run-1-turn-5-start",
+              "turn": 5,
+              "world": {
+                "food": 73.04480000000002,
+                "energy": 79,
+                "economy": 74.87000000000002,
+                "environment": 76.0,
+                "international_trust": 70.01040000000002,
+                "conflict_load": 26.892,
+                "global_homeostasis": 67.135
+              },
+              "damage": 0,
+              "event": "調整機関介入",
+              "history_state": {
+                "economic_loss": 13.700000000000003,
+                "reserve_gap": 16.560000000000006,
+                "trust_loss": 19.419999999999995,
+                "alertness": 21.849999999999994
+              },
+              "public_history": [
+                "A国ミサイル着弾",
+                "食料供給低下",
+                "世界市場圧力",
+                "輸出・物流圧力"
+              ]
+            },
+            "executed_world": {
+              "snapshot_id": "run-1-turn-5-start",
+              "turn": 5,
+              "world": {
+                "food": 73.69480000000003,
+                "energy": 79,
+                "economy": 75.52000000000002,
+                "environment": 76.0,
+                "international_trust": 70.66040000000002,
+                "conflict_load": 26.142,
+                "global_homeostasis": 67.135
+              },
+              "damage": 0,
+              "event": "調整機関介入",
+              "history_state": {
+                "economic_loss": 13.700000000000003,
+                "reserve_gap": 16.560000000000006,
+                "trust_loss": 19.419999999999995,
+                "alertness": 21.849999999999994
+              },
+              "public_history": [
+                "A国ミサイル着弾",
+                "食料供給低下",
+                "世界市場圧力",
+                "輸出・物流圧力"
+              ],
+              "participation_ratio": 1.0
+            }
+          },
+          {
+            "turn": 6,
+            "proposal": {
+              "proposal_id": "prop-turn6-food-reserve-agreement",
+              "proposal_type": "緊急協定",
+              "reason": "備蓄危機および物流・食料供給の低下に対処するため、加盟国間での緊急備蓄共有と安全な供給ルート確保の共通協定を締結する。",
+              "predicted_global_effect": 75,
+              "predicted_sovereignty_burden": 30,
+              "requested_action": "加盟国間における緊急食料備蓄融通メカニズムの確立と優先物流ルートの保護協定の承認"
+            },
+            "country_responses": {
+              "ECON": {
+                "country_id": "ECON",
+                "proposal_id": "prop-turn6-food-reserve-agreement",
+                "response": "受け入れる",
+                "reason": "国際的な物流の滞りを解消し、食料備蓄の融通メカニズムを確立することは、自国のサプライチェーン安定化と世界的な食料・経済の安定に直結するため、本協定の承認に合意する。",
+                "conditions": {},
+                "self_interest": 82,
+                "sovereignty_burden": 30,
+                "perceived_global_effect": 78,
+                "policy_action": "優先物流ルートにおける通関手続きの簡素化・迅速化を即時実施し、自国の食料備蓄融通システムへの連携手続きを開始する。"
+              },
+              "FOOD": {
+                "country_id": "FOOD",
+                "proposal_id": "prop-turn6-food-reserve-agreement",
+                "response": "受け入れる",
+                "reason": "食料安全保障の強化と国際的な供給網の安定化は自国および国際社会全体の利益に直結するため、本協定に合意します。",
+                "conditions": {},
+                "self_interest": 82,
+                "sovereignty_burden": 30,
+                "perceived_global_effect": 75,
+                "policy_action": "緊急食料備蓄融通メカニズムの速やかな運用開始に向けた国内法整備および共同物流支援体制の整備"
+              },
+              "FRAGILE": {
+                "country_id": "FRAGILE",
+                "proposal_id": "prop-turn6-food-reserve-agreement",
+                "response": "受け入れる",
+                "reason": "食料安全保障の強化と供給ルートの安全確保は、我が国の国内安定および世界的な食料・物流流動性の向上にとって極めて不可欠であるため。",
+                "conditions": {},
+                "self_interest": 85,
+                "sovereignty_burden": 30,
+                "perceived_global_effect": 75,
+                "policy_action": "本協定に署名し、緊急食料融通メカニズムの受入体制整備および物流優先運用プロトコルの国内適用を進める。"
+              },
+              "ISLAND": {
+                "country_id": "ISLAND",
+                "proposal_id": "prop-turn6-food-reserve-agreement",
+                "response": "受け入れる",
+                "reason": "自国の港湾および物流ハブ機能を最大限に活用し、加盟国間での迅速な食料備蓄融通と優先輸送ルートの保護体制を強固にすることで、世界的な食料・物流危機を緩和し国際協力を推進するため。",
+                "conditions": {},
+                "self_interest": 82,
+                "sovereignty_burden": 25,
+                "perceived_global_effect": 78,
+                "policy_action": "緊急食料備蓄融通メカニズムに合わせた自国中継港湾の優先運用体制整備および海上護衛・物流円滑化施策の実施。"
+              },
+              "MIL": {
+                "country_id": "MIL",
+                "proposal_id": "prop-turn6-food-reserve-agreement",
+                "response": "受け入れる",
+                "reason": "本協定は我が国の兵站支援方針および食料相互融通プロトコル推進の方向性と完全に一致しており、世界的な供給網安定と食料危機回避に強く寄与するため。",
+                "conditions": {},
+                "self_interest": 78,
+                "sovereignty_burden": 30,
+                "perceived_global_effect": 75,
+                "policy_action": "緊急食料備蓄融通メカニズムの即時批准手続を進め、主要海上物流ルートの安全確保に向けた共同警備タスクフォースへの部隊派遣手続を開始する。"
+              },
+              "NEUTRAL": {
+                "country_id": "NEUTRAL",
+                "proposal_id": "prop-turn6-food-reserve-agreement",
+                "response": "受け入れる",
+                "reason": "本協定は当国のこれまでの食料備蓄共有協議や人道物流ルート確保の取組と合致しており、世界的な食料危機と物流混乱の緩和に大きく寄与するため。",
+                "conditions": {},
+                "self_interest": 78,
+                "sovereignty_burden": 30,
+                "perceived_global_effect": 75,
+                "policy_action": "協定に基づき緊急食料備蓄の相互融通枠組に正式参加し、国内の主要物流拠点および優先ルートの運用管理を強化して円滑な物資配給を支える。"
+              },
+              "RES": {
+                "country_id": "RES",
+                "proposal_id": "prop-turn6-food-reserve-agreement",
+                "response": "受け入れる",
+                "reason": "本国がこれまで推進してきた緊急食料備蓄管理および物流ルート保護の国際協調方針と完全に合致しており、食料供給および物流の安定化に寄与するため。",
+                "conditions": {},
+                "self_interest": 85,
+                "sovereignty_burden": 25,
+                "perceived_global_effect": 78,
+                "policy_action": "加盟国間の緊急食料備蓄融通メカニズムの運用基準策定および優先物流ルートでの共同保護手続きの早期実施に向けた国内準備を推進する。"
+              },
+              "SMALL": {
+                "country_id": "SMALL",
+                "proposal_id": "prop-turn6-food-reserve-agreement",
+                "response": "受け入れる",
+                "reason": "国際的な食料備蓄相互融通枠組みと優先物流ルートの確立は、リソースが限定的な小規模国の食料安全保障および供給網の安定化に寄与し、提示された主権負担も受容可能であるため。",
+                "conditions": {},
+                "self_interest": 85,
+                "sovereignty_burden": 30,
+                "perceived_global_effect": 78,
+                "policy_action": "協定の正式承認を実施し、国内の港湾・物流管理機関および備蓄管理組織に対し、緊急融通メカニズムの迅速な運用開始と物流ルート連携手続の整備を指示する。"
+              }
+            },
+            "evaluation": {
+              "national_sovereignty": 68.5,
+              "global_homeostasis": 76.2,
+              "resource_stability": 75.0,
+              "resilience": 78.5,
+              "conflict_load": 22.4,
+              "history_effect": 71.0,
+              "assessment": "全加盟国が食料備蓄融通および物流ルート保護に関する緊急協定を受諾したことで、供給網の安定性とグローバルホメオスタシスが大幅に向上しました。一定の主権負担は伴うものの、多国間合意による共同警備と物資相互融通の枠組みは、過去の歴史的損失からの回復力と国際的信頼の醸成に極めて有効に機能すると評価されます。"
+            },
+            "snapshot": {
+              "snapshot_id": "run-1-turn-6-start",
+              "turn": 6,
+              "world": {
+                "food": 73.69480000000003,
+                "energy": 79,
+                "economy": 75.52000000000002,
+                "environment": 76.0,
+                "international_trust": 70.66040000000002,
+                "conflict_load": 26.142,
+                "global_homeostasis": 67.135
+              },
+              "damage": 0,
+              "event": "備蓄防衛の派生イベント",
+              "history_state": {
+                "economic_loss": 12.200000000000003,
+                "reserve_gap": 15.360000000000007,
+                "trust_loss": 18.519999999999996,
+                "alertness": 21.099999999999994
+              },
+              "public_history": [
+                "A国ミサイル着弾",
+                "食料供給低下",
+                "世界市場圧力",
+                "輸出・物流圧力",
+                "調整機関介入"
+              ]
+            },
+            "executed_world": {
+              "snapshot_id": "run-1-turn-6-start",
+              "turn": 6,
+              "world": {
+                "food": 74.34480000000003,
+                "energy": 79,
+                "economy": 76.17000000000003,
+                "environment": 76.0,
+                "international_trust": 71.31040000000003,
+                "conflict_load": 25.392,
+                "global_homeostasis": 67.135
+              },
+              "damage": 0,
+              "event": "備蓄防衛の派生イベント",
+              "history_state": {
+                "economic_loss": 12.200000000000003,
+                "reserve_gap": 15.360000000000007,
+                "trust_loss": 18.519999999999996,
+                "alertness": 21.099999999999994
+              },
+              "public_history": [
+                "A国ミサイル着弾",
+                "食料供給低下",
+                "世界市場圧力",
+                "輸出・物流圧力",
+                "調整機関介入"
+              ],
+              "participation_ratio": 1.0
+            }
+          },
+          {
+            "turn": 7,
+            "proposal": {
+              "proposal_id": "prop-turn-7-food-aid",
+              "proposal_type": "食料援助",
+              "reason": "備蓄防衛に伴い生じた食料不足の緩和と国際協調の維持を図るため。",
+              "predicted_global_effect": 72.5,
+              "predicted_sovereignty_burden": 28.0,
+              "requested_action": "加盟国からの食料備蓄の即時再配分と共同支援体制の構築"
+            },
+            "country_responses": {
+              "ECON": {
+                "country_id": "ECON",
+                "proposal_id": "prop-turn-7-food-aid",
+                "response": "受け入れる",
+                "reason": "食料不足の緩和と国際秩序の回復は世界経済の安定に不可欠であり、自国のロジスティクス支援体制とも親和性が高いため。",
+                "conditions": {},
+                "self_interest": 75.0,
+                "sovereignty_burden": 25.0,
+                "perceived_global_effect": 74.0,
+                "policy_action": "食料再配分の円滑化に向け、自国港湾での優先通関手続きおよび輸送ロジスティクス拠点の開放を速やかに実施する。"
+              },
+              "FOOD": {
+                "country_id": "FOOD",
+                "proposal_id": "prop-turn-7-food-aid",
+                "response": "受け入れる",
+                "reason": "国際的な食料備蓄の再配分と共同支援体制の構築は、我が国の食料安全保障政策およびグローバルな需給安定化の方針に一致するため。",
+                "conditions": {},
+                "self_interest": 82.0,
+                "sovereignty_burden": 25.0,
+                "perceived_global_effect": 74.0,
+                "policy_action": "国内の食料備蓄拠点および物流ネットワークを統合し、加盟国間での円滑な食料融通に向けた実務体制を即時稼働させる。"
+              },
+              "FRAGILE": {
+                "country_id": "FRAGILE",
+                "proposal_id": "prop-turn-7-food-aid",
+                "response": "受け入れる",
+                "reason": "食料再配分と共同支援体制の構築は、国内食料安全保障の強化および国際協調の推進に不可欠であるため。",
+                "conditions": {},
+                "self_interest": 82.0,
+                "sovereignty_burden": 25.0,
+                "perceived_global_effect": 74.0,
+                "policy_action": "食料援助メカニズムへの即時参加手続きの実施および国内受け入れプロトコルの稼働"
+              },
+              "ISLAND": {
+                "country_id": "ISLAND",
+                "proposal_id": "prop-turn-7-food-aid",
+                "response": "受け入れる",
+                "reason": "食料不足の緩和と国際協力の推進は、海洋物流ハブとしての自国の安定と国際的信用の維持に直接寄与するため。",
+                "conditions": {},
+                "self_interest": 78.0,
+                "sovereignty_burden": 25.0,
+                "perceived_global_effect": 73.0,
+                "policy_action": "自国の中継港湾施設を再配分ルートとして優先提供し、食料物資の迅速な検疫と効率的な物流支援体制を運用する。"
+              },
+              "MIL": {
+                "country_id": "MIL",
+                "proposal_id": "prop-turn-7-food-aid",
+                "response": "受け入れる",
+                "reason": "これまでの備蓄融通および物流支援体制の経験を活用し、広域的な食料不足の緩和と国際協調の維持に貢献するため。",
+                "conditions": {},
+                "self_interest": 72.0,
+                "sovereignty_burden": 26.0,
+                "perceived_global_effect": 74.0,
+                "policy_action": "食料備蓄の即時再配分枠組みに参画し、優先物流ルートを通じた給食・配給支援手続を開始する。"
+              },
+              "NEUTRAL": {
+                "country_id": "NEUTRAL",
+                "proposal_id": "prop-turn-7-food-aid",
+                "response": "受け入れる",
+                "reason": "これまで進めてきた緊急食料備蓄の相互融通枠組および人道支援体制に基づき、国際的な食料不足緩和と共同協力体制の維持に寄与するため。",
+                "conditions": {},
+                "self_interest": 72.0,
+                "sovereignty_burden": 26.0,
+                "perceived_global_effect": 73.5,
+                "policy_action": "共同支援体制に基づく食料備蓄の即時提供準備を進め、国内物流ルートの優先運用を通じて配送手続きを迅速に執り行う。"
+              },
+              "RES": {
+                "country_id": "RES",
+                "proposal_id": "prop-turn-7-food-aid",
+                "response": "受け入れる",
+                "reason": "これまで推進してきた加盟国間の緊急食料備蓄融通メカニズムおよび共同物流支援体制の活用方針と完全に整合しており、グローバルな食料安全保障の改善と国際信頼の向上に大きく寄与するため。",
+                "conditions": {},
+                "self_interest": 75.0,
+                "sovereignty_burden": 25.0,
+                "perceived_global_effect": 75.0,
+                "policy_action": "食料援助提案を承認し、加盟国間での緊急食料備蓄の即時再配分手続きおよび共同支援体制の運用を即座に開始する。"
+              },
+              "SMALL": {
+                "country_id": "SMALL",
+                "proposal_id": "prop-turn-7-food-aid",
+                "response": "受け入れる",
+                "reason": "国際的な食料安全保障の安定化および多国間協調の強化を目指し、食料備蓄の即時再配分と共同支援体制への参加を受け入れます。",
+                "conditions": {},
+                "self_interest": 65.0,
+                "sovereignty_burden": 28.0,
+                "perceived_global_effect": 72.5,
+                "policy_action": "自国の食料備蓄管理機関に対して拠出手続を開始させ、加盟国間での物流基盤の連携調整を指揮する。"
+              }
+            },
+            "evaluation": {
+              "national_sovereignty": 72.0,
+              "global_homeostasis": 72.5,
+              "resource_stability": 76.5,
+              "resilience": 78.0,
+              "conflict_load": 21.5,
+              "history_effect": 72.0,
+              "assessment": "全加盟国が食料援助および即時再配分フレームワークを受け入れたことにより、備蓄防衛に伴う食料不足リスクと国際摩擦の大幅な緩和が達成されました。優先通関や中継港湾の開放、物流ネットワークの統合など具体的なロジスティクス協力が円滑に始動しており、国際信託の回復および多国間協調体制の強固さが実証されました。"
+            },
+            "snapshot": {
+              "snapshot_id": "run-1-turn-7-start",
+              "turn": 7,
+              "world": {
+                "food": 74.34480000000003,
+                "energy": 79,
+                "economy": 76.17000000000003,
+                "environment": 76.0,
+                "international_trust": 71.31040000000003,
+                "conflict_load": 25.392,
+                "global_homeostasis": 67.135
+              },
+              "damage": 0,
+              "event": "備蓄防衛の派生イベント",
+              "history_state": {
+                "economic_loss": 10.700000000000003,
+                "reserve_gap": 14.160000000000007,
+                "trust_loss": 17.619999999999997,
+                "alertness": 20.349999999999994
+              },
+              "public_history": [
+                "A国ミサイル着弾",
+                "食料供給低下",
+                "世界市場圧力",
+                "輸出・物流圧力",
+                "調整機関介入",
+                "備蓄防衛の派生イベント"
+              ]
+            },
+            "executed_world": {
+              "snapshot_id": "run-1-turn-7-start",
+              "turn": 7,
+              "world": {
+                "food": 74.99480000000004,
+                "energy": 79,
+                "economy": 76.82000000000004,
+                "environment": 76.0,
+                "international_trust": 71.96040000000004,
+                "conflict_load": 24.642,
+                "global_homeostasis": 67.135
+              },
+              "damage": 0,
+              "event": "備蓄防衛の派生イベント",
+              "history_state": {
+                "economic_loss": 10.700000000000003,
+                "reserve_gap": 14.160000000000007,
+                "trust_loss": 17.619999999999997,
+                "alertness": 20.349999999999994
+              },
+              "public_history": [
+                "A国ミサイル着弾",
+                "食料供給低下",
+                "世界市場圧力",
+                "輸出・物流圧力",
+                "調整機関介入",
+                "備蓄防衛の派生イベント"
+              ],
+              "participation_ratio": 1.0
+            }
+          },
+          {
+            "turn": 8,
+            "proposal": {
+              "proposal_id": "prop-turn8-resource-redistribution",
+              "proposal_type": "資源再配分",
+              "reason": "備蓄防衛派生イベントによる食料供給低下と市場混乱に対応するため、加盟国間での緊急資源再配分を実施しグローバルな供給網を安定化させる。",
+              "predicted_global_effect": 68,
+              "predicted_sovereignty_burden": 28,
+              "requested_action": "加盟国間における緊急備蓄食料・エネルギーの段階的再配分と共同流通路の確保"
+            },
+            "country_responses": {
+              "ECON": {
+                "country_id": "ECON",
+                "proposal_id": "prop-turn8-resource-redistribution",
+                "response": "受け入れる",
+                "reason": "食料・エネルギー供給網の安定化と共同流通路の確保は、国際市場の混乱を未然に防ぎ、自国の物流・経済の安定に深く寄与するため。",
+                "conditions": {},
+                "self_interest": 82,
+                "sovereignty_burden": 22,
+                "perceived_global_effect": 70,
+                "policy_action": "緊急備蓄の段階的再配分枠組みに即時合意し、自国港湾での優先通関手続きの適用と物流ロジスティクス拠点の開放措置を迅速に展開する。"
+              },
+              "FOOD": {
+                "country_id": "FOOD",
+                "proposal_id": "prop-turn8-resource-redistribution",
+                "response": "受け入れる",
+                "reason": "緊急備蓄食料およびエネルギーの段階的再配分と共同流通路の確保は、食料市場の混乱を未然に防ぎ、グローバルな食料安全保障の維持および自国の供給安定に直結するため賛同する。",
+                "conditions": {},
+                "self_interest": 75,
+                "sovereignty_burden": 25,
+                "perceived_global_effect": 70,
+                "policy_action": "国内備蓄資源の拠出枠組みの調整と共同流通レーンへの実務的参画に向けた準備手続を開始する。"
+              },
+              "FRAGILE": {
+                "country_id": "FRAGILE",
+                "proposal_id": "prop-turn8-resource-redistribution",
+                "response": "受け入れる",
+                "reason": "食料供給不足と市場の混乱に対し、加盟国間での緊急再配分と流通路の確保はグローバルな安定化に不可欠であり、当国の食料・エネルギー供給網の安定にも寄与するため。",
+                "conditions": {},
+                "self_interest": 75,
+                "sovereignty_burden": 28,
+                "perceived_global_effect": 68,
+                "policy_action": "加盟国間の緊急再配分メカニズムへの参画手続きおよび国内物流優先ルートの調整を開始する。"
+              },
+              "ISLAND": {
+                "country_id": "ISLAND",
+                "proposal_id": "prop-turn8-resource-redistribution",
+                "response": "受け入れる",
+                "reason": "緊急資源の段階的再配分と流通路の確保は、食料・エネルギー市場の安定化をもたらし、自国の港湾ハブ機能および海上物流インフラの活用と国際的信頼の向上につながるため。",
+                "conditions": {},
+                "self_interest": 80,
+                "sovereignty_burden": 28,
+                "perceived_global_effect": 70,
+                "policy_action": "自国の主要港湾および保管施設を再配分物資の中継ハブとして優先開放し、共同流通路における効率的な海上輸送と安全確保を支援する。"
+              },
+              "MIL": {
+                "country_id": "MIL",
+                "proposal_id": "prop-turn8-resource-redistribution",
+                "response": "受け入れる",
+                "reason": "食料・エネルギー供給の安定化と物流ルートの確保は、国際市場の混乱を防ぎ自国を含むグローバルな安全保障に貢献するため、協力体制を強化する。",
+                "conditions": {},
+                "self_interest": 75,
+                "sovereignty_burden": 28,
+                "perceived_global_effect": 72,
+                "policy_action": "備蓄資源の緊急再配分プロトコルを即時承認し、海上および陸上物流ルートの安全確保に向けた共同警備部隊の派遣準備を開始する。"
+              },
+              "NEUTRAL": {
+                "country_id": "NEUTRAL",
+                "proposal_id": "prop-turn8-resource-redistribution",
+                "response": "受け入れる",
+                "reason": "食料供給の低下と市場混乱に対し、緊急資源の再配分と共同流通路の確保を行うことは国際協力と市場の安定化に極めて有効であるため。",
+                "conditions": {},
+                "self_interest": 75,
+                "sovereignty_burden": 28,
+                "perceived_global_effect": 68,
+                "policy_action": "加盟国間の緊急再配分計画に基づき、自国の備蓄食料およびエネルギーの供給可能枠を算出し、優先物流ルートを通じた移送運用を開始する。"
+              },
+              "RES": {
+                "country_id": "RES",
+                "proposal_id": "prop-turn8-resource-redistribution",
+                "response": "受け入れる",
+                "reason": "食料・エネルギーの緊急再配分と共同流通路の確保は、市場の混乱を抑えグローバルな供給網および国際社会の安定に大きく寄与するため本提案を全面的に受諾します。",
+                "conditions": {},
+                "self_interest": 75,
+                "sovereignty_burden": 25,
+                "perceived_global_effect": 70,
+                "policy_action": "加盟国間での食料およびエネルギー備蓄の段階的融通手続きを迅速に進め、国内港湾および優先流通ルートにおける共同保護体制の即時運用を開始する。"
+              },
+              "SMALL": {
+                "country_id": "SMALL",
+                "proposal_id": "prop-turn8-resource-redistribution",
+                "response": "受け入れる",
+                "reason": "備蓄防衛に伴う食料市場の混乱に対し、緊急資源再配分と流通網の確保を通じてグローバル供給網を安定化させることは、国際秩序と我が国の安定的な資源確保の双方に貢献するため。",
+                "conditions": {},
+                "self_interest": 72,
+                "sovereignty_burden": 28,
+                "perceived_global_effect": 68,
+                "policy_action": "資源再配分メカニズムへの正式参加手続きの開始および国内物流拠点・通関における優先輸送手続の指示"
+              }
+            },
+            "evaluation": {
+              "national_sovereignty": 72.5,
+              "global_homeostasis": 74.8,
+              "resource_stability": 81.0,
+              "resilience": 78.2,
+              "conflict_load": 19.5,
+              "history_effect": 70.0,
+              "assessment": "全加盟国が資源再配分提案を即時受諾し、物流ルートの開放および共同警備プロトコルに合意したことで、食料・エネルギー供給網の安定化とグローバル・ホームオスタシスの大幅な改善が達成された。"
+            },
+            "snapshot": {
+              "snapshot_id": "run-1-turn-8-start",
+              "turn": 8,
+              "world": {
+                "food": 74.99480000000004,
+                "energy": 79,
+                "economy": 76.82000000000004,
+                "environment": 76.0,
+                "international_trust": 71.96040000000004,
+                "conflict_load": 24.642,
+                "global_homeostasis": 67.135
+              },
+              "damage": 0,
+              "event": "備蓄防衛の派生イベント",
+              "history_state": {
+                "economic_loss": 9.200000000000003,
+                "reserve_gap": 12.960000000000008,
+                "trust_loss": 16.72,
+                "alertness": 19.599999999999994
+              },
+              "public_history": [
+                "A国ミサイル着弾",
+                "食料供給低下",
+                "世界市場圧力",
+                "輸出・物流圧力",
+                "調整機関介入",
+                "備蓄防衛の派生イベント",
+                "備蓄防衛の派生イベント"
+              ]
+            },
+            "executed_world": {
+              "snapshot_id": "run-1-turn-8-start",
+              "turn": 8,
+              "world": {
+                "food": 75.64480000000005,
+                "energy": 79,
+                "economy": 77.47000000000004,
+                "environment": 76.0,
+                "international_trust": 72.61040000000004,
+                "conflict_load": 23.892,
+                "global_homeostasis": 67.135
+              },
+              "damage": 0,
+              "event": "備蓄防衛の派生イベント",
+              "history_state": {
+                "economic_loss": 9.200000000000003,
+                "reserve_gap": 12.960000000000008,
+                "trust_loss": 16.72,
+                "alertness": 19.599999999999994
+              },
+              "public_history": [
+                "A国ミサイル着弾",
+                "食料供給低下",
+                "世界市場圧力",
+                "輸出・物流圧力",
+                "調整機関介入",
+                "備蓄防衛の派生イベント",
+                "備蓄防衛の派生イベント"
+              ],
+              "participation_ratio": 1.0
+            }
+          }
+        ],
+        "call_audit": [
+          {
+            "agent": "地球調整機関",
+            "run": 1,
+            "turn": 1,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ECON",
+            "run": 1,
+            "turn": 1,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FOOD",
+            "run": 1,
+            "turn": 1,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FRAGILE",
+            "run": 1,
+            "turn": 1,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ISLAND",
+            "run": 1,
+            "turn": 1,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "MIL",
+            "run": 1,
+            "turn": 1,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "NEUTRAL",
+            "run": 1,
+            "turn": 1,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "RES",
+            "run": 1,
+            "turn": 1,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "SMALL",
+            "run": 1,
+            "turn": 1,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "独立評価機関（Evaluator）",
+            "run": 1,
+            "turn": 1,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "地球調整機関",
+            "run": 1,
+            "turn": 2,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ECON",
+            "run": 1,
+            "turn": 2,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FOOD",
+            "run": 1,
+            "turn": 2,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FRAGILE",
+            "run": 1,
+            "turn": 2,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ISLAND",
+            "run": 1,
+            "turn": 2,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "MIL",
+            "run": 1,
+            "turn": 2,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "NEUTRAL",
+            "run": 1,
+            "turn": 2,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "RES",
+            "run": 1,
+            "turn": 2,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "SMALL",
+            "run": 1,
+            "turn": 2,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "独立評価機関（Evaluator）",
+            "run": 1,
+            "turn": 2,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "地球調整機関",
+            "run": 1,
+            "turn": 3,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ECON",
+            "run": 1,
+            "turn": 3,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FOOD",
+            "run": 1,
+            "turn": 3,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FRAGILE",
+            "run": 1,
+            "turn": 3,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ISLAND",
+            "run": 1,
+            "turn": 3,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "MIL",
+            "run": 1,
+            "turn": 3,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "NEUTRAL",
+            "run": 1,
+            "turn": 3,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "RES",
+            "run": 1,
+            "turn": 3,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "SMALL",
+            "run": 1,
+            "turn": 3,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "SMALL",
+            "run": 1,
+            "turn": 3,
+            "attempt": 2,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "独立評価機関（Evaluator）",
+            "run": 1,
+            "turn": 3,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "地球調整機関",
+            "run": 1,
+            "turn": 4,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ECON",
+            "run": 1,
+            "turn": 4,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FOOD",
+            "run": 1,
+            "turn": 4,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FRAGILE",
+            "run": 1,
+            "turn": 4,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ISLAND",
+            "run": 1,
+            "turn": 4,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "MIL",
+            "run": 1,
+            "turn": 4,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "NEUTRAL",
+            "run": 1,
+            "turn": 4,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "RES",
+            "run": 1,
+            "turn": 4,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "SMALL",
+            "run": 1,
+            "turn": 4,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "独立評価機関（Evaluator）",
+            "run": 1,
+            "turn": 4,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "地球調整機関",
+            "run": 1,
+            "turn": 5,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ECON",
+            "run": 1,
+            "turn": 5,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FOOD",
+            "run": 1,
+            "turn": 5,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FRAGILE",
+            "run": 1,
+            "turn": 5,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ISLAND",
+            "run": 1,
+            "turn": 5,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "MIL",
+            "run": 1,
+            "turn": 5,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "NEUTRAL",
+            "run": 1,
+            "turn": 5,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "RES",
+            "run": 1,
+            "turn": 5,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "SMALL",
+            "run": 1,
+            "turn": 5,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "独立評価機関（Evaluator）",
+            "run": 1,
+            "turn": 5,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "地球調整機関",
+            "run": 1,
+            "turn": 6,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ECON",
+            "run": 1,
+            "turn": 6,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FOOD",
+            "run": 1,
+            "turn": 6,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FRAGILE",
+            "run": 1,
+            "turn": 6,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ISLAND",
+            "run": 1,
+            "turn": 6,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "MIL",
+            "run": 1,
+            "turn": 6,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "NEUTRAL",
+            "run": 1,
+            "turn": 6,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "RES",
+            "run": 1,
+            "turn": 6,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "SMALL",
+            "run": 1,
+            "turn": 6,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "独立評価機関（Evaluator）",
+            "run": 1,
+            "turn": 6,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "地球調整機関",
+            "run": 1,
+            "turn": 7,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ECON",
+            "run": 1,
+            "turn": 7,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FOOD",
+            "run": 1,
+            "turn": 7,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FRAGILE",
+            "run": 1,
+            "turn": 7,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ISLAND",
+            "run": 1,
+            "turn": 7,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "MIL",
+            "run": 1,
+            "turn": 7,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "NEUTRAL",
+            "run": 1,
+            "turn": 7,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "RES",
+            "run": 1,
+            "turn": 7,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "SMALL",
+            "run": 1,
+            "turn": 7,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "独立評価機関（Evaluator）",
+            "run": 1,
+            "turn": 7,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "地球調整機関",
+            "run": 1,
+            "turn": 8,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ECON",
+            "run": 1,
+            "turn": 8,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FOOD",
+            "run": 1,
+            "turn": 8,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "FRAGILE",
+            "run": 1,
+            "turn": 8,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "ISLAND",
+            "run": 1,
+            "turn": 8,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "MIL",
+            "run": 1,
+            "turn": 8,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "NEUTRAL",
+            "run": 1,
+            "turn": 8,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "RES",
+            "run": 1,
+            "turn": 8,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "SMALL",
+            "run": 1,
+            "turn": 8,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          },
+          {
+            "agent": "独立評価機関（Evaluator）",
+            "run": 1,
+            "turn": 8,
+            "attempt": 1,
+            "model": "gemini-3.6-flash"
+          }
+        ],
+        "resume_point": {
+          "completed_turn": 8
+        }
+      }
+    }
+  ],
+  "summary": {
+    "average_homeostasis": 74.8,
+    "homeostasis_stddev": 0.0,
+    "recovery_rate": 100.0,
+    "sovereignty_maintenance_rate": 72.5,
+    "average_recovery_turns": 5.0
+  }
+}

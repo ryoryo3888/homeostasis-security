@@ -4,7 +4,9 @@ import argparse,json,os,tempfile,statistics
 from getpass import getpass
 from pathlib import Path
 from homeostasis_core.experiments import ResearchResult,save_result_atomic
-from homeostasis_core.gemini_agents import GeminiGateway,MODEL_NAME,create_gemini_client,run_gemini_turn
+from homeostasis_core.gemini_agents import GeminiGateway,MODEL_NAME,build_private_views,create_gemini_client,derive_event,run_gemini_turn
+from homeostasis_core.models import load_country_configuration
+from homeostasis_core.resources import calculate_energy_stability
 from simulation_final import run_final_simulation
 
 COUNTRIES=("MIL","RES","FOOD","SMALL","ISLAND","ECON","FRAGILE","NEUTRAL")
@@ -34,31 +36,31 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
     for run_number in range(len(completed)+1,runs+1):
         gateway=GeminiGateway(client,max_calls=MAX_CALLS_PER_RUN,retry_limit=RETRY_LIMIT)
         base=run_final_simulation(seed+run_number-1,TURNS)
+        configured=load_country_configuration(Path("config/country_archetypes.json"))
+        initial_states={c:{"archetype":p.archetype,"sovereignty":p.initial_indicators["sovereignty"],"indicators":{**{k:v for k,v in p.initial_indicators.items() if k!="sovereignty"},"energy_stability":calculate_energy_stability(p.energy_portfolio,p.initial_resources)},"resources":dict(p.initial_resources.levels)} for c,p in configured.profiles.items()}
+        freshness={a["country_id"]:a["perception"]["freshness"] for a in base["agents"]}
         if active is not None:
             if active.get("run")!=run_number or active.get("seed")!=seed+run_number-1:raise ValueError("checkpoint run or seed mismatch")
-            turn_rows=active["turns"];memories={c:tuple(active["memories"][c]) for c in COUNTRIES};current_world=dict(active["current_world"]);gateway.calls=list(active["call_audit"])
-        else:turn_rows=[];memories={c:() for c in COUNTRIES};current_world=dict(base["turns"][0]["world"])
+            turn_rows=active["turns"];memories={c:tuple(active["memories"][c]) for c in COUNTRIES};current_world=dict(active["current_world"]);country_states=active["country_states"];gateway.calls=list(active["call_audit"])
+        else:turn_rows=[];memories={c:() for c in COUNTRIES};current_world=dict(base["turns"][0]["world"]);country_states=initial_states
         def save_attempt_audit(calls):
-            in_progress={"run":run_number,"seed":seed+run_number-1,"completed_turn":len(turn_rows),"turns":turn_rows,"memories":memories,"current_world":current_world,"call_audit":calls}
+            in_progress={"run":run_number,"seed":seed+run_number-1,"completed_turn":len(turn_rows),"turns":turn_rows,"memories":memories,"current_world":current_world,"country_states":country_states,"call_audit":calls}
             _checkpoint(checkpoint,{"completed_runs":completed,"active_run":in_progress})
         gateway.audit_hook=save_attempt_audit
         for turn in range(len(turn_rows)+1,TURNS+1):
-            row=base["turns"][turn-1];prior_actions=[a["policy_action"] for prior in turn_rows for a in prior["country_responses"].values()]
-            event=row["event"] if turn<=5 else ("協調政策の派生イベント" if prior_actions.count("cooperate")>=len(prior_actions)/2 else "備蓄防衛の派生イベント")
-            snapshot={"snapshot_id":f"run-{run_number}-turn-{turn}-start","turn":turn,"world":current_world,"damage":row["farmland_damage_tons"],"event":event,"history_state":row["history_state"],"public_history":[x["executed_world"]["event"] for x in turn_rows]}
-            views={}
-            for index,c in enumerate(COUNTRIES):
-                freshness=base["agents"][index]["perception"]["freshness"];offset=(index-3.5)*(100-freshness)/100
-                observed={k:(max(0,min(100,v+offset)) if isinstance(v,(int,float)) else v) for k,v in current_world.items()}
-                views[c]={"snapshot_id":snapshot["snapshot_id"],"turn":turn,"observed_world":observed,"own_country":c,"information_freshness":freshness}
-            result=run_gemini_turn(gateway,run_number,turn,snapshot,views,memories,COUNTRIES);turn_rows.append(result)
-            current_world=dict(result["executed_world"]["world"])
-            memories={c:memories[c]+(result["country_responses"][c]["policy_action"],) for c in COUNTRIES}
-            active={"run":run_number,"seed":seed+run_number-1,"completed_turn":turn,"turns":turn_rows,"memories":memories,"current_world":current_world,"call_audit":gateway.calls}
+            row=base["turns"][turn-1]
+            event=row["event"] if turn<=5 else derive_event(current_world,row["history_state"],turn_rows[-1]["executed_state"]["action_counts"])
+            snapshot={"snapshot_id":f"run-{run_number}-turn-{turn}-start","turn":turn,"world":current_world,"damage":row["farmland_damage_tons"],"event":event,"history_state":row["history_state"],"public_history":[x["snapshot"]["event"] for x in turn_rows]}
+            views=build_private_views(snapshot["snapshot_id"],turn,current_world,country_states,freshness)
+            result=run_gemini_turn(gateway,run_number,turn,snapshot,views,memories,COUNTRIES,country_states=country_states);turn_rows.append(result)
+            current_world=dict(result["executed_state"]["true_world"]);country_states=result["executed_state"]["country_states"]
+            memories={c:memories[c]+(result["country_responses"][c]["action"]["action_id"],) for c in COUNTRIES}
+            active={"run":run_number,"seed":seed+run_number-1,"completed_turn":turn,"turns":turn_rows,"memories":memories,"current_world":current_world,"country_states":country_states,"call_audit":gateway.calls}
             _checkpoint(checkpoint,{"completed_runs":completed,"active_run":active})
-        completed.append({"run":run_number,"seed":seed+run_number-1,"model":MODEL_NAME,"turns":turn_rows,"call_audit":gateway.calls,"resume_point":{"completed_turn":TURNS}})
+        token_totals={k:sum(x["token_usage"][k] for x in gateway.calls if x["token_usage"][k] is not None) for k in ("input_tokens","output_tokens","total_tokens")}
+        completed.append({"run":run_number,"seed":seed+run_number-1,"model":MODEL_NAME,"turns":turn_rows,"response_convergence_detected":all(x["response_convergence"] for x in turn_rows),"call_audit":gateway.calls,"token_usage":token_totals,"resume_point":{"completed_turn":TURNS}})
         active=None;_checkpoint(checkpoint,{"completed_runs":completed,"active_run":None})
-    rows=tuple({"recovered":r["turns"][-1]["executed_world"]["damage"]==0,"final_homeostasis":r["turns"][-1]["evaluation"]["global_homeostasis"],"sovereignty_maintenance":r["turns"][-1]["evaluation"]["national_sovereignty"],"recovery_turns":next((x["turn"] for x in r["turns"] if x["executed_world"]["damage"]==0),TURNS),"details":r} for r in completed)
+    rows=tuple({"recovered":r["turns"][-1]["snapshot"]["damage"]==0,"final_homeostasis":r["turns"][-1]["research_metrics"]["global_homeostasis"],"sovereignty_maintenance":r["turns"][-1]["research_metrics"]["national_sovereignty"],"recovery_turns":next((x["turn"] for x in r["turns"] if x["snapshot"]["damage"]==0),TURNS),"details":r} for r in completed)
     metadata={"mode":"gemini","model":MODEL_NAME,"seed":seed,"runs":runs,"turns":TURNS,"provider":"GeminiGateway"}
     homeostasis=[x["final_homeostasis"] for x in rows];sovereignty=[x["sovereignty_maintenance"] for x in rows];recovery=[x["recovery_turns"] for x in rows]
     summary={"average_homeostasis":statistics.fmean(homeostasis),"homeostasis_stddev":statistics.pstdev(homeostasis),"recovery_rate":100*sum(x["recovered"] for x in rows)/len(rows),"sovereignty_maintenance_rate":statistics.fmean(sovereignty),"average_recovery_turns":statistics.fmean(recovery)}
