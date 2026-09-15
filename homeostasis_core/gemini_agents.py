@@ -4,10 +4,11 @@ from dataclasses import dataclass
 import hashlib,json,time
 from typing import Any,Callable
 from .metrics import clamp,global_homeostasis
-from .models import _score
+from .models import CountryState,EnergyPortfolio,ResourcePortfolio,_score
+from .resources import ResourceNetwork,SupplyLink,process_resource_network
 MODEL_NAME="gemini-3.6-flash";SCHEMA_VERSION=2
 RESPONSE_IDS={"ACCEPT":"受け入れる","REJECT":"拒否する","CONDITIONAL":"条件付きで応じる"}
-ACTION_IDS=("PROVIDE_RESOURCE","SUPPORT_LOGISTICS","PROVIDE_FUNDS","DEFENSIVE_ESCORT","MEDIATE","PROTECT_RESERVES","NO_ACTION")
+ACTION_IDS=("PROVIDE_RESOURCE","DRAW_WORLD_POOL","SUPPORT_LOGISTICS","PROVIDE_FUNDS","RESTRICT_EXPORTS","SUSPEND_SUPPLY","DISRUPT_LOGISTICS","DEFENSIVE_ESCORT","MEDIATE","PROTECT_RESERVES","NO_ACTION")
 RESOURCE_TYPES=("food","fossil_fuel","renewable_energy","nuclear","grid_storage_resilience","funds_economy","logistics")
 PROPOSAL_TYPES=("食料援助","仲裁","制裁提案","資源再配分","緊急協定","停戦提案","復興支援")
 def _object(text,keys):
@@ -44,6 +45,16 @@ def parse_country_json(text,allowed_countries=None):
             if allowed_countries is not None and p["target_country"] not in set(allowed_countries):raise ValueError(f"target_country must be one of {sorted(allowed_countries)}")
         elif p["target_country"] is not None:raise ValueError("target_country must be null unless recipient_type is country")
         if p["recipient_type"]=="none" and p["amount"]!=0:raise ValueError("none recipient requires amount 0")
+    elif a["action_id"]=="DRAW_WORLD_POOL":
+        p=a["parameters"]
+        if set(p)!={"resource","amount","target_country"} or p["resource"] not in RESOURCE_TYPES:raise ValueError("invalid world pool draw")
+        _score("amount",p["amount"]);_text("target_country",p["target_country"])
+        if allowed_countries is not None and p["target_country"] not in set(allowed_countries):raise ValueError(f"target_country must be one of {sorted(allowed_countries)}")
+    elif a["action_id"] in ("SUPPORT_LOGISTICS","PROVIDE_FUNDS"):
+        p=a["parameters"]
+        if set(p)!={"amount","target_country"}:raise ValueError("invalid support action")
+        _score("amount",p["amount"]);_text("target_country",p["target_country"])
+        if allowed_countries is not None and p["target_country"] not in set(allowed_countries):raise ValueError(f"target_country must be one of {sorted(allowed_countries)}")
     elif a["parameters"]:raise ValueError("only PROVIDE_RESOURCE accepts parameters")
     return d
 def parse_coordinator_json(text):
@@ -100,7 +111,7 @@ def _condition_met(a,available,turn):
     c=a["conditions"]
     amount=a["action"]["parameters"].get("amount",0)
     return set(c.get("required_countries",()))<=available and amount>=c.get("minimum_aid_amount",0) and a["sovereignty_burden"]<=c.get("maximum_sovereignty_burden",100) and turn<=c.get("deadline_turn",turn) and (not c.get("mutual_performance") or len(available)>1)
-def apply_structured_actions(country_states,answers,previous_world,damage,turn=1):
+def apply_structured_actions(country_states,answers,previous_world,damage,turn=1,*,world_pool=None,resource_network=None,network_policy=None):
     states=json.loads(json.dumps(country_states));eligible={c for c,a in answers.items() if a["response_id"]=="ACCEPT"}
     changed=True
     while changed:
@@ -108,9 +119,15 @@ def apply_structured_actions(country_states,answers,previous_world,damage,turn=1
         for c,a in sorted(answers.items()):
             if a["response_id"]=="CONDITIONAL" and c not in eligible and _condition_met(a,eligible,turn):eligible.add(c);changed=True
     unmet=sorted(c for c,a in answers.items() if a["response_id"]=="CONDITIONAL" and c not in eligible);counts={k:0 for k in ACTION_IDS};requests=[]
+    pool={r:float((world_pool or {}).get(r,0)) for r in RESOURCE_TYPES};draws=[];support=[];prior=network_policy or {};restricted=set(prior.get("restricted",()));suspended=set(prior.get("suspended",()));disrupted=set(prior.get("disrupted",()))
     for c in sorted(eligible):
         a=answers[c]["action"];counts[a["action_id"]]+=1
         if a["action_id"]=="PROVIDE_RESOURCE":requests.append((c,a["parameters"]["recipient_type"],a["parameters"]["target_country"],a["parameters"]["resource"],a["parameters"]["amount"]))
+        elif a["action_id"]=="DRAW_WORLD_POOL":draws.append((c,a["parameters"]["target_country"],a["parameters"]["resource"],a["parameters"]["amount"]))
+        elif a["action_id"] in ("SUPPORT_LOGISTICS","PROVIDE_FUNDS"):support.append((c,a["parameters"]["target_country"],"logistics" if a["action_id"]=="SUPPORT_LOGISTICS" else "funds_economy",a["parameters"]["amount"]))
+        elif a["action_id"]=="RESTRICT_EXPORTS":restricted.add(c)
+        elif a["action_id"]=="SUSPEND_SUPPLY":suspended.add(c)
+        elif a["action_id"]=="DISRUPT_LOGISTICS":disrupted.add(c)
     # Validate the whole turn before changing the copied state; no partial application.
     for source,recipient,target,resource,amount in requests:
         if source not in states or recipient not in ("country","world_pool","none"):raise ValueError("invalid resource recipient")
@@ -118,21 +135,43 @@ def apply_structured_actions(country_states,answers,previous_world,damage,turn=1
         if resource not in states[source]["resources"] or (recipient=="country" and resource not in states[target]["resources"]):raise ValueError("unregistered resource")
         if recipient!="country" and target is not None:raise ValueError("non-country recipient cannot have target_country")
         if recipient=="none" and amount!=0:raise ValueError("none recipient requires zero amount")
-    transfers=[];world_pool={r:0.0 for r in RESOURCE_TYPES}
+    for source,target,resource,amount in draws:
+        if target not in states or resource not in states[target]["resources"] or amount>pool[resource]:raise ValueError("world pool draw exceeds available stock or has invalid target")
+    for source,target,resource,amount in support:
+        if source not in states or target not in states or source==target or amount>states[source]["resources"][resource] or states[target]["resources"][resource]+amount>100:raise ValueError("invalid support transfer")
+    transfers=[]
     for source,recipient,target,resource,amount in sorted(requests,key=lambda x:(x[0],x[1],str(x[2]),x[3])):
         if recipient=="none":continue
-        headroom=100-states[target]["resources"][resource] if recipient=="country" else 100-world_pool[resource]
+        headroom=100-states[target]["resources"][resource] if recipient=="country" else 100-pool[resource]
         delivered=min(amount,states[source]["resources"][resource],headroom);states[source]["resources"][resource]-=delivered
         if recipient=="country":states[target]["resources"][resource]+=delivered
-        else:world_pool[resource]+=delivered
+        else:pool[resource]+=delivered
         transfers.append({"source":source,"recipient_type":recipient,"target_country":target,"resource":resource,"requested":amount,"delivered":delivered})
+    for source,target,resource,amount in sorted(draws):
+        pool[resource]-=amount;states[target]["resources"][resource]+=amount;transfers.append({"source":"world_pool","recipient_type":"country","target_country":target,"resource":resource,"requested":amount,"delivered":amount})
+    for source,target,resource,amount in sorted(support):
+        states[source]["resources"][resource]-=amount;states[target]["resources"][resource]+=amount;transfers.append({"source":source,"recipient_type":"country","target_country":target,"resource":resource,"requested":amount,"delivered":amount})
+    network_transfers=[];consumption={}
+    if resource_network is not None:
+        links=[];logistics_targets={target:amount for _,target,res,amount in support if res=="logistics"}
+        for link in resource_network.links:
+            active=link.active and link.source not in restricted|suspended
+            capacity=clamp(link.transport_capacity-(35 if link.source in disrupted else 0)+(min(20,logistics_targets.get(link.target,0))))
+            links.append(SupplyLink(link.link_id,link.source,link.target,link.resource,link.supply_amount,capacity,link.reliability,active))
+        network=ResourceNetwork(resource_network.schema_version,tuple(links),resource_network.demands,resource_network.resource_types)
+        country_objects={c:CountryState(c,s["sovereignty"],s["indicators"],EnergyPortfolio.from_dict(s["energy_portfolio"]),{},ResourcePortfolio(s["resources"])) for c,s in states.items()}
+        net=process_resource_network(country_objects,network)
+        for c,obj in net.countries.items():states[c]["sovereignty"]=obj.sovereignty;states[c]["indicators"]=dict(obj.indicators);states[c]["resources"]=dict(obj.resources.levels)
+        network_transfers=[x.to_dict() for x in net.transfers];consumption={c:dict(v) for c,v in network.demands.items()}
     for c,s in states.items():
-        s["indicators"]["food_reserves"]=s["resources"]["food"];s["indicators"]["energy_stability"]=clamp(.25*s["resources"]["fossil_fuel"]+.25*s["resources"]["renewable_energy"]+.2*s["resources"]["nuclear"]+.3*s["resources"]["grid_storage_resilience"]);s["indicators"]["economy"]=clamp(s["indicators"]["economy"]-.02*damage/1000);s["indicators"]["international_trust"]=clamp(s["indicators"]["international_trust"]+.2*counts["MEDIATE"]+.05*len(eligible));s["sovereignty"]=clamp(s["sovereignty"]-(answers[c]["sovereignty_burden"]*.03 if c in eligible else 0))
-    n=len(states);w={"food":sum(s["resources"]["food"] for s in states.values())/n,"energy":sum(s["indicators"]["energy_stability"] for s in states.values())/n,"economy":sum(s["indicators"]["economy"] for s in states.values())/n,"environment":clamp(previous_world["environment"]-.01*damage/1000),"international_trust":sum(s["indicators"]["international_trust"] for s in states.values())/n,"conflict_load":clamp(previous_world["conflict_load"]-.8*counts["MEDIATE"]-.35*counts["DEFENSIVE_ESCORT"]+.25*counts["PROTECT_RESERVES"]+.01*damage/1000)};w["global_homeostasis"]=global_homeostasis(w)
-    research={"global_homeostasis":w["global_homeostasis"],"national_sovereignty":sum(s["sovereignty"] for s in states.values())/n,"resource_stability":sum(sum(s["resources"].values())/len(s["resources"]) for s in states.values())/n,"resilience":sum(s["indicators"]["recovery_capacity"] for s in states.values())/n,"conflict_load":w["conflict_load"]}
-    return {"true_world":w,"country_states":states,"world_pool":world_pool,"transfers":transfers,"research_metrics":research,"action_counts":counts,"participants":sorted(eligible),"rejected":sorted(c for c,a in answers.items() if a["response_id"]=="REJECT"),"condition_unmet":unmet}
+        s["indicators"]["food_reserves"]=s["resources"]["food"];s["indicators"]["energy_stability"]=clamp(.25*s["resources"]["fossil_fuel"]+.25*s["resources"]["renewable_energy"]+.2*s["resources"]["nuclear"]+.3*s["resources"]["grid_storage_resilience"]);s["indicators"]["economy"]=clamp(.7*s["indicators"]["economy"]+.3*s["resources"]["funds_economy"]-.02*damage/1000);s["indicators"]["domestic_stability"]=clamp(.8*s["indicators"]["domestic_stability"]+.2*s["resources"]["logistics"]);s["indicators"]["international_trust"]=clamp(s["indicators"]["international_trust"]+.2*counts["MEDIATE"]+.05*len(eligible));s["sovereignty"]=clamp(s["sovereignty"]-(answers[c]["sovereignty_burden"]*.03 if c in eligible else 0))
+    n=len(states);w={"food":(sum(s["resources"]["food"] for s in states.values())+pool["food"])/n,"energy":sum(s["indicators"]["energy_stability"] for s in states.values())/n+(pool["fossil_fuel"]+pool["renewable_energy"]+pool["nuclear"])/(3*n),"economy":sum(s["indicators"]["economy"] for s in states.values())/n+pool["funds_economy"]/n,"environment":clamp(previous_world["environment"]-.01*damage/1000),"international_trust":sum(s["indicators"]["international_trust"] for s in states.values())/n,"conflict_load":clamp(previous_world["conflict_load"]-.8*counts["MEDIATE"]-.35*counts["DEFENSIVE_ESCORT"]+.25*counts["PROTECT_RESERVES"]+.01*damage/1000)};w={k:clamp(v) for k,v in w.items()};w["global_homeostasis"]=global_homeostasis(w)
+    research={"global_homeostasis":w["global_homeostasis"],"national_sovereignty":sum(s["sovereignty"] for s in states.values())/n,"resource_stability":((sum(sum(s["resources"].values()) for s in states.values())+sum(pool.values()))/(n*len(RESOURCE_TYPES))),"resilience":sum(s["indicators"]["recovery_capacity"] for s in states.values())/n,"conflict_load":w["conflict_load"]}
+    causal={"event":None,"damage":damage,"accepted_actions":{c:answers[c]["action"]["action_id"] for c in sorted(eligible)},"direct_transfers":transfers,"network_transfers":network_transfers,"network_consumption":consumption,"world_after":w}
+    return {"true_world":w,"country_states":states,"world_pool":pool,"transfers":transfers,"network_transfers":network_transfers,"network_consumption":consumption,"network_policy":{"restricted":sorted(restricted),"suspended":sorted(suspended),"disrupted":sorted(disrupted)},"causal_record":causal,"research_metrics":research,"action_counts":counts,"participants":sorted(eligible),"rejected":sorted(c for c,a in answers.items() if a["response_id"]=="REJECT"),"condition_unmet":unmet}
 def derive_event(world,history,counts):
     pressure=(100-world["food"])+(100-world["international_trust"])+world["conflict_load"]+history["reserve_gap"]+history["alertness"]
+    if counts.get("SUSPEND_SUPPLY",0)+counts.get("RESTRICT_EXPORTS",0)+counts.get("DISRUPT_LOGISTICS",0)>=1:return "供給網分断と輸出圧力"
     if counts.get("MEDIATE",0)>=2 and world["conflict_load"]<35:return "外交信頼回復"
     if counts.get("PROVIDE_RESOURCE",0)>=2 and world["food"]<75:return "共同備蓄再配分"
     if counts.get("PROTECT_RESERVES",0)>=2 or pressure>=140:return "輸出制限圧力"
@@ -146,15 +185,15 @@ def eligible_result_paths(directory):
         manifest=result.with_suffix(".audit.json")
         if manifest.exists() and pilot_is_eligible(result,manifest):out.append(result)
     return tuple(out)
-def run_gemini_turn(gateway,run,turn,snapshot,private_views,history,country_order,*,country_states=None):
+def run_gemini_turn(gateway,run,turn,snapshot,private_views,history,country_order,*,country_states=None,world_pool=None,resource_network=None,network_policy=None):
     sid=snapshot.get("snapshot_id");proposal=gateway.call("地球調整機関",run,turn,{"role":"neutral proposal-only coordinator; describe tradeoffs and do not advocate acceptance","observable_world":snapshot,"public_history":snapshot.get("public_history",[]),"response_contract":{"exact_fields":["proposal_id","proposal_type","reason","predicted_global_effect","predicted_sovereignty_burden","requested_action"],"proposal_type":list(PROPOSAL_TYPES),"scores":"numbers 0..100","text":"non-empty"}},parse_coordinator_json,agent_type="coordinator",snapshot_id=sid);answers={}
     for c in sorted(country_order):
-        allowed=sorted(country_order);payload={"role":"independent sovereign country; acceptance, rejection and conditional acceptance are equally valid; decide from own state, burden, resources, diplomacy and domestic stability","turn_start_observation":private_views[c],"memory":list(history.get(c,())),"current_proposal":proposal,"allowed_country_ids":allowed,"recipient_rules":{"country":"target_country is required and must be one allowed_country_id","world_pool":"target_country must be null; use for shared global reserve","none":"target_country must be null and amount must be 0","forbidden_target_examples":["GLOBAL","WORLD","日本語国名"]},"response_contract":{"exact_fields":["country_id","proposal_id","response_id","response_label","reason","conditions","self_interest","sovereignty_burden","perceived_global_effect","action"],"response_ids":RESPONSE_IDS,"conditions":"empty object unless CONDITIONAL; otherwise structured required_countries/minimum_aid_amount/maximum_sovereignty_burden/mutual_performance/deadline_turn","action":{"exact_fields":["action_id","description","parameters"],"action_ids":ACTION_IDS,"PROVIDE_RESOURCE_parameters":["recipient_type","resource","amount","target_country"],"recipient_type":["country","world_pool","none"],"other_parameters":"empty object"},"scores":"numbers 0..100","schema_version":SCHEMA_VERSION}}
+        allowed=sorted(country_order);payload={"role":"independent sovereign country; acceptance, rejection and conditional acceptance are equally valid; decide from own state, burden, resources, diplomacy and domestic stability","turn_start_observation":private_views[c],"memory":list(history.get(c,())),"current_proposal":proposal,"allowed_country_ids":allowed,"recipient_rules":{"country":"target_country is required and must be one allowed_country_id","world_pool":"target_country must be null; use for shared global reserve","none":"target_country must be null and amount must be 0","forbidden_target_examples":["GLOBAL","WORLD","日本語国名"]},"response_contract":{"exact_fields":["country_id","proposal_id","response_id","response_label","reason","conditions","self_interest","sovereignty_burden","perceived_global_effect","action"],"response_ids":RESPONSE_IDS,"conditions":"empty object unless CONDITIONAL; otherwise structured required_countries/minimum_aid_amount/maximum_sovereignty_burden/mutual_performance/deadline_turn","action":{"exact_fields":["action_id","description","parameters"],"action_ids":ACTION_IDS,"PROVIDE_RESOURCE_parameters":["recipient_type","resource","amount","target_country"],"DRAW_WORLD_POOL_parameters":["resource","amount","target_country"],"SUPPORT_LOGISTICS_or_PROVIDE_FUNDS_parameters":["amount","target_country"],"recipient_type":["country","world_pool","none"],"all_other_action_parameters":"empty object"},"scores":"numbers 0..100","schema_version":SCHEMA_VERSION}}
         a=gateway.call(c,run,turn,payload,lambda text,ids=set(allowed):parse_country_json(text,ids),agent_type="country",archetype=private_views[c].get("archetype"),snapshot_id=sid)
         if a["country_id"]!=c or a["proposal_id"]!=proposal["proposal_id"]:raise RuntimeError("country response identity mismatch")
         answers[c]=a
     convergence=len({a["response_id"] for a in answers.values()})==1
     if country_states is None:return {"turn":turn,"proposal":proposal,"country_responses":answers,"snapshot":dict(snapshot),"response_convergence":convergence}
-    effects=apply_structured_actions(country_states,answers,snapshot["world"],snapshot["damage"],turn)
+    effects=apply_structured_actions(country_states,answers,snapshot["world"],snapshot["damage"],turn,world_pool=world_pool,resource_network=resource_network,network_policy=network_policy);effects["causal_record"]["event"]=snapshot["event"]
     evaluator=gateway.call("独立評価機関（Evaluator）",run,turn,{"role":"independent narrative evaluator; scores cannot alter research metrics; assess sovereignty, necessary defense, resources, resilience, conflict and history; do not reward delay, avoidance or formal acceptance","executed_true_state":effects,"public_outcomes":{c:{"response_id":a["response_id"],"action_id":a["action"]["action_id"]} for c,a in answers.items()},"proposal":proposal,"response_contract":{"exact_fields":["national_sovereignty","global_homeostasis","resource_stability","resilience","conflict_load","history_effect","assessment"],"scores":"numbers 0..100","assessment":"non-empty text"}},parse_evaluator_json,agent_type="evaluator",snapshot_id=sid)
     return {"turn":turn,"proposal":proposal,"country_responses":answers,"snapshot":dict(snapshot),"response_convergence":convergence,"executed_state":effects,"research_metrics":effects["research_metrics"],"evaluator_commentary":evaluator}
