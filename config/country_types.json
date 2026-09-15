@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "countries": {
+    "A": {
+      "role": "事件を発生させた国家",
+      "interests": ["国家安全保障", "国際的立場", "自国民の保護"],
+      "allowed_actions": ["攻撃継続", "停戦", "補償", "制裁への反発", "外交交渉"],
+      "initial_indicators": {"sovereignty": 88}
+    },
+    "B": {
+      "role": "農地への直接被害を受けた国家",
+      "interests": ["食料供給", "民間人保護", "領土と主権"],
+      "allowed_actions": ["軍事報復", "農地復旧", "食料輸入", "援助要請", "停戦交渉"],
+      "initial_indicators": {"sovereignty": 88}
+    },
+    "C": {
+      "role": "食料価格・経済への二次的影響を受ける第三国",
+      "interests": ["国内物価", "供給安定", "外交的自律性"],
+      "allowed_actions": ["輸入政策変更", "援助参加", "中立維持", "制裁参加", "自国優先"],
+      "initial_indicators": {"sovereignty": 88}
+    }
+  }
+}
