@@ -4,11 +4,11 @@ from simulation_final import run_final_simulation,convert_v1_event,export_local_
 ROOT=Path(__file__).parents[2]
 class Phase8Tests(unittest.TestCase):
     def test_eight_countries_and_five_turns(self):
-        r=run_final_simulation();self.assertEqual(len(r["countries"]),8);self.assertEqual(len(r["turns"]),5)
+        r=run_final_simulation();self.assertEqual(len(r["countries"]),8);self.assertEqual(len(r["turns"]),8)
     def test_recovery_and_causal_chain(self):
-        r=run_final_simulation();self.assertEqual([t["farmland_damage_tons"] for t in r["turns"]],[8000,6000,4000,2000,0]);self.assertGreaterEqual(len(r["causal_chain"]),10)
+        r=run_final_simulation();self.assertEqual([t["farmland_damage_tons"] for t in r["turns"]],[8000,6000,4000,2000,0,0,0,0]);self.assertGreaterEqual(len(r["causal_chain"]),10);self.assertTrue(all("history_state" in t for t in r["turns"][5:]))
     def test_saved_result_matches_dashboard_values(self):
-        saved=json.loads((ROOT/"results/final/deterministic_prototype.json").read_text());html=(ROOT/"dashboard_final.html").read_text();sim=run_final_simulation();self.assertEqual(saved["global_homeostasis"],[t["world"]["global_homeostasis"] for t in sim["turns"]]);self.assertEqual(saved["farmland_damage_tons"],[t["farmland_damage_tons"] for t in sim["turns"]]);self.assertIn(json.dumps(saved["global_homeostasis"],separators=(",",":")),html);self.assertIn(json.dumps(saved["farmland_damage_tons"],separators=(",",":")),html)
+        saved=json.loads((ROOT/"results/final/deterministic_prototype_8turn.json").read_text());html=(ROOT/"dashboard_final.html").read_text();sim=run_final_simulation();self.assertEqual(saved["global_homeostasis"],[t["world"]["global_homeostasis"] for t in sim["turns"]]);self.assertEqual(saved["farmland_damage_tons"],[t["farmland_damage_tons"] for t in sim["turns"]]);self.assertIn(json.dumps(saved["global_homeostasis"],separators=(",",":")),html);self.assertIn(json.dumps(saved["farmland_damage_tons"],separators=(",",":")),html);self.assertFalse(saved["gemini_executed"])
     def test_dashboard_is_self_contained_and_responsive(self):
         html=(ROOT/"dashboard_final.html").read_text();self.assertIn('name="viewport"',html);self.assertNotIn("https://",html);self.assertIn("@media",html)
     def test_every_dashboard_tab_has_scrollable_substantive_content(self):
@@ -29,6 +29,7 @@ class Phase8Tests(unittest.TestCase):
         self.assertNotIn("`Turn ${i+1}`",html)
         data=json.loads(html.split('<script id="data" type="application/json">',1)[1].split('</script>',1)[0])
         self.assertEqual(data["countries"],["MIL","RES","FOOD","SMALL","ISLAND","ECON","FRAGILE","NEUTRAL"])
+        self.assertEqual(len(data["damage"]),8);self.assertFalse(data["gemini_executed"]);self.assertIn("Gemini本番結果ではありません",html)
     def test_v1_bridge_is_explicit_and_nonexecuting(self):
         event=convert_v1_event({"actor":"A","target":"B","turn":3});self.assertEqual(event["origin"]["system"],"v1");out=export_local_security_input({"country":"MIL","action":"de-escalate","turn":5});self.assertTrue(out["requires_manual_v1_execution"])
     def test_reproducible(self):self.assertEqual(run_final_simulation(),run_final_simulation())

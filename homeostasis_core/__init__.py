@@ -5,6 +5,7 @@ from .events import CausalEvent, EventLedger, EventRule, advance_events, farmlan
 from .perception import CountryMemory, DecisionProvider, DeterministicDecisionProvider, InformationPolicy, observe_world, recover_country
 from .experiments import ExperimentPlan, ResearchResult, estimate_experiment, run_experiment, save_result_atomic
 from .governance import CHANGE_TYPES, GovernanceChangeRecord, GovernanceRuleSet, GovernanceVote, RuleChangeProposal, decide_rule_change, expire_emergency_rules, governance_sovereignty_maintenance
+from .gemini_agents import GeminiGateway, MODEL_NAME, create_gemini_client, parse_coordinator_json, parse_country_json, parse_evaluator_json, run_gemini_turn
 from .coordination import (
     OUTCOME_TYPES,
     PROPOSAL_TYPES,
@@ -72,6 +73,7 @@ __all__ = [
     "CountryMemory", "DecisionProvider", "DeterministicDecisionProvider", "InformationPolicy", "observe_world", "recover_country",
     "ExperimentPlan", "ResearchResult", "estimate_experiment", "run_experiment", "save_result_atomic",
     "CHANGE_TYPES", "GovernanceChangeRecord", "GovernanceRuleSet", "GovernanceVote", "RuleChangeProposal", "decide_rule_change", "expire_emergency_rules", "governance_sovereignty_maintenance",
+    "GeminiGateway", "MODEL_NAME", "create_gemini_client", "parse_coordinator_json", "parse_country_json", "parse_evaluator_json", "run_gemini_turn",
     "NATIONAL_INDICATORS", "RESOURCE_TYPES", "ResourceNetwork", "ResourceNetworkResult",
     "SupplyLink", "TransferRecord", "calculate_energy_stability", "load_country_configuration",
     "load_resource_network", "load_scenario_configuration", "process_resource_network",
