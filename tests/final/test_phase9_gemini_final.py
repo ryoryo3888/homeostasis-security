@@ -3,16 +3,18 @@ from pathlib import Path
 from final_experiment_runner import estimate,run_live
 from homeostasis_core.gemini_agents import GeminiGateway,parse_country_json,run_gemini_turn
 
+class Usage:
+    prompt_token_count=10;candidates_token_count=5;total_token_count=15
 class Response:
-    def __init__(self,text):self.text=text
+    def __init__(self,text):self.text=text;self.usage_metadata=Usage()
 class Models:
     def __init__(self,invalid=False):self.payloads=[];self.invalid=invalid
     def generate_content(self,**kw):
         data=json.loads(kw["contents"]);self.payloads.append(data)
         if self.invalid:return Response("{}")
         if "observable_world" in data:return Response(json.dumps({"proposal_id":"proposal-1","proposal_type":"食料援助","reason":"r","predicted_global_effect":60,"predicted_sovereignty_burden":5,"requested_action":"cooperate"}))
-        if "executed_world" in data:return Response(json.dumps({"national_sovereignty":80,"global_homeostasis":75,"resource_stability":70,"resilience":72,"conflict_load":20,"history_effect":30,"assessment":"stable"}))
-        return Response(json.dumps({"country_id":data["turn_start_observation"]["own_country"],"proposal_id":data["current_proposal"]["proposal_id"],"response":"受け入れる","reason":"r","conditions":{},"self_interest":60,"sovereignty_burden":5,"perceived_global_effect":60,"policy_action":"cooperate"}))
+        if "executed_true_state" in data:return Response(json.dumps({"national_sovereignty":80,"global_homeostasis":75,"resource_stability":70,"resilience":72,"conflict_load":20,"history_effect":30,"assessment":"stable"}))
+        return Response(json.dumps({"country_id":data["turn_start_observation"]["own_country"],"proposal_id":data["current_proposal"]["proposal_id"],"response_id":"ACCEPT","response_label":"受け入れる","reason":"r","conditions":{},"self_interest":60,"sovereignty_burden":5,"perceived_global_effect":60,"action":{"action_id":"MEDIATE","description":"mediate","parameters":{}}}))
 class Client:
     def __init__(self,invalid=False):self.models=Models(invalid)
 class InterruptingModels(Models):
@@ -34,7 +36,7 @@ class GeminiFinalTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):g.call("MIL",1,1,{},parse_country_json)
         self.assertEqual(len(g.calls),3)
     def test_structured_conditions_reject_bool_and_identity_mismatch(self):
-        invalid={"country_id":"A","proposal_id":"p","response":"条件付きで応じる","reason":"r","conditions":{"minimum_aid_amount":True},"self_interest":50,"sovereignty_burden":5,"perceived_global_effect":50,"policy_action":"cooperate"}
+        invalid={"country_id":"A","proposal_id":"p","response_id":"CONDITIONAL","response_label":"条件付きで応じる","reason":"r","conditions":{"minimum_aid_amount":True},"self_interest":50,"sovereignty_burden":5,"perceived_global_effect":50,"action":{"action_id":"NO_ACTION","description":"none","parameters":{}}}
         with self.assertRaises(ValueError):parse_country_json(json.dumps(invalid))
         class WrongModels(Models):
             def generate_content(self,**kw):
@@ -52,13 +54,13 @@ class GeminiFinalTests(unittest.TestCase):
         country_payloads=[p for p in client.models.payloads if "turn_start_observation" in p]
         self.assertEqual([p["turn_start_observation"]["observed_world"] for p in country_payloads],[{"food":70},{"food":70}]);self.assertEqual(set(out["country_responses"]),set(countries))
         self.assertTrue(all("country_responses" not in p for p in country_payloads))
-        evaluator_payload=[p for p in client.models.payloads if "executed_world" in p][0]
-        self.assertIn("participation_ratio",evaluator_payload["executed_world"])
+        self.assertEqual(len(country_payloads),2)
+        self.assertTrue(out["response_convergence"])
     def test_call_audit_has_no_prompt_or_secret(self):
         class StaticModels:
-            def generate_content(self,**kw):return Response(json.dumps({"country_id":"MIL","proposal_id":"p","response":"受け入れる","reason":"r","conditions":{},"self_interest":60,"sovereignty_burden":5,"perceived_global_effect":60,"policy_action":"cooperate"}))
+            def generate_content(self,**kw):return Response(json.dumps({"country_id":"MIL","proposal_id":"p","response_id":"ACCEPT","response_label":"受け入れる","reason":"r","conditions":{},"self_interest":60,"sovereignty_burden":5,"perceived_global_effect":60,"action":{"action_id":"NO_ACTION","description":"none","parameters":{}}}))
         g=GeminiGateway(type("StaticClient",(),{"models":StaticModels()})(),max_calls=1);g.call("MIL",1,1,{"private":"x"},parse_country_json)
-        self.assertEqual(set(g.calls[0]),{"agent","run","turn","attempt","model"})
+        self.assertNotIn("GEMINI_API_KEY",json.dumps(g.calls[0]));self.assertEqual(g.calls[0]["token_usage"]["total_tokens"],15)
     def test_existing_output_stops_before_api(self):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/"x.json";p.write_text("old");c=Client()
@@ -73,7 +75,12 @@ class GeminiFinalTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/"x.json";p.with_suffix(".json.checkpoint").write_text('{"completed_runs":[]}');c=Client()
             result=run_live(c,p,1,7,True)
-            self.assertEqual(len(result["runs"][0]["turns"]),8);self.assertEqual(len(result["runs"][0]["call_audit"]),80);self.assertTrue(p.exists());self.assertFalse(p.with_suffix(".json.checkpoint").exists())
+            run=result["runs"][0];self.assertEqual(len(run["turns"]),8);self.assertEqual(len(run["call_audit"]),80);self.assertEqual(run["token_usage"]["total_tokens"],1200);self.assertTrue(p.exists());self.assertFalse(p.with_suffix(".json.checkpoint").exists())
+            first=[x for x in run["call_audit"] if x["turn"]==1 and x["agent_type"]=="country"]
+            self.assertEqual(len({x["snapshot_id"] for x in first}),1);self.assertEqual(len({x["agent_archetype"] for x in first}),8)
+            for audit in first:
+                own=audit["agent_id"];payload=audit["public_observation_payload"];self.assertEqual(payload["turn_start_observation"]["own_country"],own);self.assertNotIn("country_responses",payload)
+            self.assertNotEqual(run["turns"][0]["research_metrics"]["global_homeostasis"],run["turns"][0]["evaluator_commentary"]["global_homeostasis"])
     def test_resume_continues_after_last_completed_turn(self):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/"x.json";first=InterruptingClient(20)
