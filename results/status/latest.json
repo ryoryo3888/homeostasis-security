@@ -1,43 +1,43 @@
 {
   "blocked_run_count": 2,
   "branch": "choice-id-one-turn-probe-20260917",
-  "commit": "bd3a69b0a955d8ae4e24acc3416f61ca04fbf1d1",
+  "commit": "d33fa36d29f795e611f61e043617cd630e752516",
   "commit_semantics": "source HEAD at export; source_digest includes uncommitted implementation",
-  "history_index": "results/status/indexes/5e9f43eb7165720fc812bed6a2324e45f74e4479481d999483089f63ed65d183.json",
-  "history_sha256": "5e9f43eb7165720fc812bed6a2324e45f74e4479481d999483089f63ed65d183",
+  "history_index": "results/status/indexes/23602aaf3995bd46ab62ee9a869a8d4d756bf6c1aafaa9de015037d81dc81a02.json",
+  "history_sha256": "23602aaf3995bd46ab62ee9a869a8d4d756bf6c1aafaa9de015037d81dc81a02",
   "latest": {
     "experiment": null,
     "failed_or_rejected": "results/status/runs/20260916T223649Z-60aff84a/2046c3475b57f6e76d32640a337fe6cb05fcb369eb9ad5f06a8c5c4011012d27.json",
     "probe": "results/status/runs/20260916T221421Z-10ac7c71/89708220285c85ca8fe433ed1bf22d1382bcd0ae0b42d97ccd8a44cacddc0eb6.json",
     "successful_research": null,
-    "turn": "results/status/runs/20260916T223649Z-60aff84a/2046c3475b57f6e76d32640a337fe6cb05fcb369eb9ad5f06a8c5c4011012d27.json"
+    "turn": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json"
   },
   "latest_blocked_run": null,
-  "latest_observed_run": "20260916T223649Z-60aff84a",
+  "latest_observed_run": "20260916T233557Z-2a8367e6",
   "latest_run": {
-    "api_calls": 2,
+    "api_calls": 10,
     "maximum_api_calls": 10,
     "mode": "turn",
     "retry_count": 0,
-    "run_id": "20260916T223649Z-60aff84a",
-    "status": "failed",
-    "turns_completed": 0
+    "run_id": "20260916T233557Z-2a8367e6",
+    "status": "success",
+    "turns_completed": 1
   },
-  "next_step": "Inspect latest failure and pass free checks before separately authorizing a new attempt.",
+  "next_step": "Separately authorize the next minimal experiment; never automatically advance.",
   "publication_api_calls": 0,
   "research_stage": "minimal_experiment_validation",
   "result_paths": {
-    "decision_audit": "results/status/runs/20260916T223649Z-60aff84a/2046c3475b57f6e76d32640a337fe6cb05fcb369eb9ad5f06a8c5c4011012d27.json#/decisions",
-    "failure": "results/status/runs/20260916T223649Z-60aff84a/2046c3475b57f6e76d32640a337fe6cb05fcb369eb9ad5f06a8c5c4011012d27.json#/failure",
-    "result": "results/status/runs/20260916T223649Z-60aff84a/2046c3475b57f6e76d32640a337fe6cb05fcb369eb9ad5f06a8c5c4011012d27.json#/result",
-    "transport_audit": "results/status/runs/20260916T223649Z-60aff84a/2046c3475b57f6e76d32640a337fe6cb05fcb369eb9ad5f06a8c5c4011012d27.json#/transport_audit",
-    "world_state": "results/status/runs/20260916T223649Z-60aff84a/2046c3475b57f6e76d32640a337fe6cb05fcb369eb9ad5f06a8c5c4011012d27.json#/worlds"
+    "decision_audit": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/decisions",
+    "failure": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/failure",
+    "result": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/result",
+    "transport_audit": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/transport_audit",
+    "world_state": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/worlds"
   },
   "source_digest": "ba8e90efba411491519931074a6fd20a6f0a6b4fd95a8eb453916a7435fd3270",
   "status_version": 1,
-  "updated_at": "2026-09-16T23:07:34.742255+00:00",
+  "updated_at": "2026-09-16T23:38:00.400827+00:00",
   "validation": {
-    "contracts": "FAIL",
+    "contracts": "PASS",
     "decision_audit": "PASS",
     "preflight": "PASS",
     "research_eligible": false,
