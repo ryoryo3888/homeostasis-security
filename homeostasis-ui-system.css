@@ -1,0 +1,104 @@
+/* HOMEOSTASIS SECURITY — shared visual shell
+   Visual-only. Do not alter content, data, charts, Earth behavior, or research structure. */
+:root{
+  --hs-bg:#030b14;
+  --hs-bg-deep:#07111d;
+  --hs-panel:#071827;
+  --hs-panel-2:#0b2132;
+  --hs-line:rgba(91,220,247,.20);
+  --hs-line-strong:rgba(103,232,249,.28);
+  --hs-cyan:#67e8f9;
+  --hs-cyan-2:#22d3ee;
+  --hs-magenta:#d88cff;
+  --hs-amber:#fbbf24;
+  --hs-green:#34d399;
+  --hs-red:#fb7185;
+  --hs-text:#edf7fb;
+  --hs-muted:#96afbb;
+  --hs-radius:14px;
+  --hs-radius-small:9px;
+  --hs-gap:10px;
+  --hs-panel-bg:linear-gradient(180deg,rgba(8,27,42,.94),rgba(3,15,25,.95));
+  --hs-panel-shadow:inset 0 0 30px rgba(34,211,238,.025),0 16px 45px rgba(0,0,0,.22);
+}
+html{color-scheme:dark;scroll-behavior:smooth}
+body{
+  background:radial-gradient(circle at 50% -10%,#16364c 0,#071522 34%,var(--hs-bg) 72%)!important;
+  color:var(--hs-text)!important;
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Segoe UI",sans-serif!important;
+  line-height:1.55;
+}
+/* Shared shell surfaces. Existing geometry remains version-specific. */
+.panel,.brand-panel,.global-status,.turn-panel,.country-panel,.earth-panel,.event-panel,.card,.simulation-control{
+  border-color:var(--hs-line)!important;
+  border-radius:var(--hs-radius)!important;
+  box-shadow:var(--hs-panel-shadow)!important;
+}
+.panel,.brand-panel,.global-status,.turn-panel,.country-panel,.earth-panel,.event-panel{
+  background:var(--hs-panel-bg)!important;
+}
+/* Brand language */
+.brand-en,.control-name,.section-title,.turn-label,.global-status h2,.event-panel h2{
+  color:var(--hs-cyan)!important;
+}
+.brand-en{font-size:20px!important;font-weight:800!important;letter-spacing:.035em!important}
+/* Version navigation */
+.version-switch{display:flex;gap:8px;margin-top:12px;max-width:100%}
+.version-switch a,.version-switch span{
+  padding:7px 10px!important;
+  border:1px solid var(--hs-line)!important;
+  border-radius:8px!important;
+  background:rgba(8,29,44,.58);
+  color:#b9ced7!important;
+  text-decoration:none!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  line-height:1.2;
+}
+.version-switch .active,.version-switch span[aria-current="page"],.version-switch span{
+  background:#0e4556!important;
+  color:#eaffff!important;
+  border-color:var(--hs-cyan)!important;
+  box-shadow:0 0 14px rgba(103,232,249,.16)!important;
+}
+.version-switch a:hover,.version-switch a:focus-visible{border-color:var(--hs-cyan)!important;color:#eaffff!important}
+/* Controls */
+.turn-button{
+  border-color:var(--hs-line)!important;
+  border-radius:7px!important;
+  background:#081827!important;
+  color:#a9c3cf!important;
+  font-weight:800!important;
+}
+.turn-button:hover,.turn-button:focus-visible{border-color:var(--hs-cyan)!important}
+.turn-button.active{
+  color:#fff!important;
+  border-color:var(--hs-cyan)!important;
+  background:#125064!important;
+  box-shadow:0 0 11px rgba(103,232,249,.32)!important;
+}
+select{
+  background:#081827!important;
+  color:var(--hs-text)!important;
+  border:1px solid var(--hs-line)!important;
+  border-radius:7px!important;
+}
+/* Shared card surface language without changing card layout/content. */
+.metric-card,.metric,.primary-kpi,.country-summary>div,.country-block,.response-row,.evaluation,.log-item{
+  border-color:rgba(103,232,249,.15)!important;
+  border-radius:var(--hs-radius-small)!important;
+}
+.metric-card,.metric,.primary-kpi,.country-summary>div,.country-block,.evaluation,.log-item{
+  background:rgba(6,24,38,.72)!important;
+}
+.metric-card span,.metric span,.primary-kpi span,.run-state,.small,.note{color:var(--hs-muted)!important}
+.metric-card strong,.metric strong,.primary-kpi strong{color:var(--hs-cyan)!important}
+/* Keep magenta as the shared secondary/system-B accent. */
+.country-b,.agent.c,.primary-kpi.sovereignty{--hs-local-accent:var(--hs-magenta)}
+.country-b h2,.agent.c h2,.primary-kpi.sovereignty strong,.coordinator h2{color:var(--hs-magenta)!important}
+/* Graph/table framing only; never alter data/series/axes. */
+.card,.timeline,.log{border-color:var(--hs-line)!important}
+.legend{color:var(--hs-muted)!important}
+th,td{border-color:rgba(91,220,247,.16)!important}
+/* Earth is intentionally NOT normalized here.
+   v1 keeps A/B communications; v2 keeps three satellites; future versions evolve independently. */
