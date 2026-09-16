@@ -1,0 +1,46 @@
+name: Build unified UI previews
+
+on:
+  push:
+    branches:
+      - homeostasis-ui-system-20260916
+    paths:
+      - dashboard_v1.html
+      - dashboard_v2.html
+      - homeostasis-ui-system.css
+      - tools/build_ui_previews.py
+      - .github/workflows/build-ui-preview.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: homeostasis-ui-system-20260916
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build standalone previews
+        run: python tools/build_ui_previews.py
+      - name: Verify previews
+        run: |
+          test -s preview_v1_unified.html
+          test -s preview_v2_unified.html
+          grep -q 'HOMEOSTASIS_UI_SYSTEM_PREVIEW' preview_v1_unified.html
+          grep -q 'HOMEOSTASIS_UI_SYSTEM_PREVIEW' preview_v2_unified.html
+      - name: Commit generated previews
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add preview_v1_unified.html preview_v2_unified.html
+          if git diff --cached --quiet; then
+            echo 'No preview changes.'
+          else
+            git commit -m 'Generate standalone unified UI previews'
+            git push origin HEAD:homeostasis-ui-system-20260916
+          fi
