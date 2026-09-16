@@ -1,18 +1,23 @@
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CSS = (ROOT / "homeostasis-ui-system.css").read_text(encoding="utf-8")
+UI_CSS = (ROOT / "homeostasis-ui-system.css").read_text(encoding="utf-8")
+RESEARCH_CSS = (ROOT / "homeostasis-research-layer.css").read_text(encoding="utf-8")
+RESEARCH_JS = (ROOT / "homeostasis-research-layer.js").read_text(encoding="utf-8")
 MARK = "<!-- HOMEOSTASIS_UI_SYSTEM_PREVIEW -->"
+RESEARCH_MARK = "<!-- HOMEOSTASIS_RESEARCH_NARRATIVE_PREVIEW -->"
 
 for version in ("v1", "v2"):
     source = ROOT / f"dashboard_{version}.html"
     target = ROOT / f"preview_{version}_unified.html"
     html = source.read_text(encoding="utf-8")
-    if MARK in html:
+    if MARK in html or RESEARCH_MARK in html:
         raise SystemExit(f"Refusing to modify already-previewed source: {source}")
-    injection = f"\n{MARK}\n<style>\n{CSS}\n</style>\n"
-    if "</head>" not in html:
-        raise SystemExit(f"Missing </head>: {source}")
-    preview = html.replace("</head>", injection + "</head>", 1)
+    head_injection = f"\n{MARK}\n<style>\n{UI_CSS}\n</style>\n{RESEARCH_MARK}\n<style>\n{RESEARCH_CSS}\n</style>\n"
+    body_injection = f"\n{RESEARCH_MARK}\n<script>\n{RESEARCH_JS}\n</script>\n"
+    if "</head>" not in html or "</body>" not in html:
+        raise SystemExit(f"Missing document boundary: {source}")
+    preview = html.replace("</head>", head_injection + "</head>", 1)
+    preview = preview.replace("</body>", body_injection + "</body>", 1)
     target.write_text(preview, encoding="utf-8")
     print(f"built {target.name} from {source.name}")
