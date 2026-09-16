@@ -12,7 +12,7 @@ def test_every_generated_choice_is_executable_without_api():
         assert validate_catalog(country,choices,feasible)
         for choice in choices:
             maximum=float(choice["maximum_amount"]);amount=0 if maximum==0 else min(1.0,maximum)
-            action=materialize_choice(choice["choice_id"],amount,"test",choices,feasible)
+            action=materialize_choice(country,choice["choice_id"],amount,"test",choices,feasible)
             assert action["action_id"]==choice["action_id"]
             assert action["parameters"]["resource"]==choice["resource"]
             assert action["parameters"]["recipient_type"]==choice["recipient_type"]

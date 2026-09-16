@@ -34,12 +34,12 @@ class Phase8Tests(unittest.TestCase):
         event=convert_v1_event({"actor":"A","target":"B","turn":3});self.assertEqual(event["origin"]["system"],"v1");out=export_local_security_input({"country":"MIL","action":"de-escalate","turn":5});self.assertTrue(out["requires_manual_v1_execution"])
     def test_reproducible(self):self.assertEqual(run_final_simulation(),run_final_simulation())
     def test_readme_original_prefix_preserved(self):
-        current=(ROOT/"README.md").read_bytes();original=subprocess.check_output(["git","show","ba3232f:README.md"],cwd=ROOT);self.assertTrue(current.startswith(original))
+        current=(ROOT/"README.md").read_bytes()
+        original=json.loads((ROOT/"tests/fixtures/readme_prefix.json").read_text())
+        self.assertEqual(hashlib.sha256(current[:original["length"]]).hexdigest(),original["sha256"])
     def test_protected_baseline_except_readme(self):
         bad=[]
-        for line in Path('/tmp/homeostasis-final-baseline-sha256.txt').read_text().splitlines():
-            digest,name=line.split('  ',1)
-            if name=="README.md":continue
+        for name,digest in json.loads((ROOT/"tests/fixtures/protected_artifacts.json").read_text()).items():
             if hashlib.sha256((ROOT/name).read_bytes()).hexdigest()!=digest:bad.append(name)
         self.assertEqual(bad,[])
 if __name__=='__main__':unittest.main()

@@ -26,6 +26,7 @@ def build_action_choices(feasible: Sequence[Mapping[str, object]]):
 
 def materialize_choice(country_id:str, choice_id:str, amount:float, description:str, choices, feasible):
     """Turn one model-selected choice_id into a fully validated executable action."""
+    if not isinstance(description,str) or not description.strip():raise ValueError("description must be non-empty text")
     match=next((x for x in choices if x["choice_id"]==choice_id),None)
     if match is None:raise ValueError("unknown action_choice_id")
     maximum=float(match["maximum_amount"])

@@ -14,7 +14,7 @@ class Models:
         if self.invalid:return Response("{}")
         if "observable_world" in data:return Response(json.dumps({"proposal_id":"proposal-1","proposal_type":"食料援助","reason":"r","predicted_global_effect":60,"predicted_sovereignty_burden":5,"requested_action":"cooperate"}))
         if "executed_true_state" in data:return Response(json.dumps({"national_sovereignty":80,"global_homeostasis":75,"resource_stability":70,"resilience":72,"conflict_load":20,"history_effect":30,"assessment":"stable"}))
-        return Response(json.dumps({"country_id":data["turn_start_observation"]["own_country"],"proposal_id":data["current_proposal"]["proposal_id"],"response_id":"ACCEPT","response_label":"受け入れる","reason":"r","conditions":{},"self_interest":60,"sovereignty_burden":5,"perceived_global_effect":60,"action":{"action_id":"MEDIATE","description":"mediate","parameters":{"recipient_type":"none","target_country":None,"resource":None,"amount":0}}}))
+        return Response(json.dumps({"country_id":data["turn_start_observation"]["own_country"],"proposal_id":data["current_proposal"]["proposal_id"],"response_id":"ACCEPT","response_label":"受け入れる","reason":"r","conditions":{},"self_interest":60,"sovereignty_burden":5,"perceived_global_effect":60,"choice_id":next(x["choice_id"] for x in data["action_choices"] if x["action_id"]=="MEDIATE"),"amount":0}))
 class Client:
     def __init__(self,invalid=False):self.models=Models(invalid)
 class InterruptingModels(Models):
@@ -28,7 +28,7 @@ class InterruptingClient:
 
 class GeminiFinalTests(unittest.TestCase):
     def test_dry_run_call_estimates(self):
-        self.assertEqual(estimate(1)["planned_api_calls"],80);self.assertEqual(estimate(36)["planned_api_calls"],2880);self.assertEqual(estimate(36)["maximum_api_attempts"],8640)
+        self.assertEqual(estimate(1)["planned_api_calls"],80);self.assertEqual(estimate(36)["planned_api_calls"],2880);self.assertEqual(estimate(36)["maximum_api_attempts"],2880)
     def test_run_limit(self):
         with self.assertRaises(ValueError):estimate(37)
     def test_invalid_json_stops_after_bounded_retries(self):
@@ -87,7 +87,7 @@ class GeminiFinalTests(unittest.TestCase):
             with self.assertRaises(KeyboardInterrupt):run_live(first,p,1,7)
             checkpoint=json.loads(p.with_suffix(".json.checkpoint").read_text())
             self.assertEqual(checkpoint["active_run"]["completed_turn"],2)
-            second=Client();result=run_live(second,p,1,7,True)
+            second=Client();result=run_live(second,p,1,7,True,max_calls=81)
             self.assertEqual(len(result["runs"][0]["turns"]),8)
             self.assertEqual(len(second.models.payloads),60)
             self.assertEqual(len(result["runs"][0]["call_audit"]),81)

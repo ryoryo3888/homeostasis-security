@@ -143,3 +143,24 @@ Gemini Agentによる5ターンの実験では、各国と地球調整機関が�
 実行は `python3 simulation_final.py`、複数runの保存前確認は `python3 final_experiment_runner.py OUTPUT.json --dry-run` です。保存処理は既存結果を上書きせず、seed、設定、コード版、Provider種別を記録します。画面は [最終版Dashboard](dashboard_final.html) から閲覧でき、「概要」「国家」「地球」「資源」「ログ／研究結果」に整理しています。
 
 本実装は外部APIを使用しない決定論的Providerによる探索的研究です。同一seedと設定で再現できますが、モデル化されたAgent判断とEvaluatorは現実の国家意思決定を再現・予測するものではありません。指標、因果規則、認識誤差、統治成立条件はいずれも研究上の仮定を含みます。現実の政策判断、国家評価、国際法上の判断、制裁、緊急権限または武力行使の正当化には使用できません。将来は検証済みデータ、追加国家・シナリオ、差し替え可能なDecisionProviderによる比較研究へ拡張できます。
+
+## 開発・実験の4段階（2026-09-17）
+
+現在地は [RESEARCH_STATE.md](RESEARCH_STATE.md) を参照してください。新しい創発実験は以下の入口へ統一しています。
+
+| コマンド | 通常の動作 | 明示実行時のAPI上限 | retry |
+|---|---|---:|---:|
+| `make check` | syntax・全unit tests・choice-ID・全契約・不正入力拒否・8TURNを無料検証 | 0 | 0 |
+| `make probe` | 1 Agentの予定表示だけ | 1 | 0 |
+| `make turn` | 1TURNの予定表示だけ | 10 | 0 |
+| `make experiment` | 8TURN・1世界線の予定表示だけ | 80 | 0 |
+
+`make check` はPython標準ライブラリだけで動作し、APIキー・SDK・追加パッケージは不要です。ネットワークをPython audit hookで遮断し、V1テスト用SDKも実クライアントを作れない代替にします。クラス形式と関数形式の全テストを実行します。成功時は `HOMEOSTASIS PREFLIGHT PASSED`、失敗時は `HOMEOSTASIS PREFLIGHT FAILED` と非ゼロ終了コードを返します。診断は `results/debug/check.json` に保存されます。
+
+将来、課金実行を明示的に許可する場合だけ `CONFIRM=YES` を指定します。この指定でも先に無料チェックを再実行し、FAILならAPI接続前に停止します。SDKと環境内の認証情報は将来の実行時のみ必要です。キーの入力プロンプトは出しません。今回の作業では有料コマンドを実行していません。
+
+1TURNは国家8 Agent＋地球調整機関＋Evaluatorの計10 Agentです。従来の「8国家の選択だけを確認するprobe」と異なり、資源決済・世界状態更新・復旧計算まで実行します。国家は `choice_id` と上限内の量を選び、Pythonがactionを復元・検証します。API例外や回答不正時は再試行せず停止し、送信前に試行数を永続記録します。旧probeとfinal runnerのCLI入口もこの安全な入口へ接続しています。V1の `experiment_runner.py` は互換性のため保持しています。
+
+新規結果は `results/debug`、`results/probe`、`results/rejected`、`results/research` に分離します。既存JSON・Dashboard・`results/final`は移動しません。researchへの昇格は全TURN完走だけでなくschema・必要ログ・API監査・派生イベント・復旧計算・研究条件の検証が必要です。Dashboard用の正式結果列挙関数は `accepted_research_paths` です。今回Dashboardの読込経路は変更していません。
+
+旧V1/V2と決定論的prototypeの固定復旧は保存済み研究の再現・互換性のため残っています。新しいpreflightとGemini実験はこれらの復旧表を使いません。互換テストの旧シナリオは `c918dd1` の親コミットから保存した `tests/fixtures/scenario_v1_legacy.json` を使用します。

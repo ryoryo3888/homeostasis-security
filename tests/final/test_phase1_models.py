@@ -76,7 +76,7 @@ class Phase1ModelTests(unittest.TestCase):
             self.assertEqual(countries.profiles[code].code, code)
             self.assertEqual(countries.initial_states[code].sovereignty, 88)
         scenario = load_scenario_configuration(
-            ROOT / "scenarios/scenario_01_farmland_missile.json", countries
+            ROOT / "tests/fixtures/scenario_v1_legacy.json", countries
         )
         self.assertEqual(scenario.definition.event_id, "scenario_01_farmland_missile")
         self.assertEqual(scenario.schema_version, 1)

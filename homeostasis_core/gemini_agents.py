@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import hashlib,json,random,time
 from typing import Any,Callable
+from .action_choices import build_action_choices, materialize_choice, validate_catalog
 from .metrics import clamp,global_homeostasis
 from .models import CountryState,EnergyPortfolio,ResourcePortfolio,_score
 from .resources import ResourceNetwork,SupplyLink,process_resource_network
@@ -84,8 +85,12 @@ def _usage(r):
     return {"input_tokens":g("prompt_token_count","prompt_tokens"),"output_tokens":g("candidates_token_count","output_tokens"),"total_tokens":g("total_token_count","total_tokens")}
 @dataclass
 class GeminiGateway:
-    client:Any;model:str=MODEL_NAME;max_calls:int=240;retry_limit:int=3;sleep_fn:Callable[[float],None]=time.sleep;audit_hook:Callable|None=None
-    def __post_init__(self):self.calls=[]
+    client:Any;model:str=MODEL_NAME;max_calls:int=80;retry_limit:int=1;sleep_fn:Callable[[float],None]=time.sleep;audit_hook:Callable|None=None
+    def __post_init__(self):
+        # retry_limit is historical naming for total attempts (1 = zero retries).
+        if type(self.max_calls) is not int or self.max_calls < 0:raise ValueError("invalid call limit")
+        if type(self.retry_limit) is not int or self.retry_limit < 1:raise ValueError("invalid attempt limit")
+        self.calls=[]
     def call(self,agent_name,run,turn,payload,parser,*,agent_type="unknown",archetype=None,snapshot_id=None,json_schema=None,validation_help=None):
         error=None
         for attempt in range(1,self.retry_limit+1):
@@ -106,6 +111,9 @@ class GeminiGateway:
                 if attempt<self.retry_limit:self.sleep_fn(0)
         raise RuntimeError(f"Gemini response failed validation after {self.retry_limit} attempts") from error
 def create_gemini_client(api_key):
+    import os
+    if os.environ.get("HOMEOSTASIS_OFFLINE") == "1":
+        raise RuntimeError("Gemini client creation forbidden in offline check")
     from google import genai
     from google.genai import types
     return genai.Client(api_key=api_key,http_options=types.HttpOptions(retry_options=types.HttpRetryOptions(attempts=1)))
@@ -202,14 +210,27 @@ def run_gemini_turn(gateway,run,turn,snapshot,private_views,history,country_orde
         factors=decision_factors(private_views[c],proposal,history.get(c,()))
         option_text={"ACCEPT":"choose only when expected national benefit and implementability justify the sovereignty cost","REJECT":"choose when sovereignty, security, domestic or resource costs outweigh benefits; rejection is legitimate and is not penalized merely for rejecting","CONDITIONAL":"choose when participation is beneficial only with explicit enforceable conditions"}
         payload={"role":"independent sovereign country; make a free decision without trying to satisfy the coordinator or balance response frequencies","turn_start_observation":private_views[c],"memory":list(history.get(c,())),"current_proposal":proposal,"decision_factors":factors,"response_options":[{"response_id":x,"meaning":option_text[x]} for x in response_order],"decision_instruction":"Compare own interests, sovereignty, diplomacy, domestic stability, scarcity, trust, threat, history, proposal benefit and cost. Do not infer that cooperation is preferred. Explain the country-specific tradeoff. List order has no meaning.","allowed_country_ids":allowed,"feasible_actions":list(feasible),"action_instruction":"Choose exactly one entry from feasible_actions based on national meaning and cost, not its list position. Copy its identifiers exactly. For maximum_amount > 0 choose amount > 0 and <= maximum_amount; otherwise use 0.","recipient_rules":{"all_parameters_fields_are_required":["recipient_type","target_country","resource","amount"],"country":"target_country must be one allowed_country_id and not self","world_pool":"target_country must be null","none":"target_country and resource must be null; amount must be 0","forbidden_target_examples":["GLOBAL","WORLD","日本語国名"],"correct_parameter_shapes":examples},"response_contract":{"exact_fields":["country_id","proposal_id","response_id","response_label","reason","conditions","self_interest","sovereignty_burden","perceived_global_effect","action"],"identity":{"country_id":c,"proposal_id":proposal["proposal_id"]},"response_ids":[{"id":x,"label":RESPONSE_IDS[x]} for x in response_order],"conditions":"empty object unless CONDITIONAL; otherwise structured required_countries/minimum_aid_amount/maximum_sovereignty_burden/mutual_performance/deadline_turn","action":{"exact_fields":["action_id","description","parameters"],"allowed_action_ids":feasible_ids,"parameters_required":["recipient_type","target_country","resource","amount"]},"scores":"numbers 0..100","schema_version":SCHEMA_VERSION}}
-        help_data={"allowed_country_ids":allowed,"correct_json_examples":examples}
+        choices=build_action_choices(feasible)
+        validate_catalog(c,choices,feasible)
+        schema=country_response_schema(allowed,feasible_ids,response_order)
+        schema["properties"].pop("action")
+        schema["required"].remove("action")
+        schema["required"].extend(["choice_id","amount"])
+        schema["properties"].update({"choice_id":{"type":"string","enum":[x["choice_id"] for x in choices]},"amount":{"type":"number","minimum":0,"maximum":100}})
+        # Only Python owns executable tuples; the model selects a catalog ID.
+        for key in ("feasible_actions","recipient_rules","response_contract"):
+            payload.pop(key,None)
+        payload["action_choices"]=list(choices)
+        payload["action_instruction"]="Select one choice_id from action_choices and an amount within its maximum. Use 0 only for maximum_amount=0. Do not output action tuples."
+        payload["response_contract"]=schema
         def parse_bound(text,ids=set(allowed),expected_country=c,expected_proposal=proposal["proposal_id"]):
-            value=parse_country_json(text,ids)
+            value=_object(text,set(schema["required"]))
+            choice_id=value.pop("choice_id");amount=value.pop("amount")
+            value["action"]=materialize_choice(expected_country,choice_id,amount,value["reason"],choices,feasible)
+            value=parse_country_json(json.dumps(value))
             if value["country_id"]!=expected_country or value["proposal_id"]!=expected_proposal:raise ValueError("country_id or proposal_id does not match this request")
-            validate_action_feasible(expected_country,value["action"],feasible)
             return value
-        help_data["feasible_actions"]=list(feasible)
-        a=gateway.call(c,run,turn,payload,parse_bound,agent_type="country",archetype=private_views[c].get("archetype"),snapshot_id=sid,json_schema=country_response_schema(allowed,feasible_ids,response_order),validation_help=help_data)
+        a=gateway.call(c,run,turn,payload,parse_bound,agent_type="country",archetype=private_views[c].get("archetype"),snapshot_id=sid,json_schema=schema)
         answers[c]=a
     convergence=len({a["response_id"] for a in answers.values()})==1
     if country_states is None:return {"turn":turn,"proposal":proposal,"country_responses":answers,"snapshot":dict(snapshot),"response_convergence":convergence}

@@ -60,7 +60,7 @@ def feasible_actions(country_id,country_states,world_pool,resource_network:Resou
     result.extend({"action_id":name,"recipient_type":"none","target_country":None,"resource":None,"maximum_amount":0} for name in ("DEFENSIVE_ESCORT","MEDIATE","PROTECT_RESERVES","NO_ACTION"))
     # A transfer-shaped response may explicitly elect not to transfer; this keeps
     # the contract backwards compatible while remaining physically inert.
-    result.extend({"action_id":name,"recipient_type":"none","target_country":None,"resource":None,"maximum_amount":0} for name in TRANSFER_ACTIONS)
+    result.extend({"action_id":name,"recipient_type":"none","target_country":None,"resource":None,"maximum_amount":0} for name in ("PROVIDE_RESOURCE",))
     return tuple(sorted(result,key=lambda x:(x["action_id"],x["recipient_type"],str(x["target_country"]),str(x["resource"]))))
 
 def validate_action_feasible(country_id,action,feasible):

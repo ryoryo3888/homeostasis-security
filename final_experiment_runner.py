@@ -22,7 +22,7 @@ from homeostasis_core.models import load_country_configuration
 from homeostasis_core.resources import RESOURCE_TYPES,calculate_energy_stability,load_resource_network
 
 COUNTRIES=("MIL","RES","FOOD","SMALL","ISLAND","ECON","FRAGILE","NEUTRAL")
-TURNS=8;PLANNED_CALLS_PER_RUN=80;RETRY_LIMIT=3;MAX_CALLS_PER_RUN=240;MAX_RUNS=36
+TURNS=8;PLANNED_CALLS_PER_RUN=80;RETRY_LIMIT=1;MAX_CALLS_PER_RUN=80;MAX_RUNS=36
 SCENARIO_PATH=Path("scenarios/scenario_01_farmland_missile.json")
 
 def estimate(runs:int)->dict:
@@ -63,7 +63,8 @@ def _recovery_turn(turn_rows):
         if row["executed_state"]["reconstruction"]["after"]<=0:return row["turn"]
     return None
 
-def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
+def run_live(client,output:Path,runs:int,seed:int,resume:bool=False,*,turns:int=TURNS,max_calls:int=MAX_CALLS_PER_RUN,retry_limit:int=RETRY_LIMIT)->dict:
+    if turns not in (1,8) or type(turns) is not int:raise ValueError("turns must be 1 or 8")
     if output.exists():raise FileExistsError("output already exists")
     estimate(runs);checkpoint=output.with_suffix(output.suffix+".checkpoint");completed=[];active=None
     scenario=_load_scenario()
@@ -72,7 +73,7 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
     elif checkpoint.exists():raise FileExistsError("checkpoint exists; use --resume")
     for run_number in range(len(completed)+1,runs+1):
         run_seed=seed+run_number-1
-        gateway=GeminiGateway(client,max_calls=MAX_CALLS_PER_RUN,retry_limit=RETRY_LIMIT)
+        gateway=GeminiGateway(client,max_calls=max_calls,retry_limit=retry_limit)
         configured=load_country_configuration(Path("config/country_archetypes.json"))
         initial_states=_initial_states(configured)
         resource_network=load_resource_network(Path("scenarios/resource_network_sample.json"),COUNTRIES)
@@ -100,7 +101,7 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
                          "current_damage":current_damage,"call_audit":calls}
             _checkpoint(checkpoint,{"completed_runs":completed,"active_run":in_progress})
         gateway.audit_hook=save_attempt_audit
-        for turn in range(len(turn_rows)+1,TURNS+1):
+        for turn in range(len(turn_rows)+1,turns+1):
             if turn==1:
                 event=INITIAL_EVENT;event_origin="fixed_initial_condition"
             else:
@@ -149,7 +150,7 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
                       for k in ("input_tokens","output_tokens","total_tokens")}
         completed.append({"run":run_number,"seed":run_seed,"model":MODEL_NAME,"research_mode":"emergent-worldlines",
                           "turns":turn_rows,"response_convergence_detected":all(x["response_convergence"] for x in turn_rows),
-                          "call_audit":gateway.calls,"token_usage":token_totals,"resume_point":{"completed_turn":TURNS}})
+                          "call_audit":gateway.calls,"token_usage":token_totals,"resume_point":{"completed_turn":turns}})
         active=None;_checkpoint(checkpoint,{"completed_runs":completed,"active_run":None})
     rows=[]
     for r in completed:
@@ -157,11 +158,11 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
         rows.append({"recovered":recovery_turn is not None,
                      "final_homeostasis":r["turns"][-1]["research_metrics"]["global_homeostasis"],
                      "sovereignty_maintenance":r["turns"][-1]["research_metrics"]["national_sovereignty"],
-                     "recovery_turns":recovery_turn if recovery_turn is not None else TURNS+1,"details":r})
+                     "recovery_turns":recovery_turn if recovery_turn is not None else turns+1,"details":r})
     rows=tuple(rows)
     metadata={"mode":"gemini","research_mode":"emergent-worldlines","model":MODEL_NAME,"seed":seed,"runs":runs,
-              "turns":TURNS,"provider":"GeminiGateway","fixed_initial_events":1,
-              "derived_event_turns":list(range(2,TURNS+1))}
+              "turns":turns,"provider":"GeminiGateway","fixed_initial_events":1,
+              "derived_event_turns":list(range(2,turns+1))}
     homeostasis=[x["final_homeostasis"] for x in rows];sovereignty=[x["sovereignty_maintenance"] for x in rows]
     recovered_turns=[x["recovery_turns"] for x in rows if x["recovered"]]
     summary={"average_homeostasis":statistics.fmean(homeostasis),
@@ -179,11 +180,7 @@ def parse_args():
     p.add_argument("--resume",action="store_true");return p.parse_args()
 
 def main():
-    a=parse_args();runs=1 if a.one_run else a.runs;print(json.dumps(estimate(runs),ensure_ascii=False,indent=2))
-    if not a.execute:return
-    if a.confirm!="YES":raise SystemExit("本番実行には --execute --confirm YES が必要です。APIは呼び出していません。")
-    if a.output.exists():raise SystemExit("出力先が存在します。APIは呼び出していません。")
-    key=os.environ.get("GEMINI_API_KEY","").strip() or getpass("Gemini API Key（表示されません）: ").strip()
-    if not key:raise SystemExit("GEMINI_API_KEYがないため停止しました。APIは呼び出していません。")
-    run_live(create_gemini_client(key),a.output,runs,a.seed,a.resume)
+    from research_workflow import main as workflow_main
+    import sys
+    return workflow_main(["experiment", *sys.argv[1:]])
 if __name__=="__main__":main()

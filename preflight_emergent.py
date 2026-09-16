@@ -9,10 +9,10 @@ import json
 from pathlib import Path
 from homeostasis_core.action_choices import build_action_choices,validate_catalog,materialize_choice
 from homeostasis_core.feasibility import ACTION_IDS,feasible_actions
-from homeostasis_core.gemini_agents import apply_structured_actions,derive_event
+from homeostasis_core.gemini_agents import apply_structured_actions,derive_event,parse_country_json
 from homeostasis_core.models import load_country_configuration
 from homeostasis_core.resources import RESOURCE_TYPES,calculate_energy_stability,load_resource_network
-from simulation_final import run_final_simulation
+from homeostasis_core.emergent_dynamics import INITIAL_EVENT, initial_world_from_scenario, initial_damage_from_scenario, reconstruction_step
 
 COUNTRIES=("MIL","RES","FOOD","SMALL","ISLAND","ECON","FRAGILE","NEUTRAL")
 API_CALLS=0
@@ -47,18 +47,21 @@ def reject_invalid_combinations(country,choices,feasible):
     return attempted,rejected
 
 def run_preflight(turns=8):
-    base=run_final_simulation(20260917,turns);states=initial_states();pool={r:0.0 for r in RESOURCE_TYPES};policy={"restricted":[],"suspended":[],"disrupted":[]};network=load_resource_network(Path("scenarios/resource_network_sample.json"),COUNTRIES);world=dict(base["turns"][0]["world"]);history=dict(base["turns"][0]["history_state"]);damage=8000;events=[];rows=[];covered=set();invalid_attempts=0;invalid_rejected=0
+    scenario=json.loads(Path("scenarios/scenario_01_farmland_missile.json").read_text());states=initial_states();pool={r:0.0 for r in RESOURCE_TYPES};policy={"restricted":[],"suspended":[],"disrupted":[]};network=load_resource_network(Path("scenarios/resource_network_sample.json"),COUNTRIES);world=initial_world_from_scenario(scenario);history={};damage=initial_damage_from_scenario(scenario);events=[];rows=[];covered=set();invalid_attempts=0;invalid_rejected=0
     for turn in range(1,turns+1):
         catalogs={};answers={}
         for c in COUNTRIES:
             feasible=feasible_actions(c,states,pool,network,policy);choices=build_action_choices(feasible);validate_catalog(c,choices,feasible);catalogs[c]=len(choices);covered.update(x["action_id"] for x in choices)
+            for candidate in choices:
+                parse_country_json(json.dumps(mock_answer(c,candidate,feasible,choices,turn)),COUNTRIES)
             attempted,rejected=reject_invalid_combinations(c,choices,feasible);invalid_attempts+=attempted;invalid_rejected+=rejected
             choice=choices[(turn+COUNTRIES.index(c))%len(choices)];answers[c]=mock_answer(c,choice,feasible,choices,turn)
-        event="A国ミサイルのB国民間農地への着弾" if turn==1 else derive_event(world,history,rows[-1]["action_counts"],events)
+        event=INITIAL_EVENT if turn==1 else derive_event(world,history,rows[-1]["action_counts"],events)
         effects=apply_structured_actions(states,answers,world,damage,turn,world_pool=pool,resource_network=network,network_policy=policy)
+        reconstruction=reconstruction_step(damage,effects,effects["country_states"]);damage=reconstruction["after"]
         states=effects["country_states"];pool=effects["world_pool"];policy=effects["network_policy"];world=effects["true_world"];events.append(event)
         history={"economic_loss":max(0,100-world["economy"]),"reserve_gap":max(0,100-world["food"]),"trust_loss":max(0,100-world["international_trust"]),"alertness":world["conflict_load"],"unmet_resource_demand":effects.get("demand_unmet",0)}
-        rows.append({"turn":turn,"event":event,"catalog_sizes":catalogs,"action_counts":effects["action_counts"],"homeostasis":effects["research_metrics"]["global_homeostasis"],"sovereignty":effects["research_metrics"]["national_sovereignty"]})
+        rows.append({"turn":turn,"event":event,"reconstruction":reconstruction,"event_origin":"fixed_initial_condition" if turn==1 else "derived_from_previous_executed_state","catalog_sizes":catalogs,"action_counts":effects["action_counts"],"homeostasis":effects["research_metrics"]["global_homeostasis"],"sovereignty":effects["research_metrics"]["national_sovereignty"]})
     missing=sorted(set(ACTION_IDS)-covered)
     pass_ok=(API_CALLS==0 and len(rows)==turns and not missing and invalid_attempts==invalid_rejected)
     return {"status":"PASS" if pass_ok else "FAIL","api_calls":API_CALLS,"action_contracts_tested":"ALL" if not missing else "PARTIAL","missing_action_contracts":missing,"invalid_combinations_attempted":invalid_attempts,"invalid_combinations_accepted":invalid_attempts-invalid_rejected,"turn_simulation":"PASS" if len(rows)==turns else "FAIL","turns":turns,"events":events,"rows":rows}

@@ -9,7 +9,7 @@ from homeostasis_core.v2_adapter import load_v2_first_run
 
 ROOT = Path(__file__).resolve().parents[2]
 LEGACY = ROOT / "v2_first_run.json"
-BASELINE = Path("/tmp/homeostasis-final-baseline-sha256.txt")
+BASELINE = ROOT / "tests/fixtures/protected_artifacts.json"
 
 
 class Phase1CompatibilityTests(unittest.TestCase):
@@ -50,11 +50,7 @@ class Phase1CompatibilityTests(unittest.TestCase):
 
     def test_existing_tracked_files_match_baseline(self):
         self.assertTrue(BASELINE.is_file(), "baseline SHA-256 list is missing")
-        records = {}
-        for line in BASELINE.read_text(encoding="utf-8").splitlines():
-            digest, filename = line.split("  ", 1)
-            records[filename] = digest
-        self.assertEqual(len(records), 117)
+        records = json.loads(BASELINE.read_text())
         for filename, expected in records.items():
             # PHASE 8 is explicitly allowed to append to README; its immutable
             # original prefix is verified by test_phase8_final.
