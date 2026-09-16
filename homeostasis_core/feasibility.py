@@ -1,6 +1,7 @@
 """Central, deterministic feasibility rules for structured national actions."""
 from __future__ import annotations
 
+import copy,math
 from typing import Mapping
 
 from .resources import RESOURCE_TYPES, ResourceNetwork
@@ -75,3 +76,60 @@ def validate_action_feasible(country_id,action,feasible):
         if amount!=0:raise ValueError("non-transfer action amount must be 0")
     elif not (0<amount<=maximum):raise ValueError(f"amount must be greater than 0 and at most {maximum}")
     return True
+
+def settle_atomic_actions(country_states,intents,world_pool):
+    """Settle all transfer intents together using deterministic proportional allocation."""
+    states=copy.deepcopy(country_states);opening={r:float((world_pool or {}).get(r,0)) for r in RESOURCE_TYPES};pool=dict(opening)
+    bilateral=[];draws=[];contributions=[]
+    for agent,action in sorted(intents.items()):
+        p=action["parameters"];kind=action["action_id"]
+        if p["recipient_type"]=="none":continue
+        row={"agent_id":agent,"source":agent,"target_country":p["target_country"],"resource":p["resource"],"requested":float(p["amount"]),"recipient_type":p["recipient_type"],"action_id":kind}
+        if kind=="DRAW_WORLD_POOL":draws.append(row)
+        elif p["recipient_type"]=="world_pool":contributions.append(row)
+        else:bilateral.append(row)
+    realized={};all_rows=bilateral+draws+contributions
+    for row in all_rows:realized[id(row)]=row["requested"]
+    # Bilateral receiver capacity is shared proportionally. Each country submits
+    # one intent, so source stock was already bounded by the feasibility snapshot.
+    groups={}
+    for row in bilateral:groups.setdefault((row["target_country"],row["resource"]),[]).append(row)
+    for (target,resource),rows in groups.items():
+        capacity=max(0,100-float(states[target]["resources"][resource]));total=math.fsum(x["requested"] for x in rows);scale=min(1,capacity/total) if total else 0
+        for row in rows:realized[id(row)]=row["requested"]*scale
+    # Draws use only opening stock. Contributions made this turn are unavailable
+    # until all withdrawals have settled.
+    groups={}
+    for row in draws:groups.setdefault(row["resource"],[]).append(row)
+    for resource,rows in groups.items():
+        total=math.fsum(x["requested"] for x in rows);scale=min(1,opening[resource]/total) if total else 0
+        for row in rows:realized[id(row)]=row["requested"]*scale
+        target_groups={}
+        for row in rows:target_groups.setdefault(row["target_country"],[]).append(row)
+        for target,target_rows in target_groups.items():
+            capacity=max(0,100-float(states[target]["resources"][resource]));incoming=math.fsum(realized[id(x)] for x in target_rows);target_scale=min(1,capacity/incoming) if incoming else 0
+            for row in target_rows:realized[id(row)]*=target_scale
+        pool[resource]-=math.fsum(realized[id(x)] for x in rows)
+    # Contributions are added only after withdrawals and share remaining pool room.
+    groups={}
+    for row in contributions:groups.setdefault(row["resource"],[]).append(row)
+    for resource,rows in groups.items():
+        capacity=max(0,100-pool[resource]);total=math.fsum(x["requested"] for x in rows);scale=min(1,capacity/total) if total else 0
+        for row in rows:realized[id(row)]=row["requested"]*scale
+        pool[resource]+=math.fsum(realized[id(x)] for x in rows)
+    deltas={c:{r:0.0 for r in RESOURCE_TYPES} for c in states}
+    for row in bilateral:
+        amount=realized[id(row)];deltas[row["source"]][row["resource"]]-=amount;deltas[row["target_country"]][row["resource"]]+=amount
+    for row in draws:deltas[row["target_country"]][row["resource"]]+=realized[id(row)]
+    for row in contributions:deltas[row["source"]][row["resource"]]-=realized[id(row)]
+    for country in sorted(states):
+        for resource in RESOURCE_TYPES:
+            value=float(states[country]["resources"][resource])+deltas[country][resource]
+            if value < -1e-9 or value > 100+1e-9:raise ValueError("atomic settlement produced an out-of-range resource")
+            states[country]["resources"][resource]=min(100,max(0,value))
+    records=[]
+    for row in sorted(all_rows,key=lambda x:(x["resource"],x["agent_id"],str(x["target_country"]),x["action_id"])):
+        amount=realized[id(row)];record={**row,"realized":amount,"delivered":amount,"unmet":row["requested"]-amount}
+        if row["action_id"]=="DRAW_WORLD_POOL":record["source"]="world_pool"
+        records.append(record)
+    return {"country_states":states,"world_pool":pool,"settlements":records,"total_unmet":math.fsum(x["unmet"] for x in records)}
