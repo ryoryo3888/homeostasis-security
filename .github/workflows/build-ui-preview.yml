@@ -8,6 +8,8 @@ on:
       - dashboard_v1.html
       - dashboard_v2.html
       - homeostasis-ui-system.css
+      - homeostasis-research-layer.css
+      - homeostasis-research-layer.js
       - tools/build_ui_previews.py
       - .github/workflows/build-ui-preview.yml
 
@@ -25,6 +27,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify research layer JavaScript
+        run: node --check homeostasis-research-layer.js
       - name: Build standalone previews
         run: python tools/build_ui_previews.py
       - name: Verify previews
@@ -33,6 +40,10 @@ jobs:
           test -s preview_v2_unified.html
           grep -q 'HOMEOSTASIS_UI_SYSTEM_PREVIEW' preview_v1_unified.html
           grep -q 'HOMEOSTASIS_UI_SYSTEM_PREVIEW' preview_v2_unified.html
+          grep -q 'HOMEOSTASIS_RESEARCH_NARRATIVE_PREVIEW' preview_v1_unified.html
+          grep -q 'HOMEOSTASIS_RESEARCH_NARRATIVE_PREVIEW' preview_v2_unified.html
+          grep -q 'この世界を10秒で理解' preview_v1_unified.html
+          grep -q 'この世界を10秒で理解' preview_v2_unified.html
       - name: Commit generated previews
         run: |
           git config user.name 'github-actions[bot]'
