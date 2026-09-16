@@ -13,8 +13,6 @@ def build_action_choices(feasible: Sequence[Mapping[str, object]]):
     choices=[]
     for index,row in enumerate(feasible,1):
         maximum=float(row["maximum_amount"])
-        # Amount remains a bounded model decision for transfer actions. Everything
-        # else is immutable and owned by Python.
         choices.append({
             "choice_id":f"A{index:03d}",
             "action_id":row["action_id"],
@@ -26,7 +24,8 @@ def build_action_choices(feasible: Sequence[Mapping[str, object]]):
     return tuple(choices)
 
 
-def materialize_choice(choice_id:str, amount:float, description:str, choices, feasible):
+def materialize_choice(country_id:str, choice_id:str, amount:float, description:str, choices, feasible):
+    """Turn one model-selected choice_id into a fully validated executable action."""
     match=next((x for x in choices if x["choice_id"]==choice_id),None)
     if match is None:raise ValueError("unknown action_choice_id")
     maximum=float(match["maximum_amount"])
@@ -35,16 +34,18 @@ def materialize_choice(choice_id:str, amount:float, description:str, choices, fe
     elif isinstance(amount,bool) or not isinstance(amount,(int,float)) or not 0<amount<=maximum:
         raise ValueError(f"amount must be > 0 and <= {maximum}")
     action={"action_id":match["action_id"],"description":description,"parameters":{"recipient_type":match["recipient_type"],"target_country":match["target_country"],"resource":match["resource"],"amount":amount}}
-    validate_action_feasible("__COUNTRY_PLACEHOLDER__",action,feasible) if False else None
+    validate_action_feasible(country_id,action,feasible)
     return action
 
 
 def validate_catalog(country_id:str, choices, feasible):
+    if len(choices)!=len(feasible):raise ValueError("choice catalog size mismatch")
     if len({x["choice_id"] for x in choices})!=len(choices):raise ValueError("duplicate choice_id")
     for choice,row in zip(choices,feasible):
+        for key in ("action_id","recipient_type","target_country","resource","maximum_amount"):
+            if choice[key]!=row[key]:raise ValueError(f"choice catalog changed executable field: {key}")
         amount=0 if float(choice["maximum_amount"])==0 else min(1.0,float(choice["maximum_amount"]))
-        action={"action_id":choice["action_id"],"description":"preflight","parameters":{"recipient_type":choice["recipient_type"],"target_country":choice["target_country"],"resource":choice["resource"],"amount":amount}}
-        validate_action_feasible(country_id,action,feasible)
+        materialize_choice(country_id,choice["choice_id"],amount,"preflight",choices,feasible)
     return True
 
 
