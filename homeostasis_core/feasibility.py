@@ -33,7 +33,8 @@ def feasible_actions(country_id,country_states,world_pool,resource_network:Resou
         for resource in RESOURCE_TYPES:
             stock=float(resources.get(resource,0))
             action="SUPPORT_LOGISTICS" if resource=="logistics" else "PROVIDE_FUNDS" if resource=="funds_economy" else "PROVIDE_RESOURCE"
-            if stock>0:add(action,"world_pool",None,resource,min(stock,logistics))
+            pool_room=max(0,100-float(pool.get(resource,0)))
+            if stock>0 and pool_room>0:add(action,"world_pool",None,resource,min(stock,logistics,pool_room))
     # Bilateral transfers require a currently operable directed route.
     candidate_links=links
     if resource_network is None:
@@ -132,4 +133,4 @@ def settle_atomic_actions(country_states,intents,world_pool):
         amount=realized[id(row)];record={**row,"realized":amount,"delivered":amount,"unmet":row["requested"]-amount}
         if row["action_id"]=="DRAW_WORLD_POOL":record["source"]="world_pool"
         records.append(record)
-    return {"country_states":states,"world_pool":pool,"settlements":records,"total_unmet":math.fsum(x["unmet"] for x in records)}
+    return {"country_states":states,"world_pool":pool,"settlements":records,"total_unmet":math.fsum(x["unmet"] for x in records),"demand_unmet":math.fsum(x["unmet"] for x in records if x["recipient_type"]=="country")}
