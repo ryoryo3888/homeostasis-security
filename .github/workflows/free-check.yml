@@ -12,6 +12,8 @@ jobs:
           python-version: '3.12'
       - name: Offline syntax, all tests and emergent eight-turn preflight
         run: make check
+      - name: Verify public observation files and publication gate
+        run: make verify-status
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -178,3 +178,11 @@ SDKは [公式のgoogle-genai](https://googleapis.github.io/python-genai/) を `
 共通Gatewayの各 `call_audit` レコードに `model_response`（宣言済みの最終回答JSON）、`choice_response`（元のchoice_id・amount・reason）、`materialized_action`（復元action）、`validation_status` を保存します。`run_id / run / turn / agent_id / attempt / call_id` でtransport監査と対応します。reasonは公開の行動理由であり、SDKの内部推論・thought・署名・生のresponseオブジェクトは取得・保存しません。認証値は環境内の秘密値と既知の秘密フィールドを除去し、回答に認証値が混入した場合は検証失敗とします。
 
 probeでは `decision.audit.json` に送信前・回答取得後・検証後を永続保存します。1TURN/8TURNでも同じレコードをcheckpointと最終resultへ保存します。監査書込失敗は即停止し、API再試行しません。researchの入場検証は元のchoice-IDによる再復元、構造化回答との一致、transportとの対応を必須にします。過去ログはそのまま保持し、欠けた元回答を推測で補完しません。
+
+### ChatGPTがGitHubから結果を直接確認する
+
+入口は [CHATGPT_HANDOFF.md](CHATGPT_HANDOFF.md) と [results/status/latest.json](results/status/latest.json)。公開済みの最新probe／turn／experiment／正式研究／失敗runを索引から確認できます。公開JSONはAgentの最終判断・choice-ID・復元action・監査・実際に完了したTURNの世界状態を含みます。秘密情報や壊れた監査のあるrunはログを公開せず、拒否コードだけを記録します。
+
+`make publish-status` は原本の検証・secret scan・公開ファイルの準備のみで、APIやpushは行いません。実験終了後も同じ準備処理を自動実行します。`make sync-status` で無料検証後、観測ファイルだけを現在branchへcommit/pushできます（main/master禁止）。この同期後は、写真ではなく「終わった」「確認して」と伝えればChatGPTがGitHubから確認できます。未同期のローカル結果はGitHubから見えません。
+
+原本runとcheckpointはGit管理から除外し、既存の追跡済み研究結果は保持します。`git config --local core.hooksPath .githooks` でpush対象コミットそのものの検証を有効にできます。CIも公開ファイルを検証します。研究状態の冒頭はmachine stateから生成し、以前の研究記録はその下に保持します。

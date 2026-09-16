@@ -2,3 +2,12 @@ __pycache__/
 *.py[cod]
 .venv*/
 results/debug/*.json
+
+# Private raw runtime output: publish only validated projections.
+results/probe/*/
+results/rejected/*/
+results/research/*/
+*.checkpoint
+results/status/**/.publish-*
+.env
+.env.*

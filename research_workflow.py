@@ -94,6 +94,13 @@ def main(argv=None):
             'error_type': type(exc).__name__, 'api_calls': len(client.attempts),
             'include_in_research_aggregation': False}, indent=2))
         raise
+    finally:
+        # Observation export only: no model, commit, push or stage advancement.
+        try:
+            from homeostasis_core.observability import prepare
+            prepare(ROOT)
+        except Exception:
+            print('Status publication blocked; local run evidence retained. Run make publish-status after diagnosis.')
 
 if __name__ == '__main__':
     main()

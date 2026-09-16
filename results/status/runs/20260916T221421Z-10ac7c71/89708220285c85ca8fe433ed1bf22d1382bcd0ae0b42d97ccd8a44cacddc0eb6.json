@@ -1,0 +1,240 @@
+{
+  "decisions": [
+    {
+      "agent_id": "MIL",
+      "agent_type": "country",
+      "amount": 5.0,
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260916T221421Z-10ac7c71:1:1:MIL:1",
+      "choice_id": "A014",
+      "choice_response": {
+        "amount": 5.0,
+        "choice_id": "A014",
+        "reason": "Providing targeted logistics support to FRAGILE to stabilize regional supply chains and enhance international trust."
+      },
+      "contract_validation": "PASS",
+      "materialized_action": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "Providing targeted logistics support to FRAGILE to stabilize regional supply chains and enhance international trust.",
+        "parameters": {
+          "amount": 5.0,
+          "recipient_type": "country",
+          "resource": "logistics",
+          "target_country": "FRAGILE"
+        }
+      },
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "amount": 5.0,
+        "choice_id": "A014",
+        "reason": "Providing targeted logistics support to FRAGILE to stabilize regional supply chains and enhance international trust."
+      },
+      "public_observation_payload": {
+        "action_choices": [
+          {
+            "action_id": "DEFENSIVE_ESCORT",
+            "choice_id": "A001",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "DISRUPT_LOGISTICS",
+            "choice_id": "A002",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "MEDIATE",
+            "choice_id": "A003",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "NO_ACTION",
+            "choice_id": "A004",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROTECT_RESERVES",
+            "choice_id": "A005",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_FUNDS",
+            "choice_id": "A006",
+            "maximum_amount": 84.0,
+            "recipient_type": "world_pool",
+            "resource": "funds_economy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A007",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A008",
+            "maximum_amount": 68.0,
+            "recipient_type": "world_pool",
+            "resource": "food",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A009",
+            "maximum_amount": 70.0,
+            "recipient_type": "world_pool",
+            "resource": "fossil_fuel",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A010",
+            "maximum_amount": 78.0,
+            "recipient_type": "world_pool",
+            "resource": "grid_storage_resilience",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A011",
+            "maximum_amount": 82.0,
+            "recipient_type": "world_pool",
+            "resource": "nuclear",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A012",
+            "maximum_amount": 55.0,
+            "recipient_type": "world_pool",
+            "resource": "renewable_energy",
+            "target_country": null
+          },
+          {
+            "action_id": "RESTRICT_EXPORTS",
+            "choice_id": "A013",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A014",
+            "maximum_amount": 6.0,
+            "recipient_type": "country",
+            "resource": "logistics",
+            "target_country": "FRAGILE"
+          },
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A015",
+            "maximum_amount": 88.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          },
+          {
+            "action_id": "SUSPEND_SUPPLY",
+            "choice_id": "A016",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          }
+        ]
+      },
+      "reason": "Providing targeted logistics support to FRAGILE to stabilize regional supply chains and enhance international trust.",
+      "recipient": {
+        "recipient_type": "country",
+        "target_country": "FRAGILE"
+      },
+      "resource": "logistics",
+      "run": 1,
+      "run_id": "20260916T221421Z-10ac7c71",
+      "schema_version": 2,
+      "structured_response": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "Providing targeted logistics support to FRAGILE to stabilize regional supply chains and enhance international trust.",
+        "parameters": {
+          "amount": 5.0,
+          "recipient_type": "country",
+          "resource": "logistics",
+          "target_country": "FRAGILE"
+        }
+      },
+      "token_usage": {
+        "input_tokens": 1128,
+        "output_tokens": 37,
+        "total_tokens": 1814
+      },
+      "turn": 1,
+      "validation_status": "PASS"
+    }
+  ],
+  "failure": null,
+  "observation_version": 1,
+  "result": {
+    "include_in_research_aggregation": false,
+    "metadata": {},
+    "summary": {}
+  },
+  "run": {
+    "api_calls": 1,
+    "maximum_api_calls": 1,
+    "mode": "probe",
+    "retry_count": 0,
+    "run_id": "20260916T221421Z-10ac7c71",
+    "status": "success",
+    "turns_completed": 0
+  },
+  "source_hashes": {
+    "decision.audit.json": "11f35c6a4ef4b5ff5b4adc251021a914baf4cb632b1fadf8562fa6b6880bc457",
+    "result.audit.json": "3b107fe24d02cdc0a7d687da29f7a3877d8cfdb8a203535ba31524b1ffc06c17",
+    "result.json": "1a94b6da5a1b5bbf81aec48fa5e6db4582460fbd120fe4101c328c7fe9ce015c",
+    "transport.audit.json": "96c2fdff9c51d69de2fe7e2d41d9dc220b329a27657eb3d7b1b73850d36e1a6e"
+  },
+  "transport_audit": {
+    "api_calls": 1,
+    "attempts": [
+      {
+        "agent_id": "MIL",
+        "attempt": 1,
+        "call_id": "20260916T221421Z-10ac7c71:1:1:MIL:1",
+        "run": 1,
+        "run_id": "20260916T221421Z-10ac7c71",
+        "status": "returned",
+        "transport_attempt": 1,
+        "turn": 1
+      }
+    ],
+    "maximum_api_calls": 1,
+    "run_id": "20260916T221421Z-10ac7c71"
+  },
+  "validation": {
+    "contracts": "PASS",
+    "decision_audit": "PASS",
+    "research_eligible": false,
+    "secret_scan": "PASS",
+    "transport_audit": "PASS"
+  },
+  "worlds": []
+}

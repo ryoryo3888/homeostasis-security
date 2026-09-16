@@ -42,7 +42,8 @@ def main():
     preflight = run_preflight()
     print_verdict(preflight)
     passed = result.wasSuccessful() and preflight['status'] == 'PASS'
-    report = {'status': 'PASS' if passed else 'FAIL', 'tests': result.testsRun,
+    from homeostasis_core.observability import source_digest
+    report = {'source_digest': source_digest(ROOT), 'status': 'PASS' if passed else 'FAIL', 'tests': result.testsRun,
               'api_calls': 0, 'network': 'blocked by Python audit hook', 'preflight': preflight}
     Path('results/debug/check.json').write_text(json.dumps(report, ensure_ascii=False, indent=2))
     print('HOMEOSTASIS PREFLIGHT ' + ('PASSED' if passed else 'FAILED'))

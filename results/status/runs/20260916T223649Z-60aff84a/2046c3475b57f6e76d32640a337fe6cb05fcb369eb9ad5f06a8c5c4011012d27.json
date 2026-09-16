@@ -1,0 +1,425 @@
+{
+  "decisions": [
+    {
+      "agent_id": "地球調整機関",
+      "agent_type": "coordinator",
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260916T223649Z-60aff84a:1:1:地球調整機関:1",
+      "choice_response": null,
+      "contract_validation": "PASS",
+      "materialized_action": null,
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "predicted_global_effect": 55,
+        "predicted_sovereignty_burden": 25,
+        "proposal_id": "prop-20260917-01",
+        "proposal_type": "食料援助",
+        "reason": "A国によるB国民間農地へのミサイル着弾を受け、年間8000トンの米生産能力喪失に対する短期的な食料補填と国際的影響の緩和を目的とする。",
+        "requested_action": "加盟国による緊急食料備蓄の供給と現場における配分状況の現地調査受入。"
+      },
+      "public_observation_payload": {
+        "response_contract": {
+          "exact_fields": [
+            "proposal_id",
+            "proposal_type",
+            "reason",
+            "predicted_global_effect",
+            "predicted_sovereignty_burden",
+            "requested_action"
+          ],
+          "proposal_type": [
+            "食料援助",
+            "仲裁",
+            "制裁提案",
+            "資源再配分",
+            "緊急協定",
+            "停戦提案",
+            "復興支援"
+          ],
+          "scores": "numbers 0..100",
+          "text": "non-empty"
+        }
+      },
+      "run": 1,
+      "run_id": "20260916T223649Z-60aff84a",
+      "schema_version": 2,
+      "structured_response": {
+        "predicted_global_effect": 55,
+        "predicted_sovereignty_burden": 25,
+        "proposal_id": "prop-20260917-01",
+        "proposal_type": "食料援助",
+        "reason": "A国によるB国民間農地へのミサイル着弾を受け、年間8000トンの米生産能力喪失に対する短期的な食料補填と国際的影響の緩和を目的とする。",
+        "requested_action": "加盟国による緊急食料備蓄の供給と現場における配分状況の現地調査受入。"
+      },
+      "token_usage": {
+        "input_tokens": 555,
+        "output_tokens": 122,
+        "total_tokens": 1647
+      },
+      "turn": 1,
+      "validation_status": "PASS"
+    },
+    {
+      "agent_id": "ECON",
+      "agent_type": "country",
+      "amount": 10.0,
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260916T223649Z-60aff84a:1:1:ECON:2",
+      "choice_id": "A005",
+      "choice_response": {
+        "amount": 10.0,
+        "choice_id": "A005",
+        "reason": "主権尊重の観点から自国の介入規模を適正に保ちつつ、国際経済および食料市場の安定を図るため、現地調査および配分運用は中立的な国際機関の監督下で実施することを条件として経済支援を行う。"
+      },
+      "contract_validation": "FAIL",
+      "error_type": "ValueError",
+      "materialized_action": null,
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "amount": 10.0,
+        "choice_id": "A005",
+        "conditions": {},
+        "country_id": "ECON",
+        "perceived_global_effect": 60,
+        "proposal_id": "prop-20260917-01",
+        "reason": "主権尊重の観点から自国の介入規模を適正に保ちつつ、国際経済および食料市場の安定を図るため、現地調査および配分運用は中立的な国際機関の監督下で実施することを条件として経済支援を行う。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 65,
+        "sovereignty_burden": 25
+      },
+      "public_observation_payload": {
+        "action_choices": [
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A001",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A002",
+            "maximum_amount": 94.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          },
+          {
+            "action_id": "PROTECT_RESERVES",
+            "choice_id": "A003",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "NO_ACTION",
+            "choice_id": "A004",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_FUNDS",
+            "choice_id": "A005",
+            "maximum_amount": 11.9,
+            "recipient_type": "country",
+            "resource": "funds_economy",
+            "target_country": "FRAGILE"
+          },
+          {
+            "action_id": "MEDIATE",
+            "choice_id": "A006",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "DISRUPT_LOGISTICS",
+            "choice_id": "A007",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A008",
+            "maximum_amount": 65.0,
+            "recipient_type": "world_pool",
+            "resource": "fossil_fuel",
+            "target_country": null
+          },
+          {
+            "action_id": "DEFENSIVE_ESCORT",
+            "choice_id": "A009",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A010",
+            "maximum_amount": 7.65,
+            "recipient_type": "country",
+            "resource": "food",
+            "target_country": "FOOD"
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A011",
+            "maximum_amount": 90.0,
+            "recipient_type": "world_pool",
+            "resource": "grid_storage_resilience",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A012",
+            "maximum_amount": 75.0,
+            "recipient_type": "world_pool",
+            "resource": "food",
+            "target_country": null
+          },
+          {
+            "action_id": "SUSPEND_SUPPLY",
+            "choice_id": "A013",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A014",
+            "maximum_amount": 84.0,
+            "recipient_type": "world_pool",
+            "resource": "nuclear",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_FUNDS",
+            "choice_id": "A015",
+            "maximum_amount": 94.0,
+            "recipient_type": "world_pool",
+            "resource": "funds_economy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A016",
+            "maximum_amount": 86.0,
+            "recipient_type": "world_pool",
+            "resource": "renewable_energy",
+            "target_country": null
+          },
+          {
+            "action_id": "RESTRICT_EXPORTS",
+            "choice_id": "A017",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          }
+        ],
+        "allowed_country_ids": [
+          "ECON",
+          "FOOD",
+          "FRAGILE",
+          "ISLAND",
+          "MIL",
+          "NEUTRAL",
+          "RES",
+          "SMALL"
+        ],
+        "response_contract": {
+          "additionalProperties": false,
+          "properties": {
+            "amount": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "choice_id": {
+              "enum": [
+                "A001",
+                "A002",
+                "A003",
+                "A004",
+                "A005",
+                "A006",
+                "A007",
+                "A008",
+                "A009",
+                "A010",
+                "A011",
+                "A012",
+                "A013",
+                "A014",
+                "A015",
+                "A016",
+                "A017"
+              ],
+              "type": "string"
+            },
+            "conditions": {
+              "type": "object"
+            },
+            "country_id": {
+              "enum": [
+                "ECON",
+                "FOOD",
+                "FRAGILE",
+                "ISLAND",
+                "MIL",
+                "NEUTRAL",
+                "RES",
+                "SMALL"
+              ],
+              "type": "string"
+            },
+            "perceived_global_effect": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "proposal_id": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "response_id": {
+              "enum": [
+                "ACCEPT",
+                "CONDITIONAL",
+                "REJECT"
+              ],
+              "type": "string"
+            },
+            "response_label": {
+              "enum": [
+                "受け入れる",
+                "条件付きで応じる",
+                "拒否する"
+              ],
+              "type": "string"
+            },
+            "self_interest": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "sovereignty_burden": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "country_id",
+            "proposal_id",
+            "response_id",
+            "response_label",
+            "reason",
+            "conditions",
+            "self_interest",
+            "sovereignty_burden",
+            "perceived_global_effect",
+            "choice_id",
+            "amount"
+          ],
+          "type": "object"
+        }
+      },
+      "reason": "主権尊重の観点から自国の介入規模を適正に保ちつつ、国際経済および食料市場の安定を図るため、現地調査および配分運用は中立的な国際機関の監督下で実施することを条件として経済支援を行う。",
+      "run": 1,
+      "run_id": "20260916T223649Z-60aff84a",
+      "schema_version": 2,
+      "structured_response": null,
+      "token_usage": {
+        "input_tokens": 2213,
+        "output_tokens": 146,
+        "total_tokens": 3434
+      },
+      "turn": 1,
+      "validation_status": "FAIL"
+    }
+  ],
+  "failure": {
+    "agent_id": "ECON",
+    "api_call_number": 2,
+    "attempt": 1,
+    "call_id": "20260916T223649Z-60aff84a:1:1:ECON:2",
+    "derived_diagnosis": "CONDITIONAL_REQUIRES_EXECUTABLE_CONDITIONS",
+    "error_type": "ValueError",
+    "include_in_research_aggregation": false,
+    "run": 1,
+    "run_id": "20260916T223649Z-60aff84a",
+    "turn": 1,
+    "validation": "FAIL",
+    "validation_error": null
+  },
+  "observation_version": 1,
+  "result": {
+    "include_in_research_aggregation": false,
+    "metadata": {},
+    "summary": {}
+  },
+  "run": {
+    "api_calls": 2,
+    "maximum_api_calls": 10,
+    "mode": "turn",
+    "retry_count": 0,
+    "run_id": "20260916T223649Z-60aff84a",
+    "status": "failed",
+    "turns_completed": 0
+  },
+  "source_hashes": {
+    "failure.json": "1c8fb07370c9d2b1ad190df836e99e8659abf39e81ad3b3ad2fba66283349f71",
+    "result.json.checkpoint": "e04e04d81f28402939ee1537b60fcf48081c41c58eed92994668e39d34c8b07c",
+    "transport.audit.json": "c0cef39e0bde10c5dee41d1587d86e25f12bf31b4fadd60a34edffa21c2d9e92"
+  },
+  "transport_audit": {
+    "api_calls": 2,
+    "attempts": [
+      {
+        "agent_id": "地球調整機関",
+        "attempt": 1,
+        "call_id": "20260916T223649Z-60aff84a:1:1:地球調整機関:1",
+        "run": 1,
+        "run_id": "20260916T223649Z-60aff84a",
+        "status": "returned",
+        "transport_attempt": 1,
+        "turn": 1
+      },
+      {
+        "agent_id": "ECON",
+        "attempt": 1,
+        "call_id": "20260916T223649Z-60aff84a:1:1:ECON:2",
+        "run": 1,
+        "run_id": "20260916T223649Z-60aff84a",
+        "status": "returned",
+        "transport_attempt": 2,
+        "turn": 1
+      }
+    ],
+    "maximum_api_calls": 10,
+    "run_id": "20260916T223649Z-60aff84a"
+  },
+  "validation": {
+    "contracts": "FAIL",
+    "decision_audit": "PASS",
+    "research_eligible": false,
+    "secret_scan": "PASS",
+    "transport_audit": "PASS"
+  },
+  "worlds": []
+}

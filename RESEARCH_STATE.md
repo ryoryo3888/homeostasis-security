@@ -1,3 +1,13 @@
+<!-- MACHINE STATE START -->
+## 現在地（機械可読stateから生成）
+
+一次情報: [results/status/latest.json](results/status/latest.json)。
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `bd3a69b0a955d8ae4e24acc3416f61ca04fbf1d1`（公開コミット自身ではありません）。
+最新run: `20260916T223649Z-60aff84a` / turn / failed / 完了0TURN / API 2 calls / retry 0。
+無料検証: PASS。次: Inspect latest failure and pass free checks before separately authorizing a new attempt.
+今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
+<!-- MACHINE STATE END -->
+
 # HOMEOSTASIS SECURITY — 研究状態
 
 更新: 2026-09-17。今回の作業範囲は基盤整備・無料検証のみ。Gemini API calls = **0**。キー要求・有料実験なし。
@@ -59,3 +69,9 @@
 ## choice-ID監査の補強
 
 追加Gemini呼び出しなしで共通監査を補強。今後のprobe・1TURN・8TURNは元の選択回答と復元actionを同一記録に保存し、transportと識別子で対応付ける。監査保存失敗は即停止・研究不採用。過去probe `20260916T213715Z-a59dc6a3` の元choice-IDは未保存のまま保持し、逆算値を書き込まない。次の最小有料段階は、別途明示許可した新しい1-call probeによる監査確認。今回有料実行なし。
+
+## 1TURN失敗の無料診断（20260916T223649Z-60aff84a）
+
+保存済みtransportとcheckpointによる実消費は2 calls（調整機関成功＋最初の国家ECON失敗）、retry 0。ECONはCONDITIONAL / conditions={} を返した。choice A005、資金10.0（FRAGILE向け、上限11.9）は有効。旧送信schemaのconditionsは単なるobjectで空を許したが、PythonはCONDITIONALに非空の実行条件を要求していた。理由文にある中立機関の監督は現在の環境契約で判定できず、勝手に成立扱いしない。
+
+条件型・国ID・数値範囲をschemaへ定義し、response ID/labelとconditionsの整合をanyOfで拘束。構造化できない必須条件はREJECTと公開理由で表現する。元回答を受諾へ変換せず、choice-IDと数量の厳格検証を維持。失敗記録は改変せずrejectedに隔離。修正中API calls 0、SDK設定構築と疑似回答による無料テストのみ。新schemaの実API受理・全国家の回答は未検証で、次回の別途明示許可された1TURNで確認する。

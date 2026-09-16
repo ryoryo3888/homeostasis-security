@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eu
+if [ -x .venv/bin/python ]; then
+    exec .venv/bin/python -B tools/publication_gate.py
+else
+    exec python3 -B tools/publication_gate.py
+fi

@@ -60,6 +60,7 @@ class DecisionAuditTests(unittest.TestCase):
         self.assertEqual(saved['choice_response']['choice_id'], 'UNKNOWN')
         self.assertIsNone(saved['materialized_action'])
         self.assertEqual(saved['validation_status'], 'FAIL')
+        self.assertEqual(saved['validation_error'], 'unknown action_choice_id')
         self.assertEqual(models.calls, 1)
 
     def test_audit_failure_before_dispatch_makes_zero_calls(self):

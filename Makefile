@@ -14,3 +14,11 @@ setup-gemini:
 # Real SDK import under the same network guard as free checks.
 check-sdk:
 	HOMEOSTASIS_OFFLINE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$(CURDIR)/tools/offline:$(CURDIR)" $(PYTHON) -B -c 'from google import genai; print("Gemini SDK import: PASS; Gemini API calls: 0")'
+
+.PHONY: publish-status verify-status sync-status
+publish-status:
+	HOMEOSTASIS_OFFLINE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$(CURDIR)/tools/offline:$(CURDIR)" $(PYTHON) -B tools/publish_status.py
+verify-status:
+	HOMEOSTASIS_OFFLINE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$(CURDIR)/tools/offline:$(CURDIR)" $(PYTHON) -B tools/publish_status.py --verify
+sync-status: check publish-status verify-status
+	$(PYTHON) -B tools/publish_status.py --sync

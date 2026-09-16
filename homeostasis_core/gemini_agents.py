@@ -25,6 +25,53 @@ def country_response_schema(country_ids,action_ids=None,response_ids=None):
     actions=list(action_ids or ACTION_IDS)
     responses=list(response_ids or RESPONSE_IDS)
     return {"type":"object","additionalProperties":False,"required":["country_id","proposal_id","response_id","response_label","reason","conditions","self_interest","sovereignty_burden","perceived_global_effect","action"],"properties":{"country_id":{"type":"string","enum":ids},"proposal_id":{"type":"string"},"response_id":{"type":"string","enum":responses},"response_label":{"type":"string","enum":[RESPONSE_IDS[x] for x in responses]},"reason":{"type":"string"},"conditions":{"type":"object"},"self_interest":{"type":"number","minimum":0,"maximum":100},"sovereignty_burden":{"type":"number","minimum":0,"maximum":100},"perceived_global_effect":{"type":"number","minimum":0,"maximum":100},"action":{"type":"object","additionalProperties":False,"required":["action_id","description","parameters"],"properties":{"action_id":{"type":"string","enum":actions},"description":{"type":"string"},"parameters":{"type":"object","additionalProperties":False,"required":["recipient_type","target_country","resource","amount"],"properties":{"recipient_type":{"type":"string","enum":["country","world_pool","none"]},"target_country":{"type":["string","null"],"enum":ids+[None]},"resource":{"type":["string","null"],"enum":list(RESOURCE_TYPES)+[None]},"amount":{"type":"number","minimum":0,"maximum":100}}}}}}}
+def condition_properties(country_ids):
+    """Only conditions actually evaluated by _condition_met are offered."""
+    return {
+        "required_countries":{"type":"array","items":{"type":"string","enum":list(country_ids)}},
+        "minimum_aid_amount":{"type":"number","minimum":0,"maximum":100},
+        "maximum_sovereignty_burden":{"type":"number","minimum":0,"maximum":100},
+        "mutual_performance":{"type":"boolean"},
+        "deadline_turn":{"type":"integer","minimum":1},
+    }
+
+
+def country_choice_schema(country_id, proposal_id, country_ids, choices, response_ids=None):
+    schema=country_response_schema(country_ids,response_ids=response_ids)
+    schema["properties"].pop("action")
+    schema["required"].remove("action")
+    schema["required"].extend(["choice_id","amount"])
+    props=schema["properties"]
+    props["country_id"]={"type":"string","enum":[country_id]}
+    props["proposal_id"]={"type":"string","enum":[proposal_id]}
+    props.update({"choice_id":{"type":"string","enum":[x["choice_id"] for x in choices]},
+                  "amount":{"type":"number","minimum":0,"maximum":100}})
+    conditions={"type":"object","additionalProperties":False,"properties":condition_properties(country_ids)}
+    props["conditions"]=conditions
+    # Pair each response ID with its label and enforce executable conditions.
+    # required-field alternatives forbid an empty CONDITIONAL without relying
+    # on prose instructions or inferring obligations from the public reason.
+    nonempty={"anyOf":[{**conditions,"required":[key]} for key in conditions["properties"]]}
+    empty={"type":"object","properties":{},"additionalProperties":False}
+    schema["anyOf"]=[{"type":"object","properties":{
+        "response_id":{"type":"string","enum":[response_id]},
+        "response_label":{"type":"string","enum":[RESPONSE_IDS[response_id]]},
+        "conditions":nonempty if response_id=="CONDITIONAL" else empty,
+    }} for response_id in (response_ids or RESPONSE_IDS)]
+    return schema
+
+
+def parse_country_choice_json(text, country_id, proposal_id, country_ids, choices, feasible):
+    keys={"country_id","proposal_id","response_id","response_label","reason","conditions",
+          "self_interest","sovereignty_burden","perceived_global_effect","choice_id","amount"}
+    value=_object(text,keys)
+    if value["country_id"]!=country_id or value["proposal_id"]!=proposal_id:
+        raise ValueError("country_id or proposal_id does not match this request")
+    choice_id=value.pop("choice_id");amount=value.pop("amount")
+    value["action"]=materialize_choice(country_id,choice_id,amount,value["reason"],choices,feasible)
+    return parse_country_json(json.dumps(value),set(country_ids))
+
+
 def coordinator_response_schema():
     return {"type":"object","additionalProperties":False,"required":["proposal_id","proposal_type","reason","predicted_global_effect","predicted_sovereignty_burden","requested_action"],"properties":{"proposal_id":{"type":"string"},"proposal_type":{"type":"string","enum":list(PROPOSAL_TYPES)},"reason":{"type":"string"},"predicted_global_effect":{"type":"number","minimum":0,"maximum":100},"predicted_sovereignty_burden":{"type":"number","minimum":0,"maximum":100},"requested_action":{"type":"string"}}}
 def evaluator_response_schema():
@@ -37,10 +84,11 @@ def _object(text,keys):
     return d
 def _text(name,v):
     if not isinstance(v,str) or not v.strip():raise ValueError(f"{name} is required")
-def _conditions(c):
+def _conditions(c,allowed_countries=None):
     allowed={"required_countries","minimum_aid_amount","maximum_sovereignty_burden","mutual_performance","deadline_turn"}
     if not isinstance(c,dict) or set(c)-allowed:raise ValueError("invalid conditions")
     if "required_countries" in c and (not isinstance(c["required_countries"],list) or any(not isinstance(x,str) or not x for x in c["required_countries"])):raise ValueError("invalid required_countries")
+    if allowed_countries is not None and not set(c.get("required_countries",())) <= set(allowed_countries):raise ValueError("required_countries must use configured country IDs")
     for k in ("minimum_aid_amount","maximum_sovereignty_burden"):
         if k in c:_score(k,c[k])
     if "mutual_performance" in c and not isinstance(c["mutual_performance"],bool):raise ValueError("mutual_performance must be bool")
@@ -49,7 +97,7 @@ def parse_country_json(text,allowed_countries=None):
     d=_object(text,{"country_id","proposal_id","response_id","response_label","reason","conditions","self_interest","sovereignty_burden","perceived_global_effect","action"})
     for k in ("country_id","proposal_id","reason"):_text(k,d[k])
     if d["response_id"] not in RESPONSE_IDS or d["response_label"]!=RESPONSE_IDS[d["response_id"]]:raise ValueError("invalid response enum")
-    _conditions(d["conditions"])
+    _conditions(d["conditions"],allowed_countries)
     if (d["response_id"]=="CONDITIONAL")!=bool(d["conditions"]):raise ValueError("conditions must exist only for conditional response")
     for k in ("self_interest","sovereignty_burden","perceived_global_effect"):_score(k,d[k])
     a=d["action"]
@@ -132,6 +180,8 @@ class GeminiGateway:
                 error=exc
                 audit["validation_status"]="FAIL"
                 audit["error_type"]=type(exc).__name__
+                if isinstance(exc,ValueError) and audit["model_response"] is not None:
+                    audit["validation_error"]=safe_data(str(exc))
                 self._persist()
                 if attempt<self.retry_limit:self.sleep_fn(0)
                 continue
@@ -241,24 +291,22 @@ def run_gemini_turn(gateway,run,turn,snapshot,private_views,history,country_orde
         payload={"role":"independent sovereign country; make a free decision without trying to satisfy the coordinator or balance response frequencies","turn_start_observation":private_views[c],"memory":list(history.get(c,())),"current_proposal":proposal,"decision_factors":factors,"response_options":[{"response_id":x,"meaning":option_text[x]} for x in response_order],"decision_instruction":"Compare own interests, sovereignty, diplomacy, domestic stability, scarcity, trust, threat, history, proposal benefit and cost. Do not infer that cooperation is preferred. Explain the country-specific tradeoff. List order has no meaning.","allowed_country_ids":allowed,"feasible_actions":list(feasible),"action_instruction":"Choose exactly one entry from feasible_actions based on national meaning and cost, not its list position. Copy its identifiers exactly. For maximum_amount > 0 choose amount > 0 and <= maximum_amount; otherwise use 0.","recipient_rules":{"all_parameters_fields_are_required":["recipient_type","target_country","resource","amount"],"country":"target_country must be one allowed_country_id and not self","world_pool":"target_country must be null","none":"target_country and resource must be null; amount must be 0","forbidden_target_examples":["GLOBAL","WORLD","日本語国名"],"correct_parameter_shapes":examples},"response_contract":{"exact_fields":["country_id","proposal_id","response_id","response_label","reason","conditions","self_interest","sovereignty_burden","perceived_global_effect","action"],"identity":{"country_id":c,"proposal_id":proposal["proposal_id"]},"response_ids":[{"id":x,"label":RESPONSE_IDS[x]} for x in response_order],"conditions":"empty object unless CONDITIONAL; otherwise structured required_countries/minimum_aid_amount/maximum_sovereignty_burden/mutual_performance/deadline_turn","action":{"exact_fields":["action_id","description","parameters"],"allowed_action_ids":feasible_ids,"parameters_required":["recipient_type","target_country","resource","amount"]},"scores":"numbers 0..100","schema_version":SCHEMA_VERSION}}
         choices=build_action_choices(feasible)
         validate_catalog(c,choices,feasible)
-        schema=country_response_schema(allowed,feasible_ids,response_order)
-        schema["properties"].pop("action")
-        schema["required"].remove("action")
-        schema["required"].extend(["choice_id","amount"])
-        schema["properties"].update({"choice_id":{"type":"string","enum":[x["choice_id"] for x in choices]},"amount":{"type":"number","minimum":0,"maximum":100}})
+        schema=country_choice_schema(c,proposal["proposal_id"],allowed,choices,response_order)
         # Only Python owns executable tuples; the model selects a catalog ID.
         for key in ("feasible_actions","recipient_rules","response_contract"):
             payload.pop(key,None)
         payload["action_choices"]=list(choices)
         payload["action_instruction"]="Select one choice_id from action_choices and an amount within its maximum. Use 0 only for maximum_amount=0. Do not output action tuples."
+        payload["conditions_instruction"]=(
+            "ACCEPT and REJECT require conditions={}. CONDITIONAL requires at least one typed, executable condition: "
+            "required_countries (configured IDs whose participation is required); minimum_aid_amount (minimum own selected action amount); "
+            "maximum_sovereignty_burden (ceiling on own burden score); mutual_performance (requires another participating country when true); "
+            "deadline_turn (latest turn for performance). The reason is a public justification, not an executable condition. "
+            "Do not encode oversight or other unsupported obligations as these fields. If an essential condition cannot be "
+            "represented by this contract, choose REJECT and explain it; do not silently waive it or return an empty CONDITIONAL.")
         payload["response_contract"]=schema
         def parse_bound(text,ids=set(allowed),expected_country=c,expected_proposal=proposal["proposal_id"]):
-            value=_object(text,set(schema["required"]))
-            choice_id=value.pop("choice_id");amount=value.pop("amount")
-            value["action"]=materialize_choice(expected_country,choice_id,amount,value["reason"],choices,feasible)
-            value=parse_country_json(json.dumps(value))
-            if value["country_id"]!=expected_country or value["proposal_id"]!=expected_proposal:raise ValueError("country_id or proposal_id does not match this request")
-            return value
+            return parse_country_choice_json(text,expected_country,expected_proposal,ids,choices,feasible)
         a=gateway.call(c,run,turn,payload,parse_bound,agent_type="country",archetype=private_views[c].get("archetype"),snapshot_id=sid,json_schema=schema)
         answers[c]=a
     convergence=len({a["response_id"] for a in answers.values()})==1

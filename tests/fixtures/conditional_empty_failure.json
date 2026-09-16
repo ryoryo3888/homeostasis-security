@@ -1,0 +1,264 @@
+{
+  "model_response": {
+    "country_id": "ECON",
+    "proposal_id": "prop-20260917-01",
+    "response_id": "CONDITIONAL",
+    "response_label": "条件付きで応じる",
+    "reason": "主権尊重の観点から自国の介入規模を適正に保ちつつ、国際経済および食料市場の安定を図るため、現地調査および配分運用は中立的な国際機関の監督下で実施することを条件として経済支援を行う。",
+    "conditions": {},
+    "self_interest": 65,
+    "sovereignty_burden": 25,
+    "perceived_global_effect": 60,
+    "choice_id": "A005",
+    "amount": 10.0
+  },
+  "action_choices": [
+    {
+      "choice_id": "A001",
+      "action_id": "PROVIDE_RESOURCE",
+      "recipient_type": "none",
+      "target_country": null,
+      "resource": null,
+      "maximum_amount": 0.0
+    },
+    {
+      "choice_id": "A002",
+      "action_id": "SUPPORT_LOGISTICS",
+      "recipient_type": "world_pool",
+      "target_country": null,
+      "resource": "logistics",
+      "maximum_amount": 94.0
+    },
+    {
+      "choice_id": "A003",
+      "action_id": "PROTECT_RESERVES",
+      "recipient_type": "none",
+      "target_country": null,
+      "resource": null,
+      "maximum_amount": 0.0
+    },
+    {
+      "choice_id": "A004",
+      "action_id": "NO_ACTION",
+      "recipient_type": "none",
+      "target_country": null,
+      "resource": null,
+      "maximum_amount": 0.0
+    },
+    {
+      "choice_id": "A005",
+      "action_id": "PROVIDE_FUNDS",
+      "recipient_type": "country",
+      "target_country": "FRAGILE",
+      "resource": "funds_economy",
+      "maximum_amount": 11.9
+    },
+    {
+      "choice_id": "A006",
+      "action_id": "MEDIATE",
+      "recipient_type": "none",
+      "target_country": null,
+      "resource": null,
+      "maximum_amount": 0.0
+    },
+    {
+      "choice_id": "A007",
+      "action_id": "DISRUPT_LOGISTICS",
+      "recipient_type": "none",
+      "target_country": null,
+      "resource": null,
+      "maximum_amount": 0.0
+    },
+    {
+      "choice_id": "A008",
+      "action_id": "PROVIDE_RESOURCE",
+      "recipient_type": "world_pool",
+      "target_country": null,
+      "resource": "fossil_fuel",
+      "maximum_amount": 65.0
+    },
+    {
+      "choice_id": "A009",
+      "action_id": "DEFENSIVE_ESCORT",
+      "recipient_type": "none",
+      "target_country": null,
+      "resource": null,
+      "maximum_amount": 0.0
+    },
+    {
+      "choice_id": "A010",
+      "action_id": "PROVIDE_RESOURCE",
+      "recipient_type": "country",
+      "target_country": "FOOD",
+      "resource": "food",
+      "maximum_amount": 7.65
+    },
+    {
+      "choice_id": "A011",
+      "action_id": "PROVIDE_RESOURCE",
+      "recipient_type": "world_pool",
+      "target_country": null,
+      "resource": "grid_storage_resilience",
+      "maximum_amount": 90.0
+    },
+    {
+      "choice_id": "A012",
+      "action_id": "PROVIDE_RESOURCE",
+      "recipient_type": "world_pool",
+      "target_country": null,
+      "resource": "food",
+      "maximum_amount": 75.0
+    },
+    {
+      "choice_id": "A013",
+      "action_id": "SUSPEND_SUPPLY",
+      "recipient_type": "none",
+      "target_country": null,
+      "resource": null,
+      "maximum_amount": 0.0
+    },
+    {
+      "choice_id": "A014",
+      "action_id": "PROVIDE_RESOURCE",
+      "recipient_type": "world_pool",
+      "target_country": null,
+      "resource": "nuclear",
+      "maximum_amount": 84.0
+    },
+    {
+      "choice_id": "A015",
+      "action_id": "PROVIDE_FUNDS",
+      "recipient_type": "world_pool",
+      "target_country": null,
+      "resource": "funds_economy",
+      "maximum_amount": 94.0
+    },
+    {
+      "choice_id": "A016",
+      "action_id": "PROVIDE_RESOURCE",
+      "recipient_type": "world_pool",
+      "target_country": null,
+      "resource": "renewable_energy",
+      "maximum_amount": 86.0
+    },
+    {
+      "choice_id": "A017",
+      "action_id": "RESTRICT_EXPORTS",
+      "recipient_type": "none",
+      "target_country": null,
+      "resource": null,
+      "maximum_amount": 0.0
+    }
+  ],
+  "country_id": "ECON",
+  "proposal_id": "prop-20260917-01",
+  "country_ids": [
+    "ECON",
+    "FOOD",
+    "FRAGILE",
+    "ISLAND",
+    "MIL",
+    "NEUTRAL",
+    "RES",
+    "SMALL"
+  ],
+  "original_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "country_id",
+      "proposal_id",
+      "response_id",
+      "response_label",
+      "reason",
+      "conditions",
+      "self_interest",
+      "sovereignty_burden",
+      "perceived_global_effect",
+      "choice_id",
+      "amount"
+    ],
+    "properties": {
+      "country_id": {
+        "type": "string",
+        "enum": [
+          "ECON",
+          "FOOD",
+          "FRAGILE",
+          "ISLAND",
+          "MIL",
+          "NEUTRAL",
+          "RES",
+          "SMALL"
+        ]
+      },
+      "proposal_id": {
+        "type": "string"
+      },
+      "response_id": {
+        "type": "string",
+        "enum": [
+          "ACCEPT",
+          "CONDITIONAL",
+          "REJECT"
+        ]
+      },
+      "response_label": {
+        "type": "string",
+        "enum": [
+          "受け入れる",
+          "条件付きで応じる",
+          "拒否する"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "conditions": {
+        "type": "object"
+      },
+      "self_interest": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+      },
+      "sovereignty_burden": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+      },
+      "perceived_global_effect": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+      },
+      "choice_id": {
+        "type": "string",
+        "enum": [
+          "A001",
+          "A002",
+          "A003",
+          "A004",
+          "A005",
+          "A006",
+          "A007",
+          "A008",
+          "A009",
+          "A010",
+          "A011",
+          "A012",
+          "A013",
+          "A014",
+          "A015",
+          "A016",
+          "A017"
+        ]
+      },
+      "amount": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+      }
+    }
+  }
+}
