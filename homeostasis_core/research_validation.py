@@ -1,6 +1,7 @@
 """Fail-closed admission for new research artifacts; old files stay untouched."""
 import hashlib
 import json
+from .decision_audit import validate_choice_trace
 from .emergent_dynamics import INITIAL_EVENT, reconstruction_step
 from .gemini_agents import parse_country_json, parse_coordinator_json, parse_evaluator_json, derive_event
 
@@ -19,6 +20,14 @@ def validate_research(result, transport_audit):
             raise ValueError('missing or unexpected API attempts')
         if len(transport_audit['attempts']) != 80 or any(a['status'] != 'returned' for a in transport_audit['attempts']):
             raise ValueError('incomplete transport audit')
+        if len({a.get('call_id') for a in calls}) != 80:
+            raise ValueError('duplicate or missing decision audit identity')
+        for item, transport in zip(calls, transport_audit['attempts']):
+            if item.get('validation_status') != 'PASS' or item.get('model_response') is None:
+                raise ValueError('unvalidated decision audit')
+            for key in ('run_id', 'run', 'turn', 'agent_id', 'attempt', 'call_id'):
+                if not item.get(key) or item[key] != transport.get(key):
+                    raise ValueError('transport/decision audit identity mismatch')
         for row in turns:
             t = row['turn']; snapshot = row['snapshot']; executed = row['executed_state']
             parse_coordinator_json(json.dumps(row['proposal']))
@@ -37,15 +46,18 @@ def validate_research(result, transport_audit):
                 raise ValueError('country audit missing')
             for item in audit:
                 if item['agent_type'] == 'country':
+                    validate_choice_trace(item)
                     answer = row['country_responses'][item['agent_id']]
                     if item['structured_response'] != answer:
                         raise ValueError('audit/response mismatch')
                     from .feasibility import validate_action_feasible
                     validate_action_feasible(item['agent_id'], answer['action'], item['public_observation_payload']['action_choices'])
                 elif item['agent_type'] == 'coordinator':
+                    if item['model_response'] != item['structured_response']: raise ValueError('original coordinator response mismatch')
                     if item['structured_response'] != row['proposal']:
                         raise ValueError('proposal audit mismatch')
                 elif item['agent_type'] == 'evaluator':
+                    if item['model_response'] != item['structured_response']: raise ValueError('original evaluator response mismatch')
                     if item['structured_response'] != row['evaluator_commentary']:
                         raise ValueError('evaluator audit mismatch')
                 else:

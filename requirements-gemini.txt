@@ -1,0 +1,3 @@
+# Optional runtime dependency for explicitly authorized Gemini execution.
+# Package/import mapping: https://googleapis.github.io/python-genai/
+google-genai==2.20.0

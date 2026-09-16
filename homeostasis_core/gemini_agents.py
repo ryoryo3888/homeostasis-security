@@ -1,8 +1,9 @@
 """Strict Gemini boundary with private observations and deterministic effects."""
 from __future__ import annotations
 from dataclasses import dataclass
-import hashlib,json,random,time
+import hashlib,json,random,time,uuid
 from typing import Any,Callable
+from .decision_audit import AuditPersistenceError, safe_data, decision_json, validate_choice_trace
 from .action_choices import build_action_choices, materialize_choice, validate_catalog
 from .metrics import clamp,global_homeostasis
 from .models import CountryState,EnergyPortfolio,ResourcePortfolio,_score
@@ -85,31 +86,59 @@ def _usage(r):
     return {"input_tokens":g("prompt_token_count","prompt_tokens"),"output_tokens":g("candidates_token_count","output_tokens"),"total_tokens":g("total_token_count","total_tokens")}
 @dataclass
 class GeminiGateway:
-    client:Any;model:str=MODEL_NAME;max_calls:int=80;retry_limit:int=1;sleep_fn:Callable[[float],None]=time.sleep;audit_hook:Callable|None=None
+    client:Any;model:str=MODEL_NAME;max_calls:int=80;retry_limit:int=1;sleep_fn:Callable[[float],None]=time.sleep;audit_hook:Callable|None=None;run_id:str|None=None
     def __post_init__(self):
         # retry_limit is historical naming for total attempts (1 = zero retries).
         if type(self.max_calls) is not int or self.max_calls < 0:raise ValueError("invalid call limit")
         if type(self.retry_limit) is not int or self.retry_limit < 1:raise ValueError("invalid attempt limit")
         self.calls=[]
+        self.run_id=self.run_id or getattr(self.client,"run_id",None) or uuid.uuid4().hex
+    def _persist(self):
+        if self.audit_hook:
+            try:self.audit_hook(safe_data(self.calls))
+            except Exception as exc:
+                raise AuditPersistenceError("decision audit persistence failed") from None
+
     def call(self,agent_name,run,turn,payload,parser,*,agent_type="unknown",archetype=None,snapshot_id=None,json_schema=None,validation_help=None):
         error=None
         for attempt in range(1,self.retry_limit+1):
             if len(self.calls)>=self.max_calls:raise RuntimeError("API call limit reached")
             attempt_payload=json.loads(json.dumps(payload))
             if error is not None:attempt_payload["validation_feedback"]={"error":str(error),"missing_or_invalid_fields":"Use the error above; target_country is always required inside action.parameters.","allowed_country_ids":(validation_help or {}).get("allowed_country_ids",[]),"feasible_actions":(validation_help or {}).get("feasible_actions",[]),"correct_json_examples":(validation_help or {}).get("correct_json_examples",{}),"instruction":"Return a complete new JSON object and choose exactly one current feasible_actions entry; never infer or translate an ID."}
-            audit={"run":run,"turn":turn,"agent_id":agent_name,"agent_type":agent_type,"agent_archetype":archetype,"snapshot_id":snapshot_id,"observation_digest":_digest(attempt_payload),"public_observation_payload":attempt_payload,"structured_response":None,"model":self.model,"schema_version":SCHEMA_VERSION,"attempt":attempt,"token_usage":{"input_tokens":None,"output_tokens":None,"total_tokens":None}}
+            identity={"run_id":self.run_id,"run":run,"turn":turn,"agent_id":agent_name,"attempt":attempt,"call_id":f"{self.run_id}:{run}:{turn}:{agent_name}:{len(self.calls)+1}"}
+            audit={**identity,"audit_version":1,"agent_type":agent_type,"agent_archetype":archetype,"snapshot_id":snapshot_id,"observation_digest":_digest(attempt_payload),"public_observation_payload":safe_data(attempt_payload),"model_response":None,"choice_response":None,"materialized_action":None,"validation_status":"PENDING","structured_response":None,"model":self.model,"schema_version":SCHEMA_VERSION,"token_usage":{"input_tokens":None,"output_tokens":None,"total_tokens":None}}
             self.calls.append(audit)
-            if self.audit_hook:self.audit_hook(self.calls)
+            self._persist()
             try:
                 config={"response_mime_type":"application/json"}
                 if json_schema is not None:config["response_json_schema"]=json_schema
-                r=self.client.models.generate_content(model=self.model,contents=json.dumps(attempt_payload,ensure_ascii=False),config=config);parsed=parser(r.text);audit["structured_response"]=parsed;audit["token_usage"]=_usage(r)
-                if self.audit_hook:self.audit_hook(self.calls)
-                return parsed
+                if hasattr(self.client,"set_audit_context"):self.client.set_audit_context(identity)
+                r=self.client.models.generate_content(model=self.model,contents=json.dumps(attempt_payload,ensure_ascii=False),config=config)
+                audit["token_usage"]=_usage(r)
+                audit["model_response"]=decision_json(r.text,json_schema)
+                if "action_choices" in payload:
+                    audit["choice_response"]={k:audit["model_response"].get(k) for k in ("choice_id","amount","reason")}
+                self._persist()  # Preserve the selection even when contract validation fails.
+                parsed=parser(r.text)
+                if safe_data(parsed)!=parsed:raise ValueError("response contains protected data")
+                audit["structured_response"]=parsed
+                audit["validation_status"]="PASS"
+                if "action_choices" in payload:
+                    audit["materialized_action"]=parsed.get("action",parsed)
+                    validate_choice_trace(audit)
+            except AuditPersistenceError:
+                raise  # Never retry an API call to fix a local disk failure.
             except Exception as exc:
                 error=exc
+                audit["validation_status"]="FAIL"
+                audit["error_type"]=type(exc).__name__
+                self._persist()
                 if attempt<self.retry_limit:self.sleep_fn(0)
+                continue
+            self._persist()
+            return parsed
         raise RuntimeError(f"Gemini response failed validation after {self.retry_limit} attempts") from error
+
 def create_gemini_client(api_key):
     import os
     if os.environ.get("HOMEOSTASIS_OFFLINE") == "1":

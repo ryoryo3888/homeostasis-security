@@ -16,7 +16,7 @@ PLANS = {
 }
 
 
-def probe(client):
+def probe(client, *, audit_hook=None):
     from gemini_choice_probe import COUNTRY, COUNTRIES, initial_states
     from homeostasis_core.action_choices import build_action_choices, materialize_choice
     from homeostasis_core.feasibility import feasible_actions
@@ -35,11 +35,11 @@ def probe(client):
         if set(answer) != {'choice_id', 'amount', 'reason'}:
             raise ValueError('unexpected fields')
         return materialize_choice(COUNTRY, answer['choice_id'], answer['amount'], answer['reason'], choices, feasible)
-    gateway = GeminiGateway(client, max_calls=1, retry_limit=1)
+    gateway = GeminiGateway(client, max_calls=1, retry_limit=1, audit_hook=audit_hook)
     action = gateway.call(COUNTRY, 1, 1, {'country_id': COUNTRY, 'private_observation': states[COUNTRY],
         'instruction': 'Independently select one choice_id and bounded amount; zero only for a zero maximum.',
         'action_choices': choices}, parse, agent_type='country', json_schema=schema)
-    return {'mode': 'probe', 'include_in_research_aggregation': False, 'action': action, 'call_audit': gateway.calls}
+    return {'mode': 'probe', 'include_in_research_aggregation': False, 'run_id': gateway.run_id, 'action': action, 'call_audit': gateway.calls}
 
 
 def main(argv=None):
@@ -68,7 +68,7 @@ def main(argv=None):
         raise SystemExit('API credential unavailable; stopped without prompting or API calls')
     from homeostasis_core.api_budget import BoundedClient
     from homeostasis_core.gemini_agents import create_gemini_client
-    from final_experiment_runner import run_live
+    from final_experiment_runner import run_live, _checkpoint
     from homeostasis_core.research_validation import validate_research, research_manifest
     run_id = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8]
     staging = ROOT/'results/rejected'/run_id
@@ -78,7 +78,7 @@ def main(argv=None):
     output = staging/'result.json'
     try:
         if args.mode == 'probe':
-            output.write_text(json.dumps(probe(client), ensure_ascii=False, indent=2))
+            output.write_text(json.dumps(probe(client, audit_hook=lambda calls: _checkpoint(staging/"decision.audit.json", {"run_id": run_id, "calls": calls})), ensure_ascii=False, indent=2))
         else:
             run_live(client, output, 1, args.seed, turns=plan['turns'],
                      max_calls=plan['maximum_api_calls'], retry_limit=1)

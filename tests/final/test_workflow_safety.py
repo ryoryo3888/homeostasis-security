@@ -74,6 +74,9 @@ class WorkflowSafetyTests(unittest.TestCase):
             client = Client()
             result = run_live(client, Path(d)/'result.json', 1, 7, turns=1, max_calls=10, retry_limit=1)
             self.assertEqual(len(client.models.payloads), 10)
+            from homeostasis_core.decision_audit import validate_choice_trace
+            for record in result['runs'][0]['call_audit']:
+                if record['agent_type'] == 'country': self.assertTrue(validate_choice_trace(record))
             self.assertIn('reconstruction', result['runs'][0]['turns'][0]['executed_state'])
             for payload in client.models.payloads:
                 if 'turn_start_observation' in payload:
@@ -104,6 +107,10 @@ class WorkflowSafetyTests(unittest.TestCase):
             for mutate in (
                 lambda r: r['runs'][0]['details']['turns'].pop(),
                 lambda r: r['runs'][0]['details']['call_audit'].pop(),
+                lambda r: r['runs'][0]['details']['call_audit'][1].pop('choice_response'),
+                lambda r: r['runs'][0]['details']['call_audit'][1]['model_response'].update(choice_id='UNKNOWN'),
+                lambda r: r['runs'][0]['details']['call_audit'][1].update(call_id='wrong-transport-link'),
+                lambda r: r['runs'][0]['details']['call_audit'][1].update(validation_status='FAIL'),
                 lambda r: r['runs'][0]['details']['turns'][2]['snapshot'].update(event='scripted'),
                 lambda r: r['runs'][0]['details']['turns'][3]['executed_state']['reconstruction'].update(after=0),
                 lambda r: r['runs'][0]['details']['turns'][0].pop('evaluator_commentary'),

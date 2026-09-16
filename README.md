@@ -164,3 +164,17 @@ Gemini Agentによる5ターンの実験では、各国と地球調整機関が�
 新規結果は `results/debug`、`results/probe`、`results/rejected`、`results/research` に分離します。既存JSON・Dashboard・`results/final`は移動しません。researchへの昇格は全TURN完走だけでなくschema・必要ログ・API監査・派生イベント・復旧計算・研究条件の検証が必要です。Dashboard用の正式結果列挙関数は `accepted_research_paths` です。今回Dashboardの読込経路は変更していません。
 
 旧V1/V2と決定論的prototypeの固定復旧は保存済み研究の再現・互換性のため残っています。新しいpreflightとGemini実験はこれらの復旧表を使いません。互換テストの旧シナリオは `c918dd1` の親コミットから保存した `tests/fixtures/scenario_v1_legacy.json` を使用します。
+
+### Gemini SDKのローカル依存関係
+
+Makefileはリポジトリの `.venv/bin/python` があれば優先し、なければ `python3` を使います。`PYTHON=...` で明示指定も可能です。今回確認した既存環境はPython 3.13.15、SDKは `google-genai==2.20.0` です。システムPythonにはSDKがなく、仮想環境を使わない実行で `No module named 'google'` が発生していました。
+
+SDKは [公式のgoogle-genai](https://googleapis.github.io/python-genai/) を `requirements-gemini.txt` にバージョン固定しました。uvが利用できる環境では `make setup-gemini` で未作成の仮想環境を作り、指定SDKを導入できます。既存仮想環境は作り直しません。pipを利用する場合は `python3 -m venv .venv` で新規環境を作成してから `.venv/bin/python -m pip install -r requirements-gemini.txt` を実行できます。SDK本体の版を固定していますが、推移依存はSDKの指定範囲で解決されます。
+
+`make check-sdk` は実SDKの `from google import genai` だけをネットワーク遮断下で確認し、Clientの生成もAPI呼び出しもしません。`make check` は引き続きSDK不要の無料テストです。依存関係の構築・import確認はprobe実行の許可を意味しません。
+
+### choice-ID監査（追加API不要の整備）
+
+共通Gatewayの各 `call_audit` レコードに `model_response`（宣言済みの最終回答JSON）、`choice_response`（元のchoice_id・amount・reason）、`materialized_action`（復元action）、`validation_status` を保存します。`run_id / run / turn / agent_id / attempt / call_id` でtransport監査と対応します。reasonは公開の行動理由であり、SDKの内部推論・thought・署名・生のresponseオブジェクトは取得・保存しません。認証値は環境内の秘密値と既知の秘密フィールドを除去し、回答に認証値が混入した場合は検証失敗とします。
+
+probeでは `decision.audit.json` に送信前・回答取得後・検証後を永続保存します。1TURN/8TURNでも同じレコードをcheckpointと最終resultへ保存します。監査書込失敗は即停止し、API再試行しません。researchの入場検証は元のchoice-IDによる再復元、構造化回答との一致、transportとの対応を必須にします。過去ログはそのまま保持し、欠けた元回答を推測で補完しません。
