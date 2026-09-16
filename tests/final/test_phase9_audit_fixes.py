@@ -1,7 +1,7 @@
 import hashlib,json,tempfile,unittest
 from pathlib import Path
 from homeostasis_core.gemini_agents import (
-    GeminiGateway,apply_structured_actions,build_private_views,country_response_schema,derive_event,eligible_result_paths,parse_country_json,pilot_is_eligible,
+    GeminiGateway,apply_structured_actions,build_private_views,coordinator_response_schema,country_response_schema,derive_event,eligible_result_paths,evaluator_response_schema,parse_country_json,pilot_is_eligible,
 )
 from homeostasis_core.resources import ResourceNetwork,SupplyLink
 
@@ -48,7 +48,7 @@ class AuditFixTests(unittest.TestCase):
             with self.assertRaises(ValueError):parse_country_json(json.dumps(bad),{"MIL","FOOD"})
     def test_world_pool_and_none_are_distinct(self):
         pool=self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"world_pool","resource":"food","amount":10,"target_country":None})
-        none=self.response("FOOD","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"none","resource":"food","amount":0,"target_country":None})
+        none=self.response("FOOD","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"none","resource":None,"amount":0,"target_country":None})
         parse_country_json(json.dumps(pool),{"MIL","FOOD"});parse_country_json(json.dumps(none),{"MIL","FOOD"})
         out=apply_structured_actions(self.states,{"MIL":pool,"FOOD":none},{"food":55,"energy":60,"economy":65,"environment":70,"international_trust":60,"conflict_load":30},0)
         self.assertEqual(out["world_pool"]["food"],10);self.assertEqual(out["country_states"]["MIL"]["resources"]["food"],58)
@@ -74,6 +74,18 @@ class AuditFixTests(unittest.TestCase):
         answers={"MIL":self.response("MIL","SUPPORT_LOGISTICS","ACCEPT",{"recipient_type":"country","resource":"logistics","amount":5,"target_country":"FOOD"}),"FOOD":self.response("FOOD","PROVIDE_FUNDS","ACCEPT",{"recipient_type":"country","resource":"funds_economy","amount":4,"target_country":"MIL"})}
         out=apply_structured_actions(self.states,answers,{"food":55,"energy":60,"economy":65,"environment":70,"international_trust":60,"conflict_load":30},0,world_pool={})
         self.assertEqual(out["country_states"]["FOOD"]["resources"]["logistics"],79);self.assertEqual(out["country_states"]["MIL"]["resources"]["funds_economy"],88);self.assertGreater(out["country_states"]["FOOD"]["indicators"]["domestic_stability"],67);self.assertGreater(out["country_states"]["MIL"]["indicators"]["economy"],82)
+    def test_econ_support_actions_share_world_pool_contract(self):
+        for action,resource in (("SUPPORT_LOGISTICS","logistics"),("PROVIDE_FUNDS","funds_economy")):
+            answer=self.response("MIL",action,"ACCEPT",{"recipient_type":"world_pool","target_country":None,"resource":resource,"amount":5})
+            parse_country_json(json.dumps(answer),{"MIL","FOOD"})
+            out=apply_structured_actions(self.states,{"MIL":answer,"FOOD":self.response("FOOD")},{"food":55,"energy":60,"economy":65,"environment":70,"international_trust":60,"conflict_load":30},0,world_pool={})
+            self.assertEqual(out["world_pool"][resource],5)
+    def test_all_agent_schemas_are_strict(self):
+        for schema in (coordinator_response_schema(),country_response_schema(("MIL","FOOD")),evaluator_response_schema()):
+            self.assertFalse(schema["additionalProperties"]);self.assertEqual(set(schema["required"]),set(schema["properties"]))
+    def test_aborted_fifth_pilot_is_immutable_and_excluded(self):
+        root=Path(__file__).parents[2];cp=root/"results/final/gemini-run-20260916-05.json.checkpoint";manifest=root/"results/final/gemini-run-20260916-05.audit.json";audit=json.loads(manifest.read_text())
+        self.assertEqual(hashlib.sha256(cp.read_bytes()).hexdigest(),audit["checkpoint_sha256"]);self.assertEqual(audit["status"],"aborted");self.assertFalse(audit["include_in_research_aggregation"]);self.assertFalse(audit["include_in_dashboard"]);self.assertFalse(audit["resume_allowed"]);self.assertNotIn(cp.name,(root/"dashboard_final.html").read_text())
     def test_rejected_third_pilot_is_immutable_and_excluded(self):
         root=Path(__file__).parents[2];result=root/"results/final/gemini-run-20260915-03.json";manifest=root/"results/final/gemini-run-20260915-03.audit.json";audit=json.loads(manifest.read_text())
         self.assertEqual(hashlib.sha256(result.read_bytes()).hexdigest(),audit["result_sha256"]);self.assertEqual(audit["status"],"rejected");self.assertFalse(audit["include_in_research_aggregation"]);self.assertFalse(audit["include_in_dashboard"]);self.assertNotIn(result,eligible_result_paths(result.parent));self.assertNotIn(result.name,(root/"dashboard_final.html").read_text())

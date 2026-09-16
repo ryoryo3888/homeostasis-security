@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "checkpoint_file": "gemini-run-20260916-05.json.checkpoint",
+  "checkpoint_sha256": "e2264ba7f7b51143ca541fe667bfedb85b779d8edbc6bb1b5c59ec0eb8e56fb0",
+  "classification": "回答契約検証で安全停止した不採用pilot",
+  "status": "aborted",
+  "stopped_at": "turn_1_country_response_validation",
+  "include_in_research_aggregation": false,
+  "include_in_dashboard": false,
+  "resume_allowed": false,
+  "reason": "ECON support action violated the recipient/resource contract after three attempts"
+}
