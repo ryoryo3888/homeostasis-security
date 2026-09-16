@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "checkpoint_file": "gemini-run-20260915-04.json.checkpoint",
+  "checkpoint_sha256": "3e857843c2b8ca301b7c896bdc890afb879927577c5fba7c6e08002e8f1a2e16",
+  "classification": "構造化出力検証で安全停止した不採用pilot",
+  "status": "aborted",
+  "stopped_at": "turn_3_country_response_validation",
+  "include_in_research_aggregation": false,
+  "include_in_dashboard": false,
+  "resume_allowed": false,
+  "reason": "FRAGILE omitted required target_country after three attempts"
+}
