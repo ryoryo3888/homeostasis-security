@@ -6,7 +6,7 @@ from typing import Any,Callable
 from .metrics import clamp,global_homeostasis
 from .models import CountryState,EnergyPortfolio,ResourcePortfolio,_score
 from .resources import ResourceNetwork,SupplyLink,process_resource_network
-from .feasibility import ACTION_IDS,feasible_actions,validate_action_feasible
+from .feasibility import ACTION_IDS,feasible_actions,settle_atomic_actions,validate_action_feasible
 MODEL_NAME="gemini-3.6-flash";SCHEMA_VERSION=2
 RESPONSE_IDS={"ACCEPT":"受け入れる","REJECT":"拒否する","CONDITIONAL":"条件付きで応じる"}
 RESOURCE_TYPES=("food","fossil_fuel","renewable_energy","nuclear","grid_storage_resilience","funds_economy","logistics")
@@ -127,47 +127,18 @@ def apply_structured_actions(country_states,answers,previous_world,damage,turn=1
         for c,a in sorted(answers.items()):
             if a["response_id"]=="CONDITIONAL" and c not in eligible and _condition_met(a,eligible,turn):eligible.add(c);changed=True
     for c in sorted(eligible):validate_action_feasible(c,answers[c]["action"],feasible_actions(c,country_states,world_pool,resource_network,network_policy))
-    unmet=sorted(c for c,a in answers.items() if a["response_id"]=="CONDITIONAL" and c not in eligible);counts={k:0 for k in ACTION_IDS};requests=[]
-    pool={r:float((world_pool or {}).get(r,0)) for r in RESOURCE_TYPES};draws=[];support=[];prior=network_policy or {};restricted=set(prior.get("restricted",()));suspended=set(prior.get("suspended",()));disrupted=set(prior.get("disrupted",()))
+    unmet=sorted(c for c,a in answers.items() if a["response_id"]=="CONDITIONAL" and c not in eligible);counts={k:0 for k in ACTION_IDS};prior=network_policy or {};restricted=set(prior.get("restricted",()));suspended=set(prior.get("suspended",()));disrupted=set(prior.get("disrupted",()))
+    intents={}
     for c in sorted(eligible):
         a=answers[c]["action"];counts[a["action_id"]]+=1
-        if a["action_id"]=="PROVIDE_RESOURCE":requests.append((c,a["parameters"]["recipient_type"],a["parameters"]["target_country"],a["parameters"]["resource"],a["parameters"]["amount"]))
-        elif a["action_id"]=="DRAW_WORLD_POOL":draws.append((c,a["parameters"]["target_country"],a["parameters"]["resource"],a["parameters"]["amount"]))
-        elif a["action_id"] in ("SUPPORT_LOGISTICS","PROVIDE_FUNDS"):
-            p=a["parameters"]
-            if p["recipient_type"]=="world_pool":requests.append((c,"world_pool",None,p["resource"],p["amount"]))
-            else:support.append((c,p["target_country"],p["resource"],p["amount"]))
-        elif a["action_id"]=="RESTRICT_EXPORTS":restricted.add(c)
+        intents[c]=a
+        if a["action_id"]=="RESTRICT_EXPORTS":restricted.add(c)
         elif a["action_id"]=="SUSPEND_SUPPLY":suspended.add(c)
         elif a["action_id"]=="DISRUPT_LOGISTICS":disrupted.add(c)
-    # Validate the whole turn before changing the copied state; no partial application.
-    for source,recipient,target,resource,amount in requests:
-        if source not in states or recipient not in ("country","world_pool","none"):raise ValueError("invalid resource recipient")
-        if recipient=="none":
-            if target is not None or resource is not None or amount!=0:raise ValueError("none recipient requires null resource and zero amount")
-            continue
-        if recipient=="country" and (target not in states or source==target):raise ValueError("unknown or invalid transfer country")
-        if resource not in states[source]["resources"] or (recipient=="country" and resource not in states[target]["resources"]):raise ValueError("unregistered resource")
-        if recipient!="country" and target is not None:raise ValueError("non-country recipient cannot have target_country")
-    for source,target,resource,amount in draws:
-        if target not in states or resource not in states[target]["resources"] or amount>pool[resource]:raise ValueError("world pool draw exceeds available stock or has invalid target")
-    for source,target,resource,amount in support:
-        if source not in states or target not in states or source==target or amount>states[source]["resources"][resource] or states[target]["resources"][resource]+amount>100:raise ValueError("invalid support transfer")
-    transfers=[]
-    for source,recipient,target,resource,amount in sorted(requests,key=lambda x:(x[0],x[1],str(x[2]),x[3])):
-        if recipient=="none":continue
-        headroom=100-states[target]["resources"][resource] if recipient=="country" else 100-pool[resource]
-        delivered=min(amount,states[source]["resources"][resource],headroom);states[source]["resources"][resource]-=delivered
-        if recipient=="country":states[target]["resources"][resource]+=delivered
-        else:pool[resource]+=delivered
-        transfers.append({"source":source,"recipient_type":recipient,"target_country":target,"resource":resource,"requested":amount,"delivered":delivered})
-    for source,target,resource,amount in sorted(draws):
-        pool[resource]-=amount;states[target]["resources"][resource]+=amount;transfers.append({"source":"world_pool","recipient_type":"country","target_country":target,"resource":resource,"requested":amount,"delivered":amount})
-    for source,target,resource,amount in sorted(support):
-        states[source]["resources"][resource]-=amount;states[target]["resources"][resource]+=amount;transfers.append({"source":source,"recipient_type":"country","target_country":target,"resource":resource,"requested":amount,"delivered":amount})
+    settlement=settle_atomic_actions(states,intents,world_pool);states=settlement["country_states"];pool=settlement["world_pool"];transfers=settlement["settlements"]
     network_transfers=[];consumption={}
     if resource_network is not None:
-        links=[];logistics_targets={target:amount for _,target,res,amount in support if res=="logistics"}
+        links=[];logistics_targets={x["target_country"]:x["realized"] for x in transfers if x["resource"]=="logistics" and x["recipient_type"]=="country"}
         for link in resource_network.links:
             active=link.active and link.source not in restricted|suspended
             capacity=clamp(link.transport_capacity-(35 if link.source in disrupted else 0)+(min(20,logistics_targets.get(link.target,0))))
@@ -177,12 +148,13 @@ def apply_structured_actions(country_states,answers,previous_world,damage,turn=1
         net=process_resource_network(country_objects,network)
         for c,obj in net.countries.items():states[c]["sovereignty"]=obj.sovereignty;states[c]["indicators"]=dict(obj.indicators);states[c]["resources"]=dict(obj.resources.levels)
         network_transfers=[x.to_dict() for x in net.transfers];consumption={c:dict(v) for c,v in network.demands.items()}
+    unmet_by_country={c:sum(x["unmet"] for x in transfers if x["agent_id"]==c or x["target_country"]==c) for c in states}
     for c,s in states.items():
-        s["indicators"]["food_reserves"]=s["resources"]["food"];s["indicators"]["energy_stability"]=clamp(.25*s["resources"]["fossil_fuel"]+.25*s["resources"]["renewable_energy"]+.2*s["resources"]["nuclear"]+.3*s["resources"]["grid_storage_resilience"]);s["indicators"]["economy"]=clamp(.7*s["indicators"]["economy"]+.3*s["resources"]["funds_economy"]-.02*damage/1000);s["indicators"]["domestic_stability"]=clamp(.8*s["indicators"]["domestic_stability"]+.2*s["resources"]["logistics"]);s["indicators"]["international_trust"]=clamp(s["indicators"]["international_trust"]+.2*counts["MEDIATE"]+.05*len(eligible));s["sovereignty"]=clamp(s["sovereignty"]-(answers[c]["sovereignty_burden"]*.03 if c in eligible else 0))
-    n=len(states);w={"food":(sum(s["resources"]["food"] for s in states.values())+pool["food"])/n,"energy":sum(s["indicators"]["energy_stability"] for s in states.values())/n+(pool["fossil_fuel"]+pool["renewable_energy"]+pool["nuclear"])/(3*n),"economy":sum(s["indicators"]["economy"] for s in states.values())/n+pool["funds_economy"]/n,"environment":clamp(previous_world["environment"]-.01*damage/1000),"international_trust":sum(s["indicators"]["international_trust"] for s in states.values())/n,"conflict_load":clamp(previous_world["conflict_load"]-.8*counts["MEDIATE"]-.35*counts["DEFENSIVE_ESCORT"]+.25*counts["PROTECT_RESERVES"]+.01*damage/1000)};w={k:clamp(v) for k,v in w.items()};w["global_homeostasis"]=global_homeostasis(w)
+        pressure=unmet_by_country[c];s["indicators"]["food_reserves"]=s["resources"]["food"];s["indicators"]["energy_stability"]=clamp(.25*s["resources"]["fossil_fuel"]+.25*s["resources"]["renewable_energy"]+.2*s["resources"]["nuclear"]+.3*s["resources"]["grid_storage_resilience"]);s["indicators"]["economy"]=clamp(.7*s["indicators"]["economy"]+.3*s["resources"]["funds_economy"]-.02*damage/1000-.01*pressure);s["indicators"]["domestic_stability"]=clamp(.8*s["indicators"]["domestic_stability"]+.2*s["resources"]["logistics"]-.03*pressure);s["indicators"]["international_trust"]=clamp(s["indicators"]["international_trust"]+.2*counts["MEDIATE"]+.05*len(eligible)-.01*pressure);s["sovereignty"]=clamp(s["sovereignty"]-(answers[c]["sovereignty_burden"]*.03 if c in eligible else 0))
+    n=len(states);w={"food":(sum(s["resources"]["food"] for s in states.values())+pool["food"])/n,"energy":sum(s["indicators"]["energy_stability"] for s in states.values())/n+(pool["fossil_fuel"]+pool["renewable_energy"]+pool["nuclear"])/(3*n),"economy":sum(s["indicators"]["economy"] for s in states.values())/n+pool["funds_economy"]/n,"environment":clamp(previous_world["environment"]-.01*damage/1000),"international_trust":sum(s["indicators"]["international_trust"] for s in states.values())/n,"conflict_load":clamp(previous_world["conflict_load"]-.8*counts["MEDIATE"]-.35*counts["DEFENSIVE_ESCORT"]+.25*counts["PROTECT_RESERVES"]+.01*damage/1000+.02*settlement["total_unmet"])};w={k:clamp(v) for k,v in w.items()};w["global_homeostasis"]=global_homeostasis(w)
     research={"global_homeostasis":w["global_homeostasis"],"national_sovereignty":sum(s["sovereignty"] for s in states.values())/n,"resource_stability":((sum(sum(s["resources"].values()) for s in states.values())+sum(pool.values()))/(n*len(RESOURCE_TYPES))),"resilience":sum(s["indicators"]["recovery_capacity"] for s in states.values())/n,"conflict_load":w["conflict_load"]}
-    causal={"event":None,"damage":damage,"accepted_actions":{c:answers[c]["action"]["action_id"] for c in sorted(eligible)},"direct_transfers":transfers,"network_transfers":network_transfers,"network_consumption":consumption,"world_after":w}
-    return {"true_world":w,"country_states":states,"world_pool":pool,"transfers":transfers,"network_transfers":network_transfers,"network_consumption":consumption,"network_policy":{"restricted":sorted(restricted),"suspended":sorted(suspended),"disrupted":sorted(disrupted)},"causal_record":causal,"research_metrics":research,"action_counts":counts,"participants":sorted(eligible),"rejected":sorted(c for c,a in answers.items() if a["response_id"]=="REJECT"),"condition_unmet":unmet}
+    causal={"event":None,"damage":damage,"accepted_actions":{c:answers[c]["action"]["action_id"] for c in sorted(eligible)},"atomic_settlements":transfers,"unmet_resource_demand":settlement["total_unmet"],"direct_transfers":transfers,"network_transfers":network_transfers,"network_consumption":consumption,"world_after":w}
+    return {"true_world":w,"country_states":states,"world_pool":pool,"transfers":transfers,"atomic_settlements":transfers,"total_unmet":settlement["total_unmet"],"network_transfers":network_transfers,"network_consumption":consumption,"network_policy":{"restricted":sorted(restricted),"suspended":sorted(suspended),"disrupted":sorted(disrupted)},"causal_record":causal,"research_metrics":research,"action_counts":counts,"participants":sorted(eligible),"rejected":sorted(c for c,a in answers.items() if a["response_id"]=="REJECT"),"condition_unmet":unmet}
 def derive_event(world,history,counts):
     pressure=(100-world["food"])+(100-world["international_trust"])+world["conflict_load"]+history["reserve_gap"]+history["alertness"]
     if counts.get("SUSPEND_SUPPLY",0)+counts.get("RESTRICT_EXPORTS",0)+counts.get("DISRUPT_LOGISTICS",0)>=1:return "供給網分断と輸出圧力"

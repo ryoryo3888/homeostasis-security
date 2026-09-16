@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "checkpoint_file": "gemini-run-20260916-07.json.checkpoint",
+  "checkpoint_sha256": "9912866f01c35650a0c1ac483e17b1ca825086553f0cbb0809ca381f02bb1f6c",
+  "classification": "同時資源競合で安全停止した不採用pilot",
+  "status": "aborted",
+  "stopped_at": "turn_5_atomic_settlement",
+  "include_in_research_aggregation": false,
+  "include_in_dashboard": false,
+  "resume_allowed": false,
+  "reason": "individually feasible actions exceeded shared pool and receiver capacities without joint proportional settlement"
+}
