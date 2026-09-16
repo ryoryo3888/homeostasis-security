@@ -14,7 +14,7 @@ class Models:
         if self.invalid:return Response("{}")
         if "observable_world" in data:return Response(json.dumps({"proposal_id":"proposal-1","proposal_type":"食料援助","reason":"r","predicted_global_effect":60,"predicted_sovereignty_burden":5,"requested_action":"cooperate"}))
         if "executed_true_state" in data:return Response(json.dumps({"national_sovereignty":80,"global_homeostasis":75,"resource_stability":70,"resilience":72,"conflict_load":20,"history_effect":30,"assessment":"stable"}))
-        return Response(json.dumps({"country_id":data["turn_start_observation"]["own_country"],"proposal_id":data["current_proposal"]["proposal_id"],"response_id":"ACCEPT","response_label":"受け入れる","reason":"r","conditions":{},"self_interest":60,"sovereignty_burden":5,"perceived_global_effect":60,"action":{"action_id":"MEDIATE","description":"mediate","parameters":{}}}))
+        return Response(json.dumps({"country_id":data["turn_start_observation"]["own_country"],"proposal_id":data["current_proposal"]["proposal_id"],"response_id":"ACCEPT","response_label":"受け入れる","reason":"r","conditions":{},"self_interest":60,"sovereignty_burden":5,"perceived_global_effect":60,"action":{"action_id":"MEDIATE","description":"mediate","parameters":{"recipient_type":"none","target_country":None,"resource":None,"amount":0}}}))
 class Client:
     def __init__(self,invalid=False):self.models=Models(invalid)
 class InterruptingModels(Models):
@@ -36,7 +36,7 @@ class GeminiFinalTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):g.call("MIL",1,1,{},parse_country_json)
         self.assertEqual(len(g.calls),3)
     def test_structured_conditions_reject_bool_and_identity_mismatch(self):
-        invalid={"country_id":"A","proposal_id":"p","response_id":"CONDITIONAL","response_label":"条件付きで応じる","reason":"r","conditions":{"minimum_aid_amount":True},"self_interest":50,"sovereignty_burden":5,"perceived_global_effect":50,"action":{"action_id":"NO_ACTION","description":"none","parameters":{}}}
+        invalid={"country_id":"A","proposal_id":"p","response_id":"CONDITIONAL","response_label":"条件付きで応じる","reason":"r","conditions":{"minimum_aid_amount":True},"self_interest":50,"sovereignty_burden":5,"perceived_global_effect":50,"action":{"action_id":"NO_ACTION","description":"none","parameters":{"recipient_type":"none","target_country":None,"resource":None,"amount":0}}}
         with self.assertRaises(ValueError):parse_country_json(json.dumps(invalid))
         class WrongModels(Models):
             def generate_content(self,**kw):
@@ -58,7 +58,7 @@ class GeminiFinalTests(unittest.TestCase):
         self.assertTrue(out["response_convergence"])
     def test_call_audit_has_no_prompt_or_secret(self):
         class StaticModels:
-            def generate_content(self,**kw):return Response(json.dumps({"country_id":"MIL","proposal_id":"p","response_id":"ACCEPT","response_label":"受け入れる","reason":"r","conditions":{},"self_interest":60,"sovereignty_burden":5,"perceived_global_effect":60,"action":{"action_id":"NO_ACTION","description":"none","parameters":{}}}))
+            def generate_content(self,**kw):return Response(json.dumps({"country_id":"MIL","proposal_id":"p","response_id":"ACCEPT","response_label":"受け入れる","reason":"r","conditions":{},"self_interest":60,"sovereignty_burden":5,"perceived_global_effect":60,"action":{"action_id":"NO_ACTION","description":"none","parameters":{"recipient_type":"none","target_country":None,"resource":None,"amount":0}}}))
         g=GeminiGateway(type("StaticClient",(),{"models":StaticModels()})(),max_calls=1);g.call("MIL",1,1,{"private":"x"},parse_country_json)
         self.assertNotIn("GEMINI_API_KEY",json.dumps(g.calls[0]));self.assertEqual(g.calls[0]["token_usage"]["total_tokens"],15)
     def test_existing_output_stops_before_api(self):

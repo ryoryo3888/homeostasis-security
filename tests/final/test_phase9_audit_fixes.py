@@ -1,7 +1,7 @@
 import hashlib,json,tempfile,unittest
 from pathlib import Path
 from homeostasis_core.gemini_agents import (
-    GeminiGateway,apply_structured_actions,build_private_views,derive_event,eligible_result_paths,parse_country_json,pilot_is_eligible,
+    GeminiGateway,apply_structured_actions,build_private_views,country_response_schema,derive_event,eligible_result_paths,parse_country_json,pilot_is_eligible,
 )
 from homeostasis_core.resources import ResourceNetwork,SupplyLink
 
@@ -13,7 +13,7 @@ class AuditFixTests(unittest.TestCase):
         }
     def response(self,c,action="NO_ACTION",response="REJECT",params=None):
         labels={"ACCEPT":"受け入れる","REJECT":"拒否する","CONDITIONAL":"条件付きで応じる"}
-        return {"country_id":c,"proposal_id":"p","response_id":response,"response_label":labels[response],"reason":"r","conditions":({"required_countries":["MIL"],"maximum_sovereignty_burden":20} if response=="CONDITIONAL" else {}),"self_interest":50,"sovereignty_burden":10,"perceived_global_effect":50,"action":{"action_id":action,"description":"d","parameters":params or {}}}
+        return {"country_id":c,"proposal_id":"p","response_id":response,"response_label":labels[response],"reason":"r","conditions":({"required_countries":["MIL"],"maximum_sovereignty_burden":20} if response=="CONDITIONAL" else {}),"self_interest":50,"sovereignty_burden":10,"perceived_global_effect":50,"action":{"action_id":action,"description":"d","parameters":params if params is not None else {"recipient_type":"none","target_country":None,"resource":None,"amount":0}}}
     def test_private_views_include_only_own_archetype_and_state(self):
         views=build_private_views("s1",1,{"food":60},self.states,{"MIL":90,"FOOD":80})
         self.assertEqual(views["MIL"]["archetype"],"軍事大国");self.assertEqual(views["FOOD"]["own_state"]["food_reserves"],42)
@@ -62,21 +62,27 @@ class AuditFixTests(unittest.TestCase):
     def test_world_pool_persists_and_distributes_without_creation(self):
         donate={"MIL":self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"world_pool","resource":"food","amount":10,"target_country":None}),"FOOD":self.response("FOOD")};world={"food":55,"energy":60,"economy":65,"environment":70,"international_trust":60,"conflict_load":30}
         one=apply_structured_actions(self.states,donate,world,0,world_pool={})
-        draw={"MIL":self.response("MIL"),"FOOD":self.response("FOOD","DRAW_WORLD_POOL","ACCEPT",{"resource":"food","amount":6,"target_country":"FOOD"})}
+        draw={"MIL":self.response("MIL"),"FOOD":self.response("FOOD","DRAW_WORLD_POOL","ACCEPT",{"recipient_type":"country","resource":"food","amount":6,"target_country":"FOOD"})}
         two=apply_structured_actions(one["country_states"],draw,one["true_world"],0,world_pool=one["world_pool"])
         self.assertEqual(two["world_pool"]["food"],4);self.assertEqual(two["country_states"]["FOOD"]["resources"]["food"],48)
         self.assertEqual(sum(x["resources"]["food"] for x in two["country_states"].values())+two["world_pool"]["food"],sum(x["resources"]["food"] for x in self.states.values()))
     def test_world_pool_overdraw_is_rejected_atomically(self):
-        draw={"MIL":self.response("MIL"),"FOOD":self.response("FOOD","DRAW_WORLD_POOL","ACCEPT",{"resource":"food","amount":6,"target_country":"FOOD"})};before=json.loads(json.dumps(self.states))
+        draw={"MIL":self.response("MIL"),"FOOD":self.response("FOOD","DRAW_WORLD_POOL","ACCEPT",{"recipient_type":"country","resource":"food","amount":6,"target_country":"FOOD"})};before=json.loads(json.dumps(self.states))
         with self.assertRaises(ValueError):apply_structured_actions(self.states,draw,{"food":55,"energy":60,"economy":65,"environment":70,"international_trust":60,"conflict_load":30},0,world_pool={"food":5})
         self.assertEqual(self.states,before)
     def test_funds_and_logistics_actions_change_recipient_state(self):
-        answers={"MIL":self.response("MIL","SUPPORT_LOGISTICS","ACCEPT",{"amount":5,"target_country":"FOOD"}),"FOOD":self.response("FOOD","PROVIDE_FUNDS","ACCEPT",{"amount":4,"target_country":"MIL"})}
+        answers={"MIL":self.response("MIL","SUPPORT_LOGISTICS","ACCEPT",{"recipient_type":"country","resource":"logistics","amount":5,"target_country":"FOOD"}),"FOOD":self.response("FOOD","PROVIDE_FUNDS","ACCEPT",{"recipient_type":"country","resource":"funds_economy","amount":4,"target_country":"MIL"})}
         out=apply_structured_actions(self.states,answers,{"food":55,"energy":60,"economy":65,"environment":70,"international_trust":60,"conflict_load":30},0,world_pool={})
         self.assertEqual(out["country_states"]["FOOD"]["resources"]["logistics"],79);self.assertEqual(out["country_states"]["MIL"]["resources"]["funds_economy"],88);self.assertGreater(out["country_states"]["FOOD"]["indicators"]["domestic_stability"],67);self.assertGreater(out["country_states"]["MIL"]["indicators"]["economy"],82)
     def test_rejected_third_pilot_is_immutable_and_excluded(self):
         root=Path(__file__).parents[2];result=root/"results/final/gemini-run-20260915-03.json";manifest=root/"results/final/gemini-run-20260915-03.audit.json";audit=json.loads(manifest.read_text())
         self.assertEqual(hashlib.sha256(result.read_bytes()).hexdigest(),audit["result_sha256"]);self.assertEqual(audit["status"],"rejected");self.assertFalse(audit["include_in_research_aggregation"]);self.assertFalse(audit["include_in_dashboard"]);self.assertNotIn(result,eligible_result_paths(result.parent));self.assertNotIn(result.name,(root/"dashboard_final.html").read_text())
+    def test_target_country_is_required_by_sdk_schema(self):
+        schema=country_response_schema(("MIL","FOOD"));params=schema["properties"]["action"]["properties"]["parameters"]
+        self.assertIn("target_country",params["required"]);self.assertEqual(params["properties"]["target_country"]["type"],["string","null"])
+    def test_aborted_fourth_pilot_is_immutable_and_excluded(self):
+        root=Path(__file__).parents[2];cp=root/"results/final/gemini-run-20260915-04.json.checkpoint";manifest=root/"results/final/gemini-run-20260915-04.audit.json";audit=json.loads(manifest.read_text())
+        self.assertEqual(hashlib.sha256(cp.read_bytes()).hexdigest(),audit["checkpoint_sha256"]);self.assertEqual(audit["status"],"aborted");self.assertFalse(audit["include_in_research_aggregation"]);self.assertFalse(audit["include_in_dashboard"]);self.assertNotIn(cp.name,(root/"dashboard_final.html").read_text())
     def test_phase2_network_moves_resources_and_supply_stop_persists(self):
         network=ResourceNetwork(1,(SupplyLink("mil-food","MIL","FOOD","food",10,100,100,True),),{},("food",))
         accept={"MIL":self.response("MIL","NO_ACTION","ACCEPT"),"FOOD":self.response("FOOD")};world={"food":55,"energy":60,"economy":65,"environment":70,"international_trust":60,"conflict_load":30}
@@ -92,11 +98,12 @@ class AuditFixTests(unittest.TestCase):
             usage_metadata=None
             def __init__(self,x):self.text=json.dumps(x)
         class M:
-            def __init__(self):self.payloads=[]
-            def generate_content(s,**kw):s.payloads.append(json.loads(kw["contents"]));return R(invalid if len(s.payloads)==1 else valid)
+            def __init__(self):self.payloads=[];self.configs=[]
+            def generate_content(s,**kw):s.payloads.append(json.loads(kw["contents"]));s.configs.append(kw["config"]);return R(invalid if len(s.payloads)==1 else valid)
         client=type("C",(),{})();client.models=M();g=GeminiGateway(client,retry_limit=2,sleep_fn=lambda _:None)
-        got=g.call("MIL",1,1,{},lambda text:parse_country_json(text,{"MIL","FOOD"}))
-        self.assertEqual(got["action"]["parameters"]["target_country"],"FOOD");self.assertIn("validation_feedback",client.models.payloads[1])
+        schema=country_response_schema(("MIL","FOOD"));help_data={"allowed_country_ids":["MIL","FOOD"],"correct_json_examples":{"country":{"recipient_type":"country","target_country":"FOOD","resource":"food","amount":5}}}
+        got=g.call("MIL",1,1,{},lambda text:parse_country_json(text,{"MIL","FOOD"}),json_schema=schema,validation_help=help_data)
+        feedback=client.models.payloads[1]["validation_feedback"];self.assertEqual(got["action"]["parameters"]["target_country"],"FOOD");self.assertEqual(feedback["allowed_country_ids"],["MIL","FOOD"]);self.assertIn("country",feedback["correct_json_examples"]);self.assertEqual(client.models.configs[0]["response_json_schema"],schema)
     def test_invalid_target_stops_after_retry_limit(self):
         invalid=self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"country","resource":"food","amount":5,"target_country":"GLOBAL"})
         class R:
