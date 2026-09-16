@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HOMEOSTASIS SECURITY v2｜地球規模の恒常性</title>
+<style>
+:root{color-scheme:dark;--bg:#030b14;--panel:#071827;--panel2:#0b2132;--line:rgba(91,220,247,.2);--cyan:#67e8f9;--cyan2:#22d3ee;--magenta:#d88cff;--amber:#fbbf24;--green:#34d399;--red:#fb7185;--text:#edf7fb;--muted:#96afbb}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% -10%,#16364c 0,#071522 34%,var(--bg) 72%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Segoe UI",sans-serif;line-height:1.55}
+button,a{font:inherit}.shell{width:min(1500px,calc(100% - 28px));margin:auto;padding:14px 0 42px}.panel{background:linear-gradient(180deg,rgba(8,27,42,.94),rgba(3,15,25,.95));border:1px solid var(--line);border-radius:14px;box-shadow:inset 0 0 30px rgba(34,211,238,.025),0 16px 45px rgba(0,0,0,.22)}
+.mast{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(480px,1.5fr);gap:12px;margin-bottom:12px}.brand{padding:18px 20px}.brand-en{color:var(--cyan);font-size:20px;font-weight:800;letter-spacing:.035em}.brand h1{font-size:22px;margin:5px 0 0}.brand p{font-size:12px;color:var(--muted);margin:8px 0 0}.experiment-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.experiment-meta span{padding:4px 7px;border:1px solid rgba(103,232,249,.22);border-radius:5px;background:#081d2c;color:#c7eaf0;font-size:10px}.experiment-meta span:first-child{color:var(--cyan);font-weight:800}.version-switch{display:flex;gap:8px;margin-top:15px}.version-switch a{padding:8px 12px;border:1px solid var(--line);border-radius:8px;color:#b9ced7;text-decoration:none;font-weight:700;font-size:13px}.version-switch a.active{background:#0e4556;color:#eaffff;border-color:var(--cyan);box-shadow:0 0 14px rgba(103,232,249,.16)}
+.origin{padding:16px 20px;display:grid;grid-template-columns:1fr 1.15fr 1.45fr;gap:1px;background:var(--line)}.origin>div{background:#061522;padding:12px 15px}.origin b{display:block;color:var(--cyan);font-size:11px;letter-spacing:.1em;margin-bottom:5px}.origin strong{font-size:14px}.origin .event strong{color:#fff}.origin .impact strong{color:#ff9bae}.flow{grid-column:1/-1;text-align:center;background:#092234!important;color:#bfeef6;font-weight:700;font-size:13px;padding:8px!important}.flow span{color:var(--magenta)}
+.controls{display:flex;flex-direction:column;align-items:stretch;gap:8px;padding:10px 14px;margin-bottom:12px;position:sticky;top:0;z-index:30;backdrop-filter:blur(12px)}.turn-operations{display:flex;align-items:center;gap:16px;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto}.turn-label{color:var(--cyan);font-size:13px;font-weight:800;letter-spacing:.1em;flex-shrink:0}.turn-label strong{color:#fff;font-size:24px;margin-left:7px}.turn-buttons{display:flex;flex-wrap:nowrap;gap:6px;white-space:nowrap}.turn-button{width:38px;height:34px;flex-shrink:0;border:1px solid var(--line);border-radius:7px;background:#081827;color:#a9c3cf;font-weight:800;cursor:pointer}.turn-button:hover,.turn-button:focus-visible{border-color:var(--cyan)}.turn-button.active{background:#125064;color:#fff;border-color:var(--cyan);box-shadow:0 0 11px rgba(103,232,249,.32)}.nav-button{width:auto;padding:0 13px}.event-now{color:#d5e5eb;font-size:13px}.event-now b{color:var(--cyan)}
+.hero{display:grid;grid-template-columns:290px minmax(440px,1fr) 320px;gap:12px;align-items:stretch}.agent-stack{display:grid;gap:10px}.agent{padding:13px 14px}.agent h2{font-size:16px;color:var(--cyan);margin:0 0 8px}.agent.c h2{color:var(--magenta)}.agent dl{margin:0;display:grid;grid-template-columns:68px 1fr;gap:4px 8px;font-size:12px}.agent dt{color:#7898a6}.agent dd{margin:0}.agent .action{margin-top:9px;padding-top:8px;border-top:1px solid var(--line);color:#fff;font-weight:700;font-size:13px}.agent .response{color:#bcebf2;font-size:12px;margin-top:4px}.agent details{margin-top:7px;font-size:11px;color:#a9c0cb}.agent summary{cursor:pointer;color:#7edfee}.agent details p{margin:5px 0 0}
+.earth-panel{padding:14px 18px;text-align:center;position:relative;overflow:hidden}.earth-panel:before{content:"";position:absolute;inset:10% 14%;background:radial-gradient(circle,rgba(41,184,226,.13),transparent 64%);pointer-events:none}.question{color:#b4ccd6;font-size:13px;margin:0}.question strong{color:#fff}.earth-wrap{width:min(390px,75%);aspect-ratio:1;margin:4px auto 2px;position:relative;display:grid;place-items:center}.earth-wrap:before,.earth-wrap:after{content:"";position:absolute;inset:2%;border:1px solid rgba(103,232,249,.3);border-radius:50%;animation:orbit 14s linear infinite}.earth-wrap:after{inset:10%;border-style:dashed;animation-direction:reverse;animation-duration:20s}.earth{position:relative;z-index:2;width:80%;aspect-ratio:1;border-radius:50%;object-fit:cover;filter:saturate(.82) contrast(1.08) brightness(.82);box-shadow:0 0 25px rgba(51,215,247,.32),0 0 75px rgba(31,130,210,.25);animation:pulse 5s ease-in-out infinite}.sat-orbit{position:absolute;left:50%;top:50%;width:98%;height:62%;z-index:4;pointer-events:none;transform:translate(-50%,-50%) rotate(12deg)}.sat-orbit.two{width:90%;height:78%;transform:translate(-50%,-50%) rotate(-32deg)}.sat-orbit.three{width:78%;height:96%;transform:translate(-50%,-50%) rotate(48deg)}.sat-runner{position:absolute;inset:0;animation:satelliteOrbit 26s linear infinite}.sat-orbit.two .sat-runner{animation-duration:34s;animation-direction:reverse;animation-delay:-12s}.sat-orbit.three .sat-runner{animation-duration:42s;animation-delay:-27s}.satellite{position:absolute;left:-11px;top:calc(50% - 7px);width:25px;height:14px;filter:drop-shadow(0 0 4px rgba(180,247,255,.95)) drop-shadow(0 0 9px rgba(60,210,255,.65));transform:rotate(-12deg)}.satellite .body{fill:#d9fbff;stroke:#67e8f9;stroke-width:.8}.satellite .panel{fill:#237f9e;stroke:#8cf4ff;stroke-width:.7}.satellite .mast-line{stroke:#d9fbff;stroke-width:1}.sat-orbit.two .satellite{transform:rotate(32deg) scale(.88)}.sat-orbit.three .satellite{transform:rotate(-48deg) scale(.78)}@keyframes orbit{to{transform:rotate(360deg)}}@keyframes satelliteOrbit{to{transform:rotate(360deg)}}@keyframes pulse{50%{transform:scale(1.018);box-shadow:0 0 35px rgba(51,215,247,.42),0 0 95px rgba(31,130,210,.3)}}@media(prefers-reduced-motion:reduce){.earth-wrap:before,.earth-wrap:after,.earth,.sat-runner{animation:none!important}}
+.primary-kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative}.primary-kpi{padding:12px;background:rgba(6,24,38,.8);border-top:2px solid var(--cyan)}.primary-kpi.sovereignty{border-color:var(--magenta)}.primary-kpi span{display:block;color:var(--muted);font-size:11px}.primary-kpi strong{font-size:32px;color:var(--cyan)}.primary-kpi.sovereignty strong{color:var(--magenta)}
+.coordinator{padding:14px}.coordinator h2{font-size:16px;color:var(--magenta);margin:0 0 6px}.coordinator .role{font-size:11px;color:var(--muted);margin-bottom:13px}.proposal{padding:13px;background:#10263a;border-left:3px solid var(--magenta);font-size:15px;font-weight:800}.proposal-reason,.evaluation{margin-top:8px;color:#b9ccd5;font-size:11px;line-height:1.55}.evaluation{padding:9px;border:1px solid rgba(103,232,249,.14);border-radius:7px;background:rgba(5,21,33,.75)}.evaluation b{color:var(--cyan)}.responses{display:grid;gap:8px;margin-top:10px}.response-row{display:grid;grid-template-columns:32px 1fr;gap:8px;padding:9px;border:1px solid var(--line);border-radius:8px;font-size:12px}.response-row b{color:var(--cyan)}.response-row.reject span{color:#ff9bae}.response-row.conditional span{color:#ff9bae}.damage{margin-top:12px;padding:11px;border:1px solid rgba(216,140,255,.3);background:rgba(63,16,54,.28);border-radius:9px}.damage b{display:flex;justify-content:space-between;color:#ff9bae;font-size:12px}.bar-track{height:8px;background:#2d3640;border-radius:9px;overflow:hidden;margin:8px 0 5px}.bar-fill{height:100%;background:linear-gradient(90deg,var(--magenta),var(--red));transition:width .25s}.damage small{color:#efb9d4}
+.section-title{margin:24px 3px 10px;color:var(--cyan);font-size:13px;letter-spacing:.12em}.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}.metric{padding:12px}.metric span{display:block;color:var(--muted);font-size:11px}.metric strong{font-size:25px}.metric .mini{height:5px;background:#243644;border-radius:5px;margin-top:8px;overflow:hidden}.metric .mini i{display:block;height:100%;background:var(--cyan2)}.metric.conflict .mini i{background:var(--red)}
+.lower{display:grid;grid-template-columns:1.25fr .75fr;gap:12px}.timeline,.log{padding:15px}.timeline h2,.log h2{font-size:16px;margin:0 0 9px}.timeline svg{display:block;width:100%;height:auto;max-height:330px}.legend{display:flex;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:10px}.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}.log-list{display:grid;gap:7px;max-height:300px;overflow:auto}.log-item{padding:8px 10px;border-left:2px solid var(--cyan);background:#081b2a;font-size:12px}.log-item b{color:var(--cyan);margin-right:7px}.result{display:none;margin-top:12px;padding:16px;text-align:center;border:1px solid rgba(52,211,153,.4);background:rgba(8,63,51,.32);border-radius:12px}.result.visible{display:block}.result strong{font-size:24px;color:#87f5ce}.result p{margin:5px 0 0;color:#c8e6dc}
+@media(max-width:1100px){.mast{grid-template-columns:1fr}.hero{grid-template-columns:250px minmax(390px,1fr)}.coordinator{grid-column:1/-1}.metrics{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.shell{width:min(100% - 16px,1500px)}.origin{grid-template-columns:1fr}.event-now{width:100%}.hero{grid-template-columns:1fr}.agent-stack{grid-template-columns:1fr}.earth-panel{order:-1}.metrics{grid-template-columns:repeat(2,1fr)}.lower{grid-template-columns:1fr}.origin .flow{grid-column:1}.primary-kpi strong{font-size:27px}}
+</style>
+
+<!-- HOMEOSTASIS_UI_SYSTEM_PREVIEW -->
+<style>
+/* HOMEOSTASIS SECURITY — shared visual shell
+   Visual-only. Do not alter content, data, charts, Earth behavior, or research structure. */
+:root{
+  --hs-bg:#030b14;
+  --hs-bg-deep:#07111d;
+  --hs-panel:#071827;
+  --hs-panel-2:#0b2132;
+  --hs-line:rgba(91,220,247,.20);
+  --hs-line-strong:rgba(103,232,249,.28);
+  --hs-cyan:#67e8f9;
+  --hs-cyan-2:#22d3ee;
+  --hs-magenta:#d88cff;
+  --hs-amber:#fbbf24;
+  --hs-green:#34d399;
+  --hs-red:#fb7185;
+  --hs-text:#edf7fb;
+  --hs-muted:#96afbb;
+  --hs-radius:14px;
+  --hs-radius-small:9px;
+  --hs-gap:10px;
+  --hs-panel-bg:linear-gradient(180deg,rgba(8,27,42,.94),rgba(3,15,25,.95));
+  --hs-panel-shadow:inset 0 0 30px rgba(34,211,238,.025),0 16px 45px rgba(0,0,0,.22);
+}
+html{color-scheme:dark;scroll-behavior:smooth}
+body{
+  background:radial-gradient(circle at 50% -10%,#16364c 0,#071522 34%,var(--hs-bg) 72%)!important;
+  color:var(--hs-text)!important;
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Segoe UI",sans-serif!important;
+  line-height:1.55;
+}
+/* Shared shell surfaces. Existing geometry remains version-specific. */
+.panel,.brand-panel,.global-status,.turn-panel,.country-panel,.earth-panel,.event-panel,.card,.simulation-control{
+  border-color:var(--hs-line)!important;
+  border-radius:var(--hs-radius)!important;
+  box-shadow:var(--hs-panel-shadow)!important;
+}
+.panel,.brand-panel,.global-status,.turn-panel,.country-panel,.earth-panel,.event-panel{
+  background:var(--hs-panel-bg)!important;
+}
+/* Brand language */
+.brand-en,.control-name,.section-title,.turn-label,.global-status h2,.event-panel h2{
+  color:var(--hs-cyan)!important;
+}
+.brand-en{font-size:20px!important;font-weight:800!important;letter-spacing:.035em!important}
+/* Version navigation */
+.version-switch{display:flex;gap:8px;margin-top:12px;max-width:100%}
+.version-switch a,.version-switch span{
+  padding:7px 10px!important;
+  border:1px solid var(--hs-line)!important;
+  border-radius:8px!important;
+  background:rgba(8,29,44,.58);
+  color:#b9ced7!important;
+  text-decoration:none!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  line-height:1.2;
+}
+.version-switch .active,.version-switch span[aria-current="page"],.version-switch span{
+  background:#0e4556!important;
+  color:#eaffff!important;
+  border-color:var(--hs-cyan)!important;
+  box-shadow:0 0 14px rgba(103,232,249,.16)!important;
+}
+.version-switch a:hover,.version-switch a:focus-visible{border-color:var(--hs-cyan)!important;color:#eaffff!important}
+/* Controls */
+.turn-button{
+  border-color:var(--hs-line)!important;
+  border-radius:7px!important;
+  background:#081827!important;
+  color:#a9c3cf!important;
+  font-weight:800!important;
+}
+.turn-button:hover,.turn-button:focus-visible{border-color:var(--hs-cyan)!important}
+.turn-button.active{
+  color:#fff!important;
+  border-color:var(--hs-cyan)!important;
+  background:#125064!important;
+  box-shadow:0 0 11px rgba(103,232,249,.32)!important;
+}
+select{
+  background:#081827!important;
+  color:var(--hs-text)!important;
+  border:1px solid var(--hs-line)!important;
+  border-radius:7px!important;
+}
+/* Shared card surface language without changing card layout/content. */
+.metric-card,.metric,.primary-kpi,.country-summary>div,.country-block,.response-row,.evaluation,.log-item{
+  border-color:rgba(103,232,249,.15)!important;
+  border-radius:var(--hs-radius-small)!important;
+}
+.metric-card,.metric,.primary-kpi,.country-summary>div,.country-block,.evaluation,.log-item{
+  background:rgba(6,24,38,.72)!important;
+}
+.metric-card span,.metric span,.primary-kpi span,.run-state,.small,.note{color:var(--hs-muted)!important}
+.metric-card strong,.metric strong,.primary-kpi strong{color:var(--hs-cyan)!important}
+/* Keep magenta as the shared secondary/system-B accent. */
+.country-b,.agent.c,.primary-kpi.sovereignty{--hs-local-accent:var(--hs-magenta)}
+.country-b h2,.agent.c h2,.primary-kpi.sovereignty strong,.coordinator h2{color:var(--hs-magenta)!important}
+/* Graph/table framing only; never alter data/series/axes. */
+.card,.timeline,.log{border-color:var(--hs-line)!important}
+.legend{color:var(--hs-muted)!important}
+th,td{border-color:rgba(91,220,247,.16)!important}
+/* Earth is intentionally NOT normalized here.
+   v1 keeps A/B communications; v2 keeps three satellites; future versions evolve independently. */
+
+</style>
+</head>
+<body>
+<main class="shell">
+  <section class="mast">
+    <div class="brand panel">
+      <div class="brand-en">HOMEOSTASIS SECURITY v2</div>
+      <h1>地球規模の恒常性シミュレーション</h1>
+      <p>国家主権を維持したまま、地球規模の恒常性は成立するのか？</p>
+      <div class="experiment-meta"><span>Gemini Agent 実験結果</span><span>1 run／5ターン</span><span>A国・B国・C国・地球調整機関・Evaluator</span><span>gemini-3.6-flash</span></div>
+      <nav class="version-switch" aria-label="バージョン切替">
+        <a href="dashboard_v1.html">v1：二国間の恒常性</a>
+        <a href="dashboard_v2.html" class="active" aria-current="page">v2：地球規模の恒常性</a>
+      </nav>
+    </div>
+    <div class="origin panel">
+      <div><b>発生元</b><strong>v1 二国間の恒常性シミュレーション／第3ターン</strong></div>
+      <div class="event"><b>事件</b><strong>A国のミサイルがB国の民間農地へ着弾</strong></div>
+      <div class="impact"><b>影響</b><strong>米8,000t相当の年間生産能力を喪失／復旧まで4ターン</strong></div>
+      <div class="flow">v1 局所イベント <span>から</span> 食料・経済・外交を通じて v2 地球状態へ波及</div>
+    </div>
+  </section>
+
+  <section class="controls panel" aria-label="ターン操作">
+    <div class="turn-operations">
+    <div class="turn-label">CURRENT TURN <strong id="turnNumber">1</strong> / 5</div>
+    <div class="turn-buttons">
+      <button class="turn-button nav-button" id="prevTurn" type="button">‹ 前へ</button>
+      <button class="turn-button direct active" data-turn="1" type="button">1</button>
+      <button class="turn-button direct" data-turn="2" type="button">2</button>
+      <button class="turn-button direct" data-turn="3" type="button">3</button>
+      <button class="turn-button direct" data-turn="4" type="button">4</button>
+      <button class="turn-button direct" data-turn="5" type="button">5</button>
+      <button class="turn-button nav-button" id="nextTurn" type="button">次へ ›</button>
+    </div>
+    </div>
+    <div class="event-now">現在のイベント：<b id="currentEvent"></b></div>
+  </section>
+
+  <section class="hero">
+    <div class="agent-stack" id="agents"></div>
+    <section class="earth-panel panel">
+      <p class="question">研究問い：<strong>国家主権を維持したまま、地球規模の恒常性は成立するのか？</strong></p>
+      <div class="earth-wrap">
+        <img class="earth" src="earth_japan_network_v2.png" alt="青く発光する地球ネットワーク">
+        <div class="sat-orbit one" aria-hidden="true"><div class="sat-runner"><svg class="satellite" viewBox="0 0 30 16"><rect class="panel" x="1" y="4" width="8" height="8" rx="1"/><rect class="body" x="11" y="3" width="8" height="10" rx="2"/><rect class="panel" x="21" y="4" width="8" height="8" rx="1"/><line class="mast-line" x1="15" y1="3" x2="15" y2="0"/><circle class="body" cx="15" cy="1" r="1.3"/></svg></div></div>
+        <div class="sat-orbit two" aria-hidden="true"><div class="sat-runner"><svg class="satellite" viewBox="0 0 30 16"><rect class="panel" x="1" y="4" width="8" height="8" rx="1"/><rect class="body" x="11" y="3" width="8" height="10" rx="2"/><rect class="panel" x="21" y="4" width="8" height="8" rx="1"/><line class="mast-line" x1="15" y1="3" x2="15" y2="0"/><circle class="body" cx="15" cy="1" r="1.3"/></svg></div></div>
+        <div class="sat-orbit three" aria-hidden="true"><div class="sat-runner"><svg class="satellite" viewBox="0 0 30 16"><rect class="panel" x="1" y="4" width="8" height="8" rx="1"/><rect class="body" x="11" y="3" width="8" height="10" rx="2"/><rect class="panel" x="21" y="4" width="8" height="8" rx="1"/><line class="mast-line" x1="15" y1="3" x2="15" y2="0"/><circle class="body" cx="15" cy="1" r="1.3"/></svg></div></div>
+      </div>
+      <div class="primary-kpis">
+        <div class="primary-kpi sovereignty"><span>国家主権</span><strong id="sovereignty"></strong></div>
+        <div class="primary-kpi"><span>地球全体の恒常性</span><strong id="homeostasis"></strong></div>
+      </div>
+    </section>
+    <aside class="coordinator panel">
+      <h2>地球調整機関</h2>
+      <div class="role">主権を残したまま崩壊回避を試みる調整Agent。各国への強制命令権は持たない。</div>
+      <div class="proposal" id="proposal"></div>
+      <div class="proposal-reason" id="proposalReason"></div>
+      <div class="responses" id="responses"></div>
+      <div class="evaluation" id="evaluation"></div>
+      <div class="damage">
+        <b><span>農地被害の残存</span><span id="damageText"></span></b>
+        <div class="bar-track"><div class="bar-fill" id="damageBar"></div></div>
+        <small id="damageNote"></small>
+      </div>
+    </aside>
+  </section>
+
+  <h2 class="section-title">GLOBAL STATE｜地球全体の6指標</h2>
+  <section class="metrics" id="metrics"></section>
+
+  <h2 class="section-title">FIVE-TURN TRACE｜5ターンの指標推移</h2>
+  <section class="lower">
+    <div class="timeline panel">
+      <h2>地球状態の推移</h2>
+      <div class="legend" id="legend"></div>
+      <div id="timeline"></div>
+      <div class="result" id="result"></div>
+    </div>
+    <div class="log panel">
+      <h2>各Agentの行動ログ</h2>
+      <div class="log-list" id="log"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+"use strict";
+
+// v2_first_run.json（Gemini Agent実験 1 run）の検証済みスナップショット。
+// file:// で直接開けるよう、外部取得せずページ内へ埋め込む。
+const experimentData={"metadata":{"schema_version":1,"engine":"homeostasis-security-v2","mode":"gemini","model":"gemini-3.6-flash","turn_count":5,"generated_at_utc":"2026-09-14T22:03:43.193847+00:00"},"research_question":"国家主権を維持したまま、地球規模の恒常性は成立するのか？","source_event":{"origin":"v1 二国間の恒常性シミュレーション／第3ターン","event":"A国のミサイルがB国の民間農地へ着弾","lost_annual_rice_capacity_tons":8000,"recovery_turns":4},"initial_world_state":{"food":82,"energy":79,"economy":81,"environment":76,"international_trust":72,"conflict_load":24,"national_sovereignty":88,"global_homeostasis":68},"turns":[{"turn":1,"persistent_effects":{"lost_capacity_before_actions_tons":8000,"recovered_this_turn_tons":2000,"remaining_lost_capacity_tons":6000},"coordinator_proposal":{"proposal":"食料援助","reason":"B国の民間農地への着弾により年間8,000トンの米生産能力が喪失したため、グローバルな食料指標の維持および被害国の人道的安定を図るべく食料援助を提案する。"},"countries":{"A":{"observation":"我が国のミサイルがB国の農地に誤って着弾したことにより、B国の食料生産能力に損害が生じ、国際的信頼の低下および地域緊張の低下リスクが発生している。","action":"外交交渉","proposal_response":"条件付きで応じる","reason":"意図しない事態の不必要な拡大を防ぎ、国家安全保障と国際的立場を維持するため、B国との直接的な外交交渉を開始する。食料援助については、事案の共同調査の実施と相互の安全保障が確認されることを条件に応じる。"},"B":{"observation":"A国のミサイル攻撃により民間農地が被災し、年間8,000トンの米生産能力が喪失した。調整機関から食料援助の提案を受けている。","action":"農地復旧","proposal_response":"受け入れる","reason":"国民への食料供給と民間人保護を最優先とし、提案された食料援助を受け入れて直ちの不足を補いつつ、農地復旧に着手して生産能力の早期回復を図るため。"},"C":{"observation":"A国のミサイル着弾によるB国の農地被害（年間8,000トンの生産力喪失）を受け、国際食料市場における供給不足と自国の物価上昇が懸念される。","action":"輸入政策変更","proposal_response":"条件付きで応じる","reason":"自国の物価安定と食料供給の確保を最優先し、輸入ルートの多様化と備蓄の強化を図る。食料援助への参加提案に対しては、自国内の供給不安を招かない範囲での余剰支援に限定することを条件として応じることで、外交的自律性と実利を両立させる。"}},"proposal_responses":{"A":"条件付きで応じる","B":"受け入れる","C":"条件付きで応じる"},"world_state":{"food":84,"energy":79,"economy":80,"environment":76,"international_trust":75,"conflict_load":21,"national_sovereignty":88,"global_homeostasis":70},"evaluator":{"food":84,"energy":79,"economy":80,"environment":76,"international_trust":75,"conflict_load":21,"sovereignty_pressure":25,"assessment":"食料援助の合意とB国の迅速な農地復旧作業により、食料不安と対立負荷が緩和されました。A国の外交対応も国際的信認の回復に貢献しています。"},"action_log":["地球調整機関: 食料援助","A国: 外交交渉 / 条件付きで応じる","B国: 農地復旧 / 受け入れる","C国: 輸入政策変更 / 条件付きで応じる"]},{"turn":2,"persistent_effects":{"lost_capacity_before_actions_tons":6000,"recovered_this_turn_tons":2000,"remaining_lost_capacity_tons":4000},"coordinator_proposal":{"proposal":"食料援助","reason":"A国の着弾事案によりB国で6000トンの米生産能力が喪失しており、食料指標（84）の悪化予防と被害国の食料安全保障を支援するため。"},"countries":{"A":{"observation":"B国農地へのミサイル着弾事故による影響が依然として残っており、国際的信用の維持と紛争負荷の低減が必要な状況である。調整機関より食料援助の提案が行われている。","action":"外交交渉","proposal_response":"受け入れる","reason":"事態の更なる悪化を防ぎ、国際的立場の回復と国家安全保障を確保するため、調整機関の食料援助提案を受け入れた上で、B国との積極的な外交交渉により解決を図る。"},"B":{"observation":"A国の攻撃による農地被害が継続し、年間6000トン分の米生産能力が喪失した状態で、食料供給への影響が深刻化している。","action":"農地復旧","proposal_response":"受け入れる","reason":"短期的には調整機関の食料援助を受け入れて国民の食料供給と民間人保護を確保しつつ、中長期的には農地復旧を進めて自国の食料生産能力と主権を回復するため。"},"C":{"observation":"A国のミサイル着弾によるB国の食料生産能力低下に伴い、世界の食料指標低下と市場価格の高騰が懸念される。自国の供給安定と国内物価への悪影響を抑制する必要がある。","action":"輸入政策変更","proposal_response":"条件付きで応じる","reason":"自国の食料安全保障と物価安定を確保するため輸入ルートの多角化を進める。食料援助については、国内供給に支障を出さない範囲に限定することを条件に応じることで、自律的な外交方針と市場安定化への協力を両立させる。"}},"proposal_responses":{"A":"受け入れる","B":"受け入れる","C":"条件付きで応じる"},"world_state":{"food":85,"energy":79,"economy":80,"environment":77,"international_trust":78,"conflict_load":17,"national_sovereignty":87,"global_homeostasis":73},"evaluator":{"food":85,"energy":79,"economy":80,"environment":77,"international_trust":78,"conflict_load":17,"sovereignty_pressure":22,"assessment":"全受入国による協調行動と外交的努力により、食料供給能力の改善と国際的緊張の緩和が進展しました。"},"action_log":["地球調整機関: 食料援助","A国: 外交交渉 / 受け入れる","B国: 農地復旧 / 受け入れる","C国: 輸入政策変更 / 条件付きで応じる"]},{"turn":3,"persistent_effects":{"lost_capacity_before_actions_tons":4000,"recovered_this_turn_tons":2000,"remaining_lost_capacity_tons":2000},"coordinator_proposal":{"proposal":"食料援助","reason":"A国のミサイル着弾によりB国の食料生産能力が残り4000トン低下しており、食料供給の安定化と国際的心理負担の軽減を図るため。"},"countries":{"A":{"observation":"A国のミサイル着弾によるB国農地への被害が続いており、国際的な不信感の高まりと紛争負荷の増大が懸念される状態である。","action":"外交交渉","proposal_response":"受け入れる","reason":"事態の更なる悪化を防ぎ、国家安全保障および国際的立場を維持するため、対話による平和的解決を目指すとともに調整機関からの食料援助提案を受け入れる。"},"B":{"observation":"A国のミサイル攻撃による農地被害は一部回復したものの依然として4000トンの損失が残っており、国民への食料供給確保と農地の早期完全復旧が最優先課題である。","action":"農地復旧","proposal_response":"受け入れる","reason":"食料援助を受け入れることで即時の食料不足リスクを緩和し、同時に自国の農地復旧を進めることで長期的な食料安全保障と自給能力を取り戻すため。"},"C":{"observation":"A国とB国の紛争影響により世界的食料供給の制限が継続しており、国内の物価上昇および供給不安のリスクが高まっている。","action":"輸入政策変更","proposal_response":"条件付きで応じる","reason":"国内物価の安定と供給能力の確保を最優先とするため調達先を多角化する。食料援助提案には国内需要を満たした上での余剰分のみ拠出という条件で協力する。"}},"proposal_responses":{"A":"受け入れる","B":"受け入れる","C":"条件付きで応じる"},"world_state":{"food":87,"energy":79,"economy":81,"environment":78,"international_trust":82,"conflict_load":14,"national_sovereignty":86,"global_homeostasis":76},"evaluator":{"food":87,"energy":79,"economy":81,"environment":78,"international_trust":82,"conflict_load":14,"sovereignty_pressure":22,"assessment":"食料援助の受入とB国の農地復旧策により生産能力の喪失幅が2000tまで縮小し、A国の外交交渉姿勢も評価され国際的信頼の上昇と紛争負荷の低減が進みました。"},"action_log":["地球調整機関: 食料援助","A国: 外交交渉 / 受け入れる","B国: 農地復旧 / 受け入れる","C国: 輸入政策変更 / 条件付きで応じる"]},{"turn":4,"persistent_effects":{"lost_capacity_before_actions_tons":2000,"recovered_this_turn_tons":2000,"remaining_lost_capacity_tons":0},"coordinator_proposal":{"proposal":"食料援助","reason":"B国における着弾被害による残存食料損失2,000トンに対し、国家主権を維持しながら食料指標の低下を防止し、地球規模の食料需給の恒常性を保つため。"},"countries":{"A":{"observation":"B国農地へのミサイル着弾による影響は徐々に回復傾向にあるが、国際的信頼の維持と衝突負荷の低減のためには事態の早期平和的解決が必要である。","action":"外交交渉","proposal_response":"条件付きで応じる","reason":"食料援助を通じて被害軽減に貢献し国際的協調姿勢を示すことで、国家安全保障と国際的信頼の双方を維持しつつ、対話を通じた事態収拾を図るため。"},"B":{"observation":"農地の被害に伴う減産影響は2000トンまで縮小しているが、国民への食料供給の安定化と生産基盤の完全回復が必要である。調整機関から食料援助の提案を受けている。","action":"農地復旧","proposal_response":"受け入れる","reason":"提案された食料援助を受け入れて即時の食料供給不安を解消しつつ、農地復旧を進めることで食料生産能力を完全回復させ、国家利益である食料供給と自給基盤を確保するため。"},"C":{"observation":"第4ターンとなり、B国の失われた米生産能力の残存量は2000トンまで縮小し、世界の食料指標も87まで回復している。紛争による市場の混乱は落ち着きつつある。","action":"援助参加","proposal_response":"受け入れる","reason":"食料供給の回復が進んでいるため、国際機関の食料援助提案を受け入れて支援に参加することで、地域全体の供給と物価の更なる安定化を促進し、長期的な自国の食料安全保障と外交的自律性を維持する。"}},"proposal_responses":{"A":"条件付きで応じる","B":"受け入れる","C":"受け入れる"},"world_state":{"food":90,"energy":79,"economy":83,"environment":80,"international_trust":86,"conflict_load":8,"national_sovereignty":86,"global_homeostasis":80},"evaluator":{"food":90,"energy":79,"economy":83,"environment":80,"international_trust":86,"conflict_load":8,"sovereignty_pressure":12,"assessment":"食料援助の実施と農地復旧により被害喪失量がゼロとなり、多角的な協調外交によって国際信頼度の向上と紛争負荷の大幅な軽減が達成された。"},"action_log":["地球調整機関: 食料援助","A国: 外交交渉 / 条件付きで応じる","B国: 農地復旧 / 受け入れる","C国: 援助参加 / 受け入れる"]},{"turn":5,"persistent_effects":{"lost_capacity_before_actions_tons":0,"recovered_this_turn_tons":0,"remaining_lost_capacity_tons":0},"coordinator_proposal":{"proposal":"緊急協定提案","reason":"食料生産能力の損失は解消されているものの、誤爆事件の再発防止と対立の再燃を防ぐため、国家主権を尊重した紛争予防および武力行使抑制のための緊急協定締結を促す。"},"countries":{"A":{"observation":"B国における農地被害の残存量が0となり、事件による直接的な影響が収束したことを確認。国際的信用は保たれているが、衝突負荷を低減させ事態を安定化させる必要がある。","action":"外交交渉","proposal_response":"受け入れる","reason":"被害の復旧が完了したため、緊急協定を受け入れて外交交渉を進めることで、国際的立場の安定と長期的な国家安全保障を確保する。"},"B":{"observation":"農地被害の復旧が完了して残存損失容量が0になり、食料供給能力は回復した。しかし対立状態（conflict_load: 8）は継続しており、国際機関より緊急協定が提案されている。","action":"停戦交渉","proposal_response":"条件付きで応じる","reason":"農地被害が解消されたため緊急の食料対策は不要となった。今後は民間人の安全確保と領土・主権の侵害防止を保証することを条件として緊急協定に応じ、停戦交渉を通じて長期的安定を図る。"},"C":{"observation":"食料能力の損失が解消し世界的な食料指標も高水準に回復した。調整機関より緊急協定の提案が届いている。","action":"中立維持","proposal_response":"受け入れる","reason":"供給リスクが沈静化したため外交的自律性を保つべく中立姿勢を維持する。緊急協定への参加を通じて国際的信頼を保持し、国内物価と食料供給の長期的安定を図るため。"}},"proposal_responses":{"A":"受け入れる","B":"条件付きで応じる","C":"受け入れる"},"world_state":{"food":91,"energy":79,"economy":84,"environment":80,"international_trust":88,"conflict_load":5,"national_sovereignty":86,"global_homeostasis":82},"evaluator":{"food":91,"energy":79,"economy":84,"environment":80,"international_trust":88,"conflict_load":5,"sovereignty_pressure":15,"assessment":"各国の外交的対応と緊急協定の受諾により対立懸念が大幅に緩和され、国際的信用の向上と情勢の安定化が実現した良好な状況です。"},"action_log":["地球調整機関: 緊急協定提案","A国: 外交交渉 / 受け入れる","B国: 停戦交渉 / 条件付きで応じる","C国: 中立維持 / 受け入れる"]}],"final_result":{"outcome":"recovered","global_homeostasis_change":14,"remaining_lost_capacity_tons":0,"national_sovereignty":86,"global_homeostasis":82}};
+
+// 以下の旧生成定義は呼び出さず、画面には上のGemini Agent実験結果だけを表示する。
+const plans = [
+  {event:"着弾直後。農地被害と食料不安が顕在化",proposal:"食料援助",actions:{A:"制裁への反発",B:"援助要請",C:"自国優先"},responses:{A:"拒否する",B:"受け入れる",C:"条件付きで応じる"},restore:0,delta:{food:-9,energy:-1,economy:-5,environment:-4,trust:-9,conflict:12,sovereignty:1}},
+  {event:"輸入需要が増加し、第三国の食料価格へ波及",proposal:"資源再配分",actions:{A:"外交交渉",B:"食料輸入",C:"輸入政策変更"},responses:{A:"条件付きで応じる",B:"受け入れる",C:"条件付きで応じる"},restore:1800,delta:{food:-3,energy:-2,economy:-3,environment:-1,trust:3,conflict:-3,sovereignty:-1}},
+  {event:"復旧作業が進む一方、制裁参加をめぐり対立",proposal:"仲裁",actions:{A:"停戦",B:"農地復旧",C:"制裁参加"},responses:{A:"受け入れる",B:"受け入れる",C:"条件付きで応じる"},restore:2400,delta:{food:3,energy:0,economy:1,environment:2,trust:6,conflict:-7,sovereignty:-1}},
+  {event:"農地の段階的回復と援助分担の再調整",proposal:"緊急協定提案",actions:{A:"補償",B:"農地復旧",C:"援助参加"},responses:{A:"条件付きで応じる",B:"受け入れる",C:"受け入れる"},restore:2600,delta:{food:6,energy:-1,economy:4,environment:3,trust:8,conflict:-6,sovereignty:-2}},
+  {event:"農地復旧が完了し、停戦と食料供給を維持",proposal:"食料援助",actions:{A:"外交交渉",B:"停戦交渉",C:"援助参加"},responses:{A:"受け入れる",B:"受け入れる",C:"受け入れる"},restore:1200,delta:{food:7,energy:1,economy:5,environment:3,trust:7,conflict:-5,sovereignty:1}}
+];
+
+const observations = {
+  A:["制裁と安全保障上の圧力を強く認識","孤立コストと停戦利益を比較","仲裁が主権を侵害しない範囲を確認","補償による信頼回復の条件を検討","外交関係の安定化を観測"],
+  B:["民間農地の直接被害と供給不足を観測","輸入で不足を補いながら復旧余力を確保","復旧作業と停戦の実効性を評価","生産能力の回復と補償を観測","供給回復と再発防止交渉を確認"],
+  C:["価格上昇と国内備蓄への圧力を観測","輸入政策が地域市場へ与える影響を確認","制裁と食料流通の両立を検討","援助参加による市場安定を観測","価格圧力の緩和を確認"]
+};
+
+function clamp(value){return Math.max(0,Math.min(100,value));}
+
+function calculateHomeostasis(s){
+  // 回復に寄与する5指標の平均から、紛争負荷の40%を差し引く。
+  // 食料・エネルギー・経済・環境・国際信頼・紛争負荷をすべて0〜100で使用する。
+  const sustaining=(s.food+s.energy+s.economy+s.environment+s.trust)/5;
+  return clamp(sustaining-s.conflict*.4);
+}
+
+function simulate(){
+  let state={food:82,energy:79,economy:81,environment:76,trust:72,conflict:24,sovereignty:88,damage:8000};
+  return plans.map((plan,index)=>{
+    // 1. 前ターンから残る物理的影響を反映する。
+    const persistentLoss=state.damage/8000*2.2;
+    state.food=clamp(state.food-persistentLoss);
+    state.economy=clamp(state.economy-persistentLoss*.35);
+    // 2. 地球全体と各国が状況を観測する。
+    const observed={global:{...state},countries:{A:observations.A[index],B:observations.B[index],C:observations.C[index]}};
+    // 3. 調整機関が提案を選択する。4. 各国が独立して行動を選択する。
+    // 5. 各国が提案への回答を判断する。これらはplans内の固定ルールで与える。
+    // 6. 行動の組み合わせから地球状態を更新する。
+    for(const key of ["food","energy","economy","environment","trust","conflict","sovereignty"]){state[key]=clamp(state[key]+plan.delta[key]);}
+    state.damage=Math.max(0,state.damage-plan.restore);
+    // 7. 国家主権と、6指標から算出する地球全体の恒常性を更新する。
+    state.homeostasis=calculateHomeostasis(state);
+    // 8. 表示用の行動ログへ記録する。
+    const log=[`調整機関：${plan.proposal}`,`A国：${plan.actions.A}／${plan.responses.A}`,`B国：${plan.actions.B}／${plan.responses.B}`,`C国：${plan.actions.C}／${plan.responses.C}`];
+    return {turn:index+1,...plan,state:{...state},observed,log};
+  });
+}
+
+const turns=experimentData.turns.map(row=>({
+  turn:row.turn,
+  event:row.evaluator.assessment,
+  proposal:row.coordinator_proposal.proposal,
+  proposalReason:row.coordinator_proposal.reason,
+  actions:Object.fromEntries(Object.entries(row.countries).map(([code,value])=>[code,value.action])),
+  responses:row.proposal_responses,
+  state:{
+    food:row.world_state.food,
+    energy:row.world_state.energy,
+    economy:row.world_state.economy,
+    environment:row.world_state.environment,
+    trust:row.world_state.international_trust,
+    conflict:row.world_state.conflict_load,
+    sovereignty:row.world_state.national_sovereignty,
+    homeostasis:row.world_state.global_homeostasis,
+    damage:row.persistent_effects.remaining_lost_capacity_tons
+  },
+  countries:row.countries,
+  evaluator:row.evaluator,
+  damageBefore:row.persistent_effects.lost_capacity_before_actions_tons,
+  recovered:row.persistent_effects.recovered_this_turn_tons,
+  log:row.action_log
+}));
+const metricDefs=[
+  ["food","食料","#67e8f9"],["energy","エネルギー","#60a5fa"],["economy","経済","#c084fc"],
+  ["environment","環境","#34d399"],["trust","国際信頼","#fbbf24"],["conflict","紛争負荷","#fb7185"]
+];
+let current=1;
+
+function renderAgents(t){
+  const descriptions={A:"事件を発生させた国家",B:"農地へ直接被害を受けた国家",C:"二次的な食料・経済影響を受ける第三国"};
+  document.querySelector("#agents").innerHTML=["A","B","C"].map(code=>{const country=t.countries[code];return `<article class="agent panel ${code.toLowerCase()}"><h2>${code}国</h2><dl><dt>位置づけ</dt><dd>${descriptions[code]}</dd><dt>状態</dt><dd>${code==="A"?`国際信頼 ${t.state.trust.toFixed(0)}`:code==="B"?`農地被害 ${t.state.damage.toLocaleString()}t`:`経済 ${t.state.economy.toFixed(0)}`}</dd><dt>観測</dt><dd>${country.observation}</dd></dl><div class="action">選択行動：${country.action}</div><div class="response">提案への回答：${country.proposal_response}</div><details><summary>判断理由</summary><p>${country.reason}</p></details></article>`}).join("");
+}
+
+function renderMetrics(t){
+  document.querySelector("#metrics").innerHTML=metricDefs.map(([key,label])=>`<article class="metric panel ${key==="conflict"?"conflict":""}"><span>${label}</span><strong>${t.state[key].toFixed(1)}</strong><div class="mini"><i style="width:${t.state[key]}%"></i></div></article>`).join("");
+}
+
+function renderTimeline(activeTurn){
+  const W=760,H=280,left=44,right=18,top=20,bottom=34,plotW=W-left-right,plotH=H-top-bottom;
+  const x=i=>left+i*plotW/4,y=v=>top+(100-v)*plotH/100;
+  const lines=metricDefs.map(([key,,color])=>`<path d="${turns.map((t,i)=>`${i?"L":"M"}${x(i)},${y(t.state[key])}`).join(" ")}" fill="none" stroke="${color}" stroke-width="2" opacity=".9"/>`).join("");
+  const home=`<path d="${turns.map((t,i)=>`${i?"L":"M"}${x(i)},${y(t.state.homeostasis)}`).join(" ")}" fill="none" stroke="#ffffff" stroke-width="3"/>`;
+  const dots=turns.map((t,i)=>`<circle cx="${x(i)}" cy="${y(t.state.homeostasis)}" r="${i+1===activeTurn?6:3}" fill="#fff"/><text x="${x(i)}" y="270" text-anchor="middle">T${i+1}</text>`).join("");
+  const grid=[0,25,50,75,100].map(v=>`<line x1="${left}" y1="${y(v)}" x2="${W-right}" y2="${y(v)}" stroke="#254154"/><text x="36" y="${y(v)+4}" text-anchor="end">${v}</text>`).join("");
+  document.querySelector("#timeline").innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="5ターンの地球指標推移"><g fill="#8fa9b5" font-size="11">${grid}${dots}</g>${lines}${home}</svg>`;
+  document.querySelector("#legend").innerHTML=metricDefs.map(([,label,color])=>`<span><i style="background:${color}"></i>${label}</span>`).join("")+`<span><i style="background:#fff"></i>地球全体の恒常性</span>`;
+}
+
+function render(turn){
+  current=turn;const t=turns[turn-1];
+  document.querySelector("#turnNumber").textContent=turn;
+  document.querySelector("#currentEvent").textContent=t.event;
+  document.querySelector("#sovereignty").textContent=t.state.sovereignty.toFixed(1);
+  document.querySelector("#homeostasis").textContent=t.state.homeostasis.toFixed(1);
+  document.querySelector("#proposal").textContent=`提案：${t.proposal}`;
+  document.querySelector("#proposalReason").textContent=t.proposalReason;
+  document.querySelector("#responses").innerHTML=["A","B","C"].map(code=>{const answer=t.responses[code];const cls=answer.includes("拒否")?"reject":answer.includes("条件")?"conditional":"accept";return `<div class="response-row ${cls}"><b>${code}国</b><span>${answer}</span></div>`}).join("");
+  document.querySelector("#evaluation").innerHTML=`<b>Evaluator</b><br>${t.evaluator.assessment}`;
+  document.querySelector("#damageText").textContent=`${t.state.damage.toLocaleString()}t / 8,000t`;
+  document.querySelector("#damageBar").style.width=`${t.state.damage/80}%`;
+  document.querySelector("#damageNote").textContent=t.state.damage?`このターンに${t.recovered.toLocaleString()}t回復。`:`${t.recovered?"このターンで復旧完了。":"復旧済み。"}`;
+  document.querySelector("#log").innerHTML=t.log.map((line,i)=>`<div class="log-item"><b>${i+1}</b>${line}</div>`).join("");
+  document.querySelectorAll(".direct").forEach(button=>button.classList.toggle("active",Number(button.dataset.turn)===turn));
+  document.querySelector("#prevTurn").disabled=turn===1;document.querySelector("#nextTurn").disabled=turn===5;
+  renderAgents(t);renderMetrics(t);renderTimeline(turn);
+  const result=document.querySelector("#result");
+  if(turn===5){const first=experimentData.initial_world_state.global_homeostasis,last=experimentData.final_result.global_homeostasis,recovered=experimentData.final_result.outcome==="recovered";result.classList.add("visible");result.innerHTML=`<strong>${recovered?"回復":"悪化"}：地球全体の恒常性 ${first} → ${last}</strong><p>国家主権を${experimentData.final_result.national_sovereignty}に維持しながら、農地生産能力は復旧しました。</p>`}else{result.classList.remove("visible");result.innerHTML=""}
+}
+
+document.querySelectorAll(".direct").forEach(button=>button.addEventListener("click",()=>render(Number(button.dataset.turn))));
+document.querySelector("#prevTurn").addEventListener("click",()=>render(Math.max(1,current-1)));
+document.querySelector("#nextTurn").addEventListener("click",()=>render(Math.min(5,current+1)));
+render(1);
+</script>
+</body>
+</html>
