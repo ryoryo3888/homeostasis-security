@@ -18,6 +18,7 @@
   --hs-radius:14px;
   --hs-radius-small:9px;
   --hs-gap:10px;
+  --hs-shell-width:1500px;
   --hs-panel-bg:linear-gradient(180deg,rgba(8,27,42,.94),rgba(3,15,25,.95));
   --hs-panel-shadow:inset 0 0 30px rgba(34,211,238,.025),0 16px 45px rgba(0,0,0,.22);
 }
@@ -28,6 +29,13 @@ body{
   font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Segoe UI",sans-serif!important;
   line-height:1.55;
 }
+/* Same outer instrument frame for v1 and v2. Content grids inside remain version-specific. */
+body>main,main.shell{
+  width:min(var(--hs-shell-width),calc(100% - 28px))!important;
+  max-width:var(--hs-shell-width)!important;
+  margin:14px auto 42px!important;
+  padding:0!important;
+}
 /* Shared shell surfaces. Existing geometry remains version-specific. */
 .panel,.brand-panel,.global-status,.turn-panel,.country-panel,.earth-panel,.event-panel,.card,.simulation-control{
   border-color:var(--hs-line)!important;
@@ -37,6 +45,9 @@ body{
 .panel,.brand-panel,.global-status,.turn-panel,.country-panel,.earth-panel,.event-panel{
   background:var(--hs-panel-bg)!important;
 }
+/* Keep top-level dashboard rhythm consistent without moving or deleting content. */
+.topbar,.mast{gap:10px!important;margin-bottom:10px!important}
+.simulation-control,.controls{margin-bottom:10px!important}
 /* Brand language */
 .brand-en,.control-name,.section-title,.turn-label,.global-status h2,.event-panel h2{
   color:var(--hs-cyan)!important;
@@ -102,3 +113,6 @@ select{
 th,td{border-color:rgba(91,220,247,.16)!important}
 /* Earth is intentionally NOT normalized here.
    v1 keeps A/B communications; v2 keeps three satellites; future versions evolve independently. */
+@media(max-width:760px){
+  body>main,main.shell{width:min(100% - 16px,var(--hs-shell-width))!important;margin-top:8px!important}
+}
