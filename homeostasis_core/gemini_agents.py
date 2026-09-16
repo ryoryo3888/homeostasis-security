@@ -11,9 +11,21 @@ RESPONSE_IDS={"ACCEPT":"受け入れる","REJECT":"拒否する","CONDITIONAL":"
 ACTION_IDS=("PROVIDE_RESOURCE","DRAW_WORLD_POOL","SUPPORT_LOGISTICS","PROVIDE_FUNDS","RESTRICT_EXPORTS","SUSPEND_SUPPLY","DISRUPT_LOGISTICS","DEFENSIVE_ESCORT","MEDIATE","PROTECT_RESERVES","NO_ACTION")
 RESOURCE_TYPES=("food","fossil_fuel","renewable_energy","nuclear","grid_storage_resilience","funds_economy","logistics")
 PROPOSAL_TYPES=("食料援助","仲裁","制裁提案","資源再配分","緊急協定","停戦提案","復興支援")
+ACTION_CONTRACTS={
+    "PROVIDE_RESOURCE":{"recipients":["country","world_pool","none"],"resources":[*RESOURCE_TYPES,None]},
+    "DRAW_WORLD_POOL":{"recipients":["country"],"resources":list(RESOURCE_TYPES)},
+    "SUPPORT_LOGISTICS":{"recipients":["country","world_pool"],"resources":["logistics"]},
+    "PROVIDE_FUNDS":{"recipients":["country","world_pool"],"resources":["funds_economy"]},
+    **{name:{"recipients":["none"],"resources":[None]} for name in ACTION_IDS[4:]},
+}
 def country_response_schema(country_ids):
     ids=list(country_ids)
     return {"type":"object","additionalProperties":False,"required":["country_id","proposal_id","response_id","response_label","reason","conditions","self_interest","sovereignty_burden","perceived_global_effect","action"],"properties":{"country_id":{"type":"string","enum":ids},"proposal_id":{"type":"string"},"response_id":{"type":"string","enum":list(RESPONSE_IDS)},"response_label":{"type":"string","enum":list(RESPONSE_IDS.values())},"reason":{"type":"string"},"conditions":{"type":"object"},"self_interest":{"type":"number","minimum":0,"maximum":100},"sovereignty_burden":{"type":"number","minimum":0,"maximum":100},"perceived_global_effect":{"type":"number","minimum":0,"maximum":100},"action":{"type":"object","additionalProperties":False,"required":["action_id","description","parameters"],"properties":{"action_id":{"type":"string","enum":list(ACTION_IDS)},"description":{"type":"string"},"parameters":{"type":"object","additionalProperties":False,"required":["recipient_type","target_country","resource","amount"],"properties":{"recipient_type":{"type":"string","enum":["country","world_pool","none"]},"target_country":{"type":["string","null"],"enum":ids+[None]},"resource":{"type":["string","null"],"enum":list(RESOURCE_TYPES)+[None]},"amount":{"type":"number","minimum":0,"maximum":100}}}}}}}
+def coordinator_response_schema():
+    return {"type":"object","additionalProperties":False,"required":["proposal_id","proposal_type","reason","predicted_global_effect","predicted_sovereignty_burden","requested_action"],"properties":{"proposal_id":{"type":"string"},"proposal_type":{"type":"string","enum":list(PROPOSAL_TYPES)},"reason":{"type":"string"},"predicted_global_effect":{"type":"number","minimum":0,"maximum":100},"predicted_sovereignty_burden":{"type":"number","minimum":0,"maximum":100},"requested_action":{"type":"string"}}}
+def evaluator_response_schema():
+    scores={k:{"type":"number","minimum":0,"maximum":100} for k in ("national_sovereignty","global_homeostasis","resource_stability","resilience","conflict_load","history_effect")}
+    return {"type":"object","additionalProperties":False,"required":[*scores,"assessment"],"properties":{**scores,"assessment":{"type":"string"}}}
 def _object(text,keys):
     try:d=json.loads(text)
     except (TypeError,json.JSONDecodeError) as e:raise ValueError("invalid JSON response") from e
@@ -46,15 +58,9 @@ def parse_country_json(text,allowed_countries=None):
         _text("target_country",p["target_country"])
         if allowed_countries is not None and p["target_country"] not in set(allowed_countries):raise ValueError(f"target_country must be one of {sorted(allowed_countries)}")
     elif p["target_country"] is not None:raise ValueError("target_country must be null for world_pool or none")
-    if a["action_id"]=="PROVIDE_RESOURCE":
-        if p["resource"] not in RESOURCE_TYPES:raise ValueError("invalid resource action")
-        if p["recipient_type"]=="none" and p["amount"]!=0:raise ValueError("none recipient requires amount 0")
-    elif a["action_id"]=="DRAW_WORLD_POOL":
-        if p["recipient_type"]!="country" or p["resource"] not in RESOURCE_TYPES:raise ValueError("world pool draw requires country recipient and resource")
-    elif a["action_id"] in ("SUPPORT_LOGISTICS","PROVIDE_FUNDS"):
-        expected="logistics" if a["action_id"]=="SUPPORT_LOGISTICS" else "funds_economy"
-        if p["recipient_type"]!="country" or p["resource"]!=expected:raise ValueError("support action has invalid recipient or resource")
-    elif not (p["recipient_type"]=="none" and p["target_country"] is None and p["resource"] is None and p["amount"]==0):raise ValueError("non-transfer action requires none/null/null/0 parameters")
+    contract=ACTION_CONTRACTS[a["action_id"]]
+    if p["recipient_type"] not in contract["recipients"] or p["resource"] not in contract["resources"]:raise ValueError(f"action parameters violate {a['action_id']} contract")
+    if p["recipient_type"]=="none" and (p["target_country"] is not None or p["resource"] is not None or p["amount"]!=0):raise ValueError("none action requires null/null/0 parameters")
     return d
 def parse_coordinator_json(text):
     d=_object(text,{"proposal_id","proposal_type","reason","predicted_global_effect","predicted_sovereignty_burden","requested_action"})
@@ -125,17 +131,22 @@ def apply_structured_actions(country_states,answers,previous_world,damage,turn=1
         a=answers[c]["action"];counts[a["action_id"]]+=1
         if a["action_id"]=="PROVIDE_RESOURCE":requests.append((c,a["parameters"]["recipient_type"],a["parameters"]["target_country"],a["parameters"]["resource"],a["parameters"]["amount"]))
         elif a["action_id"]=="DRAW_WORLD_POOL":draws.append((c,a["parameters"]["target_country"],a["parameters"]["resource"],a["parameters"]["amount"]))
-        elif a["action_id"] in ("SUPPORT_LOGISTICS","PROVIDE_FUNDS"):support.append((c,a["parameters"]["target_country"],"logistics" if a["action_id"]=="SUPPORT_LOGISTICS" else "funds_economy",a["parameters"]["amount"]))
+        elif a["action_id"] in ("SUPPORT_LOGISTICS","PROVIDE_FUNDS"):
+            p=a["parameters"]
+            if p["recipient_type"]=="world_pool":requests.append((c,"world_pool",None,p["resource"],p["amount"]))
+            else:support.append((c,p["target_country"],p["resource"],p["amount"]))
         elif a["action_id"]=="RESTRICT_EXPORTS":restricted.add(c)
         elif a["action_id"]=="SUSPEND_SUPPLY":suspended.add(c)
         elif a["action_id"]=="DISRUPT_LOGISTICS":disrupted.add(c)
     # Validate the whole turn before changing the copied state; no partial application.
     for source,recipient,target,resource,amount in requests:
         if source not in states or recipient not in ("country","world_pool","none"):raise ValueError("invalid resource recipient")
+        if recipient=="none":
+            if target is not None or resource is not None or amount!=0:raise ValueError("none recipient requires null resource and zero amount")
+            continue
         if recipient=="country" and (target not in states or source==target):raise ValueError("unknown or invalid transfer country")
         if resource not in states[source]["resources"] or (recipient=="country" and resource not in states[target]["resources"]):raise ValueError("unregistered resource")
         if recipient!="country" and target is not None:raise ValueError("non-country recipient cannot have target_country")
-        if recipient=="none" and amount!=0:raise ValueError("none recipient requires zero amount")
     for source,target,resource,amount in draws:
         if target not in states or resource not in states[target]["resources"] or amount>pool[resource]:raise ValueError("world pool draw exceeds available stock or has invalid target")
     for source,target,resource,amount in support:
@@ -187,16 +198,19 @@ def eligible_result_paths(directory):
         if manifest.exists() and pilot_is_eligible(result,manifest):out.append(result)
     return tuple(out)
 def run_gemini_turn(gateway,run,turn,snapshot,private_views,history,country_order,*,country_states=None,world_pool=None,resource_network=None,network_policy=None):
-    sid=snapshot.get("snapshot_id");proposal=gateway.call("地球調整機関",run,turn,{"role":"neutral proposal-only coordinator; describe tradeoffs and do not advocate acceptance","observable_world":snapshot,"public_history":snapshot.get("public_history",[]),"response_contract":{"exact_fields":["proposal_id","proposal_type","reason","predicted_global_effect","predicted_sovereignty_burden","requested_action"],"proposal_type":list(PROPOSAL_TYPES),"scores":"numbers 0..100","text":"non-empty"}},parse_coordinator_json,agent_type="coordinator",snapshot_id=sid);answers={}
+    sid=snapshot.get("snapshot_id");proposal=gateway.call("地球調整機関",run,turn,{"role":"neutral proposal-only coordinator; describe tradeoffs and do not advocate acceptance","observable_world":snapshot,"public_history":snapshot.get("public_history",[]),"response_contract":{"exact_fields":["proposal_id","proposal_type","reason","predicted_global_effect","predicted_sovereignty_burden","requested_action"],"proposal_type":list(PROPOSAL_TYPES),"scores":"numbers 0..100","text":"non-empty"}},parse_coordinator_json,agent_type="coordinator",snapshot_id=sid,json_schema=coordinator_response_schema());answers={}
     for c in sorted(country_order):
         allowed=sorted(country_order);examples={"country":{"recipient_type":"country","target_country":allowed[0],"resource":"food","amount":5},"world_pool":{"recipient_type":"world_pool","target_country":None,"resource":"food","amount":5},"none":{"recipient_type":"none","target_country":None,"resource":None,"amount":0}}
-        payload={"role":"independent sovereign country; acceptance, rejection and conditional acceptance are equally valid; decide from own state, burden, resources, diplomacy and domestic stability","turn_start_observation":private_views[c],"memory":list(history.get(c,())),"current_proposal":proposal,"allowed_country_ids":allowed,"recipient_rules":{"all_parameters_fields_are_required":["recipient_type","target_country","resource","amount"],"country":"target_country must be one allowed_country_id","world_pool":"target_country must be null","none":"target_country and resource must be null; amount must be 0","forbidden_target_examples":["GLOBAL","WORLD","日本語国名"],"correct_examples":examples},"response_contract":{"exact_fields":["country_id","proposal_id","response_id","response_label","reason","conditions","self_interest","sovereignty_burden","perceived_global_effect","action"],"response_ids":RESPONSE_IDS,"conditions":"empty object unless CONDITIONAL; otherwise structured required_countries/minimum_aid_amount/maximum_sovereignty_burden/mutual_performance/deadline_turn","action":{"exact_fields":["action_id","description","parameters"],"action_ids":ACTION_IDS,"parameters_required":["recipient_type","target_country","resource","amount"]},"scores":"numbers 0..100","schema_version":SCHEMA_VERSION}}
+        payload={"role":"independent sovereign country; acceptance, rejection and conditional acceptance are equally valid; decide from own state, burden, resources, diplomacy and domestic stability","turn_start_observation":private_views[c],"memory":list(history.get(c,())),"current_proposal":proposal,"allowed_country_ids":allowed,"recipient_rules":{"all_parameters_fields_are_required":["recipient_type","target_country","resource","amount"],"country":"target_country must be one allowed_country_id","world_pool":"target_country must be null","none":"target_country and resource must be null; amount must be 0","forbidden_target_examples":["GLOBAL","WORLD","日本語国名"],"correct_examples":examples},"response_contract":{"exact_fields":["country_id","proposal_id","response_id","response_label","reason","conditions","self_interest","sovereignty_burden","perceived_global_effect","action"],"identity":{"country_id":c,"proposal_id":proposal["proposal_id"]},"response_ids":RESPONSE_IDS,"conditions":"empty object unless CONDITIONAL; otherwise structured required_countries/minimum_aid_amount/maximum_sovereignty_burden/mutual_performance/deadline_turn","action":{"exact_fields":["action_id","description","parameters"],"contracts":ACTION_CONTRACTS,"parameters_required":["recipient_type","target_country","resource","amount"]},"scores":"numbers 0..100","schema_version":SCHEMA_VERSION}}
         help_data={"allowed_country_ids":allowed,"correct_json_examples":examples}
-        a=gateway.call(c,run,turn,payload,lambda text,ids=set(allowed):parse_country_json(text,ids),agent_type="country",archetype=private_views[c].get("archetype"),snapshot_id=sid,json_schema=country_response_schema(allowed),validation_help=help_data)
-        if a["country_id"]!=c or a["proposal_id"]!=proposal["proposal_id"]:raise RuntimeError("country response identity mismatch")
+        def parse_bound(text,ids=set(allowed),expected_country=c,expected_proposal=proposal["proposal_id"]):
+            value=parse_country_json(text,ids)
+            if value["country_id"]!=expected_country or value["proposal_id"]!=expected_proposal:raise ValueError("country_id or proposal_id does not match this request")
+            return value
+        a=gateway.call(c,run,turn,payload,parse_bound,agent_type="country",archetype=private_views[c].get("archetype"),snapshot_id=sid,json_schema=country_response_schema(allowed),validation_help=help_data)
         answers[c]=a
     convergence=len({a["response_id"] for a in answers.values()})==1
     if country_states is None:return {"turn":turn,"proposal":proposal,"country_responses":answers,"snapshot":dict(snapshot),"response_convergence":convergence}
     effects=apply_structured_actions(country_states,answers,snapshot["world"],snapshot["damage"],turn,world_pool=world_pool,resource_network=resource_network,network_policy=network_policy);effects["causal_record"]["event"]=snapshot["event"]
-    evaluator=gateway.call("独立評価機関（Evaluator）",run,turn,{"role":"independent narrative evaluator; scores cannot alter research metrics; assess sovereignty, necessary defense, resources, resilience, conflict and history; do not reward delay, avoidance or formal acceptance","executed_true_state":effects,"public_outcomes":{c:{"response_id":a["response_id"],"action_id":a["action"]["action_id"]} for c,a in answers.items()},"proposal":proposal,"response_contract":{"exact_fields":["national_sovereignty","global_homeostasis","resource_stability","resilience","conflict_load","history_effect","assessment"],"scores":"numbers 0..100","assessment":"non-empty text"}},parse_evaluator_json,agent_type="evaluator",snapshot_id=sid)
+    evaluator=gateway.call("独立評価機関（Evaluator）",run,turn,{"role":"independent narrative evaluator; scores cannot alter research metrics; assess sovereignty, necessary defense, resources, resilience, conflict and history; do not reward delay, avoidance or formal acceptance","executed_true_state":effects,"public_outcomes":{c:{"response_id":a["response_id"],"action_id":a["action"]["action_id"]} for c,a in answers.items()},"proposal":proposal,"response_contract":{"exact_fields":["national_sovereignty","global_homeostasis","resource_stability","resilience","conflict_load","history_effect","assessment"],"scores":"numbers 0..100","assessment":"non-empty text"}},parse_evaluator_json,agent_type="evaluator",snapshot_id=sid,json_schema=evaluator_response_schema())
     return {"turn":turn,"proposal":proposal,"country_responses":answers,"snapshot":dict(snapshot),"response_convergence":convergence,"executed_state":effects,"research_metrics":effects["research_metrics"],"evaluator_commentary":evaluator}
