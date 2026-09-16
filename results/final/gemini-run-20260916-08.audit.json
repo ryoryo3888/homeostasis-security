@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "result_file": "gemini-run-20260916-08.json",
+  "result_sha256": "ea7c82041ebda6e612fa6e1e01c1c496431190ee030f7f17039b7700ed2b1db6",
+  "classification": "技術完走・判断収束により研究不採用pilot",
+  "status": "rejected",
+  "include_in_research_aggregation": false,
+  "include_in_dashboard": false,
+  "resume_allowed": false,
+  "reason": "all 64 national responses accepted, logistics support dominated, and turns 6-8 repeated the same derived event"
+}

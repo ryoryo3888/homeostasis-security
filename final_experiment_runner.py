@@ -50,13 +50,13 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
         gateway.audit_hook=save_attempt_audit
         for turn in range(len(turn_rows)+1,TURNS+1):
             row=base["turns"][turn-1]
-            event=row["event"] if turn<=5 else derive_event(current_world,history_state,turn_rows[-1]["executed_state"]["action_counts"])
-            snapshot={"snapshot_id":f"run-{run_number}-turn-{turn}-start","turn":turn,"world":current_world,"damage":row["farmland_damage_tons"],"event":event,"history_state":history_state,"world_pool":world_pool,"network_policy":network_policy,"public_history":[x["snapshot"]["event"] for x in turn_rows]}
+            event=row["event"] if turn<=5 else derive_event(current_world,history_state,turn_rows[-1]["executed_state"]["action_counts"],[x["snapshot"]["event"] for x in turn_rows])
+            snapshot={"snapshot_id":f"run-{run_number}-turn-{turn}-start","decision_seed":seed+run_number-1,"turn":turn,"world":current_world,"damage":row["farmland_damage_tons"],"event":event,"history_state":history_state,"world_pool":world_pool,"network_policy":network_policy,"public_history":[x["snapshot"]["event"] for x in turn_rows]}
             views=build_private_views(snapshot["snapshot_id"],turn,current_world,country_states,freshness)
             result=run_gemini_turn(gateway,run_number,turn,snapshot,views,memories,COUNTRIES,country_states=country_states,world_pool=world_pool,resource_network=resource_network,network_policy=network_policy);turn_rows.append(result)
             current_world=dict(result["executed_state"]["true_world"]);country_states=result["executed_state"]["country_states"];world_pool=result["executed_state"]["world_pool"];network_policy=result["executed_state"]["network_policy"]
-            history_state={"economic_loss":max(0,100-current_world["economy"]),"reserve_gap":max(0,100-current_world["food"]),"trust_loss":max(0,100-current_world["international_trust"]),"alertness":current_world["conflict_load"]}
-            memories={c:memories[c]+(result["country_responses"][c]["action"]["action_id"],) for c in COUNTRIES}
+            history_state={"economic_loss":max(0,100-current_world["economy"]),"reserve_gap":max(0,100-current_world["food"]),"trust_loss":max(0,100-current_world["international_trust"]),"alertness":current_world["conflict_load"],"unmet_resource_demand":result["executed_state"].get("demand_unmet",0)}
+            memories={c:memories[c]+({"response_id":result["country_responses"][c]["response_id"],"action_id":result["country_responses"][c]["action"]["action_id"],"realized":sum(x["realized"] for x in result["executed_state"].get("atomic_settlements",[]) if x["agent_id"]==c),"unmet":sum(x["unmet"] for x in result["executed_state"].get("atomic_settlements",[]) if x["agent_id"]==c)},) for c in COUNTRIES}
             active={"run":run_number,"seed":seed+run_number-1,"completed_turn":turn,"turns":turn_rows,"memories":memories,"current_world":current_world,"country_states":country_states,"world_pool":world_pool,"network_policy":network_policy,"history_state":history_state,"call_audit":gateway.calls}
             _checkpoint(checkpoint,{"completed_runs":completed,"active_run":active})
         token_totals={k:sum(x["token_usage"][k] for x in gateway.calls if x["token_usage"][k] is not None) for k in ("input_tokens","output_tokens","total_tokens")}
