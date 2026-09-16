@@ -10,6 +10,7 @@ on:
       - homeostasis-ui-system.css
       - homeostasis-research-layer.css
       - homeostasis-research-layer.js
+      - homeostasis-research-integration.js
       - tools/build_ui_previews.py
       - .github/workflows/build-ui-preview.yml
 
@@ -30,8 +31,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify research layer JavaScript
-        run: node --check homeostasis-research-layer.js
+      - name: Verify research JavaScript
+        run: |
+          node --check homeostasis-research-layer.js
+          node --check homeostasis-research-integration.js
       - name: Build standalone previews
         run: python tools/build_ui_previews.py
       - name: Verify previews
@@ -42,8 +45,10 @@ jobs:
           grep -q 'HOMEOSTASIS_UI_SYSTEM_PREVIEW' preview_v2_unified.html
           grep -q 'HOMEOSTASIS_RESEARCH_NARRATIVE_PREVIEW' preview_v1_unified.html
           grep -q 'HOMEOSTASIS_RESEARCH_NARRATIVE_PREVIEW' preview_v2_unified.html
-          grep -q 'この世界を10秒で理解' preview_v1_unified.html
-          grep -q 'この世界を10秒で理解' preview_v2_unified.html
+          grep -q 'HOMEOSTASIS_RESEARCH_INTEGRATION' preview_v1_unified.html
+          grep -q 'HOMEOSTASIS_RESEARCH_INTEGRATION' preview_v2_unified.html
+          grep -q 'V1で起きた農地への着弾' preview_v1_unified.html
+          grep -q 'なぜV2が生まれた' preview_v2_unified.html
       - name: Commit generated previews
         run: |
           git config user.name 'github-actions[bot]'
@@ -52,6 +57,6 @@ jobs:
           if git diff --cached --quiet; then
             echo 'No preview changes.'
           else
-            git commit -m 'Generate standalone unified UI previews'
+            git commit -m 'Generate integrated research previews'
             git push origin HEAD:homeostasis-ui-system-20260916
           fi
