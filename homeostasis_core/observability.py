@@ -38,6 +38,8 @@ def source_digest(root):
     paths = [*root.glob('*.py'), *root.glob('homeostasis_core/*.py'), *root.glob('tools/**/*.py'),
              *root.glob('tests/**/*.py'), *root.glob('tests/fixtures/*.json'), *root.glob('tests/frontend/*'),
              *root.glob('observatory/*'), root/'worldline_observatory.html',
+             *root.glob('homeostasis-*.js'), *root.glob('homeostasis-*.css'),
+             root/'dashboard_v1.html', root/'dashboard_v2.html', root/'preview_v1_unified.html', root/'preview_v2_unified.html', root/'presentation.html',
              *root.glob('config/*.json'), *root.glob('scenarios/*.json'),
              *root.glob('.github/workflows/*.yml'), *root.glob('.githooks/*'), *root.glob('requirements*.txt'), root/'Makefile', root/'README.md']
     return digest(encoded({str(p.relative_to(root)): digest(p.read_bytes()) for p in sorted(set(paths)) if p.is_file()}))

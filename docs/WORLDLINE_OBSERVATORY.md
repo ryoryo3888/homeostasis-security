@@ -56,3 +56,7 @@ Phase 1はread-only研究作品としての入口。社会の予測製品とし�
 `make check` は既存のAPI遮断テストに静的buildのallowlist・hash改変拒否・frontend指紋を加える。`make observatory-check` は実Chromiumで純粋性・全decision/flow pointer・不正入力拒否・3現象・DOM操作・フォーカス・画面幅・reduced-motionを確認する。`make observatory-build` はsecret scanを含む。GitHub Actionsは3つとpublication validationを実行する。
 
 ローカルはrepositoryルートをHTTP配信する。build成果物の新入口は `dist/observatory/worldline_observatory.html`。静的HTTPS配信は可能だが、この作業はホスティング設定変更・mainへの公開を行わない。
+
+## 追加Art Direction
+
+導入を短い作品名と観測点数へ縮小し、最初の画面を軌跡中心へ更新。体験を説明するコピーを削除。V1/V2を含む [copy audit](audits/ui-copy-audit.md) に分類・保持理由を記録した。元のPhase 1評価後、ユーザー指示によりV1/V2のコピーと配置も変更したが、研究原本と元のdata bindingは不変。

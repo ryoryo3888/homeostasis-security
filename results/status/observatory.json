@@ -13,15 +13,13 @@
   "api_calls_this_work": 0,
   "read_only": true,
   "raw_run_hashes_unchanged": true,
-  "existing_dashboard_unchanged": true,
+  "existing_dashboard_unchanged": false,
   "view_model": "observatory/view-model.js",
-  "source_digest": "4a82b9774bd36d0679961af3654b2f93d651d299cd748172df52f30399af2ef6",
+  "source_digest": "cfea37fa9d56b4ee245f81c2b8b5db6faeec4e1ceff7efca2b3b3fbd3bb5526a",
   "verification": {
     "make_check": "PASS",
-    "tests": 293,
+    "tests": 295,
     "sdk_transport_tests": 4,
-    "frontend_assertions": 236,
-    "frontend": "PASS",
     "build": "PASS",
     "secret_scan": "PASS",
     "widths_tested": [
@@ -31,7 +29,9 @@
     ],
     "all_lenses_tested": true,
     "reduced_motion": "PASS",
-    "ci_workflow": ".github/workflows/free-check.yml"
+    "ci_workflow": ".github/workflows/free-check.yml",
+    "frontend_last_local_phase1_assertions": 236,
+    "frontend_current_source": "Verified by the linked CI workflow on push"
   },
   "quality": {
     "data_fidelity": "PASS: hash-pinned timeline, catalog tuple and amount checks, atomic amounts, evidence pointers.",
@@ -63,5 +63,8 @@
     }
   ],
   "next_improvement": "Observe first-time, keyboard and screen-reader users; refine density before adding comparison views.",
-  "hosting": "Serve repository or dist/observatory over localhost or HTTPS. GitHub HTML source view is not a deployed interactive site."
+  "hosting": "Serve repository or dist/observatory over localhost or HTTPS. GitHub HTML source view is not a deployed interactive site.",
+  "copy_audit": "docs/audits/ui-copy-audit.json",
+  "existing_dashboard_data_bindings_unchanged": true,
+  "dashboard_change_authority": "User-requested copy reduction and Earth-first composition"
 }

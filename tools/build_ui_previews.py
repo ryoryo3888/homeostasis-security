@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +32,15 @@ for version in ("v1", "v2"):
             raise SystemExit(f"Missing body boundary: {source}")
         integration = f"\n{INTEGRATION_MARK}\n<script>\n{INTEGRATION_JS}\n</script>\n"
         integrated = integrated.replace("</body>", integration + "</body>", 1)
+
+    # Refresh owned embedded layers from their canonical sources on every build.
+    # Preserve the original dashboard shell, data bindings and experiment outputs.
+    for marker, tag, content in [(MARK, 'style', UI_CSS), (RESEARCH_MARK, 'style', RESEARCH_CSS),
+                                 (RESEARCH_MARK, 'script', RESEARCH_JS), (INTEGRATION_MARK, 'script', INTEGRATION_JS)]:
+        pattern = re.escape(marker) + r"\s*<" + tag + r">.*?</" + tag + r">"
+        integrated, count = re.subn(pattern, lambda _: marker + "\n<" + tag + ">\n" + content + "\n</" + tag + ">", integrated, flags=re.S)
+        if count != 1:
+            raise SystemExit(f"Expected one {marker} {tag} layer, found {count}")
 
     # The same verified artifact is both the preview and the formal dashboard.
     # This prevents the preview/formal-version split that caused earlier drift.

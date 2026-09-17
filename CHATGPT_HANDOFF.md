@@ -38,3 +38,5 @@
 研究上、単一runから一般化・因果効果の断定をしない。理由は公開の行動説明だけであり内部推論ではない。観測完了は次の有料実験の許可ではない。次の実行は `next_step` と失敗理由を確認し、明示許可を得た最小段階だけにする。
 
 [自動公開の仕様と今回の調査](docs/REMOTE_PUBLICATION.md)。現在の評価はdevelopment stateを優先する。以前のfresh 1TURN未発見という評価は、新runの監査により更新済み。
+
+コピーとEarth-first配置の現行監査: [UI copy audit](docs/audits/ui-copy-audit.md)。閲覧時間・閲覧者属性による誘導を削除し、原データと研究限界は維持。

@@ -138,7 +138,7 @@ async function load() {
     selectTurn(moment.turn-1);$('.lens').scrollIntoView({behavior:'instant',block:'start'});
     if(moment.kind==='boundary') $(`#network [data-agent="${moment.agent}"]`).focus({preventScroll:true});
   }));
-  $('.intro-note span').textContent=`${model.turns.length}つの観測点。${model.turns.reduce((sum,t)=>sum+t.agents.length,0)}の国家判断。光の向こうに、根拠がある。`;
+  $('.intro-note span').textContent=`${model.turns.length}つの観測点。${model.turns.reduce((sum,t)=>sum+t.agents.length,0)}の国家判断。`;
   $('#run-meta').innerHTML=`${escape(model.runId)}<br>${model.turns.length} TURN · ${model.calls} recorded calls · retry ${model.retry}<br>この閲覧によるGemini API calls: 0<br><a href="${escape(config.report)}">Research artifact ↗</a> · <a href="${escape(model.source)}">Source timeline ↗</a>`;
   const locationState=new URLSearchParams(location.hash.slice(1));
   const requestedTurn=Number(locationState.get('turn'));

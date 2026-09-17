@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "api_calls": 0,
+  "scope": [
+    "V1",
+    "V2",
+    "unified previews",
+    "Observatory",
+    "presentation",
+    "index redirect",
+    "comparison preview"
+  ],
+  "archived_backups": "Historical before/final/restored snapshots are not active routes and remain immutable.",
+  "categories": {
+    "1": "Saved data and data-derived labels retained",
+    "2": "Units, metric semantics, provenance, limitations and non-causal interpretations retained",
+    "3": "Research questions retained",
+    "4": "TURN controls, data selection, evidence links, loading/error and keyboard labels retained",
+    "5": "Reader speed, audience labels, redundant instructions and interface self-description removed"
+  },
+  "removed": [
+    "この世界を10秒で理解",
+    "30秒で理解",
+    "研究者向け",
+    "読み方の番号付き手順",
+    "初見は簡単に、検証したい人は深く読めます",
+    "旧追加部分の研究情報は削除せず、検証用の深い層へ統合しました",
+    "必要な深さまで。",
+    "光の向こうに、根拠がある。",
+    "内容・グラフ・Earthは変更せず、共通外観のみ適用"
+  ],
+  "composition": {
+    "V1": "Earth/world and TURN controls precede research narrative; metrics retained after world.",
+    "V2": "Earth/world precedes narrative; initial event context retained in a disclosure.",
+    "Observatory": "Compact factual header; world trajectories occupy opening."
+  },
+  "authorized_ui_baseline_changes": [
+    {
+      "path": "dashboard_v1.html",
+      "before_sha256": "9fd66fdaef4a39572215cc9f583263675f97d00622609e8b4425672fae33c6f7",
+      "after_sha256": "7cc39cc4f9f49eda6a6aae82815d89fe3b4816306cc5b2cf0f7c6c3e205485b6"
+    },
+    {
+      "path": "dashboard_v2.html",
+      "before_sha256": "5f3d22383b5b727ccbc964eb85e28bc9b0f9ce09327f23ac68bea3af78699258",
+      "after_sha256": "fdce7f7e27cd6e472f1535afdb47c2de61fbcf7cf1455a8199434bbec7000f6f"
+    },
+    {
+      "path": "preview_v1_unified.html",
+      "before_sha256": "9fd66fdaef4a39572215cc9f583263675f97d00622609e8b4425672fae33c6f7",
+      "after_sha256": "7cc39cc4f9f49eda6a6aae82815d89fe3b4816306cc5b2cf0f7c6c3e205485b6"
+    },
+    {
+      "path": "preview_v2_unified.html",
+      "before_sha256": "5f3d22383b5b727ccbc964eb85e28bc9b0f9ce09327f23ac68bea3af78699258",
+      "after_sha256": "fdce7f7e27cd6e472f1535afdb47c2de61fbcf7cf1455a8199434bbec7000f6f"
+    },
+    {
+      "path": "homeostasis-research-layer.js",
+      "before_sha256": "ddf7da7a03f9c82ab618838fe00ddc02493665ac7f03b6a5d61a22ccde647184",
+      "after_sha256": "afbf0f5009b72aa8b2ec7896491df42024a2c94180b561e90dafaa43222aada0"
+    },
+    {
+      "path": "homeostasis-research-layer.css",
+      "before_sha256": "5a7f7e3d244572624f5c63f5e2c857998b2950dda70154cafd45e948d0c36eff",
+      "after_sha256": "a6adbd09ef8aed3238c81eff4063bfa6b499a866086078e32311075790454e5d"
+    },
+    {
+      "path": "homeostasis-research-integration.js",
+      "before_sha256": "1af5134784e69b291f4201949022e1547d30fe12a30395e2f93cfb57b8e2683e",
+      "after_sha256": "67604b6e4dd773520071587f21efe64f548269b974d9a1ceed5c3016c079df7c"
+    },
+    {
+      "path": "presentation.html",
+      "before_sha256": "a0ae099568d0cda1c6699769fed8ae9b594e8fab8af3c81f292d42fb950a9eed",
+      "after_sha256": "4e96a8291b0263608094bde3f47152038a27de55c81396f1e80d6eabb93b801b"
+    },
+    {
+      "path": "ui_compare_preview.html",
+      "before_sha256": "538b516458c9d6d1863e93e60394514a4feda1a4eb107ce1ebcfe3f699da693e",
+      "after_sha256": "792bd99b97372f6ac9b3a0710033e1615cd24681b4df0b83a64fbca92f139b2b"
+    }
+  ],
+  "research_data_modified": false,
+  "audit_note": "Static and generated copy reviewed by semantic category. Runtime Agent statements and research values are not rewritten."
+}

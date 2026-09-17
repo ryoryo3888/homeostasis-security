@@ -6,3 +6,6 @@
 /* Keep every discrete observation reachable even at 320px. */
 #turn-buttons{min-width:0}#turn-buttons button{min-width:0;padding-left:0;padding-right:0}
 @media(max-width:600px){.intro-note{flex-direction:column;gap:12px}.intro-note p{white-space:nowrap}.tabs{flex-shrink:0}.tabs button{white-space:nowrap;padding:8px 10px}.lens>.section-head{flex-wrap:wrap;align-items:flex-end}.recovery-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 12px}.scar{height:110px}}
+
+/* The observed world, rather than the exhibit title, occupies the opening. */
+.intro{padding:24px 0;align-items:center;gap:20px}.intro .eyebrow{display:none}.intro h1{font:400 clamp(22px,3vw,36px)/1.2 var(--serif);letter-spacing:-.03em}.intro-note{padding:0;max-width:320px;margin:0}.intro-note span{font-size:12px}.intro-note p{display:none}@media(max-width:600px){.intro{display:block;padding:20px 0}.intro-note{margin-top:10px}}

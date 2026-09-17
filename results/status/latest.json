@@ -1,21 +1,22 @@
 {
   "blocked_run_count": 2,
   "branch": "choice-id-one-turn-probe-20260917",
-  "commit": "31703fac57a2cda4fc5931143e9d873218f55b87",
+  "commit": "b1c63eca3250d69b1f10613e9fd0b5c346ba1298",
   "commit_semantics": "source HEAD at export; source_digest includes uncommitted implementation",
   "development_status": {
     "analysis_path": "results/status/analyses/20260917T075421Z-11147417/findings.json",
     "analysis_result": "PASS",
     "api_calls_this_work": 0,
+    "copy_audit": "docs/audits/ui-copy-audit.json",
     "design_principles": "DESIGN_RESEARCH_PRINCIPLES.md",
     "development_status_version": 1,
     "make_check": {
       "api_calls": 0,
       "sdk_transport": "PASS",
       "sdk_transport_tests": 4,
-      "source_digest": "4a82b9774bd36d0679961af3654b2f93d651d299cd748172df52f30399af2ef6",
+      "source_digest": "cfea37fa9d56b4ee245f81c2b8b5db6faeec4e1ceff7efca2b3b3fbd3bb5526a",
       "status": "PASS",
-      "tests": 293
+      "tests": 295
     },
     "next_creative_priority": "Observe first-time, keyboard and screen-reader users; refine density before adding comparison views.",
     "next_research_priority": "Pre-register metric semantics and duplicate-demand/role-ID hypotheses; validate units and model assumptions offline before independent comparisons.",
@@ -494,9 +495,9 @@
     "transport_audit": "results/status/runs/20260917T075421Z-11147417/e0919357163de85576e395a5fb9128896028140841c6870902d120dc14a5dbf7.json#/transport_audit",
     "world_state": "results/status/runs/20260917T075421Z-11147417/e0919357163de85576e395a5fb9128896028140841c6870902d120dc14a5dbf7.json#/worlds"
   },
-  "source_digest": "4a82b9774bd36d0679961af3654b2f93d651d299cd748172df52f30399af2ef6",
+  "source_digest": "cfea37fa9d56b4ee245f81c2b8b5db6faeec4e1ceff7efca2b3b3fbd3bb5526a",
   "status_version": 1,
-  "updated_at": "2026-09-17T09:57:11.455102+00:00",
+  "updated_at": "2026-09-17T10:09:21.339831+00:00",
   "validation": {
     "contracts": "PASS",
     "decision_audit": "PASS",
