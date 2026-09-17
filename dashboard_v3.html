@@ -5,13 +5,59 @@
 <meta name="color-scheme" content="dark">
 <title>HOMEOSTASIS SECURITY — V3</title>
 <link rel="stylesheet" href="ui/v3/observatory.css">
+<style>
+/* V3 candidate: align the outer frame with the approved V1/V2 visual grammar. V3 data/earth remain isolated. */
+body.v3{background:radial-gradient(circle at top,#132d43,#07111d 55%)}
+.shell{width:min(1780px,calc(100vw - 24px));margin:12px auto 28px}
+#v3-identity{min-height:0;display:grid;grid-template-columns:350px minmax(620px,1fr);gap:10px;align-items:stretch;border:0;margin-bottom:10px}
+#v3-identity>.brand-panel,#v3-identity>.global-status,#v3-control,#v3-world,.state-detail,.network-detail,.research-question,#v3-evidence{
+ border:1px solid rgba(73,211,255,.22);background:linear-gradient(180deg,rgba(6,22,34,.91),rgba(2,10,18,.94));
+ box-shadow:inset 0 0 26px rgba(24,147,196,.045),0 0 22px rgba(0,0,0,.25);border-radius:14px
+}
+.brand-panel{padding:16px 18px}.identity{color:#70efff;font-size:20px;letter-spacing:.025em}.identity>span{font-size:12px}
+.brand-panel h1{margin:8px 0 0;color:#e8f2fa;font-size:21px;line-height:1.35;font-weight:700;letter-spacing:0}
+.version-switch{display:flex;gap:6px;margin-top:13px}
+.version-switch a{padding:6px 9px;border:1px solid #28445f;border-radius:7px;color:#b9ced7;font-size:11px;font-weight:700;line-height:1.2}
+.version-switch a span{display:inline;margin-left:5px;font-size:9px}.version-switch a[aria-current]{background:#0e4556;color:#eaffff;border-color:#67e8f9;box-shadow:0 0 12px rgba(103,232,249,.16)}
+.version-switch a[aria-current]:after{display:none}
+.global-status{padding:12px}.global-status h2{margin:0 0 10px;color:#6deaff;font-size:15px;letter-spacing:.04em}
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.metric-card{min-width:0;padding:10px 8px;text-align:center;border:1px solid rgba(60,202,245,.16);border-radius:10px;background:rgba(6,20,31,.75)}
+.metric-card span{display:block;color:#a9bbc4;font-size:11px;margin-bottom:5px}.metric-card strong{display:block;color:#7be9ff;font-size:24px;line-height:1.1}.metric-card small{display:block;color:#7894a3;font-size:9px;margin-top:5px}
+#v3-control{min-height:58px;padding:9px 14px;margin-bottom:10px;border-bottom:1px solid rgba(73,211,255,.22);gap:18px}
+#v3-control h2{font-size:17px}.turn-control button{border-radius:7px;background:#081827;border-color:rgba(103,232,249,.23)}
+#v3-control p{font-size:12px}
+#v3-world{padding:13px 15px;overflow:hidden}.world-top{padding:0 0 8px}.world-canvas{height:630px;border-top:1px solid rgba(90,218,245,.10);border-bottom:1px solid rgba(90,218,245,.10);background:radial-gradient(circle at 50% 47%,rgba(30,129,166,.18),transparent 46%)}
+#v3-earth{width:min(43%,470px)}#v3-earth img{filter:drop-shadow(0 0 22px rgba(47,205,255,.25)) drop-shadow(0 0 70px rgba(24,126,210,.20))}
+.state-node{border:1px solid rgba(80,220,245,.15);border-radius:9px;background:rgba(4,17,27,.82)}
+.state-node[aria-pressed=true]{border-color:rgba(110,234,255,.55);background:rgba(22,67,82,.65);box-shadow:0 0 14px rgba(70,220,255,.12)}
+.world-bottom{padding:11px 3px 0;border-top:0}
+.details-surface{border-top:0;padding:10px 0;gap:10px}.state-detail,.network-detail{padding:13px;border-left:1px solid rgba(73,211,255,.22)}
+.research-question{margin-top:0;padding:18px 20px}.research-question p{font-size:18px}
+#v3-evidence{margin-top:10px;padding:0 16px}
+footer{padding:18px 4px 30px}
+@media(max-width:1250px){#v3-identity{grid-template-columns:300px 1fr}.metric-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:900px){#v3-identity{grid-template-columns:1fr}.metric-grid{grid-template-columns:repeat(4,1fr)}.world-canvas{height:620px}}
+@media(max-width:600px){.metric-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
 <script defer src="ui/v3/observatory.js"></script>
 </head>
 <body class="v3">
 <div class="shell">
 <header id="v3-identity" data-v3-frame="identity">
-  <div><a class="identity" href="dashboard_v3.html">HOMEOSTASIS SECURITY <span>V3</span></a><h1>多国間・有限資源・相互依存ネットワーク</h1></div>
-  <nav aria-label="バージョン"><a href="dashboard_v1.html">V1<span>二国間</span></a><a href="dashboard_v2.html">V2<span>地球規模</span></a><a href="dashboard_v3.html" aria-current="page">V3<span>相互依存</span></a></nav>
+  <div class="brand-panel">
+    <a class="identity" href="dashboard_v3.html">HOMEOSTASIS SECURITY <span>V3</span></a>
+    <h1>多国間・有限資源・相互依存ネットワーク</h1>
+    <nav class="version-switch" aria-label="バージョン"><a href="dashboard_v1.html">V1 <span>二国間</span></a><a href="dashboard_v2.html">V2 <span>地球規模</span></a><a href="dashboard_v3.html" aria-current="page">V3 <span>相互依存</span></a></nav>
+  </div>
+  <div class="global-status" aria-label="V3基準世界の構造">
+    <h2>地球の状態（全体）</h2>
+    <div class="metric-grid">
+      <div class="metric-card"><span>国家</span><strong>8</strong><small>独立した合成国家</small></div>
+      <div class="metric-card"><span>資源</span><strong>2</strong><small>食料・エネルギー</small></div>
+      <div class="metric-card"><span>輸送経路</span><strong>18</strong><small>構造のみ・流量未観測</small></div>
+      <div class="metric-card"><span>正式TURN</span><strong>—</strong><small>正式世界線は未実行</small></div>
+    </div>
+  </div>
 </header>
 <section id="v3-control" data-v3-frame="control" aria-label="Simulation Control">
   <h2>SIMULATION CONTROL</h2>
