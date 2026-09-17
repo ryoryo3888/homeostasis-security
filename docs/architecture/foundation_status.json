@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "baseline_sha": "36d0b8c225214a13e54a88b8b8e6751255b922ce",
+  "public_visual_change": 0,
+  "gemini_api_calls": 0,
+  "v3_implementation_started": false,
+  "constitution": "docs/architecture/HOMEOSTASIS_VISUAL_CONSTITUTION.md",
+  "layout_contract": "tests/layout/layout_contract.json",
+  "public_baseline": "tests/layout/public-baseline.json",
+  "content_contract": "docs/architecture/CONTENT_SLOT_CONTRACT.md",
+  "verification": {
+    "existing_tests": 199,
+    "new_unit_tests": 18,
+    "unit_tests": "PASS",
+    "build": "PASS",
+    "secret_scan": "PASS",
+    "desktop": "PASS",
+    "ipad": "PASS",
+    "states_compared": 12,
+    "dom_relocation_guard": "PASS",
+    "turn_interaction": "PASS"
+  },
+  "scope": "Protect current V1/V2 without visual refactoring; V3 requires its own frame contract."
+}

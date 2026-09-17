@@ -1,0 +1,2 @@
+-r layout.txt
+google-genai==2.20.0

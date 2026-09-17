@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "scenario_id": "scenario_01_farmland_missile",
+  "name": "A国ミサイルのB国民間農地への着弾",
+  "origin": "v1 二国間の恒常性シミュレーション／第3ターン",
+  "participants": ["A", "B", "C"],
+  "event": {
+    "actor_country": "A",
+    "target_country": "B",
+    "target_type": "civilian_farmland",
+    "lost_annual_rice_capacity_tons": 8000,
+    "recovery_turns": 4
+  },
+  "initial_world_state": {
+    "food": 82,
+    "energy": 79,
+    "economy": 81,
+    "environment": 76,
+    "international_trust": 72,
+    "conflict_load": 24,
+    "national_sovereignty": 88,
+    "global_homeostasis": 68
+  }
+}
