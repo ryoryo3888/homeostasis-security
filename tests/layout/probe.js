@@ -4,6 +4,14 @@
     if (nodes.length !== 1) throw Error(`Expected one ${selector}, found ${nodes.length}`);
     return nodes[0];
   };
+  // Include hidden evidence layers; scripts/styles are not displayed copy.
+  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+  let rendered='',textNode;
+  while(textNode=walker.nextNode()) if(!textNode.parentElement.closest('script,style')) rendered+=textNode.textContent;
+  if(/(?:[0-9０-９〇○一二三四五六七八九十]+\s*秒で(?:理解|分かる|わかる)|読み方|初見|初心者|研究者向け|まず.{0,30}(?:見て|見よう|読む)|詳しく知りたい人)/.test(rendered)) throw Error('Viewer-directive meta copy');
+  if(one('.rn-intro h3').textContent!=='世界の構成' || document.querySelector('.rn-intro aside')) throw Error('World composition copy contract');
+  const research=one('#homeostasisResearchLayer').textContent;
+  if(!research.includes(document.querySelector('.hero')?'局所危機から地球規模の回復へ':'この8ターンで何が起きた？')) throw Error('Research heading lost');
   const rect = node => {
     const r = node.getBoundingClientRect();
     return {x:r.x + scrollX, y:r.y + scrollY, width:r.width, height:r.height};

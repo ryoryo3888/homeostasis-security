@@ -5,7 +5,7 @@
 FRAME = FIXED. CONTENT = EXTENSIBLE.
 
 This constitution protects the completed worlds; it is not a redesign specification.
-The approved public baseline is commit **36d0b8c225214a13e54a88b8b8e6751255b922ce**,
+The current approved copy revision source is commit **231fde90d6e6f0734e28ed820c28251dce236e8e**,
 served by GitHub Pages from `main /`:
 
 - https://ryoryo3888.github.io/homeostasis-security/dashboard_v1.html
@@ -101,3 +101,25 @@ The CI check must be treated as a merge gate by maintainers. This change adds
 checks but does not silently change repository branch-protection settings.
 
 See [Layout Contract](LAYOUT_CONTRACT.md) for enforcement and limitations.
+
+## Authorized copy sanitation revision
+
+The user explicitly authorized FINAL META-COPY SANITATION after the initial
+constitution release. `tests/layout/history/pre-copy-*` preserves the previous
+baseline; `tests/layout/copy_revision.json` enumerates the exact replacements.
+`docs/architecture/meta_copy_delta.json` records the 12-state difference proof.
+Only viewer-directive copy was removed/relabelled. No CSS, research data,
+Earth geometry, control geometry, section order or recovery composition changed.
+Research blocks naturally shrink and subsequent content follows normal flow.
+The empty former subtitle span remains; no spacing compensation was introduced.
+
+The builder now refreshes the marked narrative script from its canonical source
+in both dashboards. V1 previously carried an older, inactive V2 function; canonical
+synchronization removes that source drift without executing V2 code in V1.
+The source-delta test verifies the rest of each HTML document byte-for-byte.
+
+`test_copy_contract.py` and the browser probe reject time/viewer directives in
+current public generation paths and rendered text, including hidden evidence.
+Historical reports/fixtures are not rewritten. Content/evidence labels remain.
+The public baseline is reacquired after Pages deployment; the release record is
+`docs/architecture/meta_copy_release.json`. V3 implementation remains unstarted.

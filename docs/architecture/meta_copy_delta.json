@@ -1,0 +1,117 @@
+{
+  "authorization": "FINAL META-COPY SANITATION",
+  "previous_public_sha": "0ece7cf5c6d0cddf01dd0cb9f99f5177cbc6a2e6",
+  "source_delta": "approved copy replacements and canonical narrative synchronization only",
+  "css_change": 0,
+  "research_data_change": 0,
+  "states": [
+    {
+      "version": "v1",
+      "viewport": "desktop",
+      "turn": 1,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v1",
+      "viewport": "desktop",
+      "turn": 3,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v1",
+      "viewport": "desktop",
+      "turn": 8,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v1",
+      "viewport": "ipad",
+      "turn": 1,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v1",
+      "viewport": "ipad",
+      "turn": 3,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v1",
+      "viewport": "ipad",
+      "turn": 8,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v2",
+      "viewport": "desktop",
+      "turn": 1,
+      "research_height_delta": -50.046875,
+      "intro_height_delta": -30.546875,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v2",
+      "viewport": "desktop",
+      "turn": 3,
+      "research_height_delta": -50.046875,
+      "intro_height_delta": -30.546875,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v2",
+      "viewport": "desktop",
+      "turn": 5,
+      "research_height_delta": -50.046875,
+      "intro_height_delta": -30.546875,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v2",
+      "viewport": "ipad",
+      "turn": 1,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v2",
+      "viewport": "ipad",
+      "turn": 3,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v2",
+      "viewport": "ipad",
+      "turn": 5,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    }
+  ]
+}

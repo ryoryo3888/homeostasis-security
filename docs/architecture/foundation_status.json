@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "baseline_sha": "36d0b8c225214a13e54a88b8b8e6751255b922ce",
-  "public_visual_change": 0,
+  "baseline_sha": "231fde90d6e6f0734e28ed820c28251dce236e8e",
+  "public_visual_change": "approved copy sanitation only",
   "gemini_api_calls": 0,
   "v3_implementation_started": false,
   "constitution": "docs/architecture/HOMEOSTASIS_VISUAL_CONSTITUTION.md",
@@ -18,7 +18,9 @@
     "ipad": "PASS",
     "states_compared": 12,
     "dom_relocation_guard": "PASS",
-    "turn_interaction": "PASS"
+    "turn_interaction": "PASS",
+    "copy_tests": 7,
+    "copy_only_delta": "PASS"
   },
   "scope": "Protect current V1/V2 without visual refactoring; V3 requires its own frame contract."
 }
