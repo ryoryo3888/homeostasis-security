@@ -2,7 +2,7 @@
 ## 現在地（機械可読stateから生成）
 
 一次情報: [results/status/latest.json](results/status/latest.json)。
-生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `f81da80833c9aac4719134edac9bdf5b1374f054`（公開コミット自身ではありません）。
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `45e278593945588d18a081000ba75473f2662154`（公開コミット自身ではありません）。
 最新run: `20260917T022330Z-a9d78ed9` / probe / success / 完了0TURN / API 1 calls / retry 0。
 無料検証: PASS。次: Locate the saved fresh 1TURN run_id/path and validate its settlement and Evaluator evidence. Do not rerun any experiment or advance to 8TURN automatically.
 今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
