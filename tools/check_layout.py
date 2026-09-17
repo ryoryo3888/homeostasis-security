@@ -25,11 +25,18 @@ class Browser:
         self.profile = tempfile.TemporaryDirectory(prefix='homeostasis-layout-')
         chrome = os.environ.get('CHROME_BIN') or shutil.which('google-chrome') or shutil.which('chromium') or '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
         env = {k:v for k,v in os.environ.items() if not any(x in k.upper() for x in ('KEY','TOKEN','SECRET','PASSWORD'))}
-        self.process = subprocess.Popen([chrome,'--headless','--disable-gpu','--no-first-run','--disable-background-networking','--disable-component-update','--remote-debugging-port=0','--user-data-dir='+self.profile.name,'about:blank'],env=env,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+        self.browser_log = tempfile.TemporaryFile(mode='w+b')
+        self.process = subprocess.Popen([chrome,'--headless','--disable-gpu','--no-first-run','--disable-background-networking','--disable-component-update','--remote-debugging-port=0','--user-data-dir='+self.profile.name,'about:blank'],env=env,stdout=subprocess.DEVNULL,stderr=self.browser_log)
         portfile = Path(self.profile.name)/'DevToolsActivePort'
         until = time.monotonic()+20
         while not portfile.exists():
-            if time.monotonic()>until: raise RuntimeError('Chromium did not start')
+            if self.process.poll() is not None or time.monotonic()>until:
+                self.process.terminate()
+                self.process.wait(timeout=4)
+                self.browser_log.seek(0)
+                diagnostic=self.browser_log.read().decode('utf-8',errors='replace')[-4000:]
+                self.browser_log.close();self.profile.cleanup()
+                raise RuntimeError('Chromium did not start: '+diagnostic)
             time.sleep(.1)
         port, endpoint = portfile.read_text().splitlines()[:2]
         self.ws = connect('ws://127.0.0.1:'+port+endpoint,max_size=30_000_000)
@@ -72,7 +79,7 @@ class Browser:
         self.ws.close(); self.process.terminate()
         try:self.process.wait(timeout=4)
         except subprocess.TimeoutExpired:self.process.kill();self.process.wait()
-        self.profile.cleanup()
+        self.browser_log.close();self.profile.cleanup()
 
 def collect(base, output_dir=None, exercise=False):
     records=[]
