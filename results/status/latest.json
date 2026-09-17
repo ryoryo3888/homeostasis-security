@@ -1,7 +1,7 @@
 {
   "blocked_run_count": 2,
   "branch": "choice-id-one-turn-probe-20260917",
-  "commit": "d8027ab800e2ed7bc32ccfea20bf9f44cc7a084f",
+  "commit": "59619249a60dfcbefbebc5453d594506e2faddc4",
   "commit_semantics": "source HEAD at export; source_digest includes uncommitted implementation",
   "development_status": {
     "api_calls_this_work": 0,
@@ -398,41 +398,41 @@
     "research_stage": "eight_turn_ready",
     "run_id": "20260917T063102Z-2d170cd8"
   },
-  "history_index": "results/status/indexes/b66731d07c0e8aa328423e354c9d175e7eb006187db3ffee0a963f52284241df.json",
-  "history_sha256": "b66731d07c0e8aa328423e354c9d175e7eb006187db3ffee0a963f52284241df",
+  "history_index": "results/status/indexes/22cda10e102489e53e8e5107ebfee11c67455be295a9f514004357d7197b42e4.json",
+  "history_sha256": "22cda10e102489e53e8e5107ebfee11c67455be295a9f514004357d7197b42e4",
   "latest": {
-    "experiment": "results/status/runs/20260917T004355Z-c09ce05c/7739f6d132db41adbf2b926cda9051116e3320ca80bda38a9934e8eae1a040f9.json",
-    "failed_or_rejected": "results/status/runs/20260917T004355Z-c09ce05c/7739f6d132db41adbf2b926cda9051116e3320ca80bda38a9934e8eae1a040f9.json",
+    "experiment": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json",
+    "failed_or_rejected": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json",
     "probe": "results/status/runs/20260917T022330Z-a9d78ed9/f3925d6eab55cb2948c4788225013a0609baf144a821784c23f687a399de894f.json",
     "successful_research": null,
     "turn": "results/status/runs/20260917T063102Z-2d170cd8/89f00fe78329259fcf7331b50f85c9a1a5160bb779eaac998aa0a1da87f0ba88.json"
   },
   "latest_blocked_run": null,
-  "latest_observed_run": "20260917T063102Z-2d170cd8",
+  "latest_observed_run": "20260917T071205Z-fb7f949f",
   "latest_run": {
-    "api_calls": 10,
-    "maximum_api_calls": 10,
-    "mode": "turn",
+    "api_calls": 29,
+    "maximum_api_calls": 80,
+    "mode": "experiment",
     "retry_count": 0,
-    "run_id": "20260917T063102Z-2d170cd8",
-    "status": "success",
-    "turns_completed": 1
+    "run_id": "20260917T071205Z-fb7f949f",
+    "status": "failed",
+    "turns_completed": 2
   },
-  "next_step": "After separate explicit authorization, execute one 8TURN worldline, maximum 80 API calls, retry 0; stop immediately on validation failure. No automatic progression or retry.",
+  "next_step": "Inspect latest failure and pass free checks before separately authorizing a new attempt.",
   "publication_api_calls": 0,
-  "research_stage": "eight_turn_ready",
+  "research_stage": "minimal_experiment_validation",
   "result_paths": {
-    "decision_audit": "results/status/runs/20260917T063102Z-2d170cd8/89f00fe78329259fcf7331b50f85c9a1a5160bb779eaac998aa0a1da87f0ba88.json#/decisions",
-    "failure": "results/status/runs/20260917T063102Z-2d170cd8/89f00fe78329259fcf7331b50f85c9a1a5160bb779eaac998aa0a1da87f0ba88.json#/failure",
-    "result": "results/status/runs/20260917T063102Z-2d170cd8/89f00fe78329259fcf7331b50f85c9a1a5160bb779eaac998aa0a1da87f0ba88.json#/result",
-    "transport_audit": "results/status/runs/20260917T063102Z-2d170cd8/89f00fe78329259fcf7331b50f85c9a1a5160bb779eaac998aa0a1da87f0ba88.json#/transport_audit",
-    "world_state": "results/status/runs/20260917T063102Z-2d170cd8/89f00fe78329259fcf7331b50f85c9a1a5160bb779eaac998aa0a1da87f0ba88.json#/worlds"
+    "decision_audit": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json#/decisions",
+    "failure": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json#/failure",
+    "result": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json#/result",
+    "transport_audit": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json#/transport_audit",
+    "world_state": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json#/worlds"
   },
   "source_digest": "de2f0dd6c22bc9f28faeea577c9941d9b27aaf097a2f77d661ee34dbb3f64cdd",
   "status_version": 1,
-  "updated_at": "2026-09-17T06:58:13.159360+00:00",
+  "updated_at": "2026-09-17T07:15:07.123853+00:00",
   "validation": {
-    "contracts": "PASS",
+    "contracts": "FAIL",
     "decision_audit": "PASS",
     "preflight": "PASS",
     "research_eligible": false,
