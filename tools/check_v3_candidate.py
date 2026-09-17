@@ -4,6 +4,15 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from check_layout import Browser,QuietHandler,ROOT
 
+# Read the real V2 styles at the same viewport; do not bless a new pixel baseline.
+FRAME_STYLES = '''(selectors => Object.fromEntries(Object.entries(selectors).map(([name,selector]) => {
+    const s=getComputedStyle(document.querySelector(selector));
+    const keys=name==='shell'?['width']:name==='body'?['backgroundImage','fontFamily','color']:
+        name==='brandText'||name==='controlText'?['fontSize','fontWeight','letterSpacing','color']:
+        ['borderTopColor','borderTopWidth','borderRadius','backgroundImage','boxShadow'];
+    return [name,Object.fromEntries(keys.map(k=>[k,s[k]]))];
+})))'''
+
 
 def check(base):
     contract=json.loads((ROOT/'ui/v3/frame.json').read_text())
@@ -17,13 +26,21 @@ def check(base):
             browser.call('Fetch.enable',{'patterns':[{'urlPattern':'*'}]},session)
             browser.call('Emulation.setDeviceMetricsOverride',{'width':vp['width'],'height':vp['height'],'deviceScaleFactor':1,'mobile':False},session)
             browser.call('Emulation.setEmulatedMedia',{'features':[{'name':'prefers-reduced-motion','value':'reduce'}]},session)
+            browser.call('Page.navigate',{'url':base+'/dashboard_v2.html'},session)
+            browser.wait("!!document.querySelector('.control-heading')",session)
+            reference=browser.evaluate(FRAME_STYLES+'('+json.dumps({'shell':'.shell','body':'body','panel':'.brand','control':'.controls','brandText':'.brand-en','controlText':'.control-heading'})+')',session)
             browser.call('Page.navigate',{'url':base+'/dashboard_v3.html'},session)
             browser.wait('!!window.V3Candidate?.ready',session)
             browser.evaluate('document.fonts.ready.then(()=>true)',session)
+            inherited=browser.evaluate(FRAME_STYLES+'('+json.dumps({'shell':'.shell','body':'body','panel':'.brand','control':'#v3-control','brandText':'.identity','controlText':'#v3-control h2'})+')',session)
+            assert inherited==reference, (vp['name'], 'V1/V2 shared frame drift', reference, inherited)
             result=browser.evaluate('''(() => {
                 const rect=id=>{const b=document.getElementById(id).getBoundingClientRect();return {x:b.x,y:b.y,width:b.width,height:b.height,bottom:b.bottom}};
                 const ids=['v3-identity','v3-control','v3-world','v3-state-detail','v3-evidence'];
+                const caption=document.querySelector('.earth-caption').getBoundingClientRect();
+                const measurements=document.querySelector('.world-measurements').getBoundingClientRect();
                 return {bounds:Object.fromEntries(ids.concat(['v3-earth','v3-canvas']).map(id=>[id,rect(id)])),
+                 captionBottom:caption.bottom,measurementsTop:measurements.top,measurementsBottom:measurements.bottom,
                  parents:Object.fromEntries(['v3-earth','v3-canvas','v3-network','state-nodes'].map(id=>[id,document.getElementById(id).parentElement.id])),
                  nodes:[...document.querySelectorAll('.state-node')].map(n=>{const b=n.getBoundingClientRect();return {id:n.dataset.state,x:b.x,y:b.y,width:b.width,height:b.height}}),
                  routeCount:document.querySelectorAll('.route').length,
@@ -38,6 +55,8 @@ def check(base):
             assert all(bounds[a]['bottom']<=bounds[b]['y']+.5 for a,b in zip(contract['order'],contract['order'][1:]))
             assert abs(earth['x']+earth['width']/2-(canvas['x']+canvas['width']/2))<1
             assert earth['width']>=canvas['width']*.3 and earth['y']>=bounds['v3-control']['bottom']
+            assert earth['bottom']<=result['measurementsTop'] and result['captionBottom']<=result['measurementsTop'], (vp['name'],'Earth/measurement overlap')
+            assert result['measurementsBottom']<=canvas['bottom'], (vp['name'],'measurements outside world')
             assert earth['y']<vp['height']*.65 and earth['bottom']<vp['height']
             assert len(result['nodes'])==8 and result['routeCount']==18
             for node in result['nodes']:

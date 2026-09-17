@@ -2,6 +2,8 @@
   "version": "v3",
   "status": "candidate",
   "approved_visual_baseline": false,
+  "visual_frame_source": "dashboard_v2.html",
+  "revision": "2026-09-18-common-frame-correction",
   "constitution": "docs/architecture/HOMEOSTASIS_VISUAL_CONSTITUTION.md",
   "order": ["v3-identity", "v3-control", "v3-world", "v3-state-detail", "v3-evidence"],
   "parents": {"v3-earth": "v3-canvas", "v3-canvas": "v3-world", "v3-network": "v3-canvas", "state-nodes": "v3-canvas"},
