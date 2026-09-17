@@ -2,7 +2,7 @@
 ## 現在地（機械可読stateから生成）
 
 一次情報: [results/status/latest.json](results/status/latest.json)。
-生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `bc6dc1818d476d784bbbadf2bc52c22398aff5bd`（公開コミット自身ではありません）。
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `31703fac57a2cda4fc5931143e9d873218f55b87`（公開コミット自身ではありません）。
 最新run: `20260917T075421Z-11147417` / experiment / success / 完了8TURN / API 80 calls / retry 0。
 無料検証: PASS。次: Evaluate the read-only Observatory with first-time and assistive-technology users. Pre-register research comparisons separately; no paid execution is authorized by the UI.
 今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
