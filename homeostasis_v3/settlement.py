@@ -88,6 +88,25 @@ class SettlementEngine:
     def read(self, state):
         return self.authority.verify(state, 'settlement_state')
 
+    def restore_history(self, principal, *, turn, shipments, seen_choice_ids):
+        """Trusted TURN host bootstrap, never an Agent input or a state patch.
+
+        Domestic balances/configuration were validated by the constructor. The
+        host validates its durable checkpoint before supplying transit history.
+        This entry point is usable only on a fresh engine.
+        """
+        with self._lock:
+            s = self._core(principal, self.initial)
+            ensure(type(turn) is int and turn > 0, 'INVALID_RESTORE_TURN')
+            ensure(len(seen_choice_ids) == len(set(seen_choice_ids)), 'CHOICE_ID_COLLISION')
+            result = deepcopy(s)
+            result.update(turn=turn, shipments=deepcopy(shipments), seen_choice_ids=list(seen_choice_ids))
+            expected = self._totals(result)
+            self._validate_state(result, expected_totals=expected)
+            sealed = self._commit(s, result)
+            self._initial_totals = expected
+            return sealed
+
     def _core(self, principal, state):
         role, _ = self.authority._identity(principal)
         ensure(role == 'core', 'CORE_AUTHORITY_REQUIRED')
@@ -103,9 +122,9 @@ class SettlementEngine:
                 out[shipment['resource']] += shipment['dispatched_amount']
         return out
 
-    def _validate_state(self, state):
+    def _validate_state(self, state, *, expected_totals=None):
         ensure(all(type(q) is int and q >= 0 for a in [*state['stock'].values(), state['pool']] for q in a.values()), 'NEGATIVE_OR_INVALID_STOCK')
-        ensure(self._totals(state) == self._initial_totals, 'RESOURCE_CONSERVATION_VIOLATION')
+        ensure(self._totals(state) == (self._initial_totals if expected_totals is None else expected_totals), 'RESOURCE_CONSERVATION_VIOLATION')
         ids = [s['shipment_id'] for s in state['shipments']]
         ensure(len(ids) == len(set(ids)), 'DUPLICATE_SHIPMENT')
         for s in state['shipments']:
