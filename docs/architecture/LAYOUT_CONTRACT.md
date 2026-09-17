@@ -9,7 +9,7 @@
 - `tests/layout/source_baseline.json`: hashes of completed public HTML/JS/CSS.
 - `tests/layout/protected-baseline.sha256`: the original 117 protected files from
   `06a4994`. Only V1/V2 HTML hashes advance to the explicitly approved visual
-  baseline `36d0b8c...`; the historical README prefix remains separately checked.
+  authorized baseline in `source_baseline.json`; the historical README prefix remains separately checked.
 - `ui/layout-guard.js`: synchronous guards for common node relocation/removal/
   replacement methods, plus persistent MutationObserver evidence for native
   bypasses. No style or visual node is added.
@@ -91,3 +91,8 @@ The existing GitHub Pages source remains `main /`. Require a green preflight
 before merging; confirm the automatic Pages build and the live public contract
 afterward. Secret scan reports filenames only. It is a conservative pattern
 scanner, not proof against every possible secret encoding.
+
+Copy sanitation adds seven tests in `test_copy_contract.py`: forbidden-copy rejection,
+research-label retention, exact authorized source delta, stale-generator repair,
+12-state approved geometry delta, Earth-movement rejection and research-loss rejection.
+The immutable pre-copy snapshots remain under `tests/layout/history/`.
