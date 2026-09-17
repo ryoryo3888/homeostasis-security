@@ -1,6 +1,6 @@
 # ChatGPT直接観測
 
-最初に [開発・監査状態](results/status/development.json) と [8TURN直前無料ゲート](docs/audits/20260917T001606Z-eight-turn-gate.md) を読む。fresh修正版1TURN `20260917T001606Z-c7bae18f` の最終ゲートはPASS、**8TURN READY: YES**。8TURNは未実行で別途明示許可が必要。以前の条件決済FAILは `previous_settlement_audit` と旧報告に履歴として保持している。
+最初に [開発・監査状態](results/status/development.json) を読む。最新experiment `20260917T004355Z-c09ce05c` はTURN1の地球調整機関でUnicodeEncodeErrorにより失敗（完了0TURN、transport試行1、retry 0）。research対象外、8TURN READY: NO。以前の実行前ゲートYESは履歴であり、現在の再実行許可ではない。失敗詳細と同期不具合はdevelopment stateを参照。
 
 続いてこの作業ブランチの [results/status/latest.json](results/status/latest.json) を読む。
 

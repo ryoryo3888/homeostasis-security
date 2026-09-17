@@ -1,0 +1,110 @@
+{
+  "decisions": [
+    {
+      "agent_id": "地球調整機関",
+      "agent_type": "coordinator",
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260917T004355Z-c09ce05c:1:1:地球調整機関:1",
+      "choice_response": null,
+      "contract_validation": "FAIL",
+      "error_type": "UnicodeEncodeError",
+      "materialized_action": null,
+      "model": "gemini-3.6-flash",
+      "model_response": null,
+      "public_observation_payload": {
+        "response_contract": {
+          "exact_fields": [
+            "proposal_id",
+            "proposal_type",
+            "reason",
+            "predicted_global_effect",
+            "predicted_sovereignty_burden",
+            "requested_action"
+          ],
+          "proposal_type": [
+            "食料援助",
+            "仲裁",
+            "制裁提案",
+            "資源再配分",
+            "緊急協定",
+            "停戦提案",
+            "復興支援"
+          ],
+          "scores": "numbers 0..100",
+          "text": "non-empty"
+        }
+      },
+      "run": 1,
+      "run_id": "20260917T004355Z-c09ce05c",
+      "schema_version": 2,
+      "structured_response": null,
+      "token_usage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null
+      },
+      "turn": 1,
+      "validation_status": "FAIL"
+    }
+  ],
+  "failure": {
+    "agent_id": "地球調整機関",
+    "api_call_number": 1,
+    "attempt": 1,
+    "call_id": "20260917T004355Z-c09ce05c:1:1:地球調整機関:1",
+    "error_type": "UnicodeEncodeError",
+    "include_in_research_aggregation": false,
+    "run": 1,
+    "run_id": "20260917T004355Z-c09ce05c",
+    "turn": 1,
+    "validation": "FAIL",
+    "validation_error": null
+  },
+  "observation_version": 1,
+  "result": {
+    "include_in_research_aggregation": false,
+    "metadata": {},
+    "summary": {}
+  },
+  "run": {
+    "api_calls": 1,
+    "maximum_api_calls": 80,
+    "mode": "experiment",
+    "retry_count": 0,
+    "run_id": "20260917T004355Z-c09ce05c",
+    "status": "failed",
+    "turns_completed": 0
+  },
+  "source_hashes": {
+    "failure.json": "e5d132d8e7537ad75fb92638a39ceea8fcf934e574aad818815f11ff71571913",
+    "result.json.checkpoint": "1f1429bea9189b4938669bd5bd435e4f150a1e86eff16f6ae208fd4cf190d89b",
+    "transport.audit.json": "85b4042b3a55fa52ff784f9a3bb4479757aa6ceb7276f75c0ca5304b9205d21c"
+  },
+  "transport_audit": {
+    "api_calls": 1,
+    "attempts": [
+      {
+        "agent_id": "地球調整機関",
+        "attempt": 1,
+        "call_id": "20260917T004355Z-c09ce05c:1:1:地球調整機関:1",
+        "error_type": "UnicodeEncodeError",
+        "run": 1,
+        "run_id": "20260917T004355Z-c09ce05c",
+        "status": "failed",
+        "transport_attempt": 1,
+        "turn": 1
+      }
+    ],
+    "maximum_api_calls": 80,
+    "run_id": "20260917T004355Z-c09ce05c"
+  },
+  "validation": {
+    "contracts": "FAIL",
+    "decision_audit": "PASS",
+    "research_eligible": false,
+    "secret_scan": "PASS",
+    "transport_audit": "PASS"
+  },
+  "worlds": []
+}

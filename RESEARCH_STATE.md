@@ -2,11 +2,17 @@
 ## 現在地（機械可読stateから生成）
 
 一次情報: [results/status/latest.json](results/status/latest.json)。
-生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `33da81e4bf8695888b19e63818f2eff678f6b28d`（公開コミット自身ではありません）。
-最新run: `20260917T001606Z-c7bae18f` / turn / success / 完了1TURN / API 10 calls / retry 0。
-無料検証: PASS。次: 8TURN READY: YES. Await separate explicit authorization for one 8TURN worldline, maximum 80 API calls, retry 0. No automatic execution.
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `faf464698a2687da2985bb0270fb0c373e2bb037`（公開コミット自身ではありません）。
+最新run: `20260917T004355Z-c09ce05c` / experiment / failed / 完了0TURN / API 1 calls / retry 0。
+無料検証: PASS。次: Diagnose UnicodeEncodeError and fix exporter null-response handling before any separately authorized retry. Do not rerun the experiment automatically.
 今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
 <!-- MACHINE STATE END -->
+
+## 最新experiment観測（2026-09-17）
+
+`20260917T004355Z-c09ce05c`: failed、完了0TURN、transport試行1回、retry 0。TURN1・地球調整機関でUnicodeEncodeError。構造化回答は未取得で具体的なvalidation理由は保存されていない。Gemini側の受理・課金は不明。decision/transport監査・secret scanはPASS、contractsはFAIL、research対象外。今回の解析・同期API callsは0。
+
+観測生成器がnullのmodel_responseを辞書として扱うAttributeErrorを再現。既存validatorを通した観測状態だけを公開し、原本・コードは変更していない。恒久的なexporter修正とUnicodeEncodeErrorの診断は未実施。8TURN READYはNOへ戻し、自動再実行は禁止。以前のYESは実験前ゲートの履歴として保持。
 
 ## 最新無料ゲート：8TURN READY: YES（2026-09-17）
 
