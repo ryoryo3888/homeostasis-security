@@ -1,0 +1,2246 @@
+{
+  "kind": "synthetic_baseline_world",
+  "contract_version": "v3",
+  "physical_schema_version": 1,
+  "world": {
+    "contract_version": "v3",
+    "schema_version": 1,
+    "resources": [
+      {
+        "resource_id": "food",
+        "unit_id": "food_unit"
+      },
+      {
+        "resource_id": "energy",
+        "unit_id": "energy_unit"
+      }
+    ],
+    "countries": [
+      {
+        "state_id": "MIL",
+        "accounts": [
+          "MIL:food",
+          "MIL:energy"
+        ],
+        "capacities": [
+          "MIL:produce:food",
+          "MIL:produce:energy",
+          "MIL:transport",
+          "MIL:recovery"
+        ],
+        "demands": [
+          {
+            "resource_id": "food",
+            "unit_id": "food_unit",
+            "quantity": 18,
+            "function_id": "food_essential"
+          },
+          {
+            "resource_id": "energy",
+            "unit_id": "energy_unit",
+            "quantity": 22,
+            "function_id": "energy_essential"
+          }
+        ],
+        "essential_functions": [
+          "food_essential",
+          "energy_essential"
+        ],
+        "dependencies": [],
+        "decision_state": {
+          "observation_hash": "025ba9489c51a8035a3b7ce3616d894e4e178081d0975a2c3726c0ba5bea53c1",
+          "intent_ids": []
+        },
+        "autonomy": {
+          "mandate_ids": [],
+          "decision_authority": "self"
+        },
+        "self_reliance": {
+          "assumption_set": {
+            "id": "physical-components-only",
+            "digest": "9b1ff10ec4cc47acba4b7dc2fc972d90272921ceec7e43add5f3d6eae888e5d7"
+          },
+          "evidence_refs": []
+        }
+      },
+      {
+        "state_id": "RES",
+        "accounts": [
+          "RES:food",
+          "RES:energy"
+        ],
+        "capacities": [
+          "RES:produce:food",
+          "RES:produce:energy",
+          "RES:transport",
+          "RES:recovery"
+        ],
+        "demands": [
+          {
+            "resource_id": "food",
+            "unit_id": "food_unit",
+            "quantity": 16,
+            "function_id": "food_essential"
+          },
+          {
+            "resource_id": "energy",
+            "unit_id": "energy_unit",
+            "quantity": 18,
+            "function_id": "energy_essential"
+          }
+        ],
+        "essential_functions": [
+          "food_essential",
+          "energy_essential"
+        ],
+        "dependencies": [],
+        "decision_state": {
+          "observation_hash": "c8e21d80a1d4f7665b495923d6526175c8969f04e501df8ee626091d5b0d2a49",
+          "intent_ids": []
+        },
+        "autonomy": {
+          "mandate_ids": [],
+          "decision_authority": "self"
+        },
+        "self_reliance": {
+          "assumption_set": {
+            "id": "physical-components-only",
+            "digest": "9b1ff10ec4cc47acba4b7dc2fc972d90272921ceec7e43add5f3d6eae888e5d7"
+          },
+          "evidence_refs": []
+        }
+      },
+      {
+        "state_id": "FOOD",
+        "accounts": [
+          "FOOD:food",
+          "FOOD:energy"
+        ],
+        "capacities": [
+          "FOOD:produce:food",
+          "FOOD:produce:energy",
+          "FOOD:transport",
+          "FOOD:recovery"
+        ],
+        "demands": [
+          {
+            "resource_id": "food",
+            "unit_id": "food_unit",
+            "quantity": 20,
+            "function_id": "food_essential"
+          },
+          {
+            "resource_id": "energy",
+            "unit_id": "energy_unit",
+            "quantity": 16,
+            "function_id": "energy_essential"
+          }
+        ],
+        "essential_functions": [
+          "food_essential",
+          "energy_essential"
+        ],
+        "dependencies": [],
+        "decision_state": {
+          "observation_hash": "b1af523aec10756fe24f7be50e9b80501e8b30be3eeaf284888bec3087676516",
+          "intent_ids": []
+        },
+        "autonomy": {
+          "mandate_ids": [],
+          "decision_authority": "self"
+        },
+        "self_reliance": {
+          "assumption_set": {
+            "id": "physical-components-only",
+            "digest": "9b1ff10ec4cc47acba4b7dc2fc972d90272921ceec7e43add5f3d6eae888e5d7"
+          },
+          "evidence_refs": []
+        }
+      },
+      {
+        "state_id": "SMALL",
+        "accounts": [
+          "SMALL:food",
+          "SMALL:energy"
+        ],
+        "capacities": [
+          "SMALL:produce:food",
+          "SMALL:produce:energy",
+          "SMALL:transport",
+          "SMALL:recovery"
+        ],
+        "demands": [
+          {
+            "resource_id": "food",
+            "unit_id": "food_unit",
+            "quantity": 12,
+            "function_id": "food_essential"
+          },
+          {
+            "resource_id": "energy",
+            "unit_id": "energy_unit",
+            "quantity": 10,
+            "function_id": "energy_essential"
+          }
+        ],
+        "essential_functions": [
+          "food_essential",
+          "energy_essential"
+        ],
+        "dependencies": [],
+        "decision_state": {
+          "observation_hash": "86915f83426f50a78b6354638b2e586b868ecc472c89102c6961085361ffcbeb",
+          "intent_ids": []
+        },
+        "autonomy": {
+          "mandate_ids": [],
+          "decision_authority": "self"
+        },
+        "self_reliance": {
+          "assumption_set": {
+            "id": "physical-components-only",
+            "digest": "9b1ff10ec4cc47acba4b7dc2fc972d90272921ceec7e43add5f3d6eae888e5d7"
+          },
+          "evidence_refs": []
+        }
+      },
+      {
+        "state_id": "ISLAND",
+        "accounts": [
+          "ISLAND:food",
+          "ISLAND:energy"
+        ],
+        "capacities": [
+          "ISLAND:produce:food",
+          "ISLAND:produce:energy",
+          "ISLAND:transport",
+          "ISLAND:recovery"
+        ],
+        "demands": [
+          {
+            "resource_id": "food",
+            "unit_id": "food_unit",
+            "quantity": 14,
+            "function_id": "food_essential"
+          },
+          {
+            "resource_id": "energy",
+            "unit_id": "energy_unit",
+            "quantity": 14,
+            "function_id": "energy_essential"
+          }
+        ],
+        "essential_functions": [
+          "food_essential",
+          "energy_essential"
+        ],
+        "dependencies": [],
+        "decision_state": {
+          "observation_hash": "f3c85348a8633d7c9ae068cbde9377df181880cdcb435756a1918785ef20a586",
+          "intent_ids": []
+        },
+        "autonomy": {
+          "mandate_ids": [],
+          "decision_authority": "self"
+        },
+        "self_reliance": {
+          "assumption_set": {
+            "id": "physical-components-only",
+            "digest": "9b1ff10ec4cc47acba4b7dc2fc972d90272921ceec7e43add5f3d6eae888e5d7"
+          },
+          "evidence_refs": []
+        }
+      },
+      {
+        "state_id": "ECON",
+        "accounts": [
+          "ECON:food",
+          "ECON:energy"
+        ],
+        "capacities": [
+          "ECON:produce:food",
+          "ECON:produce:energy",
+          "ECON:transport",
+          "ECON:recovery"
+        ],
+        "demands": [
+          {
+            "resource_id": "food",
+            "unit_id": "food_unit",
+            "quantity": 22,
+            "function_id": "food_essential"
+          },
+          {
+            "resource_id": "energy",
+            "unit_id": "energy_unit",
+            "quantity": 26,
+            "function_id": "energy_essential"
+          }
+        ],
+        "essential_functions": [
+          "food_essential",
+          "energy_essential"
+        ],
+        "dependencies": [],
+        "decision_state": {
+          "observation_hash": "77fb443744b36d4590f81ce16fdc1cf49da38c57a52be3ab198d3c5b24d83a33",
+          "intent_ids": []
+        },
+        "autonomy": {
+          "mandate_ids": [],
+          "decision_authority": "self"
+        },
+        "self_reliance": {
+          "assumption_set": {
+            "id": "physical-components-only",
+            "digest": "9b1ff10ec4cc47acba4b7dc2fc972d90272921ceec7e43add5f3d6eae888e5d7"
+          },
+          "evidence_refs": []
+        }
+      },
+      {
+        "state_id": "FRAGILE",
+        "accounts": [
+          "FRAGILE:food",
+          "FRAGILE:energy"
+        ],
+        "capacities": [
+          "FRAGILE:produce:food",
+          "FRAGILE:produce:energy",
+          "FRAGILE:transport",
+          "FRAGILE:recovery"
+        ],
+        "demands": [
+          {
+            "resource_id": "food",
+            "unit_id": "food_unit",
+            "quantity": 15,
+            "function_id": "food_essential"
+          },
+          {
+            "resource_id": "energy",
+            "unit_id": "energy_unit",
+            "quantity": 12,
+            "function_id": "energy_essential"
+          }
+        ],
+        "essential_functions": [
+          "food_essential",
+          "energy_essential"
+        ],
+        "dependencies": [],
+        "decision_state": {
+          "observation_hash": "9bfdf246b157928a783bc95bb73ae74580b7186ce1ee74a04ff8cfb87a268638",
+          "intent_ids": []
+        },
+        "autonomy": {
+          "mandate_ids": [],
+          "decision_authority": "self"
+        },
+        "self_reliance": {
+          "assumption_set": {
+            "id": "physical-components-only",
+            "digest": "9b1ff10ec4cc47acba4b7dc2fc972d90272921ceec7e43add5f3d6eae888e5d7"
+          },
+          "evidence_refs": []
+        }
+      },
+      {
+        "state_id": "NEUTRAL",
+        "accounts": [
+          "NEUTRAL:food",
+          "NEUTRAL:energy"
+        ],
+        "capacities": [
+          "NEUTRAL:produce:food",
+          "NEUTRAL:produce:energy",
+          "NEUTRAL:transport",
+          "NEUTRAL:recovery"
+        ],
+        "demands": [
+          {
+            "resource_id": "food",
+            "unit_id": "food_unit",
+            "quantity": 16,
+            "function_id": "food_essential"
+          },
+          {
+            "resource_id": "energy",
+            "unit_id": "energy_unit",
+            "quantity": 16,
+            "function_id": "energy_essential"
+          }
+        ],
+        "essential_functions": [
+          "food_essential",
+          "energy_essential"
+        ],
+        "dependencies": [],
+        "decision_state": {
+          "observation_hash": "2d6f3ea3757e000f65f39dbb38cfb07d999d046db65bcc48c6648f348022f5d6",
+          "intent_ids": []
+        },
+        "autonomy": {
+          "mandate_ids": [],
+          "decision_authority": "self"
+        },
+        "self_reliance": {
+          "assumption_set": {
+            "id": "physical-components-only",
+            "digest": "9b1ff10ec4cc47acba4b7dc2fc972d90272921ceec7e43add5f3d6eae888e5d7"
+          },
+          "evidence_refs": []
+        }
+      }
+    ],
+    "accounts": [
+      {
+        "kind": "stock",
+        "account_id": "MIL:food",
+        "resource_id": "food",
+        "owner": "MIL",
+        "location": "MIL",
+        "unit_id": "food_unit",
+        "balance": 68,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "MIL:energy",
+        "resource_id": "energy",
+        "owner": "MIL",
+        "location": "MIL",
+        "unit_id": "energy_unit",
+        "balance": 70,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "RES:food",
+        "resource_id": "food",
+        "owner": "RES",
+        "location": "RES",
+        "unit_id": "food_unit",
+        "balance": 72,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "RES:energy",
+        "resource_id": "energy",
+        "owner": "RES",
+        "location": "RES",
+        "unit_id": "energy_unit",
+        "balance": 96,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "FOOD:food",
+        "resource_id": "food",
+        "owner": "FOOD",
+        "location": "FOOD",
+        "unit_id": "food_unit",
+        "balance": 42,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "FOOD:energy",
+        "resource_id": "energy",
+        "owner": "FOOD",
+        "location": "FOOD",
+        "unit_id": "energy_unit",
+        "balance": 58,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "SMALL:food",
+        "resource_id": "food",
+        "owner": "SMALL",
+        "location": "SMALL",
+        "unit_id": "food_unit",
+        "balance": 58,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "SMALL:energy",
+        "resource_id": "energy",
+        "owner": "SMALL",
+        "location": "SMALL",
+        "unit_id": "energy_unit",
+        "balance": 48,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "ISLAND:food",
+        "resource_id": "food",
+        "owner": "ISLAND",
+        "location": "ISLAND",
+        "unit_id": "food_unit",
+        "balance": 50,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "ISLAND:energy",
+        "resource_id": "energy",
+        "owner": "ISLAND",
+        "location": "ISLAND",
+        "unit_id": "energy_unit",
+        "balance": 42,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "ECON:food",
+        "resource_id": "food",
+        "owner": "ECON",
+        "location": "ECON",
+        "unit_id": "food_unit",
+        "balance": 75,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "ECON:energy",
+        "resource_id": "energy",
+        "owner": "ECON",
+        "location": "ECON",
+        "unit_id": "energy_unit",
+        "balance": 65,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "FRAGILE:food",
+        "resource_id": "food",
+        "owner": "FRAGILE",
+        "location": "FRAGILE",
+        "unit_id": "food_unit",
+        "balance": 35,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "FRAGILE:energy",
+        "resource_id": "energy",
+        "owner": "FRAGILE",
+        "location": "FRAGILE",
+        "unit_id": "energy_unit",
+        "balance": 32,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "NEUTRAL:food",
+        "resource_id": "food",
+        "owner": "NEUTRAL",
+        "location": "NEUTRAL",
+        "unit_id": "food_unit",
+        "balance": 88,
+        "in_transit": false
+      },
+      {
+        "kind": "stock",
+        "account_id": "NEUTRAL:energy",
+        "resource_id": "energy",
+        "owner": "NEUTRAL",
+        "location": "NEUTRAL",
+        "unit_id": "energy_unit",
+        "balance": 62,
+        "in_transit": false
+      }
+    ],
+    "capacities": [
+      {
+        "kind": "capacity",
+        "capacity_id": "MIL:produce:food",
+        "owner": "MIL",
+        "category": "production",
+        "unit_id": "food_unit_per_turn",
+        "available": 12,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "MIL:produce:energy",
+        "owner": "MIL",
+        "category": "production",
+        "unit_id": "energy_unit_per_turn",
+        "available": 20,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "MIL:transport",
+        "owner": "MIL",
+        "category": "transport",
+        "unit_id": "transport_unit_per_turn",
+        "available": 18,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "MIL:recovery",
+        "owner": "MIL",
+        "category": "recovery",
+        "unit_id": "recovery_unit_per_turn",
+        "available": 10,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "RES:produce:food",
+        "owner": "RES",
+        "category": "production",
+        "unit_id": "food_unit_per_turn",
+        "available": 20,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "RES:produce:energy",
+        "owner": "RES",
+        "category": "production",
+        "unit_id": "energy_unit_per_turn",
+        "available": 26,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "RES:transport",
+        "owner": "RES",
+        "category": "transport",
+        "unit_id": "transport_unit_per_turn",
+        "available": 16,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "RES:recovery",
+        "owner": "RES",
+        "category": "recovery",
+        "unit_id": "recovery_unit_per_turn",
+        "available": 8,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "FOOD:produce:food",
+        "owner": "FOOD",
+        "category": "production",
+        "unit_id": "food_unit_per_turn",
+        "available": 10,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "FOOD:produce:energy",
+        "owner": "FOOD",
+        "category": "production",
+        "unit_id": "energy_unit_per_turn",
+        "available": 10,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "FOOD:transport",
+        "owner": "FOOD",
+        "category": "transport",
+        "unit_id": "transport_unit_per_turn",
+        "available": 14,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "FOOD:recovery",
+        "owner": "FOOD",
+        "category": "recovery",
+        "unit_id": "recovery_unit_per_turn",
+        "available": 6,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "SMALL:produce:food",
+        "owner": "SMALL",
+        "category": "production",
+        "unit_id": "food_unit_per_turn",
+        "available": 14,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "SMALL:produce:energy",
+        "owner": "SMALL",
+        "category": "production",
+        "unit_id": "energy_unit_per_turn",
+        "available": 8,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "SMALL:transport",
+        "owner": "SMALL",
+        "category": "transport",
+        "unit_id": "transport_unit_per_turn",
+        "available": 10,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "SMALL:recovery",
+        "owner": "SMALL",
+        "category": "recovery",
+        "unit_id": "recovery_unit_per_turn",
+        "available": 6,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "ISLAND:produce:food",
+        "owner": "ISLAND",
+        "category": "production",
+        "unit_id": "food_unit_per_turn",
+        "available": 18,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "ISLAND:produce:energy",
+        "owner": "ISLAND",
+        "category": "production",
+        "unit_id": "energy_unit_per_turn",
+        "available": 20,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "ISLAND:transport",
+        "owner": "ISLAND",
+        "category": "transport",
+        "unit_id": "transport_unit_per_turn",
+        "available": 12,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "ISLAND:recovery",
+        "owner": "ISLAND",
+        "category": "recovery",
+        "unit_id": "recovery_unit_per_turn",
+        "available": 8,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "ECON:produce:food",
+        "owner": "ECON",
+        "category": "production",
+        "unit_id": "food_unit_per_turn",
+        "available": 16,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "ECON:produce:energy",
+        "owner": "ECON",
+        "category": "production",
+        "unit_id": "energy_unit_per_turn",
+        "available": 24,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "ECON:transport",
+        "owner": "ECON",
+        "category": "transport",
+        "unit_id": "transport_unit_per_turn",
+        "available": 20,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "ECON:recovery",
+        "owner": "ECON",
+        "category": "recovery",
+        "unit_id": "recovery_unit_per_turn",
+        "available": 12,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "FRAGILE:produce:food",
+        "owner": "FRAGILE",
+        "category": "production",
+        "unit_id": "food_unit_per_turn",
+        "available": 8,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "FRAGILE:produce:energy",
+        "owner": "FRAGILE",
+        "category": "production",
+        "unit_id": "energy_unit_per_turn",
+        "available": 6,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "FRAGILE:transport",
+        "owner": "FRAGILE",
+        "category": "transport",
+        "unit_id": "transport_unit_per_turn",
+        "available": 8,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "FRAGILE:recovery",
+        "owner": "FRAGILE",
+        "category": "recovery",
+        "unit_id": "recovery_unit_per_turn",
+        "available": 4,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "NEUTRAL:produce:food",
+        "owner": "NEUTRAL",
+        "category": "production",
+        "unit_id": "food_unit_per_turn",
+        "available": 22,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "NEUTRAL:produce:energy",
+        "owner": "NEUTRAL",
+        "category": "production",
+        "unit_id": "energy_unit_per_turn",
+        "available": 18,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "NEUTRAL:transport",
+        "owner": "NEUTRAL",
+        "category": "transport",
+        "unit_id": "transport_unit_per_turn",
+        "available": 16,
+        "reserved": 0
+      },
+      {
+        "kind": "capacity",
+        "capacity_id": "NEUTRAL:recovery",
+        "owner": "NEUTRAL",
+        "category": "recovery",
+        "unit_id": "recovery_unit_per_turn",
+        "available": 10,
+        "reserved": 0
+      }
+    ],
+    "routes": [],
+    "dependencies": [],
+    "policies": [
+      {
+        "policy_id": "baseline-v3",
+        "definition_hash": "12aeef61788be8305623762598e0e20bfc6c772b269e0e48d5a9de56f2323bf6"
+      }
+    ],
+    "active_policy": "baseline-v3"
+  },
+  "capacity_profiles": [
+    {
+      "capacity_id": "MIL:produce:food",
+      "resource_id": "food",
+      "current_capacity": 12,
+      "maximum_capacity": 16,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "MIL:produce:energy",
+      "resource_id": "energy",
+      "current_capacity": 20,
+      "maximum_capacity": 24,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "MIL:transport",
+      "resource_id": null,
+      "current_capacity": 18,
+      "maximum_capacity": 22,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "MIL:recovery",
+      "resource_id": null,
+      "current_capacity": 10,
+      "maximum_capacity": 14,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "RES:produce:food",
+      "resource_id": "food",
+      "current_capacity": 20,
+      "maximum_capacity": 24,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "RES:produce:energy",
+      "resource_id": "energy",
+      "current_capacity": 26,
+      "maximum_capacity": 30,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "RES:transport",
+      "resource_id": null,
+      "current_capacity": 16,
+      "maximum_capacity": 20,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "RES:recovery",
+      "resource_id": null,
+      "current_capacity": 8,
+      "maximum_capacity": 12,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "FOOD:produce:food",
+      "resource_id": "food",
+      "current_capacity": 10,
+      "maximum_capacity": 14,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "FOOD:produce:energy",
+      "resource_id": "energy",
+      "current_capacity": 10,
+      "maximum_capacity": 14,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "FOOD:transport",
+      "resource_id": null,
+      "current_capacity": 14,
+      "maximum_capacity": 18,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "FOOD:recovery",
+      "resource_id": null,
+      "current_capacity": 6,
+      "maximum_capacity": 10,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "SMALL:produce:food",
+      "resource_id": "food",
+      "current_capacity": 14,
+      "maximum_capacity": 18,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "SMALL:produce:energy",
+      "resource_id": "energy",
+      "current_capacity": 8,
+      "maximum_capacity": 12,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "SMALL:transport",
+      "resource_id": null,
+      "current_capacity": 10,
+      "maximum_capacity": 14,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "SMALL:recovery",
+      "resource_id": null,
+      "current_capacity": 6,
+      "maximum_capacity": 10,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "ISLAND:produce:food",
+      "resource_id": "food",
+      "current_capacity": 18,
+      "maximum_capacity": 22,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "ISLAND:produce:energy",
+      "resource_id": "energy",
+      "current_capacity": 20,
+      "maximum_capacity": 24,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "ISLAND:transport",
+      "resource_id": null,
+      "current_capacity": 12,
+      "maximum_capacity": 16,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "ISLAND:recovery",
+      "resource_id": null,
+      "current_capacity": 8,
+      "maximum_capacity": 12,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "ECON:produce:food",
+      "resource_id": "food",
+      "current_capacity": 16,
+      "maximum_capacity": 20,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "ECON:produce:energy",
+      "resource_id": "energy",
+      "current_capacity": 24,
+      "maximum_capacity": 28,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "ECON:transport",
+      "resource_id": null,
+      "current_capacity": 20,
+      "maximum_capacity": 24,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "ECON:recovery",
+      "resource_id": null,
+      "current_capacity": 12,
+      "maximum_capacity": 16,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "FRAGILE:produce:food",
+      "resource_id": "food",
+      "current_capacity": 8,
+      "maximum_capacity": 12,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "FRAGILE:produce:energy",
+      "resource_id": "energy",
+      "current_capacity": 6,
+      "maximum_capacity": 10,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "FRAGILE:transport",
+      "resource_id": null,
+      "current_capacity": 8,
+      "maximum_capacity": 12,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "FRAGILE:recovery",
+      "resource_id": null,
+      "current_capacity": 4,
+      "maximum_capacity": 8,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "NEUTRAL:produce:food",
+      "resource_id": "food",
+      "current_capacity": 22,
+      "maximum_capacity": 26,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "NEUTRAL:produce:energy",
+      "resource_id": "energy",
+      "current_capacity": 18,
+      "maximum_capacity": 22,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "NEUTRAL:transport",
+      "resource_id": null,
+      "current_capacity": 16,
+      "maximum_capacity": 20,
+      "utilization_ppm": 1000000
+    },
+    {
+      "capacity_id": "NEUTRAL:recovery",
+      "resource_id": null,
+      "current_capacity": 10,
+      "maximum_capacity": 14,
+      "utilization_ppm": 1000000
+    }
+  ],
+  "provenance": [
+    {
+      "path": "/world/schema_version",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit model parameter; no calibrated national statistic or predetermined outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/0/demands/0/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/0/demands/1/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/1/demands/0/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/1/demands/1/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/2/demands/0/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/2/demands/1/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/3/demands/0/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/3/demands/1/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/4/demands/0/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/4/demands/1/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/5/demands/0/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/5/demands/1/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/6/demands/0/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/6/demands/1/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/7/demands/0/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/countries/7/demands/1/quantity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic essential requirement, varied across resource/state independently of any target outcome.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/accounts/0/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:MIL:initial_resources.levels.food"
+    },
+    {
+      "path": "/world/accounts/1/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:MIL:initial_resources.levels.fossil_fuel"
+    },
+    {
+      "path": "/world/accounts/2/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:RES:initial_resources.levels.food"
+    },
+    {
+      "path": "/world/accounts/3/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:RES:initial_resources.levels.fossil_fuel"
+    },
+    {
+      "path": "/world/accounts/4/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:FOOD:initial_resources.levels.food"
+    },
+    {
+      "path": "/world/accounts/5/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:FOOD:initial_resources.levels.fossil_fuel"
+    },
+    {
+      "path": "/world/accounts/6/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:SMALL:initial_resources.levels.food"
+    },
+    {
+      "path": "/world/accounts/7/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:SMALL:initial_resources.levels.fossil_fuel"
+    },
+    {
+      "path": "/world/accounts/8/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:ISLAND:initial_resources.levels.food"
+    },
+    {
+      "path": "/world/accounts/9/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:ISLAND:initial_resources.levels.fossil_fuel"
+    },
+    {
+      "path": "/world/accounts/10/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:ECON:initial_resources.levels.food"
+    },
+    {
+      "path": "/world/accounts/11/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:ECON:initial_resources.levels.fossil_fuel"
+    },
+    {
+      "path": "/world/accounts/12/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:FRAGILE:initial_resources.levels.food"
+    },
+    {
+      "path": "/world/accounts/13/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:FRAGILE:initial_resources.levels.fossil_fuel"
+    },
+    {
+      "path": "/world/accounts/14/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:NEUTRAL:initial_resources.levels.food"
+    },
+    {
+      "path": "/world/accounts/15/balance",
+      "kind": "synthetic_assumption",
+      "explanation": "Legacy numeric magnitude reused as synthetic model stock, not a physical conversion. Energy uses fossil magnitude, not a composite index.",
+      "source": "git:ed70ee235c4ce098709c0825d055e4b64f901db8:config/country_archetypes.json:NEUTRAL:initial_resources.levels.fossil_fuel"
+    },
+    {
+      "path": "/world/capacities/0/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/0/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/1/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/1/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/2/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/2/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/3/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/3/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/4/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/4/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/5/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/5/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/6/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/6/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/7/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/7/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/8/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/8/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/9/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/9/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/10/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/10/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/11/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/11/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/12/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/12/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/13/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/13/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/14/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/14/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/15/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/15/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/16/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/16/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/17/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/17/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/18/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/18/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/19/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/19/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/20/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/20/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/21/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/21/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/22/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/22/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/23/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/23/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/24/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/24/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/25/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/25/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/26/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/26/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/27/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/27/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/28/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/28/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/29/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/29/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/30/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/30/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/world/capacities/31/available",
+      "kind": "derived",
+      "explanation": "floor(current_capacity * utilization_ppm / 1000000).",
+      "source": "capacity_profiles"
+    },
+    {
+      "path": "/world/capacities/31/reserved",
+      "kind": "synthetic_assumption",
+      "explanation": "No transactions or reservations in phase two.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/0/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/0/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/0/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/1/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/1/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/1/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/2/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/2/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/2/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/3/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/3/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/3/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/4/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/4/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/4/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/5/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/5/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/5/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/6/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/6/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/6/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/7/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/7/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/7/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/8/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/8/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/8/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/9/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/9/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/9/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/10/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/10/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/10/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/11/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/11/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/11/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/12/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/12/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/12/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/13/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/13/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/13/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/14/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/14/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/14/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/15/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/15/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/15/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/16/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/16/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/16/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/17/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/17/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/17/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/18/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/18/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/18/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/19/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/19/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/19/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/20/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/20/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/20/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/21/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/21/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/21/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/22/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/22/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/22/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/23/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/23/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/23/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/24/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/24/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/24/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/25/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/25/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/25/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/26/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/26/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/26/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/27/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/27/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/27/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/28/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/28/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/28/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/29/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/29/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/29/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/30/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/30/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/30/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/31/current_capacity",
+      "kind": "synthetic_assumption",
+      "explanation": "Synthetic throughput reflecting heterogeneous endowments, not a prescribed future role.",
+      "source": "V3 phase-two synthetic design"
+    },
+    {
+      "path": "/capacity_profiles/31/maximum_capacity",
+      "kind": "derived",
+      "explanation": "Four model units of installed headroom; no automatic recovery.",
+      "source": "same profile current_capacity + 4"
+    },
+    {
+      "path": "/capacity_profiles/31/utilization_ppm",
+      "kind": "synthetic_assumption",
+      "explanation": "Explicit full-utilization initial assumption, replaceable without changing the engine.",
+      "source": "V3 phase-two synthetic design"
+    }
+  ],
+  "production_availability": "closing_stock",
+  "interpretation": "Synthetic baseline world; model units, not real national statistics. Historical IDs imply no future role. Production inputs are exogenous assumptions, not modeled industrial supply."
+}
