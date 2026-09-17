@@ -1,0 +1,279 @@
+{
+  "schema_version": 1,
+  "scope_commit": "b151cb25802c8352ce3c4eefc2d80814c91f12b0",
+  "scope": "Current tracked main artifacts only; no private/untracked artifacts, no other-branch results promoted.",
+  "registered_source_files": [
+    "simulation_result_cautious_cautious_law_hotline_run1.json",
+    "simulation_result_cautious_cautious_law_hotline_run1_previous_20260830T105924.json",
+    "simulation_result_cautious_cautious_law_hotline_run2.json",
+    "simulation_result_cautious_cautious_law_hotline_run3.json",
+    "simulation_result_cautious_cautious_law_hotline_run4.json",
+    "result_hardliner_law_hotline_run1.json",
+    "result_hardliner_law_hotline_run2.json",
+    "result_cautious_no_law_hotline_run1.json",
+    "result_cautious_no_law_hotline_run2.json",
+    "simulation_result_cautious_cautious_law_no_hotline_run1.json",
+    "simulation_result_cautious_cautious_law_no_hotline_run2.json",
+    "simulation_result_cautious_cautious_law_no_hotline_run3.json",
+    "result_hardliner_no_law_no_hotline_run1.json",
+    "result_hardliner_no_law_no_hotline_run2.json",
+    "result_hardliner_no_law_hotline_run1.json",
+    "result_hardliner_no_law_hotline_run2.json",
+    "result_hardliner_law_no_hotline_run1.json",
+    "result_hardliner_law_no_hotline_run2.json",
+    "result_cautious_no_law_no_hotline_run1.json",
+    "result_cautious_no_law_no_hotline_run2.json",
+    "result_hardliner_cautious_law_hotline_run1.json",
+    "result_hardliner_cautious_law_hotline_run2.json",
+    "result_hardliner_cautious_law_no_hotline_run1.json",
+    "result_hardliner_cautious_law_no_hotline_run2.json",
+    "result_hardliner_cautious_no_law_hotline_run1.json",
+    "result_hardliner_cautious_no_law_hotline_run2.json",
+    "result_hardliner_cautious_no_law_no_hotline_run1.json",
+    "result_hardliner_cautious_no_law_no_hotline_run2.json",
+    "result_cautious_hardliner_law_hotline_run1.json",
+    "result_cautious_hardliner_law_hotline_run2.json",
+    "result_cautious_hardliner_law_no_hotline_run1.json",
+    "result_cautious_hardliner_law_no_hotline_run2.json",
+    "result_cautious_hardliner_no_law_hotline_run1.json",
+    "result_cautious_hardliner_no_law_hotline_run2.json",
+    "result_cautious_hardliner_no_law_no_hotline_run1.json",
+    "result_cautious_hardliner_no_law_no_hotline_run2.json",
+    "summary.json",
+    "v2_first_run.json"
+  ],
+  "unregistered": [
+    {
+      "artifact": "config/country_archetypes.json",
+      "classification": "configuration",
+      "registration": "UNREGISTERED",
+      "reason": "設定・シナリオであり実行記録ではない。"
+    },
+    {
+      "artifact": "config/country_types.json",
+      "classification": "configuration",
+      "registration": "UNREGISTERED",
+      "reason": "設定・シナリオであり実行記録ではない。"
+    },
+    {
+      "artifact": "config/event_generation_rules.json",
+      "classification": "configuration",
+      "registration": "UNREGISTERED",
+      "reason": "設定・シナリオであり実行記録ではない。"
+    },
+    {
+      "artifact": "config/information_policies.json",
+      "classification": "configuration",
+      "registration": "UNREGISTERED",
+      "reason": "設定・シナリオであり実行記録ではない。"
+    },
+    {
+      "artifact": "contrast_scores.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    },
+    {
+      "artifact": "contrast_scores_hotline.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    },
+    {
+      "artifact": "contrast_scores_no_hotline.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    },
+    {
+      "artifact": "reaction_axis_config.json",
+      "classification": "configuration",
+      "registration": "UNREGISTERED",
+      "reason": "設定・シナリオであり実行記録ではない。"
+    },
+    {
+      "artifact": "results/final/deterministic_prototype.json",
+      "classification": "deterministic prototype run",
+      "registration": "UNREGISTERED",
+      "reason": "旧完全版／第三層は現Version方針ではV3対象。今回登録しない。監査のrejected/abortedも維持。"
+    },
+    {
+      "artifact": "results/final/deterministic_prototype_8turn.json",
+      "classification": "API未実行の決定論的試作結果",
+      "registration": "UNREGISTERED",
+      "reason": "旧完全版／第三層は現Version方針ではV3対象。今回登録しない。監査のrejected/abortedも維持。"
+    },
+    {
+      "artifact": "results/final/gemini-run-20260915-01.audit.json",
+      "classification": "rejected",
+      "registration": "UNREGISTERED",
+      "reason": "旧完全版／第三層は現Version方針ではV3対象。今回登録しない。監査のrejected/abortedも維持。"
+    },
+    {
+      "artifact": "results/final/gemini-run-20260915-01.json",
+      "classification": "development-only",
+      "registration": "UNREGISTERED",
+      "reason": "旧完全版／第三層は現Version方針ではV3対象。今回登録しない。監査のrejected/abortedも維持。"
+    },
+    {
+      "artifact": "results/final/gemini-run-20260915-02.audit.json",
+      "classification": "aborted",
+      "registration": "UNREGISTERED",
+      "reason": "旧完全版／第三層は現Version方針ではV3対象。今回登録しない。監査のrejected/abortedも維持。"
+    },
+    {
+      "artifact": "results/final/gemini-run-20260915-03.audit.json",
+      "classification": "rejected",
+      "registration": "UNREGISTERED",
+      "reason": "旧完全版／第三層は現Version方針ではV3対象。今回登録しない。監査のrejected/abortedも維持。"
+    },
+    {
+      "artifact": "results/final/gemini-run-20260915-03.json",
+      "classification": "development-only",
+      "registration": "UNREGISTERED",
+      "reason": "旧完全版／第三層は現Version方針ではV3対象。今回登録しない。監査のrejected/abortedも維持。"
+    },
+    {
+      "artifact": "results/final/gemini-run-20260915-04.audit.json",
+      "classification": "aborted",
+      "registration": "UNREGISTERED",
+      "reason": "旧完全版／第三層は現Version方針ではV3対象。今回登録しない。監査のrejected/abortedも維持。"
+    },
+    {
+      "artifact": "results/final/gemini-run-20260916-05.audit.json",
+      "classification": "aborted",
+      "registration": "UNREGISTERED",
+      "reason": "旧完全版／第三層は現Version方針ではV3対象。今回登録しない。監査のrejected/abortedも維持。"
+    },
+    {
+      "artifact": "results/final/gemini-run-20260916-06.audit.json",
+      "classification": "aborted",
+      "registration": "UNREGISTERED",
+      "reason": "旧完全版／第三層は現Version方針ではV3対象。今回登録しない。監査のrejected/abortedも維持。"
+    },
+    {
+      "artifact": "results/final/gemini-run-20260916-07.audit.json",
+      "classification": "aborted",
+      "registration": "UNREGISTERED",
+      "reason": "旧完全版／第三層は現Version方針ではV3対象。今回登録しない。監査のrejected/abortedも維持。"
+    },
+    {
+      "artifact": "results/final/gemini-run-20260916-08.audit.json",
+      "classification": "rejected",
+      "registration": "UNREGISTERED",
+      "reason": "旧完全版／第三層は現Version方針ではV3対象。今回登録しない。監査のrejected/abortedも維持。"
+    },
+    {
+      "artifact": "results/final/gemini-run-20260916-08.json",
+      "classification": "development-only",
+      "registration": "UNREGISTERED",
+      "reason": "旧完全版／第三層は現Version方針ではV3対象。今回登録しない。監査のrejected/abortedも維持。"
+    },
+    {
+      "artifact": "scenarios/resource_network_sample.json",
+      "classification": "configuration",
+      "registration": "UNREGISTERED",
+      "reason": "設定・シナリオであり実行記録ではない。"
+    },
+    {
+      "artifact": "scenarios/scenario_01_farmland_missile.json",
+      "classification": "configuration",
+      "registration": "UNREGISTERED",
+      "reason": "設定・シナリオであり実行記録ではない。"
+    },
+    {
+      "artifact": "simulation_result.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    },
+    {
+      "artifact": "simulation_result_backup.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    },
+    {
+      "artifact": "simulation_result_before_rich_data.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    },
+    {
+      "artifact": "simulation_result_demo_gemini.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    },
+    {
+      "artifact": "simulation_result_development.json",
+      "classification": "development-only",
+      "registration": "UNREGISTERED",
+      "reason": "mode=development。正式研究へ登録しない。"
+    },
+    {
+      "artifact": "simulation_result_independent_agents_hotline.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    },
+    {
+      "artifact": "simulation_result_independent_agents_hotline_backup.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    },
+    {
+      "artifact": "simulation_result_independent_agents_hotline_final.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    },
+    {
+      "artifact": "simulation_result_independent_agents_no_hotline.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    },
+    {
+      "artifact": "simulation_result_independent_agents_no_hotline_backup.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    },
+    {
+      "artifact": "simulation_result_independent_agents_no_hotline_before_final_run.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    },
+    {
+      "artifact": "simulation_result_independent_agents_no_hotline_failed_backup.json",
+      "classification": "failed",
+      "registration": "UNREGISTERED",
+      "reason": "失敗バックアップ。完了研究として登録しない。"
+    },
+    {
+      "artifact": "simulation_result_independent_agents_no_hotline_final.json",
+      "classification": "ambiguous",
+      "registration": "UNREGISTERED",
+      "reason": "現比較summaryの採用ファイルにも公開代表の選択にも含まれない。重複・旧run・中間評価の可能性があり個別登録を保留。"
+    }
+  ],
+  "absent_from_current_main": [
+    "docs/research/",
+    "results/probe/",
+    "results/debug/",
+    "results/rejected/",
+    "results/research/",
+    "results/status/latest.json",
+    "RESEARCH_STATE.md"
+  ],
+  "counts": {
+    "v1_comparison_conditions": 16,
+    "v1_distinct_comparison_worldlines": 36,
+    "v1_recorded_seeds": 26,
+    "v1_unknown_seeds": 10,
+    "v2_worldlines": 1
+  }
+}

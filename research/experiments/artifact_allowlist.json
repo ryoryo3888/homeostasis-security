@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "reviewed_at_commit": "b151cb25802c8352ce3c4eefc2d80814c91f12b0",
+  "artifacts": [
+    {
+      "path": "simulation_result_cautious_cautious_law_hotline_run1.json",
+      "sha256": "a011d8fc99117a08dbfe459cd1ea906330909371b07f26094ca9e2a60e9b6bc7",
+      "version": "v1",
+      "classification": "representative_run",
+      "source_eligible": true
+    },
+    {
+      "path": "simulation_result_cautious_cautious_law_hotline_run1_previous_20260830T105924.json",
+      "sha256": "a44d5d22ca7908629e7de2a4c2af100c03d43bc722f814fd2fbe8d9e82e56dfc",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "simulation_result_cautious_cautious_law_hotline_run2.json",
+      "sha256": "370dd153aa6f3a5803d3eb71ed518f42c41096250bdcc56c282e411148abf947",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "simulation_result_cautious_cautious_law_hotline_run3.json",
+      "sha256": "4b1c3abc191464c55dfe66ad3aa99980ffdb7591810ef699b7bece9c28448e0b",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "simulation_result_cautious_cautious_law_hotline_run4.json",
+      "sha256": "18a259bd5bfcec133c31dd51d5e33fdacccbd654e48b16f0b5de536d21a2bafc",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_law_hotline_run1.json",
+      "sha256": "9156ff6f4834349ec88ff4e5f1cad94e8e7c7b5685da3610f0b32dd2a596a80b",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_law_hotline_run2.json",
+      "sha256": "1888c9e58a04c3b0b73ff7f4b11ace288c064ee5f7151c98b5060da149e54e04",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_cautious_no_law_hotline_run1.json",
+      "sha256": "cd1e75938f8ef2bc09f4c2e75be0effef4588318d75121a97dc1428ef8521768",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_cautious_no_law_hotline_run2.json",
+      "sha256": "d3c2cdacc7e658ccdd8be82b43606adcf6b7f4546faeef25a4926cc67bc68ed1",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "simulation_result_cautious_cautious_law_no_hotline_run1.json",
+      "sha256": "ea80931c7cbdf7f7305dc7ff0a59f4562136ccd9ba76fe0bb25340b908eaba5e",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "simulation_result_cautious_cautious_law_no_hotline_run2.json",
+      "sha256": "f68f991b803ef7454b7b0af4f96ff35bcf59257cf4a0069f7dc4bb9952188fbf",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "simulation_result_cautious_cautious_law_no_hotline_run3.json",
+      "sha256": "be3d3d99f67ebc76ef8d33d7875f8cd8b7b32a43b9f5764b5b8a1094503736ed",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_no_law_no_hotline_run1.json",
+      "sha256": "ef38ceef66d2d22d76fcd21d767e56fd546c846500118dd6047432cd61fb8154",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_no_law_no_hotline_run2.json",
+      "sha256": "69dc37c75c444ad0e912343043816a06f8a04f7131d93bbc12d33b1076959e91",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_no_law_hotline_run1.json",
+      "sha256": "8d20967c21b009f4440d7ba60cf5bf7d73a0a1a8261a2ee0bce485061d252270",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_no_law_hotline_run2.json",
+      "sha256": "da021c178179b8c3d54bdb5a300677c6e65cb2b4430837248494a24afd138a14",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_law_no_hotline_run1.json",
+      "sha256": "1420209c8a79a19a7d57ead9d097e13e23b4a987f1dd6d8e1e012f2c564466ea",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_law_no_hotline_run2.json",
+      "sha256": "7fcddab8887e6e6ee14def9d1f96a3ab5287b2606ca7a4119840cd759ba11913",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_cautious_no_law_no_hotline_run1.json",
+      "sha256": "848d61b0964c1d4afb70123543774152962f2a9ae0fc0db4c04c07a43aa8a8e4",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_cautious_no_law_no_hotline_run2.json",
+      "sha256": "c85ba25263da5d85dfd5bc98aa625f01acffe8e6d3dfead1710f854c75154908",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_cautious_law_hotline_run1.json",
+      "sha256": "377a2094e2f0063c033aa3ff5ee345004555281ee61ffb869c609b1336e823b4",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_cautious_law_hotline_run2.json",
+      "sha256": "587e835a65997907208733b9f011c9a314d09d809ec3659b590a9f7ff2b9e632",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_cautious_law_no_hotline_run1.json",
+      "sha256": "fdd15fd343c2413ec7a717f004a04ce1cb5a8bae707ae3d6d9b11ebf70fe2fb2",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_cautious_law_no_hotline_run2.json",
+      "sha256": "46eb5788f69ea780afe1038dd9f7e9147178fd89fe3a4c1b06a77959236252b8",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_cautious_no_law_hotline_run1.json",
+      "sha256": "4f973534e6b3a1772eaf4a54eb1fa4fc08eb3f9ce337f0cdc21fe1c7f128330a",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_cautious_no_law_hotline_run2.json",
+      "sha256": "f323f37b1d133c339dca2f21d88aa03583f1174e7043d1d45073df40495fda1b",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_cautious_no_law_no_hotline_run1.json",
+      "sha256": "0f1a9d6adbb5e9f4d15b0474bf09487ec986747f5bdc96725e9d76d5ae831be5",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_hardliner_cautious_no_law_no_hotline_run2.json",
+      "sha256": "b4a5899b309824e8c34f29d0c62e8a3c57c62ca1892ddf3abc394a03e5d1a331",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_cautious_hardliner_law_hotline_run1.json",
+      "sha256": "4f993370e3027a7526f45c4af5b645854d7bb3cf9a945c76e2092ff20c7f5fd4",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_cautious_hardliner_law_hotline_run2.json",
+      "sha256": "fb31014e5d3f7cd3f664e62796aed75e26564b00edc2a74e0ed7d36df29a9332",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_cautious_hardliner_law_no_hotline_run1.json",
+      "sha256": "b35c328a8d49c0d9b566de07708c3b6565cc3d695bdfca23500fb32e54d24374",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_cautious_hardliner_law_no_hotline_run2.json",
+      "sha256": "9e9d733d89b765fe41f2ddaee93aa61b8df6897b564f09e3736641e065982323",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_cautious_hardliner_no_law_hotline_run1.json",
+      "sha256": "39f40cd0770b8ab7dfff96c44468c469721aff44e724a81fd69bc8c857ba53d9",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_cautious_hardliner_no_law_hotline_run2.json",
+      "sha256": "0235438ef59f75cdcbf27aa10c624b02cfd6a774e61babae71605b0399c9d098",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_cautious_hardliner_no_law_no_hotline_run1.json",
+      "sha256": "58a4726ad579ad956110bccda1ca8e26c39122e39b3b2360790030d300472f01",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "result_cautious_hardliner_no_law_no_hotline_run2.json",
+      "sha256": "1b228a47c1cbfdc4eda3ebf13286b2af9f622585264c928210a304956bc5a367",
+      "version": "v1",
+      "classification": "formal_research",
+      "source_eligible": true
+    },
+    {
+      "path": "summary.json",
+      "sha256": "67e7719c60126d5f6eb4002728920f4b1c1dce30b5d2df47dc2286dbf1d8e6e8",
+      "version": "v1",
+      "classification": "comparison_study",
+      "source_eligible": true
+    },
+    {
+      "path": "v2_first_run.json",
+      "sha256": "ab642a4d61b1057584494b06cf035eb30a74425eb001024667a349fdc924de7f",
+      "version": "v2",
+      "classification": "representative_run",
+      "source_eligible": true
+    },
+    {
+      "path": "README.md",
+      "sha256": "de430f085a4508d114fa19a2537bba300142f408eab93ae42ec53a099ee1b563",
+      "version": "shared",
+      "classification": "documentation",
+      "source_eligible": false
+    },
+    {
+      "path": "homeostasis-research-layer.js",
+      "sha256": "599aae6fbbee00f3be0e3987f04983353276a6efdcc6f8dd9b0dfbf19b0121e6",
+      "version": "shared",
+      "classification": "publication_source",
+      "source_eligible": false
+    }
+  ]
+}
