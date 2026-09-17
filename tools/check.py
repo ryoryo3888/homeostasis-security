@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import sys
+import subprocess
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,9 +42,11 @@ def main():
     from preflight_emergent import run_preflight, print_verdict
     preflight = run_preflight()
     print_verdict(preflight)
-    passed = result.wasSuccessful() and preflight['status'] == 'PASS'
+    sdk = subprocess.run([sys.executable, '-B', str(ROOT/'tools/sdk_transport_check.py')], cwd=ROOT)
+    passed = result.wasSuccessful() and preflight['status'] == 'PASS' and sdk.returncode == 0
     from homeostasis_core.observability import source_digest
     report = {'source_digest': source_digest(ROOT), 'status': 'PASS' if passed else 'FAIL', 'tests': result.testsRun,
+              'sdk_transport': 'PASS' if sdk.returncode == 0 else 'FAIL', 'sdk_transport_tests': 4,
               'api_calls': 0, 'network': 'blocked by Python audit hook', 'preflight': preflight}
     Path('results/debug/check.json').write_text(json.dumps(report, ensure_ascii=False, indent=2))
     print('HOMEOSTASIS PREFLIGHT ' + ('PASSED' if passed else 'FAILED'))

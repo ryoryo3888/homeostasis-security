@@ -1,3 +1,7 @@
 # Optional runtime dependency for explicitly authorized Gemini execution.
 # Package/import mapping: https://googleapis.github.io/python-genai/
 google-genai==2.20.0
+
+# HTTP boundary used by the real-SDK offline regression gate.
+httpx==0.28.1
+httpcore==1.0.9

@@ -1,6 +1,6 @@
 # ChatGPT直接観測
 
-最初に [開発・監査状態](results/status/development.json) を読む。最新experiment `20260917T004355Z-c09ce05c` はTURN1の地球調整機関でUnicodeEncodeErrorにより失敗（完了0TURN、transport試行1、retry 0）。research対象外、8TURN READY: NO。以前の実行前ゲートYESは履歴であり、現在の再実行許可ではない。失敗詳細と同期不具合はdevelopment stateを参照。
+最初に [開発・監査状態](results/status/development.json) を読む。最新experiment `20260917T004355Z-c09ce05c` はTURN1の地球調整機関でUnicodeEncodeErrorにより失敗（完了0TURN、transport試行1、retry 0）。research対象外、8TURN READY: NO。以前の実行前ゲートYESは履歴であり、現在の再実行許可ではない。[独立設計診断](results/status/diagnostics/20260917T004355Z-design-diagnosis.json) を参照。原因は未確定だが、送信前検証・実SDK境界テスト・失敗publicationは修正済み。次は別途許可された1-call probeだけを推奨し、自動進行しない。
 
 続いてこの作業ブランチの [results/status/latest.json](results/status/latest.json) を読む。
 

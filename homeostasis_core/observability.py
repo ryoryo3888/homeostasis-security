@@ -109,9 +109,9 @@ def public_decision(row):
 def check_audits(calls, transport, run_id, failed):
     for key in ('api_calls','maximum_api_calls'):
         if type(transport.get(key)) is not int:raise PublicationError('INVALID_TRANSPORT_COUNT')
-    if not calls or len(calls)!=transport['api_calls'] or len(calls)!=len(transport['attempts']):
+    if (not calls and not failed) or len(calls)!=transport['api_calls'] or len(calls)!=len(transport['attempts']):
         raise PublicationError('AUDIT_COUNT_MISMATCH')
-    if transport.get('run_id')!=run_id or not 0<len(calls)<=transport['maximum_api_calls']:
+    if transport.get('run_id')!=run_id or not 0<=len(calls)<=transport['maximum_api_calls']:
         raise PublicationError('TRANSPORT_LIMIT_OR_ID_MISMATCH')
     seen=set(); groups={}
     for number,(row,attempt) in enumerate(zip(calls,transport['attempts']),1):
@@ -162,7 +162,7 @@ def inspect_run(path):
     run_id=path.name
     if not RUN_ID.fullmatch(run_id) or path.is_symlink(): raise PublicationError('INVALID_RUN_PATH')
     data={name:read_json(path/name,optional=True) for name in
-          ('result.json','result.audit.json','decision.audit.json','transport.audit.json','failure.json','result.json.checkpoint')}
+          ('result.json','result.audit.json','decision.audit.json','transport.audit.json','failure.json','result.json.checkpoint','runtime.json')}
     result=data['result.json'];transport=data['transport.audit.json'];failure=data['failure.json']
     if transport is None: raise PublicationError('MISSING_TRANSPORT_AUDIT')
     failed=failure is not None
@@ -193,6 +193,8 @@ def inspect_run(path):
             if active['completed_turn']!=len(turns): raise PublicationError('CHECKPOINT_TURN_MISMATCH')
         elif decision:
             calls=decision['calls'];turns=[]
+        elif transport['api_calls']==0:
+            calls=[];turns=[]
         else: raise PublicationError('MISSING_DECISION_AUDIT')
         if failure['api_calls']!=transport['api_calls'] or failure.get('include_in_research_aggregation') is not False:
             raise PublicationError('FAILURE_AUDIT_MISMATCH')
@@ -211,22 +213,28 @@ def inspect_run(path):
     status='failed' if failed else 'rejected' if mode=='experiment' and not eligible else 'success'
     diagnostic=None
     if failed:
-        last=calls[-1]
-        diagnostic={**select(last,IDENTITY), 'api_call_number':len(calls),
-                    'validation':last['validation_status'], 'error_type':last.get('error_type',failure['error_type']),
+        last=calls[-1] if calls else {}
+        diagnostic={**select(last,IDENTITY), 'run_id':run_id, 'api_call_number':len(calls),
+                    'validation':last.get('validation_status','NOT_STARTED'),
+                    'error_type':last.get('error_type',failure['error_type']),
                     'validation_error':last.get('validation_error'), 'include_in_research_aggregation':False}
-        if last.get('model_response',{}).get('response_id')=='CONDITIONAL' and last['model_response'].get('conditions')=={}:
+        evidence=transport['attempts'][-1].get('failure_evidence') if calls else failure.get('failure_evidence')
+        if evidence:diagnostic['transport_failure']=evidence
+        response=last.get('model_response')
+        if isinstance(response,dict) and response.get('response_id')=='CONDITIONAL' and response.get('conditions')=={}:
             diagnostic['derived_diagnosis']='CONDITIONAL_REQUIRES_EXECUTABLE_CONDITIONS'
     summary={'run_id':run_id,'mode':mode,'status':status,'turns_completed':len(turns),
              'api_calls':transport['api_calls'],'maximum_api_calls':transport['maximum_api_calls'],'retry_count':retry}
     bundle={'observation_version':1,'run':summary,
-            'validation':{'contracts':'FAIL' if any(a['validation_status']!='PASS' for a in calls) else 'PASS',
+            'validation':{'contracts':'FAIL' if failed or any(a['validation_status']!='PASS' for a in calls) else 'PASS',
                           'decision_audit':'PASS','transport_audit':'PASS','secret_scan':'PASS','research_eligible':eligible},
             'decisions':[public_decision(a) for a in calls], 'transport_audit':transport,
             'worlds':[project_world(t) for t in turns], 'failure':diagnostic,
             'result':{'metadata':select(result.get('metadata',{}),('mode','research_mode','model','seed','runs','turns','provider','fixed_initial_events','derived_event_turns')) if result else {},
                       'summary':result.get('summary',{}) if result else {},'include_in_research_aggregation':eligible},
             'source_hashes':{name:digest((path/name).read_bytes()) for name,value in data.items() if value is not None}}
+    if data.get('runtime.json') is not None:
+        bundle['runtime']=select(data['runtime.json'],('runtime_version','mode','source_commit','source_digest','python_version','packages','encoding','transport_policy','environment_presence','credential_validation'))
     secret_scan(bundle)
     if len(encoded(bundle))>MAX_PUBLIC: raise PublicationError('PUBLIC_BUNDLE_TOO_LARGE')
     return bundle
@@ -245,7 +253,7 @@ def validate_bundle(bundle):
         raise PublicationError('PUBLIC_COUNT_MISMATCH')
     if v['decision_audit']!='PASS' or v['transport_audit']!='PASS' or v['secret_scan']!='PASS':
         raise PublicationError('PUBLIC_AUDIT_FAILED')
-    if v['contracts'] != ('FAIL' if any(a['validation_status']!='PASS' for a in bundle['decisions']) else 'PASS'):
+    if v['contracts'] != ('FAIL' if r['status']=='failed' or any(a['validation_status']!='PASS' for a in bundle['decisions']) else 'PASS'):
         raise PublicationError('PUBLIC_CONTRACT_STATUS_MISMATCH')
     if r['status']=='success':
         expected={'probe':(0,1),'turn':(1,10),'experiment':(8,80)}[r['mode']]
@@ -298,7 +306,7 @@ def prepare(root):
     # Preserve already-published history when a clone has no private raw runs.
     old=root/'results/status/latest.json'
     if old.exists():
-        validate_publication(root,check_human=False)
+        validate_publication(root,check_human=False,check_development=False)
         old_state=read_json(old);old_index=read_json(root/old_state['history_index'])
         current={e['run_id'] for e in entries}|{e['run_id'] for e in blocked}
         for e in old_index['runs']:
@@ -341,7 +349,7 @@ def prepare(root):
         state['development_status']=development
         if latest and development.get('run_id')==latest['run_id']:
             state['next_step']=development['next_step']
-            state['research_stage']=('eight_turn_ready' if development.get('eight_turn_ready') is True
+            state['research_stage']=development.get('research_stage') or ('eight_turn_ready' if development.get('eight_turn_ready') is True
                                      else 'settlement_fix_pending_revalidation')
     secret_scan(state)
     for relative,raw in bundles.items():atomic_write(root/relative,raw)
@@ -354,7 +362,7 @@ def prepare(root):
     return state
 
 
-def validate_publication(root,check_human=True):
+def validate_publication(root,check_human=True,check_development=True):
     root=Path(root);state=read_json(root/'results/status/latest.json')
     if type(state.get('status_version')) is not int or state['status_version']!=1 or state['publication_api_calls']!=0 or state['validation']['preflight'] not in ('PASS','FAIL','UNKNOWN'):
         raise PublicationError('INVALID_STATUS_SCHEMA')
@@ -389,7 +397,7 @@ def validate_publication(root,check_human=True):
         if state['latest_run']!=expected_run:raise PublicationError('LATEST_RUN_MISMATCH')
         bundle=referenced(latest['path'],latest['sha256'])
         if any(state['validation'][k]!=v for k,v in bundle['validation'].items()):raise PublicationError('STATUS_VALIDATION_MISMATCH')
-    if 'development_status' in state and state['development_status']!=referenced('results/status/development.json'):
+    if check_development and 'development_status' in state and state['development_status']!=referenced('results/status/development.json'):
         raise PublicationError('DEVELOPMENT_STATE_MISMATCH')
     if check_human and human_block(state) not in (root/'RESEARCH_STATE.md').read_text():
         raise PublicationError('HUMAN_STATE_MISMATCH')

@@ -1,0 +1,132 @@
+{
+  "diagnosis_version": 1,
+  "run_id": "20260917T004355Z-c09ce05c",
+  "comparison_run_id": "20260917T001606Z-c7bae18f",
+  "api_calls_this_work": 0,
+  "root_cause": {
+    "status": "not_conclusively_identified",
+    "most_likely": "SDK/HTTP configuration value incompatible with header encoding; non-ASCII synthetic credential reproduces UnicodeEncodeError before HTTP mock dispatch",
+    "proven_design_defects": [
+      "No credential/header preflight",
+      "No real SDK HTTP boundary in previous CI",
+      "Null model response crashes exporter",
+      "Insufficient runtime and failure-stage provenance"
+    ],
+    "not_proven": [
+      "Actual credential content at failed run",
+      "Historical environment or dependency difference",
+      "Provider receipt or billing"
+    ]
+  },
+  "facts": {
+    "turns_completed": 0,
+    "durable_attempts": 1,
+    "retry": 0,
+    "error_type": "UnicodeEncodeError",
+    "model_response": null,
+    "first_payload_equal": true,
+    "first_payload_utf8_bytes": 1653,
+    "historical_source_comparison": {
+      "commits": [
+        "33da81e",
+        "faf4646"
+      ],
+      "equal_paths": [
+        "Makefile",
+        "research_workflow.py",
+        "homeostasis_core/gemini_agents.py",
+        "homeostasis_core/api_budget.py"
+      ]
+    },
+    "research_eligible": false
+  },
+  "hypotheses": [
+    {
+      "cause": "Non-ASCII HTTP header configuration",
+      "support": "Real SDK synthetic reproduction; transport captured failure before return",
+      "counterevidence": "Historical input and encoding/frame metadata absent",
+      "verdict": "leading_unconfirmed"
+    },
+    {
+      "cause": "Backend/proxy/dependency/environment difference",
+      "support": "SDK formerly used implicit environment; runtime not saved",
+      "counterevidence": "No historical environment snapshot",
+      "verdict": "possible"
+    },
+    {
+      "cause": "Japanese payload/schema or eight-turn loop",
+      "support": "Both paths contain Japanese",
+      "counterevidence": "First payload and shared sources identical; UTF-8 and real SDK mock roundtrip pass; total turn count not in first payload",
+      "verdict": "not_supported"
+    },
+    {
+      "cause": "Audit/checkpoint/CLI encoding",
+      "support": "Encoding error can arise from output",
+      "counterevidence": "Checkpoint explicitly UTF-8 and persistence exceptions wrapped; error recorded inside transport",
+      "verdict": "unlikely"
+    },
+    {
+      "cause": "Other SDK internal encoding or logging path",
+      "support": "Broad transport exception boundary",
+      "counterevidence": "Original traceback and encoding metadata absent",
+      "verdict": "cannot_exclude"
+    }
+  ],
+  "why_tests_missed": "Previous 255 tests used fake SDK/model layers and lacked null-response/client-initialization publication coverage.",
+  "fixes": [
+    "Pre-client printable-ASCII credential validation without echo/hash",
+    "Explicit backend/endpoint/version, proxy policy, certifi TLS contexts and retry=0",
+    "UTF-8 finite JSON request preflight and request fingerprint",
+    "Sanitized dispatch-stage/encoding/library-family evidence; no exception payload",
+    "Runtime source/Python/SDK/HTTP metadata with environment-presence booleans only",
+    "Null response and zero-attempt failure publication",
+    "Client initialization inside failure capture; suppress raw exception chain in CLI",
+    "Development state regeneration without manual pointer patches",
+    "Mandatory real SDK HTTP mock checks in local and GitHub preflight"
+  ],
+  "invariants": [
+    "No change to agent choices",
+    "choice-ID preserved",
+    "strict validation preserved",
+    "atomic settlement preserved",
+    "No failed research promotion",
+    "No old run edits"
+  ],
+  "tests": {
+    "new_unit_tests": 10,
+    "new_real_sdk_mock_tests": 4,
+    "unit_total": 265,
+    "sdk_transport_total": 4,
+    "make_check": "PASS",
+    "sdk_transport": "PASS",
+    "api_calls": 0,
+    "source_digest": "99e1ea3edba35bee22d0f6c068f419cc34f44d5082f2afff19878a72875f4601"
+  },
+  "additional_risks": [
+    "Historical root cause not identifiable beyond evidence",
+    "Provider authentication and billing not established by mocks",
+    "Remaining transitive dependencies not fully locked",
+    "SDK default waiting time is not an explicit operational timeout",
+    "Partial-turn resume can duplicate calls and bias research; not exposed by managed CLI"
+  ],
+  "recommended_improvements": [
+    "Keep real-SDK mock boundary as mandatory gate",
+    "Use one-call live authentication/transport gate before full experiment",
+    "Define explicit operational timeouts and complete dependency lock",
+    "Add provider request identifier only when safely obtainable",
+    "Design idempotent turn-boundary resume with durable budget before enabling it"
+  ],
+  "next_minimal_experiment": {
+    "command": "CONFIRM=YES make probe",
+    "requires_separate_authorization": true,
+    "maximum_api_calls": 1,
+    "retry": 0,
+    "stop_after_probe": true,
+    "automatic_progression": false,
+    "rationale": "Existing probe shares the corrected client/model/transport; saved coordinator payload already passes actual-SDK mock roundtrip. Verify real authentication and connection at minimum cost, then assess a fresh 1TURN."
+  },
+  "eight_turn_ready": false,
+  "report": "docs/audits/20260917T004355Z-design-diagnosis.md",
+  "source_head_before_commit": "237bf855d1710c822247d63fd6807a2624891bec",
+  "past_runs_modified": false
+}

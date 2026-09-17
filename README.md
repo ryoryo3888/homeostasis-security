@@ -155,7 +155,7 @@ Gemini Agentによる5ターンの実験では、各国と地球調整機関が�
 | `make turn` | 1TURNの予定表示だけ | 10 | 0 |
 | `make experiment` | 8TURN・1世界線の予定表示だけ | 80 | 0 |
 
-`make check` はPython標準ライブラリだけで動作し、APIキー・SDK・追加パッケージは不要です。ネットワークをPython audit hookで遮断し、V1テスト用SDKも実クライアントを作れない代替にします。クラス形式と関数形式の全テストを実行します。成功時は `HOMEOSTASIS PREFLIGHT PASSED`、失敗時は `HOMEOSTASIS PREFLIGHT FAILED` と非ゼロ終了コードを返します。診断は `results/debug/check.json` に保存されます。
+`make check` はAPIキー不要・外部API 0 callsですが、実SDK境界テスト用に `requirements-gemini.txt` の依存が必要です（初回は `make setup-gemini`）。ネットワークをPython audit hookで遮断し、V1テスト用SDKも実クライアントを作れない代替にします。クラス形式と関数形式の全テストを実行します。成功時は `HOMEOSTASIS PREFLIGHT PASSED`、失敗時は `HOMEOSTASIS PREFLIGHT FAILED` と非ゼロ終了コードを返します。診断は `results/debug/check.json` に保存されます。
 
 将来、課金実行を明示的に許可する場合だけ `CONFIRM=YES` を指定します。この指定でも先に無料チェックを再実行し、FAILならAPI接続前に停止します。SDKと環境内の認証情報は将来の実行時のみ必要です。キーの入力プロンプトは出しません。今回の作業では有料コマンドを実行していません。
 
@@ -169,9 +169,9 @@ Gemini Agentによる5ターンの実験では、各国と地球調整機関が�
 
 Makefileはリポジトリの `.venv/bin/python` があれば優先し、なければ `python3` を使います。`PYTHON=...` で明示指定も可能です。今回確認した既存環境はPython 3.13.15、SDKは `google-genai==2.20.0` です。システムPythonにはSDKがなく、仮想環境を使わない実行で `No module named 'google'` が発生していました。
 
-SDKは [公式のgoogle-genai](https://googleapis.github.io/python-genai/) を `requirements-gemini.txt` にバージョン固定しました。uvが利用できる環境では `make setup-gemini` で未作成の仮想環境を作り、指定SDKを導入できます。既存仮想環境は作り直しません。pipを利用する場合は `python3 -m venv .venv` で新規環境を作成してから `.venv/bin/python -m pip install -r requirements-gemini.txt` を実行できます。SDK本体の版を固定していますが、推移依存はSDKの指定範囲で解決されます。
+SDKは [公式のgoogle-genai](https://googleapis.github.io/python-genai/) を `requirements-gemini.txt` にバージョン固定しました。uvが利用できる環境では `make setup-gemini` で未作成の仮想環境を作り、指定SDKを導入できます。既存仮想環境は作り直しません。pipを利用する場合は `python3 -m venv .venv` で新規環境を作成してから `.venv/bin/python -m pip install -r requirements-gemini.txt` を実行できます。SDKとHTTPX/HTTPCoreの版を固定しています。その他の推移依存はSDKの指定範囲で解決され、実行時の主要バージョンはruntime auditに保存します。
 
-`make check-sdk` は実SDKの `from google import genai` だけをネットワーク遮断下で確認し、Clientの生成もAPI呼び出しもしません。`make check` は引き続きSDK不要の無料テストです。依存関係の構築・import確認はprobe実行の許可を意味しません。
+`make check-sdk` は実SDKの `from google import genai` だけをネットワーク遮断下で確認し、Clientの生成もAPI呼び出しもしません。`make check` は実SDKをHTTPモックへ接続する4件の無料テストも必須にします。外部ネットワークは遮断し、合成キーだけを使用します。依存関係の構築・import確認はprobe実行の許可を意味しません。
 
 ### choice-ID監査（追加API不要の整備）
 

@@ -158,7 +158,7 @@ class GeminiGateway:
             self.calls.append(audit)
             self._persist()
             try:
-                config={"response_mime_type":"application/json"}
+                config={"response_mime_type":"application/json","automatic_function_calling":{"disable":True}}
                 if json_schema is not None:config["response_json_schema"]=json_schema
                 if hasattr(self.client,"set_audit_context"):self.client.set_audit_context(identity)
                 r=self.client.models.generate_content(model=self.model,contents=json.dumps(attempt_payload,ensure_ascii=False),config=config)
@@ -194,8 +194,8 @@ def create_gemini_client(api_key):
     if os.environ.get("HOMEOSTASIS_OFFLINE") == "1":
         raise RuntimeError("Gemini client creation forbidden in offline check")
     from google import genai
-    from google.genai import types
-    return genai.Client(api_key=api_key,http_options=types.HttpOptions(retry_options=types.HttpRetryOptions(attempts=1)))
+    from .transport_safety import client_settings
+    return genai.Client(**client_settings(api_key))
 def build_private_views(snapshot_id,turn,world,country_states,freshness):
     out={}
     for i,c in enumerate(sorted(country_states)):

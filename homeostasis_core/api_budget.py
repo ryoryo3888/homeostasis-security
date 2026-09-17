@@ -2,6 +2,7 @@
 import json
 from types import SimpleNamespace
 from .decision_audit import AuditPersistenceError
+from .transport_safety import request_fingerprint, exception_evidence
 
 
 class BoundedClient:
@@ -32,16 +33,22 @@ class BoundedClient:
         if len(self.attempts) >= self.maximum:
             raise RuntimeError('Hard API call limit reached')
         record = {**self.context, 'transport_attempt': len(self.attempts) + 1,
-                  'attempt': self.context.get('attempt', 1), 'status': 'started'}
+                  'attempt': self.context.get('attempt', 1), 'status': 'started',
+                  'dispatch_stage': 'local_request_validation', 'provider_acceptance': 'unknown'}
         self.attempts.append(record)
         self._save()  # Reserve before dispatch; an interrupted request consumes budget.
         try:
+            record['request_sha256'] = request_fingerprint(kwargs)
+            record['dispatch_stage'] = 'sdk_entered'
+            self._save()
             response = self.client.models.generate_content(**kwargs)
+            record['dispatch_stage'] = 'sdk_returned'
             record['status'] = 'returned'
             return response
         except BaseException as exc:
             record['status'] = 'failed'
             record['error_type'] = type(exc).__name__
+            record['failure_evidence'] = exception_evidence(exc, record['dispatch_stage'])
             raise
         finally:
             self._save()

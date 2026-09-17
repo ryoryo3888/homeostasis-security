@@ -63,9 +63,11 @@ def main(argv=None):
     env = dict(os.environ, HOMEOSTASIS_OFFLINE='1', PYTHONDONTWRITEBYTECODE='1',
                PYTHONPATH=os.pathsep.join((str(ROOT/'tools/offline'), str(ROOT))))
     subprocess.run([sys.executable, '-B', 'tools/check.py'], env=env, check=True)
-    key = os.environ.get('GEMINI_API_KEY', '').strip()
+    key = os.environ.get('GEMINI_API_KEY', '')
     if not key:
         raise SystemExit('API credential unavailable; stopped without prompting or API calls')
+    from homeostasis_core.transport_safety import validate_credential, runtime_manifest, exception_evidence
+    validate_credential(key)  # Before client creation, audit reservation or any request.
     from homeostasis_core.api_budget import BoundedClient
     from homeostasis_core.gemini_agents import create_gemini_client
     from final_experiment_runner import run_live, _checkpoint
@@ -74,26 +76,30 @@ def main(argv=None):
     staging = ROOT/'results/rejected'/run_id
     staging.mkdir(parents=True, exist_ok=False)
     audit_path = staging/'transport.audit.json'
-    client = BoundedClient(create_gemini_client(key), plan['maximum_api_calls'], audit_path)
     output = staging/'result.json'
+    client = None
+    _checkpoint(staging/'runtime.json', runtime_manifest(ROOT, args.mode))
     try:
+        client = BoundedClient(None, plan['maximum_api_calls'], audit_path)
+        client.client = create_gemini_client(key)
         if args.mode == 'probe':
-            output.write_text(json.dumps(probe(client, audit_hook=lambda calls: _checkpoint(staging/"decision.audit.json", {"run_id": run_id, "calls": calls})), ensure_ascii=False, indent=2))
+            output.write_text(json.dumps(probe(client, audit_hook=lambda calls: _checkpoint(staging/"decision.audit.json", {"run_id": run_id, "calls": calls})), ensure_ascii=False, indent=2), encoding="utf-8")
         else:
             run_live(client, output, 1, args.seed, turns=plan['turns'],
                      max_calls=plan['maximum_api_calls'], retry_limit=1)
         reasons = validate_research(json.loads(output.read_text()), json.loads(audit_path.read_text())) if args.mode == 'experiment' else ['probe or one-turn validation; not research']
         manifest = research_manifest(output, reasons)
-        output.with_suffix('.audit.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2))
+        output.with_suffix('.audit.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
         destination = 'research' if not reasons else 'probe' if args.mode != 'experiment' else 'rejected'
         if destination != 'rejected':
             staging.rename(ROOT/'results'/destination/run_id)
-        print(f'Result: results/{destination}/{run_id}; Gemini API calls: {len(client.attempts)}')
+        print(f'Result: results/{destination}/{run_id}; durable API attempts: {len(client.attempts)}; provider billing is not measured')
     except BaseException as exc:
         (staging/'failure.json').write_text(json.dumps({'status': 'rejected', 'mode': args.mode,
-            'error_type': type(exc).__name__, 'api_calls': len(client.attempts),
-            'include_in_research_aggregation': False}, indent=2))
-        raise
+            'error_type': type(exc).__name__, 'api_calls': len(client.attempts) if client is not None else 0,
+            'failure_evidence': exception_evidence(exc, 'client_initialization' if client is None or not client.attempts else 'execution'),
+            'include_in_research_aggregation': False}, indent=2), encoding='utf-8')
+        raise RuntimeError('Experiment stopped; inspect sanitized failure audit') from None
     finally:
         # Observation export only: no model, commit, push or stage advancement.
         try:

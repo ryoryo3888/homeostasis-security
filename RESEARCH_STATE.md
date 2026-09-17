@@ -2,11 +2,17 @@
 ## 現在地（機械可読stateから生成）
 
 一次情報: [results/status/latest.json](results/status/latest.json)。
-生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `faf464698a2687da2985bb0270fb0c373e2bb037`（公開コミット自身ではありません）。
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `237bf855d1710c822247d63fd6807a2624891bec`（公開コミット自身ではありません）。
 最新run: `20260917T004355Z-c09ce05c` / experiment / failed / 完了0TURN / API 1 calls / retry 0。
-無料検証: PASS。次: Diagnose UnicodeEncodeError and fix exporter null-response handling before any separately authorized retry. Do not rerun the experiment automatically.
+無料検証: PASS。次: After separate explicit authorization, run only the existing 1-call probe (retry 0), inspect its audits, then decide whether to authorize a fresh 1TURN. Do not automatically advance to 8TURN.
 今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
 <!-- MACHINE STATE END -->
+
+## 最新設計診断・修正（2026-09-17）
+
+[機械可読診断](results/status/diagnostics/20260917T004355Z-design-diagnosis.json) / [診断書](docs/audits/20260917T004355Z-design-diagnosis.md)。根本原因は証拠不足で未確定。SDK/HTTP設定値のencoding不適合が最有力で、合成入力により無料再現。日本語promptは成功1TURNと同一で実SDKモックでも正常。
+
+送信前検証・接続方針・秘密を含まない失敗段階記録・null/0試行publicationを修正。make checkは265テスト＋実SDK HTTPモック4件PASS、外部API calls 0。過去run不変、失敗runはresearch対象外。**8TURN READY: NO**。次は別途許可された既存1-call probe（最大1、retry 0）だけで停止し、実認証/接続を確認後にfresh 1TURNの要否を判断。以前の状態は以下に履歴として保持。
 
 ## 最新experiment観測（2026-09-17）
 

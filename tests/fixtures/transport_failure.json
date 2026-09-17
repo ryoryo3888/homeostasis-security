@@ -1,0 +1,189 @@
+{
+  "successful_run": "20260917T001606Z-c7bae18f",
+  "failed_run": "20260917T004355Z-c09ce05c",
+  "first_payload_identical": true,
+  "request": {
+    "model": "gemini-3.6-flash",
+    "contents": "{\"role\": \"neutral proposal-only coordinator; propose but never command or advocate acceptance\", \"observable_world\": {\"snapshot_id\": \"run-1-turn-1-start\", \"decision_seed\": 20260917, \"turn\": 1, \"world\": {\"food\": 82.0, \"energy\": 79.0, \"economy\": 81.0, \"environment\": 76.0, \"international_trust\": 72.0, \"conflict_load\": 24.0, \"global_homeostasis\": 68.0}, \"damage\": 8000.0, \"event\": \"A国ミサイルがB国民間農地へ着弾\", \"event_origin\": \"fixed_initial_condition\", \"affected_country\": \"FRAGILE\", \"initial_shock\": {\"actor_country\": \"A\", \"target_country\": \"B\", \"simulation_affected_agent\": \"FRAGILE\", \"target_type\": \"civilian_farmland\", \"lost_annual_rice_capacity_tons\": 8000}, \"history_state\": {\"economic_loss\": 19.0, \"reserve_gap\": 18.0, \"trust_loss\": 28.0, \"alertness\": 24.0, \"unmet_resource_demand\": 0}, \"world_pool\": {\"food\": 0.0, \"fossil_fuel\": 0.0, \"renewable_energy\": 0.0, \"nuclear\": 0.0, \"grid_storage_resilience\": 0.0, \"funds_economy\": 0.0, \"logistics\": 0.0}, \"network_policy\": {\"restricted\": [], \"suspended\": [], \"disrupted\": []}, \"public_history\": []}, \"public_history\": [], \"proposal_instruction\": \"State concrete benefits, burdens and sovereignty costs neutrally. Do not describe acceptance as responsible, cooperative or preferred. Countries may legitimately accept, reject or impose conditions.\", \"response_contract\": {\"exact_fields\": [\"proposal_id\", \"proposal_type\", \"reason\", \"predicted_global_effect\", \"predicted_sovereignty_burden\", \"requested_action\"], \"proposal_type\": [\"食料援助\", \"仲裁\", \"制裁提案\", \"資源再配分\", \"緊急協定\", \"停戦提案\", \"復興支援\"], \"scores\": \"numbers 0..100\", \"text\": \"non-empty\"}}",
+    "config": {
+      "response_mime_type": "application/json",
+      "response_json_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "proposal_id",
+          "proposal_type",
+          "reason",
+          "predicted_global_effect",
+          "predicted_sovereignty_burden",
+          "requested_action"
+        ],
+        "properties": {
+          "proposal_id": {
+            "type": "string"
+          },
+          "proposal_type": {
+            "type": "string",
+            "enum": [
+              "食料援助",
+              "仲裁",
+              "制裁提案",
+              "資源再配分",
+              "緊急協定",
+              "停戦提案",
+              "復興支援"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "predicted_global_effect": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "predicted_sovereignty_burden": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "requested_action": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "successful_response": {
+    "proposal_id": "prop-20260917-001",
+    "proposal_type": "食料援助",
+    "reason": "A国ミサイルの着弾によりB国民間農地で8000トンの米生産能力が喪失したため、食料供給不足に対する不確実性を軽減するための援助案を提起する。本提案は世界市場の供給安定に寄与する一方、提供国には拠出負担および現地監査に伴う主権上の制約が生じる。",
+    "predicted_global_effect": 65,
+    "predicted_sovereignty_burden": 30,
+    "requested_action": "加盟国は緊急食料備蓄からの拠出可能性を検討し、受入国は配分状況のモニタリングを受け入れるか判断を行う。"
+  },
+  "failed_decision": {
+    "run_id": "20260917T004355Z-c09ce05c",
+    "run": 1,
+    "turn": 1,
+    "agent_id": "地球調整機関",
+    "attempt": 1,
+    "call_id": "20260917T004355Z-c09ce05c:1:1:地球調整機関:1",
+    "audit_version": 1,
+    "agent_type": "coordinator",
+    "agent_archetype": null,
+    "snapshot_id": "run-1-turn-1-start",
+    "observation_digest": "bc8848a1f9fcb46052bb2af922be0a8edd4e3ccb39ae5a5668f00c1bd308ef03",
+    "public_observation_payload": {
+      "role": "neutral proposal-only coordinator; propose but never command or advocate acceptance",
+      "observable_world": {
+        "snapshot_id": "run-1-turn-1-start",
+        "decision_seed": 20260917,
+        "turn": 1,
+        "world": {
+          "food": 82.0,
+          "energy": 79.0,
+          "economy": 81.0,
+          "environment": 76.0,
+          "international_trust": 72.0,
+          "conflict_load": 24.0,
+          "global_homeostasis": 68.0
+        },
+        "damage": 8000.0,
+        "event": "A国ミサイルがB国民間農地へ着弾",
+        "event_origin": "fixed_initial_condition",
+        "affected_country": "FRAGILE",
+        "initial_shock": {
+          "actor_country": "A",
+          "target_country": "B",
+          "simulation_affected_agent": "FRAGILE",
+          "target_type": "civilian_farmland",
+          "lost_annual_rice_capacity_tons": 8000
+        },
+        "history_state": {
+          "economic_loss": 19.0,
+          "reserve_gap": 18.0,
+          "trust_loss": 28.0,
+          "alertness": 24.0,
+          "unmet_resource_demand": 0
+        },
+        "world_pool": {
+          "food": 0.0,
+          "fossil_fuel": 0.0,
+          "renewable_energy": 0.0,
+          "nuclear": 0.0,
+          "grid_storage_resilience": 0.0,
+          "funds_economy": 0.0,
+          "logistics": 0.0
+        },
+        "network_policy": {
+          "restricted": [],
+          "suspended": [],
+          "disrupted": []
+        },
+        "public_history": []
+      },
+      "public_history": [],
+      "proposal_instruction": "State concrete benefits, burdens and sovereignty costs neutrally. Do not describe acceptance as responsible, cooperative or preferred. Countries may legitimately accept, reject or impose conditions.",
+      "response_contract": {
+        "exact_fields": [
+          "proposal_id",
+          "proposal_type",
+          "reason",
+          "predicted_global_effect",
+          "predicted_sovereignty_burden",
+          "requested_action"
+        ],
+        "proposal_type": [
+          "食料援助",
+          "仲裁",
+          "制裁提案",
+          "資源再配分",
+          "緊急協定",
+          "停戦提案",
+          "復興支援"
+        ],
+        "scores": "numbers 0..100",
+        "text": "non-empty"
+      }
+    },
+    "model_response": null,
+    "choice_response": null,
+    "materialized_action": null,
+    "validation_status": "FAIL",
+    "structured_response": null,
+    "model": "gemini-3.6-flash",
+    "schema_version": 2,
+    "token_usage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "total_tokens": null
+    },
+    "error_type": "UnicodeEncodeError"
+  },
+  "transport": {
+    "run_id": "20260917T004355Z-c09ce05c",
+    "maximum_api_calls": 80,
+    "api_calls": 1,
+    "attempts": [
+      {
+        "run_id": "20260917T004355Z-c09ce05c",
+        "run": 1,
+        "turn": 1,
+        "agent_id": "地球調整機関",
+        "attempt": 1,
+        "call_id": "20260917T004355Z-c09ce05c:1:1:地球調整機関:1",
+        "transport_attempt": 1,
+        "status": "failed",
+        "error_type": "UnicodeEncodeError"
+      }
+    ]
+  },
+  "failure": {
+    "status": "rejected",
+    "mode": "experiment",
+    "error_type": "RuntimeError",
+    "api_calls": 1,
+    "include_in_research_aggregation": false
+  }
+}
