@@ -1,7 +1,7 @@
 {
   "blocked_run_count": 2,
   "branch": "choice-id-one-turn-probe-20260917",
-  "commit": "f24b78efb43151bdd0dbf2699f331d84cea3148a",
+  "commit": "9da2eccc7370dc6ddd36be0b2a084dea45d2a592",
   "commit_semantics": "source HEAD at export; source_digest includes uncommitted implementation",
   "development_status": {
     "all_29_decisions_valid": true,
@@ -471,7 +471,7 @@
   },
   "source_digest": "3103a72a6dd9d4c1e2b2b40b42534460e139d27ba73202c117a14f78171956b2",
   "status_version": 1,
-  "updated_at": "2026-09-17T07:40:41.094410+00:00",
+  "updated_at": "2026-09-17T07:42:11.977873+00:00",
   "validation": {
     "contracts": "FAIL",
     "decision_audit": "PASS",
