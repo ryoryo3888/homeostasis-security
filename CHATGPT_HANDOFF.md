@@ -1,6 +1,6 @@
 # ChatGPT直接観測
 
-最初に [開発・監査状態](results/status/development.json) と [条件決済監査報告](docs/audits/20260916T233557Z-settlement.md) を読む。保存runは実行成功でも条件決済監査はFAIL。コード修正と無料検証はPASS、8TURN READYはNO。新しい1TURNでの確認が残る。過去runの成功表示をこの監査判定より優先しない。
+最初に [開発・監査状態](results/status/development.json) と [8TURN直前無料ゲート](docs/audits/20260917T001606Z-eight-turn-gate.md) を読む。fresh修正版1TURN `20260917T001606Z-c7bae18f` の最終ゲートはPASS、**8TURN READY: YES**。8TURNは未実行で別途明示許可が必要。以前の条件決済FAILは `previous_settlement_audit` と旧報告に履歴として保持している。
 
 続いてこの作業ブランチの [results/status/latest.json](results/status/latest.json) を読む。
 

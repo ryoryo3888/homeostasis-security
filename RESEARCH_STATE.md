@@ -2,13 +2,19 @@
 ## 現在地（機械可読stateから生成）
 
 一次情報: [results/status/latest.json](results/status/latest.json)。
-生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `d37dfcf4bd94a50a5992fec09da9cd37d1de6401`（公開コミット自身ではありません）。
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `33da81e4bf8695888b19e63818f2eff678f6b28d`（公開コミット自身ではありません）。
 最新run: `20260917T001606Z-c7bae18f` / turn / success / 完了1TURN / API 10 calls / retry 0。
-無料検証: PASS。次: Separately authorize the next minimal experiment; never automatically advance.
+無料検証: PASS。次: 8TURN READY: YES. Await separate explicit authorization for one 8TURN worldline, maximum 80 API calls, retry 0. No automatic execution.
 今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
 <!-- MACHINE STATE END -->
 
-## 最新の条件決済監査（2026-09-17）
+## 最新無料ゲート：8TURN READY: YES（2026-09-17）
+
+fresh修正版1TURN `20260917T001606Z-c7bae18f` は10/10 calls・retry 0で完走。全8国家の契約・監査・同時決済・Evaluator整合・secret scan PASS。make checkは255テストと無料preflight PASS。今回のAPI callsは0、過去run改変なし。8TURNは未実行で、実行には別途明示許可が必要（1世界線・最大80 calls・retry 0）。この1TURN自体はresearch対象外。
+
+[ゲート詳細](docs/audits/20260917T001606Z-eight-turn-gate.md) / [一次情報](results/status/development.json)。以下の旧監査は履歴として保持。
+
+## 旧条件決済監査（2026-09-17、fresh 1TURNで再確認済み）
 
 [機械可読な正式開発状態](results/status/development.json) / [8国家一覧・監査報告](docs/audits/20260916T233557Z-settlement.md)。対象run `20260916T233557Z-2a8367e6` の条件決済監査は **FAIL**。循環条件を除外した実装を修正し、255件の無料テストはPASS。**8TURN READY: NO**。修正版での1TURN確認は別途許可後。既存runは不変で、新たな正式研究結果はない。今回のAPI callsは0。
 

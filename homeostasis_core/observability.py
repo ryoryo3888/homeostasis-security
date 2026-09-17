@@ -341,7 +341,8 @@ def prepare(root):
         state['development_status']=development
         if latest and development.get('run_id')==latest['run_id']:
             state['next_step']=development['next_step']
-            state['research_stage']='settlement_fix_pending_revalidation'
+            state['research_stage']=('eight_turn_ready' if development.get('eight_turn_ready') is True
+                                     else 'settlement_fix_pending_revalidation')
     secret_scan(state)
     for relative,raw in bundles.items():atomic_write(root/relative,raw)
     atomic_write(root/index_path,index_raw)
