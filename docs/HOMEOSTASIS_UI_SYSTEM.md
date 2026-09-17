@@ -2,6 +2,8 @@
 
 Status: visual design contract for v1, v2 and future extensions.
 
+上位の判断基準: [Design / Research Principles](../DESIGN_RESEARCH_PRINCIPLES.md)。新しい実データ表示は [visual primitives仕様](CREATIVE_RESEARCH_ROADMAP.md) のfield/単位/変換/欠損/provenance対応を満たす。既存Dashboardの内容保持は引き続き適用する。
+
 ## 1. 最重要原則
 
 HOMEOSTASIS SECURITY は一つの研究シリーズとして、各Dashboardの**見た目のフレームだけを統一**する。

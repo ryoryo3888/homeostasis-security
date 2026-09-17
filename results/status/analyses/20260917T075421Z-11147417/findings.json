@@ -1,0 +1,501 @@
+{
+  "analysis_api_calls": 0,
+  "analysis_version": 1,
+  "artifacts": {
+    "assessment": "docs/CREATIVE_RESEARCH_ROADMAP.md",
+    "principles": "DESIGN_RESEARCH_PRINCIPLES.md",
+    "report": "docs/research/20260917T075421Z-11147417-analysis.md",
+    "timeline": "results/status/analyses/20260917T075421Z-11147417/timeline.json",
+    "turn_appendix": "docs/research/20260917T075421Z-11147417-turns.md"
+  },
+  "automatic_api_execution": false,
+  "facts": {
+    "condition_dependency_frequency": {
+      "ECON": 7,
+      "FOOD": 20,
+      "FRAGILE": 3,
+      "RES": 5
+    },
+    "conditions_not_satisfied": [
+      {
+        "countries": [
+          "SMALL"
+        ],
+        "turn": 6
+      }
+    ],
+    "country_resources_initial_to_final": {
+      "ECON": {
+        "food": {
+          "change": -75,
+          "final": 0,
+          "initial": 75
+        },
+        "fossil_fuel": {
+          "change": 0.0,
+          "final": 65.0,
+          "initial": 65
+        },
+        "funds_economy": {
+          "change": -98,
+          "final": 0,
+          "initial": 98
+        },
+        "grid_storage_resilience": {
+          "change": 0.0,
+          "final": 90.0,
+          "initial": 90
+        },
+        "logistics": {
+          "change": -19.734743244177196,
+          "final": 74.2652567558228,
+          "initial": 94
+        },
+        "nuclear": {
+          "change": 0.0,
+          "final": 84.0,
+          "initial": 84
+        },
+        "renewable_energy": {
+          "change": -20.0,
+          "final": 66.0,
+          "initial": 86
+        }
+      },
+      "FOOD": {
+        "food": {
+          "change": -30.33333333333335,
+          "final": 11.66666666666665,
+          "initial": 42
+        },
+        "fossil_fuel": {
+          "change": -16.0,
+          "final": 42.0,
+          "initial": 58
+        },
+        "funds_economy": {
+          "change": 0.0,
+          "final": 70.0,
+          "initial": 70
+        },
+        "grid_storage_resilience": {
+          "change": 0.0,
+          "final": 64.0,
+          "initial": 64
+        },
+        "logistics": {
+          "change": -57.935448199599136,
+          "final": 16.064551800400864,
+          "initial": 74
+        },
+        "nuclear": {
+          "change": 0.0,
+          "final": 45.0,
+          "initial": 45
+        },
+        "renewable_energy": {
+          "change": 0.0,
+          "final": 60.0,
+          "initial": 60
+        }
+      },
+      "FRAGILE": {
+        "food": {
+          "change": 64.99999999999999,
+          "final": 99.99999999999999,
+          "initial": 35
+        },
+        "fossil_fuel": {
+          "change": 0.0,
+          "final": 32.0,
+          "initial": 32
+        },
+        "funds_economy": {
+          "change": 18.0,
+          "final": 53.0,
+          "initial": 35
+        },
+        "grid_storage_resilience": {
+          "change": 0.0,
+          "final": 30.0,
+          "initial": 30
+        },
+        "logistics": {
+          "change": 64,
+          "final": 92,
+          "initial": 28
+        },
+        "nuclear": {
+          "change": 0.0,
+          "final": 10.0,
+          "initial": 10
+        },
+        "renewable_energy": {
+          "change": 30.0,
+          "final": 70.0,
+          "initial": 40
+        }
+      },
+      "ISLAND": {
+        "food": {
+          "change": -20.0,
+          "final": 30.0,
+          "initial": 50
+        },
+        "fossil_fuel": {
+          "change": 0.0,
+          "final": 42.0,
+          "initial": 42
+        },
+        "funds_economy": {
+          "change": 0.0,
+          "final": 62.0,
+          "initial": 62
+        },
+        "grid_storage_resilience": {
+          "change": 0.0,
+          "final": 70.0,
+          "initial": 70
+        },
+        "logistics": {
+          "change": -26.401409910843874,
+          "final": 28.598590089156126,
+          "initial": 55
+        },
+        "nuclear": {
+          "change": 0.0,
+          "final": 20.0,
+          "initial": 20
+        },
+        "renewable_energy": {
+          "change": -77.58400000000002,
+          "final": 4.415999999999983,
+          "initial": 82
+        }
+      },
+      "MIL": {
+        "food": {
+          "change": 0.0,
+          "final": 68.0,
+          "initial": 68
+        },
+        "fossil_fuel": {
+          "change": 0.0,
+          "final": 70.0,
+          "initial": 70
+        },
+        "funds_economy": {
+          "change": 0.0,
+          "final": 84.0,
+          "initial": 84
+        },
+        "grid_storage_resilience": {
+          "change": 0.0,
+          "final": 78.0,
+          "initial": 78
+        },
+        "logistics": {
+          "change": -66.46775865643792,
+          "final": 21.53224134356208,
+          "initial": 88
+        },
+        "nuclear": {
+          "change": 0.0,
+          "final": 82.0,
+          "initial": 82
+        },
+        "renewable_energy": {
+          "change": 0.0,
+          "final": 55.0,
+          "initial": 55
+        }
+      },
+      "NEUTRAL": {
+        "food": {
+          "change": -88,
+          "final": 0,
+          "initial": 88
+        },
+        "fossil_fuel": {
+          "change": 0.0,
+          "final": 62.0,
+          "initial": 62
+        },
+        "funds_economy": {
+          "change": 0.0,
+          "final": 82.0,
+          "initial": 82
+        },
+        "grid_storage_resilience": {
+          "change": 0.0,
+          "final": 86.0,
+          "initial": 86
+        },
+        "logistics": {
+          "change": -6.401409910843867,
+          "final": 79.59859008915613,
+          "initial": 86
+        },
+        "nuclear": {
+          "change": 0.0,
+          "final": 80.0,
+          "initial": 80
+        },
+        "renewable_energy": {
+          "change": -20.0,
+          "final": 68.0,
+          "initial": 88
+        }
+      },
+      "RES": {
+        "food": {
+          "change": -20.0,
+          "final": 52.0,
+          "initial": 72
+        },
+        "fossil_fuel": {
+          "change": -96,
+          "final": 0,
+          "initial": 96
+        },
+        "funds_economy": {
+          "change": 0.0,
+          "final": 78.0,
+          "initial": 78
+        },
+        "grid_storage_resilience": {
+          "change": 0.0,
+          "final": 70.0,
+          "initial": 70
+        },
+        "logistics": {
+          "change": -23.068076577510546,
+          "final": 58.931923422489454,
+          "initial": 82
+        },
+        "nuclear": {
+          "change": 0.0,
+          "final": 40.0,
+          "initial": 40
+        },
+        "renewable_energy": {
+          "change": -15.0,
+          "final": 52.0,
+          "initial": 67
+        }
+      },
+      "SMALL": {
+        "food": {
+          "change": -16.666666666666664,
+          "final": 41.333333333333336,
+          "initial": 58
+        },
+        "fossil_fuel": {
+          "change": 0.0,
+          "final": 48.0,
+          "initial": 48
+        },
+        "funds_economy": {
+          "change": 0.0,
+          "final": 58.0,
+          "initial": 58
+        },
+        "grid_storage_resilience": {
+          "change": 0.0,
+          "final": 55.0,
+          "initial": 55
+        },
+        "logistics": {
+          "change": -23.06807657751054,
+          "final": 38.93192342248946,
+          "initial": 62
+        },
+        "nuclear": {
+          "change": 0.0,
+          "final": 18.0,
+          "initial": 18
+        },
+        "renewable_energy": {
+          "change": 3.58400000000006,
+          "final": 69.58400000000006,
+          "initial": 66
+        }
+      }
+    },
+    "cycles": [
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      []
+    ],
+    "damage_recovered": 2841.3017,
+    "participating_decisions": 63,
+    "recovered_percent": 35.516271249999996,
+    "response_counts": {
+      "ACCEPT": 38,
+      "CONDITIONAL": 26
+    },
+    "world_t1_to_t8": {
+      "conflict_load": {
+        "change": 9.115617539999995,
+        "turn1": 24.33,
+        "turn8": 33.44561753999999
+      },
+      "economy": {
+        "change": -9.032965349202989,
+        "turn1": 70.5745,
+        "turn8": 61.54153465079701
+      },
+      "energy": {
+        "change": -4.447916666666657,
+        "turn1": 60.93125,
+        "turn8": 56.48333333333334
+      },
+      "environment": {
+        "change": -0.47561753999998757,
+        "turn1": 75.92,
+        "turn8": 75.44438246000001
+      },
+      "food": {
+        "change": -17.5,
+        "turn1": 58.5,
+        "turn8": 41.0
+      },
+      "global_homeostasis": {
+        "change": -9,
+        "turn1": 58,
+        "turn8": 49
+      },
+      "international_trust": {
+        "change": 1.8125539681731198,
+        "turn1": 73.9,
+        "turn8": 75.71255396817313
+      }
+    }
+  },
+  "full_eight_turn_saved_data_replay": "PASS",
+  "hypotheses": [
+    {
+      "design": "Pre-register contract-version comparison; no post-hoc action edits.",
+      "id": "H1",
+      "question": "Does reservation coordination reduce duplicate beneficiary demand?",
+      "status": "UNTESTED"
+    },
+    {
+      "design": "Neutral-ID control with fixed archetype content and explicit mapping.",
+      "id": "H2",
+      "question": "Does the FOOD identifier induce role confusion despite food-importer archetype?",
+      "status": "UNTESTED"
+    },
+    {
+      "design": "Independent runs with predeclared initial resource/network comparisons.",
+      "id": "H3",
+      "question": "Does donor depletion constrain sustained recovery across independent worldlines?",
+      "status": "UNTESTED"
+    },
+    {
+      "design": "Offline units/conservation/lag specification before any separately authorized versioned experiment.",
+      "id": "H4",
+      "question": "How does an explicitly specified production-recovery coupling change trajectories?",
+      "status": "UNTESTED"
+    }
+  ],
+  "interpretations": [
+    {
+      "claim": "High participation coexists with uncoordinated duplicate aid reservations and resource shortfalls.",
+      "evidence_turns": [
+        3,
+        4,
+        5,
+        8
+      ],
+      "id": "I1"
+    },
+    {
+      "claim": "Recipient recovery coexists with donor depletion and deteriorating global indicators.",
+      "evidence_turns": [
+        1,
+        5,
+        8
+      ],
+      "id": "I2"
+    },
+    {
+      "claim": "Repeated assistance choices and later self-withdrawals are emergent candidates; deterministic score updates and event cooldown must be separated.",
+      "evidence_turns": [
+        4,
+        6,
+        7,
+        8
+      ],
+      "id": "I3"
+    }
+  ],
+  "make_check": {
+    "api_calls": 0,
+    "sdk_transport": "PASS",
+    "sdk_transport_tests": 4,
+    "source_digest": "db45dacfb199d449cd6d9324181f9dc19effff01ecfab908a4dcad334ac172db",
+    "status": "PASS",
+    "tests": 288
+  },
+  "model_limitations": [
+    "n=1; no general causal or real-country inference.",
+    "Scenario initial world scores and initial country-resource aggregates use different baselines.",
+    "Fixed food consumption accounts for observed 2.5 per-turn global food decline; reconstruction currently adds no food production.",
+    "Trust and sovereignty updates mechanically depend on participation and stated burden.",
+    "Event ordering depends on fixed thresholds and a two-event cooldown.",
+    "Atomic demand shortfalls include overlapping requests for the same beneficiary; not independent humanitarian need.",
+    "Evaluator narrative is a model interpretation, not an independent scientific measurement.",
+    "Energy pool and national portfolios have different aggregation weights; redistribution changes the index."
+  ],
+  "next_creative_priority": "One read-only evidence-linked worldline experience: trajectories, conditional network and requested/realized resource flows.",
+  "next_research_priority": "Pre-register metric semantics and duplicate-demand/role-ID hypotheses; validate units and model assumptions offline before independent comparisons.",
+  "observed_run": {
+    "api_calls": 80,
+    "maximum_api_calls": 80,
+    "mode": "experiment",
+    "retry_count": 0,
+    "run_id": "20260917T075421Z-11147417",
+    "status": "success",
+    "turns_completed": 8
+  },
+  "original_publication_ci": {
+    "conclusion": "success",
+    "head": "f093d2a5f1f24edc9d61b87e5634cac73fc72572",
+    "id": 35197624389
+  },
+  "principles_integration": {
+    "entry_points": [
+      "README.md",
+      "CHATGPT_HANDOFF.md",
+      "RESEARCH_STATE.md",
+      "docs/HOMEOSTASIS_UI_SYSTEM.md"
+    ],
+    "existing_dashboards_modified": false,
+    "formal_document": "DESIGN_RESEARCH_PRINCIPLES.md",
+    "implementation_assessment": "docs/CREATIVE_RESEARCH_ROADMAP.md",
+    "simulation_core_modified": false,
+    "version": "1.0"
+  },
+  "quality_assessment": "Auditable research prototype; scientific calibration, independent comparisons and validated artistic UI remain incomplete.",
+  "research_use": "Verified descriptive trace and model-internal mechanisms; hypotheses require pre-registered independent comparisons.",
+  "run_id": "20260917T075421Z-11147417",
+  "source_hashes": {
+    "result.audit.json": "a8152866b3f22bfd7f121ac200d4cea92f363cef70ec767f403d85e419d0d670",
+    "result.json": "c8c82ede050988629fd4c386a9dac7c40fab2c39162581ee5124bf679eaed926",
+    "runtime.json": "a1a1530fe4f5bba624b4a9a722013566188c935ae4fdec0fe1c434067f708087",
+    "transport.audit.json": "184d5b226342bf9f5907758037c8ddbe858985ffc4891cf87c07c7fcd0481d08"
+  },
+  "validation": {
+    "contracts": "PASS",
+    "decision_audit": "PASS",
+    "research_eligible": true,
+    "secret_scan": "PASS",
+    "transport_audit": "PASS"
+  }
+}
