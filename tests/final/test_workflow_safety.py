@@ -66,6 +66,7 @@ class WorkflowSafetyTests(unittest.TestCase):
     def test_failed_preflight_stops_before_client(self):
         with patch.dict(os.environ, {'HOMEOSTASIS_OFFLINE': '0', 'GEMINI_API_KEY': 'fake'}), \
              patch('research_workflow.subprocess.run', side_effect=subprocess.CalledProcessError(1, 'check')), \
+             patch('tools.publish_status.publication_preconditions', return_value='work'), \
              patch('homeostasis_core.gemini_agents.create_gemini_client', side_effect=AssertionError('client')):
             with self.assertRaises(subprocess.CalledProcessError): workflow.main(['experiment', '--execute', '--confirm', 'YES'])
 

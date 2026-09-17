@@ -2,11 +2,17 @@
 ## 現在地（機械可読stateから生成）
 
 一次情報: [results/status/latest.json](results/status/latest.json)。
-生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `6afbb8add9867a6a46071e86d4a6046bcada5fb2`（公開コミット自身ではありません）。
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `f81da80833c9aac4719134edac9bdf5b1374f054`（公開コミット自身ではありません）。
 最新run: `20260917T022330Z-a9d78ed9` / probe / success / 完了0TURN / API 1 calls / retry 0。
-無料検証: PASS。次: Separately authorize the next minimal experiment; never automatically advance.
+無料検証: PASS。次: Locate the saved fresh 1TURN run_id/path and validate its settlement and Evaluator evidence. Do not rerun any experiment or advance to 8TURN automatically.
 今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
 <!-- MACHINE STATE END -->
+
+## 最新観測・同期導線（2026-09-17）
+
+確認できた最新保存runはprobe `20260917T022330Z-a9d78ed9`（success、1試行、retry 0、監査・契約・secret scan PASS、UnicodeEncodeErrorなし）。これはf81da80ですでに公開済み。申告された新fresh 1TURNは本checkoutの保存結果から未発見で、run_id/保存先の確認待ち。新1TURNのsettlement・world・Evaluator整合は未確認、**8TURN READY: NO**。未発見runの成功を推定しない。
+
+実験終了後の自動sanitize/validation/status/commit/push/fetch・remote照合を実装。同期失敗時はmake sync-statusだけを再試行し、実験は再実行しない。[仕様と調査](docs/REMOTE_PUBLICATION.md)。今回の追加API callsは0。過去run不変。
 
 ## 最新設計診断・修正（2026-09-17）
 

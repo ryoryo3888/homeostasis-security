@@ -186,3 +186,7 @@ probeでは `decision.audit.json` に送信前・回答取得後・検証後を�
 `make publish-status` は原本の検証・secret scan・公開ファイルの準備のみで、APIやpushは行いません。実験終了後も同じ準備処理を自動実行します。`make sync-status` で無料検証後、観測ファイルだけを現在branchへcommit/pushできます（main/master禁止）。この同期後は、写真ではなく「終わった」「確認して」と伝えればChatGPTがGitHubから確認できます。未同期のローカル結果はGitHubから見えません。
 
 原本runとcheckpointはGit管理から除外し、既存の追跡済み研究結果は保持します。`git config --local core.hooksPath .githooks` でpush対象コミットそのものの検証を有効にできます。CIも公開ファイルを検証します。研究状態の冒頭はmachine stateから生成し、以前の研究記録はその下に保持します。
+
+### 実験終了時のremote観測
+
+明示許可された実験は、終了後にsanitized観測の生成・検証・commit・作業branchへのpush・fetch後のHEAD照合まで自動実施します。完了表示は `REMOTE OBSERVABILITY READY: <commit>`。同期失敗時は実験を繰り返さず `make sync-status` のみ再実行してください。[仕様・停止条件](docs/REMOTE_PUBLICATION.md)。

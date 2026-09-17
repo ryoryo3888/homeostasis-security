@@ -36,7 +36,7 @@ class TransportSafetyTests(unittest.TestCase):
     def test_invalid_credential_stops_cli_before_client_and_budget(self):
         with tempfile.TemporaryDirectory() as d, patch.object(workflow,'ROOT',Path(d)), patch.object(workflow.os,'chdir'), \
              patch.dict(os.environ,{'HOMEOSTASIS_OFFLINE':'0','GEMINI_API_KEY':'synthetic-日本語'}), \
-             patch.object(workflow.subprocess,'run'), patch('homeostasis_core.gemini_agents.create_gemini_client') as factory:
+             patch.object(workflow.subprocess,'run'), patch('tools.publish_status.publication_preconditions',return_value='work'), patch('homeostasis_core.gemini_agents.create_gemini_client') as factory:
             with self.assertRaises(LocalTransportConfigurationError):workflow.main(['experiment','--execute','--confirm','YES'])
             factory.assert_not_called();self.assertFalse((Path(d)/'results').exists())
 
@@ -92,7 +92,8 @@ class TransportSafetyTests(unittest.TestCase):
             root=Path(d)
             with patch.object(workflow,'ROOT',root),patch.object(workflow.os,'chdir'), \
                  patch.dict(os.environ,{'HOMEOSTASIS_OFFLINE':'0','GEMINI_API_KEY':'synthetic'}), \
-                 patch.object(workflow.subprocess,'run'),patch('homeostasis_core.transport_safety.runtime_manifest',return_value={'runtime_version':1}), \
+                 patch.object(workflow.subprocess,'run'),patch('tools.publish_status.publication_preconditions',return_value='work'), \
+                 patch('tools.publish_status.complete_publication',side_effect=lambda root,expected_run,expected_branch:prepare(root)),patch('homeostasis_core.transport_safety.runtime_manifest',return_value={'runtime_version':1}), \
                  patch('homeostasis_core.gemini_agents.create_gemini_client',side_effect=ValueError('synthetic')), \
                  patch('homeostasis_core.observability.subprocess.check_output',return_value='test\n'):
                 with self.assertRaisesRegex(RuntimeError,'sanitized failure'):workflow.main(['experiment','--execute','--confirm','YES'])

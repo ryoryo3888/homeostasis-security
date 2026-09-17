@@ -1,6 +1,6 @@
 # ChatGPT直接観測
 
-最初に [開発・監査状態](results/status/development.json) を読む。最新experiment `20260917T004355Z-c09ce05c` はTURN1の地球調整機関でUnicodeEncodeErrorにより失敗（完了0TURN、transport試行1、retry 0）。research対象外、8TURN READY: NO。以前の実行前ゲートYESは履歴であり、現在の再実行許可ではない。[独立設計診断](results/status/diagnostics/20260917T004355Z-design-diagnosis.json) を参照。原因は未確定だが、送信前検証・実SDK境界テスト・失敗publicationは修正済み。次は別途許可された1-call probeだけを推奨し、自動進行しない。
+最初に [開発・監査状態](results/status/development.json) を読む。確認できた最新保存runはprobe `20260917T022330Z-a9d78ed9`（PASS、1試行、retry 0）。申告された新fresh 1TURNは未発見で、8TURN READY: NO。以前の1TURNやprobeを今回のfresh 1TURNと取り違えない。今後は明示許可した実験の成功・失敗後にremote照合まで自動同期する。
 
 続いてこの作業ブランチの [results/status/latest.json](results/status/latest.json) を読む。
 
@@ -27,10 +27,12 @@
 
 ## 利用者の通常工程
 
-実験の成功・失敗後、status生成までは自動実行される。`make publish-status` でも検証・secret scan・公開ファイル準備ができる。ここまでではGitHubは更新されない。
+実験の成功・失敗後、検証・status生成・観測ファイルのcommit・現在branchへのpush・fetch後のremote HEAD照合まで自動実行される。`make publish-status` でも検証・secret scan・公開ファイル準備ができる。ここまでではGitHubは更新されない。
 
-GitHubへ届ける操作は **`make sync-status`**。無料check → 公開準備 → 再検証 → 観測ファイルだけcommit → 現在branchへpush。main/masterは禁止。他のstaged変更があれば停止する。実験/API呼び出しはしない。以後「終わった」「確認して」とChatGPTへ伝えれば、上記GitHubから読み取れる。
+同期だけを再試行する操作は **`make sync-status`**。必要な無料check → 公開準備 → 再検証 → 観測ファイルだけcommit → 現在branchへpush → fetch/HEAD照合。実験は再実行しない。main/masterは禁止。他のstaged変更があれば停止する。実験/API呼び出しはしない。以後「終わった」「確認して」とChatGPTへ伝えれば、上記GitHubから読み取れる。
 
 初回clone後は `git config --local core.hooksPath .githooks` で同梱pre-push検証を有効化できる。push対象コミットそのものの公開ファイル、秘密情報、原本の誤登録を検査する。Actionsでも `make check` と `make verify-status` を実施する。通常のGit操作を意図的に強制回避することまで保証する仕組みではない。
 
 研究上、単一runから一般化・因果効果の断定をしない。理由は公開の行動説明だけであり内部推論ではない。観測完了は次の有料実験の許可ではない。次の実行は `next_step` と失敗理由を確認し、明示許可を得た最小段階だけにする。
+
+[自動公開の仕様と今回の調査](docs/REMOTE_PUBLICATION.md)。現在の評価はdevelopment stateを優先し、未発見のfresh 1TURNを成功扱いしない。

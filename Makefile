@@ -20,5 +20,5 @@ publish-status:
 	HOMEOSTASIS_OFFLINE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$(CURDIR)/tools/offline:$(CURDIR)" $(PYTHON) -B tools/publish_status.py
 verify-status:
 	HOMEOSTASIS_OFFLINE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$(CURDIR)/tools/offline:$(CURDIR)" $(PYTHON) -B tools/publish_status.py --verify
-sync-status: check publish-status verify-status
-	$(PYTHON) -B tools/publish_status.py --sync
+sync-status:
+	$(PYTHON) -B tools/publish_status.py --complete

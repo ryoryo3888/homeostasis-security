@@ -52,7 +52,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     os.chdir(ROOT)
     plan = {'mode': 'execute' if args.execute else 'dry-run', 'experiment_mode': args.mode,
-            'worldlines': 1, **PLANS[args.mode], 'retries': 0}
+            'worldlines': 1, **PLANS[args.mode], 'retries': 0, 'execution_started': False}
     print(json.dumps(plan, ensure_ascii=False, indent=2), flush=True)
     if not args.execute:
         return
@@ -60,6 +60,8 @@ def main(argv=None):
         raise SystemExit('Explicit --execute --confirm YES outside offline check required; API calls: 0')
     if args.output is not None:
         raise SystemExit('Paid outputs use isolated managed directories; custom output not allowed')
+    from tools.publish_status import publication_preconditions
+    publication_branch = publication_preconditions(ROOT)  # Fail before spending calls on an unpublishable checkout.
     env = dict(os.environ, HOMEOSTASIS_OFFLINE='1', PYTHONDONTWRITEBYTECODE='1',
                PYTHONPATH=os.pathsep.join((str(ROOT/'tools/offline'), str(ROOT))))
     subprocess.run([sys.executable, '-B', 'tools/check.py'], env=env, check=True)
@@ -101,12 +103,9 @@ def main(argv=None):
             'include_in_research_aggregation': False}, indent=2), encoding='utf-8')
         raise RuntimeError('Experiment stopped; inspect sanitized failure audit') from None
     finally:
-        # Observation export only: no model, commit, push or stage advancement.
-        try:
-            from homeostasis_core.observability import prepare
-            prepare(ROOT)
-        except Exception:
-            print('Status publication blocked; local run evidence retained. Run make publish-status after diagnosis.')
+        # Success or failure: synchronize only this saved run, never repeat it.
+        from tools.publish_status import complete_publication
+        complete_publication(ROOT, expected_run=run_id, expected_branch=publication_branch)
 
 if __name__ == '__main__':
     main()
