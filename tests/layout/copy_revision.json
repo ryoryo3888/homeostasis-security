@@ -1,0 +1,44 @@
+{
+  "previous_public_sha": "0ece7cf5c6d0cddf01dd0cb9f99f5177cbc6a2e6",
+  "authorization": "User-approved FINAL META-COPY SANITATION; copy only, natural research block shrinkage permitted.",
+  "narrative_replacements": [
+    [
+      "この世界を10秒で理解",
+      "世界の構成"
+    ],
+    [
+      "30秒で理解",
+      ""
+    ],
+    [
+      "研究者向け：グラフ・ターン・原データまで検証する",
+      "グラフ・ターン・原データ"
+    ],
+    [
+      "既存の比較グラフ、条件表、イベントログは下に残しています。初見は簡単に、検証したい人は深く読めます。",
+      "比較グラフ、条件表、イベントログ。"
+    ],
+    [
+      "研究者向け：証拠までたどる",
+      "証拠・原データ"
+    ],
+    [
+      "<aside><b>読み方</b><span>① 8ターンで何が起きた？</span><span>② 16条件・36回で何が見えた？</span><span>③ なぜ地球規模へ進んだ？</span></aside>",
+      ""
+    ],
+    [
+      "<aside><b>読み方</b><span>① 何が起きた？</span><span>② どこが転換点？</span><span>③ 数字はどう動いた？</span><span>④ 何が言える／言えない？</span></aside>",
+      ""
+    ]
+  ],
+  "v1_static_replacements": [
+    [
+      "まず「全観測」で条件全体の特徴を見て、その下のA国・B国でどちらの国が影響しているか確認できます。",
+      "「全観測」は条件全体の特徴、A国・B国の内訳は各国の影響を示します。"
+    ],
+    [
+      "<strong>読み方：</strong>",
+      "<strong>観測差：</strong>"
+    ]
+  ]
+}
