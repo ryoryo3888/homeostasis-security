@@ -2,7 +2,7 @@
 ## 現在地（機械可読stateから生成）
 
 一次情報: [results/status/latest.json](results/status/latest.json)。
-生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `80939fa385952267ae9c4c661f8450c6b5450b48`（公開コミット自身ではありません）。
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `d8027ab800e2ed7bc32ccfea20bf9f44cc7a084f`（公開コミット自身ではありません）。
 最新run: `20260917T063102Z-2d170cd8` / turn / success / 完了1TURN / API 10 calls / retry 0。
 無料検証: PASS。次: After separate explicit authorization, execute one 8TURN worldline, maximum 80 API calls, retry 0; stop immediately on validation failure. No automatic progression or retry.
 今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
