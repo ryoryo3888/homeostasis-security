@@ -150,6 +150,14 @@ th,td{border-color:rgba(91,220,247,.16)!important}
 .origin .impact strong{font-size:0!important}.origin .impact strong::after{content:"年間8,000tの米生産能力を喪失（V1から引き継いだ初期被害）";font-size:14px;line-height:1.55}.origin::after{content:"実験条件（人が設定）　B国が「農地復旧」を選ぶと、1ターンにつき2,000t回復\A AIの判断　B国は農地復旧を継続\A 観測結果　8,000 → 6,000 → 4,000 → 2,000 → 0　／　4ターン目に復旧";white-space:pre-line;grid-column:1/-1;display:block;background:#071b2a;color:#dce9ee;padding:10px 14px;border-top:1px solid rgba(103,232,249,.16);font-size:12px;line-height:1.7}.origin::after:first-line{color:#67e8f9;font-weight:800}.rn-chain::before{content:"実験条件（人が設定）　初期被害：年間生産能力8,000t喪失 ／ B国が「農地復旧」を選ぶと1ターン2,000t回復";display:block;text-align:left;padding:9px 11px;margin-bottom:5px;border-left:3px solid #fbbf24;background:rgba(71,52,11,.28);color:#f7e7ad;font-size:11px;line-height:1.6}.rn-chain::after{content:"↑ ここまでが、AIの判断と相互作用から実際に観測された流れです。";display:block;text-align:left;padding:8px 10px;margin-top:5px;border-left:3px solid #34d399;background:rgba(8,63,51,.25);color:#bdf5df;font-size:11px}.rn-metrics::before{content:"観測結果";grid-column:1/-1;color:#34d399;font-size:10px;font-weight:800;letter-spacing:.12em}.rn-turns::before{content:"AIの判断とターンごとの差分";grid-column:1/-1;color:#d88cff;font-size:10px;font-weight:800;letter-spacing:.12em}.rn-say::before{content:"観測から分かったこと／まだ確かめていないこと";grid-column:1/-1;color:#67e8f9;font-size:10px;font-weight:800;letter-spacing:.1em}
 @media(max-width:760px){.rn-intro,.rn-say{grid-template-columns:1fr}.rn-metrics{grid-template-columns:1fr}.rn-findings{grid-template-columns:1fr}.rn-compare{grid-template-columns:1fr}.rn-compare i{padding:4px}.rn-bridge{grid-template-columns:90px 1fr}.research-narrative{padding:14px!important}.origin::after{font-size:11px}}
 </style>
+<style>
+/* V2 Earth System Field: decorative atmosphere, not research data. */
+.earth-panel .earth{width:94.4%}
+.earth-panel .earth-system-field{position:absolute;inset:300px 0 0;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse at 50% 0,rgba(43,177,208,.09),transparent 68%);mask-image:linear-gradient(transparent,#000 15%,#000 45%,transparent 96%)}
+.earth-panel .earth-system-field svg{width:100%;height:100%;display:block;fill:none;stroke:#67dbea;stroke-width:.7;opacity:.18}
+.earth-panel .earth-system-field .field-node{fill:#a4edf2;stroke:none;opacity:.65}
+.earth-panel .question,.earth-panel .earth-wrap,.earth-panel .primary-kpis{position:relative;z-index:1}
+</style>
 </head>
 <body>
 <main class="shell">
@@ -191,6 +199,16 @@ th,td{border-color:rgba(91,220,247,.16)!important}
   <section class="hero">
     <div class="agent-stack" id="agents"></div>
     <section class="earth-panel panel">
+      <div class="earth-system-field" aria-hidden="true">
+        <svg viewBox="0 0 600 1000" preserveAspectRatio="none" focusable="false">
+          <ellipse cx="300" cy="80" rx="190" ry="100"/>
+          <ellipse cx="300" cy="180" rx="240" ry="160"/>
+          <ellipse cx="300" cy="320" rx="285" ry="220"/>
+          <ellipse cx="300" cy="510" rx="330" ry="300"/>
+          <path d="M300 0 C120 180 110 400 215 850 M300 0 C480 180 490 400 385 850 M300 0 C240 230 390 480 300 950 M98 295 Q300 420 502 295 M75 510 Q300 630 525 510"/>
+          <g class="field-node"><circle cx="98" cy="295" r="2"/><circle cx="502" cy="295" r="1.6"/><circle cx="300" cy="357" r="2"/><circle cx="75" cy="510" r="1.5"/><circle cx="525" cy="510" r="1.8"/><circle cx="325" cy="665" r="1.5"/></g>
+        </svg>
+      </div>
       <p class="question">研究問い：<strong>国家主権を維持したまま、地球規模の恒常性は成立するのか？</strong></p>
       <div class="earth-wrap">
         <img class="earth" src="earth_japan_network_v2.png" alt="青く発光する地球ネットワーク">
