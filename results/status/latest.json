@@ -1,7 +1,7 @@
 {
   "blocked_run_count": 2,
   "branch": "choice-id-one-turn-probe-20260917",
-  "commit": "9da2eccc7370dc6ddd36be0b2a084dea45d2a592",
+  "commit": "c434a660220b1720fe8c4c10ee836f3e587e0259",
   "commit_semantics": "source HEAD at export; source_digest includes uncommitted implementation",
   "development_status": {
     "all_29_decisions_valid": true,
@@ -439,44 +439,44 @@
     "resume_allowed_for_research": false,
     "run_id": "20260917T071205Z-fb7f949f"
   },
-  "history_index": "results/status/indexes/22cda10e102489e53e8e5107ebfee11c67455be295a9f514004357d7197b42e4.json",
-  "history_sha256": "22cda10e102489e53e8e5107ebfee11c67455be295a9f514004357d7197b42e4",
+  "history_index": "results/status/indexes/1f7634e9960129f6e00a4c8c008e32df744673af109e4478a02cdd4951d2f72d.json",
+  "history_sha256": "1f7634e9960129f6e00a4c8c008e32df744673af109e4478a02cdd4951d2f72d",
   "latest": {
-    "experiment": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json",
+    "experiment": "results/status/runs/20260917T075421Z-11147417/e0919357163de85576e395a5fb9128896028140841c6870902d120dc14a5dbf7.json",
     "failed_or_rejected": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json",
     "probe": "results/status/runs/20260917T022330Z-a9d78ed9/f3925d6eab55cb2948c4788225013a0609baf144a821784c23f687a399de894f.json",
-    "successful_research": null,
+    "successful_research": "results/status/runs/20260917T075421Z-11147417/e0919357163de85576e395a5fb9128896028140841c6870902d120dc14a5dbf7.json",
     "turn": "results/status/runs/20260917T063102Z-2d170cd8/89f00fe78329259fcf7331b50f85c9a1a5160bb779eaac998aa0a1da87f0ba88.json"
   },
   "latest_blocked_run": null,
-  "latest_observed_run": "20260917T071205Z-fb7f949f",
+  "latest_observed_run": "20260917T075421Z-11147417",
   "latest_run": {
-    "api_calls": 29,
+    "api_calls": 80,
     "maximum_api_calls": 80,
     "mode": "experiment",
     "retry_count": 0,
-    "run_id": "20260917T071205Z-fb7f949f",
-    "status": "failed",
-    "turns_completed": 2
+    "run_id": "20260917T075421Z-11147417",
+    "status": "success",
+    "turns_completed": 8
   },
-  "next_step": "After separate explicit authorization, start a NEW 8TURN worldline on the fixed source, maximum 80 API calls, retry 0, stop on first failure. No checkpoint resume or automatic progression; no extra paid probe/1TURN needed.",
+  "next_step": "Separately authorize the next minimal experiment; never automatically advance.",
   "publication_api_calls": 0,
-  "research_stage": "mixed_channel_settlement_fixed",
+  "research_stage": "minimal_experiment_validation",
   "result_paths": {
-    "decision_audit": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json#/decisions",
-    "failure": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json#/failure",
-    "result": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json#/result",
-    "transport_audit": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json#/transport_audit",
-    "world_state": "results/status/runs/20260917T071205Z-fb7f949f/b7aa39fe3aac7b733f34a5f5487352a898334d00cda46fe19eba22c89a2cd1da.json#/worlds"
+    "decision_audit": "results/status/runs/20260917T075421Z-11147417/e0919357163de85576e395a5fb9128896028140841c6870902d120dc14a5dbf7.json#/decisions",
+    "failure": "results/status/runs/20260917T075421Z-11147417/e0919357163de85576e395a5fb9128896028140841c6870902d120dc14a5dbf7.json#/failure",
+    "result": "results/status/runs/20260917T075421Z-11147417/e0919357163de85576e395a5fb9128896028140841c6870902d120dc14a5dbf7.json#/result",
+    "transport_audit": "results/status/runs/20260917T075421Z-11147417/e0919357163de85576e395a5fb9128896028140841c6870902d120dc14a5dbf7.json#/transport_audit",
+    "world_state": "results/status/runs/20260917T075421Z-11147417/e0919357163de85576e395a5fb9128896028140841c6870902d120dc14a5dbf7.json#/worlds"
   },
   "source_digest": "3103a72a6dd9d4c1e2b2b40b42534460e139d27ba73202c117a14f78171956b2",
   "status_version": 1,
-  "updated_at": "2026-09-17T07:42:11.977873+00:00",
+  "updated_at": "2026-09-17T08:03:02.248822+00:00",
   "validation": {
-    "contracts": "FAIL",
+    "contracts": "PASS",
     "decision_audit": "PASS",
     "preflight": "PASS",
-    "research_eligible": false,
+    "research_eligible": true,
     "secret_scan": "PASS",
     "transport_audit": "PASS"
   }
