@@ -1,7 +1,7 @@
 {
   "blocked_run_count": 2,
   "branch": "choice-id-one-turn-probe-20260917",
-  "commit": "6682c32f86450dcc3e98330faa4abfa0770d0001",
+  "commit": "d37dfcf4bd94a50a5992fec09da9cd37d1de6401",
   "commit_semantics": "source HEAD at export; source_digest includes uncommitted implementation",
   "development_status": {
     "api_calls": 0,
@@ -89,39 +89,39 @@
       "NEUTRAL"
     ]
   },
-  "history_index": "results/status/indexes/23602aaf3995bd46ab62ee9a869a8d4d756bf6c1aafaa9de015037d81dc81a02.json",
-  "history_sha256": "23602aaf3995bd46ab62ee9a869a8d4d756bf6c1aafaa9de015037d81dc81a02",
+  "history_index": "results/status/indexes/f50d730d8686f89c7ddfbd6a523d873f31af36cfcdf8b6a9b8390e7f25463621.json",
+  "history_sha256": "f50d730d8686f89c7ddfbd6a523d873f31af36cfcdf8b6a9b8390e7f25463621",
   "latest": {
     "experiment": null,
     "failed_or_rejected": "results/status/runs/20260916T223649Z-60aff84a/2046c3475b57f6e76d32640a337fe6cb05fcb369eb9ad5f06a8c5c4011012d27.json",
     "probe": "results/status/runs/20260916T221421Z-10ac7c71/89708220285c85ca8fe433ed1bf22d1382bcd0ae0b42d97ccd8a44cacddc0eb6.json",
     "successful_research": null,
-    "turn": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json"
+    "turn": "results/status/runs/20260917T001606Z-c7bae18f/a480e8585b112ddb2c8e577cb4cb5035f23d00ded1123938a9dc587385b9baf6.json"
   },
   "latest_blocked_run": null,
-  "latest_observed_run": "20260916T233557Z-2a8367e6",
+  "latest_observed_run": "20260917T001606Z-c7bae18f",
   "latest_run": {
     "api_calls": 10,
     "maximum_api_calls": 10,
     "mode": "turn",
     "retry_count": 0,
-    "run_id": "20260916T233557Z-2a8367e6",
+    "run_id": "20260917T001606Z-c7bae18f",
     "status": "success",
     "turns_completed": 1
   },
-  "next_step": "Do not advance to 8TURN. Separately authorize a fresh 1TURN validation of the settlement fix; no automatic execution.",
+  "next_step": "Separately authorize the next minimal experiment; never automatically advance.",
   "publication_api_calls": 0,
-  "research_stage": "settlement_fix_pending_revalidation",
+  "research_stage": "minimal_experiment_validation",
   "result_paths": {
-    "decision_audit": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/decisions",
-    "failure": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/failure",
-    "result": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/result",
-    "transport_audit": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/transport_audit",
-    "world_state": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/worlds"
+    "decision_audit": "results/status/runs/20260917T001606Z-c7bae18f/a480e8585b112ddb2c8e577cb4cb5035f23d00ded1123938a9dc587385b9baf6.json#/decisions",
+    "failure": "results/status/runs/20260917T001606Z-c7bae18f/a480e8585b112ddb2c8e577cb4cb5035f23d00ded1123938a9dc587385b9baf6.json#/failure",
+    "result": "results/status/runs/20260917T001606Z-c7bae18f/a480e8585b112ddb2c8e577cb4cb5035f23d00ded1123938a9dc587385b9baf6.json#/result",
+    "transport_audit": "results/status/runs/20260917T001606Z-c7bae18f/a480e8585b112ddb2c8e577cb4cb5035f23d00ded1123938a9dc587385b9baf6.json#/transport_audit",
+    "world_state": "results/status/runs/20260917T001606Z-c7bae18f/a480e8585b112ddb2c8e577cb4cb5035f23d00ded1123938a9dc587385b9baf6.json#/worlds"
   },
   "source_digest": "b35bef5cdd4ab4f5134e8851935f3772be9eeefe8d072a7e5b39f6cafbd2d7a4",
   "status_version": 1,
-  "updated_at": "2026-09-17T00:02:40.051192+00:00",
+  "updated_at": "2026-09-17T00:18:59.937196+00:00",
   "validation": {
     "contracts": "PASS",
     "decision_audit": "PASS",
