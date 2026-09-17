@@ -76,10 +76,18 @@ class Browser:
             time.sleep(.1)
 
     def __exit__(self,*_):
-        self.ws.close(); self.process.terminate()
+        # Graceful close lets Chrome flush its profile before directory cleanup.
+        self.counter += 1
+        self.ws.send(json.dumps({'id':self.counter,'method':'Browser.close'}))
+        self.ws.close()
         try:self.process.wait(timeout=4)
-        except subprocess.TimeoutExpired:self.process.kill();self.process.wait()
-        self.browser_log.close();self.profile.cleanup()
+        except subprocess.TimeoutExpired:self.process.terminate();self.process.wait(timeout=4)
+        self.browser_log.close()
+        for attempt in range(20):
+            try:self.profile.cleanup();break
+            except OSError:
+                if attempt == 19:raise
+                time.sleep(.1)
 
 def collect(base, output_dir=None, exercise=False):
     records=[]
