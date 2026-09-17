@@ -1,0 +1,87 @@
+# V3 第4段階：意図・個別可能性・共同成立・原子的決済
+
+第1〜3段階、V1/V2、研究原本と既存JSONを変更せず、新規モジュールで接続する。正式Experiment登録、Agent/Coordinator/Evaluatorの起動、8TURN、閉ループイベント、V3 UIは行わない。合成Choiceによる世界法則の無料検証のみ。
+
+## 実装構成と旧資産の継承
+
+- `homeostasis_v3/choices.py`：Python所有のtemplate、IDによるmaterialization、型付き条件、署名付きChoice/同意。
+- `homeostasis_v3/settlement.py`：Policy、個別可能量、同一TURN全候補の共同判定、sealed stateのatomic commit、明示的な着荷処理。
+- `tests/v3/test_settlement.py`：合成fixture。出力を研究結果として保存しない。
+
+旧 `ed70ee235c4ce098709c0825d055e4b64f901db8:homeostasis_core/action_choices.py` を調査した。Pythonが実行tupleを所有し、モデル側はchoice_idと許可量だけを指定する原則を継承。旧schemaや旧研究runは変更しない。
+
+新しい選択はchoice_id、actor_state_id、turn、snapshot_hash、action_type、resource、requested/maximum/minimum_amount、target、route_preference、conditions、allow_partial、provenanceを持つ。選択入力はID・数量・公開理由に限定し、target等はtrusted catalogueから復元する。国家にCoordinatorへの応答を必須にしない。
+
+choice_idは同じsettlement context内で一意、別TURNでも再使用禁止。永続的な追跡IDはcontext_idとchoice_idのhash。初期化時context_idを必須にし、将来のrunnerは異なる正式runへ異なるcontextを割り当てる。context間の登録重複防止は将来のRegistry層の責務。
+
+## 信頼・権限境界
+
+Authorityはtrusted hostだけが保持し、country/core/pool/coordinator/evaluatorのcapabilityを発行する。country capabilityは自国Choiceしか署名できない。consentはChoice全体のhashに結び付け、量・条件・snapshotの変更後には再利用できない。Coordinator/EvaluatorはChoice署名・同意署名・settle・arrivalを実行できない。
+
+署名秘密はプロセス内で生成し、ファイル・監査・環境へ保存しない。payloadの変更、別Authorityの署名、未発行Principal、Principal属性の改変は拒否する。Agentへrole文字列を書かせて権限判定する方式ではない。
+
+これはPythonコードを同じプロセスで任意実行する攻撃者に対するsandboxではない。Authorityの発行権・private key・core capabilityをAgentへ渡してはいけない。将来のrunnerはcapabilityを隔離し、再起動後の永続署名・鍵管理・保存原子性を別工程で実装する。本段階はメモリ内のtrusted core境界。
+
+## 行動・経路の範囲
+
+既知physical handlerはtransfer、pool_deposit、pool_withdraw。外部action名は明示action_registryでこれらの意味へ対応させられる。未知の行動を自動許可しない。新しい物理作用はschema/handler/testを追加する契約拡張で扱い、model出力をコードとして実行しない。
+
+選択には一つの明示経路を指定する。route_preferenceというfield名でも自動的に別routeへfallbackしない。第3段階の候補列挙からどれを選ぶかはここで決めない。多段配送は後続の明示Choiceと各辺の遅延を要する。将来到着を当TURN在庫として使わない。
+
+poolは明示した所在国を持つ有限の共有勘定。拠出は国→pool所在地、払い出しはpool所在地→受取国の実経路を使う。同じ所在地内の預託／払い出しだけroute=nullで、会計処理遅延1を設定する。遠隔poolへの瞬間移動はない。
+
+## 個別実行可能性
+
+国家在庫は正式sealed stateから読む。生産capacityがあっても未生産分を在庫へ加えない。既存baseline/network契約のvalidityを確認し、route端点・resource・availability・capacity・shared group・所在地国のtransport能力・遅延を決定論的に検証する。
+
+承認済みbaseline Policyでは国自身の必須需要min(stock,demand)を先に予約し、残りが供給上限。同意は全Policyで必須。自国の署名済みChoiceは自国支出の同意となるが、明示拒否があれば不成立。受取国の同意も必要。poolにはpool委任同意を要求し、他国に所在するpoolから発送するなら所在国の輸送利用同意も要求する。
+
+requestedが可能上限を超える場合、allow_partial=trueならminimum_amount以上を候補とし、falseなら不成立。個別可能量は世界を変更しない。routeやcapacityの競合は全候補を集めるまで成立とはしない。
+
+## 条件
+
+- participation：同一batchの参照choiceが正の量で成立すること。
+- settled_amount：同一batchの参照choiceの確定量がminimum以上。
+- arrived_amount：過去または現在の参照choiceについて、正式着荷台帳の実到着量がminimum以上。
+
+文字列reasonを執行条件にしない。未来の発送・到着予定を到着済みと扱わない。同じbatchの発送はdelay>0なので、その到着を前提に当TURN参加する条件は未充足。未知参照・自己条件・不正schemaは技術失敗。既知の条件が満たされないことは合法な世界上の不成立。
+
+相互参加の循環は同時に判定する。量と共有capacityも含めた共同解で、循環が可能なら成立し、不可能なら双方不成立となり得る。旧単調参加固定点だけで数量条件を判定する方式には戻さない。
+
+## Policyと共同配分
+
+基準Policyは `leximin_actor_fulfillment`、必要需要予約あり、同意必須、pool期首残高のみ。Policy ID・全設定・hashをauditへ保存する。比較用には予約なし設定、および明示的なchoice優先順位制度 `lexicographic_choice_priority` を選べる。入力順による先着順ではない。
+
+基準の充足率は、まず同一actor/resource内で全Choiceの成立量合計÷要求量合計を計算する。次にactor内で資源別の無次元充足率を平均し、actor間の昇順vectorを辞書式最大化する。同じactor/resourceでIDを分割してもweightは増えない。異種資源の量を直接合算しない。
+
+同一vectorの解は固定Policy seedとchoice IDのhash順による数量vectorで一意化。これは公開された比較制度であり、公平性・恒常性・国家自律性の普遍的正解ではない。それらの指標を内部目的関数として使用しない。
+
+実装は整数候補の**厳密な参照探索**。全量のみ／部分可／minimum、同意、在庫、必須予約、route/shared/source transport、pool、全条件を満たす解から選ぶ。参照探索は既定200,000組を超えると探索開始前にSEARCH_BUDGET_EXCEEDEDで停止する。近似解や順次配分へfallbackしない。大きな実験へ使用する前に、第5段階以降で同じ意味論を持つsolverと性能gateを検証する必要がある。今回8国家の小整数fixtureは検証済みで、任意規模の実験実行可能性を主張しない。
+
+同一TURNでsettleを二回呼ぶことは拒否し、後出しbatchによる先着優先を防ぐ。全候補を一括提出することはtrusted runnerの責務。署名だけで提出漏れがないことまでは証明しない。
+
+## 原子性・遅延・所有権
+
+共同成立量を確定後、私有copyへ全変更を計算。送出在庫を減らし、同量をin_transit shipmentへ移す。**所有権はatomic dispatch時に受取側へ移るが、受取側の可用在庫にはまだ入らない。** pool拠出も同様にpool所有の輸送中勘定。損失は今回導入しない。
+
+着荷処理はcoreによる明示的な到着TURNの呼出し。due TURN以前の着荷は不可。発送量dispatched_amountと到着量arrived_amountは別field、着荷前の後者は0。着荷で輸送中から国内／pool残高へ移し、同じshipmentを再受取しない。到着予定量を成立量条件へ混ぜない。
+
+pool当TURN拠出は輸送中であり、同TURNの引出しを賄えない。着荷後の次回開始残高から使用可能。全資源について `国内stock + pool stock + 未着荷shipment = 開始総量` を検証する。本段階では生産・消費・損失を実行せず、第2段階との正式TURN結合は第5段階。
+
+在庫・route/shared/source能力の使用量は共同予約記録として保存する。固定capacity定義を書き換えない。検証・署名が全て終わるまでheadを更新せず、最後にlock下で開始hashをcompare-and-swapする。例外・保存則違反・競合した古いheadは未commitのまま。元state・baseline/networkは変更しない。再起動を跨ぐdurable transactionは本段階の保証外。
+
+## 不成立と技術失敗
+
+世界上の不成立はauditを返す：INSUFFICIENT_STOCK、ESSENTIAL_RESERVE_CONFLICT、NO_ROUTE、INVALID_TARGET/RESOURCE、ROUTE_RESOURCE_MISMATCH、ROUTE_UNAVAILABLE、ROUTE_CAPACITY_EXCEEDED、SHARED_CAPACITY_CONFLICT、TRANSPORT_CAPACITY_EXCEEDED、POOL_CONFLICT、DOUBLE_RESERVATION、MISSING_CONSENT、CONSENT_REFUSED、CONDITION_NOT_MET、MINIMUM_AMOUNT_NOT_MET、FULL_AMOUNT_REQUIRED、POLICY_ALLOCATION_NOT_SELECTED。
+
+選ばれた他候補を固定して自己量を増やした場合の競合をdiagnosticとして併記する。複数Choiceを同時変更した反実仮想の唯一原因を証明するものではない。Policyによる非選択を特定国の責任へ変換しない。
+
+schema error、ID collision、署名改変、古いsnapshot、未知条件参照、未知action contract、保存則違反、コード例外、探索上限はTechnicalFailure等の例外で停止。合法な全不成立／空batchを技術失敗扱いしない。
+
+## 監査と創発余白
+
+context/choice/actor/TURN→復元intentとhash→個別上限と制約→同意証拠→共同予約→Policyとhash→確定量→shipment ID/route/発送/着荷予定→状態差分・reason codeを追跡する。着荷実績は同shipmentの独立fieldで確認できる。
+
+行動、相手、経路、条件は合成fixtureから入力されるので、特定の国の支援・拒否・回復をコードに予定しない。署名鍵や内部推論をauditへ保存しない。将来、Agentが許可法則から選んだ異なるChoice集合を同じ法則へ入力できる。
+
+第4段階の法則が成立可能性を規定することと、将来の世界線を予約することは異なる。未知の選択や競合を扱う境界を検証し、世界の結末を作るための補正は行わない。第5段階へ進まない。
