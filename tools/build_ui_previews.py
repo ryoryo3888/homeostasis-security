@@ -15,7 +15,7 @@ for version in ("v1", "v2"):
     html = source.read_text(encoding="utf-8")
 
     # Sources may already be the promoted unified dashboards. Keep the existing
-    # visual shell and narrative; only add missing layers.
+    # visual shell; refresh only the marked narrative source below.
     if MARK in html or RESEARCH_MARK in html:
         integrated = html
     else:
@@ -25,6 +25,17 @@ for version in ("v1", "v2"):
             raise SystemExit(f"Missing document boundary: {source}")
         integrated = html.replace("</head>", head_injection + "</head>", 1)
         integrated = integrated.replace("</body>", body_injection + "</body>", 1)
+
+    # The narrative generator is authoritative, including already-promoted pages.
+    # Replace only its marked script: all CSS, world shells and other scripts stay intact.
+    narrative_start = RESEARCH_MARK + "\n<script>\n"
+    if integrated.count(narrative_start) != 1:
+        raise SystemExit(f"Missing/ambiguous narrative script: {source}")
+    before, narrative_tail = integrated.split(narrative_start, 1)
+    if "\n</script>" not in narrative_tail:
+        raise SystemExit(f"Missing narrative script boundary: {source}")
+    _, after = narrative_tail.split("\n</script>", 1)
+    integrated = before + narrative_start + RESEARCH_JS + "\n</script>" + after
 
     if INTEGRATION_MARK not in integrated:
         if "</body>" not in integrated:
