@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>HOMEOSTASIS SECURITY — V3</title>
+<link rel="stylesheet" href="ui/v3/observatory.css">
+<script defer src="ui/v3/observatory.js"></script>
+</head>
+<body class="v3">
+<div class="shell">
+<header id="v3-identity" data-v3-frame="identity">
+  <div><a class="identity" href="dashboard_v3.html">HOMEOSTASIS SECURITY <span>V3</span></a><h1>多国間・有限資源・相互依存ネットワーク</h1></div>
+  <nav aria-label="バージョン"><a href="dashboard_v1.html">V1<span>二国間</span></a><a href="dashboard_v2.html">V2<span>地球規模</span></a><a href="dashboard_v3.html" aria-current="page">V3<span>相互依存</span></a></nav>
+</header>
+<section id="v3-control" data-v3-frame="control" aria-label="Simulation Control">
+  <h2>SIMULATION CONTROL</h2>
+  <div class="turn-control"><button disabled aria-label="前のTURN">←</button><span>TURN <b>—</b></span><button disabled aria-label="次のTURN">→</button></div>
+  <p>正式世界線なし <span>／ TURN未実行</span></p>
+</section>
+<main>
+<section id="v3-world" data-v3-frame="world" aria-label="合成8国家の初期構造">
+  <div class="world-top"><div><span class="overline">STRUCTURE / BASELINE STATE</span><span class="synthetic">合成初期状態</span></div><div class="resource-key"><span class="food">食料 <i></i></span><span class="energy">エネルギー <i></i></span></div></div>
+  <div class="world-canvas" id="v3-canvas">
+    <svg id="v3-network" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="route-tip" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0 0L5 2.5L0 5" fill="none" stroke="currentColor"/></marker></defs><g id="route-lines"></g></svg>
+    <div id="v3-earth" data-v3-frame="earth"><img src="ui/v3/earth.svg" alt="地球。A〜Hは地理に対応しない合成国家。"><div class="earth-caption"><span>ONE PLANET</span><small>EIGHT INDEPENDENT STATES</small></div></div>
+    <div id="state-nodes" aria-label="国家と初期資源"></div>
+    <div class="world-measurements" aria-label="TURN末観測の状態"><span>必須機能充足 <b>未観測</b></span><span>資源不足 <b>未観測</b></span><span>輸送中 <b>未観測</b></span></div>
+  </div>
+  <div class="world-bottom"><span id="route-count">構造データ確認中</span><span>破線：経路の存在 <i>／</i> 実流量は未観測</span><button id="clear-selection" type="button">全体</button></div>
+  <p id="load-error" role="alert" hidden></p>
+</section>
+<section id="v3-state-detail" data-v3-slot="STATE_DETAIL" class="details-surface" aria-labelledby="state-heading">
+  <div class="state-detail">
+    <div class="section-heading"><span class="overline">STATE / RESOURCES</span><h2 id="state-heading">国家 <span id="selected-label">—</span></h2></div>
+    <div id="resource-details"></div>
+    <div class="boundary-notes"><p><b>国家自律性</b><span>選択・拒否・条件付き参加の余地。判断は未観測。</span></p><p><b>国家的自立性</b><span>在庫・需要・生産能力。維持可能期間は未観測。</span></p></div>
+  </div>
+  <div class="network-detail" id="v3-network-detail" data-v3-slot="NETWORK_DETAIL">
+    <div class="section-heading"><span class="overline">POTENTIAL CONNECTIONS</span><h2>経路と依存</h2></div>
+    <p class="muted" id="connection-context">国家未選択</p><div id="route-details"></div>
+    <details id="production-detail"><summary>生産の投入依存</summary><div id="production-dependencies"></div></details>
+  </div>
+</section>
+<section class="research-question" aria-label="研究質問"><span class="overline">RESEARCH QUESTION</span><p>世界の安定化は、国家の自律性や資源分布と<br class="desktop-break">どのように両立・衝突するか？</p></section>
+<section id="v3-evidence" data-v3-slot="METRICS_EVIDENCE">
+  <details><summary>観測・証拠 <span>PROVENANCE</span></summary>
+    <div class="evidence-body"><p>表示中の在庫・需要・能力・経路は、合成基準世界の定義値。Agent判断・取引・回復・研究結果は含まない。国家配置は抽象配置。</p>
+      <p>資源バーは資源ごとの最大初期在庫を共通上限とする。経路の太さは定義容量に対応。線の強調は選択状態であり、使用量や重要度ではない。</p>
+      <div id="source-evidence"></div>
+      <p><a href="docs/design/v3/PHASE6_OBSERVATION.md">観測指標の定義と限界</a> · <a href="docs/architecture/V3_CANDIDATE_FRAME.md">V3候補Frame</a></p>
+      <p class="muted">地形：<a href="https://www.naturalearthdata.com/about/terms-of-use/">Natural Earth</a>。国家・経路の地理的位置は示さない。</p>
+    </div>
+  </details>
+</section>
+<footer><span>V3 VISUAL BASELINE — CANDIDATE</span><span>合成初期構造 ／ 正式研究データではありません</span></footer>
+</main>
+</div>
+</body>
+</html>
