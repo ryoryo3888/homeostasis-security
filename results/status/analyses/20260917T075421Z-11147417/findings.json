@@ -439,9 +439,9 @@
     "api_calls": 0,
     "sdk_transport": "PASS",
     "sdk_transport_tests": 4,
-    "source_digest": "db45dacfb199d449cd6d9324181f9dc19effff01ecfab908a4dcad334ac172db",
+    "source_digest": "cd36976dc439b6bb9ead397a65d681c78da2fdd0704b369427e8b7a07778e671",
     "status": "PASS",
-    "tests": 288
+    "tests": 289
   },
   "model_limitations": [
     "n=1; no general causal or real-country inference.",
@@ -481,6 +481,13 @@
     "implementation_assessment": "docs/CREATIVE_RESEARCH_ROADMAP.md",
     "simulation_core_modified": false,
     "version": "1.0"
+  },
+  "publication_check_correction": {
+    "analysis_or_raw_data_changed": false,
+    "fix": "Restore protected prefix; append links; include README in source fingerprint so a later README change invalidates cached checks.",
+    "initial_ci": 35200301761,
+    "initial_failure": "README protected prefix changed by inserted links",
+    "regression_test": "test_check_fingerprint_covers_protected_readme"
   },
   "quality_assessment": "Auditable research prototype; scientific calibration, independent comparisons and validated artistic UI remain incomplete.",
   "research_use": "Verified descriptive trace and model-internal mechanisms; hypotheses require pre-registered independent comparisons.",

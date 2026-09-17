@@ -1,7 +1,7 @@
 {
   "blocked_run_count": 2,
   "branch": "choice-id-one-turn-probe-20260917",
-  "commit": "13391423ed185d6b8ca43af68b502b1d2e022913",
+  "commit": "ca1a9f6b0a790143f3667632e2246a1779b522e4",
   "commit_semantics": "source HEAD at export; source_digest includes uncommitted implementation",
   "development_status": {
     "analysis_path": "results/status/analyses/20260917T075421Z-11147417/findings.json",
@@ -13,9 +13,9 @@
       "api_calls": 0,
       "sdk_transport": "PASS",
       "sdk_transport_tests": 4,
-      "source_digest": "db45dacfb199d449cd6d9324181f9dc19effff01ecfab908a4dcad334ac172db",
+      "source_digest": "cd36976dc439b6bb9ead397a65d681c78da2fdd0704b369427e8b7a07778e671",
       "status": "PASS",
-      "tests": 288
+      "tests": 289
     },
     "next_creative_priority": "One read-only evidence-linked worldline experience: trajectories, conditional network and requested/realized resource flows.",
     "next_research_priority": "Pre-register metric semantics and duplicate-demand/role-ID hypotheses; validate units and model assumptions offline before independent comparisons.",
@@ -493,9 +493,9 @@
     "transport_audit": "results/status/runs/20260917T075421Z-11147417/e0919357163de85576e395a5fb9128896028140841c6870902d120dc14a5dbf7.json#/transport_audit",
     "world_state": "results/status/runs/20260917T075421Z-11147417/e0919357163de85576e395a5fb9128896028140841c6870902d120dc14a5dbf7.json#/worlds"
   },
-  "source_digest": "db45dacfb199d449cd6d9324181f9dc19effff01ecfab908a4dcad334ac172db",
+  "source_digest": "cd36976dc439b6bb9ead397a65d681c78da2fdd0704b369427e8b7a07778e671",
   "status_version": 1,
-  "updated_at": "2026-09-17T08:33:15.885747+00:00",
+  "updated_at": "2026-09-17T08:41:09.708296+00:00",
   "validation": {
     "contracts": "PASS",
     "decision_audit": "PASS",

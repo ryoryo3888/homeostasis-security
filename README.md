@@ -4,12 +4,6 @@ HOMEOSTASIS SECURITYは、国家の安全保障反応を生体の免疫反応と
 
 目的は、国家タイプ、国際法、Hotline（直接対話経路）の違いが、脅威認知、防衛反応、エスカレーション圧、信頼、回復力にどう関連するかを探索することです。「緊張が低いほど常に良い」とはせず、高い脅威に対する必要な防衛反応も適応に含めます。
 
-## 正式原則と最初の完全worldline
-
-- [Design / Research Principles](DESIGN_RESEARCH_PRINCIPLES.md): 技術・研究・UI/UX・社会実装の判断基準。
-- [最初の完全8TURN解析](docs/research/20260917T075421Z-11147417-analysis.md) / [全TURN資料](docs/research/20260917T075421Z-11147417-turns.md) / [machine timeline](results/status/analyses/20260917T075421Z-11147417/timeline.json)。
-- [原則の現状評価とvisual primitives](docs/CREATIVE_RESEARCH_ROADMAP.md)。新方式の単一worldlineであり、以下の既存16条件研究とは別系列。
-
 ## Dashboard
 
 - 公開Dashboard: <https://ryoryo3888.github.io/homeostasis-security/>
@@ -196,3 +190,9 @@ probeでは `decision.audit.json` に送信前・回答取得後・検証後を�
 ### 実験終了時のremote観測
 
 明示許可された実験は、終了後にsanitized観測の生成・検証・commit・作業branchへのpush・fetch後のHEAD照合まで自動実施します。完了表示は `REMOTE OBSERVABILITY READY: <commit>`。同期失敗時は実験を繰り返さず `make sync-status` のみ再実行してください。[仕様・停止条件](docs/REMOTE_PUBLICATION.md)。
+
+## 正式原則と最初の完全worldline
+
+- [Design / Research Principles](DESIGN_RESEARCH_PRINCIPLES.md): 技術・研究・UI/UX・社会実装の判断基準。
+- [最初の完全8TURN解析](docs/research/20260917T075421Z-11147417-analysis.md) / [全TURN資料](docs/research/20260917T075421Z-11147417-turns.md) / [machine timeline](results/status/analyses/20260917T075421Z-11147417/timeline.json)。
+- [原則の現状評価とvisual primitives](docs/CREATIVE_RESEARCH_ROADMAP.md)。新方式の単一worldlineであり、以下の既存16条件研究とは別系列。

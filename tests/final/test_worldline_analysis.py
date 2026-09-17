@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import unittest
+import tempfile
 from tools.analyze_worldline import validate_timeline, ROOT
 
 class WorldlineAnalysisTests(unittest.TestCase):
@@ -34,6 +35,14 @@ class WorldlineAnalysisTests(unittest.TestCase):
             if field=='event':d['turns'][5]['event_derivation']['candidates'][0]['priority']+=1
             else:d['turns'][5]['evaluator_input_sha256']='0'*64
             with self.assertRaises(ValueError):validate_timeline(d)
+
+    def test_check_fingerprint_covers_protected_readme(self):
+        from homeostasis_core.observability import source_digest
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);(root/'README.md').write_text('protected historical prefix')
+            before=source_digest(root)
+            (root/'README.md').write_text('changed prefix')
+            self.assertNotEqual(source_digest(root),before)
 
     def test_original_run_unchanged_when_available(self):
         path=ROOT/'results/research'/self.data['run_id']

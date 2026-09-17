@@ -2,7 +2,7 @@
 ## 現在地（機械可読stateから生成）
 
 一次情報: [results/status/latest.json](results/status/latest.json)。
-生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `13391423ed185d6b8ca43af68b502b1d2e022913`（公開コミット自身ではありません）。
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `ca1a9f6b0a790143f3667632e2246a1779b522e4`（公開コミット自身ではありません）。
 最新run: `20260917T075421Z-11147417` / experiment / success / 完了8TURN / API 80 calls / retry 0。
 無料検証: PASS。次: Develop a read-only evidence-linked visual prototype and pre-register the next research comparison. Do not run any paid experiment without separate explicit authorization and budget.
 今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
@@ -12,7 +12,7 @@
 
 `20260917T075421Z-11147417`: 8/8TURN、80/80 calls、retry 0、research eligibility true。保存選択・条件決済・全世界状態・復興・Evaluator入力・次eventを無料再計算し完全一致。63/64条件参加、REJECT 0でもHomeostasisはT1 58→T8 49、農地被害は35.5163%回復。更新式の作用と創発候補を区別し、n=1から一般因果を断定しない。原本不変・今回API 0。
 
-[解析](docs/research/20260917T075421Z-11147417-analysis.md) / [timeline](results/status/analyses/20260917T075421Z-11147417/timeline.json) / [findings](results/status/analyses/20260917T075421Z-11147417/findings.json)。[Design / Research Principles](DESIGN_RESEARCH_PRINCIPLES.md) v1.0を正式採用し、[現状評価・visual primitives](docs/CREATIVE_RESEARCH_ROADMAP.md)へ接続。無料check 288件＋実SDK4件PASS。次は証拠へ遡れるread-only可視化と、単位・重複要求・役割ID仮説の事前登録。新実験への自動進行は禁止。以下は過去時点の記録。
+[解析](docs/research/20260917T075421Z-11147417-analysis.md) / [timeline](results/status/analyses/20260917T075421Z-11147417/timeline.json) / [findings](results/status/analyses/20260917T075421Z-11147417/findings.json)。[Design / Research Principles](DESIGN_RESEARCH_PRINCIPLES.md) v1.0を正式採用し、[現状評価・visual primitives](docs/CREATIVE_RESEARCH_ROADMAP.md)へ接続。無料check 289件＋実SDK4件PASS。次は証拠へ遡れるread-only可視化と、単位・重複要求・役割ID仮説の事前登録。新実験への自動進行は禁止。以下は過去時点の記録。
 
 
 ## 8TURN run #2 故障診断（2026-09-17、最新評価）
