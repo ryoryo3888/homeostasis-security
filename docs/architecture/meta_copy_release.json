@@ -1,7 +1,132 @@
 {
   "schema_version": 1,
   "source_sha": "231fde90d6e6f0734e28ed820c28251dce236e8e",
+  "public_baseline_sha": "c9b436f9271b71804e27f30b72c6d057b271bdd6",
   "previous_public_sha": "0ece7cf5c6d0cddf01dd0cb9f99f5177cbc6a2e6",
-  "public_capture": "pending deployment",
-  "gemini_api_calls": 0
+  "public_capture": "PASS",
+  "origin": "https://ryoryo3888.github.io/homeostasis-security",
+  "candidate_match": "PASS",
+  "approved_copy_delta": "PASS",
+  "source_generated_consistency": "PASS",
+  "research_content_loss": 0,
+  "earth_change": 0,
+  "simulation_control_change": 0,
+  "turn_interaction": "PASS",
+  "recovery_two_columns": "PASS",
+  "unit_tests": 224,
+  "secret_scan": "PASS",
+  "gemini_api_calls": 0,
+  "ci_run": 35251568627,
+  "pages_run": 35251565214,
+  "v3_started": false,
+  "states": [
+    {
+      "version": "v1",
+      "viewport": "desktop",
+      "turn": 1,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v1",
+      "viewport": "desktop",
+      "turn": 3,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v1",
+      "viewport": "desktop",
+      "turn": 8,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v1",
+      "viewport": "ipad",
+      "turn": 1,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v1",
+      "viewport": "ipad",
+      "turn": 3,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v1",
+      "viewport": "ipad",
+      "turn": 8,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v2",
+      "viewport": "desktop",
+      "turn": 1,
+      "research_height_delta": -50.046875,
+      "intro_height_delta": -30.546875,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v2",
+      "viewport": "desktop",
+      "turn": 3,
+      "research_height_delta": -50.046875,
+      "intro_height_delta": -30.546875,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v2",
+      "viewport": "desktop",
+      "turn": 5,
+      "research_height_delta": -50.046875,
+      "intro_height_delta": -30.546875,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v2",
+      "viewport": "ipad",
+      "turn": 1,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v2",
+      "viewport": "ipad",
+      "turn": 3,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    },
+    {
+      "version": "v2",
+      "viewport": "ipad",
+      "turn": 5,
+      "research_height_delta": -19.5,
+      "intro_height_delta": 0.0,
+      "world_change": 0,
+      "result": "PASS"
+    }
+  ]
 }
