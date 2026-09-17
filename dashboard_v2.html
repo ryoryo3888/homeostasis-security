@@ -166,6 +166,10 @@ th,td{border-color:rgba(91,220,247,.16)!important}
 .earth-panel .earth-system-field .field-node{fill:#a4edf2;stroke:none;opacity:.65}
 .earth-panel .question,.earth-panel .earth-wrap,.earth-panel .primary-kpis{position:relative;z-index:1}
 </style>
+<style>
+/* Compensate only for the longer V2 heading; preserve the existing turn controls. */
+.turn-label .control-heading{display:inline-block;transform:scaleX(.68);transform-origin:left center;margin-right:-55.734375px}
+</style>
 </head>
 <body>
 <main class="shell">
@@ -190,7 +194,7 @@ th,td{border-color:rgba(91,220,247,.16)!important}
 
   <section class="controls panel" aria-label="ターン操作">
     <div class="turn-operations">
-    <div class="turn-label">CURRENT TURN <strong id="turnNumber">1</strong> / 5</div>
+    <div class="turn-label"><span class="control-heading">SIMULATION CONTROL</span> <strong id="turnNumber">1</strong> / 5</div>
     <div class="turn-buttons">
       <button class="turn-button nav-button" id="prevTurn" type="button">‹ 前へ</button>
       <button class="turn-button direct active" data-turn="1" type="button">1</button>
