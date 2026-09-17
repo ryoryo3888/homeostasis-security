@@ -152,8 +152,11 @@ th,td{border-color:rgba(91,220,247,.16)!important}
 </style>
 <style>
 /* V2 Earth System Field: decorative atmosphere, not research data. */
+.earth-panel{display:flex;flex-direction:column}
 .earth-panel .earth{width:94.4%}
-.earth-panel .earth-system-field{position:absolute;inset:300px 0 0;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse at 50% 0,rgba(43,177,208,.09),transparent 68%);mask-image:linear-gradient(transparent,#000 15%,#000 45%,transparent 96%)}
+.earth-panel .earth-wrap{flex-shrink:0;margin-top:auto}
+.earth-panel .primary-kpis{flex-shrink:0;width:100%;margin-bottom:auto}
+.earth-panel .earth-system-field{position:absolute;inset:6% 0 4%;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse at 50% 46%,rgba(43,177,208,.09),transparent 68%);mask-image:linear-gradient(transparent,#000 15%,#000 70%,transparent 98%)}
 .earth-panel .earth-system-field svg{width:100%;height:100%;display:block;fill:none;stroke:#67dbea;stroke-width:.7;opacity:.18}
 .earth-panel .earth-system-field .field-node{fill:#a4edf2;stroke:none;opacity:.65}
 .earth-panel .question,.earth-panel .earth-wrap,.earth-panel .primary-kpis{position:relative;z-index:1}
