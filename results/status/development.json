@@ -1,331 +1,395 @@
 {
-  "development_status_version": 1,
-  "run_id": "20260917T022330Z-a9d78ed9",
-  "research_stage": "fresh_turn_evidence_missing",
-  "eight_turn_ready": false,
-  "research_eligible": false,
   "api_calls_this_work": 0,
+  "checks": {
+    "all_10_agent_contracts": "PASS",
+    "atomic_settlement_full_replay": "PASS",
+    "automatic_publication": "PASS",
+    "country_choice_materialization": "PASS",
+    "decision_transport_identity": "PASS",
+    "evaluator_post_settlement_input": "PASS",
+    "reconstruction": "PASS",
+    "request_fingerprints_10": "PASS",
+    "reverse_order_replay": "PASS",
+    "secret_scan": "PASS",
+    "simultaneous_settlement": "PASS",
+    "source_digest_and_ancestor": "PASS",
+    "world_state": "PASS"
+  },
+  "development_status_version": 1,
+  "diagnosis_path": "results/status/diagnostics/20260917T063102Z-final-audit.json",
+  "eight_turn_ready": true,
   "latest_saved_run": {
-    "run_id": "20260917T022330Z-a9d78ed9",
-    "mode": "probe",
+    "api_calls": 10,
+    "maximum_api_calls": 10,
+    "mode": "turn",
+    "retry_count": 0,
+    "run_id": "20260917T063102Z-2d170cd8",
     "status": "success",
-    "turns_completed": 0,
-    "api_calls": 1,
-    "maximum_api_calls": 1,
-    "retry_count": 0
+    "turns_completed": 1
   },
   "latest_saved_run_validation": {
     "contracts": "PASS",
     "decision_audit": "PASS",
-    "transport_audit": "PASS",
+    "research_eligible": false,
     "secret_scan": "PASS",
-    "research_eligible": false
-  },
-  "unicode_error_in_latest_probe": false,
-  "requested_fresh_turn": {
-    "found": false,
-    "run_id": null,
-    "status": "NOT_FOUND",
-    "api_calls": null,
-    "retry": null,
-    "turns_completed": null,
-    "contracts": "NOT_VERIFIABLE",
-    "decision_audit": "NOT_VERIFIABLE",
-    "transport_audit": "NOT_VERIFIABLE",
-    "secret_scan": "NOT_VERIFIABLE",
-    "settlement": "NOT_VERIFIABLE",
-    "world_state": "NOT_VERIFIABLE",
-    "evaluator": "NOT_VERIFIABLE",
-    "unicode_error_recurrence": "NOT_VERIFIABLE"
-  },
-  "last_known_saved_turn": "20260917T001606Z-c7bae18f",
-  "sync_diagnosis": {
-    "starting_head": "f81da80833c9aac4719134edac9bdf5b1374f054",
-    "starting_head_already_includes_latest_probe": true,
-    "previous_experiment_finalizer": "prepare only; no commit/push; publication errors swallowed",
-    "previous_sync_command": "did commit/push if successful, but no fetch/remote comparison",
-    "historical_console_evidence_available": false,
-    "missing_fresh_turn_cause": "unknown; no new raw run was found, so publication alone cannot explain it"
-  },
-  "automatic_publication": {
-    "enabled": true,
-    "success_and_failure": true,
-    "pre_experiment_publishability_check": true,
-    "secret_and_audit_gate": true,
-    "status_only_commit": true,
-    "forbid_main": true,
-    "push_current_branch": true,
-    "fetch_and_compare_remote": true,
-    "verify_advertised_head": true,
-    "api_rerun": false,
-    "stage_auto_advance": false,
-    "recovery_command": "make sync-status",
-    "receipt": "results/debug/publication-receipt.json"
+    "transport_audit": "PASS"
   },
   "make_check": {
-    "status": "PASS",
-    "tests": 274,
+    "api_calls": 0,
     "sdk_transport": "PASS",
     "sdk_transport_tests": 4,
-    "api_calls": 0
+    "source_digest": "de2f0dd6c22bc9f28faeea577c9941d9b27aaf097a2f77d661ee34dbb3f64cdd",
+    "status": "PASS",
+    "tests": 274,
+    "verification": "Reused successful check for identical source digest; original publication CI independently passed."
   },
-  "next_step": "Locate the saved fresh 1TURN run_id/path and validate its settlement and Evaluator evidence. Do not rerun any experiment or advance to 8TURN automatically.",
-  "report": "docs/REMOTE_PUBLICATION.md",
+  "next_experiment": {
+    "additional_probe_required": false,
+    "limits": [
+      "Historical UnicodeEncodeError root cause remains unproven; successful current runtime does not establish historical credential contents.",
+      "Single-turn success does not guarantee all future model outputs or later-turn dynamics.",
+      "One 8TURN worldline is exploratory evidence, not a general causal conclusion.",
+      "Keep runtime and source unchanged; workflow reruns free gate before paid execution.",
+      "Failure remains excluded from research; only complete validated 8TURN may be admitted.",
+      "API count is 10 recorded SDK attempts with returned responses, not an independent provider billing audit."
+    ],
+    "maximum_api_calls": 80,
+    "rationale": "A real 1-call probe and fresh 10-call full-agent turn already exercise corrected credentials, SDK, schemas, settlement and publication. Another identical entrance test adds little evidence; the remaining useful test is multi-turn state-dependent behavior.",
+    "retry": 0
+  },
+  "next_step": "After separate explicit authorization, execute one 8TURN worldline, maximum 80 API calls, retry 0; stop immediately on validation failure. No automatic progression or retry.",
   "previous_assessment": {
-    "development_status_version": 1,
-    "run_id": "20260917T004355Z-c09ce05c",
-    "research_stage": "transport_gate_pending",
-    "eight_turn_ready": false,
-    "research_eligible": false,
-    "diagnosis_path": "results/status/diagnostics/20260917T004355Z-design-diagnosis.json",
-    "root_cause": {
-      "status": "not_conclusively_identified",
-      "most_likely": "SDK/HTTP configuration value incompatible with header encoding; non-ASCII synthetic credential reproduces UnicodeEncodeError before HTTP mock dispatch",
-      "proven_design_defects": [
-        "No credential/header preflight",
-        "No real SDK HTTP boundary in previous CI",
-        "Null model response crashes exporter",
-        "Insufficient runtime and failure-stage provenance"
-      ],
-      "not_proven": [
-        "Actual credential content at failed run",
-        "Historical environment or dependency difference",
-        "Provider receipt or billing"
-      ]
-    },
-    "fix_validation": "PASS",
-    "make_check": {
-      "new_unit_tests": 10,
-      "new_real_sdk_mock_tests": 4,
-      "unit_total": 265,
-      "sdk_transport_total": 4,
-      "make_check": "PASS",
-      "sdk_transport": "PASS",
-      "api_calls": 0,
-      "source_digest": "99e1ea3edba35bee22d0f6c068f419cc34f44d5082f2afff19878a72875f4601"
-    },
     "api_calls_this_work": 0,
-    "next_step": "After separate explicit authorization, run only the existing 1-call probe (retry 0), inspect its audits, then decide whether to authorize a fresh 1TURN. Do not automatically advance to 8TURN.",
-    "next_minimal_experiment": {
-      "command": "CONFIRM=YES make probe",
-      "requires_separate_authorization": true,
-      "maximum_api_calls": 1,
-      "retry": 0,
-      "stop_after_probe": true,
-      "automatic_progression": false,
-      "rationale": "Existing probe shares the corrected client/model/transport; saved coordinator payload already passes actual-SDK mock roundtrip. Verify real authentication and connection at minimum cost, then assess a fresh 1TURN."
+    "automatic_publication": {
+      "api_rerun": false,
+      "enabled": true,
+      "fetch_and_compare_remote": true,
+      "forbid_main": true,
+      "pre_experiment_publishability_check": true,
+      "push_current_branch": true,
+      "receipt": "results/debug/publication-receipt.json",
+      "recovery_command": "make sync-status",
+      "secret_and_audit_gate": true,
+      "stage_auto_advance": false,
+      "status_only_commit": true,
+      "success_and_failure": true,
+      "verify_advertised_head": true
     },
-    "previous_observation": {
-      "api_calls_this_analysis": 0,
-      "api_count_note": "The durable transport audit records one attempt reserved before dispatch; provider acceptance/billing cannot be established from these files.",
-      "audits": {
-        "contracts": "FAIL",
-        "decision_audit": "PASS",
-        "research_eligible": false,
-        "secret_scan": "PASS",
-        "transport_audit": "PASS"
-      },
+    "development_status_version": 1,
+    "eight_turn_ready": false,
+    "last_known_saved_turn": "20260917T001606Z-c7bae18f",
+    "latest_saved_run": {
+      "api_calls": 1,
+      "maximum_api_calls": 1,
+      "mode": "probe",
+      "retry_count": 0,
+      "run_id": "20260917T022330Z-a9d78ed9",
+      "status": "success",
+      "turns_completed": 0
+    },
+    "latest_saved_run_validation": {
+      "contracts": "PASS",
+      "decision_audit": "PASS",
+      "research_eligible": false,
+      "secret_scan": "PASS",
+      "transport_audit": "PASS"
+    },
+    "make_check": {
+      "api_calls": 0,
+      "sdk_transport": "PASS",
+      "sdk_transport_tests": 4,
+      "status": "PASS",
+      "tests": 274
+    },
+    "next_step": "Locate the saved fresh 1TURN run_id/path and validate its settlement and Evaluator evidence. Do not rerun any experiment or advance to 8TURN automatically.",
+    "previous_assessment": {
+      "api_calls_this_work": 0,
       "development_status_version": 1,
+      "diagnosis_path": "results/status/diagnostics/20260917T004355Z-design-diagnosis.json",
       "eight_turn_ready": false,
-      "experiment": {
-        "api_calls": 1,
-        "maximum_api_calls": 80,
-        "mode": "experiment",
-        "retry_count": 0,
-        "run_id": "20260917T004355Z-c09ce05c",
-        "status": "failed",
-        "turns_completed": 0
-      },
-      "failure": {
-        "agent_id": "地球調整機関",
-        "api_call_number": 1,
-        "attempt": 1,
-        "call_id": "20260917T004355Z-c09ce05c:1:1:地球調整機関:1",
-        "error_type": "UnicodeEncodeError",
-        "include_in_research_aggregation": false,
-        "run": 1,
-        "run_id": "20260917T004355Z-c09ce05c",
-        "turn": 1,
-        "validation": "FAIL",
-        "validation_error": null
-      },
+      "fix_validation": "PASS",
       "make_check": {
         "api_calls": 0,
-        "source_digest": "9fd88a5ab5e15f25c98d6bf6853689c61bf55b9c8baae7bc13c1f8f02c044481",
-        "status": "PASS",
-        "tests": 255
+        "make_check": "PASS",
+        "new_real_sdk_mock_tests": 4,
+        "new_unit_tests": 10,
+        "sdk_transport": "PASS",
+        "sdk_transport_total": 4,
+        "source_digest": "99e1ea3edba35bee22d0f6c068f419cc34f44d5082f2afff19878a72875f4601",
+        "unit_total": 265
       },
-      "next_step": "Diagnose UnicodeEncodeError and fix exporter null-response handling before any separately authorized retry. Do not rerun the experiment automatically.",
-      "past_runs_modified": false,
-      "previous_gate": {
-        "api_calls_this_gate": 0,
-        "checks": {
-          "atomic_established_actions": "PASS",
-          "corrected_settlement_replay": "PASS",
-          "country_contracts": "PASS",
+      "next_minimal_experiment": {
+        "automatic_progression": false,
+        "command": "CONFIRM=YES make probe",
+        "maximum_api_calls": 1,
+        "rationale": "Existing probe shares the corrected client/model/transport; saved coordinator payload already passes actual-SDK mock roundtrip. Verify real authentication and connection at minimum cost, then assess a fresh 1TURN.",
+        "requires_separate_authorization": true,
+        "retry": 0,
+        "stop_after_probe": true
+      },
+      "next_step": "After separate explicit authorization, run only the existing 1-call probe (retry 0), inspect its audits, then decide whether to authorize a fresh 1TURN. Do not automatically advance to 8TURN.",
+      "previous_observation": {
+        "api_calls_this_analysis": 0,
+        "api_count_note": "The durable transport audit records one attempt reserved before dispatch; provider acceptance/billing cannot be established from these files.",
+        "audits": {
+          "contracts": "FAIL",
           "decision_audit": "PASS",
-          "derived_event_code_review": "PASS",
-          "eligibility_only_after_eight_turns": "PASS",
-          "evaluator_world_consistency": "PASS",
-          "failed_research_exclusion": "PASS",
-          "fresh_completion": "PASS",
-          "maximum_80_calls": "PASS",
-          "reconstruction": "PASS",
-          "retry_zero": "PASS",
+          "research_eligible": false,
           "secret_scan": "PASS",
-          "transport_audit": "PASS",
-          "validation_failure_stops": "PASS"
+          "transport_audit": "PASS"
         },
-        "countries_validated": 8,
         "development_status_version": 1,
-        "eight_turn_ready": true,
-        "established_actions": {
-          "ECON": "PROVIDE_FUNDS",
-          "FOOD": "SUPPORT_LOGISTICS",
-          "FRAGILE": "PROTECT_RESERVES",
-          "ISLAND": "SUPPORT_LOGISTICS",
-          "MIL": "SUPPORT_LOGISTICS",
-          "NEUTRAL": "PROVIDE_RESOURCE",
-          "RES": "SUPPORT_LOGISTICS",
-          "SMALL": "PROVIDE_RESOURCE"
+        "eight_turn_ready": false,
+        "experiment": {
+          "api_calls": 1,
+          "maximum_api_calls": 80,
+          "mode": "experiment",
+          "retry_count": 0,
+          "run_id": "20260917T004355Z-c09ce05c",
+          "status": "failed",
+          "turns_completed": 0
         },
-        "gate_result": "PASS",
-        "gate_version": 1,
-        "historical_run_api_calls": 10,
+        "failure": {
+          "agent_id": "地球調整機関",
+          "api_call_number": 1,
+          "attempt": 1,
+          "call_id": "20260917T004355Z-c09ce05c:1:1:地球調整機関:1",
+          "error_type": "UnicodeEncodeError",
+          "include_in_research_aggregation": false,
+          "run": 1,
+          "run_id": "20260917T004355Z-c09ce05c",
+          "turn": 1,
+          "validation": "FAIL",
+          "validation_error": null
+        },
         "make_check": {
           "api_calls": 0,
           "source_digest": "9fd88a5ab5e15f25c98d6bf6853689c61bf55b9c8baae7bc13c1f8f02c044481",
           "status": "PASS",
           "tests": 255
         },
-        "next_step": "8TURN READY: YES. Await separate explicit authorization for one 8TURN worldline, maximum 80 API calls, retry 0. No automatic execution.",
-        "old_algorithm_participants": [
-          "FRAGILE"
-        ],
-        "participants": [
-          "ECON",
-          "FOOD",
-          "FRAGILE",
-          "ISLAND",
-          "MIL",
-          "NEUTRAL",
-          "RES",
-          "SMALL"
-        ],
+        "next_step": "Diagnose UnicodeEncodeError and fix exporter null-response handling before any separately authorized retry. Do not rerun the experiment automatically.",
         "past_runs_modified": false,
-        "previous_settlement_audit": {
-          "api_calls": 0,
-          "code_fix": "Descending simultaneous elimination from all ACCEPT/CONDITIONAL candidates; strict conditions and atomic settlement preserved.",
-          "condition_dependencies": {
-            "ECON": [
-              "FOOD"
-            ],
-            "FOOD": [
-              "RES",
-              "ECON"
-            ],
-            "FRAGILE": [
-              "FOOD",
-              "ECON"
-            ],
-            "ISLAND": [
-              "FOOD"
-            ],
-            "MIL": [
-              "FOOD"
-            ],
-            "NEUTRAL": [],
-            "RES": [
-              "FOOD"
-            ],
-            "SMALL": [
-              "FOOD",
-              "ECON"
-            ]
+        "previous_gate": {
+          "api_calls_this_gate": 0,
+          "checks": {
+            "atomic_established_actions": "PASS",
+            "corrected_settlement_replay": "PASS",
+            "country_contracts": "PASS",
+            "decision_audit": "PASS",
+            "derived_event_code_review": "PASS",
+            "eligibility_only_after_eight_turns": "PASS",
+            "evaluator_world_consistency": "PASS",
+            "failed_research_exclusion": "PASS",
+            "fresh_completion": "PASS",
+            "maximum_80_calls": "PASS",
+            "reconstruction": "PASS",
+            "retry_zero": "PASS",
+            "secret_scan": "PASS",
+            "transport_audit": "PASS",
+            "validation_failure_stops": "PASS"
           },
-          "conditional": [
-            "ECON",
-            "FOOD",
-            "FRAGILE",
-            "ISLAND",
-            "MIL",
-            "RES",
-            "SMALL"
-          ],
-          "country_choices": 8,
-          "cyclic_component": [
-            "ECON",
-            "FOOD",
-            "RES"
-          ],
+          "countries_validated": 8,
           "development_status_version": 1,
-          "eight_turn_ready": false,
-          "evaluator_consistency": "PASS",
-          "fix_validation": "PASS",
-          "historical_established_actions": {
-            "NEUTRAL": "PROVIDE_RESOURCE"
-          },
-          "historical_unestablished_actions": {
+          "eight_turn_ready": true,
+          "established_actions": {
             "ECON": "PROVIDE_FUNDS",
             "FOOD": "SUPPORT_LOGISTICS",
             "FRAGILE": "PROTECT_RESERVES",
             "ISLAND": "SUPPORT_LOGISTICS",
             "MIL": "SUPPORT_LOGISTICS",
+            "NEUTRAL": "PROVIDE_RESOURCE",
             "RES": "SUPPORT_LOGISTICS",
             "SMALL": "PROVIDE_RESOURCE"
           },
+          "gate_result": "PASS",
+          "gate_version": 1,
+          "historical_run_api_calls": 10,
           "make_check": {
             "api_calls": 0,
+            "source_digest": "9fd88a5ab5e15f25c98d6bf6853689c61bf55b9c8baae7bc13c1f8f02c044481",
             "status": "PASS",
             "tests": 255
           },
-          "neutral_only_reason": "Least fixed point seeded by ACCEPT incorrectly excluded mutually satisfiable conditional cycles.",
-          "next_step": "Do not advance to 8TURN. Separately authorize a fresh 1TURN validation of the settlement fix; no automatic execution.",
-          "order_dependence": "NONE",
-          "partial_effect_bug": "NONE",
+          "next_step": "8TURN READY: YES. Await separate explicit authorization for one 8TURN worldline, maximum 80 API calls, retry 0. No automatic execution.",
+          "old_algorithm_participants": [
+            "FRAGILE"
+          ],
+          "participants": [
+            "ECON",
+            "FOOD",
+            "FRAGILE",
+            "ISLAND",
+            "MIL",
+            "NEUTRAL",
+            "RES",
+            "SMALL"
+          ],
           "past_runs_modified": false,
-          "regression_tests": {
-            "added": 7,
-            "answer_permutations": 40320,
-            "subsets": 256,
-            "suite": "tests/final/test_simultaneous_conditions.py"
+          "previous_settlement_audit": {
+            "api_calls": 0,
+            "code_fix": "Descending simultaneous elimination from all ACCEPT/CONDITIONAL candidates; strict conditions and atomic settlement preserved.",
+            "condition_dependencies": {
+              "ECON": [
+                "FOOD"
+              ],
+              "FOOD": [
+                "RES",
+                "ECON"
+              ],
+              "FRAGILE": [
+                "FOOD",
+                "ECON"
+              ],
+              "ISLAND": [
+                "FOOD"
+              ],
+              "MIL": [
+                "FOOD"
+              ],
+              "NEUTRAL": [],
+              "RES": [
+                "FOOD"
+              ],
+              "SMALL": [
+                "FOOD",
+                "ECON"
+              ]
+            },
+            "conditional": [
+              "ECON",
+              "FOOD",
+              "FRAGILE",
+              "ISLAND",
+              "MIL",
+              "RES",
+              "SMALL"
+            ],
+            "country_choices": 8,
+            "cyclic_component": [
+              "ECON",
+              "FOOD",
+              "RES"
+            ],
+            "development_status_version": 1,
+            "eight_turn_ready": false,
+            "evaluator_consistency": "PASS",
+            "fix_validation": "PASS",
+            "historical_established_actions": {
+              "NEUTRAL": "PROVIDE_RESOURCE"
+            },
+            "historical_unestablished_actions": {
+              "ECON": "PROVIDE_FUNDS",
+              "FOOD": "SUPPORT_LOGISTICS",
+              "FRAGILE": "PROTECT_RESERVES",
+              "ISLAND": "SUPPORT_LOGISTICS",
+              "MIL": "SUPPORT_LOGISTICS",
+              "RES": "SUPPORT_LOGISTICS",
+              "SMALL": "PROVIDE_RESOURCE"
+            },
+            "make_check": {
+              "api_calls": 0,
+              "status": "PASS",
+              "tests": 255
+            },
+            "neutral_only_reason": "Least fixed point seeded by ACCEPT incorrectly excluded mutually satisfiable conditional cycles.",
+            "next_step": "Do not advance to 8TURN. Separately authorize a fresh 1TURN validation of the settlement fix; no automatic execution.",
+            "order_dependence": "NONE",
+            "partial_effect_bug": "NONE",
+            "past_runs_modified": false,
+            "regression_tests": {
+              "added": 7,
+              "answer_permutations": 40320,
+              "subsets": 256,
+              "suite": "tests/final/test_simultaneous_conditions.py"
+            },
+            "rejected_or_no_action": [],
+            "report": "docs/audits/20260916T233557Z-settlement.md",
+            "research_eligible": false,
+            "run_id": "20260916T233557Z-2a8367e6",
+            "settlement_audit": "FAIL",
+            "unconditional": [
+              "NEUTRAL"
+            ]
           },
-          "rejected_or_no_action": [],
-          "report": "docs/audits/20260916T233557Z-settlement.md",
+          "provenance_note": "Saved complete settlement matches corrected implementation and differs from old algorithm; original run does not carry a signed source-code attestation.",
+          "report": "docs/audits/20260917T001606Z-eight-turn-gate.md",
           "research_eligible": false,
-          "run_id": "20260916T233557Z-2a8367e6",
-          "settlement_audit": "FAIL",
-          "unconditional": [
-            "NEUTRAL"
-          ]
+          "retry": 0,
+          "run_id": "20260917T001606Z-c7bae18f",
+          "run_source_hashes": {
+            "results/probe/20260917T001606Z-c7bae18f/result.audit.json": "1d018822f389a80d06e6fd6b416a2ef1fd717aea7e768899103a0597b6a85878",
+            "results/probe/20260917T001606Z-c7bae18f/result.json": "a20e99596b0918fbb9fb6fbc2b5a6d40190f619e66a6f46825df9b30ae72c16b",
+            "results/probe/20260917T001606Z-c7bae18f/transport.audit.json": "7b682b9d65a5de3b1a29764a8f199c20375588b1f61b4847baf7e7ab79b198ec"
+          },
+          "source_branch": "choice-id-one-turn-probe-20260917",
+          "source_head": "33da81e4bf8695888b19e63818f2eff678f6b28d"
         },
-        "provenance_note": "Saved complete settlement matches corrected implementation and differs from old algorithm; original run does not carry a signed source-code attestation.",
-        "report": "docs/audits/20260917T001606Z-eight-turn-gate.md",
+        "provider_billing_count": null,
+        "provider_received_call_count": null,
+        "publication_diagnosis": {
+          "cause": "Transport failed before any structured model response; model_response is null. Exporter assumes it is a dictionary.",
+          "current_publication_blocked": false,
+          "historical_sync_console_available": false,
+          "location": "homeostasis_core/observability.py:inspect_run failure diagnostic model_response.get",
+          "method": "State-only projection of saved audit through existing public_decision, check_audits, secret_scan, validate_bundle and validate_publication; no source-code or run changes.",
+          "permanent_exporter_fix_applied": false,
+          "reproduced_error": "AttributeError: NoneType object has no attribute get"
+        },
         "research_eligible": false,
-        "retry": 0,
-        "run_id": "20260917T001606Z-c7bae18f",
-        "run_source_hashes": {
-          "results/probe/20260917T001606Z-c7bae18f/result.audit.json": "1d018822f389a80d06e6fd6b416a2ef1fd717aea7e768899103a0597b6a85878",
-          "results/probe/20260917T001606Z-c7bae18f/result.json": "a20e99596b0918fbb9fb6fbc2b5a6d40190f619e66a6f46825df9b30ae72c16b",
-          "results/probe/20260917T001606Z-c7bae18f/transport.audit.json": "7b682b9d65a5de3b1a29764a8f199c20375588b1f61b4847baf7e7ab79b198ec"
-        },
-        "source_branch": "choice-id-one-turn-probe-20260917",
-        "source_head": "33da81e4bf8695888b19e63818f2eff678f6b28d"
-      },
-      "provider_billing_count": null,
-      "provider_received_call_count": null,
-      "publication_diagnosis": {
-        "cause": "Transport failed before any structured model response; model_response is null. Exporter assumes it is a dictionary.",
-        "current_publication_blocked": false,
-        "historical_sync_console_available": false,
-        "location": "homeostasis_core/observability.py:inspect_run failure diagnostic model_response.get",
-        "method": "State-only projection of saved audit through existing public_decision, check_audits, secret_scan, validate_bundle and validate_publication; no source-code or run changes.",
-        "permanent_exporter_fix_applied": false,
-        "reproduced_error": "AttributeError: NoneType object has no attribute get"
+        "run_id": "20260917T004355Z-c09ce05c",
+        "status": "failed"
       },
       "research_eligible": false,
-      "run_id": "20260917T004355Z-c09ce05c",
-      "status": "failed"
-    }
-  }
+      "research_stage": "transport_gate_pending",
+      "root_cause": {
+        "most_likely": "SDK/HTTP configuration value incompatible with header encoding; non-ASCII synthetic credential reproduces UnicodeEncodeError before HTTP mock dispatch",
+        "not_proven": [
+          "Actual credential content at failed run",
+          "Historical environment or dependency difference",
+          "Provider receipt or billing"
+        ],
+        "proven_design_defects": [
+          "No credential/header preflight",
+          "No real SDK HTTP boundary in previous CI",
+          "Null model response crashes exporter",
+          "Insufficient runtime and failure-stage provenance"
+        ],
+        "status": "not_conclusively_identified"
+      },
+      "run_id": "20260917T004355Z-c09ce05c"
+    },
+    "report": "docs/REMOTE_PUBLICATION.md",
+    "requested_fresh_turn": {
+      "api_calls": null,
+      "contracts": "NOT_VERIFIABLE",
+      "decision_audit": "NOT_VERIFIABLE",
+      "evaluator": "NOT_VERIFIABLE",
+      "found": false,
+      "retry": null,
+      "run_id": null,
+      "secret_scan": "NOT_VERIFIABLE",
+      "settlement": "NOT_VERIFIABLE",
+      "status": "NOT_FOUND",
+      "transport_audit": "NOT_VERIFIABLE",
+      "turns_completed": null,
+      "unicode_error_recurrence": "NOT_VERIFIABLE",
+      "world_state": "NOT_VERIFIABLE"
+    },
+    "research_eligible": false,
+    "research_stage": "fresh_turn_evidence_missing",
+    "run_id": "20260917T022330Z-a9d78ed9",
+    "sync_diagnosis": {
+      "historical_console_evidence_available": false,
+      "missing_fresh_turn_cause": "unknown; no new raw run was found, so publication alone cannot explain it",
+      "previous_experiment_finalizer": "prepare only; no commit/push; publication errors swallowed",
+      "previous_sync_command": "did commit/push if successful, but no fetch/remote comparison",
+      "starting_head": "f81da80833c9aac4719134edac9bdf5b1374f054",
+      "starting_head_already_includes_latest_probe": true
+    },
+    "unicode_error_in_latest_probe": false
+  },
+  "research_eligible": false,
+  "research_stage": "eight_turn_ready",
+  "run_id": "20260917T063102Z-2d170cd8"
 }

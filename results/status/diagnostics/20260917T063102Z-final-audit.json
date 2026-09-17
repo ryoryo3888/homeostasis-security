@@ -1,0 +1,316 @@
+{
+  "agent_choices": [
+    {
+      "agent_id": "ECON",
+      "choice": {
+        "amount": 20,
+        "choice_id": "A002",
+        "reason": "食料生産国であるFOODの参加および主権負荷の制限を条件に、自国の強みである物流支援を提供する。"
+      },
+      "contract": "PASS",
+      "materialized_action": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "食料生産国であるFOODの参加および主権負荷の制限を条件に、自国の強みである物流支援を提供する。",
+        "parameters": {
+          "amount": 20,
+          "recipient_type": "world_pool",
+          "resource": "logistics",
+          "target_country": null
+        }
+      }
+    },
+    {
+      "agent_id": "FOOD",
+      "choice": {
+        "amount": 15.0,
+        "choice_id": "A006",
+        "reason": "我が国の食料備蓄には限りがあるため直ちに出す食料拠出は限定的とし、物流支援を中心に貢献する。ただし支援の実効性と負担の公平性を担保するため、ECONおよびRESの同時参加を条件とする。"
+      },
+      "contract": "PASS",
+      "materialized_action": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "我が国の食料備蓄には限りがあるため直ちに出す食料拠出は限定的とし、物流支援を中心に貢献する。ただし支援の実効性と負担の公平性を担保するため、ECONおよびRESの同時参加を条件とする。",
+        "parameters": {
+          "amount": 15.0,
+          "recipient_type": "world_pool",
+          "resource": "logistics",
+          "target_country": null
+        }
+      }
+    },
+    {
+      "agent_id": "FRAGILE",
+      "choice": {
+        "amount": 0,
+        "choice_id": "A002",
+        "reason": "当国は被害を受けた当事国として支援を必要としており、提案の主旨に同意するが、実効性のある緊急食料供給網を維持するため、主要食料支援国（FOOD, ECON）の参加を必須条件とする。"
+      },
+      "contract": "PASS",
+      "materialized_action": {
+        "action_id": "PROTECT_RESERVES",
+        "description": "当国は被害を受けた当事国として支援を必要としており、提案の主旨に同意するが、実効性のある緊急食料供給網を維持するため、主要食料支援国（FOOD, ECON）の参加を必須条件とする。",
+        "parameters": {
+          "amount": 0,
+          "recipient_type": "none",
+          "resource": null,
+          "target_country": null
+        }
+      }
+    },
+    {
+      "agent_id": "ISLAND",
+      "choice": {
+        "amount": 15.0,
+        "choice_id": "A001",
+        "reason": "島嶼国として国際信認と人道支援を重視するが、自国の資源制約を考慮し、主要食料供給国（FOOD）の確実な参加を条件として物流支援を行う。"
+      },
+      "contract": "PASS",
+      "materialized_action": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "島嶼国として国際信認と人道支援を重視するが、自国の資源制約を考慮し、主要食料供給国（FOOD）の確実な参加を条件として物流支援を行う。",
+        "parameters": {
+          "amount": 15.0,
+          "recipient_type": "world_pool",
+          "resource": "logistics",
+          "target_country": null
+        }
+      }
+    },
+    {
+      "agent_id": "MIL",
+      "choice": {
+        "amount": 5.0,
+        "choice_id": "A001",
+        "reason": "当国は高水準の物流・輸送能力を有しており被災国への直接支援が可能であるが、軍事および主権上の自立性を優先するため、主要食料産出国および経済大国の共同参加を必須条件とする。"
+      },
+      "contract": "PASS",
+      "materialized_action": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "当国は高水準の物流・輸送能力を有しており被災国への直接支援が可能であるが、軍事および主権上の自立性を優先するため、主要食料産出国および経済大国の共同参加を必須条件とする。",
+        "parameters": {
+          "amount": 5.0,
+          "recipient_type": "country",
+          "resource": "logistics",
+          "target_country": "FRAGILE"
+        }
+      }
+    },
+    {
+      "agent_id": "NEUTRAL",
+      "choice": {
+        "amount": 15.0,
+        "choice_id": "A001",
+        "reason": "中立国としての外交的信認を維持し、国際社会の食料安定に貢献するため、自国の豊かな食料備蓄から拠出を行う。"
+      },
+      "contract": "PASS",
+      "materialized_action": {
+        "action_id": "PROVIDE_RESOURCE",
+        "description": "中立国としての外交的信認を維持し、国際社会の食料安定に貢献するため、自国の豊かな食料備蓄から拠出を行う。",
+        "parameters": {
+          "amount": 15.0,
+          "recipient_type": "world_pool",
+          "resource": "food",
+          "target_country": null
+        }
+      }
+    },
+    {
+      "agent_id": "RES",
+      "choice": {
+        "amount": 20.0,
+        "choice_id": "A012",
+        "reason": "我が国は主権及び国内エネルギー・物流安定を最重視している。主要食料生産国であるFOODの明確な参加と相互履行が担保されることを条件に、輸送物流支援を提供する。"
+      },
+      "contract": "PASS",
+      "materialized_action": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "我が国は主権及び国内エネルギー・物流安定を最重視している。主要食料生産国であるFOODの明確な参加と相互履行が担保されることを条件に、輸送物流支援を提供する。",
+        "parameters": {
+          "amount": 20.0,
+          "recipient_type": "world_pool",
+          "resource": "logistics",
+          "target_country": null
+        }
+      }
+    },
+    {
+      "agent_id": "SMALL",
+      "choice": {
+        "amount": 5.0,
+        "choice_id": "A007",
+        "reason": "小国としての自国食料安全保障と国内安定を損なわない範囲で国際協力に応じるため、主要食料供給国であるFOODの参加および相互履行を条件とします。"
+      },
+      "contract": "PASS",
+      "materialized_action": {
+        "action_id": "PROVIDE_RESOURCE",
+        "description": "小国としての自国食料安全保障と国内安定を損なわない範囲で国際協力に応じるため、主要食料供給国であるFOODの参加および相互履行を条件とします。",
+        "parameters": {
+          "amount": 5.0,
+          "recipient_type": "world_pool",
+          "resource": "food",
+          "target_country": null
+        }
+      }
+    }
+  ],
+  "api_calls_this_audit": 0,
+  "audit_version": 1,
+  "checks": {
+    "all_10_agent_contracts": "PASS",
+    "atomic_settlement_full_replay": "PASS",
+    "automatic_publication": "PASS",
+    "country_choice_materialization": "PASS",
+    "decision_transport_identity": "PASS",
+    "evaluator_post_settlement_input": "PASS",
+    "reconstruction": "PASS",
+    "request_fingerprints_10": "PASS",
+    "reverse_order_replay": "PASS",
+    "secret_scan": "PASS",
+    "simultaneous_settlement": "PASS",
+    "source_digest_and_ancestor": "PASS",
+    "world_state": "PASS"
+  },
+  "code_changes": "NONE",
+  "condition_unmet": [],
+  "eight_turn_ready": true,
+  "established_actions": {
+    "ECON": "SUPPORT_LOGISTICS",
+    "FOOD": "SUPPORT_LOGISTICS",
+    "FRAGILE": "PROTECT_RESERVES",
+    "ISLAND": "SUPPORT_LOGISTICS",
+    "MIL": "SUPPORT_LOGISTICS",
+    "NEUTRAL": "PROVIDE_RESOURCE",
+    "RES": "SUPPORT_LOGISTICS",
+    "SMALL": "PROVIDE_RESOURCE"
+  },
+  "evidence_chain": [
+    "docs/audits/20260916T233557Z-settlement.md",
+    "docs/audits/20260917T001606Z-eight-turn-gate.md",
+    "results/status/diagnostics/20260917T004355Z-design-diagnosis.json",
+    "20260917T022330Z-a9d78ed9",
+    "20260917T063102Z-2d170cd8"
+  ],
+  "make_check": {
+    "api_calls": 0,
+    "sdk_transport": "PASS",
+    "sdk_transport_tests": 4,
+    "source_digest": "de2f0dd6c22bc9f28faeea577c9941d9b27aaf097a2f77d661ee34dbb3f64cdd",
+    "status": "PASS",
+    "tests": 274,
+    "verification": "Reused successful check for identical source digest; original publication CI independently passed."
+  },
+  "new_tests": "NONE: existing regression coverage and targeted saved-data replay sufficient; no implementation change.",
+  "next_step": "After separate explicit authorization, execute one 8TURN worldline, maximum 80 API calls, retry 0; stop immediately on validation failure. No automatic progression or retry.",
+  "original_publication_ci": {
+    "conclusion": "success",
+    "head": "80939fa385952267ae9c4c661f8450c6b5450b48",
+    "id": 35190257103
+  },
+  "participants": [
+    "ECON",
+    "FOOD",
+    "FRAGILE",
+    "ISLAND",
+    "MIL",
+    "NEUTRAL",
+    "RES",
+    "SMALL"
+  ],
+  "past_runs_modified": false,
+  "publication_receipt": {
+    "api_calls": 0,
+    "branch": "choice-id-one-turn-probe-20260917",
+    "local_head": "80939fa385952267ae9c4c661f8450c6b5450b48",
+    "publication_version": 1,
+    "remote_head": "80939fa385952267ae9c4c661f8450c6b5450b48",
+    "run_id": "20260917T063102Z-2d170cd8",
+    "status": "PASS"
+  },
+  "recommendation": {
+    "additional_probe_required": false,
+    "limits": [
+      "Historical UnicodeEncodeError root cause remains unproven; successful current runtime does not establish historical credential contents.",
+      "Single-turn success does not guarantee all future model outputs or later-turn dynamics.",
+      "One 8TURN worldline is exploratory evidence, not a general causal conclusion.",
+      "Keep runtime and source unchanged; workflow reruns free gate before paid execution.",
+      "Failure remains excluded from research; only complete validated 8TURN may be admitted.",
+      "API count is 10 recorded SDK attempts with returned responses, not an independent provider billing audit."
+    ],
+    "maximum_api_calls": 80,
+    "rationale": "A real 1-call probe and fresh 10-call full-agent turn already exercise corrected credentials, SDK, schemas, settlement and publication. Another identical entrance test adds little evidence; the remaining useful test is multi-turn state-dependent behavior.",
+    "retry": 0
+  },
+  "reconstruction": {
+    "after": 7926.928,
+    "before": 8000.0,
+    "conflict_factor": 0.9134,
+    "domestic_recovery": 0.0,
+    "external_support": 73.072,
+    "recovered": 73.072
+  },
+  "run": {
+    "api_calls": 10,
+    "maximum_api_calls": 10,
+    "mode": "turn",
+    "retry_count": 0,
+    "run_id": "20260917T063102Z-2d170cd8",
+    "status": "success",
+    "turns_completed": 1
+  },
+  "run_id": "20260917T063102Z-2d170cd8",
+  "runtime": {
+    "credential_validation": "PASS",
+    "encoding": {
+      "default": "utf-8",
+      "locale": "utf-8",
+      "stderr": "utf-8",
+      "stdout": "utf-8"
+    },
+    "environment_presence": {
+      "ALL_PROXY": false,
+      "GOOGLE_GEMINI_BASE_URL": false,
+      "GOOGLE_GENAI_USE_ENTERPRISE": false,
+      "GOOGLE_GENAI_USE_VERTEXAI": false,
+      "HTTPS_PROXY": false,
+      "HTTP_PROXY": false,
+      "PYTHONIOENCODING": false,
+      "SSL_CERT_DIR": false,
+      "SSL_CERT_FILE": false
+    },
+    "mode": "turn",
+    "packages": {
+      "certifi": "2026.7.22",
+      "google-genai": "2.20.0",
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5"
+    },
+    "python_version": "3.13.15",
+    "runtime_version": 1,
+    "source_commit": "57970c65081d46246a630be6bb9b5440082b52c6",
+    "source_digest": "de2f0dd6c22bc9f28faeea577c9941d9b27aaf097a2f77d661ee34dbb3f64cdd",
+    "transport_policy": {
+      "api_version": "v1beta",
+      "backend": "gemini-developer-api",
+      "certificate_policy": "certifi",
+      "endpoint": "https://generativelanguage.googleapis.com",
+      "retry": 0,
+      "trust_env": false
+    }
+  },
+  "source_hashes": {
+    "result.audit.json": "37615517b562164368901956713adbb9061cde479b4fbd9912af87a206fe16d3",
+    "result.json": "87bb78310a6dbcb78455d844c73df492ca6d7e3c446a2bdf7351c24e4eb9713f",
+    "runtime.json": "e0597c04ddb2493a7c683f82e72b35bb4f9f599224aab63aec8df0745933915f",
+    "transport.audit.json": "b3798c394078dcf89d20529077fe8cb06916736e88f62ddb77f9ee85b3c36c11"
+  },
+  "unicode_error_recurrence": false,
+  "validation": {
+    "contracts": "PASS",
+    "decision_audit": "PASS",
+    "research_eligible": false,
+    "secret_scan": "PASS",
+    "transport_audit": "PASS"
+  },
+  "verdict": "PASS"
+}

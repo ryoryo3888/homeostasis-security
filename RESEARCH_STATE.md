@@ -2,11 +2,18 @@
 ## 現在地（機械可読stateから生成）
 
 一次情報: [results/status/latest.json](results/status/latest.json)。
-生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `57970c65081d46246a630be6bb9b5440082b52c6`（公開コミット自身ではありません）。
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `80939fa385952267ae9c4c661f8450c6b5450b48`（公開コミット自身ではありません）。
 最新run: `20260917T063102Z-2d170cd8` / turn / success / 完了1TURN / API 10 calls / retry 0。
-無料検証: PASS。次: Separately authorize the next minimal experiment; never automatically advance.
+無料検証: PASS。次: After separate explicit authorization, execute one 8TURN worldline, maximum 80 API calls, retry 0; stop immediately on validation failure. No automatic progression or retry.
 今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
 <!-- MACHINE STATE END -->
+
+## fresh 1TURN最終監査（2026-09-17、最新評価）
+
+`20260917T063102Z-2d170cd8`: PASS。10/10 calls・retry 0。全Agent契約・choice復元・decision/transport監査・secret scan PASS。全8国家が同時決済に参加し、保存状態・復興73.072・Evaluator入力が無料再計算と完全一致。UnicodeEncodeError再発なし。自動公開80939faとCI 35190257103成功を確認。実行元コードと無料checkのsource digest一致。**8TURN READY: YES**。追加probeではなく、別途明示許可後の8TURN 1世界線（最大80 calls、retry 0）を推奨。1TURN自体はresearch対象外。今回のAPI callsは0、原本不変。
+
+[機械可読監査](results/status/diagnostics/20260917T063102Z-final-audit.json)。以下は過去の評価であり、未発見・NOという記録は当時の状態。
+
 
 ## 最新観測・同期導線（2026-09-17）
 
