@@ -1,0 +1,284 @@
+{
+  "decisions": [
+    {
+      "agent_id": "MIL",
+      "agent_type": "country",
+      "amount": 6.0,
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260917T022330Z-a9d78ed9:1:1:MIL:1",
+      "choice_id": "A014",
+      "choice_response": {
+        "amount": 6.0,
+        "choice_id": "A014",
+        "reason": "Provide targeted logistics support to the fragile state to enhance regional stability and build international trust while maintaining strong domestic reserves."
+      },
+      "contract_validation": "PASS",
+      "materialized_action": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "Provide targeted logistics support to the fragile state to enhance regional stability and build international trust while maintaining strong domestic reserves.",
+        "parameters": {
+          "amount": 6.0,
+          "recipient_type": "country",
+          "resource": "logistics",
+          "target_country": "FRAGILE"
+        }
+      },
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "amount": 6.0,
+        "choice_id": "A014",
+        "reason": "Provide targeted logistics support to the fragile state to enhance regional stability and build international trust while maintaining strong domestic reserves."
+      },
+      "public_observation_payload": {
+        "action_choices": [
+          {
+            "action_id": "DEFENSIVE_ESCORT",
+            "choice_id": "A001",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "DISRUPT_LOGISTICS",
+            "choice_id": "A002",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "MEDIATE",
+            "choice_id": "A003",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "NO_ACTION",
+            "choice_id": "A004",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROTECT_RESERVES",
+            "choice_id": "A005",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_FUNDS",
+            "choice_id": "A006",
+            "maximum_amount": 84.0,
+            "recipient_type": "world_pool",
+            "resource": "funds_economy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A007",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A008",
+            "maximum_amount": 68.0,
+            "recipient_type": "world_pool",
+            "resource": "food",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A009",
+            "maximum_amount": 70.0,
+            "recipient_type": "world_pool",
+            "resource": "fossil_fuel",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A010",
+            "maximum_amount": 78.0,
+            "recipient_type": "world_pool",
+            "resource": "grid_storage_resilience",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A011",
+            "maximum_amount": 82.0,
+            "recipient_type": "world_pool",
+            "resource": "nuclear",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A012",
+            "maximum_amount": 55.0,
+            "recipient_type": "world_pool",
+            "resource": "renewable_energy",
+            "target_country": null
+          },
+          {
+            "action_id": "RESTRICT_EXPORTS",
+            "choice_id": "A013",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A014",
+            "maximum_amount": 6.0,
+            "recipient_type": "country",
+            "resource": "logistics",
+            "target_country": "FRAGILE"
+          },
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A015",
+            "maximum_amount": 88.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          },
+          {
+            "action_id": "SUSPEND_SUPPLY",
+            "choice_id": "A016",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          }
+        ]
+      },
+      "reason": "Provide targeted logistics support to the fragile state to enhance regional stability and build international trust while maintaining strong domestic reserves.",
+      "recipient": {
+        "recipient_type": "country",
+        "target_country": "FRAGILE"
+      },
+      "resource": "logistics",
+      "run": 1,
+      "run_id": "20260917T022330Z-a9d78ed9",
+      "schema_version": 2,
+      "structured_response": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "Provide targeted logistics support to the fragile state to enhance regional stability and build international trust while maintaining strong domestic reserves.",
+        "parameters": {
+          "amount": 6.0,
+          "recipient_type": "country",
+          "resource": "logistics",
+          "target_country": "FRAGILE"
+        }
+      },
+      "token_usage": {
+        "input_tokens": 1128,
+        "output_tokens": 41,
+        "total_tokens": 1553
+      },
+      "turn": 1,
+      "validation_status": "PASS"
+    }
+  ],
+  "failure": null,
+  "observation_version": 1,
+  "result": {
+    "include_in_research_aggregation": false,
+    "metadata": {},
+    "summary": {}
+  },
+  "run": {
+    "api_calls": 1,
+    "maximum_api_calls": 1,
+    "mode": "probe",
+    "retry_count": 0,
+    "run_id": "20260917T022330Z-a9d78ed9",
+    "status": "success",
+    "turns_completed": 0
+  },
+  "runtime": {
+    "credential_validation": "PASS",
+    "encoding": {
+      "default": "utf-8",
+      "locale": "utf-8",
+      "stderr": "utf-8",
+      "stdout": "utf-8"
+    },
+    "environment_presence": {
+      "ALL_PROXY": false,
+      "GOOGLE_GEMINI_BASE_URL": false,
+      "GOOGLE_GENAI_USE_ENTERPRISE": false,
+      "GOOGLE_GENAI_USE_VERTEXAI": false,
+      "HTTPS_PROXY": false,
+      "HTTP_PROXY": false,
+      "PYTHONIOENCODING": false,
+      "SSL_CERT_DIR": false,
+      "SSL_CERT_FILE": false
+    },
+    "mode": "probe",
+    "packages": {
+      "certifi": "2026.7.22",
+      "google-genai": "2.20.0",
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5"
+    },
+    "python_version": "3.13.15",
+    "runtime_version": 1,
+    "source_commit": "6afbb8add9867a6a46071e86d4a6046bcada5fb2",
+    "source_digest": "99e1ea3edba35bee22d0f6c068f419cc34f44d5082f2afff19878a72875f4601",
+    "transport_policy": {
+      "api_version": "v1beta",
+      "backend": "gemini-developer-api",
+      "certificate_policy": "certifi",
+      "endpoint": "https://generativelanguage.googleapis.com",
+      "retry": 0,
+      "trust_env": false
+    }
+  },
+  "source_hashes": {
+    "decision.audit.json": "fc87bd92b383cffd09670c8d3419bbb1c142c9f5449ed539c3c99db1ab951432",
+    "result.audit.json": "567f6928b4738ae86d9503dabc0162103cbe5548d4ab4cbc977bcceaae790934",
+    "result.json": "4ea515ae0df83d2a3636bf075400834326be2c05ca06359f2610238a894ee1b9",
+    "runtime.json": "c449a0e2130d57a3c15020b70ee8ce7931c42f5e188c5ad51e1420e8216746f3",
+    "transport.audit.json": "099092cfb217a6d300df20e321585e516a9e87e9fdc58807a537c631396f4ab2"
+  },
+  "transport_audit": {
+    "api_calls": 1,
+    "attempts": [
+      {
+        "agent_id": "MIL",
+        "attempt": 1,
+        "call_id": "20260917T022330Z-a9d78ed9:1:1:MIL:1",
+        "dispatch_stage": "sdk_returned",
+        "provider_acceptance": "unknown",
+        "request_sha256": "b7b9fbb2cfdfa454649cee8ba2f115795c273026b8a3102d76a5c575256904f5",
+        "run": 1,
+        "run_id": "20260917T022330Z-a9d78ed9",
+        "status": "returned",
+        "transport_attempt": 1,
+        "turn": 1
+      }
+    ],
+    "maximum_api_calls": 1,
+    "run_id": "20260917T022330Z-a9d78ed9"
+  },
+  "validation": {
+    "contracts": "PASS",
+    "decision_audit": "PASS",
+    "research_eligible": false,
+    "secret_scan": "PASS",
+    "transport_audit": "PASS"
+  },
+  "worlds": []
+}

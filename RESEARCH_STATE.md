@@ -2,9 +2,9 @@
 ## 現在地（機械可読stateから生成）
 
 一次情報: [results/status/latest.json](results/status/latest.json)。
-生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `237bf855d1710c822247d63fd6807a2624891bec`（公開コミット自身ではありません）。
-最新run: `20260917T004355Z-c09ce05c` / experiment / failed / 完了0TURN / API 1 calls / retry 0。
-無料検証: PASS。次: After separate explicit authorization, run only the existing 1-call probe (retry 0), inspect its audits, then decide whether to authorize a fresh 1TURN. Do not automatically advance to 8TURN.
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `6afbb8add9867a6a46071e86d4a6046bcada5fb2`（公開コミット自身ではありません）。
+最新run: `20260917T022330Z-a9d78ed9` / probe / success / 完了0TURN / API 1 calls / retry 0。
+無料検証: PASS。次: Separately authorize the next minimal experiment; never automatically advance.
 今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
 <!-- MACHINE STATE END -->
 
