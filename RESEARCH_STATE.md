@@ -2,11 +2,18 @@
 ## 現在地（機械可読stateから生成）
 
 一次情報: [results/status/latest.json](results/status/latest.json)。
-生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `59619249a60dfcbefbebc5453d594506e2faddc4`（公開コミット自身ではありません）。
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `f24b78efb43151bdd0dbf2699f331d84cea3148a`（公開コミット自身ではありません）。
 最新run: `20260917T071205Z-fb7f949f` / experiment / failed / 完了2TURN / API 29 calls / retry 0。
-無料検証: PASS。次: Inspect latest failure and pass free checks before separately authorizing a new attempt.
+無料検証: PASS。次: After separate explicit authorization, start a NEW 8TURN worldline on the fixed source, maximum 80 API calls, retry 0, stop on first failure. No checkpoint resume or automatic progression; no extra paid probe/1TURN needed.
 今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
 <!-- MACHINE STATE END -->
+
+## 8TURN run #2 故障診断（2026-09-17、最新評価）
+
+`20260917T071205Z-fb7f949f`: 2TURN完了、29 calls、retry 0。全回答の契約はPASS。TURN3決済で直接援助とpool引出しが受取容量を二重計上しFRAGILE logistics=105となって停止。SMALLは原因Agentではない。汎用的な共有容量配分とfractional上限修正を実装。無料check 283件＋実SDK4件PASS。保存TURN1/2完全一致、TURN3決済/world/復興のcounterfactual PASS、Evaluator未取得は補完しない。失敗runはresearch対象外・原本不変。**8TURN READY: YES（修正版による新runのみ）**。別途許可後、新run_id・最大80 calls・retry 0。resumeと自動進行は禁止。今回API 0。
+
+[診断一次情報](results/status/diagnostics/20260917T071205Z-failure-diagnosis.json) / [詳細](docs/audits/20260917T071205Z-failure-diagnosis.md)。以下は過去時点の記録。
+
 
 ## fresh 1TURN最終監査（2026-09-17、最新評価）
 

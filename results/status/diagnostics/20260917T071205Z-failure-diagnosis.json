@@ -1,0 +1,275 @@
+{
+  "all_29_decisions_valid": true,
+  "allocation_policy": "Deterministic proportional conservative allocation. Released pool reservations are not reallocated; same-turn contributions do not fund withdrawals; outgoing transfers do not expand opening receiver room.",
+  "api_calls_this_work": 0,
+  "conditions_result": {
+    "participants": [
+      "ECON",
+      "FOOD",
+      "FRAGILE",
+      "ISLAND",
+      "MIL",
+      "NEUTRAL",
+      "RES",
+      "SMALL"
+    ],
+    "unmet": []
+  },
+  "counterfactual": {
+    "atomic_settlements": [
+      {
+        "action_id": "PROVIDE_RESOURCE",
+        "agent_id": "ISLAND",
+        "delivered": 10.0,
+        "realized": 10.0,
+        "recipient_type": "world_pool",
+        "requested": 10.0,
+        "resource": "food",
+        "source": "ISLAND",
+        "target_country": null,
+        "unmet": 0.0
+      },
+      {
+        "action_id": "PROVIDE_RESOURCE",
+        "agent_id": "NEUTRAL",
+        "delivered": 15.0,
+        "realized": 15.0,
+        "recipient_type": "world_pool",
+        "requested": 15.0,
+        "resource": "food",
+        "source": "NEUTRAL",
+        "target_country": null,
+        "unmet": 0.0
+      },
+      {
+        "action_id": "PROVIDE_RESOURCE",
+        "agent_id": "RES",
+        "delivered": 15.0,
+        "realized": 15.0,
+        "recipient_type": "world_pool",
+        "requested": 15.0,
+        "resource": "food",
+        "source": "RES",
+        "target_country": null,
+        "unmet": 0.0
+      },
+      {
+        "action_id": "PROVIDE_RESOURCE",
+        "agent_id": "SMALL",
+        "delivered": 10.0,
+        "realized": 10.0,
+        "recipient_type": "world_pool",
+        "requested": 10.0,
+        "resource": "food",
+        "source": "SMALL",
+        "target_country": null,
+        "unmet": 0.0
+      },
+      {
+        "action_id": "PROVIDE_FUNDS",
+        "agent_id": "ECON",
+        "delivered": 10.0,
+        "realized": 10.0,
+        "recipient_type": "country",
+        "requested": 10.0,
+        "resource": "funds_economy",
+        "source": "ECON",
+        "target_country": "FRAGILE",
+        "unmet": 0.0
+      },
+      {
+        "action_id": "DRAW_WORLD_POOL",
+        "agent_id": "FOOD",
+        "delivered": 14.456762749445677,
+        "realized": 14.456762749445677,
+        "recipient_type": "country",
+        "requested": 20.0,
+        "resource": "logistics",
+        "source": "world_pool",
+        "target_country": "FRAGILE",
+        "unmet": 5.5432372505543235
+      },
+      {
+        "action_id": "DRAW_WORLD_POOL",
+        "agent_id": "FRAGILE",
+        "delivered": 47.12904656319291,
+        "realized": 47.12904656319291,
+        "recipient_type": "country",
+        "requested": 65.2,
+        "resource": "logistics",
+        "source": "world_pool",
+        "target_country": "FRAGILE",
+        "unmet": 18.070953436807095
+      },
+      {
+        "action_id": "SUPPORT_LOGISTICS",
+        "agent_id": "MIL",
+        "delivered": 3.614190687361419,
+        "realized": 3.614190687361419,
+        "recipient_type": "country",
+        "requested": 5.0,
+        "resource": "logistics",
+        "source": "MIL",
+        "target_country": "FRAGILE",
+        "unmet": 1.3858093126385809
+      }
+    ],
+    "classification": "offline development evidence only; NOT a completed real TURN3 or research result",
+    "reconstruction": {
+      "after": 6163.5352,
+      "before": 7608.5219,
+      "conflict_factor": 0.8943,
+      "domestic_recovery": 351.0474,
+      "external_support": 1093.9393,
+      "recovered": 1444.9867
+    },
+    "saved_turns_1_2_full_replay": "PASS",
+    "turn3_evaluator": "NOT_REQUESTED_NOT_AVAILABLE",
+    "turn3_settlement_world_reconstruction": "PASS",
+    "turns_4_8_real_answers": "NOT_AVAILABLE",
+    "world": {
+      "conflict_load": 25.283710379,
+      "economy": 68.597710529796,
+      "energy": 59.55625,
+      "environment": 75.766289621,
+      "food": 53.5,
+      "global_homeostasis": 56,
+      "international_trust": 74.63196369179602
+    },
+    "world_pool": {
+      "food": 50.0,
+      "fossil_fuel": 0.0,
+      "funds_economy": 0.0,
+      "grid_storage_resilience": 0.0,
+      "logistics": 38.41419068736141,
+      "nuclear": 0.0,
+      "renewable_energy": 0.0
+    }
+  },
+  "diagnosis_version": 1,
+  "eight_turn_ready": true,
+  "exact_exception_reproduced": "ValueError: atomic settlement produced an out-of-range resource",
+  "exception_source": {
+    "commit": "59619249a60dfcbefbebc5453d594506e2faddc4",
+    "line": 129,
+    "path": "homeostasis_core/feasibility.py",
+    "stack": [
+      "run_gemini_turn",
+      "apply_structured_actions",
+      "settle_atomic_actions"
+    ]
+  },
+  "failure_agent": null,
+  "failure_stage": "atomic_settlement_after_all_country_decisions_before_evaluator",
+  "failure_turn": 3,
+  "fixes": [
+    "Share receiver/resource opening headroom across bilateral aid and pool draws after opening-pool allocation, debit only final realized draws, then admit contributions.",
+    "Preserve physical upper bounds without rounding up in feasible action catalogs."
+  ],
+  "historical_audit": {
+    "contracts": "FAIL",
+    "decision_audit": "PASS",
+    "research_eligible": false,
+    "secret_scan": "PASS",
+    "transport_audit": "PASS"
+  },
+  "historical_run": {
+    "api_calls": 29,
+    "maximum_api_calls": 80,
+    "mode": "experiment",
+    "retry_count": 0,
+    "run_id": "20260917T071205Z-fb7f949f",
+    "status": "failed",
+    "turns_completed": 2
+  },
+  "last_successful_agent": "SMALL",
+  "later_turn_risk": "The same mixed-channel contention can occur on any later turn and any resource; fractional catalog maxima also recur after proportional settlement.",
+  "make_check": {
+    "api_calls": 0,
+    "sdk_transport": "PASS",
+    "sdk_transport_tests": 4,
+    "source_digest": "3103a72a6dd9d4c1e2b2b40b42534460e139d27ba73202c117a14f78171956b2",
+    "status": "PASS",
+    "tests": 283
+  },
+  "maximum_api_calls_next_step": 80,
+  "model_response_valid": true,
+  "next_step": "After separate explicit authorization, start a NEW 8TURN worldline on the fixed source, maximum 80 API calls, retry 0, stop on first failure. No checkpoint resume or automatic progression; no extra paid probe/1TURN needed.",
+  "numeric_proof": {
+    "direct_aid": 5,
+    "headroom": 65.2,
+    "old_closing_before_network": 105,
+    "old_realized_draws": 65.2,
+    "opening": 34.8,
+    "pool_stock": 100,
+    "receiver": "FRAGILE",
+    "requested_draws": 85.2,
+    "resource": "logistics"
+  },
+  "observability_caveat": "Legacy public failure.agent_id identifies the last call, not the source of a later execution exception; legacy contracts FAIL describes failed run admission, while all individual decisions passed. This diagnosis is the corrected failure attribution.",
+  "original_failure_message_saved": false,
+  "past_runs_modified": false,
+  "report": "docs/audits/20260917T071205Z-failure-diagnosis.md",
+  "research_eligible": false,
+  "resume_recommendation": "NO: preserve independent fixed-source worldlines; do not mix pre-fix history with changed settlement or infer missing Evaluator output.",
+  "retry_next_step": 0,
+  "root_cause": "Bilateral transfers and pool withdrawals each independently spent the same receiver/resource opening headroom. Valid individual actions composed to an invalid aggregate.",
+  "run_id": "20260917T071205Z-fb7f949f",
+  "secret_scan": "PASS",
+  "small_materialized_action": {
+    "action_id": "PROVIDE_RESOURCE",
+    "description": "自国の食料・経済基盤を守りつつ協調に対応するため、食料供給能力の高いFOOD国および経済支援能力を持つECON国の同調参加を条件として備蓄食料の一部を提供する。",
+    "parameters": {
+      "amount": 10.0,
+      "recipient_type": "world_pool",
+      "resource": "food",
+      "target_country": null
+    }
+  },
+  "small_response": {
+    "amount": 10.0,
+    "choice_id": "A003",
+    "conditions": {
+      "maximum_sovereignty_burden": 30.0,
+      "mutual_performance": true,
+      "required_countries": [
+        "FOOD",
+        "ECON"
+      ]
+    },
+    "country_id": "SMALL",
+    "perceived_global_effect": 62.5,
+    "proposal_id": "prop-turn3-food-01",
+    "reason": "自国の食料・経済基盤を守りつつ協調に対応するため、食料供給能力の高いFOOD国および経済支援能力を持つECON国の同調参加を条件として備蓄食料の一部を提供する。",
+    "response_id": "CONDITIONAL",
+    "response_label": "条件付きで応じる",
+    "self_interest": 55.0,
+    "sovereignty_burden": 28.0
+  },
+  "source_hashes": {
+    "failure.json": "f1c571a24031811661b5b8011a570d5b419654cb106b171635d96a42a55a23b0",
+    "result.json.checkpoint": "0e1ae6c27d5d40c3923aba60c7b24a2952b6fc6d88ba5232691e59cae0409158",
+    "runtime.json": "4cbc4b6cec77041c20cb0785cbde6b686f1e691e7f0ce240e3e269fe27356130",
+    "transport.audit.json": "db7adfd10807be1141f67854c23305b915f1e9dd227d12b5d35b0b6e00d2f04a"
+  },
+  "tests": {
+    "atomic_order_permutations": 40320,
+    "fixture": "tests/fixtures/settlement_20260917T071205Z.json",
+    "generated_legal_maximum_sets": 200,
+    "input_immutability": "PASS",
+    "invalid_source_overdraft_fail_closed": "PASS",
+    "limits": "Finite deterministic boundary coverage, not exhaustive proof over all continuous states/model outputs.",
+    "new_tests": 9,
+    "receiver_pool_resource_cases": 112,
+    "saved_country_responses": 24,
+    "suite": "tests/final/test_mixed_settlement.py",
+    "synthetic_later_turns": [
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "why_prior_tests_missed": "Initial one-turn pool is empty; prior allocation property tests cover draw/draw rather than mixed direct/draw constraints; saved replay covers only selected states/actions."
+}

@@ -1,6 +1,6 @@
 # ChatGPT直接観測
 
-最初に [開発・監査状態](results/status/development.json) を読む。fresh 1TURN `20260917T063102Z-2d170cd8` は10/10 calls・retry 0で完走し、保存回答の再検証、決済/world/復興/Evaluator一致、送信指紋、source provenance、自動remote公開、CIを確認済み。**8TURN READY: YES**。追加probeは不要と判断。別途明示許可後に1世界線・最大80 calls・retry 0を推奨し、自動進行しない。今回の監査API callsは0。
+最初に [開発・監査状態](results/status/development.json) を読む。最新experiment `20260917T071205Z-fb7f949f` はTURN2完了、29 calls・retry 0で失敗。全29回答はPASSで、SMALLは最後の回答者にすぎない。故障はTURN3決済の受入容量二重計上。保存回答replayで修正確認済み。詳細はdevelopmentのdiagnosis_pathを参照。失敗runはresearch対象外。修正版で新run_idの8TURN 1世界線（最大80 calls、retry 0）を別途明示許可後に推奨。resumeや自動進行は禁止。
 
 続いてこの作業ブランチの [results/status/latest.json](results/status/latest.json) を読む。
 

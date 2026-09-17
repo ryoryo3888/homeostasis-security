@@ -24,8 +24,10 @@ def feasible_actions(country_id,country_states,world_pool,resource_network:Resou
     if not isinstance(resources,Mapping):raise ValueError("country resources are required")
     pool=world_pool or {};links=_effective_links(country_id,resource_network,network_policy)
     result=[]
+    # Never round a physical upper bound upward: a legal maximum must not
+    # exceed opening stock/headroom, even for fractional later-turn states.
     def add(action,recipient,target,resource,maximum):
-        if maximum>0:result.append({"action_id":action,"recipient_type":recipient,"target_country":target,"resource":resource,"maximum_amount":round(float(maximum),8)})
+        if maximum>0:result.append({"action_id":action,"recipient_type":recipient,"target_country":target,"resource":resource,"maximum_amount":float(maximum)})
     # Contributions to the persistent pool do not require a bilateral route, but do
     # require stock and national logistics capacity.
     logistics=float(resources.get("logistics",0))
@@ -91,25 +93,26 @@ def settle_atomic_actions(country_states,intents,world_pool):
         else:bilateral.append(row)
     realized={};all_rows=bilateral+draws+contributions
     for row in all_rows:realized[id(row)]=row["requested"]
-    # Bilateral receiver capacity is shared proportionally. Each country submits
-    # one intent, so source stock was already bounded by the feasibility snapshot.
-    groups={}
-    for row in bilateral:groups.setdefault((row["target_country"],row["resource"]),[]).append(row)
-    for (target,resource),rows in groups.items():
-        capacity=max(0,100-float(states[target]["resources"][resource]));total=math.fsum(x["requested"] for x in rows);scale=min(1,capacity/total) if total else 0
-        for row in rows:realized[id(row)]=row["requested"]*scale
-    # Draws use only opening stock. Contributions made this turn are unavailable
-    # until all withdrawals have settled.
+    # First reserve draws against opening pool stock; same-turn contributions
+    # cannot fund them. This is a deterministic conservative allocation, not a
+    # maximum-flow solver: capacity released below remains in the pool.
     groups={}
     for row in draws:groups.setdefault(row["resource"],[]).append(row)
     for resource,rows in groups.items():
         total=math.fsum(x["requested"] for x in rows);scale=min(1,opening[resource]/total) if total else 0
         for row in rows:realized[id(row)]=row["requested"]*scale
-        target_groups={}
-        for row in rows:target_groups.setdefault(row["target_country"],[]).append(row)
-        for target,target_rows in target_groups.items():
-            capacity=max(0,100-float(states[target]["resources"][resource]));incoming=math.fsum(realized[id(x)] for x in target_rows);target_scale=min(1,capacity/incoming) if incoming else 0
-            for row in target_rows:realized[id(row)]*=target_scale
+    # ALL incoming channels share one receiver/resource headroom. Scaling draws
+    # separately from bilateral aid would spend that headroom twice. Outgoing
+    # transfers do not create same-turn receiver capacity (opening-state rule).
+    receivers={}
+    for row in bilateral+draws:receivers.setdefault((row["target_country"],row["resource"]),[]).append(row)
+    for (target,resource),rows in receivers.items():
+        capacity=max(0,100-float(states[target]["resources"][resource]))
+        incoming=math.fsum(realized[id(x)] for x in rows)
+        scale=min(1,capacity/incoming) if incoming else 0
+        for row in rows:realized[id(row)]*=scale
+    # Debit only final realized withdrawals, after shared receiver allocation.
+    for resource,rows in groups.items():
         pool[resource]-=math.fsum(realized[id(x)] for x in rows)
     # Contributions are added only after withdrawals and share remaining pool room.
     groups={}
