@@ -1,0 +1,871 @@
+{
+  "schema_version": 1,
+  "experiments": [
+    {
+      "schema_version": 1,
+      "created_at": null,
+      "seed": null,
+      "parent_experiment": null,
+      "control_experiment": null,
+      "comparison_group": null,
+      "publication_status": "already_public_reference",
+      "experiment_id": "v1-condition-a-representative",
+      "version": "v1",
+      "title": "V1 条件Aの公開代表worldline",
+      "research_question": "二国間の危機は、どうすれば平衡へ戻れるのか？",
+      "experiment_type": "exploratory",
+      "record_kind": "representative_run",
+      "status": "completed",
+      "conditions": [
+        {
+          "path": "simulation_result_cautious_cautious_law_hotline_run1.json",
+          "pointer": "/agents"
+        },
+        {
+          "path": "simulation_result_cautious_cautious_law_hotline_run1.json",
+          "pointer": "/international_law"
+        },
+        {
+          "path": "simulation_result_cautious_cautious_law_hotline_run1.json",
+          "pointer": "/experiment_condition"
+        }
+      ],
+      "run_count": 1,
+      "worldline_count": 1,
+      "turn_count": 8,
+      "seed_policy": "unknown",
+      "source_artifacts": [
+        {
+          "path": "simulation_result_cautious_cautious_law_hotline_run1.json",
+          "pointer": ""
+        }
+      ],
+      "evidence_artifacts": [
+        {
+          "path": "README.md",
+          "pointer": ""
+        },
+        {
+          "path": "homeostasis-research-layer.js",
+          "pointer": ""
+        }
+      ],
+      "runs": [
+        {
+          "artifact": {
+            "path": "simulation_result_cautious_cautious_law_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": null,
+          "seed_pointer": null
+        }
+      ],
+      "result_summary": null,
+      "known_limits": [
+        "8 TURNの保存済みworldline。seedと生成日時は原JSONに記録されていない。",
+        "比較研究36 runに含まれる同一artifactの別索引であり、追加runとして数えない。",
+        "公開代表選択は研究layerの条件A mappingに基づく。現実国家の予測や因果効果の証明ではない。",
+        "completedは保存済みTURN完了を指す。新しいtransport/contract監査の合格を遡及的に付与しない。"
+      ],
+      "field_evidence": {
+        "experiment_type": [
+          {
+            "path": "README.md",
+            "pointer": ""
+          }
+        ],
+        "research_question": [
+          {
+            "path": "homeostasis-research-layer.js",
+            "pointer": ""
+          }
+        ],
+        "status": [
+          {
+            "path": "simulation_result_cautious_cautious_law_hotline_run1.json",
+            "pointer": "/turn_count"
+          },
+          {
+            "path": "simulation_result_cautious_cautious_law_hotline_run1.json",
+            "pointer": "/results"
+          }
+        ],
+        "conditions": [
+          {
+            "path": "simulation_result_cautious_cautious_law_hotline_run1.json",
+            "pointer": "/agents"
+          },
+          {
+            "path": "simulation_result_cautious_cautious_law_hotline_run1.json",
+            "pointer": "/international_law"
+          },
+          {
+            "path": "simulation_result_cautious_cautious_law_hotline_run1.json",
+            "pointer": "/experiment_condition"
+          }
+        ],
+        "publication_status": [
+          {
+            "path": "homeostasis-research-layer.js",
+            "pointer": ""
+          }
+        ]
+      }
+    },
+    {
+      "schema_version": 1,
+      "created_at": null,
+      "seed": null,
+      "parent_experiment": null,
+      "control_experiment": null,
+      "comparison_group": null,
+      "publication_status": "already_public_reference",
+      "experiment_id": "v1-sixteen-condition-comparison",
+      "version": "v1",
+      "title": "V1 16条件・36 run比較",
+      "research_question": "国家タイプ、国際法、Hotlineの違いが、脅威認知、防衛反応、エスカレーション圧、信頼、回復力にどう関連するか？",
+      "experiment_type": "comparative",
+      "record_kind": "comparison_study",
+      "status": "completed",
+      "conditions": [
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/0"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/1"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/2"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/3"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/4"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/5"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/6"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/7"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/8"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/9"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/10"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/11"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/12"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/13"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/14"
+        },
+        {
+          "path": "summary.json",
+          "pointer": "/conditions/15"
+        }
+      ],
+      "run_count": 36,
+      "worldline_count": 36,
+      "turn_count": 8,
+      "seed_policy": "partially_recorded",
+      "source_artifacts": [
+        {
+          "path": "summary.json",
+          "pointer": ""
+        },
+        {
+          "path": "simulation_result_cautious_cautious_law_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "simulation_result_cautious_cautious_law_hotline_run1_previous_20260830T105924.json",
+          "pointer": ""
+        },
+        {
+          "path": "simulation_result_cautious_cautious_law_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "simulation_result_cautious_cautious_law_hotline_run3.json",
+          "pointer": ""
+        },
+        {
+          "path": "simulation_result_cautious_cautious_law_hotline_run4.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_law_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_law_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_cautious_no_law_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_cautious_no_law_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "simulation_result_cautious_cautious_law_no_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "simulation_result_cautious_cautious_law_no_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "simulation_result_cautious_cautious_law_no_hotline_run3.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_no_law_no_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_no_law_no_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_no_law_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_no_law_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_law_no_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_law_no_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_cautious_no_law_no_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_cautious_no_law_no_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_cautious_law_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_cautious_law_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_cautious_law_no_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_cautious_law_no_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_cautious_no_law_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_cautious_no_law_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_cautious_no_law_no_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_hardliner_cautious_no_law_no_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_cautious_hardliner_law_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_cautious_hardliner_law_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_cautious_hardliner_law_no_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_cautious_hardliner_law_no_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_cautious_hardliner_no_law_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_cautious_hardliner_no_law_hotline_run2.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_cautious_hardliner_no_law_no_hotline_run1.json",
+          "pointer": ""
+        },
+        {
+          "path": "result_cautious_hardliner_no_law_no_hotline_run2.json",
+          "pointer": ""
+        }
+      ],
+      "evidence_artifacts": [
+        {
+          "path": "README.md",
+          "pointer": ""
+        }
+      ],
+      "runs": [
+        {
+          "artifact": {
+            "path": "simulation_result_cautious_cautious_law_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": null,
+          "seed_pointer": null
+        },
+        {
+          "artifact": {
+            "path": "simulation_result_cautious_cautious_law_hotline_run1_previous_20260830T105924.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": null,
+          "seed_pointer": null
+        },
+        {
+          "artifact": {
+            "path": "simulation_result_cautious_cautious_law_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": null,
+          "seed_pointer": null
+        },
+        {
+          "artifact": {
+            "path": "simulation_result_cautious_cautious_law_hotline_run3.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": null,
+          "seed_pointer": null
+        },
+        {
+          "artifact": {
+            "path": "simulation_result_cautious_cautious_law_hotline_run4.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": null,
+          "seed_pointer": null
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_law_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260910,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_law_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260911,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_cautious_no_law_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260910,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_cautious_no_law_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260911,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "simulation_result_cautious_cautious_law_no_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": null,
+          "seed_pointer": null
+        },
+        {
+          "artifact": {
+            "path": "simulation_result_cautious_cautious_law_no_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": null,
+          "seed_pointer": null
+        },
+        {
+          "artifact": {
+            "path": "simulation_result_cautious_cautious_law_no_hotline_run3.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": null,
+          "seed_pointer": null
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_no_law_no_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": null,
+          "seed_pointer": null
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_no_law_no_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": null,
+          "seed_pointer": null
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_no_law_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260912,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_no_law_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260913,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_law_no_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260914,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_law_no_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260915,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_cautious_no_law_no_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260916,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_cautious_no_law_no_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260917,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_cautious_law_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260918,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_cautious_law_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260919,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_cautious_law_no_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260920,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_cautious_law_no_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260921,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_cautious_no_law_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260922,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_cautious_no_law_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260923,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_cautious_no_law_no_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260924,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_hardliner_cautious_no_law_no_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260925,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_cautious_hardliner_law_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260926,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_cautious_hardliner_law_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260927,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_cautious_hardliner_law_no_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260928,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_cautious_hardliner_law_no_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260929,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_cautious_hardliner_no_law_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20260930,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_cautious_hardliner_no_law_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20261001,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_cautious_hardliner_no_law_no_hotline_run1.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20261002,
+          "seed_pointer": "/experiment_metadata/seed"
+        },
+        {
+          "artifact": {
+            "path": "result_cautious_hardliner_no_law_no_hotline_run2.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/results",
+          "turn_count": 8,
+          "seed": 20261003,
+          "seed_pointer": "/experiment_metadata/seed"
+        }
+      ],
+      "result_summary": "保存集計は16条件、合計36 run。各runは8 TURN。比較値はsummary.jsonを参照する。",
+      "known_limits": [
+        "run数は不均等でA=5、D=3、その他=2。探索的・記述的比較で因果効果は断定できない。",
+        "26 runでseedを記録、10 runでは未記録。summary.api_used=falseは集計時のAPI不使用であり、原runのモデル不使用を意味しない。",
+        "代表worldline登録と一部artifactが重複する。Registry件数やrun_countを横断加算しない。",
+        "previousという名前のA原JSONもsummary.conditions[].filesに明示されているため採用。ファイル名だけで履歴除外しない。"
+      ],
+      "field_evidence": {
+        "experiment_type": [
+          {
+            "path": "README.md",
+            "pointer": ""
+          }
+        ],
+        "research_question": [
+          {
+            "path": "README.md",
+            "pointer": ""
+          }
+        ],
+        "status": [
+          {
+            "path": "summary.json",
+            "pointer": "/conditions"
+          }
+        ],
+        "result_summary": [
+          {
+            "path": "summary.json",
+            "pointer": "/conditions"
+          }
+        ],
+        "publication_status": [
+          {
+            "path": "README.md",
+            "pointer": ""
+          }
+        ],
+        "seed_policy": [
+          {
+            "path": "summary.json",
+            "pointer": "/conditions"
+          }
+        ]
+      }
+    },
+    {
+      "schema_version": 1,
+      "created_at": "2026-09-14T22:03:43.193847+00:00",
+      "seed": null,
+      "parent_experiment": null,
+      "control_experiment": null,
+      "comparison_group": null,
+      "publication_status": "already_public_reference",
+      "experiment_id": "v2-first-representative",
+      "version": "v2",
+      "title": "V2 公開代表worldline",
+      "research_question": "国家主権を維持したまま、地球規模の恒常性は成立するのか？",
+      "experiment_type": "unknown",
+      "record_kind": "representative_run",
+      "status": "completed",
+      "conditions": [
+        {
+          "path": "v2_first_run.json",
+          "pointer": "/source_event"
+        },
+        {
+          "path": "v2_first_run.json",
+          "pointer": "/initial_world_state"
+        },
+        {
+          "path": "v2_first_run.json",
+          "pointer": "/metadata"
+        }
+      ],
+      "run_count": 1,
+      "worldline_count": 1,
+      "turn_count": 5,
+      "seed_policy": "unknown",
+      "source_artifacts": [
+        {
+          "path": "v2_first_run.json",
+          "pointer": ""
+        }
+      ],
+      "evidence_artifacts": [
+        {
+          "path": "README.md",
+          "pointer": ""
+        },
+        {
+          "path": "homeostasis-research-layer.js",
+          "pointer": ""
+        }
+      ],
+      "runs": [
+        {
+          "artifact": {
+            "path": "v2_first_run.json",
+            "pointer": ""
+          },
+          "turns_pointer": "/turns",
+          "turn_count": 5,
+          "seed": null,
+          "seed_pointer": null
+        }
+      ],
+      "result_summary": null,
+      "known_limits": [
+        "experiment_typeの正式指定とseedは原artifactにないためunknown/null。",
+        "5 TURNの一世界線であり、一般法則や因果関係は断定しない。",
+        "source_eventはV1第3ターンを記述するが、一意な親run IDは指定されていない。parent_experimentは推測せずnull。",
+        "completedはmetadata.turn_countと保存TURN列の完了を指す。既存の新方式監査へ自動昇格しない。"
+      ],
+      "field_evidence": {
+        "research_question": [
+          {
+            "path": "v2_first_run.json",
+            "pointer": "/research_question"
+          }
+        ],
+        "status": [
+          {
+            "path": "v2_first_run.json",
+            "pointer": "/metadata/turn_count"
+          },
+          {
+            "path": "v2_first_run.json",
+            "pointer": "/final_result"
+          }
+        ],
+        "created_at": [
+          {
+            "path": "v2_first_run.json",
+            "pointer": "/metadata/generated_at_utc"
+          }
+        ],
+        "publication_status": [
+          {
+            "path": "README.md",
+            "pointer": ""
+          },
+          {
+            "path": "homeostasis-research-layer.js",
+            "pointer": ""
+          }
+        ]
+      }
+    }
+  ],
+  "comparison_groups": []
+}

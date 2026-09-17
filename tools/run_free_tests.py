@@ -16,7 +16,7 @@ socket.socket.connect=denied
 socket.create_connection=denied
 loader=unittest.TestLoader()
 suite=unittest.TestSuite()
-for directory,pattern in [('.', 'test_simulation*.py'),('tests/final','test_*.py'),('tests/layout','test_*.py')]:
+for directory,pattern in [('.', 'test_simulation*.py'),('tests/final','test_*.py'),('tests/layout','test_*.py'),('tests/registry','test_*.py')]:
     suite.addTests(loader.discover(directory,pattern=pattern))
 result=unittest.TextTestRunner(verbosity=1).run(suite)
 raise SystemExit(not result.wasSuccessful())

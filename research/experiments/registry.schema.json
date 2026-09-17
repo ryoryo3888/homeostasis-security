@@ -1,0 +1,309 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "artifact_ref": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pointer": {
+          "type": "string",
+          "pattern": "^(|/.*)$"
+        }
+      },
+      "required": [
+        "path",
+        "pointer"
+      ],
+      "additionalProperties": false
+    },
+    "experiment": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "experiment_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,95}$"
+        },
+        "version": {
+          "enum": [
+            "v1",
+            "v2"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "research_question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "experiment_type": {
+          "enum": [
+            "baseline",
+            "replication",
+            "parameter_sweep",
+            "counterfactual",
+            "ablation",
+            "seed_replication",
+            "stress_test",
+            "comparative",
+            "exploratory",
+            "unknown"
+          ]
+        },
+        "record_kind": {
+          "enum": [
+            "formal_research",
+            "representative_run",
+            "comparison_study"
+          ]
+        },
+        "status": {
+          "enum": [
+            "planned",
+            "running",
+            "completed",
+            "failed",
+            "invalidated",
+            "superseded"
+          ]
+        },
+        "created_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifact_ref"
+          }
+        },
+        "run_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "worldline_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "turn_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "seed": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "seed_policy": {
+          "enum": [
+            "unknown",
+            "recorded",
+            "partially_recorded",
+            "not_applicable"
+          ]
+        },
+        "source_artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifact_ref"
+          }
+        },
+        "evidence_artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifact_ref"
+          }
+        },
+        "parent_experiment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "control_experiment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "comparison_group": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_summary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "known_limits": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "publication_status": {
+          "enum": [
+            "registered_only",
+            "approval_requested",
+            "approved_for_slot",
+            "already_public_reference",
+            "withheld"
+          ]
+        },
+        "runs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "artifact": {
+                "$ref": "#/$defs/artifact_ref"
+              },
+              "turns_pointer": {
+                "type": "string",
+                "minLength": 1
+              },
+              "turn_count": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "seed": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "seed_pointer": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "artifact",
+              "turns_pointer",
+              "turn_count",
+              "seed",
+              "seed_pointer"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "field_evidence": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/artifact_ref"
+            }
+          }
+        }
+      },
+      "required": [
+        "schema_version",
+        "experiment_id",
+        "version",
+        "title",
+        "research_question",
+        "experiment_type",
+        "record_kind",
+        "status",
+        "created_at",
+        "conditions",
+        "run_count",
+        "worldline_count",
+        "turn_count",
+        "seed",
+        "seed_policy",
+        "source_artifacts",
+        "evidence_artifacts",
+        "parent_experiment",
+        "control_experiment",
+        "comparison_group",
+        "result_summary",
+        "known_limits",
+        "publication_status",
+        "runs",
+        "field_evidence"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "experiments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/experiment"
+      }
+    },
+    "comparison_groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{0,95}$"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{0,95}$"
+            },
+            "minItems": 2,
+            "uniqueItems": true
+          },
+          "question": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "group_id",
+          "members",
+          "question"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "experiments",
+    "comparison_groups"
+  ],
+  "additionalProperties": false
+}
