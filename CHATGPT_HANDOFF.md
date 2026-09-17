@@ -1,6 +1,8 @@
 # ChatGPT直接観測
 
-最初にこの作業ブランチの [results/status/latest.json](results/status/latest.json) を読む。
+最初に [開発・監査状態](results/status/development.json) と [条件決済監査報告](docs/audits/20260916T233557Z-settlement.md) を読む。保存runは実行成功でも条件決済監査はFAIL。コード修正と無料検証はPASS、8TURN READYはNO。新しい1TURNでの確認が残る。過去runの成功表示をこの監査判定より優先しない。
+
+続いてこの作業ブランチの [results/status/latest.json](results/status/latest.json) を読む。
 
 - Repository: `ryoryo3888/homeostasis-security`
 - Branch: `choice-id-one-turn-probe-20260917`（mainとは異なる）

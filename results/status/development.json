@@ -1,0 +1,86 @@
+{
+  "development_status_version": 1,
+  "run_id": "20260916T233557Z-2a8367e6",
+  "settlement_audit": "FAIL",
+  "fix_validation": "PASS",
+  "api_calls": 0,
+  "country_choices": 8,
+  "unconditional": [
+    "NEUTRAL"
+  ],
+  "conditional": [
+    "ECON",
+    "FOOD",
+    "FRAGILE",
+    "ISLAND",
+    "MIL",
+    "RES",
+    "SMALL"
+  ],
+  "rejected_or_no_action": [],
+  "historical_established_actions": {
+    "NEUTRAL": "PROVIDE_RESOURCE"
+  },
+  "historical_unestablished_actions": {
+    "ECON": "PROVIDE_FUNDS",
+    "FOOD": "SUPPORT_LOGISTICS",
+    "FRAGILE": "PROTECT_RESERVES",
+    "ISLAND": "SUPPORT_LOGISTICS",
+    "MIL": "SUPPORT_LOGISTICS",
+    "RES": "SUPPORT_LOGISTICS",
+    "SMALL": "PROVIDE_RESOURCE"
+  },
+  "neutral_only_reason": "Least fixed point seeded by ACCEPT incorrectly excluded mutually satisfiable conditional cycles.",
+  "condition_dependencies": {
+    "ECON": [
+      "FOOD"
+    ],
+    "FOOD": [
+      "RES",
+      "ECON"
+    ],
+    "FRAGILE": [
+      "FOOD",
+      "ECON"
+    ],
+    "ISLAND": [
+      "FOOD"
+    ],
+    "MIL": [
+      "FOOD"
+    ],
+    "NEUTRAL": [],
+    "RES": [
+      "FOOD"
+    ],
+    "SMALL": [
+      "FOOD",
+      "ECON"
+    ]
+  },
+  "cyclic_component": [
+    "ECON",
+    "FOOD",
+    "RES"
+  ],
+  "order_dependence": "NONE",
+  "partial_effect_bug": "NONE",
+  "evaluator_consistency": "PASS",
+  "code_fix": "Descending simultaneous elimination from all ACCEPT/CONDITIONAL candidates; strict conditions and atomic settlement preserved.",
+  "regression_tests": {
+    "added": 7,
+    "answer_permutations": 40320,
+    "subsets": 256,
+    "suite": "tests/final/test_simultaneous_conditions.py"
+  },
+  "make_check": {
+    "status": "PASS",
+    "tests": 255,
+    "api_calls": 0
+  },
+  "eight_turn_ready": false,
+  "next_step": "Do not advance to 8TURN. Separately authorize a fresh 1TURN validation of the settlement fix; no automatic execution.",
+  "report": "docs/audits/20260916T233557Z-settlement.md",
+  "past_runs_modified": false,
+  "research_eligible": false
+}

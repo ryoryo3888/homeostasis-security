@@ -1,8 +1,94 @@
 {
   "blocked_run_count": 2,
   "branch": "choice-id-one-turn-probe-20260917",
-  "commit": "d33fa36d29f795e611f61e043617cd630e752516",
+  "commit": "6682c32f86450dcc3e98330faa4abfa0770d0001",
   "commit_semantics": "source HEAD at export; source_digest includes uncommitted implementation",
+  "development_status": {
+    "api_calls": 0,
+    "code_fix": "Descending simultaneous elimination from all ACCEPT/CONDITIONAL candidates; strict conditions and atomic settlement preserved.",
+    "condition_dependencies": {
+      "ECON": [
+        "FOOD"
+      ],
+      "FOOD": [
+        "RES",
+        "ECON"
+      ],
+      "FRAGILE": [
+        "FOOD",
+        "ECON"
+      ],
+      "ISLAND": [
+        "FOOD"
+      ],
+      "MIL": [
+        "FOOD"
+      ],
+      "NEUTRAL": [],
+      "RES": [
+        "FOOD"
+      ],
+      "SMALL": [
+        "FOOD",
+        "ECON"
+      ]
+    },
+    "conditional": [
+      "ECON",
+      "FOOD",
+      "FRAGILE",
+      "ISLAND",
+      "MIL",
+      "RES",
+      "SMALL"
+    ],
+    "country_choices": 8,
+    "cyclic_component": [
+      "ECON",
+      "FOOD",
+      "RES"
+    ],
+    "development_status_version": 1,
+    "eight_turn_ready": false,
+    "evaluator_consistency": "PASS",
+    "fix_validation": "PASS",
+    "historical_established_actions": {
+      "NEUTRAL": "PROVIDE_RESOURCE"
+    },
+    "historical_unestablished_actions": {
+      "ECON": "PROVIDE_FUNDS",
+      "FOOD": "SUPPORT_LOGISTICS",
+      "FRAGILE": "PROTECT_RESERVES",
+      "ISLAND": "SUPPORT_LOGISTICS",
+      "MIL": "SUPPORT_LOGISTICS",
+      "RES": "SUPPORT_LOGISTICS",
+      "SMALL": "PROVIDE_RESOURCE"
+    },
+    "make_check": {
+      "api_calls": 0,
+      "status": "PASS",
+      "tests": 255
+    },
+    "neutral_only_reason": "Least fixed point seeded by ACCEPT incorrectly excluded mutually satisfiable conditional cycles.",
+    "next_step": "Do not advance to 8TURN. Separately authorize a fresh 1TURN validation of the settlement fix; no automatic execution.",
+    "order_dependence": "NONE",
+    "partial_effect_bug": "NONE",
+    "past_runs_modified": false,
+    "regression_tests": {
+      "added": 7,
+      "answer_permutations": 40320,
+      "subsets": 256,
+      "suite": "tests/final/test_simultaneous_conditions.py"
+    },
+    "rejected_or_no_action": [],
+    "report": "docs/audits/20260916T233557Z-settlement.md",
+    "research_eligible": false,
+    "run_id": "20260916T233557Z-2a8367e6",
+    "settlement_audit": "FAIL",
+    "unconditional": [
+      "NEUTRAL"
+    ]
+  },
   "history_index": "results/status/indexes/23602aaf3995bd46ab62ee9a869a8d4d756bf6c1aafaa9de015037d81dc81a02.json",
   "history_sha256": "23602aaf3995bd46ab62ee9a869a8d4d756bf6c1aafaa9de015037d81dc81a02",
   "latest": {
@@ -23,9 +109,9 @@
     "status": "success",
     "turns_completed": 1
   },
-  "next_step": "Separately authorize the next minimal experiment; never automatically advance.",
+  "next_step": "Do not advance to 8TURN. Separately authorize a fresh 1TURN validation of the settlement fix; no automatic execution.",
   "publication_api_calls": 0,
-  "research_stage": "minimal_experiment_validation",
+  "research_stage": "settlement_fix_pending_revalidation",
   "result_paths": {
     "decision_audit": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/decisions",
     "failure": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/failure",
@@ -33,9 +119,9 @@
     "transport_audit": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/transport_audit",
     "world_state": "results/status/runs/20260916T233557Z-2a8367e6/ea184ed32a4e2f6aa02ca94c40810eac5d6705718802df8b80b4fb202aed1aeb.json#/worlds"
   },
-  "source_digest": "ba8e90efba411491519931074a6fd20a6f0a6b4fd95a8eb453916a7435fd3270",
+  "source_digest": "b35bef5cdd4ab4f5134e8851935f3772be9eeefe8d072a7e5b39f6cafbd2d7a4",
   "status_version": 1,
-  "updated_at": "2026-09-16T23:38:00.400827+00:00",
+  "updated_at": "2026-09-17T00:02:40.051192+00:00",
   "validation": {
     "contracts": "PASS",
     "decision_audit": "PASS",

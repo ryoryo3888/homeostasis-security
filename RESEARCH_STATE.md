@@ -2,11 +2,15 @@
 ## 現在地（機械可読stateから生成）
 
 一次情報: [results/status/latest.json](results/status/latest.json)。
-生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `d33fa36d29f795e611f61e043617cd630e752516`（公開コミット自身ではありません）。
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `6682c32f86450dcc3e98330faa4abfa0770d0001`（公開コミット自身ではありません）。
 最新run: `20260916T233557Z-2a8367e6` / turn / success / 完了1TURN / API 10 calls / retry 0。
-無料検証: PASS。次: Separately authorize the next minimal experiment; never automatically advance.
+無料検証: PASS。次: Do not advance to 8TURN. Separately authorize a fresh 1TURN validation of the settlement fix; no automatic execution.
 今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
 <!-- MACHINE STATE END -->
+
+## 最新の条件決済監査（2026-09-17）
+
+[機械可読な正式開発状態](results/status/development.json) / [8国家一覧・監査報告](docs/audits/20260916T233557Z-settlement.md)。対象run `20260916T233557Z-2a8367e6` の条件決済監査は **FAIL**。循環条件を除外した実装を修正し、255件の無料テストはPASS。**8TURN READY: NO**。修正版での1TURN確認は別途許可後。既存runは不変で、新たな正式研究結果はない。今回のAPI callsは0。
 
 # HOMEOSTASIS SECURITY — 研究状態
 

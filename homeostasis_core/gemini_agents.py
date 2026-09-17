@@ -215,13 +215,24 @@ def _condition_met(a,available,turn):
     c=a["conditions"]
     amount=a["action"]["parameters"].get("amount",0)
     return set(c.get("required_countries",()))<=available and amount>=c.get("minimum_aid_amount",0) and a["sovereignty_burden"]<=c.get("maximum_sovereignty_burden",100) and turn<=c.get("deadline_turn",turn) and (not c.get("mutual_performance") or len(available)>1)
+def resolve_conditional_participants(answers, turn):
+    """Greatest simultaneous participation set, computed before any mutation.
+
+    Monotone participation conditions allow descending fixed-point elimination.
+    Remove failing candidates together: no execution order or privileged seed
+    is required to admit a mutually consenting cycle. Individual amount, burden
+    and deadline constraints remain mandatory. REJECT never participates.
+    """
+    eligible={c for c,a in answers.items() if a["response_id"] in ("ACCEPT","CONDITIONAL")}
+    while True:
+        remaining={c for c in eligible if answers[c]["response_id"]=="ACCEPT"
+                   or _condition_met(answers[c],eligible,turn)}
+        if remaining==eligible:
+            return eligible
+        eligible=remaining
+
 def apply_structured_actions(country_states,answers,previous_world,damage,turn=1,*,world_pool=None,resource_network=None,network_policy=None):
-    states=json.loads(json.dumps(country_states));eligible={c for c,a in answers.items() if a["response_id"]=="ACCEPT"}
-    changed=True
-    while changed:
-        changed=False
-        for c,a in sorted(answers.items()):
-            if a["response_id"]=="CONDITIONAL" and c not in eligible and _condition_met(a,eligible,turn):eligible.add(c);changed=True
+    states=json.loads(json.dumps(country_states));eligible=resolve_conditional_participants(answers,turn)
     for c in sorted(eligible):validate_action_feasible(c,answers[c]["action"],feasible_actions(c,country_states,world_pool,resource_network,network_policy))
     unmet=sorted(c for c,a in answers.items() if a["response_id"]=="CONDITIONAL" and c not in eligible);counts={k:0 for k in ACTION_IDS};prior=network_policy or {};restricted=set(prior.get("restricted",()));suspended=set(prior.get("suspended",()));disrupted=set(prior.get("disrupted",()))
     intents={}
