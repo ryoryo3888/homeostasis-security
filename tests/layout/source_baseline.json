@@ -1,0 +1,14 @@
+{
+  "baseline_sha": "36d0b8c225214a13e54a88b8b8e6751255b922ce",
+  "legacy_research_sha": "06a4994",
+  "assets": {
+    "dashboard_v1.html": "9d137b942a42836cbba6fb530b76500ded9a780005c2827a4533a172ff9851f1",
+    "dashboard_v2.html": "627223e3bcbf29a552fb0bc07f44929d48b3dc32b548404b8e21f3b73f0c4f58",
+    "preview_v1_unified.html": "9d137b942a42836cbba6fb530b76500ded9a780005c2827a4533a172ff9851f1",
+    "preview_v2_unified.html": "627223e3bcbf29a552fb0bc07f44929d48b3dc32b548404b8e21f3b73f0c4f58",
+    "homeostasis-research-layer.js": "a2314c535aa8df41460e5b20d0d1107f9d395a6c2b5a950453c43e77a652309a",
+    "homeostasis-research-layer.css": "5a1479fa58b7b57aa09b24be282d7b5321901917a4d1c05295274dd759edd1dc",
+    "homeostasis-research-integration.js": "1af5134784e69b291f4201949022e1547d30fe12a30395e2f93cfb57b8e2683e",
+    "homeostasis-ui-system.css": "3e6c9e77a69653da00c0a990d340de68bcbdceff89d2cc462c540790b612e198"
+  }
+}
