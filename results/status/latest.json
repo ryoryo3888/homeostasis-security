@@ -1,7 +1,7 @@
 {
   "blocked_run_count": 2,
   "branch": "choice-id-one-turn-probe-20260917",
-  "commit": "4d04e4eb8b552b140b6f579bc041d3072c26f86f",
+  "commit": "bc6dc1818d476d784bbbadf2bc52c22398aff5bd",
   "commit_semantics": "source HEAD at export; source_digest includes uncommitted implementation",
   "development_status": {
     "analysis_path": "results/status/analyses/20260917T075421Z-11147417/findings.json",
@@ -13,13 +13,14 @@
       "api_calls": 0,
       "sdk_transport": "PASS",
       "sdk_transport_tests": 4,
-      "source_digest": "cd36976dc439b6bb9ead397a65d681c78da2fdd0704b369427e8b7a07778e671",
+      "source_digest": "4a82b9774bd36d0679961af3654b2f93d651d299cd748172df52f30399af2ef6",
       "status": "PASS",
-      "tests": 289
+      "tests": 293
     },
-    "next_creative_priority": "One read-only evidence-linked worldline experience: trajectories, conditional network and requested/realized resource flows.",
+    "next_creative_priority": "Observe first-time, keyboard and screen-reader users; refine density before adding comparison views.",
     "next_research_priority": "Pre-register metric semantics and duplicate-demand/role-ID hypotheses; validate units and model assumptions offline before independent comparisons.",
-    "next_step": "Develop a read-only evidence-linked visual prototype and pre-register the next research comparison. Do not run any paid experiment without separate explicit authorization and budget.",
+    "next_step": "Evaluate the read-only Observatory with first-time and assistive-technology users. Pre-register research comparisons separately; no paid execution is authorized by the UI.",
+    "observatory": "results/status/observatory.json",
     "previous_assessment": {
       "all_29_decisions_valid": true,
       "api_calls_this_work": 0,
@@ -483,7 +484,7 @@
     "status": "success",
     "turns_completed": 8
   },
-  "next_step": "Develop a read-only evidence-linked visual prototype and pre-register the next research comparison. Do not run any paid experiment without separate explicit authorization and budget.",
+  "next_step": "Evaluate the read-only Observatory with first-time and assistive-technology users. Pre-register research comparisons separately; no paid execution is authorized by the UI.",
   "publication_api_calls": 0,
   "research_stage": "first_complete_worldline_analyzed",
   "result_paths": {
@@ -493,9 +494,9 @@
     "transport_audit": "results/status/runs/20260917T075421Z-11147417/e0919357163de85576e395a5fb9128896028140841c6870902d120dc14a5dbf7.json#/transport_audit",
     "world_state": "results/status/runs/20260917T075421Z-11147417/e0919357163de85576e395a5fb9128896028140841c6870902d120dc14a5dbf7.json#/worlds"
   },
-  "source_digest": "cd36976dc439b6bb9ead397a65d681c78da2fdd0704b369427e8b7a07778e671",
+  "source_digest": "4a82b9774bd36d0679961af3654b2f93d651d299cd748172df52f30399af2ef6",
   "status_version": 1,
-  "updated_at": "2026-09-17T08:41:51.129323+00:00",
+  "updated_at": "2026-09-17T09:42:45.237042+00:00",
   "validation": {
     "contracts": "PASS",
     "decision_audit": "PASS",

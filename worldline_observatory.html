@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark"><meta name="description" content="保存された世界線を、現象から判断の証拠まで観測する。HOMEOSTASIS SECURITY WORLDLINE OBSERVATORY">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'">
+  <title>Worldline Observatory · HOMEOSTASIS SECURITY</title>
+  <link rel="stylesheet" href="observatory/style.css">
+  <script type="module" src="observatory/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#turn-controls">観測操作へ移動</a>
+<header class="mast"><a href="README.md" class="brand">HOMEOSTASIS <span>SECURITY</span></a><span class="edition">OBSERVATORY / PHASE 01</span><button id="about-open" class="quiet">この観測について ↗</button></header>
+<main>
+  <section class="intro" aria-labelledby="title"><div><p class="eyebrow">A RECORD OF AN EMERGENT WORLD</p><h1 id="title">Worldline<br><em>Observatory.</em></h1></div><div class="intro-note"><p>ひとつの世界を、<br>深く観測する。</p><span>保存された観測点と国家判断。<br>光の向こうに、根拠がある。</span></div></section>
+  <div id="load-status" role="status">保存された世界線を読み込んでいます。</div>
+  <div id="experience" hidden>
+    <section class="worldline" aria-label="世界状態の軌跡">
+      <div class="section-head"><span class="eyebrow">01 / THE WORLDLINE</span><span class="subtle">観測点を選ぶ · 線は観測点間の接続</span></div>
+      <div class="trajectory-wrap"><div id="trajectory"></div><div class="current-state"><span class="eyebrow">TURN <b id="turn-number"></b></span><h2 id="event-title"></h2><div class="current-metrics" id="current-metrics"></div></div></div>
+      <div class="chart-controls"><div id="metric-legend" class="legend"></div><label>追加指標 <select id="extra-metric"><option value="">なし</option><option value="food">Food</option><option value="energy">Energy</option><option value="economy">Economy</option><option value="environment">Environment</option></select></label></div>
+      <nav id="turn-controls" class="turn-controls" aria-label="観測TURN"><button id="previous" aria-label="前のTURN">←</button><div id="turn-buttons"></div><button id="next" aria-label="次のTURN">→</button></nav>
+      <p id="turn-announcement" class="sr-only" aria-live="polite"></p>
+    </section>
+    <section class="discover" aria-label="観測への入口"><span class="eyebrow">LOOK CLOSER</span><div id="moments"></div></section>
+    <section class="lens" aria-labelledby="lens-title">
+      <div class="section-head"><div><p class="eyebrow">02 / WITHIN THE OBSERVATION</p><h2 id="lens-title">関係を、覗く。</h2></div><div class="tabs" role="tablist" aria-label="観測レンズ"><button role="tab" aria-selected="true" aria-controls="conditions-panel" id="conditions-tab" data-lens="conditions">条件</button><button role="tab" aria-selected="false" aria-controls="flows-panel" id="flows-tab" data-lens="flows" tabindex="-1">資源</button><button role="tab" aria-selected="false" aria-controls="recovery-panel" id="recovery-tab" data-lens="recovery" tabindex="-1">復興</button></div></div>
+      <div id="conditions-panel" role="tabpanel" aria-labelledby="conditions-tab"><div class="network-layout"><div id="network" class="network"></div><aside class="lens-note"><span class="eyebrow">CONDITIONAL DEPENDENCIES</span><h3>参加の条件が、<br>関係をつくる。</h3><p>矢印は「参加を求める国」から「求められる国」へ。国家を選ぶと、判断と条件の内側へ。</p><p class="subtle">配置は識別順の概念図。地理や同盟を表しません。破線の国家は条件不成立。線の太さに強弱の意味はありません。</p><p id="network-summary"></p></aside></div></div>
+      <div id="flows-panel" role="tabpanel" aria-labelledby="flows-tab" hidden><div class="flow-heading"><div><span class="eyebrow">REQUESTED → REALIZED</span><h3>届いた量と、<br>届かなかった量。</h3></div><label>資源 <select id="resource-select"></select></label></div><div id="flow-totals" class="flow-totals"></div><p class="subtle">輪郭＝要求、塗り＝実現、斜線＝未達。同じ資源内の共通尺度。各行を選択して要求者と証拠へ。</p><div id="flows"></div><div class="pool-section"><h3>World pool <span class="subtle">開始 → 決済後 / 容量100</span></h3><p class="subtle">このTURNの拠出は、同じTURNの引出しには使われません。</p><div id="pools"></div></div></div>
+      <div id="recovery-panel" role="tabpanel" aria-labelledby="recovery-tab" hidden><div class="flow-heading"><div><span class="eyebrow">RECONSTRUCTION</span><h3>残る損失。<br>回復する構造。</h3></div><p class="subtle">面積＝初期被害に対する残量<br>棒＝各TURNの回復量（共通尺度）</p></div><div id="recovery"></div><p class="subtle">シナリオ上の生産能力損失（tons）。国内・外部の内訳はモデル式による計上です。農地回復が食料生産へ加算される経路は現モデルにありません。</p></div>
+    </section>
+    <section class="depth" aria-label="研究として読む"><div class="section-head"><p class="eyebrow">03 / THE EVIDENCE</p><span class="subtle">必要な深さまで。</span></div><details><summary>数値として読む <span>WORLD STATE</span></summary><div id="numeric-state"></div></details><details><summary>提案と評価を読む <span>PROPOSAL / EVALUATOR</span></summary><div id="narratives"></div></details><details><summary>このeventの生成根拠 <span>EVENT DERIVATION</span></summary><div id="event-evidence"></div></details></section>
+    <footer><div><span class="brand">HOMEOSTASIS <span>SECURITY</span></span><p>科学によって構造をつくり、芸術によってその構造を知覚可能にする。</p></div><div id="run-meta"></div></footer>
+  </div>
+</main>
+<dialog id="evidence-dialog" aria-labelledby="evidence-title"><div class="dialog-head"><span class="eyebrow">DECISION OBSERVATORY</span><button class="close" data-close aria-label="証拠を閉じる">閉じる ×</button></div><div id="evidence-content"></div></dialog>
+<dialog id="about-dialog" aria-labelledby="about-title"><div class="dialog-head"><span class="eyebrow">READING THIS WORLD</span><button class="close" data-close aria-label="説明を閉じる">閉じる ×</button></div><h2 id="about-title">現象から、根拠へ。</h2><p>保存された1本のworldlineを観測するread-only作品です。ここで新しい実験やAPI呼出しは行いません。</p><p>TURNボタンで時点を選び、条件・資源・復興を切り替え、国家や流れを選択して証拠へ進めます。キーボードではTabで移動、Enterで選択、Escで閉じます。レンズは左右矢印でも切り替えられます。</p><p>観測点は離散値です。線は点を結ぶ補助線で、連続測定ではありません。自動再生・架空の地理・音はありません。Homeostasisの円は面積が0〜100の値に比例し、心拍ではありません。</p><p>実行成功は世界の改善を意味しません。正規化されたモデル指標であり、実在国家の予測ではありません。n=1から一般因果は断定しません。</p><p><a href="DESIGN_RESEARCH_PRINCIPLES.md">Design / Research Principles ↗</a> · <a href="docs/CREATIVE_RESEARCH_ROADMAP.md">表示契約と研究上の限界 ↗</a> · <a href="https://github.com/ryoryo3888/homeostasis-security/blob/choice-id-one-turn-probe-20260917/dashboard_v2.html">既存Dashboard（repository） ↗</a></p></dialog>
+<noscript><p>この観測画面にはJavaScriptが必要です。<a href="docs/research/20260917T075421Z-11147417-analysis.md">解析報告を読む</a>。</p></noscript>
+</body></html>

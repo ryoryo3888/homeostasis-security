@@ -11,3 +11,6 @@ results/research/*/
 results/status/**/.publish-*
 .env
 .env.*
+
+# Reproducible static exhibit build.
+dist/

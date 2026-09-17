@@ -1,5 +1,7 @@
 # ChatGPT直接観測
 
+可視観測の新入口: [WORLDLINE OBSERVATORY](worldline_observatory.html)。保存済み8TURNのみを読む。表示契約・検証・制限は [Phase 1設計](docs/WORLDLINE_OBSERVATORY.md)、機械可読評価は [observatory status](results/status/observatory.json)。GitHub上のHTMLはソース表示。体験にはlocalhost/静的HTTPS配信を使う。
+
 最初に [開発・研究状態](results/status/development.json) を読む。最初の完全worldline `20260917T075421Z-11147417` は8TURN・80 calls・retry 0、research eligibility true。[解析](docs/research/20260917T075421Z-11147417-analysis.md)、[機械可読timeline](results/status/analyses/20260917T075421Z-11147417/timeline.json)、[観測/解釈/仮説](results/status/analyses/20260917T075421Z-11147417/findings.json) を保存し、全8TURN再計算は一致。次の判断には [正式創造原則](DESIGN_RESEARCH_PRINCIPLES.md) と [実装評価](docs/CREATIVE_RESEARCH_ROADMAP.md) を使う。今回は解析API 0。次は無料の可視化試作と比較研究の事前登録で、有料実験は別途許可前に実行しない。
 
 続いてこの作業ブランチの [results/status/latest.json](results/status/latest.json) を読む。

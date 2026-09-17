@@ -1,0 +1,67 @@
+{
+  "observatory_version": 1,
+  "phase": 1,
+  "status": "READY",
+  "run_id": "20260917T075421Z-11147417",
+  "entry": "worldline_observatory.html",
+  "design_authority": [
+    "DESIGN_RESEARCH_PRINCIPLES.md",
+    "docs/CREATIVE_RESEARCH_ROADMAP.md"
+  ],
+  "design_review": "docs/WORLDLINE_OBSERVATORY.md",
+  "config": "observatory/config.json",
+  "api_calls_this_work": 0,
+  "read_only": true,
+  "raw_run_hashes_unchanged": true,
+  "existing_dashboard_unchanged": true,
+  "view_model": "observatory/view-model.js",
+  "source_digest": "4a82b9774bd36d0679961af3654b2f93d651d299cd748172df52f30399af2ef6",
+  "verification": {
+    "make_check": "PASS",
+    "tests": 293,
+    "sdk_transport_tests": 4,
+    "frontend_assertions": 236,
+    "frontend": "PASS",
+    "build": "PASS",
+    "secret_scan": "PASS",
+    "widths_tested": [
+      320,
+      390,
+      1440
+    ],
+    "all_lenses_tested": true,
+    "reduced_motion": "PASS",
+    "ci_workflow": ".github/workflows/free-check.yml"
+  },
+  "quality": {
+    "data_fidelity": "PASS: hash-pinned timeline, catalog tuple and amount checks, atomic amounts, evidence pointers.",
+    "research_integrity": "PASS: immutable saved evidence, public final reasons, discrete observations, n=1 limitation.",
+    "interaction_clarity": "IMPLEMENTED: turn, lens, agent, choice, conditions, action and source depth; novice usability untested.",
+    "visual_coherence": "REVIEWED: common scales, restrained palette, typographic hierarchy, no decorative flows.",
+    "artistic_distinctiveness": "SELF-ASSESSMENT: shortage and dependency structures supply the visual material; audience assessment pending.",
+    "engineering_quality": "PASS: pure projection, DOM controller, static allowlist build, no SDK or simulation imports.",
+    "accessibility": "PARTIAL VALIDATION: responsive widths, keyboard focus, native dialogs, reduced motion and numeric alternatives; actual screen-reader user testing pending.",
+    "future_extensibility": "Reusable primitives and data-derived moments; multi-worldline comparison not implemented."
+  },
+  "hero_moments": [
+    {
+      "turn": 4,
+      "phenomenon": "same-target requests",
+      "requesters": 7,
+      "requested": 350,
+      "realized": 50,
+      "unmet": 300
+    },
+    {
+      "turn": 6,
+      "agent": "SMALL",
+      "phenomenon": "condition unsatisfied"
+    },
+    {
+      "turn": 8,
+      "phenomenon": "previous donors draw to self"
+    }
+  ],
+  "next_improvement": "Observe first-time, keyboard and screen-reader users; refine density before adding comparison views.",
+  "hosting": "Serve repository or dist/observatory over localhost or HTTPS. GitHub HTML source view is not a deployed interactive site."
+}

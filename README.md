@@ -196,3 +196,13 @@ probeでは `decision.audit.json` に送信前・回答取得後・検証後を�
 - [Design / Research Principles](DESIGN_RESEARCH_PRINCIPLES.md): 技術・研究・UI/UX・社会実装の判断基準。
 - [最初の完全8TURN解析](docs/research/20260917T075421Z-11147417-analysis.md) / [全TURN資料](docs/research/20260917T075421Z-11147417-turns.md) / [machine timeline](results/status/analyses/20260917T075421Z-11147417/timeline.json)。
 - [原則の現状評価とvisual primitives](docs/CREATIVE_RESEARCH_ROADMAP.md)。新方式の単一worldlineであり、以下の既存16条件研究とは別系列。
+
+## WORLDLINE OBSERVATORY — Phase 1
+
+[Worldline Observatory](worldline_observatory.html) は、保存済みの最初の完全8TURNを観測する新しいread-only入口です。既存Dashboardとは独立しています。軌跡 → 条件・資源・復興 → 国家判断 → choiceと原本の証拠へ進めます。
+
+ローカルでは `python3 -m http.server 8000 --bind 127.0.0.1` を実行し、`http://127.0.0.1:8000/worldline_observatory.html` を開きます。ファイルを直接開く方式ではfetchとSHA-256検証が動かないため、localhostまたはHTTPSを使用します。APIキーは不要です。
+
+`make observatory-check` はChromiumによる保存済みデータ・操作・画面幅の検証、`make observatory-build` はsecret scan済みの静的成果物を `dist/observatory/` に生成します。buildは公開や実験を自動実行しません。GitHubのHTMLファイル閲覧はソース表示です。体験はlocalhostまたはbuildをHTTPS静的ホストに配置して利用します。
+
+設計・表示契約・品質評価: [Observatory Phase 1](docs/WORLDLINE_OBSERVATORY.md)。研究上の基準は [Design / Research Principles](DESIGN_RESEARCH_PRINCIPLES.md) を参照してください。

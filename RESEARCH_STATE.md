@@ -2,9 +2,9 @@
 ## 現在地（機械可読stateから生成）
 
 一次情報: [results/status/latest.json](results/status/latest.json)。
-生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `4d04e4eb8b552b140b6f579bc041d3072c26f86f`（公開コミット自身ではありません）。
+生成時branch: `choice-id-one-turn-probe-20260917` / ソースcommit: `bc6dc1818d476d784bbbadf2bc52c22398aff5bd`（公開コミット自身ではありません）。
 最新run: `20260917T075421Z-11147417` / experiment / success / 完了8TURN / API 80 calls / retry 0。
-無料検証: PASS。次: Develop a read-only evidence-linked visual prototype and pre-register the next research comparison. Do not run any paid experiment without separate explicit authorization and budget.
+無料検証: PASS。次: Evaluate the read-only Observatory with first-time and assistive-technology users. Pre-register research comparisons separately; no paid execution is authorized by the UI.
 今回の観測ファイル生成によるGemini API calls: 0。以下の既存文章は時点ごとの研究記録であり、現在地はこの欄を優先します。
 <!-- MACHINE STATE END -->
 
@@ -124,3 +124,7 @@ fresh修正版1TURN `20260917T001606Z-c7bae18f` は10/10 calls・retry 0で完�
 保存済みtransportとcheckpointによる実消費は2 calls（調整機関成功＋最初の国家ECON失敗）、retry 0。ECONはCONDITIONAL / conditions={} を返した。choice A005、資金10.0（FRAGILE向け、上限11.9）は有効。旧送信schemaのconditionsは単なるobjectで空を許したが、PythonはCONDITIONALに非空の実行条件を要求していた。理由文にある中立機関の監督は現在の環境契約で判定できず、勝手に成立扱いしない。
 
 条件型・国ID・数値範囲をschemaへ定義し、response ID/labelとconditionsの整合をanyOfで拘束。構造化できない必須条件はREJECTと公開理由で表現する。元回答を受諾へ変換せず、choice-IDと数量の厳格検証を維持。失敗記録は改変せずrejectedに隔離。修正中API calls 0、SDK設定構築と疑似回答による無料テストのみ。新schemaの実API受理・全国家の回答は未検証で、次回の別途明示許可された1TURNで確認する。
+
+## WORLDLINE OBSERVATORY Phase 1
+
+保存済み完全worldlineを読む新入口 [`worldline_observatory.html`](worldline_observatory.html) を追加。軌跡・条件依存・requested/realized/unmet・world pool・復興・choice→action→証拠へアクセスできる。既存Dashboardと原本は不変。この工程のGemini API callsは0。[機械可読品質評価](results/status/observatory.json)、[設計と制限](docs/WORLDLINE_OBSERVATORY.md)。次は初見・キーボード・読上げの利用者検証。新しい実験の許可や8TURNへの自動進行を意味しない。

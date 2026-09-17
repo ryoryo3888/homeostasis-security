@@ -22,3 +22,9 @@ verify-status:
 	HOMEOSTASIS_OFFLINE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$(CURDIR)/tools/offline:$(CURDIR)" $(PYTHON) -B tools/publish_status.py --verify
 sync-status:
 	$(PYTHON) -B tools/publish_status.py --complete
+
+.PHONY: observatory-check observatory-build
+observatory-check:
+	$(PYTHON) -B tools/observatory_frontend_check.py
+observatory-build:
+	HOMEOSTASIS_OFFLINE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$(CURDIR)/tools/offline:$(CURDIR)" $(PYTHON) -B tools/build_observatory.py

@@ -16,6 +16,14 @@ jobs:
         run: make check
       - name: Verify public observation files and publication gate
         run: make verify-status
+      - name: Real browser observatory checks (saved data only)
+        run: make observatory-check
+      - name: Build sanitized read-only observatory
+        run: make observatory-build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: worldline-observatory
+          path: dist/observatory/
       - uses: actions/upload-artifact@v4
         if: always()
         with:
