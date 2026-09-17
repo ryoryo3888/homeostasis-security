@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "baseline_sha": "231fde90d6e6f0734e28ed820c28251dce236e8e",
+  "baseline_sha": "c9b436f9271b71804e27f30b72c6d057b271bdd6",
   "public_origin": "https://ryoryo3888.github.io/homeostasis-security",
   "viewports": [{"name":"desktop","width":1440,"height":1000},{"name":"ipad","width":1024,"height":1366}],
   "versions": {
