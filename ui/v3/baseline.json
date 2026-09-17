@@ -1,0 +1,642 @@
+{
+  "schema_version": 1,
+  "version": "v3",
+  "visual_baseline": "candidate",
+  "artifact_class": "synthetic_baseline",
+  "formal_worldline": null,
+  "turn": null,
+  "research_eligible": false,
+  "states": [
+    {
+      "id": "MIL",
+      "label": "A",
+      "resources": {
+        "food": {
+          "stock": 68,
+          "demand": 18,
+          "production_capacity": 12,
+          "unit": "food_unit",
+          "account_id": "MIL:food",
+          "capacity_id": "MIL:produce:food"
+        },
+        "energy": {
+          "stock": 70,
+          "demand": 22,
+          "production_capacity": 20,
+          "unit": "energy_unit",
+          "account_id": "MIL:energy",
+          "capacity_id": "MIL:produce:energy"
+        }
+      }
+    },
+    {
+      "id": "RES",
+      "label": "B",
+      "resources": {
+        "food": {
+          "stock": 72,
+          "demand": 16,
+          "production_capacity": 20,
+          "unit": "food_unit",
+          "account_id": "RES:food",
+          "capacity_id": "RES:produce:food"
+        },
+        "energy": {
+          "stock": 96,
+          "demand": 18,
+          "production_capacity": 26,
+          "unit": "energy_unit",
+          "account_id": "RES:energy",
+          "capacity_id": "RES:produce:energy"
+        }
+      }
+    },
+    {
+      "id": "FOOD",
+      "label": "C",
+      "resources": {
+        "food": {
+          "stock": 42,
+          "demand": 20,
+          "production_capacity": 10,
+          "unit": "food_unit",
+          "account_id": "FOOD:food",
+          "capacity_id": "FOOD:produce:food"
+        },
+        "energy": {
+          "stock": 58,
+          "demand": 16,
+          "production_capacity": 10,
+          "unit": "energy_unit",
+          "account_id": "FOOD:energy",
+          "capacity_id": "FOOD:produce:energy"
+        }
+      }
+    },
+    {
+      "id": "SMALL",
+      "label": "D",
+      "resources": {
+        "food": {
+          "stock": 58,
+          "demand": 12,
+          "production_capacity": 14,
+          "unit": "food_unit",
+          "account_id": "SMALL:food",
+          "capacity_id": "SMALL:produce:food"
+        },
+        "energy": {
+          "stock": 48,
+          "demand": 10,
+          "production_capacity": 8,
+          "unit": "energy_unit",
+          "account_id": "SMALL:energy",
+          "capacity_id": "SMALL:produce:energy"
+        }
+      }
+    },
+    {
+      "id": "ISLAND",
+      "label": "E",
+      "resources": {
+        "food": {
+          "stock": 50,
+          "demand": 14,
+          "production_capacity": 18,
+          "unit": "food_unit",
+          "account_id": "ISLAND:food",
+          "capacity_id": "ISLAND:produce:food"
+        },
+        "energy": {
+          "stock": 42,
+          "demand": 14,
+          "production_capacity": 20,
+          "unit": "energy_unit",
+          "account_id": "ISLAND:energy",
+          "capacity_id": "ISLAND:produce:energy"
+        }
+      }
+    },
+    {
+      "id": "ECON",
+      "label": "F",
+      "resources": {
+        "food": {
+          "stock": 75,
+          "demand": 22,
+          "production_capacity": 16,
+          "unit": "food_unit",
+          "account_id": "ECON:food",
+          "capacity_id": "ECON:produce:food"
+        },
+        "energy": {
+          "stock": 65,
+          "demand": 26,
+          "production_capacity": 24,
+          "unit": "energy_unit",
+          "account_id": "ECON:energy",
+          "capacity_id": "ECON:produce:energy"
+        }
+      }
+    },
+    {
+      "id": "FRAGILE",
+      "label": "G",
+      "resources": {
+        "food": {
+          "stock": 35,
+          "demand": 15,
+          "production_capacity": 8,
+          "unit": "food_unit",
+          "account_id": "FRAGILE:food",
+          "capacity_id": "FRAGILE:produce:food"
+        },
+        "energy": {
+          "stock": 32,
+          "demand": 12,
+          "production_capacity": 6,
+          "unit": "energy_unit",
+          "account_id": "FRAGILE:energy",
+          "capacity_id": "FRAGILE:produce:energy"
+        }
+      }
+    },
+    {
+      "id": "NEUTRAL",
+      "label": "H",
+      "resources": {
+        "food": {
+          "stock": 88,
+          "demand": 16,
+          "production_capacity": 22,
+          "unit": "food_unit",
+          "account_id": "NEUTRAL:food",
+          "capacity_id": "NEUTRAL:produce:food"
+        },
+        "energy": {
+          "stock": 62,
+          "demand": 16,
+          "production_capacity": 18,
+          "unit": "energy_unit",
+          "account_id": "NEUTRAL:energy",
+          "capacity_id": "NEUTRAL:produce:energy"
+        }
+      }
+    }
+  ],
+  "resources": [
+    {
+      "id": "food",
+      "unit": "food_unit"
+    },
+    {
+      "id": "energy",
+      "unit": "energy_unit"
+    }
+  ],
+  "routes": [
+    {
+      "id": "MIL-forward",
+      "source": "MIL",
+      "target": "RES",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 6,
+      "delay": 1,
+      "available": true,
+      "shared_group": "corridor-0"
+    },
+    {
+      "id": "MIL-reverse",
+      "source": "MIL",
+      "target": "NEUTRAL",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 6,
+      "delay": 1,
+      "available": true,
+      "shared_group": "corridor-0"
+    },
+    {
+      "id": "RES-forward",
+      "source": "RES",
+      "target": "FOOD",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 8,
+      "delay": 2,
+      "available": true,
+      "shared_group": "corridor-1"
+    },
+    {
+      "id": "RES-reverse",
+      "source": "RES",
+      "target": "MIL",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 8,
+      "delay": 2,
+      "available": true,
+      "shared_group": "corridor-1"
+    },
+    {
+      "id": "FOOD-forward",
+      "source": "FOOD",
+      "target": "SMALL",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 10,
+      "delay": 1,
+      "available": true,
+      "shared_group": "corridor-2"
+    },
+    {
+      "id": "FOOD-reverse",
+      "source": "FOOD",
+      "target": "RES",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 10,
+      "delay": 1,
+      "available": true,
+      "shared_group": "corridor-2"
+    },
+    {
+      "id": "SMALL-forward",
+      "source": "SMALL",
+      "target": "ISLAND",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 6,
+      "delay": 2,
+      "available": true,
+      "shared_group": "corridor-3"
+    },
+    {
+      "id": "SMALL-reverse",
+      "source": "SMALL",
+      "target": "FOOD",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 6,
+      "delay": 2,
+      "available": true,
+      "shared_group": "corridor-3"
+    },
+    {
+      "id": "ISLAND-forward",
+      "source": "ISLAND",
+      "target": "ECON",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 8,
+      "delay": 1,
+      "available": true,
+      "shared_group": "corridor-0"
+    },
+    {
+      "id": "ISLAND-reverse",
+      "source": "ISLAND",
+      "target": "SMALL",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 8,
+      "delay": 1,
+      "available": true,
+      "shared_group": "corridor-0"
+    },
+    {
+      "id": "ECON-forward",
+      "source": "ECON",
+      "target": "FRAGILE",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 10,
+      "delay": 2,
+      "available": true,
+      "shared_group": "corridor-1"
+    },
+    {
+      "id": "ECON-reverse",
+      "source": "ECON",
+      "target": "ISLAND",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 10,
+      "delay": 2,
+      "available": true,
+      "shared_group": "corridor-1"
+    },
+    {
+      "id": "FRAGILE-forward",
+      "source": "FRAGILE",
+      "target": "NEUTRAL",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 6,
+      "delay": 1,
+      "available": true,
+      "shared_group": "corridor-2"
+    },
+    {
+      "id": "FRAGILE-reverse",
+      "source": "FRAGILE",
+      "target": "ECON",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 6,
+      "delay": 1,
+      "available": true,
+      "shared_group": "corridor-2"
+    },
+    {
+      "id": "NEUTRAL-forward",
+      "source": "NEUTRAL",
+      "target": "MIL",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 8,
+      "delay": 2,
+      "available": true,
+      "shared_group": "corridor-3"
+    },
+    {
+      "id": "NEUTRAL-reverse",
+      "source": "NEUTRAL",
+      "target": "FRAGILE",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 8,
+      "delay": 2,
+      "available": true,
+      "shared_group": "corridor-3"
+    },
+    {
+      "id": "MIL-cross",
+      "source": "MIL",
+      "target": "SMALL",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 8,
+      "delay": 2,
+      "available": true,
+      "shared_group": "corridor-0"
+    },
+    {
+      "id": "SMALL-cross",
+      "source": "SMALL",
+      "target": "FRAGILE",
+      "resources": [
+        "food",
+        "energy"
+      ],
+      "capacity": 8,
+      "delay": 2,
+      "available": true,
+      "shared_group": "corridor-3"
+    }
+  ],
+  "shared_capacities": [
+    {
+      "group_id": "corridor-0",
+      "capacity": 16,
+      "unit": "transport_unit_per_turn",
+      "provenance": {
+        "kind": "synthetic_assumption",
+        "source": "V3 phase-three structural test design; no real logistics statistics",
+        "reason": "Finite shared service budget for comparing common-infrastructure exposure; no scheduled damage."
+      }
+    },
+    {
+      "group_id": "corridor-1",
+      "capacity": 18,
+      "unit": "transport_unit_per_turn",
+      "provenance": {
+        "kind": "synthetic_assumption",
+        "source": "V3 phase-three structural test design; no real logistics statistics",
+        "reason": "Finite shared service budget for comparing common-infrastructure exposure; no scheduled damage."
+      }
+    },
+    {
+      "group_id": "corridor-2",
+      "capacity": 20,
+      "unit": "transport_unit_per_turn",
+      "provenance": {
+        "kind": "synthetic_assumption",
+        "source": "V3 phase-three structural test design; no real logistics statistics",
+        "reason": "Finite shared service budget for comparing common-infrastructure exposure; no scheduled damage."
+      }
+    },
+    {
+      "group_id": "corridor-3",
+      "capacity": 22,
+      "unit": "transport_unit_per_turn",
+      "provenance": {
+        "kind": "synthetic_assumption",
+        "source": "V3 phase-three structural test design; no real logistics statistics",
+        "reason": "Finite shared service budget for comparing common-infrastructure exposure; no scheduled damage."
+      }
+    }
+  ],
+  "production_dependencies": [
+    {
+      "dependency_id": "MIL-food-energy",
+      "producer_state": "MIL",
+      "production_capacity_id": "MIL:produce:food",
+      "output_resource": "food",
+      "input_resource": "energy",
+      "input_unit": "energy_unit",
+      "output_unit": "food_unit",
+      "required_input": 1,
+      "output_batch": 2,
+      "relationship": "required_input_per_output_batch",
+      "output_delay": 1,
+      "provenance": {
+        "kind": "synthetic_assumption",
+        "source": "V3 phase-three structural test design; no real logistics statistics",
+        "reason": "One energy model unit required per two food output units; synthetic input relation for tracing resource-to-production influence, not an industrial coefficient or production execution."
+      }
+    },
+    {
+      "dependency_id": "RES-food-energy",
+      "producer_state": "RES",
+      "production_capacity_id": "RES:produce:food",
+      "output_resource": "food",
+      "input_resource": "energy",
+      "input_unit": "energy_unit",
+      "output_unit": "food_unit",
+      "required_input": 1,
+      "output_batch": 2,
+      "relationship": "required_input_per_output_batch",
+      "output_delay": 1,
+      "provenance": {
+        "kind": "synthetic_assumption",
+        "source": "V3 phase-three structural test design; no real logistics statistics",
+        "reason": "One energy model unit required per two food output units; synthetic input relation for tracing resource-to-production influence, not an industrial coefficient or production execution."
+      }
+    },
+    {
+      "dependency_id": "FOOD-food-energy",
+      "producer_state": "FOOD",
+      "production_capacity_id": "FOOD:produce:food",
+      "output_resource": "food",
+      "input_resource": "energy",
+      "input_unit": "energy_unit",
+      "output_unit": "food_unit",
+      "required_input": 1,
+      "output_batch": 2,
+      "relationship": "required_input_per_output_batch",
+      "output_delay": 1,
+      "provenance": {
+        "kind": "synthetic_assumption",
+        "source": "V3 phase-three structural test design; no real logistics statistics",
+        "reason": "One energy model unit required per two food output units; synthetic input relation for tracing resource-to-production influence, not an industrial coefficient or production execution."
+      }
+    },
+    {
+      "dependency_id": "SMALL-food-energy",
+      "producer_state": "SMALL",
+      "production_capacity_id": "SMALL:produce:food",
+      "output_resource": "food",
+      "input_resource": "energy",
+      "input_unit": "energy_unit",
+      "output_unit": "food_unit",
+      "required_input": 1,
+      "output_batch": 2,
+      "relationship": "required_input_per_output_batch",
+      "output_delay": 1,
+      "provenance": {
+        "kind": "synthetic_assumption",
+        "source": "V3 phase-three structural test design; no real logistics statistics",
+        "reason": "One energy model unit required per two food output units; synthetic input relation for tracing resource-to-production influence, not an industrial coefficient or production execution."
+      }
+    },
+    {
+      "dependency_id": "ISLAND-food-energy",
+      "producer_state": "ISLAND",
+      "production_capacity_id": "ISLAND:produce:food",
+      "output_resource": "food",
+      "input_resource": "energy",
+      "input_unit": "energy_unit",
+      "output_unit": "food_unit",
+      "required_input": 1,
+      "output_batch": 2,
+      "relationship": "required_input_per_output_batch",
+      "output_delay": 1,
+      "provenance": {
+        "kind": "synthetic_assumption",
+        "source": "V3 phase-three structural test design; no real logistics statistics",
+        "reason": "One energy model unit required per two food output units; synthetic input relation for tracing resource-to-production influence, not an industrial coefficient or production execution."
+      }
+    },
+    {
+      "dependency_id": "ECON-food-energy",
+      "producer_state": "ECON",
+      "production_capacity_id": "ECON:produce:food",
+      "output_resource": "food",
+      "input_resource": "energy",
+      "input_unit": "energy_unit",
+      "output_unit": "food_unit",
+      "required_input": 1,
+      "output_batch": 2,
+      "relationship": "required_input_per_output_batch",
+      "output_delay": 1,
+      "provenance": {
+        "kind": "synthetic_assumption",
+        "source": "V3 phase-three structural test design; no real logistics statistics",
+        "reason": "One energy model unit required per two food output units; synthetic input relation for tracing resource-to-production influence, not an industrial coefficient or production execution."
+      }
+    },
+    {
+      "dependency_id": "FRAGILE-food-energy",
+      "producer_state": "FRAGILE",
+      "production_capacity_id": "FRAGILE:produce:food",
+      "output_resource": "food",
+      "input_resource": "energy",
+      "input_unit": "energy_unit",
+      "output_unit": "food_unit",
+      "required_input": 1,
+      "output_batch": 2,
+      "relationship": "required_input_per_output_batch",
+      "output_delay": 1,
+      "provenance": {
+        "kind": "synthetic_assumption",
+        "source": "V3 phase-three structural test design; no real logistics statistics",
+        "reason": "One energy model unit required per two food output units; synthetic input relation for tracing resource-to-production influence, not an industrial coefficient or production execution."
+      }
+    },
+    {
+      "dependency_id": "NEUTRAL-food-energy",
+      "producer_state": "NEUTRAL",
+      "production_capacity_id": "NEUTRAL:produce:food",
+      "output_resource": "food",
+      "input_resource": "energy",
+      "input_unit": "energy_unit",
+      "output_unit": "food_unit",
+      "required_input": 1,
+      "output_batch": 2,
+      "relationship": "required_input_per_output_batch",
+      "output_delay": 1,
+      "provenance": {
+        "kind": "synthetic_assumption",
+        "source": "V3 phase-three structural test design; no real logistics statistics",
+        "reason": "One energy model unit required per two food output units; synthetic input relation for tracing resource-to-production influence, not an industrial coefficient or production execution."
+      }
+    }
+  ],
+  "scales": {
+    "food": 88,
+    "energy": 96
+  },
+  "measurements": {
+    "essential_fulfillment": null,
+    "shortage": null,
+    "in_transit": null
+  },
+  "provenance": {
+    "baseline": {
+      "path": "scenarios/v3/synthetic_baseline.json",
+      "canonical_sha256": "1e59d0b69c643b39f30413e3ed5b9b3ba25f3124dca28518fad5e9b68ab45566",
+      "file_sha256": "02cea20adcad73a91120fe1a2fac41a493f48e7ca290287d6d6b7f544b64cbfd"
+    },
+    "network": {
+      "path": "scenarios/v3/synthetic_network.json",
+      "canonical_sha256": "8f341e91d2aa1653ac985040dacdb382eef8c768b4f863e2bbc25345b9599cec",
+      "file_sha256": "f32a319c5a1867f08234f8f182de39155361cec1f013518e43b26fda1bc013f7"
+    }
+  }
+}
