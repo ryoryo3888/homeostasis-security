@@ -123,3 +123,8 @@ current public generation paths and rendered text, including hidden evidence.
 Historical reports/fixtures are not rewritten. Content/evidence labels remain.
 The public baseline is reacquired after Pages deployment; the release record is
 `docs/architecture/meta_copy_release.json`. V3 implementation remains unstarted.
+
+The sanitized public baseline was reacquired from Pages at commit
+**c9b436f9271b71804e27f30b72c6d057b271bdd6** (source revision `231fde9`). Both desktop/iPad
+and all 12 TURN states match the verified candidate. The earlier copy-bearing
+baseline is historical evidence only, not the current visual target.
