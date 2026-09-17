@@ -1,7 +1,7 @@
 {
   "blocked_run_count": 2,
   "branch": "choice-id-one-turn-probe-20260917",
-  "commit": "45e278593945588d18a081000ba75473f2662154",
+  "commit": "57970c65081d46246a630be6bb9b5440082b52c6",
   "commit_semantics": "source HEAD at export; source_digest includes uncommitted implementation",
   "development_status": {
     "api_calls_this_work": 0,
@@ -334,39 +334,39 @@
     },
     "unicode_error_in_latest_probe": false
   },
-  "history_index": "results/status/indexes/a1c3f2a227e8a5ef23d697261442b348830692c2842f621ce58f4e05fea214f8.json",
-  "history_sha256": "a1c3f2a227e8a5ef23d697261442b348830692c2842f621ce58f4e05fea214f8",
+  "history_index": "results/status/indexes/b66731d07c0e8aa328423e354c9d175e7eb006187db3ffee0a963f52284241df.json",
+  "history_sha256": "b66731d07c0e8aa328423e354c9d175e7eb006187db3ffee0a963f52284241df",
   "latest": {
     "experiment": "results/status/runs/20260917T004355Z-c09ce05c/7739f6d132db41adbf2b926cda9051116e3320ca80bda38a9934e8eae1a040f9.json",
     "failed_or_rejected": "results/status/runs/20260917T004355Z-c09ce05c/7739f6d132db41adbf2b926cda9051116e3320ca80bda38a9934e8eae1a040f9.json",
     "probe": "results/status/runs/20260917T022330Z-a9d78ed9/f3925d6eab55cb2948c4788225013a0609baf144a821784c23f687a399de894f.json",
     "successful_research": null,
-    "turn": "results/status/runs/20260917T001606Z-c7bae18f/a480e8585b112ddb2c8e577cb4cb5035f23d00ded1123938a9dc587385b9baf6.json"
+    "turn": "results/status/runs/20260917T063102Z-2d170cd8/89f00fe78329259fcf7331b50f85c9a1a5160bb779eaac998aa0a1da87f0ba88.json"
   },
   "latest_blocked_run": null,
-  "latest_observed_run": "20260917T022330Z-a9d78ed9",
+  "latest_observed_run": "20260917T063102Z-2d170cd8",
   "latest_run": {
-    "api_calls": 1,
-    "maximum_api_calls": 1,
-    "mode": "probe",
+    "api_calls": 10,
+    "maximum_api_calls": 10,
+    "mode": "turn",
     "retry_count": 0,
-    "run_id": "20260917T022330Z-a9d78ed9",
+    "run_id": "20260917T063102Z-2d170cd8",
     "status": "success",
-    "turns_completed": 0
+    "turns_completed": 1
   },
-  "next_step": "Locate the saved fresh 1TURN run_id/path and validate its settlement and Evaluator evidence. Do not rerun any experiment or advance to 8TURN automatically.",
+  "next_step": "Separately authorize the next minimal experiment; never automatically advance.",
   "publication_api_calls": 0,
-  "research_stage": "fresh_turn_evidence_missing",
+  "research_stage": "minimal_experiment_validation",
   "result_paths": {
-    "decision_audit": "results/status/runs/20260917T022330Z-a9d78ed9/f3925d6eab55cb2948c4788225013a0609baf144a821784c23f687a399de894f.json#/decisions",
-    "failure": "results/status/runs/20260917T022330Z-a9d78ed9/f3925d6eab55cb2948c4788225013a0609baf144a821784c23f687a399de894f.json#/failure",
-    "result": "results/status/runs/20260917T022330Z-a9d78ed9/f3925d6eab55cb2948c4788225013a0609baf144a821784c23f687a399de894f.json#/result",
-    "transport_audit": "results/status/runs/20260917T022330Z-a9d78ed9/f3925d6eab55cb2948c4788225013a0609baf144a821784c23f687a399de894f.json#/transport_audit",
-    "world_state": "results/status/runs/20260917T022330Z-a9d78ed9/f3925d6eab55cb2948c4788225013a0609baf144a821784c23f687a399de894f.json#/worlds"
+    "decision_audit": "results/status/runs/20260917T063102Z-2d170cd8/89f00fe78329259fcf7331b50f85c9a1a5160bb779eaac998aa0a1da87f0ba88.json#/decisions",
+    "failure": "results/status/runs/20260917T063102Z-2d170cd8/89f00fe78329259fcf7331b50f85c9a1a5160bb779eaac998aa0a1da87f0ba88.json#/failure",
+    "result": "results/status/runs/20260917T063102Z-2d170cd8/89f00fe78329259fcf7331b50f85c9a1a5160bb779eaac998aa0a1da87f0ba88.json#/result",
+    "transport_audit": "results/status/runs/20260917T063102Z-2d170cd8/89f00fe78329259fcf7331b50f85c9a1a5160bb779eaac998aa0a1da87f0ba88.json#/transport_audit",
+    "world_state": "results/status/runs/20260917T063102Z-2d170cd8/89f00fe78329259fcf7331b50f85c9a1a5160bb779eaac998aa0a1da87f0ba88.json#/worlds"
   },
   "source_digest": "de2f0dd6c22bc9f28faeea577c9941d9b27aaf097a2f77d661ee34dbb3f64cdd",
   "status_version": 1,
-  "updated_at": "2026-09-17T06:18:21.237104+00:00",
+  "updated_at": "2026-09-17T06:32:04.711793+00:00",
   "validation": {
     "contracts": "PASS",
     "decision_audit": "PASS",

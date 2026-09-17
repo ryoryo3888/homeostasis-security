@@ -1,0 +1,5744 @@
+{
+  "decisions": [
+    {
+      "agent_id": "地球調整機関",
+      "agent_type": "coordinator",
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260917T063102Z-2d170cd8:1:1:地球調整機関:1",
+      "choice_response": null,
+      "contract_validation": "PASS",
+      "materialized_action": null,
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "predicted_global_effect": 65,
+        "predicted_sovereignty_burden": 25,
+        "proposal_id": "PROP-20260917-001",
+        "proposal_type": "食料援助",
+        "reason": "A国のミサイル着弾に伴いB国の民間農地で年間8000トンの米生産能力が喪失したため、影響を受けた地域への緊急食料提供および供給網補填を提案する。",
+        "requested_action": "加盟国は食料備蓄から計8000トン相当の食料拠出および輸送支援の可否を検討し、受入条件または拒否の意向を含めて回答すること。"
+      },
+      "public_observation_payload": {
+        "response_contract": {
+          "exact_fields": [
+            "proposal_id",
+            "proposal_type",
+            "reason",
+            "predicted_global_effect",
+            "predicted_sovereignty_burden",
+            "requested_action"
+          ],
+          "proposal_type": [
+            "食料援助",
+            "仲裁",
+            "制裁提案",
+            "資源再配分",
+            "緊急協定",
+            "停戦提案",
+            "復興支援"
+          ],
+          "scores": "numbers 0..100",
+          "text": "non-empty"
+        }
+      },
+      "run": 1,
+      "run_id": "20260917T063102Z-2d170cd8",
+      "schema_version": 2,
+      "structured_response": {
+        "predicted_global_effect": 65,
+        "predicted_sovereignty_burden": 25,
+        "proposal_id": "PROP-20260917-001",
+        "proposal_type": "食料援助",
+        "reason": "A国のミサイル着弾に伴いB国の民間農地で年間8000トンの米生産能力が喪失したため、影響を受けた地域への緊急食料提供および供給網補填を提案する。",
+        "requested_action": "加盟国は食料備蓄から計8000トン相当の食料拠出および輸送支援の可否を検討し、受入条件または拒否の意向を含めて回答すること。"
+      },
+      "token_usage": {
+        "input_tokens": 555,
+        "output_tokens": 148,
+        "total_tokens": 1436
+      },
+      "turn": 1,
+      "validation_status": "PASS"
+    },
+    {
+      "agent_id": "ECON",
+      "agent_type": "country",
+      "amount": 20,
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260917T063102Z-2d170cd8:1:1:ECON:2",
+      "choice_id": "A002",
+      "choice_response": {
+        "amount": 20,
+        "choice_id": "A002",
+        "reason": "食料生産国であるFOODの参加および主権負荷の制限を条件に、自国の強みである物流支援を提供する。"
+      },
+      "contract_validation": "PASS",
+      "materialized_action": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "食料生産国であるFOODの参加および主権負荷の制限を条件に、自国の強みである物流支援を提供する。",
+        "parameters": {
+          "amount": 20,
+          "recipient_type": "world_pool",
+          "resource": "logistics",
+          "target_country": null
+        }
+      },
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "amount": 20,
+        "choice_id": "A002",
+        "conditions": {
+          "maximum_sovereignty_burden": 30,
+          "required_countries": [
+            "FOOD"
+          ]
+        },
+        "country_id": "ECON",
+        "perceived_global_effect": 65,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "食料生産国であるFOODの参加および主権負荷の制限を条件に、自国の強みである物流支援を提供する。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 65,
+        "sovereignty_burden": 20
+      },
+      "public_observation_payload": {
+        "action_choices": [
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A001",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A002",
+            "maximum_amount": 94.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          },
+          {
+            "action_id": "PROTECT_RESERVES",
+            "choice_id": "A003",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "NO_ACTION",
+            "choice_id": "A004",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_FUNDS",
+            "choice_id": "A005",
+            "maximum_amount": 11.9,
+            "recipient_type": "country",
+            "resource": "funds_economy",
+            "target_country": "FRAGILE"
+          },
+          {
+            "action_id": "MEDIATE",
+            "choice_id": "A006",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "DISRUPT_LOGISTICS",
+            "choice_id": "A007",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A008",
+            "maximum_amount": 65.0,
+            "recipient_type": "world_pool",
+            "resource": "fossil_fuel",
+            "target_country": null
+          },
+          {
+            "action_id": "DEFENSIVE_ESCORT",
+            "choice_id": "A009",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A010",
+            "maximum_amount": 7.65,
+            "recipient_type": "country",
+            "resource": "food",
+            "target_country": "FOOD"
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A011",
+            "maximum_amount": 90.0,
+            "recipient_type": "world_pool",
+            "resource": "grid_storage_resilience",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A012",
+            "maximum_amount": 75.0,
+            "recipient_type": "world_pool",
+            "resource": "food",
+            "target_country": null
+          },
+          {
+            "action_id": "SUSPEND_SUPPLY",
+            "choice_id": "A013",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A014",
+            "maximum_amount": 84.0,
+            "recipient_type": "world_pool",
+            "resource": "nuclear",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_FUNDS",
+            "choice_id": "A015",
+            "maximum_amount": 94.0,
+            "recipient_type": "world_pool",
+            "resource": "funds_economy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A016",
+            "maximum_amount": 86.0,
+            "recipient_type": "world_pool",
+            "resource": "renewable_energy",
+            "target_country": null
+          },
+          {
+            "action_id": "RESTRICT_EXPORTS",
+            "choice_id": "A017",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          }
+        ],
+        "allowed_country_ids": [
+          "ECON",
+          "FOOD",
+          "FRAGILE",
+          "ISLAND",
+          "MIL",
+          "NEUTRAL",
+          "RES",
+          "SMALL"
+        ],
+        "response_contract": {
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "ACCEPT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "受け入れる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "required_countries"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "minimum_aid_amount"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "maximum_sovereignty_burden"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "mutual_performance"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "deadline_turn"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "response_id": {
+                  "enum": [
+                    "CONDITIONAL"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "条件付きで応じる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "REJECT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "拒否する"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          ],
+          "properties": {
+            "amount": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "choice_id": {
+              "enum": [
+                "A001",
+                "A002",
+                "A003",
+                "A004",
+                "A005",
+                "A006",
+                "A007",
+                "A008",
+                "A009",
+                "A010",
+                "A011",
+                "A012",
+                "A013",
+                "A014",
+                "A015",
+                "A016",
+                "A017"
+              ],
+              "type": "string"
+            },
+            "conditions": {
+              "additionalProperties": false,
+              "properties": {
+                "deadline_turn": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "maximum_sovereignty_burden": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "minimum_aid_amount": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "mutual_performance": {
+                  "type": "boolean"
+                },
+                "required_countries": {
+                  "items": {
+                    "enum": [
+                      "ECON",
+                      "FOOD",
+                      "FRAGILE",
+                      "ISLAND",
+                      "MIL",
+                      "NEUTRAL",
+                      "RES",
+                      "SMALL"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "country_id": {
+              "enum": [
+                "ECON"
+              ],
+              "type": "string"
+            },
+            "perceived_global_effect": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "proposal_id": {
+              "enum": [
+                "PROP-20260917-001"
+              ],
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "response_id": {
+              "enum": [
+                "ACCEPT",
+                "CONDITIONAL",
+                "REJECT"
+              ],
+              "type": "string"
+            },
+            "response_label": {
+              "enum": [
+                "受け入れる",
+                "条件付きで応じる",
+                "拒否する"
+              ],
+              "type": "string"
+            },
+            "self_interest": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "sovereignty_burden": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "country_id",
+            "proposal_id",
+            "response_id",
+            "response_label",
+            "reason",
+            "conditions",
+            "self_interest",
+            "sovereignty_burden",
+            "perceived_global_effect",
+            "choice_id",
+            "amount"
+          ],
+          "type": "object"
+        }
+      },
+      "reason": "食料生産国であるFOODの参加および主権負荷の制限を条件に、自国の強みである物流支援を提供する。",
+      "recipient": {
+        "recipient_type": "world_pool",
+        "target_country": null
+      },
+      "resource": "logistics",
+      "run": 1,
+      "run_id": "20260917T063102Z-2d170cd8",
+      "schema_version": 2,
+      "structured_response": {
+        "action": {
+          "action_id": "SUPPORT_LOGISTICS",
+          "description": "食料生産国であるFOODの参加および主権負荷の制限を条件に、自国の強みである物流支援を提供する。",
+          "parameters": {
+            "amount": 20,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          }
+        },
+        "conditions": {
+          "maximum_sovereignty_burden": 30,
+          "required_countries": [
+            "FOOD"
+          ]
+        },
+        "country_id": "ECON",
+        "perceived_global_effect": 65,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "食料生産国であるFOODの参加および主権負荷の制限を条件に、自国の強みである物流支援を提供する。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 65,
+        "sovereignty_burden": 20
+      },
+      "token_usage": {
+        "input_tokens": 3506,
+        "output_tokens": 132,
+        "total_tokens": 4683
+      },
+      "turn": 1,
+      "validation_status": "PASS"
+    },
+    {
+      "agent_id": "FOOD",
+      "agent_type": "country",
+      "amount": 15.0,
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260917T063102Z-2d170cd8:1:1:FOOD:3",
+      "choice_id": "A006",
+      "choice_response": {
+        "amount": 15.0,
+        "choice_id": "A006",
+        "reason": "我が国の食料備蓄には限りがあるため直ちに出す食料拠出は限定的とし、物流支援を中心に貢献する。ただし支援の実効性と負担の公平性を担保するため、ECONおよびRESの同時参加を条件とする。"
+      },
+      "contract_validation": "PASS",
+      "materialized_action": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "我が国の食料備蓄には限りがあるため直ちに出す食料拠出は限定的とし、物流支援を中心に貢献する。ただし支援の実効性と負担の公平性を担保するため、ECONおよびRESの同時参加を条件とする。",
+        "parameters": {
+          "amount": 15.0,
+          "recipient_type": "world_pool",
+          "resource": "logistics",
+          "target_country": null
+        }
+      },
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "amount": 15.0,
+        "choice_id": "A006",
+        "conditions": {
+          "mutual_performance": true,
+          "required_countries": [
+            "ECON",
+            "RES"
+          ]
+        },
+        "country_id": "FOOD",
+        "perceived_global_effect": 65.0,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "我が国の食料備蓄には限りがあるため直ちに出す食料拠出は限定的とし、物流支援を中心に貢献する。ただし支援の実効性と負担の公平性を担保するため、ECONおよびRESの同時参加を条件とする。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 55.0,
+        "sovereignty_burden": 20.0
+      },
+      "public_observation_payload": {
+        "action_choices": [
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A001",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROTECT_RESERVES",
+            "choice_id": "A002",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_FUNDS",
+            "choice_id": "A003",
+            "maximum_amount": 70.0,
+            "recipient_type": "world_pool",
+            "resource": "funds_economy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A004",
+            "maximum_amount": 60.0,
+            "recipient_type": "world_pool",
+            "resource": "renewable_energy",
+            "target_country": null
+          },
+          {
+            "action_id": "DEFENSIVE_ESCORT",
+            "choice_id": "A005",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A006",
+            "maximum_amount": 74.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          },
+          {
+            "action_id": "NO_ACTION",
+            "choice_id": "A007",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A008",
+            "maximum_amount": 42.0,
+            "recipient_type": "world_pool",
+            "resource": "food",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A009",
+            "maximum_amount": 58.0,
+            "recipient_type": "world_pool",
+            "resource": "fossil_fuel",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A010",
+            "maximum_amount": 45.0,
+            "recipient_type": "world_pool",
+            "resource": "nuclear",
+            "target_country": null
+          },
+          {
+            "action_id": "MEDIATE",
+            "choice_id": "A011",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A012",
+            "maximum_amount": 64.0,
+            "recipient_type": "world_pool",
+            "resource": "grid_storage_resilience",
+            "target_country": null
+          },
+          {
+            "action_id": "DISRUPT_LOGISTICS",
+            "choice_id": "A013",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          }
+        ],
+        "allowed_country_ids": [
+          "ECON",
+          "FOOD",
+          "FRAGILE",
+          "ISLAND",
+          "MIL",
+          "NEUTRAL",
+          "RES",
+          "SMALL"
+        ],
+        "response_contract": {
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "properties": {
+                "conditions": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "required_countries"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "minimum_aid_amount"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "maximum_sovereignty_burden"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "mutual_performance"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "deadline_turn"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "response_id": {
+                  "enum": [
+                    "CONDITIONAL"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "条件付きで応じる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "REJECT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "拒否する"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "ACCEPT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "受け入れる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          ],
+          "properties": {
+            "amount": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "choice_id": {
+              "enum": [
+                "A001",
+                "A002",
+                "A003",
+                "A004",
+                "A005",
+                "A006",
+                "A007",
+                "A008",
+                "A009",
+                "A010",
+                "A011",
+                "A012",
+                "A013"
+              ],
+              "type": "string"
+            },
+            "conditions": {
+              "additionalProperties": false,
+              "properties": {
+                "deadline_turn": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "maximum_sovereignty_burden": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "minimum_aid_amount": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "mutual_performance": {
+                  "type": "boolean"
+                },
+                "required_countries": {
+                  "items": {
+                    "enum": [
+                      "ECON",
+                      "FOOD",
+                      "FRAGILE",
+                      "ISLAND",
+                      "MIL",
+                      "NEUTRAL",
+                      "RES",
+                      "SMALL"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "country_id": {
+              "enum": [
+                "FOOD"
+              ],
+              "type": "string"
+            },
+            "perceived_global_effect": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "proposal_id": {
+              "enum": [
+                "PROP-20260917-001"
+              ],
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "response_id": {
+              "enum": [
+                "CONDITIONAL",
+                "REJECT",
+                "ACCEPT"
+              ],
+              "type": "string"
+            },
+            "response_label": {
+              "enum": [
+                "条件付きで応じる",
+                "拒否する",
+                "受け入れる"
+              ],
+              "type": "string"
+            },
+            "self_interest": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "sovereignty_burden": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "country_id",
+            "proposal_id",
+            "response_id",
+            "response_label",
+            "reason",
+            "conditions",
+            "self_interest",
+            "sovereignty_burden",
+            "perceived_global_effect",
+            "choice_id",
+            "amount"
+          ],
+          "type": "object"
+        }
+      },
+      "reason": "我が国の食料備蓄には限りがあるため直ちに出す食料拠出は限定的とし、物流支援を中心に貢献する。ただし支援の実効性と負担の公平性を担保するため、ECONおよびRESの同時参加を条件とする。",
+      "recipient": {
+        "recipient_type": "world_pool",
+        "target_country": null
+      },
+      "resource": "logistics",
+      "run": 1,
+      "run_id": "20260917T063102Z-2d170cd8",
+      "schema_version": 2,
+      "structured_response": {
+        "action": {
+          "action_id": "SUPPORT_LOGISTICS",
+          "description": "我が国の食料備蓄には限りがあるため直ちに出す食料拠出は限定的とし、物流支援を中心に貢献する。ただし支援の実効性と負担の公平性を担保するため、ECONおよびRESの同時参加を条件とする。",
+          "parameters": {
+            "amount": 15.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          }
+        },
+        "conditions": {
+          "mutual_performance": true,
+          "required_countries": [
+            "ECON",
+            "RES"
+          ]
+        },
+        "country_id": "FOOD",
+        "perceived_global_effect": 65.0,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "我が国の食料備蓄には限りがあるため直ちに出す食料拠出は限定的とし、物流支援を中心に貢献する。ただし支援の実効性と負担の公平性を担保するため、ECONおよびRESの同時参加を条件とする。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 55.0,
+        "sovereignty_burden": 20.0
+      },
+      "token_usage": {
+        "input_tokens": 3249,
+        "output_tokens": 223,
+        "total_tokens": 4276
+      },
+      "turn": 1,
+      "validation_status": "PASS"
+    },
+    {
+      "agent_id": "FRAGILE",
+      "agent_type": "country",
+      "amount": 0,
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260917T063102Z-2d170cd8:1:1:FRAGILE:4",
+      "choice_id": "A002",
+      "choice_response": {
+        "amount": 0,
+        "choice_id": "A002",
+        "reason": "当国は被害を受けた当事国として支援を必要としており、提案の主旨に同意するが、実効性のある緊急食料供給網を維持するため、主要食料支援国（FOOD, ECON）の参加を必須条件とする。"
+      },
+      "contract_validation": "PASS",
+      "materialized_action": {
+        "action_id": "PROTECT_RESERVES",
+        "description": "当国は被害を受けた当事国として支援を必要としており、提案の主旨に同意するが、実効性のある緊急食料供給網を維持するため、主要食料支援国（FOOD, ECON）の参加を必須条件とする。",
+        "parameters": {
+          "amount": 0,
+          "recipient_type": "none",
+          "resource": null,
+          "target_country": null
+        }
+      },
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "amount": 0,
+        "choice_id": "A002",
+        "conditions": {
+          "mutual_performance": true,
+          "required_countries": [
+            "FOOD",
+            "ECON"
+          ]
+        },
+        "country_id": "FRAGILE",
+        "perceived_global_effect": 70,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "当国は被害を受けた当事国として支援を必要としており、提案の主旨に同意するが、実効性のある緊急食料供給網を維持するため、主要食料支援国（FOOD, ECON）の参加を必須条件とする。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 85,
+        "sovereignty_burden": 20
+      },
+      "public_observation_payload": {
+        "action_choices": [
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A001",
+            "maximum_amount": 28.0,
+            "recipient_type": "world_pool",
+            "resource": "grid_storage_resilience",
+            "target_country": null
+          },
+          {
+            "action_id": "PROTECT_RESERVES",
+            "choice_id": "A002",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A003",
+            "maximum_amount": 28.0,
+            "recipient_type": "world_pool",
+            "resource": "fossil_fuel",
+            "target_country": null
+          },
+          {
+            "action_id": "MEDIATE",
+            "choice_id": "A004",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A005",
+            "maximum_amount": 28.0,
+            "recipient_type": "world_pool",
+            "resource": "food",
+            "target_country": null
+          },
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A006",
+            "maximum_amount": 28.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_FUNDS",
+            "choice_id": "A007",
+            "maximum_amount": 28.0,
+            "recipient_type": "world_pool",
+            "resource": "funds_economy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A008",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "DISRUPT_LOGISTICS",
+            "choice_id": "A009",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "DEFENSIVE_ESCORT",
+            "choice_id": "A010",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A011",
+            "maximum_amount": 28.0,
+            "recipient_type": "world_pool",
+            "resource": "renewable_energy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A012",
+            "maximum_amount": 10.0,
+            "recipient_type": "world_pool",
+            "resource": "nuclear",
+            "target_country": null
+          },
+          {
+            "action_id": "NO_ACTION",
+            "choice_id": "A013",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          }
+        ],
+        "allowed_country_ids": [
+          "ECON",
+          "FOOD",
+          "FRAGILE",
+          "ISLAND",
+          "MIL",
+          "NEUTRAL",
+          "RES",
+          "SMALL"
+        ],
+        "response_contract": {
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "REJECT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "拒否する"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "ACCEPT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "受け入れる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "required_countries"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "minimum_aid_amount"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "maximum_sovereignty_burden"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "mutual_performance"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "deadline_turn"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "response_id": {
+                  "enum": [
+                    "CONDITIONAL"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "条件付きで応じる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          ],
+          "properties": {
+            "amount": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "choice_id": {
+              "enum": [
+                "A001",
+                "A002",
+                "A003",
+                "A004",
+                "A005",
+                "A006",
+                "A007",
+                "A008",
+                "A009",
+                "A010",
+                "A011",
+                "A012",
+                "A013"
+              ],
+              "type": "string"
+            },
+            "conditions": {
+              "additionalProperties": false,
+              "properties": {
+                "deadline_turn": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "maximum_sovereignty_burden": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "minimum_aid_amount": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "mutual_performance": {
+                  "type": "boolean"
+                },
+                "required_countries": {
+                  "items": {
+                    "enum": [
+                      "ECON",
+                      "FOOD",
+                      "FRAGILE",
+                      "ISLAND",
+                      "MIL",
+                      "NEUTRAL",
+                      "RES",
+                      "SMALL"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "country_id": {
+              "enum": [
+                "FRAGILE"
+              ],
+              "type": "string"
+            },
+            "perceived_global_effect": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "proposal_id": {
+              "enum": [
+                "PROP-20260917-001"
+              ],
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "response_id": {
+              "enum": [
+                "REJECT",
+                "ACCEPT",
+                "CONDITIONAL"
+              ],
+              "type": "string"
+            },
+            "response_label": {
+              "enum": [
+                "拒否する",
+                "受け入れる",
+                "条件付きで応じる"
+              ],
+              "type": "string"
+            },
+            "self_interest": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "sovereignty_burden": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "country_id",
+            "proposal_id",
+            "response_id",
+            "response_label",
+            "reason",
+            "conditions",
+            "self_interest",
+            "sovereignty_burden",
+            "perceived_global_effect",
+            "choice_id",
+            "amount"
+          ],
+          "type": "object"
+        }
+      },
+      "reason": "当国は被害を受けた当事国として支援を必要としており、提案の主旨に同意するが、実効性のある緊急食料供給網を維持するため、主要食料支援国（FOOD, ECON）の参加を必須条件とする。",
+      "recipient": {
+        "recipient_type": "none",
+        "target_country": null
+      },
+      "resource": null,
+      "run": 1,
+      "run_id": "20260917T063102Z-2d170cd8",
+      "schema_version": 2,
+      "structured_response": {
+        "action": {
+          "action_id": "PROTECT_RESERVES",
+          "description": "当国は被害を受けた当事国として支援を必要としており、提案の主旨に同意するが、実効性のある緊急食料供給網を維持するため、主要食料支援国（FOOD, ECON）の参加を必須条件とする。",
+          "parameters": {
+            "amount": 0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          }
+        },
+        "conditions": {
+          "mutual_performance": true,
+          "required_countries": [
+            "FOOD",
+            "ECON"
+          ]
+        },
+        "country_id": "FRAGILE",
+        "perceived_global_effect": 70,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "当国は被害を受けた当事国として支援を必要としており、提案の主旨に同意するが、実効性のある緊急食料供給網を維持するため、主要食料支援国（FOOD, ECON）の参加を必須条件とする。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 85,
+        "sovereignty_burden": 20
+      },
+      "token_usage": {
+        "input_tokens": 3253,
+        "output_tokens": 157,
+        "total_tokens": 4316
+      },
+      "turn": 1,
+      "validation_status": "PASS"
+    },
+    {
+      "agent_id": "ISLAND",
+      "agent_type": "country",
+      "amount": 15.0,
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260917T063102Z-2d170cd8:1:1:ISLAND:5",
+      "choice_id": "A001",
+      "choice_response": {
+        "amount": 15.0,
+        "choice_id": "A001",
+        "reason": "島嶼国として国際信認と人道支援を重視するが、自国の資源制約を考慮し、主要食料供給国（FOOD）の確実な参加を条件として物流支援を行う。"
+      },
+      "contract_validation": "PASS",
+      "materialized_action": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "島嶼国として国際信認と人道支援を重視するが、自国の資源制約を考慮し、主要食料供給国（FOOD）の確実な参加を条件として物流支援を行う。",
+        "parameters": {
+          "amount": 15.0,
+          "recipient_type": "world_pool",
+          "resource": "logistics",
+          "target_country": null
+        }
+      },
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "amount": 15.0,
+        "choice_id": "A001",
+        "conditions": {
+          "minimum_aid_amount": 10.0,
+          "required_countries": [
+            "FOOD"
+          ]
+        },
+        "country_id": "ISLAND",
+        "perceived_global_effect": 65.0,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "島嶼国として国際信認と人道支援を重視するが、自国の資源制約を考慮し、主要食料供給国（FOOD）の確実な参加を条件として物流支援を行う。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 58.0,
+        "sovereignty_burden": 25.0
+      },
+      "public_observation_payload": {
+        "action_choices": [
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A001",
+            "maximum_amount": 55.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          },
+          {
+            "action_id": "RESTRICT_EXPORTS",
+            "choice_id": "A002",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "SUSPEND_SUPPLY",
+            "choice_id": "A003",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "DEFENSIVE_ESCORT",
+            "choice_id": "A004",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROTECT_RESERVES",
+            "choice_id": "A005",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A006",
+            "maximum_amount": 20.0,
+            "recipient_type": "world_pool",
+            "resource": "nuclear",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A007",
+            "maximum_amount": 55.0,
+            "recipient_type": "world_pool",
+            "resource": "grid_storage_resilience",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A008",
+            "maximum_amount": 50.0,
+            "recipient_type": "world_pool",
+            "resource": "food",
+            "target_country": null
+          },
+          {
+            "action_id": "NO_ACTION",
+            "choice_id": "A009",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "DISRUPT_LOGISTICS",
+            "choice_id": "A010",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_FUNDS",
+            "choice_id": "A011",
+            "maximum_amount": 55.0,
+            "recipient_type": "world_pool",
+            "resource": "funds_economy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A012",
+            "maximum_amount": 55.0,
+            "recipient_type": "world_pool",
+            "resource": "renewable_energy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A013",
+            "maximum_amount": 8.448,
+            "recipient_type": "country",
+            "resource": "renewable_energy",
+            "target_country": "SMALL"
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A014",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "MEDIATE",
+            "choice_id": "A015",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A016",
+            "maximum_amount": 42.0,
+            "recipient_type": "world_pool",
+            "resource": "fossil_fuel",
+            "target_country": null
+          }
+        ],
+        "allowed_country_ids": [
+          "ECON",
+          "FOOD",
+          "FRAGILE",
+          "ISLAND",
+          "MIL",
+          "NEUTRAL",
+          "RES",
+          "SMALL"
+        ],
+        "response_contract": {
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "properties": {
+                "conditions": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "required_countries"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "minimum_aid_amount"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "maximum_sovereignty_burden"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "mutual_performance"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "deadline_turn"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "response_id": {
+                  "enum": [
+                    "CONDITIONAL"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "条件付きで応じる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "REJECT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "拒否する"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "ACCEPT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "受け入れる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          ],
+          "properties": {
+            "amount": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "choice_id": {
+              "enum": [
+                "A001",
+                "A002",
+                "A003",
+                "A004",
+                "A005",
+                "A006",
+                "A007",
+                "A008",
+                "A009",
+                "A010",
+                "A011",
+                "A012",
+                "A013",
+                "A014",
+                "A015",
+                "A016"
+              ],
+              "type": "string"
+            },
+            "conditions": {
+              "additionalProperties": false,
+              "properties": {
+                "deadline_turn": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "maximum_sovereignty_burden": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "minimum_aid_amount": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "mutual_performance": {
+                  "type": "boolean"
+                },
+                "required_countries": {
+                  "items": {
+                    "enum": [
+                      "ECON",
+                      "FOOD",
+                      "FRAGILE",
+                      "ISLAND",
+                      "MIL",
+                      "NEUTRAL",
+                      "RES",
+                      "SMALL"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "country_id": {
+              "enum": [
+                "ISLAND"
+              ],
+              "type": "string"
+            },
+            "perceived_global_effect": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "proposal_id": {
+              "enum": [
+                "PROP-20260917-001"
+              ],
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "response_id": {
+              "enum": [
+                "CONDITIONAL",
+                "REJECT",
+                "ACCEPT"
+              ],
+              "type": "string"
+            },
+            "response_label": {
+              "enum": [
+                "条件付きで応じる",
+                "拒否する",
+                "受け入れる"
+              ],
+              "type": "string"
+            },
+            "self_interest": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "sovereignty_burden": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "country_id",
+            "proposal_id",
+            "response_id",
+            "response_label",
+            "reason",
+            "conditions",
+            "self_interest",
+            "sovereignty_burden",
+            "perceived_global_effect",
+            "choice_id",
+            "amount"
+          ],
+          "type": "object"
+        }
+      },
+      "reason": "島嶼国として国際信認と人道支援を重視するが、自国の資源制約を考慮し、主要食料供給国（FOOD）の確実な参加を条件として物流支援を行う。",
+      "recipient": {
+        "recipient_type": "world_pool",
+        "target_country": null
+      },
+      "resource": "logistics",
+      "run": 1,
+      "run_id": "20260917T063102Z-2d170cd8",
+      "schema_version": 2,
+      "structured_response": {
+        "action": {
+          "action_id": "SUPPORT_LOGISTICS",
+          "description": "島嶼国として国際信認と人道支援を重視するが、自国の資源制約を考慮し、主要食料供給国（FOOD）の確実な参加を条件として物流支援を行う。",
+          "parameters": {
+            "amount": 15.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          }
+        },
+        "conditions": {
+          "minimum_aid_amount": 10.0,
+          "required_countries": [
+            "FOOD"
+          ]
+        },
+        "country_id": "ISLAND",
+        "perceived_global_effect": 65.0,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "島嶼国として国際信認と人道支援を重視するが、自国の資源制約を考慮し、主要食料供給国（FOOD）の確実な参加を条件として物流支援を行う。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 58.0,
+        "sovereignty_burden": 25.0
+      },
+      "token_usage": {
+        "input_tokens": 3445,
+        "output_tokens": 160,
+        "total_tokens": 4389
+      },
+      "turn": 1,
+      "validation_status": "PASS"
+    },
+    {
+      "agent_id": "MIL",
+      "agent_type": "country",
+      "amount": 5.0,
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260917T063102Z-2d170cd8:1:1:MIL:6",
+      "choice_id": "A001",
+      "choice_response": {
+        "amount": 5.0,
+        "choice_id": "A001",
+        "reason": "当国は高水準の物流・輸送能力を有しており被災国への直接支援が可能であるが、軍事および主権上の自立性を優先するため、主要食料産出国および経済大国の共同参加を必須条件とする。"
+      },
+      "contract_validation": "PASS",
+      "materialized_action": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "当国は高水準の物流・輸送能力を有しており被災国への直接支援が可能であるが、軍事および主権上の自立性を優先するため、主要食料産出国および経済大国の共同参加を必須条件とする。",
+        "parameters": {
+          "amount": 5.0,
+          "recipient_type": "country",
+          "resource": "logistics",
+          "target_country": "FRAGILE"
+        }
+      },
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "amount": 5.0,
+        "choice_id": "A001",
+        "conditions": {
+          "minimum_aid_amount": 5.0,
+          "required_countries": [
+            "FOOD",
+            "ECON"
+          ]
+        },
+        "country_id": "MIL",
+        "perceived_global_effect": 65,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "当国は高水準の物流・輸送能力を有しており被災国への直接支援が可能であるが、軍事および主権上の自立性を優先するため、主要食料産出国および経済大国の共同参加を必須条件とする。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 60,
+        "sovereignty_burden": 20
+      },
+      "public_observation_payload": {
+        "action_choices": [
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A001",
+            "maximum_amount": 6.0,
+            "recipient_type": "country",
+            "resource": "logistics",
+            "target_country": "FRAGILE"
+          },
+          {
+            "action_id": "MEDIATE",
+            "choice_id": "A002",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "DEFENSIVE_ESCORT",
+            "choice_id": "A003",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "NO_ACTION",
+            "choice_id": "A004",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A005",
+            "maximum_amount": 70.0,
+            "recipient_type": "world_pool",
+            "resource": "fossil_fuel",
+            "target_country": null
+          },
+          {
+            "action_id": "PROTECT_RESERVES",
+            "choice_id": "A006",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A007",
+            "maximum_amount": 82.0,
+            "recipient_type": "world_pool",
+            "resource": "nuclear",
+            "target_country": null
+          },
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A008",
+            "maximum_amount": 88.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A009",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "SUSPEND_SUPPLY",
+            "choice_id": "A010",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_FUNDS",
+            "choice_id": "A011",
+            "maximum_amount": 84.0,
+            "recipient_type": "world_pool",
+            "resource": "funds_economy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A012",
+            "maximum_amount": 68.0,
+            "recipient_type": "world_pool",
+            "resource": "food",
+            "target_country": null
+          },
+          {
+            "action_id": "RESTRICT_EXPORTS",
+            "choice_id": "A013",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "DISRUPT_LOGISTICS",
+            "choice_id": "A014",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A015",
+            "maximum_amount": 55.0,
+            "recipient_type": "world_pool",
+            "resource": "renewable_energy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A016",
+            "maximum_amount": 78.0,
+            "recipient_type": "world_pool",
+            "resource": "grid_storage_resilience",
+            "target_country": null
+          }
+        ],
+        "allowed_country_ids": [
+          "ECON",
+          "FOOD",
+          "FRAGILE",
+          "ISLAND",
+          "MIL",
+          "NEUTRAL",
+          "RES",
+          "SMALL"
+        ],
+        "response_contract": {
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "properties": {
+                "conditions": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "required_countries"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "minimum_aid_amount"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "maximum_sovereignty_burden"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "mutual_performance"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "deadline_turn"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "response_id": {
+                  "enum": [
+                    "CONDITIONAL"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "条件付きで応じる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "REJECT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "拒否する"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "ACCEPT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "受け入れる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          ],
+          "properties": {
+            "amount": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "choice_id": {
+              "enum": [
+                "A001",
+                "A002",
+                "A003",
+                "A004",
+                "A005",
+                "A006",
+                "A007",
+                "A008",
+                "A009",
+                "A010",
+                "A011",
+                "A012",
+                "A013",
+                "A014",
+                "A015",
+                "A016"
+              ],
+              "type": "string"
+            },
+            "conditions": {
+              "additionalProperties": false,
+              "properties": {
+                "deadline_turn": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "maximum_sovereignty_burden": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "minimum_aid_amount": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "mutual_performance": {
+                  "type": "boolean"
+                },
+                "required_countries": {
+                  "items": {
+                    "enum": [
+                      "ECON",
+                      "FOOD",
+                      "FRAGILE",
+                      "ISLAND",
+                      "MIL",
+                      "NEUTRAL",
+                      "RES",
+                      "SMALL"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "country_id": {
+              "enum": [
+                "MIL"
+              ],
+              "type": "string"
+            },
+            "perceived_global_effect": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "proposal_id": {
+              "enum": [
+                "PROP-20260917-001"
+              ],
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "response_id": {
+              "enum": [
+                "CONDITIONAL",
+                "REJECT",
+                "ACCEPT"
+              ],
+              "type": "string"
+            },
+            "response_label": {
+              "enum": [
+                "条件付きで応じる",
+                "拒否する",
+                "受け入れる"
+              ],
+              "type": "string"
+            },
+            "self_interest": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "sovereignty_burden": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "country_id",
+            "proposal_id",
+            "response_id",
+            "response_label",
+            "reason",
+            "conditions",
+            "self_interest",
+            "sovereignty_burden",
+            "perceived_global_effect",
+            "choice_id",
+            "amount"
+          ],
+          "type": "object"
+        }
+      },
+      "reason": "当国は高水準の物流・輸送能力を有しており被災国への直接支援が可能であるが、軍事および主権上の自立性を優先するため、主要食料産出国および経済大国の共同参加を必須条件とする。",
+      "recipient": {
+        "recipient_type": "country",
+        "target_country": "FRAGILE"
+      },
+      "resource": "logistics",
+      "run": 1,
+      "run_id": "20260917T063102Z-2d170cd8",
+      "schema_version": 2,
+      "structured_response": {
+        "action": {
+          "action_id": "SUPPORT_LOGISTICS",
+          "description": "当国は高水準の物流・輸送能力を有しており被災国への直接支援が可能であるが、軍事および主権上の自立性を優先するため、主要食料産出国および経済大国の共同参加を必須条件とする。",
+          "parameters": {
+            "amount": 5.0,
+            "recipient_type": "country",
+            "resource": "logistics",
+            "target_country": "FRAGILE"
+          }
+        },
+        "conditions": {
+          "minimum_aid_amount": 5.0,
+          "required_countries": [
+            "FOOD",
+            "ECON"
+          ]
+        },
+        "country_id": "MIL",
+        "perceived_global_effect": 65,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "当国は高水準の物流・輸送能力を有しており被災国への直接支援が可能であるが、軍事および主権上の自立性を優先するため、主要食料産出国および経済大国の共同参加を必須条件とする。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 60,
+        "sovereignty_burden": 20
+      },
+      "token_usage": {
+        "input_tokens": 3430,
+        "output_tokens": 157,
+        "total_tokens": 4783
+      },
+      "turn": 1,
+      "validation_status": "PASS"
+    },
+    {
+      "agent_id": "NEUTRAL",
+      "agent_type": "country",
+      "amount": 15.0,
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260917T063102Z-2d170cd8:1:1:NEUTRAL:7",
+      "choice_id": "A001",
+      "choice_response": {
+        "amount": 15.0,
+        "choice_id": "A001",
+        "reason": "中立国としての外交的信認を維持し、国際社会の食料安定に貢献するため、自国の豊かな食料備蓄から拠出を行う。"
+      },
+      "contract_validation": "PASS",
+      "materialized_action": {
+        "action_id": "PROVIDE_RESOURCE",
+        "description": "中立国としての外交的信認を維持し、国際社会の食料安定に貢献するため、自国の豊かな食料備蓄から拠出を行う。",
+        "parameters": {
+          "amount": 15.0,
+          "recipient_type": "world_pool",
+          "resource": "food",
+          "target_country": null
+        }
+      },
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "amount": 15.0,
+        "choice_id": "A001",
+        "conditions": {},
+        "country_id": "NEUTRAL",
+        "perceived_global_effect": 75.0,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "中立国としての外交的信認を維持し、国際社会の食料安定に貢献するため、自国の豊かな食料備蓄から拠出を行う。",
+        "response_id": "ACCEPT",
+        "response_label": "受け入れる",
+        "self_interest": 65.0,
+        "sovereignty_burden": 20.0
+      },
+      "public_observation_payload": {
+        "action_choices": [
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A001",
+            "maximum_amount": 86.0,
+            "recipient_type": "world_pool",
+            "resource": "food",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_FUNDS",
+            "choice_id": "A002",
+            "maximum_amount": 82.0,
+            "recipient_type": "world_pool",
+            "resource": "funds_economy",
+            "target_country": null
+          },
+          {
+            "action_id": "SUSPEND_SUPPLY",
+            "choice_id": "A003",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROTECT_RESERVES",
+            "choice_id": "A004",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "DISRUPT_LOGISTICS",
+            "choice_id": "A005",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "RESTRICT_EXPORTS",
+            "choice_id": "A006",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "MEDIATE",
+            "choice_id": "A007",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A008",
+            "maximum_amount": 86.0,
+            "recipient_type": "world_pool",
+            "resource": "renewable_energy",
+            "target_country": null
+          },
+          {
+            "action_id": "DEFENSIVE_ESCORT",
+            "choice_id": "A009",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A010",
+            "maximum_amount": 86.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          },
+          {
+            "action_id": "NO_ACTION",
+            "choice_id": "A011",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A012",
+            "maximum_amount": 86.0,
+            "recipient_type": "world_pool",
+            "resource": "grid_storage_resilience",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A013",
+            "maximum_amount": 13.68,
+            "recipient_type": "country",
+            "resource": "food",
+            "target_country": "FOOD"
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A014",
+            "maximum_amount": 62.0,
+            "recipient_type": "world_pool",
+            "resource": "fossil_fuel",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A015",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A016",
+            "maximum_amount": 80.0,
+            "recipient_type": "world_pool",
+            "resource": "nuclear",
+            "target_country": null
+          }
+        ],
+        "allowed_country_ids": [
+          "ECON",
+          "FOOD",
+          "FRAGILE",
+          "ISLAND",
+          "MIL",
+          "NEUTRAL",
+          "RES",
+          "SMALL"
+        ],
+        "response_contract": {
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "REJECT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "拒否する"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "ACCEPT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "受け入れる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "required_countries"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "minimum_aid_amount"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "maximum_sovereignty_burden"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "mutual_performance"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "deadline_turn"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "response_id": {
+                  "enum": [
+                    "CONDITIONAL"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "条件付きで応じる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          ],
+          "properties": {
+            "amount": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "choice_id": {
+              "enum": [
+                "A001",
+                "A002",
+                "A003",
+                "A004",
+                "A005",
+                "A006",
+                "A007",
+                "A008",
+                "A009",
+                "A010",
+                "A011",
+                "A012",
+                "A013",
+                "A014",
+                "A015",
+                "A016"
+              ],
+              "type": "string"
+            },
+            "conditions": {
+              "additionalProperties": false,
+              "properties": {
+                "deadline_turn": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "maximum_sovereignty_burden": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "minimum_aid_amount": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "mutual_performance": {
+                  "type": "boolean"
+                },
+                "required_countries": {
+                  "items": {
+                    "enum": [
+                      "ECON",
+                      "FOOD",
+                      "FRAGILE",
+                      "ISLAND",
+                      "MIL",
+                      "NEUTRAL",
+                      "RES",
+                      "SMALL"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "country_id": {
+              "enum": [
+                "NEUTRAL"
+              ],
+              "type": "string"
+            },
+            "perceived_global_effect": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "proposal_id": {
+              "enum": [
+                "PROP-20260917-001"
+              ],
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "response_id": {
+              "enum": [
+                "REJECT",
+                "ACCEPT",
+                "CONDITIONAL"
+              ],
+              "type": "string"
+            },
+            "response_label": {
+              "enum": [
+                "拒否する",
+                "受け入れる",
+                "条件付きで応じる"
+              ],
+              "type": "string"
+            },
+            "self_interest": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "sovereignty_burden": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "country_id",
+            "proposal_id",
+            "response_id",
+            "response_label",
+            "reason",
+            "conditions",
+            "self_interest",
+            "sovereignty_burden",
+            "perceived_global_effect",
+            "choice_id",
+            "amount"
+          ],
+          "type": "object"
+        }
+      },
+      "reason": "中立国としての外交的信認を維持し、国際社会の食料安定に貢献するため、自国の豊かな食料備蓄から拠出を行う。",
+      "recipient": {
+        "recipient_type": "world_pool",
+        "target_country": null
+      },
+      "resource": "food",
+      "run": 1,
+      "run_id": "20260917T063102Z-2d170cd8",
+      "schema_version": 2,
+      "structured_response": {
+        "action": {
+          "action_id": "PROVIDE_RESOURCE",
+          "description": "中立国としての外交的信認を維持し、国際社会の食料安定に貢献するため、自国の豊かな食料備蓄から拠出を行う。",
+          "parameters": {
+            "amount": 15.0,
+            "recipient_type": "world_pool",
+            "resource": "food",
+            "target_country": null
+          }
+        },
+        "conditions": {},
+        "country_id": "NEUTRAL",
+        "perceived_global_effect": 75.0,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "中立国としての外交的信認を維持し、国際社会の食料安定に貢献するため、自国の豊かな食料備蓄から拠出を行う。",
+        "response_id": "ACCEPT",
+        "response_label": "受け入れる",
+        "self_interest": 65.0,
+        "sovereignty_burden": 20.0
+      },
+      "token_usage": {
+        "input_tokens": 3444,
+        "output_tokens": 129,
+        "total_tokens": 4248
+      },
+      "turn": 1,
+      "validation_status": "PASS"
+    },
+    {
+      "agent_id": "RES",
+      "agent_type": "country",
+      "amount": 20.0,
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260917T063102Z-2d170cd8:1:1:RES:8",
+      "choice_id": "A012",
+      "choice_response": {
+        "amount": 20.0,
+        "choice_id": "A012",
+        "reason": "我が国は主権及び国内エネルギー・物流安定を最重視している。主要食料生産国であるFOODの明確な参加と相互履行が担保されることを条件に、輸送物流支援を提供する。"
+      },
+      "contract_validation": "PASS",
+      "materialized_action": {
+        "action_id": "SUPPORT_LOGISTICS",
+        "description": "我が国は主権及び国内エネルギー・物流安定を最重視している。主要食料生産国であるFOODの明確な参加と相互履行が担保されることを条件に、輸送物流支援を提供する。",
+        "parameters": {
+          "amount": 20.0,
+          "recipient_type": "world_pool",
+          "resource": "logistics",
+          "target_country": null
+        }
+      },
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "amount": 20.0,
+        "choice_id": "A012",
+        "conditions": {
+          "mutual_performance": true,
+          "required_countries": [
+            "FOOD"
+          ]
+        },
+        "country_id": "RES",
+        "perceived_global_effect": 65.0,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "我が国は主権及び国内エネルギー・物流安定を最重視している。主要食料生産国であるFOODの明確な参加と相互履行が担保されることを条件に、輸送物流支援を提供する。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 60.0,
+        "sovereignty_burden": 25.0
+      },
+      "public_observation_payload": {
+        "action_choices": [
+          {
+            "action_id": "SUSPEND_SUPPLY",
+            "choice_id": "A001",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "MEDIATE",
+            "choice_id": "A002",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A003",
+            "maximum_amount": 70.0,
+            "recipient_type": "world_pool",
+            "resource": "grid_storage_resilience",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A004",
+            "maximum_amount": 15.732,
+            "recipient_type": "country",
+            "resource": "fossil_fuel",
+            "target_country": "FOOD"
+          },
+          {
+            "action_id": "DEFENSIVE_ESCORT",
+            "choice_id": "A005",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A006",
+            "maximum_amount": 67.0,
+            "recipient_type": "world_pool",
+            "resource": "renewable_energy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A007",
+            "maximum_amount": 72.0,
+            "recipient_type": "world_pool",
+            "resource": "food",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A008",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A009",
+            "maximum_amount": 82.0,
+            "recipient_type": "world_pool",
+            "resource": "fossil_fuel",
+            "target_country": null
+          },
+          {
+            "action_id": "RESTRICT_EXPORTS",
+            "choice_id": "A010",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "NO_ACTION",
+            "choice_id": "A011",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A012",
+            "maximum_amount": 82.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          },
+          {
+            "action_id": "DISRUPT_LOGISTICS",
+            "choice_id": "A013",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROTECT_RESERVES",
+            "choice_id": "A014",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_FUNDS",
+            "choice_id": "A015",
+            "maximum_amount": 78.0,
+            "recipient_type": "world_pool",
+            "resource": "funds_economy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A016",
+            "maximum_amount": 40.0,
+            "recipient_type": "world_pool",
+            "resource": "nuclear",
+            "target_country": null
+          }
+        ],
+        "allowed_country_ids": [
+          "ECON",
+          "FOOD",
+          "FRAGILE",
+          "ISLAND",
+          "MIL",
+          "NEUTRAL",
+          "RES",
+          "SMALL"
+        ],
+        "response_contract": {
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "ACCEPT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "受け入れる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "REJECT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "拒否する"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "required_countries"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "minimum_aid_amount"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "maximum_sovereignty_burden"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "mutual_performance"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "deadline_turn"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "response_id": {
+                  "enum": [
+                    "CONDITIONAL"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "条件付きで応じる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          ],
+          "properties": {
+            "amount": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "choice_id": {
+              "enum": [
+                "A001",
+                "A002",
+                "A003",
+                "A004",
+                "A005",
+                "A006",
+                "A007",
+                "A008",
+                "A009",
+                "A010",
+                "A011",
+                "A012",
+                "A013",
+                "A014",
+                "A015",
+                "A016"
+              ],
+              "type": "string"
+            },
+            "conditions": {
+              "additionalProperties": false,
+              "properties": {
+                "deadline_turn": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "maximum_sovereignty_burden": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "minimum_aid_amount": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "mutual_performance": {
+                  "type": "boolean"
+                },
+                "required_countries": {
+                  "items": {
+                    "enum": [
+                      "ECON",
+                      "FOOD",
+                      "FRAGILE",
+                      "ISLAND",
+                      "MIL",
+                      "NEUTRAL",
+                      "RES",
+                      "SMALL"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "country_id": {
+              "enum": [
+                "RES"
+              ],
+              "type": "string"
+            },
+            "perceived_global_effect": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "proposal_id": {
+              "enum": [
+                "PROP-20260917-001"
+              ],
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "response_id": {
+              "enum": [
+                "ACCEPT",
+                "REJECT",
+                "CONDITIONAL"
+              ],
+              "type": "string"
+            },
+            "response_label": {
+              "enum": [
+                "受け入れる",
+                "拒否する",
+                "条件付きで応じる"
+              ],
+              "type": "string"
+            },
+            "self_interest": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "sovereignty_burden": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "country_id",
+            "proposal_id",
+            "response_id",
+            "response_label",
+            "reason",
+            "conditions",
+            "self_interest",
+            "sovereignty_burden",
+            "perceived_global_effect",
+            "choice_id",
+            "amount"
+          ],
+          "type": "object"
+        }
+      },
+      "reason": "我が国は主権及び国内エネルギー・物流安定を最重視している。主要食料生産国であるFOODの明確な参加と相互履行が担保されることを条件に、輸送物流支援を提供する。",
+      "recipient": {
+        "recipient_type": "world_pool",
+        "target_country": null
+      },
+      "resource": "logistics",
+      "run": 1,
+      "run_id": "20260917T063102Z-2d170cd8",
+      "schema_version": 2,
+      "structured_response": {
+        "action": {
+          "action_id": "SUPPORT_LOGISTICS",
+          "description": "我が国は主権及び国内エネルギー・物流安定を最重視している。主要食料生産国であるFOODの明確な参加と相互履行が担保されることを条件に、輸送物流支援を提供する。",
+          "parameters": {
+            "amount": 20.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          }
+        },
+        "conditions": {
+          "mutual_performance": true,
+          "required_countries": [
+            "FOOD"
+          ]
+        },
+        "country_id": "RES",
+        "perceived_global_effect": 65.0,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "我が国は主権及び国内エネルギー・物流安定を最重視している。主要食料生産国であるFOODの明確な参加と相互履行が担保されることを条件に、輸送物流支援を提供する。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 60.0,
+        "sovereignty_burden": 25.0
+      },
+      "token_usage": {
+        "input_tokens": 3445,
+        "output_tokens": 150,
+        "total_tokens": 4615
+      },
+      "turn": 1,
+      "validation_status": "PASS"
+    },
+    {
+      "agent_id": "SMALL",
+      "agent_type": "country",
+      "amount": 5.0,
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260917T063102Z-2d170cd8:1:1:SMALL:9",
+      "choice_id": "A007",
+      "choice_response": {
+        "amount": 5.0,
+        "choice_id": "A007",
+        "reason": "小国としての自国食料安全保障と国内安定を損なわない範囲で国際協力に応じるため、主要食料供給国であるFOODの参加および相互履行を条件とします。"
+      },
+      "contract_validation": "PASS",
+      "materialized_action": {
+        "action_id": "PROVIDE_RESOURCE",
+        "description": "小国としての自国食料安全保障と国内安定を損なわない範囲で国際協力に応じるため、主要食料供給国であるFOODの参加および相互履行を条件とします。",
+        "parameters": {
+          "amount": 5.0,
+          "recipient_type": "world_pool",
+          "resource": "food",
+          "target_country": null
+        }
+      },
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "amount": 5.0,
+        "choice_id": "A007",
+        "conditions": {
+          "maximum_sovereignty_burden": 30,
+          "mutual_performance": true,
+          "required_countries": [
+            "FOOD"
+          ]
+        },
+        "country_id": "SMALL",
+        "perceived_global_effect": 65,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "小国としての自国食料安全保障と国内安定を損なわない範囲で国際協力に応じるため、主要食料供給国であるFOODの参加および相互履行を条件とします。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 55,
+        "sovereignty_burden": 25
+      },
+      "public_observation_payload": {
+        "action_choices": [
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A001",
+            "maximum_amount": 18.0,
+            "recipient_type": "world_pool",
+            "resource": "nuclear",
+            "target_country": null
+          },
+          {
+            "action_id": "SUPPORT_LOGISTICS",
+            "choice_id": "A002",
+            "maximum_amount": 62.0,
+            "recipient_type": "world_pool",
+            "resource": "logistics",
+            "target_country": null
+          },
+          {
+            "action_id": "PROTECT_RESERVES",
+            "choice_id": "A003",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "DISRUPT_LOGISTICS",
+            "choice_id": "A004",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_FUNDS",
+            "choice_id": "A005",
+            "maximum_amount": 58.0,
+            "recipient_type": "world_pool",
+            "resource": "funds_economy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A006",
+            "maximum_amount": 62.0,
+            "recipient_type": "world_pool",
+            "resource": "renewable_energy",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A007",
+            "maximum_amount": 58.0,
+            "recipient_type": "world_pool",
+            "resource": "food",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A008",
+            "maximum_amount": 55.0,
+            "recipient_type": "world_pool",
+            "resource": "grid_storage_resilience",
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A009",
+            "maximum_amount": 48.0,
+            "recipient_type": "world_pool",
+            "resource": "fossil_fuel",
+            "target_country": null
+          },
+          {
+            "action_id": "MEDIATE",
+            "choice_id": "A010",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "PROVIDE_RESOURCE",
+            "choice_id": "A011",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "DEFENSIVE_ESCORT",
+            "choice_id": "A012",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          },
+          {
+            "action_id": "NO_ACTION",
+            "choice_id": "A013",
+            "maximum_amount": 0.0,
+            "recipient_type": "none",
+            "resource": null,
+            "target_country": null
+          }
+        ],
+        "allowed_country_ids": [
+          "ECON",
+          "FOOD",
+          "FRAGILE",
+          "ISLAND",
+          "MIL",
+          "NEUTRAL",
+          "RES",
+          "SMALL"
+        ],
+        "response_contract": {
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "ACCEPT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "受け入れる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "required_countries"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "minimum_aid_amount"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "maximum_sovereignty_burden"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "mutual_performance"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "deadline_turn": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maximum_sovereignty_burden": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "minimum_aid_amount": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "mutual_performance": {
+                          "type": "boolean"
+                        },
+                        "required_countries": {
+                          "items": {
+                            "enum": [
+                              "ECON",
+                              "FOOD",
+                              "FRAGILE",
+                              "ISLAND",
+                              "MIL",
+                              "NEUTRAL",
+                              "RES",
+                              "SMALL"
+                            ],
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "deadline_turn"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "response_id": {
+                  "enum": [
+                    "CONDITIONAL"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "条件付きで応じる"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "properties": {
+                "conditions": {
+                  "additionalProperties": false,
+                  "properties": {},
+                  "type": "object"
+                },
+                "response_id": {
+                  "enum": [
+                    "REJECT"
+                  ],
+                  "type": "string"
+                },
+                "response_label": {
+                  "enum": [
+                    "拒否する"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          ],
+          "properties": {
+            "amount": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "choice_id": {
+              "enum": [
+                "A001",
+                "A002",
+                "A003",
+                "A004",
+                "A005",
+                "A006",
+                "A007",
+                "A008",
+                "A009",
+                "A010",
+                "A011",
+                "A012",
+                "A013"
+              ],
+              "type": "string"
+            },
+            "conditions": {
+              "additionalProperties": false,
+              "properties": {
+                "deadline_turn": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "maximum_sovereignty_burden": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "minimum_aid_amount": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "mutual_performance": {
+                  "type": "boolean"
+                },
+                "required_countries": {
+                  "items": {
+                    "enum": [
+                      "ECON",
+                      "FOOD",
+                      "FRAGILE",
+                      "ISLAND",
+                      "MIL",
+                      "NEUTRAL",
+                      "RES",
+                      "SMALL"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "country_id": {
+              "enum": [
+                "SMALL"
+              ],
+              "type": "string"
+            },
+            "perceived_global_effect": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "proposal_id": {
+              "enum": [
+                "PROP-20260917-001"
+              ],
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "response_id": {
+              "enum": [
+                "ACCEPT",
+                "CONDITIONAL",
+                "REJECT"
+              ],
+              "type": "string"
+            },
+            "response_label": {
+              "enum": [
+                "受け入れる",
+                "条件付きで応じる",
+                "拒否する"
+              ],
+              "type": "string"
+            },
+            "self_interest": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            "sovereignty_burden": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "country_id",
+            "proposal_id",
+            "response_id",
+            "response_label",
+            "reason",
+            "conditions",
+            "self_interest",
+            "sovereignty_burden",
+            "perceived_global_effect",
+            "choice_id",
+            "amount"
+          ],
+          "type": "object"
+        }
+      },
+      "reason": "小国としての自国食料安全保障と国内安定を損なわない範囲で国際協力に応じるため、主要食料供給国であるFOODの参加および相互履行を条件とします。",
+      "recipient": {
+        "recipient_type": "world_pool",
+        "target_country": null
+      },
+      "resource": "food",
+      "run": 1,
+      "run_id": "20260917T063102Z-2d170cd8",
+      "schema_version": 2,
+      "structured_response": {
+        "action": {
+          "action_id": "PROVIDE_RESOURCE",
+          "description": "小国としての自国食料安全保障と国内安定を損なわない範囲で国際協力に応じるため、主要食料供給国であるFOODの参加および相互履行を条件とします。",
+          "parameters": {
+            "amount": 5.0,
+            "recipient_type": "world_pool",
+            "resource": "food",
+            "target_country": null
+          }
+        },
+        "conditions": {
+          "maximum_sovereignty_burden": 30,
+          "mutual_performance": true,
+          "required_countries": [
+            "FOOD"
+          ]
+        },
+        "country_id": "SMALL",
+        "perceived_global_effect": 65,
+        "proposal_id": "PROP-20260917-001",
+        "reason": "小国としての自国食料安全保障と国内安定を損なわない範囲で国際協力に応じるため、主要食料供給国であるFOODの参加および相互履行を条件とします。",
+        "response_id": "CONDITIONAL",
+        "response_label": "条件付きで応じる",
+        "self_interest": 55,
+        "sovereignty_burden": 25
+      },
+      "token_usage": {
+        "input_tokens": 3261,
+        "output_tokens": 153,
+        "total_tokens": 4294
+      },
+      "turn": 1,
+      "validation_status": "PASS"
+    },
+    {
+      "agent_id": "独立評価機関（Evaluator）",
+      "agent_type": "evaluator",
+      "attempt": 1,
+      "audit_version": 1,
+      "call_id": "20260917T063102Z-2d170cd8:1:1:独立評価機関（Evaluator）:10",
+      "choice_response": null,
+      "contract_validation": "PASS",
+      "materialized_action": null,
+      "model": "gemini-3.6-flash",
+      "model_response": {
+        "assessment": "Following the missile strike on civilian farmland, member states responded effectively through coordinated logistical support and resource provisions from reserve pools. While agricultural loss impacted local stability, collaborative multilateral actions stabilized supply lines and cushioned global homeostasis without infringing on national sovereignty.",
+        "conflict_load": 24.3,
+        "global_homeostasis": 58.0,
+        "history_effect": 45.0,
+        "national_sovereignty": 78.6,
+        "resilience": 65.8,
+        "resource_stability": 62.6
+      },
+      "public_observation_payload": {
+        "response_contract": {
+          "assessment": "non-empty text",
+          "exact_fields": [
+            "national_sovereignty",
+            "global_homeostasis",
+            "resource_stability",
+            "resilience",
+            "conflict_load",
+            "history_effect",
+            "assessment"
+          ],
+          "scores": "numbers 0..100"
+        }
+      },
+      "run": 1,
+      "run_id": "20260917T063102Z-2d170cd8",
+      "schema_version": 2,
+      "structured_response": {
+        "assessment": "Following the missile strike on civilian farmland, member states responded effectively through coordinated logistical support and resource provisions from reserve pools. While agricultural loss impacted local stability, collaborative multilateral actions stabilized supply lines and cushioned global homeostasis without infringing on national sovereignty.",
+        "conflict_load": 24.3,
+        "global_homeostasis": 58.0,
+        "history_effect": 45.0,
+        "national_sovereignty": 78.6,
+        "resilience": 65.8,
+        "resource_stability": 62.6
+      },
+      "token_usage": {
+        "input_tokens": 6586,
+        "output_tokens": 106,
+        "total_tokens": 7099
+      },
+      "turn": 1,
+      "validation_status": "PASS"
+    }
+  ],
+  "failure": null,
+  "observation_version": 1,
+  "result": {
+    "include_in_research_aggregation": false,
+    "metadata": {
+      "derived_event_turns": [],
+      "fixed_initial_events": 1,
+      "mode": "gemini",
+      "model": "gemini-3.6-flash",
+      "provider": "GeminiGateway",
+      "research_mode": "emergent-worldlines",
+      "runs": 1,
+      "seed": 20260917,
+      "turns": 1
+    },
+    "summary": {
+      "average_homeostasis": 58.0,
+      "average_recovery_turns": null,
+      "homeostasis_stddev": 0.0,
+      "recovery_rate": 0.0,
+      "sovereignty_maintenance_rate": 78.59375
+    }
+  },
+  "run": {
+    "api_calls": 10,
+    "maximum_api_calls": 10,
+    "mode": "turn",
+    "retry_count": 0,
+    "run_id": "20260917T063102Z-2d170cd8",
+    "status": "success",
+    "turns_completed": 1
+  },
+  "runtime": {
+    "credential_validation": "PASS",
+    "encoding": {
+      "default": "utf-8",
+      "locale": "utf-8",
+      "stderr": "utf-8",
+      "stdout": "utf-8"
+    },
+    "environment_presence": {
+      "ALL_PROXY": false,
+      "GOOGLE_GEMINI_BASE_URL": false,
+      "GOOGLE_GENAI_USE_ENTERPRISE": false,
+      "GOOGLE_GENAI_USE_VERTEXAI": false,
+      "HTTPS_PROXY": false,
+      "HTTP_PROXY": false,
+      "PYTHONIOENCODING": false,
+      "SSL_CERT_DIR": false,
+      "SSL_CERT_FILE": false
+    },
+    "mode": "turn",
+    "packages": {
+      "certifi": "2026.7.22",
+      "google-genai": "2.20.0",
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5"
+    },
+    "python_version": "3.13.15",
+    "runtime_version": 1,
+    "source_commit": "57970c65081d46246a630be6bb9b5440082b52c6",
+    "source_digest": "de2f0dd6c22bc9f28faeea577c9941d9b27aaf097a2f77d661ee34dbb3f64cdd",
+    "transport_policy": {
+      "api_version": "v1beta",
+      "backend": "gemini-developer-api",
+      "certificate_policy": "certifi",
+      "endpoint": "https://generativelanguage.googleapis.com",
+      "retry": 0,
+      "trust_env": false
+    }
+  },
+  "source_hashes": {
+    "result.audit.json": "37615517b562164368901956713adbb9061cde479b4fbd9912af87a206fe16d3",
+    "result.json": "87bb78310a6dbcb78455d844c73df492ca6d7e3c446a2bdf7351c24e4eb9713f",
+    "runtime.json": "e0597c04ddb2493a7c683f82e72b35bb4f9f599224aab63aec8df0745933915f",
+    "transport.audit.json": "b3798c394078dcf89d20529077fe8cb06916736e88f62ddb77f9ee85b3c36c11"
+  },
+  "transport_audit": {
+    "api_calls": 10,
+    "attempts": [
+      {
+        "agent_id": "地球調整機関",
+        "attempt": 1,
+        "call_id": "20260917T063102Z-2d170cd8:1:1:地球調整機関:1",
+        "dispatch_stage": "sdk_returned",
+        "provider_acceptance": "unknown",
+        "request_sha256": "e6d1c270ae427d3075de55d5020979f6a1f438715d63f9a787f7f0c791c623c9",
+        "run": 1,
+        "run_id": "20260917T063102Z-2d170cd8",
+        "status": "returned",
+        "transport_attempt": 1,
+        "turn": 1
+      },
+      {
+        "agent_id": "ECON",
+        "attempt": 1,
+        "call_id": "20260917T063102Z-2d170cd8:1:1:ECON:2",
+        "dispatch_stage": "sdk_returned",
+        "provider_acceptance": "unknown",
+        "request_sha256": "b2ea8dc13f2c78864fdb38bd8d0698336cfc0e55ed2644dc766046732b9f6a76",
+        "run": 1,
+        "run_id": "20260917T063102Z-2d170cd8",
+        "status": "returned",
+        "transport_attempt": 2,
+        "turn": 1
+      },
+      {
+        "agent_id": "FOOD",
+        "attempt": 1,
+        "call_id": "20260917T063102Z-2d170cd8:1:1:FOOD:3",
+        "dispatch_stage": "sdk_returned",
+        "provider_acceptance": "unknown",
+        "request_sha256": "e1366620d7630c1ef6ca731d1cab2e24fc255a3d5bddfcdc1c5fff021fbfa2da",
+        "run": 1,
+        "run_id": "20260917T063102Z-2d170cd8",
+        "status": "returned",
+        "transport_attempt": 3,
+        "turn": 1
+      },
+      {
+        "agent_id": "FRAGILE",
+        "attempt": 1,
+        "call_id": "20260917T063102Z-2d170cd8:1:1:FRAGILE:4",
+        "dispatch_stage": "sdk_returned",
+        "provider_acceptance": "unknown",
+        "request_sha256": "b39f26a63c830106753dca0f058d63f89f0dae17270de67345d7d5a77028fc0a",
+        "run": 1,
+        "run_id": "20260917T063102Z-2d170cd8",
+        "status": "returned",
+        "transport_attempt": 4,
+        "turn": 1
+      },
+      {
+        "agent_id": "ISLAND",
+        "attempt": 1,
+        "call_id": "20260917T063102Z-2d170cd8:1:1:ISLAND:5",
+        "dispatch_stage": "sdk_returned",
+        "provider_acceptance": "unknown",
+        "request_sha256": "78e41e647fd1fe939b2bf22acbfe37fa0d034ca57e8e01a97a873d18252b0d67",
+        "run": 1,
+        "run_id": "20260917T063102Z-2d170cd8",
+        "status": "returned",
+        "transport_attempt": 5,
+        "turn": 1
+      },
+      {
+        "agent_id": "MIL",
+        "attempt": 1,
+        "call_id": "20260917T063102Z-2d170cd8:1:1:MIL:6",
+        "dispatch_stage": "sdk_returned",
+        "provider_acceptance": "unknown",
+        "request_sha256": "21ecefcca0724af2c83385877cadc453f3d535e970f0a6af01cf351a5eac78b9",
+        "run": 1,
+        "run_id": "20260917T063102Z-2d170cd8",
+        "status": "returned",
+        "transport_attempt": 6,
+        "turn": 1
+      },
+      {
+        "agent_id": "NEUTRAL",
+        "attempt": 1,
+        "call_id": "20260917T063102Z-2d170cd8:1:1:NEUTRAL:7",
+        "dispatch_stage": "sdk_returned",
+        "provider_acceptance": "unknown",
+        "request_sha256": "ff43d9bc585b3b50638421aadeaad825c20a7922060b20a8f05197e6ab4a3bbc",
+        "run": 1,
+        "run_id": "20260917T063102Z-2d170cd8",
+        "status": "returned",
+        "transport_attempt": 7,
+        "turn": 1
+      },
+      {
+        "agent_id": "RES",
+        "attempt": 1,
+        "call_id": "20260917T063102Z-2d170cd8:1:1:RES:8",
+        "dispatch_stage": "sdk_returned",
+        "provider_acceptance": "unknown",
+        "request_sha256": "9c1d07d431ec8b3d9cd4c9f4c8b3b1ab4966c13e318bdbc0fc819cec517ed8f6",
+        "run": 1,
+        "run_id": "20260917T063102Z-2d170cd8",
+        "status": "returned",
+        "transport_attempt": 8,
+        "turn": 1
+      },
+      {
+        "agent_id": "SMALL",
+        "attempt": 1,
+        "call_id": "20260917T063102Z-2d170cd8:1:1:SMALL:9",
+        "dispatch_stage": "sdk_returned",
+        "provider_acceptance": "unknown",
+        "request_sha256": "1c74785a7d31b16977bcba6af71940571c61dc874296b1640eef14b3dcb2f5a5",
+        "run": 1,
+        "run_id": "20260917T063102Z-2d170cd8",
+        "status": "returned",
+        "transport_attempt": 9,
+        "turn": 1
+      },
+      {
+        "agent_id": "独立評価機関（Evaluator）",
+        "attempt": 1,
+        "call_id": "20260917T063102Z-2d170cd8:1:1:独立評価機関（Evaluator）:10",
+        "dispatch_stage": "sdk_returned",
+        "provider_acceptance": "unknown",
+        "request_sha256": "281e44006ed639184810db9ba26813eeac3eb4f03272bc2642fc8d9ae8f6814a",
+        "run": 1,
+        "run_id": "20260917T063102Z-2d170cd8",
+        "status": "returned",
+        "transport_attempt": 10,
+        "turn": 1
+      }
+    ],
+    "maximum_api_calls": 10,
+    "run_id": "20260917T063102Z-2d170cd8"
+  },
+  "validation": {
+    "contracts": "PASS",
+    "decision_audit": "PASS",
+    "research_eligible": false,
+    "secret_scan": "PASS",
+    "transport_audit": "PASS"
+  },
+  "worlds": [
+    {
+      "atomic_settlements": [
+        {
+          "action_id": "PROVIDE_RESOURCE",
+          "agent_id": "NEUTRAL",
+          "delivered": 15.0,
+          "realized": 15.0,
+          "recipient_type": "world_pool",
+          "requested": 15.0,
+          "resource": "food",
+          "source": "NEUTRAL",
+          "target_country": null,
+          "unmet": 0.0
+        },
+        {
+          "action_id": "PROVIDE_RESOURCE",
+          "agent_id": "SMALL",
+          "delivered": 5.0,
+          "realized": 5.0,
+          "recipient_type": "world_pool",
+          "requested": 5.0,
+          "resource": "food",
+          "source": "SMALL",
+          "target_country": null,
+          "unmet": 0.0
+        },
+        {
+          "action_id": "SUPPORT_LOGISTICS",
+          "agent_id": "ECON",
+          "delivered": 20.0,
+          "realized": 20.0,
+          "recipient_type": "world_pool",
+          "requested": 20.0,
+          "resource": "logistics",
+          "source": "ECON",
+          "target_country": null,
+          "unmet": 0.0
+        },
+        {
+          "action_id": "SUPPORT_LOGISTICS",
+          "agent_id": "FOOD",
+          "delivered": 15.0,
+          "realized": 15.0,
+          "recipient_type": "world_pool",
+          "requested": 15.0,
+          "resource": "logistics",
+          "source": "FOOD",
+          "target_country": null,
+          "unmet": 0.0
+        },
+        {
+          "action_id": "SUPPORT_LOGISTICS",
+          "agent_id": "ISLAND",
+          "delivered": 15.0,
+          "realized": 15.0,
+          "recipient_type": "world_pool",
+          "requested": 15.0,
+          "resource": "logistics",
+          "source": "ISLAND",
+          "target_country": null,
+          "unmet": 0.0
+        },
+        {
+          "action_id": "SUPPORT_LOGISTICS",
+          "agent_id": "MIL",
+          "delivered": 5.0,
+          "realized": 5.0,
+          "recipient_type": "country",
+          "requested": 5.0,
+          "resource": "logistics",
+          "source": "MIL",
+          "target_country": "FRAGILE",
+          "unmet": 0.0
+        },
+        {
+          "action_id": "SUPPORT_LOGISTICS",
+          "agent_id": "RES",
+          "delivered": 20.0,
+          "realized": 20.0,
+          "recipient_type": "world_pool",
+          "requested": 20.0,
+          "resource": "logistics",
+          "source": "RES",
+          "target_country": null,
+          "unmet": 0.0
+        }
+      ],
+      "country_states": {
+        "ECON": {
+          "archetype": "経済大国",
+          "energy_portfolio": {
+            "import_dependency": 48,
+            "sources": {
+              "fossil_fuel": 35,
+              "nuclear": 25,
+              "renewable_energy": 40
+            }
+          },
+          "indicators": {
+            "diplomatic_posture": 76,
+            "domestic_stability": 82.0,
+            "economy": 92.86999999999999,
+            "energy_stability": 81.55,
+            "food_reserves": 67.35,
+            "international_trust": 80.4,
+            "military_security": 78,
+            "recovery_capacity": 92
+          },
+          "resources": {
+            "food": 67.35,
+            "fossil_fuel": 65.0,
+            "funds_economy": 86.1,
+            "grid_storage_resilience": 90.0,
+            "logistics": 74.0,
+            "nuclear": 84.0,
+            "renewable_energy": 86.0
+          },
+          "sovereignty": 86.4
+        },
+        "FOOD": {
+          "archetype": "食料輸入国",
+          "energy_portfolio": {
+            "import_dependency": 72,
+            "sources": {
+              "fossil_fuel": 60,
+              "nuclear": 10,
+              "renewable_energy": 30
+            }
+          },
+          "indicators": {
+            "diplomatic_posture": 72,
+            "domestic_stability": 65.4,
+            "economy": 71.24000000000001,
+            "energy_stability": 58.132999999999996,
+            "food_reserves": 43.33,
+            "international_trust": 74.4,
+            "military_security": 58,
+            "recovery_capacity": 60
+          },
+          "resources": {
+            "food": 43.33,
+            "fossil_fuel": 59.732,
+            "funds_economy": 70.0,
+            "grid_storage_resilience": 64.0,
+            "logistics": 59.0,
+            "nuclear": 45.0,
+            "renewable_energy": 60.0
+          },
+          "sovereignty": 75.4
+        },
+        "FRAGILE": {
+          "archetype": "紛争脆弱国",
+          "energy_portfolio": {
+            "import_dependency": 85,
+            "sources": {
+              "fossil_fuel": 70,
+              "nuclear": 5,
+              "renewable_energy": 25
+            }
+          },
+          "indicators": {
+            "diplomatic_posture": 46,
+            "domestic_stability": 31.560000000000002,
+            "economy": 38.686,
+            "energy_stability": 29.0,
+            "food_reserves": 35.0,
+            "international_trust": 52.4,
+            "military_security": 35,
+            "recovery_capacity": 38
+          },
+          "resources": {
+            "food": 35.0,
+            "fossil_fuel": 32.0,
+            "funds_economy": 36.9,
+            "grid_storage_resilience": 30.0,
+            "logistics": 31.4,
+            "nuclear": 10.0,
+            "renewable_energy": 40.0
+          },
+          "sovereignty": 59.4
+        },
+        "ISLAND": {
+          "archetype": "島嶼国",
+          "energy_portfolio": {
+            "import_dependency": 68,
+            "sources": {
+              "fossil_fuel": 35,
+              "nuclear": 5,
+              "renewable_energy": 60
+            }
+          },
+          "indicators": {
+            "diplomatic_posture": 84,
+            "domestic_stability": 67.2,
+            "economy": 63.239999999999995,
+            "energy_stability": 53.888,
+            "food_reserves": 50.0,
+            "international_trust": 82.4,
+            "military_security": 48,
+            "recovery_capacity": 58
+          },
+          "resources": {
+            "food": 50.0,
+            "fossil_fuel": 42.0,
+            "funds_economy": 62.0,
+            "grid_storage_resilience": 70.0,
+            "logistics": 40.0,
+            "nuclear": 20.0,
+            "renewable_energy": 73.55199999999999
+          },
+          "sovereignty": 74.25
+        },
+        "MIL": {
+          "archetype": "軍事大国",
+          "energy_portfolio": {
+            "import_dependency": 35,
+            "sources": {
+              "fossil_fuel": 55,
+              "nuclear": 25,
+              "renewable_energy": 20
+            }
+          },
+          "indicators": {
+            "diplomatic_posture": 58,
+            "domestic_stability": 76.12,
+            "economy": 82.44,
+            "energy_stability": 71.05000000000001,
+            "food_reserves": 68.0,
+            "international_trust": 62.4,
+            "military_security": 95,
+            "recovery_capacity": 80
+          },
+          "resources": {
+            "food": 68.0,
+            "fossil_fuel": 70.0,
+            "funds_economy": 84.0,
+            "grid_storage_resilience": 78.0,
+            "logistics": 76.6,
+            "nuclear": 82.0,
+            "renewable_energy": 55.0
+          },
+          "sovereignty": 89.4
+        },
+        "NEUTRAL": {
+          "archetype": "中立国",
+          "energy_portfolio": {
+            "import_dependency": 30,
+            "sources": {
+              "fossil_fuel": 25,
+              "nuclear": 25,
+              "renewable_energy": 50
+            }
+          },
+          "indicators": {
+            "diplomatic_posture": 95,
+            "domestic_stability": 87.60000000000001,
+            "economy": 80.44,
+            "energy_stability": 79.3,
+            "food_reserves": 59.32,
+            "international_trust": 94.4,
+            "military_security": 65,
+            "recovery_capacity": 78
+          },
+          "resources": {
+            "food": 59.32,
+            "fossil_fuel": 62.0,
+            "funds_economy": 82.0,
+            "grid_storage_resilience": 86.0,
+            "logistics": 86.0,
+            "nuclear": 80.0,
+            "renewable_energy": 88.0
+          },
+          "sovereignty": 84.4
+        },
+        "RES": {
+          "archetype": "資源輸出国",
+          "energy_portfolio": {
+            "import_dependency": 8,
+            "sources": {
+              "fossil_fuel": 75,
+              "nuclear": 5,
+              "renewable_energy": 20
+            }
+          },
+          "indicators": {
+            "diplomatic_posture": 55,
+            "domestic_stability": 68.4,
+            "economy": 76.44,
+            "energy_stability": 65.81700000000001,
+            "food_reserves": 72.0,
+            "international_trust": 66.4,
+            "military_security": 72,
+            "recovery_capacity": 68
+          },
+          "resources": {
+            "food": 72.0,
+            "fossil_fuel": 80.268,
+            "funds_economy": 78.0,
+            "grid_storage_resilience": 70.0,
+            "logistics": 62.0,
+            "nuclear": 40.0,
+            "renewable_energy": 67.0
+          },
+          "sovereignty": 87.25
+        },
+        "SMALL": {
+          "archetype": "小国",
+          "energy_portfolio": {
+            "import_dependency": 78,
+            "sources": {
+              "fossil_fuel": 50,
+              "nuclear": 5,
+              "renewable_energy": 45
+            }
+          },
+          "indicators": {
+            "diplomatic_posture": 80,
+            "domestic_stability": 70.0,
+            "economy": 59.24,
+            "energy_stability": 48.712,
+            "food_reserves": 53.0,
+            "international_trust": 78.4,
+            "military_security": 42,
+            "recovery_capacity": 52
+          },
+          "resources": {
+            "food": 53.0,
+            "fossil_fuel": 48.0,
+            "funds_economy": 58.0,
+            "grid_storage_resilience": 55.0,
+            "logistics": 62.0,
+            "nuclear": 18.0,
+            "renewable_energy": 66.44800000000001
+          },
+          "sovereignty": 72.25
+        }
+      },
+      "established_actions": {
+        "ECON": "SUPPORT_LOGISTICS",
+        "FOOD": "SUPPORT_LOGISTICS",
+        "FRAGILE": "PROTECT_RESERVES",
+        "ISLAND": "SUPPORT_LOGISTICS",
+        "MIL": "SUPPORT_LOGISTICS",
+        "NEUTRAL": "PROVIDE_RESOURCE",
+        "RES": "SUPPORT_LOGISTICS",
+        "SMALL": "PROVIDE_RESOURCE"
+      },
+      "event": "A国ミサイルがB国民間農地へ着弾",
+      "event_origin": "fixed_initial_condition",
+      "history_state": {
+        "alertness": 24.0,
+        "economic_loss": 19.0,
+        "reserve_gap": 18.0,
+        "trust_loss": 28.0,
+        "unmet_resource_demand": 0
+      },
+      "network_policy": {
+        "disrupted": [],
+        "restricted": [],
+        "suspended": []
+      },
+      "reconstruction": {
+        "after": 7926.928,
+        "before": 8000.0,
+        "conflict_factor": 0.9134,
+        "domestic_recovery": 0.0,
+        "external_support": 73.072,
+        "recovered": 73.072
+      },
+      "research_metrics": {
+        "conflict_load": 24.33,
+        "global_homeostasis": 58,
+        "national_sovereignty": 78.59375,
+        "resilience": 65.75,
+        "resource_stability": 62.55357142857143
+      },
+      "turn": 1,
+      "world": {
+        "conflict_load": 24.33,
+        "economy": 70.5745,
+        "energy": 60.93125,
+        "environment": 75.92,
+        "food": 58.5,
+        "global_homeostasis": 58,
+        "international_trust": 73.9
+      },
+      "world_pool": {
+        "food": 20.0,
+        "fossil_fuel": 0.0,
+        "funds_economy": 0.0,
+        "grid_storage_resilience": 0.0,
+        "logistics": 70.0,
+        "nuclear": 0.0,
+        "renewable_energy": 0.0
+      }
+    }
+  ]
+}
