@@ -1,7 +1,7 @@
 {
   "blocked_run_count": 2,
   "branch": "choice-id-one-turn-probe-20260917",
-  "commit": "b1c63eca3250d69b1f10613e9fd0b5c346ba1298",
+  "commit": "ed5dd9a57be699b38d333a7920db7f5b9d8b8033",
   "commit_semantics": "source HEAD at export; source_digest includes uncommitted implementation",
   "development_status": {
     "analysis_path": "results/status/analyses/20260917T075421Z-11147417/findings.json",
@@ -497,7 +497,7 @@
   },
   "source_digest": "cfea37fa9d56b4ee245f81c2b8b5db6faeec4e1ceff7efca2b3b3fbd3bb5526a",
   "status_version": 1,
-  "updated_at": "2026-09-17T10:09:21.339831+00:00",
+  "updated_at": "2026-09-17T10:11:31.879629+00:00",
   "validation": {
     "contracts": "PASS",
     "decision_audit": "PASS",
