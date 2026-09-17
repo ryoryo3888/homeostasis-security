@@ -16,12 +16,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - uses: browser-actions/setup-chrome@v1
-        id: chrome
+      - name: System Chrome with runner sandbox support
+        run: /usr/bin/google-chrome --version
       - run: python -m pip install -r requirements/free-check.txt
       - name: Free tests, build, secret scan and layout contracts
         env:
-          CHROME_BIN: ${{ steps.chrome.outputs.chrome-path }}
+          CHROME_BIN: /usr/bin/google-chrome
           PYTHONDONTWRITEBYTECODE: '1'
         run: make check
       - name: Generated dashboard consistency
