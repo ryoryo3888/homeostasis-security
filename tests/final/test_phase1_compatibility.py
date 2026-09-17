@@ -1,3 +1,4 @@
+from tools.visual_baseline import protected_bytes
 import hashlib
 import json
 from pathlib import Path
@@ -9,7 +10,7 @@ from homeostasis_core.v2_adapter import load_v2_first_run
 
 ROOT = Path(__file__).resolve().parents[2]
 LEGACY = ROOT / "v2_first_run.json"
-BASELINE = Path("/tmp/homeostasis-final-baseline-sha256.txt")
+BASELINE = ROOT / "tests/layout/protected-baseline.sha256"
 
 
 class Phase1CompatibilityTests(unittest.TestCase):
@@ -60,7 +61,7 @@ class Phase1CompatibilityTests(unittest.TestCase):
             # original prefix is verified by test_phase8_final.
             if filename == "README.md":
                 continue
-            actual = hashlib.sha256((ROOT / filename).read_bytes()).hexdigest()
+            actual = hashlib.sha256(protected_bytes(ROOT / filename)).hexdigest()
             self.assertEqual(actual, expected, filename)
 
 

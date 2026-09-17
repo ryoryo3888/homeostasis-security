@@ -143,3 +143,11 @@ Gemini Agentによる5ターンの実験では、各国と地球調整機関が�
 実行は `python3 simulation_final.py`、複数runの保存前確認は `python3 final_experiment_runner.py OUTPUT.json --dry-run` です。保存処理は既存結果を上書きせず、seed、設定、コード版、Provider種別を記録します。画面は [最終版Dashboard](dashboard_final.html) から閲覧でき、「概要」「国家」「地球」「資源」「ログ／研究結果」に整理しています。
 
 本実装は外部APIを使用しない決定論的Providerによる探索的研究です。同一seedと設定で再現できますが、モデル化されたAgent判断とEvaluatorは現実の国家意思決定を再現・予測するものではありません。指標、因果規則、認識誤差、統治成立条件はいずれも研究上の仮定を含みます。現実の政策判断、国家評価、国際法上の判断、制裁、緊急権限または武力行使の正当化には使用できません。将来は検証済みデータ、追加国家・シナリオ、差し替え可能なDecisionProviderによる比較研究へ拡張できます。
+
+## Visual Constitution / Layout Contract
+
+完成済みV1/V2の構造は [Visual Constitution](docs/architecture/HOMEOSTASIS_VISUAL_CONSTITUTION.md)
+で固定しています。新しい研究表示は [Content Slot Contract](docs/architecture/CONTENT_SLOT_CONTRACT.md)
+を使用し、Earthや操作領域を移動して場所を作らないでください。
+[Layout Contract](docs/architecture/LAYOUT_CONTRACT.md) の `make check` で無料検証します。
+V3は多国間・資源ネットワークの研究方向です。この基盤追加はV3 UI開発の開始ではありません。

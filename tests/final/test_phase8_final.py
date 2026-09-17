@@ -1,3 +1,4 @@
+from tools.visual_baseline import protected_bytes
 import hashlib,json,subprocess,unittest
 from pathlib import Path
 from simulation_final import run_final_simulation,convert_v1_event,export_local_security_input
@@ -37,9 +38,9 @@ class Phase8Tests(unittest.TestCase):
         current=(ROOT/"README.md").read_bytes();original=subprocess.check_output(["git","show","ba3232f:README.md"],cwd=ROOT);self.assertTrue(current.startswith(original))
     def test_protected_baseline_except_readme(self):
         bad=[]
-        for line in Path('/tmp/homeostasis-final-baseline-sha256.txt').read_text().splitlines():
+        for line in (ROOT/'tests/layout/protected-baseline.sha256').read_text().splitlines():
             digest,name=line.split('  ',1)
             if name=="README.md":continue
-            if hashlib.sha256((ROOT/name).read_bytes()).hexdigest()!=digest:bad.append(name)
+            if hashlib.sha256(protected_bytes(ROOT/name)).hexdigest()!=digest:bad.append(name)
         self.assertEqual(bad,[])
 if __name__=='__main__':unittest.main()
