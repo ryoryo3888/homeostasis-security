@@ -90,6 +90,7 @@ def run_validation(baseline, network, directory, *, turns=8):
         # Raw errors/provider payloads may contain secrets. Leave checkpoints for
         # inspection; uncertain commits must not trigger an automatic rerun.
         report.update(status='technical_failure', automatic_retry=False,
+                      synthetic_exchanges=len(budget.attempts),
                       failure_code='VALIDATION_FAILED_INSPECT_CHECKPOINT_HEAD')
         _write(directory/'report.json', report)
         raise RuntimeError('V3 validation failed; inspect saved report and checkpoint HEAD') from None

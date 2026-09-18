@@ -180,6 +180,7 @@ class PreflightTests(unittest.TestCase):
             self.assertEqual(CheckpointStore(path/'checkpoints').load()['turn'],1)
             report=json.loads((path/'report.json').read_text())
             self.assertEqual(report['completed_turns'],1)
+            self.assertEqual(report['synthetic_exchanges'],9)
             self.assertEqual(report['status'],'technical_failure')
 
     def test_invalid_turn_counts_do_not_create_artifacts(self):
