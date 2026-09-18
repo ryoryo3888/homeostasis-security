@@ -1,0 +1,644 @@
+{
+  "status": "approved",
+  "approved_baseline": true,
+  "records": [
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "v2_earth_width": 368.15625,
+      "bounds": {
+        "v3-identity": {
+          "x": 14,
+          "y": 14,
+          "width": 1412,
+          "height": 214.578125,
+          "bottom": 228.578125
+        },
+        "v3-control": {
+          "x": 14,
+          "y": 238.578125,
+          "width": 1412,
+          "height": 87.328125,
+          "bottom": 325.90625
+        },
+        "v3-world": {
+          "x": 14,
+          "y": 335.90625,
+          "width": 1412,
+          "height": 865.84375,
+          "bottom": 1201.75
+        },
+        "v3-state-detail": {
+          "x": 14,
+          "y": 1211.75,
+          "width": 1412,
+          "height": 337.390625,
+          "bottom": 1549.140625
+        },
+        "v3-evidence": {
+          "x": 14,
+          "y": 1710.3125,
+          "width": 1412,
+          "height": 59.140625,
+          "bottom": 1769.453125
+        },
+        "v3-earth": {
+          "x": 536,
+          "y": 468.296875,
+          "width": 368,
+          "height": 368,
+          "bottom": 836.296875
+        },
+        "v3-canvas": {
+          "x": 14,
+          "y": 378.703125,
+          "width": 1412,
+          "height": 760,
+          "bottom": 1138.703125
+        }
+      },
+      "captionBottom": 894.09375,
+      "measurementsTop": 967.734375,
+      "measurementsBottom": 1120.703125,
+      "parents": {
+        "v3-earth": "v3-canvas",
+        "v3-canvas": "v3-world",
+        "v3-network": "v3-canvas",
+        "state-nodes": "v3-canvas"
+      },
+      "nodes": [
+        {
+          "id": "MIL",
+          "x": 21.0625,
+          "y": 405.890625,
+          "width": 324.75,
+          "height": 128
+        },
+        {
+          "id": "RES",
+          "x": 21.0625,
+          "y": 588.296875,
+          "width": 324.75,
+          "height": 128
+        },
+        {
+          "id": "FOOD",
+          "x": 21.0625,
+          "y": 770.703125,
+          "width": 324.75,
+          "height": 128
+        },
+        {
+          "id": "SMALL",
+          "x": 21.0625,
+          "y": 953.09375,
+          "width": 324.75,
+          "height": 128
+        },
+        {
+          "id": "ISLAND",
+          "x": 1094.171875,
+          "y": 953.09375,
+          "width": 324.75,
+          "height": 128
+        },
+        {
+          "id": "ECON",
+          "x": 1094.171875,
+          "y": 770.703125,
+          "width": 324.75,
+          "height": 128
+        },
+        {
+          "id": "FRAGILE",
+          "x": 1094.171875,
+          "y": 588.296875,
+          "width": 324.75,
+          "height": 128
+        },
+        {
+          "id": "NEUTRAL",
+          "x": 1094.171875,
+          "y": 405.890625,
+          "width": 324.75,
+          "height": 128
+        }
+      ],
+      "routeCount": 18,
+      "aurora": {
+        "count": 1,
+        "decorative": "true",
+        "animations": [
+          "none",
+          "none"
+        ]
+      },
+      "earthLayers": [
+        {
+          "x": 536,
+          "y": 468.296875,
+          "width": 368,
+          "height": 368
+        },
+        {
+          "x": 536,
+          "y": 468.296875,
+          "width": 368,
+          "height": 368
+        }
+      ],
+      "turnDisabled": true,
+      "horizontalOverflow": false,
+      "nav": [
+        "dashboard_v1.html",
+        "dashboard_v2.html",
+        "dashboard_v3.html"
+      ],
+      "reducedMotion": true
+    },
+    {
+      "viewport": {
+        "name": "ipad",
+        "width": 1024,
+        "height": 1366
+      },
+      "v2_earth_width": 368.15625,
+      "bounds": {
+        "v3-identity": {
+          "x": 14,
+          "y": 14,
+          "width": 996,
+          "height": 361.515625,
+          "bottom": 375.515625
+        },
+        "v3-control": {
+          "x": 14,
+          "y": 385.515625,
+          "width": 996,
+          "height": 87.328125,
+          "bottom": 472.84375
+        },
+        "v3-world": {
+          "x": 14,
+          "y": 482.84375,
+          "width": 996,
+          "height": 745.84375,
+          "bottom": 1228.6875
+        },
+        "v3-state-detail": {
+          "x": 14,
+          "y": 1238.6875,
+          "width": 996,
+          "height": 348.25,
+          "bottom": 1586.9375
+        },
+        "v3-evidence": {
+          "x": 14,
+          "y": 1748.109375,
+          "width": 996,
+          "height": 59.140625,
+          "bottom": 1807.25
+        },
+        "v3-earth": {
+          "x": 352.640625,
+          "y": 596.671875,
+          "width": 318.71875,
+          "height": 318.71875,
+          "bottom": 915.390625
+        },
+        "v3-canvas": {
+          "x": 14,
+          "y": 525.640625,
+          "width": 996,
+          "height": 640,
+          "bottom": 1165.640625
+        }
+      },
+      "captionBottom": 973.1875,
+      "measurementsTop": 1011.953125,
+      "measurementsBottom": 1147.640625,
+      "parents": {
+        "v3-earth": "v3-canvas",
+        "v3-canvas": "v3-world",
+        "v3-network": "v3-canvas",
+        "state-nodes": "v3-canvas"
+      },
+      "nodes": [
+        {
+          "id": "MIL",
+          "x": 18.9765625,
+          "y": 543.4375,
+          "width": 229.078125,
+          "height": 118
+        },
+        {
+          "id": "RES",
+          "x": 18.9765625,
+          "y": 697.03125,
+          "width": 229.078125,
+          "height": 118
+        },
+        {
+          "id": "FOOD",
+          "x": 18.9765625,
+          "y": 850.640625,
+          "width": 229.078125,
+          "height": 118
+        },
+        {
+          "id": "SMALL",
+          "x": 18.9765625,
+          "y": 1004.234375,
+          "width": 229.078125,
+          "height": 118
+        },
+        {
+          "id": "ISLAND",
+          "x": 775.9296875,
+          "y": 1004.234375,
+          "width": 229.078125,
+          "height": 118
+        },
+        {
+          "id": "ECON",
+          "x": 775.9296875,
+          "y": 850.640625,
+          "width": 229.078125,
+          "height": 118
+        },
+        {
+          "id": "FRAGILE",
+          "x": 775.9296875,
+          "y": 697.03125,
+          "width": 229.078125,
+          "height": 118
+        },
+        {
+          "id": "NEUTRAL",
+          "x": 775.9296875,
+          "y": 543.4375,
+          "width": 229.078125,
+          "height": 118
+        }
+      ],
+      "routeCount": 18,
+      "aurora": {
+        "count": 1,
+        "decorative": "true",
+        "animations": [
+          "none",
+          "none"
+        ]
+      },
+      "earthLayers": [
+        {
+          "x": 352.640625,
+          "y": 596.671875,
+          "width": 318.71875,
+          "height": 318.71875
+        },
+        {
+          "x": 352.640625,
+          "y": 596.671875,
+          "width": 318.71875,
+          "height": 318.71875
+        }
+      ],
+      "turnDisabled": true,
+      "horizontalOverflow": false,
+      "nav": [
+        "dashboard_v1.html",
+        "dashboard_v2.html",
+        "dashboard_v3.html"
+      ],
+      "reducedMotion": true
+    },
+    {
+      "viewport": {
+        "name": "ipad-portrait",
+        "width": 768,
+        "height": 1024
+      },
+      "v2_earth_width": 311.515625,
+      "bounds": {
+        "v3-identity": {
+          "x": 14,
+          "y": 14,
+          "width": 740,
+          "height": 361.515625,
+          "bottom": 375.515625
+        },
+        "v3-control": {
+          "x": 14,
+          "y": 385.515625,
+          "width": 740,
+          "height": 87.328125,
+          "bottom": 472.84375
+        },
+        "v3-world": {
+          "x": 14,
+          "y": 482.84375,
+          "width": 740,
+          "height": 745.84375,
+          "bottom": 1228.6875
+        },
+        "v3-state-detail": {
+          "x": 14,
+          "y": 1238.6875,
+          "width": 740,
+          "height": 415.09375,
+          "bottom": 1653.78125
+        },
+        "v3-evidence": {
+          "x": 14,
+          "y": 1814.953125,
+          "width": 740,
+          "height": 59.140625,
+          "bottom": 1874.09375
+        },
+        "v3-earth": {
+          "x": 265.6015625,
+          "y": 637.6328125,
+          "width": 236.796875,
+          "height": 236.796875,
+          "bottom": 874.4296875
+        },
+        "v3-canvas": {
+          "x": 14,
+          "y": 525.640625,
+          "width": 740,
+          "height": 640,
+          "bottom": 1165.640625
+        }
+      },
+      "captionBottom": 929.2265625,
+      "measurementsTop": 1011.953125,
+      "measurementsBottom": 1147.640625,
+      "parents": {
+        "v3-earth": "v3-canvas",
+        "v3-canvas": "v3-world",
+        "v3-network": "v3-canvas",
+        "state-nodes": "v3-canvas"
+      },
+      "nodes": [
+        {
+          "id": "MIL",
+          "x": 17.703125,
+          "y": 543.4375,
+          "width": 170.1875,
+          "height": 118
+        },
+        {
+          "id": "RES",
+          "x": 17.703125,
+          "y": 697.03125,
+          "width": 170.1875,
+          "height": 118
+        },
+        {
+          "id": "FOOD",
+          "x": 17.703125,
+          "y": 850.640625,
+          "width": 170.1875,
+          "height": 118
+        },
+        {
+          "id": "SMALL",
+          "x": 17.703125,
+          "y": 1004.234375,
+          "width": 170.1875,
+          "height": 118
+        },
+        {
+          "id": "ISLAND",
+          "x": 580.09375,
+          "y": 1004.234375,
+          "width": 170.1875,
+          "height": 118
+        },
+        {
+          "id": "ECON",
+          "x": 580.09375,
+          "y": 850.640625,
+          "width": 170.1875,
+          "height": 118
+        },
+        {
+          "id": "FRAGILE",
+          "x": 580.09375,
+          "y": 697.03125,
+          "width": 170.1875,
+          "height": 118
+        },
+        {
+          "id": "NEUTRAL",
+          "x": 580.09375,
+          "y": 543.4375,
+          "width": 170.1875,
+          "height": 118
+        }
+      ],
+      "routeCount": 18,
+      "aurora": {
+        "count": 1,
+        "decorative": "true",
+        "animations": [
+          "none",
+          "none"
+        ]
+      },
+      "earthLayers": [
+        {
+          "x": 265.6015625,
+          "y": 637.6328125,
+          "width": 236.796875,
+          "height": 236.796875
+        },
+        {
+          "x": 265.6015625,
+          "y": 637.6328125,
+          "width": 236.796875,
+          "height": 236.796875
+        }
+      ],
+      "turnDisabled": true,
+      "horizontalOverflow": false,
+      "nav": [
+        "dashboard_v1.html",
+        "dashboard_v2.html",
+        "dashboard_v3.html"
+      ],
+      "reducedMotion": true
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "v2_earth_width": 237.875,
+      "bounds": {
+        "v3-identity": {
+          "x": 8,
+          "y": 8,
+          "width": 374,
+          "height": 204.671875,
+          "bottom": 212.671875
+        },
+        "v3-control": {
+          "x": 8,
+          "y": 222.671875,
+          "width": 374,
+          "height": 112.390625,
+          "bottom": 335.0625
+        },
+        "v3-world": {
+          "x": 8,
+          "y": 345.0625,
+          "width": 374,
+          "height": 634.984375,
+          "bottom": 980.046875
+        },
+        "v3-state-detail": {
+          "x": 8,
+          "y": 990.046875,
+          "width": 374,
+          "height": 679.640625,
+          "bottom": 1669.6875
+        },
+        "v3-evidence": {
+          "x": 8,
+          "y": 1810.078125,
+          "width": 374,
+          "height": 59.140625,
+          "bottom": 1869.21875
+        },
+        "v3-earth": {
+          "x": 123.9453125,
+          "y": 526.6328125,
+          "width": 142.109375,
+          "height": 142.109375,
+          "bottom": 668.7421875
+        },
+        "v3-canvas": {
+          "x": 8,
+          "y": 391,
+          "width": 374,
+          "height": 530,
+          "bottom": 921
+        }
+      },
+      "captionBottom": 708.5390625,
+      "measurementsTop": 726.4375,
+      "measurementsBottom": 909,
+      "parents": {
+        "v3-earth": "v3-canvas",
+        "v3-canvas": "v3-world",
+        "v3-network": "v3-canvas",
+        "state-nodes": "v3-canvas"
+      },
+      "nodes": [
+        {
+          "id": "MIL",
+          "x": 9.8671875,
+          "y": 404.59375,
+          "width": 86.015625,
+          "height": 100
+        },
+        {
+          "id": "RES",
+          "x": 9.8671875,
+          "y": 531.796875,
+          "width": 86.015625,
+          "height": 100
+        },
+        {
+          "id": "FOOD",
+          "x": 9.8671875,
+          "y": 659,
+          "width": 86.015625,
+          "height": 100
+        },
+        {
+          "id": "SMALL",
+          "x": 9.8671875,
+          "y": 786.1875,
+          "width": 86.015625,
+          "height": 100
+        },
+        {
+          "id": "ISLAND",
+          "x": 294.1015625,
+          "y": 786.1875,
+          "width": 86.015625,
+          "height": 100
+        },
+        {
+          "id": "ECON",
+          "x": 294.1015625,
+          "y": 659,
+          "width": 86.015625,
+          "height": 100
+        },
+        {
+          "id": "FRAGILE",
+          "x": 294.1015625,
+          "y": 531.796875,
+          "width": 86.015625,
+          "height": 100
+        },
+        {
+          "id": "NEUTRAL",
+          "x": 294.1015625,
+          "y": 404.59375,
+          "width": 86.015625,
+          "height": 100
+        }
+      ],
+      "routeCount": 18,
+      "aurora": {
+        "count": 1,
+        "decorative": "true",
+        "animations": [
+          "none",
+          "none"
+        ]
+      },
+      "earthLayers": [
+        {
+          "x": 123.9453125,
+          "y": 526.6328125,
+          "width": 142.109375,
+          "height": 142.109375
+        },
+        {
+          "x": 123.9453125,
+          "y": 526.6328125,
+          "width": 142.109375,
+          "height": 142.109375
+        }
+      ],
+      "turnDisabled": true,
+      "horizontalOverflow": false,
+      "nav": [
+        "dashboard_v1.html",
+        "dashboard_v2.html",
+        "dashboard_v3.html"
+      ],
+      "reducedMotion": true
+    }
+  ],
+  "source_commit": "731e184ea6481f6311d33249d909c5396a403711",
+  "source_url": "https://ryoryo3888.github.io/homeostasis-security/dashboard_v3.html",
+  "approval": "User approved the aurora revision, then explicitly authorized formal Visual Baseline protection.",
+  "capture_mode": "public Chromium; deviceScaleFactor 1; reduced motion; initial selection A",
+  "tolerance_css_px": 2,
+  "protected_sources": {
+    "ui/v3/page.html": "c7ca84b5b3e88b55e759a8c98484ac123e46121c4114121a2e6a7bc1c41c5653",
+    "ui/v3/observatory.css": "4d6148c050ed7f0793e7dcc39284e276ac687df976e24b4959885b4f4f1d9010",
+    "earth_japan_network_v2.png": "9ded98e2d6cf732c445effbf3eb3d377f70858a83e0f19b0fcd0982feea64ebc"
+  }
+}

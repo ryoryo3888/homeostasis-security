@@ -1,7 +1,10 @@
 # V3 Phase 7A — Candidate Visual Frame
 
-Status: **CANDIDATE**. User visual approval is pending. This is not the approved
-V3 visual baseline and does not update any V1/V2 baseline.
+Status: **APPROVED VISUAL FRAME**, following explicit user approval of the
+magenta/purple aurora revision and authorization to freeze it. See
+[V3 Approved Visual Baseline](V3_APPROVED_VISUAL_BASELINE.md). The candidate
+design history below is retained; references to pending approval are historical.
+V1/V2 baselines are unchanged.
 
 ## 2026-09-18 common-frame correction
 

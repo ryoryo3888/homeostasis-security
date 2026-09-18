@@ -39,9 +39,9 @@ class CandidateTests(unittest.TestCase):
             source=next(x for x in self.n['routes'] if x['route_id']==r['id'])
             self.assertEqual((r['source'],r['target'],r['capacity'],r['delay']),(source['source'],source['destination'],source['capacity'],source['delay']))
             self.assertNotIn('flow',r)
-    def test_candidate_not_approved(self):
+    def test_visual_approval_does_not_promote_research(self):
         c=json.loads((ROOT/'ui/v3/frame.json').read_text())
-        self.assertEqual(c['status'],'candidate');self.assertFalse(c['approved_visual_baseline'])
+        self.assertEqual(c['status'],'approved');self.assertTrue(c['approved_visual_baseline'])
         self.assertEqual(self.data['visual_baseline'],'candidate')
     def test_no_meta_copy(self):
         text=(ROOT/'dashboard_v3.html').read_text()+(ROOT/'ui/v3/observatory.js').read_text()

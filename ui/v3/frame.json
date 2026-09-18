@@ -1,17 +1,50 @@
 {
   "version": "v3",
-  "status": "candidate",
-  "approved_visual_baseline": false,
+  "status": "approved",
+  "approved_visual_baseline": true,
   "visual_frame_source": "dashboard_v2.html",
-  "revision": "2026-09-18-v2-scale-earth-aurora",
+  "revision": "2026-09-18-approved-aurora",
   "constitution": "docs/architecture/HOMEOSTASIS_VISUAL_CONSTITUTION.md",
-  "order": ["v3-identity", "v3-control", "v3-world", "v3-state-detail", "v3-evidence"],
-  "parents": {"v3-earth": "v3-canvas", "v3-canvas": "v3-world", "v3-network": "v3-canvas", "state-nodes": "v3-canvas"},
-  "slots": {"STATE_DETAIL": "v3-state-detail", "NETWORK_DETAIL": "v3-network-detail", "METRICS_EVIDENCE": "v3-evidence"},
+  "order": [
+    "v3-identity",
+    "v3-control",
+    "v3-world",
+    "v3-state-detail",
+    "v3-evidence"
+  ],
+  "parents": {
+    "v3-earth": "v3-canvas",
+    "v3-canvas": "v3-world",
+    "v3-network": "v3-canvas",
+    "state-nodes": "v3-canvas"
+  },
+  "slots": {
+    "STATE_DETAIL": "v3-state-detail",
+    "NETWORK_DETAIL": "v3-network-detail",
+    "METRICS_EVIDENCE": "v3-evidence"
+  },
   "viewports": [
-    {"name": "desktop", "width": 1440, "height": 1000},
-    {"name": "ipad", "width": 1024, "height": 1366},
-    {"name": "ipad-portrait", "width": 768, "height": 1024},
-    {"name": "mobile", "width": 390, "height": 844}
-  ]
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "name": "ipad",
+      "width": 1024,
+      "height": 1366
+    },
+    {
+      "name": "ipad-portrait",
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "baseline": "tests/layout/v3-public-baseline.json",
+  "source_commit": "731e184ea6481f6311d33249d909c5396a403711"
 }
