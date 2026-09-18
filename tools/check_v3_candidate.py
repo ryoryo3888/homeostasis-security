@@ -51,6 +51,18 @@ def check(base):
             assert result['nav']==['dashboard_v1.html','dashboard_v2.html','dashboard_v3.html']
             assert 'STRUCTURE / BASELINE STATE' in result['text'] and '正式世界線なし' in result['text']
             for banned in ('10秒','30秒','秒で理解','読み方','初心者向け','研究者向け','支援国','被災国'):assert banned not in result['text']
+            # Background motion must stop for reduced motion and never move the frame.
+            assert browser.evaluate("getComputedStyle(document.querySelector('.world-canvas'),'::before').animationName==='none'",session)
+            browser.call('Emulation.setEmulatedMedia',{'features':[{'name':'prefers-reduced-motion','value':'no-preference'}]},session)
+            motion=browser.evaluate("""(async()=>{
+                await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+                const el=document.querySelector('.world-canvas');
+                const animations=el.getAnimations({subtree:true}).filter(a=>a.animationName==='v3-aurora-drift');
+                const sample=t=>{animations.forEach(a=>{a.pause();a.currentTime=t});return getComputedStyle(el,'::before').transform};
+                return {count:animations.length,start:sample(0),later:sample(12000),pointer:getComputedStyle(el,'::before').pointerEvents};
+            })()""",session)
+            assert motion['count']==2 and motion['start']!=motion['later'] and motion['pointer']=='none',motion
+            browser.call('Emulation.setEmulatedMedia',{'features':[{'name':'prefers-reduced-motion','value':'reduce'}]},session)
             browser.call('Page.bringToFront',session=session)
             browser.evaluate("window._errors=[];addEventListener('error',e=>_errors.push(e.message));document.querySelectorAll('.state-node')[0].focus()",session)
             shot=browser.call('Page.captureScreenshot',{'format':'png'},session)['data']

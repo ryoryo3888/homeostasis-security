@@ -37,6 +37,9 @@ METRICS_EVIDENCE. Content is not inserted before the control or Earth.
 - Earth is a static Natural Earth land-dot projection with illustrative lighting;
   it is not a metric or the location of any synthetic country. No false network
   is baked into the globe image. No pulse pretends to be Homeostasis.
+- The user-requested cyan/magenta/purple atmospheric backdrop drifts slowly
+  through CSS pseudo-elements only. Its color and motion carry no research
+  meaning and do not animate Earth, routes or resources. Reduced motion stops it.
 - Read-only controls are disabled because no formal worldline exists. The page
   has no API dispatch, simulation or automatic advance code.
 
