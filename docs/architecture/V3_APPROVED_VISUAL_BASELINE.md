@@ -34,7 +34,10 @@ Do not auto-record a new baseline to make a failing test pass.
 `tools/check_v3_candidate.py` filename is retained for workflow compatibility.
 It compares public-captured bounds/parents/state positions/Earth layers with a
 2 CSS pixel renderer-rounding tolerance, not permission to shift the design.
-Exact source hashes protect the stylesheet, page template and Earth image.
+At 390px, font-dependent header wrapping is allowed: world coordinates are
+compared relative to the canvas and section gaps are preserved; header/control
+text heights are not compared across OS fonts. Desktop/iPad retain absolute
+geometry comparisons. Exact source hashes protect the stylesheet, page template and Earth image.
 Generated page consistency remains covered by the existing unit test.
 
 The browser watches removed locked nodes from document initialization, rejecting
