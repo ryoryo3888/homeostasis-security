@@ -76,6 +76,14 @@ METRICS_EVIDENCE. Content is not inserted before the control or Earth.
 
 ## Candidate checks
 
+User visual revision (2026-09-18): reduce the V3 globe to V2 scale (368px
+maximum, responsive within the existing eight-state frame). Keep its center
+and surrounding cards in place. V1 retains state communications, V2 retains
+satellites, and V3 adds gently moving green/cyan/violet aurora curtains. The
+aurora is decorative, independent of all research measurements, hidden from
+assistive technology, and static with reduced motion enabled. It is rendered
+as SVG/CSS over the existing Earth asset; no image or V1/V2 edits are needed.
+
 `tools/check_v3_candidate.py` checks desktop 1440×1000, iPad landscape
 1024×1366, iPad portrait 768×1024 and narrow 390×844: frame order/parents,
 Earth-centered composition, eight visible nodes, no horizontal document
