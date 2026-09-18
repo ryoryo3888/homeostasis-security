@@ -10,7 +10,7 @@ import hashlib
 from threading import RLock
 
 from .contracts import digest
-from .choices import TechnicalFailure, ensure, validate_choice
+from .choices import TechnicalFailure, ensure, validate_choice, check, TEMPLATE
 from .network import validate_network
 
 
@@ -271,7 +271,7 @@ class SettlementEngine:
         ensure(best is not None, 'NO_VALID_ALLOCATION')
         return best
 
-    def settle(self, principal, state, submissions, consents, *, policy_id):
+    def settle(self, principal, state, submissions, consents, *, policy_id, condition_catalogue=()):
         s = self._core(principal,state)
         ensure(s['last_settlement_turn'] != s['turn'], 'TURN_ALREADY_SETTLED')
         ensure(policy_id in self.policies, 'UNKNOWN_POLICY')
@@ -279,12 +279,21 @@ class SettlementEngine:
         choices = sorted((self.authority.verify(e,'choice')['choice'] for e in submissions),key=lambda c:c['choice_id'])
         ids = [c['choice_id'] for c in choices]
         ensure(len(ids) == len(set(ids)) and not set(ids)&set(s['seen_choice_ids']), 'CHOICE_ID_COLLISION')
+        # Trusted host evidence distinguishes a known but unselected opportunity
+        # (condition false) from an invented reference (technical failure).
+        known=set()
+        for template in condition_catalogue:
+            check(TEMPLATE,template)
+            ensure(template['turn']==s['turn'] and template['snapshot_hash']==digest(s),'STALE_CONDITION_CATALOGUE')
+            ensure(template['actor_state_id'] in self.states,'INVALID_CATALOGUE_ACTOR')
+            ensure(template['choice_id'] not in known and template['choice_id'] not in s['seen_choice_ids'],'CHOICE_ID_COLLISION')
+            known.add(template['choice_id'])
         for c in choices:
             validate_choice(c)
             ensure(c['turn'] == s['turn'] and c['snapshot_hash'] == digest(s), 'STALE_CHOICE')
             for condition in c['conditions']:
                 reference = condition['choice_id']
-                ensure(reference in (set(ids)|set(s['seen_choice_ids']) if condition['kind']=='arrived_amount' else set(ids)), 'UNKNOWN_CONDITION_REFERENCE')
+                ensure(reference in (set(ids)|set(s['seen_choice_ids']) if condition['kind']=='arrived_amount' else set(ids)|known), 'UNKNOWN_CONDITION_REFERENCE')
         consent_map = self._consents(choices,consents)
         prepared = [self._prepare(s,c,policy,consent_map) for c in choices]
         amounts = self._allocate(s,choices,prepared,policy)

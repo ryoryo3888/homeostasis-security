@@ -259,7 +259,8 @@ class TurnRunner:
         phase('CHOICE_VALIDATION', {'catalogue': templates, 'choices': choices, 'consents': consent_record})
         # Phase-four settle encapsulates feasibility -> joint allocation -> atomic
         # apply. Record its actual evidence only after the complete call succeeds.
-        settled = engine.read(engine.settle(core, state, submissions, consents, policy_id=self.policy.policy_id))
+        settled = engine.read(engine.settle(core, state, submissions, consents, policy_id=self.policy.policy_id,
+                                           condition_catalogue=templates))
         audit = settled['audits'][-1]
         phase('FEASIBILITY', [a['individual'] for a in audit['choices']])
         phase('JOINT_SETTLEMENT', audit)
