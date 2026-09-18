@@ -10,7 +10,7 @@ def compare_layout(expected, actual):
     def compare(a, b, path):
         if isinstance(a, (int, float)) and not isinstance(a, bool):
             if not isinstance(b, (int, float)) or not math.isfinite(b) or abs(a-b)>2:
-                raise ValueError('V3 geometry drift: '+path)
+                raise ValueError(f'V3 geometry drift: {path}: {a} -> {b}')
         elif isinstance(a, dict):
             if not isinstance(b, dict) or set(a)!=set(b): raise ValueError('V3 fields drift: '+path)
             for k in a: compare(a[k], b[k], path+'.'+k)
