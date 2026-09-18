@@ -1,8 +1,9 @@
-"""Candidate structural/interaction checks, not an approved pixel baseline."""
+"""Approved V3 frame, motion and interaction checks; no baseline auto-update."""
 import argparse,base64,functools,http.server,json,threading
 from pathlib import Path
 from urllib.parse import urlsplit
 from check_layout import Browser,QuietHandler,ROOT
+from v3_visual_contract import compare_layout,verify_sources
 
 # Read the real V2 styles at the same viewport; do not bless a new pixel baseline.
 FRAME_STYLES = '''(selectors => Object.fromEntries(Object.entries(selectors).map(([name,selector]) => {
@@ -16,6 +17,8 @@ FRAME_STYLES = '''(selectors => Object.fromEntries(Object.entries(selectors).map
 
 def check(base):
     contract=json.loads((ROOT/'ui/v3/frame.json').read_text())
+    baseline=json.loads((ROOT/contract['baseline']).read_text())
+    verify_sources(baseline['protected_sources'])
     out=ROOT/'.artifacts/layout';out.mkdir(parents=True,exist_ok=True);records=[]
     with Browser() as browser:
         parts=urlsplit(base);browser.allowed_origin=parts.scheme+'://'+parts.netloc
@@ -30,6 +33,14 @@ def check(base):
             browser.wait("!!document.querySelector('.control-heading')",session)
             reference=browser.evaluate(FRAME_STYLES+'('+json.dumps({'shell':'.shell','body':'body','panel':'.brand','control':'.controls','brandText':'.brand-en','controlText':'.control-heading'})+')',session)
             reference_earth=browser.evaluate("document.querySelector('.earth-panel .earth').getBoundingClientRect().width",session)
+            browser.call('Page.addScriptToEvaluateOnNewDocument',{'source':"""
+                window.__v3Relocations=[];
+                const locked=['v3-identity','v3-control','v3-world','v3-canvas','v3-earth','v3-network','state-nodes'];
+                new MutationObserver(records=>records.forEach(r=>r.removedNodes.forEach(n=>{
+                    if(n.nodeType===1) for(const id of locked)
+                        if(n.id===id || n.querySelector('#'+id)) window.__v3Relocations.push(id);
+                }))).observe(document,{childList:true,subtree:true});
+            """},session)
             browser.call('Page.navigate',{'url':base+'/dashboard_v3.html'},session)
             browser.wait('!!window.V3Candidate?.ready',session)
             browser.evaluate('document.fonts.ready.then(()=>true)',session)
@@ -55,6 +66,7 @@ def check(base):
                  nav:[...document.querySelectorAll('nav a')].map(a=>a.getAttribute('href')),
                  reducedMotion:matchMedia('(prefers-reduced-motion: reduce)').matches};
             })()''',session)
+            compare_layout(next(r for r in baseline['records'] if r['viewport']==vp),result)
             bounds=result['bounds'];earth=bounds['v3-earth'];canvas=bounds['v3-canvas']
             assert result['parents']==contract['parents']
             assert all(bounds[a]['bottom']<=bounds[b]['y']+.5 for a,b in zip(contract['order'],contract['order'][1:]))
@@ -95,17 +107,31 @@ def check(base):
             assert after==earth
             browser.call('Emulation.setEmulatedMedia',{'features':[{'name':'prefers-reduced-motion','value':'no-preference'}]},session)
             assert browser.evaluate("[...document.querySelectorAll('.aurora-ribbon')].every(n=>getComputedStyle(n).animationName==='aurora-drift')",session)
+            motion=browser.evaluate("""(async()=>{
+                await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+                const nodes=[...document.querySelectorAll('.aurora-ribbon')];
+                const animations=nodes.flatMap(n=>n.getAnimations());
+                const styles=nodes.map(n=>{const s=getComputedStyle(n);return {duration:s.animationDuration,delay:s.animationDelay,easing:s.animationTimingFunction}});
+                const sample=t=>{animations.forEach(a=>{a.pause();a.currentTime=t});return nodes.map(n=>getComputedStyle(n).transform)};
+                return {count:animations.length,styles,start:sample(0),later:sample(5000)};
+            })()""",session)
+            assert motion['count']==2 and motion['start']!=motion['later'],motion
+            assert motion['styles']==[{'duration':'14s','delay':'-6s','easing':'ease-in-out'},{'duration':'10s','delay':'0s','easing':'ease-in-out'}],motion
             browser.call('Emulation.setEmulatedMedia',{'features':[{'name':'prefers-reduced-motion','value':'reduce'}]},session)
             browser.evaluate("document.getElementById('clear-selection').click()",session)
             assert browser.evaluate("document.querySelectorAll('.state-node[aria-pressed=true]').length===0 && document.querySelectorAll('.route-row').length===18",session)
             browser.evaluate("document.querySelectorAll('.state-node')[0].click();document.activeElement.blur();window.scrollTo(0,0)",session)
             shot=browser.call('Page.captureScreenshot',{'format':'png'},session)['data']
             (out/f'v3-{vp["name"]}.png').write_bytes(base64.b64decode(shot))
+            assert browser.evaluate('window.__v3Relocations.length===0',session), 'Locked runtime relocation'
+            # Exercise the observer in this disposable test document, never public code.
+            assert browser.evaluate("""(async()=>{const e=document.getElementById('v3-earth'),p=e.parentNode,next=e.nextSibling;
+                document.body.append(e);p.insertBefore(e,next);await Promise.resolve();return window.__v3Relocations.includes('v3-earth')})()""",session)
             result.pop('text');records.append({'viewport':vp,'v2_earth_width':reference_earth,**result})
-            print('V3',vp['name'],'candidate frame/data/keyboard/interaction PASS',flush=True)
+            print('V3',vp['name'],'approved frame/data/keyboard/interaction PASS',flush=True)
             browser.call('Target.closeTarget',{'targetId':target})
         assert not browser.blocked,browser.blocked
-    (out/'v3-candidate-check.json').write_text(json.dumps({'status':'candidate','approved_baseline':False,'records':records},indent=2))
+    (out/'v3-candidate-check.json').write_text(json.dumps({'status':contract['status'],'approved_baseline':True,'source_commit':baseline['source_commit'],'records':records},indent=2))
 
 
 def main():

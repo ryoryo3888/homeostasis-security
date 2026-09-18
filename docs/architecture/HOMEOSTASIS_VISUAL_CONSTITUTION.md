@@ -128,3 +128,12 @@ The sanitized public baseline was reacquired from Pages at commit
 **c9b436f9271b71804e27f30b72c6d057b271bdd6** (source revision `231fde9`). Both desktop/iPad
 and all 12 TURN states match the verified candidate. The earlier copy-bearing
 baseline is historical evidence only, not the current visual target.
+
+## Approved V3 frame
+
+V3 visual approval is now recorded separately in
+[V3 Approved Visual Baseline](V3_APPROVED_VISUAL_BASELINE.md), source commit
+`731e184ea6481f6311d33249d909c5396a403711`. The earlier unstarted/candidate
+statements above describe the original constitution release, not current V3
+status. V1/V2 baselines are unchanged. The same locked-frame and explicit-slot
+rules apply to V3; visual approval does not authorize a Simulation or API call.
