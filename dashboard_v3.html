@@ -53,9 +53,9 @@ body.v3{background:radial-gradient(circle at 50% -10%,#16364c 0,#071522 34%,var(
 #v3-earth img{border-radius:50%;object-fit:cover;filter:saturate(.82) contrast(1.08) brightness(.82);box-shadow:0 0 25px rgba(51,215,247,.32),0 0 75px rgba(31,130,210,.25)}
 .earth-caption{top:100%;padding-top:15px}.earth-caption>span{font-size:11px;color:var(--cyan);font-weight:800;letter-spacing:.12em}.earth-caption small{color:var(--muted)}
 .v3-aurora{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;mix-blend-mode:screen}
-.aurora-ribbon{transform-origin:50% 24%;animation:aurora-drift 12s ease-in-out infinite alternate}
-.aurora-ribbon.far{animation-duration:17s;animation-delay:-6s;opacity:.65}
-@keyframes aurora-drift{from{transform:translateY(1px) skewX(-3deg);opacity:.58}to{transform:translateY(-5px) skewX(3deg);opacity:.95}}
+.aurora-ribbon{transform-origin:50% 24%;animation:aurora-drift 10s ease-in-out infinite alternate}
+.aurora-ribbon.far{animation-duration:14s;animation-delay:-6s;opacity:.65}
+@keyframes aurora-drift{from{transform:translate(1px,3px) skewX(-5deg);opacity:.58}to{transform:translate(-2px,-9px) skewX(5deg);opacity:.95}}
 @media(prefers-reduced-motion:reduce){.aurora-ribbon{animation:none!important}}
 .state-node{width:23%;min-height:128px;grid-template-columns:44px 1fr;column-gap:12px;padding:16px 14px;border:1px solid var(--line);border-radius:14px;background:var(--panel-bg);box-shadow:var(--panel-shadow)}
 .state-node[aria-pressed=true]{background:linear-gradient(180deg,#0d3042,#061827);border-color:var(--cyan);box-shadow:inset 0 0 20px rgba(34,211,238,.05),0 0 12px rgba(103,232,249,.10)}
@@ -116,9 +116,9 @@ body.v3{background:radial-gradient(circle at 50% -10%,#16364c 0,#071522 34%,var(
     <div id="v3-earth" data-v3-frame="earth"><img src="earth_japan_network_v2.png" alt="地球。画像内の光と線は装飾。A〜Hは地理に対応しない合成国家。"><svg class="v3-aurora" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
       <defs>
         <linearGradient id="aurora-curtain" x1="0" y1="1" x2="0.15" y2="0">
-          <stop stop-color="#64ffc6" stop-opacity=".85"/><stop offset=".42" stop-color="#41e6d0" stop-opacity=".4"/><stop offset=".78" stop-color="#9b8fff" stop-opacity=".23"/><stop offset="1" stop-color="#b594ff" stop-opacity="0"/>
+          <stop stop-color="#64ffc6" stop-opacity=".85"/><stop offset=".42" stop-color="#41e6d0" stop-opacity=".4"/><stop offset=".65" stop-color="#de71d5" stop-opacity=".48"/><stop offset=".84" stop-color="#a17aff" stop-opacity=".36"/><stop offset="1" stop-color="#b594ff" stop-opacity="0"/>
         </linearGradient>
-        <linearGradient id="aurora-edge"><stop stop-color="#79ffe0" stop-opacity="0"/><stop offset=".28" stop-color="#78ffbc"/><stop offset=".65" stop-color="#5ff4e2"/><stop offset="1" stop-color="#b3a0ff" stop-opacity="0"/></linearGradient>
+        <linearGradient id="aurora-edge"><stop stop-color="#79ffe0" stop-opacity="0"/><stop offset=".28" stop-color="#78ffbc"/><stop offset=".5" stop-color="#5ff4e2"/><stop offset=".72" stop-color="#e68bdc"/><stop offset=".88" stop-color="#ad8aff" stop-opacity=".7"/><stop offset="1" stop-color="#b3a0ff" stop-opacity="0"/></linearGradient>
         <filter id="aurora-soft" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="5"/></filter>
       </defs>
       <g class="aurora-ribbon far">
