@@ -28,6 +28,9 @@ const http=require('http'),fs=require('fs'),path=require('path'),assert=require(
    await page.screenshot({path:path.join(root,`.artifacts/layout/v3-webkit-${width}.png`)});
    await page.emulateMedia({reducedMotion:'no-preference'});
    assert.equal(await page.locator('.aurora-ribbon').first().evaluate(n=>getComputedStyle(n).animationName),'aurora-drift');
+   const motion=()=>page.locator('.aurora-ribbon').last().evaluate(n=>({transform:getComputedStyle(n).transform,opacity:getComputedStyle(n).opacity}));
+   const before=await motion();await page.waitForTimeout(900);const after=await motion();
+   assert.notEqual(before.transform,after.transform);assert.notEqual(before.opacity,after.opacity);
    console.log('WEBKIT PASS',width,height,JSON.stringify(result));await page.close();
   }
   assert.deepEqual(blocked,[]);console.log('No separate CSS, script or baseline requests required.');
