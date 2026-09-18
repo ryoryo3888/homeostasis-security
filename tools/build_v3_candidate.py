@@ -41,12 +41,27 @@ def transform(baseline, network):
                           'network':{'path':'scenarios/v3/synthetic_network.json','canonical_sha256':digest(network)}}}
 
 
+def render_page(data):
+    """One atomic document: stale CSS/JS/JSON caches cannot mix revisions."""
+    html=(ROOT/'ui/v3/page.html').read_text()
+    parts={
+        '<!-- V3_BUNDLED_STYLE -->':'<style>\n'+(ROOT/'ui/v3/observatory.css').read_text()+'\n</style>',
+        '<!-- V3_BUNDLED_DATA -->':'<script id="v3-baseline-data" type="application/json">'+json.dumps(data,ensure_ascii=False).replace('<','\\u003c')+'</script>',
+        '<!-- V3_BUNDLED_SCRIPT -->':'<script>\n'+(ROOT/'ui/v3/observatory.js').read_text()+'\n</script>',
+    }
+    for marker,content in parts.items():
+        if html.count(marker)!=1:raise ValueError('Missing/duplicate V3 bundle marker')
+        html=html.replace(marker,content)
+    return html
+
+
 def main():
     b=json.loads((ROOT/'scenarios/v3/synthetic_baseline.json').read_text())
     n=json.loads((ROOT/'scenarios/v3/synthetic_network.json').read_text())
     data=transform(b,n)
     for item in data['provenance'].values():item['file_sha256']=hashlib.sha256((ROOT/item['path']).read_bytes()).hexdigest()
     (ROOT/'ui/v3/baseline.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    (ROOT/'dashboard_v3.html').write_text(render_page(data),encoding='utf-8')
     print('V3 candidate: synthetic baseline only; no TURN execution')
 
 if __name__=='__main__':main()

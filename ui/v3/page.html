@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>HOMEOSTASIS SECURITY — V3</title>
+<!-- V3_BUNDLED_STYLE -->
+
+</head>
+<body class="v3">
+<div class="shell">
+<header id="v3-identity" data-v3-frame="identity">
+  <div class="brand panel"><a class="identity" href="dashboard_v3.html">HOMEOSTASIS SECURITY v3</a><h1>多国間・有限資源・相互依存の恒常性</h1>
+    <p class="brand-question">世界の安定化は、国家の自律性や資源分布とどのように両立・衝突するか？</p>
+    <div class="experiment-meta"><span>合成初期状態</span><span>8国家・18経路</span><span>正式Simulation未実行</span></div>
+    <nav class="version-switch" aria-label="バージョン"><a href="dashboard_v1.html">V1：二国間</a><a href="dashboard_v2.html">V2：地球規模</a><a href="dashboard_v3.html" aria-current="page">V3：相互依存</a></nav>
+  </div>
+  <div class="world-premise panel">
+    <div><b>国家</b><strong>独立した8つの意思決定主体</strong><p>自律性と自立性を別々に観測</p></div>
+    <div><b>有限資源</b><strong>食料・エネルギー</strong><p>在庫・生産・輸送能力の制約</p></div>
+    <div><b>相互依存</b><strong>18の輸送経路</strong><p>条件付き協力・第三国取引・代替経路</p></div>
+    <p class="emergence-principle">世界の法則は設計する。世界の結末は設計しない。</p>
+    <p class="coordinator-boundary">地球調整機関：観測・提案・調整案提示。命令権は持たない。</p>
+  </div>
+</header>
+<section id="v3-control" data-v3-frame="control" aria-label="Simulation Control">
+  <h2>SIMULATION CONTROL</h2>
+  <div class="turn-control"><span>TURN <b>—</b></span><button disabled aria-label="前のTURN">‹ 前へ</button><button disabled aria-label="次のTURN">次へ ›</button></div>
+  <p>正式世界線なし <span>／ TURN未実行</span></p>
+</section>
+<main>
+<section id="v3-world" data-v3-frame="world" aria-label="合成8国家の初期構造">
+  <div class="world-top"><div><span class="overline">STRUCTURE / BASELINE STATE</span><span class="synthetic">合成初期状態</span></div><div class="resource-key"><span class="food">食料 <i></i></span><span class="energy">エネルギー <i></i></span></div></div>
+  <div class="world-canvas" id="v3-canvas">
+    <div class="earth-system-field panel" aria-hidden="true"></div>
+    <svg id="v3-network" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="route-tip" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0 0L5 2.5L0 5" fill="none" stroke="currentColor"/></marker></defs><g id="route-lines"></g></svg>
+    <div id="v3-earth" data-v3-frame="earth"><img src="earth_japan_network_v2.png" alt="地球。画像内の光と線は装飾。A〜Hは地理に対応しない合成国家。"><svg class="v3-aurora" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="aurora-curtain" x1="0" y1="1" x2="0.15" y2="0">
+          <stop stop-color="#64ffc6" stop-opacity=".85"/><stop offset=".42" stop-color="#41e6d0" stop-opacity=".4"/><stop offset=".78" stop-color="#9b8fff" stop-opacity=".23"/><stop offset="1" stop-color="#b594ff" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="aurora-edge"><stop stop-color="#79ffe0" stop-opacity="0"/><stop offset=".28" stop-color="#78ffbc"/><stop offset=".65" stop-color="#5ff4e2"/><stop offset="1" stop-color="#b3a0ff" stop-opacity="0"/></linearGradient>
+        <filter id="aurora-soft" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="5"/></filter>
+      </defs>
+      <g class="aurora-ribbon far">
+        <path d="M68 105 Q100 20 145 49 T224 20 T323 87 L325 114 Q270 66 224 62 T145 86 T68 123Z" fill="url(#aurora-curtain)" filter="url(#aurora-soft)"/>
+      </g>
+      <g class="aurora-ribbon">
+        <path d="M51 127 Q89 42 123 64 T188 34 T255 58 T344 106 L344 132 Q296 90 255 107 T188 82 T123 109 T51 145Z" fill="url(#aurora-curtain)" filter="url(#aurora-soft)"/>
+        <path d="M51 145 Q88 107 123 109 T188 82 T255 107 T344 132" fill="none" stroke="url(#aurora-edge)" stroke-width="8" filter="url(#aurora-soft)"/>
+        <path d="M51 145 Q88 107 123 109 T188 82 T255 107 T344 132" fill="none" stroke="url(#aurora-edge)" stroke-width="1.4" opacity=".75"/>
+      </g>
+    </svg><div class="earth-caption"><span>EARTH / HOMEOSTASIS</span><small>EIGHT INDEPENDENT STATES</small></div></div>
+    <div id="state-nodes" aria-label="国家と初期資源"></div>
+    <div class="world-measurements" aria-label="TURN末観測の状態"><span>世界全体の恒常性 <b>未観測</b></span><span>国家自律性 <b>未観測</b></span><span>必須機能充足 <b>未観測</b></span><span>資源不足・輸送中 <b>未観測</b></span></div>
+  </div>
+  <div class="world-bottom"><span id="route-count">構造データ確認中</span><span>破線：経路の存在 <i>／</i> 実流量は未観測</span><button id="clear-selection" type="button">全体</button></div>
+  <p id="load-error" role="alert" hidden></p>
+</section>
+<section id="v3-state-detail" data-v3-slot="STATE_DETAIL" class="details-surface" aria-labelledby="state-heading">
+  <div class="state-detail">
+    <div class="section-heading"><span class="overline">STATE / RESOURCES</span><h2 id="state-heading">国家 <span id="selected-label">—</span></h2></div>
+    <div id="resource-details"></div>
+    <div class="boundary-notes"><p><b>国家自律性</b><span>選択・拒否・条件付き参加の余地。判断は未観測。</span></p><p><b>国家的自立性</b><span>在庫・需要・生産能力。維持可能期間は未観測。</span></p></div>
+  </div>
+  <div class="network-detail" id="v3-network-detail" data-v3-slot="NETWORK_DETAIL">
+    <div class="section-heading"><span class="overline">POTENTIAL CONNECTIONS</span><h2>経路と依存</h2></div>
+    <p class="muted" id="connection-context">国家未選択</p><div id="route-details"></div>
+    <details id="production-detail"><summary>生産の投入依存</summary><div id="production-dependencies"></div></details>
+  </div>
+</section>
+<section class="research-question" aria-label="研究質問"><span class="overline">RESEARCH QUESTION</span><p>世界の安定化は、国家の自律性や資源分布と<br class="desktop-break">どのように両立・衝突するか？</p></section>
+<section id="v3-evidence" data-v3-slot="METRICS_EVIDENCE">
+  <details><summary>観測・証拠 <span>PROVENANCE</span></summary>
+    <div class="evidence-body"><p>表示中の在庫・需要・能力・経路は、合成基準世界の定義値。Agent判断・取引・回復・研究結果は含まない。国家配置は抽象配置。</p>
+      <p>資源バーは資源ごとの最大初期在庫を共通上限とする。経路の太さは定義容量に対応。線の強調は選択状態であり、使用量や重要度ではない。</p>
+      <div id="source-evidence"></div>
+      <p><a href="docs/design/v3/PHASE6_OBSERVATION.md">観測指標の定義と限界</a> · <a href="docs/architecture/V3_CANDIDATE_FRAME.md">V3候補Frame</a></p>
+      <p class="muted">地球画像はV2の視覚資産を継承。画像内の光・線とオーロラは装飾であり、V3の輸送経路・流量・国家の地理的位置を示さない。外周の破線のみが合成ネットワークの定義経路。</p>
+    </div>
+  </details>
+</section>
+<footer><span>V3 VISUAL BASELINE — CANDIDATE</span><span>合成初期構造 ／ 正式研究データではありません</span></footer>
+</main>
+</div>
+<!-- V3_BUNDLED_DATA -->
+<!-- V3_BUNDLED_SCRIPT -->
+</body>
+</html>
