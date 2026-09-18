@@ -10,22 +10,33 @@
 <body class="v3">
 <div class="shell">
 <header id="v3-identity" data-v3-frame="identity">
-  <div><a class="identity" href="dashboard_v3.html">HOMEOSTASIS SECURITY <span>V3</span></a><h1>多国間・有限資源・相互依存ネットワーク</h1></div>
-  <nav aria-label="バージョン"><a href="dashboard_v1.html">V1<span>二国間</span></a><a href="dashboard_v2.html">V2<span>地球規模</span></a><a href="dashboard_v3.html" aria-current="page">V3<span>相互依存</span></a></nav>
+  <div class="brand panel"><a class="identity" href="dashboard_v3.html">HOMEOSTASIS SECURITY v3</a><h1>多国間・有限資源・相互依存の恒常性</h1>
+    <p class="brand-question">世界の安定化は、国家の自律性や資源分布とどのように両立・衝突するか？</p>
+    <div class="experiment-meta"><span>合成初期状態</span><span>8国家・18経路</span><span>正式Simulation未実行</span></div>
+    <nav class="version-switch" aria-label="バージョン"><a href="dashboard_v1.html">V1：二国間</a><a href="dashboard_v2.html">V2：地球規模</a><a href="dashboard_v3.html" aria-current="page">V3：相互依存</a></nav>
+  </div>
+  <div class="world-premise panel">
+    <div><b>国家</b><strong>独立した8つの意思決定主体</strong><p>自律性と自立性を別々に観測</p></div>
+    <div><b>有限資源</b><strong>食料・エネルギー</strong><p>在庫・生産・輸送能力の制約</p></div>
+    <div><b>相互依存</b><strong>18の輸送経路</strong><p>条件付き協力・第三国取引・代替経路</p></div>
+    <p class="emergence-principle">世界の法則は設計する。世界の結末は設計しない。</p>
+    <p class="coordinator-boundary">地球調整機関：観測・提案・調整案提示。命令権は持たない。</p>
+  </div>
 </header>
 <section id="v3-control" data-v3-frame="control" aria-label="Simulation Control">
   <h2>SIMULATION CONTROL</h2>
-  <div class="turn-control"><button disabled aria-label="前のTURN">←</button><span>TURN <b>—</b></span><button disabled aria-label="次のTURN">→</button></div>
+  <div class="turn-control"><span>TURN <b>—</b></span><button disabled aria-label="前のTURN">‹ 前へ</button><button disabled aria-label="次のTURN">次へ ›</button></div>
   <p>正式世界線なし <span>／ TURN未実行</span></p>
 </section>
 <main>
 <section id="v3-world" data-v3-frame="world" aria-label="合成8国家の初期構造">
   <div class="world-top"><div><span class="overline">STRUCTURE / BASELINE STATE</span><span class="synthetic">合成初期状態</span></div><div class="resource-key"><span class="food">食料 <i></i></span><span class="energy">エネルギー <i></i></span></div></div>
   <div class="world-canvas" id="v3-canvas">
+    <div class="earth-system-field panel" aria-hidden="true"></div>
     <svg id="v3-network" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="route-tip" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0 0L5 2.5L0 5" fill="none" stroke="currentColor"/></marker></defs><g id="route-lines"></g></svg>
-    <div id="v3-earth" data-v3-frame="earth"><img src="ui/v3/earth.svg" alt="地球。A〜Hは地理に対応しない合成国家。"><div class="earth-caption"><span>ONE PLANET</span><small>EIGHT INDEPENDENT STATES</small></div></div>
+    <div id="v3-earth" data-v3-frame="earth"><img src="earth_japan_network_v2.png" alt="地球。画像内の光と線は装飾。A〜Hは地理に対応しない合成国家。"><div class="earth-caption"><span>EARTH / HOMEOSTASIS</span><small>EIGHT INDEPENDENT STATES</small></div></div>
     <div id="state-nodes" aria-label="国家と初期資源"></div>
-    <div class="world-measurements" aria-label="TURN末観測の状態"><span>必須機能充足 <b>未観測</b></span><span>資源不足 <b>未観測</b></span><span>輸送中 <b>未観測</b></span></div>
+    <div class="world-measurements" aria-label="TURN末観測の状態"><span>世界全体の恒常性 <b>未観測</b></span><span>国家自律性 <b>未観測</b></span><span>必須機能充足 <b>未観測</b></span><span>資源不足・輸送中 <b>未観測</b></span></div>
   </div>
   <div class="world-bottom"><span id="route-count">構造データ確認中</span><span>破線：経路の存在 <i>／</i> 実流量は未観測</span><button id="clear-selection" type="button">全体</button></div>
   <p id="load-error" role="alert" hidden></p>
@@ -49,7 +60,7 @@
       <p>資源バーは資源ごとの最大初期在庫を共通上限とする。経路の太さは定義容量に対応。線の強調は選択状態であり、使用量や重要度ではない。</p>
       <div id="source-evidence"></div>
       <p><a href="docs/design/v3/PHASE6_OBSERVATION.md">観測指標の定義と限界</a> · <a href="docs/architecture/V3_CANDIDATE_FRAME.md">V3候補Frame</a></p>
-      <p class="muted">地形：<a href="https://www.naturalearthdata.com/about/terms-of-use/">Natural Earth</a>。国家・経路の地理的位置は示さない。</p>
+      <p class="muted">地球画像はV2の視覚資産を継承。画像内の光と線は装飾であり、V3の輸送経路・流量・国家の地理的位置を示さない。外周の破線のみが合成ネットワークの定義経路。</p>
     </div>
   </details>
 </section>

@@ -3,6 +3,39 @@
 Status: **CANDIDATE**. User visual approval is pending. This is not the approved
 V3 visual baseline and does not update any V1/V2 baseline.
 
+## 2026-09-18 common-frame correction
+
+The first published candidate (PR #20, `b0ca4da`) was rejected as visually
+inconsistent with the completed V1/V2 pages. The user's current direction
+supersedes the earlier allowance for an independently designed V3 frame:
+research evolves, while the established HOMEOSTASIS SECURITY frame is inherited.
+
+The revised candidate inherits the approved V2 shell's 1500px maximum width,
+14px desktop outer margin, dark radial background, 14px panel corners, cyan
+borders, panel gradients/shadows, 20px identity and 17px SIMULATION CONTROL.
+The upper frame is `brand + context panels → control panel → Earth world`.
+V3 context replaces the historical V2 event; it never reuses V2 outcomes.
+Eight state cards flank the central Earth/system-field panel. Their stocks are
+initial definitions, not TURN observations. Exact resources and dependencies
+remain in the existing lower slots. Earth's DOM parent is unchanged.
+
+The central Earth inherits `earth_japan_network_v2.png`, statically rendered.
+All embedded lights, satellites and lines are decorative. Only the separate
+dashed SVG routes represent the 18 defined V3 transport paths. This boundary
+is stated in the image alternative text and evidence section.
+
+The 760px desktop world reserves space below the 490px maximum Earth for its
+caption and four unobserved metrics; no card may overlap either. The world is
+640px at tablet widths and 530px on narrow screens. These are candidate
+geometry choices, not an approved replacement of V1/V2 geometry. The context
+panel is omitted on narrow screens to keep Earth in the first viewport.
+
+The browser check compares live computed shell, background, panel, identity
+and control styles directly against V2 at the same four viewports. It also
+rejects Earth/caption/metric overlap. No existing pixel baseline is regenerated.
+Local screenshots under `.artifacts/layout/` accompany review. V1/V2 sources,
+simulations, scenario definitions and formal research records remain unchanged.
+
 The [Visual Constitution](HOMEOSTASIS_VISUAL_CONSTITUTION.md) applies: a new
 feature must not move an existing world. This candidate adds a separate page,
 `dashboard_v3.html`, isolated CSS/JS, and named detail slots. It does not load or
@@ -34,9 +67,10 @@ METRICS_EVIDENCE. Content is not inserted before the control or Earth.
 - Production-input dependencies remain distinct in an expandable detail.
 - Formal TURN, fulfillment, shortage, transit and Agent judgment are unobserved.
   No fixture outcome or Phase 6 test observation is published as research.
-- Earth is a static Natural Earth land-dot projection with illustrative lighting;
-  it is not a metric or the location of any synthetic country. No false network
-  is baked into the globe image. No pulse pretends to be Homeostasis.
+- Earth uses the static V2 visual asset as described above. Its decorative
+  network is not V3 transport evidence or the location of a synthetic country.
+  No pulse pretends to be Homeostasis. The former Natural Earth SVG and its
+  generator remain historical candidate assets; the revised page does not use it.
 - Read-only controls are disabled because no formal worldline exists. The page
   has no API dispatch, simulation or automatic advance code.
 
