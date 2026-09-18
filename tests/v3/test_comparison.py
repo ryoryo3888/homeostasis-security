@@ -51,7 +51,7 @@ class ComparisonTests(unittest.TestCase):
         self.assertEqual(len(self.calls), 2)
 
     def test_input_budget_blocks_generation(self):
-        x = self.exchange(tokens=37001)
+        x = self.exchange(tokens=60001)
         with self.assertRaises(TechnicalFailure): x(self.raw)
         self.assertEqual(len(self.calls), 1)
         self.assertFalse(x.journal.records()[0]['usage']['generation_attempted'])
@@ -68,9 +68,9 @@ class ComparisonTests(unittest.TestCase):
         self.assertEqual(x.journal.records()[0]['status'], 'failed')
 
     def test_paired_two_turn_evidence_and_replay(self):
-        control = run_arm(self.root, self.root/'control', seed=17, arm='deterministic', exchange=deterministic)
+        control = run_arm(self.root, self.root/'control', seed=17, arm='deterministic', exchange=deterministic, turns=2)
         x = self.exchange()
-        mock = run_arm(self.root, self.root/'mock', seed=17, arm='mock', exchange=x)
+        mock = run_arm(self.root, self.root/'mock', seed=17, arm='mock', exchange=x, turns=2)
         self.assertEqual(mock['completed_turns'], 2)
         self.assertEqual(control['initial_world_digest'], mock['initial_world_digest'])
         for a,b in zip(control['rows'], mock['rows']): self.assertEqual(a['transactions'],b['transactions'])
@@ -88,3 +88,24 @@ class ComparisonTests(unittest.TestCase):
         with self.assertRaises(TechnicalFailure): check(consent_schema(), answer)
         answer['decisions'] = []
         check(consent_schema(), answer)
+
+    def test_explicit_consent_rejects_omission_but_allows_refusal(self):
+        from homeostasis_v3.contracts import digest
+        answer = {'state_id': 'ECON', 'request_digest': digest({}), 'decisions': [], 'consents': {}}
+        schema = consent_schema(['offer-a', 'offer-b'])
+        with self.assertRaises(TechnicalFailure): check(schema, answer)
+        answer['consents'] = {'offer-a': False, 'offer-b': True}
+        check(schema, answer)
+        answer['consents']['unknown'] = True
+        with self.assertRaises(TechnicalFailure): check(schema, answer)
+
+    def test_budget_stops_before_generation_from_durable_usage(self):
+        from homeostasis_v3.contracts import digest
+        x = self.exchange()
+        prior = {'request_digest': digest({'prior': 1}), 'state_id': 'ECON', 'phase': 'consent'}
+        x.journal.reserve(prior)
+        x.journal.finish(prior['request_digest'], 'response_validated', {'estimated_cost_usd': '2.999'})
+        with self.assertRaises(TechnicalFailure): x(self.raw)
+        self.assertEqual(len(self.calls), 1)
+        self.assertFalse(x.journal.records()[-1]['usage']['generation_attempted'])
+        self.assertEqual(x.journal.records()[-1]['usage']['failure_code'], 'BUDGET_LIMIT_STOP')

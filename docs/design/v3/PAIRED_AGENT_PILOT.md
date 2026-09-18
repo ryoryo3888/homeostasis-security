@@ -1,5 +1,9 @@
 # Paired Gemini / deterministic pilot
 
+Historical protocol for the first two-TURN pilot. The active runner now follows
+[the expanded protocol](EXPANDED_AGENT_COMPARISON.md); do not use this document
+as instructions to reproduce the old paid dispatch.
+
 The user requested paid Gemini country TURNs for comparison after discussing
 the “ハッカソン更新監視” task. Payment is not a research quality metric. The
 question here is what differs when the same world receives actual LLM decisions.

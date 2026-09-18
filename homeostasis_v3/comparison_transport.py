@@ -1,10 +1,11 @@
 """Bounded REST transport for the paired pilot; no retries or secret persistence."""
 import json
+from decimal import Decimal
 from pathlib import Path
 
 from .agent_adapter import _object
 from .choices import ensure, check, TechnicalFailure
-from .comparison import protocol, PILOT_DIRECTORY
+from .comparison import protocol, PILOT_DIRECTORY, consent_schema
 from .contracts import canonical, digest
 from .gemini_preflight import AttemptJournal
 from .validation_runner import _write
@@ -33,7 +34,8 @@ class PilotExchange:
         ensure(r['phase'] in ('initiative', 'consent') and r['state_id'] in self.config['states'], 'INVALID_REQUEST')
         ensure(r['request_digest'] == digest({k:v for k,v in r.items() if k != 'request_digest'}), 'REQUEST_DIGEST_MISMATCH')
         ensure(r['observation_digest'] == digest(r['observation']), 'OBSERVATION_MISMATCH')
-        schema = self.config['schemas'][0 if r['phase'] == 'initiative' else 1]
+        schema = (self.config['schemas'][0] if r['phase'] == 'initiative' else
+                  consent_schema([c['choice_id'] for c in r['payload']['choices']]))
         body = {'contents': [{'role': 'user', 'parts': [{'text': raw}]}],
                 'systemInstruction': {'parts': [{'text': self.config['system_instruction']}]},
                 'generationConfig': {'temperature': self.config['temperature'], 'seed': self.seed,
@@ -42,9 +44,8 @@ class PilotExchange:
                     'responseMimeType': 'application/json', 'responseJsonSchema': schema}}
         base = 'https://generativelanguage.googleapis.com/v1beta/models/'+self.config['model']
         # Each reserved slot permits one count request and one generation at most.
-        # 32 slots cost at most USD 0.4977408 at documented rates.
-        # Plus USD 0.14 reserved for nine prior dispatches: total USD 0.6377408.
-        # This is a documented-rate estimate, not a provider-enforced billing limit.
+        # Count exact input, reserve worst output + input margin before every dispatch.
+        # Durable validated usage is charged at uncached rates; unresolved calls block.
         self.journal.reserve(r)
         usage = {'counted_input_tokens': None, 'provider_usage': None, 'generation_attempted': False}
         evidence = self.path/r['request_digest']; evidence.mkdir(exist_ok=False)
@@ -54,9 +55,15 @@ class PilotExchange:
                 'generateContentRequest': {'model': 'models/'+self.config['model'], **body}})
             count.raise_for_status()
             tokens = count.json().get('totalTokens')
-            ensure(type(tokens) is int and 0 < tokens <= 37000, 'COUNTED_INPUT_LIMIT')
+            ensure(type(tokens) is int and 0 < tokens <= self.config['max_counted_input_tokens'], 'COUNTED_INPUT_LIMIT')
             usage['counted_input_tokens'] = tokens
             _write(evidence/'count.json', {'totalTokens': tokens})
+            prior_cost = sum((Decimal(row['usage']['estimated_cost_usd'])
+                              for row in self.journal.records() if row['status'] == 'response_validated'), Decimal(0))
+            reservation = estimate_cost(tokens + self.config['input_token_margin'], self.config['max_output_tokens'])
+            ensure(prior_cost + reservation <= Decimal(self.config['estimated_budget_usd']), 'BUDGET_LIMIT_STOP')
+            usage['reserved_cost_usd'] = str(reservation)
+            usage['prior_estimated_cost_usd'] = str(prior_cost)
             usage['generation_attempted'] = True
             _write(evidence/'dispatch.json', {'generation_attempted': True})
             response = self.http.post(base+':generateContent', json=body)
@@ -78,6 +85,7 @@ class PilotExchange:
             inp, out, thoughts = (meta.get('promptTokenCount'), meta.get('candidatesTokenCount'), meta.get('thoughtsTokenCount', 0))
             ensure(all(type(x) is int and x >= 0 for x in (inp, out, thoughts)), 'INVALID_USAGE_STOP')
             ensure(inp <= tokens+2048 and out+thoughts <= 1536, 'BUDGET_ESTIMATE_EXCEEDED_STOP')
+            usage['estimated_cost_usd'] = str(estimate_cost(inp, out+thoughts))
         except Exception as error:
             usage['failure_type'] = type(error).__name__
             usage['http_status'] = getattr(getattr(error, 'response', None), 'status_code', None)
@@ -86,3 +94,7 @@ class PilotExchange:
             raise TechnicalFailure('PILOT_TRANSPORT_STOP_NO_RETRY') from None
         self.journal.finish(r['request_digest'], 'response_validated', usage)
         return answer
+
+
+def estimate_cost(input_tokens, output_tokens):
+    return (Decimal(input_tokens)*Decimal('0.30') + Decimal(output_tokens)*Decimal('2.50')) / Decimal(1000000)

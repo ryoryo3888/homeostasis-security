@@ -14,15 +14,19 @@ from .network import load_network
 from .turn import TurnRunner
 from .validation_runner import _write
 
-SEEDS = (17,)
-TURNS = 2
-PILOT_DIRECTORY = '.artifacts/v3-paid-pilot-20260919-phase-contract'
+SEEDS = (17, 23, 41)
+TURNS = 5
+PILOT_DIRECTORY = '.artifacts/v3-paid-expanded-20260919'
 
 
-def consent_schema():
+def consent_schema(choice_ids=None):
     from .agent_adapter import RESPONSE
     schema = deepcopy(RESPONSE)
     schema['properties']['decisions']['maxItems'] = 0
+    if choice_ids is not None:
+        schema['properties']['consents'] = {
+            'type': 'object', 'properties': {cid: {'type': 'boolean'} for cid in choice_ids},
+            'required': list(choice_ids), 'additionalProperties': False}
     return schema
 
 
@@ -31,7 +35,9 @@ Transfer semantics: actor_state_id is the sender: its own inventory decreases on
 Target is the recipient. Offering a transfer does not acquire resources from the target.
 Choose only opportunities owned by state_id; no action is required.
 In consent phase decisions MUST be an empty array []. Only consents records acceptance or
-refusal of listed choice IDs. Do not repeat an earlier initiative in decisions.
+refusal of listed choice IDs. Explicitly answer true or false for EVERY listed choice ID.
+True is your own consent only, never another country's consent. False means you do not consent.
+Do not leave consents empty. Neither acceptance nor refusal is prescribed. Do not repeat an earlier initiative in decisions.
 '''
 
 
@@ -82,17 +88,17 @@ def protocol(root):
             'control': 'surplus_neighbor_v1', 'model': 'gemini-3.5-flash-lite',
             'temperature': 0.3, 'thinking_level': 'minimal', 'maximum_amount': 2, 'max_initiatives': 1,
             'system_instruction': SYSTEM_INSTRUCTION + PILOT_INSTRUCTION, 'schemas': [INITIATIVE_RESPONSE, consent_schema()],
-            'max_generation_calls': 32, 'max_count_calls': 32, 'max_output_tokens': 1536,
-            'max_counted_input_tokens': 37000, 'input_token_margin': 2048,
-            'estimated_budget_usd': '1.00', 'previous_generation_attempts': 9,
-            'previous_attempts_conservative_reserve_usd': '0.14', 'pricing_checked': '2026-09-19',
+            'max_generation_calls': 240, 'max_count_calls': 240, 'max_output_tokens': 1536,
+            'max_counted_input_tokens': 60000, 'input_token_margin': 2048,
+            'estimated_budget_usd': '3.00', 'budget_scope': 'additional_expanded_run',
+            'consent_schema_policy': 'every_listed_choice_required_boolean', 'pricing_checked': '2026-09-19',
             'input_usd_per_million': '0.30', 'output_usd_per_million': '2.50',
             'retry': 0, 'artifact_class': 'validation_run', 'research_eligible': False,
             'publication_status': 'withheld',
             'source_hashes': {p.name: digest(p.read_text()) for p in sorted((Path(root)/'homeostasis_v3').glob('*.py'))}}
 
 
-def run_arm(root, output, *, seed, arm, exchange):
+def run_arm(root, output, *, seed, arm, exchange, turns=None):
     ensure(seed in SEEDS and arm in ('deterministic', 'gemini', 'mock'), 'INVALID_PILOT_ARM')
     b, n = inputs(root)
     path = Path(output); path.mkdir(parents=True, exist_ok=False)
@@ -106,7 +112,7 @@ def run_arm(root, output, *, seed, arm, exchange):
               'rows': [], 'automatic_retry': False}
     _write(path/'report.json', report)
     try:
-        for turn in range(1, TURNS + 1):
+        for turn in range(1, (TURNS if turns is None else turns) + 1):
             exchanges = []
             def record(raw):
                 # Save the exact JSON presented to each country and its unmodified public answer.
