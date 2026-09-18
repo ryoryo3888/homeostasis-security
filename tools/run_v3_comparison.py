@@ -19,7 +19,7 @@ def main():
     p.add_argument('--execute-paid', action='store_true')
     p.add_argument('--protocol-digest')
     args = p.parse_args()
-    directory = ROOT/'.artifacts/v3-paid-pilot-20260919'
+    directory = ROOT/'.artifacts/v3-paid-pilot-20260919-current'
     spec = protocol(ROOT)
     if not args.execute_paid:
         directory.mkdir(parents=True, exist_ok=False)

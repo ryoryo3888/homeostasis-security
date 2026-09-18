@@ -14,8 +14,8 @@ from .network import load_network
 from .turn import TurnRunner
 from .validation_runner import _write
 
-SEEDS = (17, 23, 41)
-TURNS = 3
+SEEDS = (17, 23)
+TURNS = 2
 
 
 def deterministic(request_json):
@@ -62,13 +62,13 @@ def protocol(root):
     return {'kind': 'v3_paired_exploratory_pilot', 'seeds': list(SEEDS), 'turns': TURNS,
             'states': sorted(c['state_id'] for c in b['world']['countries']),
             'baseline_digest': digest(b), 'network_digest': digest(n),
-            'control': 'surplus_neighbor_v1', 'model': 'gemini-2.5-flash-lite',
-            'temperature': 0.3, 'maximum_amount': 2, 'max_initiatives': 1,
+            'control': 'surplus_neighbor_v1', 'model': 'gemini-3.5-flash-lite',
+            'temperature': 0.3, 'thinking_level': 'minimal', 'maximum_amount': 2, 'max_initiatives': 1,
             'system_instruction': SYSTEM_INSTRUCTION, 'schemas': [INITIATIVE_RESPONSE, RESPONSE],
-            'max_generation_calls': 144, 'max_count_calls': 144, 'max_output_tokens': 4096,
-            'max_counted_input_tokens': 48000, 'input_token_margin': 2048,
+            'max_generation_calls': 64, 'max_count_calls': 64, 'max_output_tokens': 1536,
+            'max_counted_input_tokens': 37000, 'input_token_margin': 2048,
             'estimated_budget_usd': '1.00', 'pricing_checked': '2026-09-19',
-            'input_usd_per_million': '0.10', 'output_usd_per_million': '0.40',
+            'input_usd_per_million': '0.30', 'output_usd_per_million': '2.50',
             'retry': 0, 'artifact_class': 'validation_run', 'research_eligible': False,
             'publication_status': 'withheld',
             'source_hashes': {p.name: digest(p.read_text()) for p in sorted((Path(root)/'homeostasis_v3').glob('*.py'))}}

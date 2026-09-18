@@ -51,7 +51,7 @@ class ComparisonTests(unittest.TestCase):
         self.assertEqual(len(self.calls), 2)
 
     def test_input_budget_blocks_generation(self):
-        x = self.exchange(tokens=48001)
+        x = self.exchange(tokens=37001)
         with self.assertRaises(TechnicalFailure): x(self.raw)
         self.assertEqual(len(self.calls), 1)
         self.assertFalse(x.journal.records()[0]['usage']['generation_attempted'])
@@ -67,13 +67,13 @@ class ComparisonTests(unittest.TestCase):
         with self.assertRaises(TechnicalFailure): x(self.raw)
         self.assertEqual(x.journal.records()[0]['status'], 'failed')
 
-    def test_paired_three_turn_evidence_and_replay(self):
+    def test_paired_two_turn_evidence_and_replay(self):
         control = run_arm(self.root, self.root/'control', seed=17, arm='deterministic', exchange=deterministic)
         x = self.exchange()
         mock = run_arm(self.root, self.root/'mock', seed=17, arm='mock', exchange=x)
-        self.assertEqual(mock['completed_turns'], 3)
+        self.assertEqual(mock['completed_turns'], 2)
         self.assertEqual(control['initial_world_digest'], mock['initial_world_digest'])
         for a,b in zip(control['rows'], mock['rows']): self.assertEqual(a['transactions'],b['transactions'])
         with self.assertRaises(TechnicalFailure): compare(control, mock)
         self.assertFalse(mock['research_eligible'])
-        self.assertEqual(len(list((self.root/'mock').glob('exchanges-*.json'))), 3)
+        self.assertEqual(len(list((self.root/'mock').glob('exchanges-*.json'))), 2)

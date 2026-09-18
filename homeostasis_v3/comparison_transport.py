@@ -15,10 +15,10 @@ class PilotExchange:
         import httpx
         ensure(type(credential) is str and bool(credential.strip()), 'CREDENTIAL_REQUIRED')
         self.root = Path(root); self.config = protocol(root); self.seed = None
-        self.path = self.root/'.artifacts/v3-paid-pilot-20260919'
+        self.path = self.root/'.artifacts/v3-paid-pilot-20260919-current'
         self.path.mkdir(parents=True, exist_ok=True)
         self.journal = AttemptJournal(self.path/'attempts.sqlite', configuration={
-            'max_calls': 144, 'protocol_digest': digest(self.config)})
+            'max_calls': 64, 'protocol_digest': digest(self.config)})
         self.http = httpx.Client(transport=transport or httpx.HTTPTransport(retries=0),
             trust_env=False, follow_redirects=False, timeout=30,
             headers={'x-goog-api-key': credential})
@@ -37,12 +37,12 @@ class PilotExchange:
         body = {'contents': [{'role': 'user', 'parts': [{'text': raw}]}],
                 'systemInstruction': {'parts': [{'text': self.config['system_instruction']}]},
                 'generationConfig': {'temperature': self.config['temperature'], 'seed': self.seed,
-                    'candidateCount': 1, 'maxOutputTokens': 4096,
-                    'thinkingConfig': {'thinkingBudget': 0},
+                    'candidateCount': 1, 'maxOutputTokens': 1536,
+                    'thinkingConfig': {'thinkingLevel': 'minimal'},
                     'responseMimeType': 'application/json', 'responseJsonSchema': schema}}
         base = 'https://generativelanguage.googleapis.com/v1beta/models/'+self.config['model']
         # Each reserved slot permits one count request and one generation at most.
-        # 144 * ((48000+2048)*0.10 + 4096*0.40)/1e6 = USD 0.9566208.
+        # 64 * ((37000+2048)*0.30 + 1536*2.50)/1e6 = USD 0.9954816.
         # This is a documented-rate estimate, not a provider-enforced billing limit.
         self.journal.reserve(r)
         usage = {'counted_input_tokens': None, 'provider_usage': None, 'generation_attempted': False}
@@ -53,7 +53,7 @@ class PilotExchange:
                 'generateContentRequest': {'model': 'models/'+self.config['model'], **body}})
             count.raise_for_status()
             tokens = count.json().get('totalTokens')
-            ensure(type(tokens) is int and 0 < tokens <= 48000, 'COUNTED_INPUT_LIMIT')
+            ensure(type(tokens) is int and 0 < tokens <= 37000, 'COUNTED_INPUT_LIMIT')
             usage['counted_input_tokens'] = tokens
             _write(evidence/'count.json', {'totalTokens': tokens})
             usage['generation_attempted'] = True
@@ -67,7 +67,7 @@ class PilotExchange:
             candidates = data.get('candidates', [])
             ensure(len(candidates) == 1 and candidates[0].get('finishReason') == 'STOP', 'INCOMPLETE_RESPONSE')
             parts = candidates[0]['content']['parts']
-            ensure(all(set(p) == {'text'} and type(p['text']) is str for p in parts), 'UNEXPECTED_RESPONSE_PART')
+            ensure(all('text' in p and set(p) <= {'text', 'thoughtSignature'} and type(p['text']) is str for p in parts), 'UNEXPECTED_RESPONSE_PART')
             answer = ''.join(p['text'] for p in parts)
             ensure(len(answer.encode()) <= 65536, 'RESPONSE_LIMIT')
             parsed = json.loads(answer, object_pairs_hook=_object); check(schema, parsed)
@@ -76,8 +76,11 @@ class PilotExchange:
             ensure(isinstance(meta, dict), 'UNKNOWN_USAGE_STOP')
             inp, out, thoughts = (meta.get('promptTokenCount'), meta.get('candidatesTokenCount'), meta.get('thoughtsTokenCount', 0))
             ensure(all(type(x) is int and x >= 0 for x in (inp, out, thoughts)), 'INVALID_USAGE_STOP')
-            ensure(inp <= tokens+2048 and out+thoughts <= 4096, 'BUDGET_ESTIMATE_EXCEEDED_STOP')
-        except Exception:
+            ensure(inp <= tokens+2048 and out+thoughts <= 1536, 'BUDGET_ESTIMATE_EXCEEDED_STOP')
+        except Exception as error:
+            usage['failure_type'] = type(error).__name__
+            usage['http_status'] = getattr(getattr(error, 'response', None), 'status_code', None)
+            usage['failure_code'] = getattr(error, 'code', None)
             self.journal.finish(r['request_digest'], 'failed', usage)
             raise TechnicalFailure('PILOT_TRANSPORT_STOP_NO_RETRY') from None
         self.journal.finish(r['request_digest'], 'response_validated', usage)
