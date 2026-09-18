@@ -125,6 +125,35 @@ def check(base):
             browser.evaluate("document.querySelectorAll('.state-node')[0].click();document.activeElement.blur();window.scrollTo(0,0)",session)
             shot=browser.call('Page.captureScreenshot',{'format':'png'},session)['data']
             (out/f'v3-{vp["name"]}.png').write_bytes(base64.b64decode(shot))
+            browser.wait('!!window.V3Validation?.ready',session)
+            assert browser.evaluate("document.getElementById('v3-validation').closest('[data-v3-slot]').dataset.v3Slot==='METRICS_EVIDENCE'",session)
+            browser.evaluate("document.getElementById('v3-validation').open=true",session)
+            for case_id,total in [('abstention',8),('conditional_exchange',3),('all_refuse',3),('missing_offer',3)]:
+                view=browser.evaluate("""(([id,last])=>{
+                    const c=document.getElementById('validation-case');c.value=id;c.dispatchEvent(new Event('change'));
+                    const t=document.getElementById('validation-turn');t.value=last;t.dispatchEvent(new Event('change'));
+                    return {turns:t.options.length,rows:document.querySelectorAll('.validation-table')[0].querySelectorAll('tbody tr').length,
+                        text:document.querySelector('.validation-output').innerText,transactions:document.querySelectorAll('.validation-transaction').length};
+                })("""+json.dumps([case_id,total])+')',session)
+                assert view['turns']==total and view['rows']==16,view
+                assert '未成立量とは別' in view['text'] and '原本との対応' in view['text']
+                if case_id=='abstention':assert view['transactions']==0
+                else:
+                    assert view['transactions']>0
+                    assert browser.evaluate("document.querySelector('.validation-transaction').open=true;document.querySelector('.validation-transaction').innerText.includes('Choice ID:') && document.querySelector('.validation-transaction').innerText.includes('JSON pointer:')",session)
+            browser.evaluate("document.querySelectorAll('.validation-controls button')[0].click()",session)
+            assert browser.evaluate("document.getElementById('validation-turn').value==='2'",session)
+            browser.evaluate("document.querySelectorAll('.validation-controls button')[1].click()",session)
+            assert browser.evaluate("document.getElementById('validation-turn').value==='3'",session)
+            browser.evaluate("document.getElementById('validation-state').value='MIL';document.getElementById('validation-state').dispatchEvent(new Event('change'));window.scrollTo(0,0)",session)
+            assert browser.evaluate("document.querySelectorAll('.validation-table')[0].querySelectorAll('tbody tr').length===2",session)
+            locked=browser.evaluate("(()=>{const b=document.getElementById('v3-earth').getBoundingClientRect();return {x:b.x,y:b.y,width:b.width,height:b.height,bottom:b.bottom}})()",session)
+            assert locked==earth,'Validation viewer moved Earth'
+            assert browser.evaluate('document.documentElement.scrollWidth<=innerWidth',session),'Validation view overflow'
+            browser.evaluate("document.getElementById('v3-validation').scrollIntoView()",session)
+            shot=browser.call('Page.captureScreenshot',{'format':'png'},session)['data']
+            (out/f'v3-validation-{vp["name"]}.png').write_bytes(base64.b64decode(shot))
+            browser.evaluate("document.getElementById('v3-validation').open=false;window.scrollTo(0,0)",session)
             assert browser.evaluate('window.__v3Relocations.length===0',session), 'Locked runtime relocation'
             # Exercise the observer in this disposable test document, never public code.
             assert browser.evaluate("""(async()=>{const e=document.getElementById('v3-earth'),p=e.parentNode,next=e.nextSibling;
