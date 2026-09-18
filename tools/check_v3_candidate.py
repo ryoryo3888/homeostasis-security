@@ -26,6 +26,8 @@ def check(base):
             target=browser.call('Target.createTarget',{'url':'about:blank'})['targetId']
             session=browser.call('Target.attachToTarget',{'targetId':target,'flatten':True})['sessionId']
             browser.call('Page.enable',session=session)
+            # Normalize Linux classic vs macOS overlay scrollbars in the test only.
+            browser.call('Emulation.setScrollbarsHidden',{'hidden':True},session)
             browser.call('Fetch.enable',{'patterns':[{'urlPattern':'*'}]},session)
             browser.call('Emulation.setDeviceMetricsOverride',{'width':vp['width'],'height':vp['height'],'deviceScaleFactor':1,'mobile':False},session)
             browser.call('Emulation.setEmulatedMedia',{'features':[{'name':'prefers-reduced-motion','value':'reduce'}]},session)

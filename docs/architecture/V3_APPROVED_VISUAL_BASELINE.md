@@ -9,7 +9,9 @@ This approves the existing visual frame, not a research result or paid run.
 - Machine authority: `ui/v3/frame.json`, status `approved`.
 - Public capture: `tests/layout/v3-public-baseline.json`.
 - Desktop 1440×1000; iPad 1024×1366 and 768×1024; narrow 390×844; scale 1.
-- Initial synthetic state, A selected, no formal TURN. Motion reduced for geometry.
+- Initial synthetic state, A selected, no formal TURN. Motion reduced for geometry. Test browser scrollbars are hidden so Linux
+  classic scrollbar width and macOS overlay scrollbars use the same content area;
+  public scrollbar behavior is untouched.
 
 ## Locked frame
 
