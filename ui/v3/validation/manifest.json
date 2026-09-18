@@ -1,0 +1,7 @@
+{
+  "artifact_class": "validation_run",
+  "research_eligible": false,
+  "public_scope": "sanitized validation evidence only; not research registry",
+  "file_sha256": "66bffc50505a6b4b613b1eaa273d59ac89e6d44decdadb0dc924f1c3206ae016",
+  "source_verification": "17 saved observations recomputed; no TURN or model execution"
+}
