@@ -76,6 +76,18 @@ METRICS_EVIDENCE. Content is not inserted before the control or Earth.
 
 ## Candidate checks
 
+Safari loading/layout repair (2026-09-18): `ui/v3/page.html` is the editable
+markup source. `build_v3_candidate.py` now emits a single `dashboard_v3.html`
+containing the exact CSS, script and validated synthetic baseline together.
+No separate JSON fetch or CSS/JS cache entry is needed to initialize the view.
+The baseline JSON remains a generated evidence artifact. The Earth square uses
+percentage padding with absolutely positioned image/aurora layers, avoiding
+percentage-height/aspect-ratio differences. Both layer rectangles are checked.
+`tools/check_v3_webkit.cjs` optionally verifies all four viewport sizes through
+Playwright WebKit with every separate `/ui/v3/` request configured to fail.
+This supplements Chrome checks; it does not claim access to the user's Safari
+cache or an exact reproduction of their browser's failure.
+
 User visual revision (2026-09-18): reduce the V3 globe to V2 scale (368px
 maximum, responsive within the existing eight-state frame). Keep its center
 and surrounding cards in place. V1 retains state communications, V2 retains
