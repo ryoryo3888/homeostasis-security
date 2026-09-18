@@ -9,6 +9,7 @@ sys.path.insert(0,str(ROOT))
 from homeostasis_v3.physical import validate_baseline
 from homeostasis_v3.network import validate_network
 from homeostasis_v3.contracts import digest
+from tools.build_v3_validation import build as build_validation
 
 
 def transform(baseline, network):
@@ -49,6 +50,10 @@ def render_page(data):
         '<!-- V3_BUNDLED_DATA -->':'<script id="v3-baseline-data" type="application/json">'+json.dumps(data,ensure_ascii=False).replace('<','\\u003c')+'</script>',
         '<!-- V3_BUNDLED_SCRIPT -->':'<script>\n'+(ROOT/'ui/v3/observatory.js').read_text()+'\n</script>',
     }
+    validation=build_validation()
+    parts['<!-- V3_BUNDLED_SCRIPT -->'] += ('<style>'+ (ROOT/'ui/v3/validation/viewer.css').read_text()+'</style>'
+        + '<script id="v3-validation-data" type="application/json">'+json.dumps(validation,ensure_ascii=False).replace('<','\\u003c')+'</script>'
+        + '<script>'+(ROOT/'ui/v3/validation/viewer.js').read_text()+'</script>')
     for marker,content in parts.items():
         if html.count(marker)!=1:raise ValueError('Missing/duplicate V3 bundle marker')
         html=html.replace(marker,content)
