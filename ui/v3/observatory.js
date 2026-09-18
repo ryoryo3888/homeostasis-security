@@ -2,7 +2,7 @@
 (() => {
   const $ = id => document.getElementById(id);
   const names = {food:'食料', energy:'エネルギー'};
-  const positions = [[22,17],[15,36],[15,57],[22,77],[78,77],[85,57],[85,36],[78,17]];
+  const positions = [[12,12],[12,36],[12,60],[12,84],[88,84],[88,60],[88,36],[88,12]];
   let model, selected = null, selectedRoute = null;
   const el = (tag, text, cls) => {const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
   const svgEl = (tag, attrs) => {const n=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,String(v));return n;};
@@ -29,8 +29,8 @@
     model.states.forEach((s,i)=>{
       const button=el('button',undefined,'state-node');button.type='button';button.dataset.state=s.id;button.style.left=positions[i][0]+'%';button.style.top=positions[i][1]+'%';button.setAttribute('aria-pressed','false');
       button.setAttribute('aria-label',`${s.label}国。初期食料 ${s.resources.food.stock}、初期エネルギー ${s.resources.energy.stock}。国家詳細`);
-      button.append(el('span',s.label,'state-letter'));
-      for(const r of model.resources){const row=el('span',undefined,'mini-resource '+r.id);row.append(el('small',names[r.id]));const track=el('span',undefined,'track');const bar=el('i');bar.style.width=(model.scales[r.id]?100*s.resources[r.id].stock/model.scales[r.id]:0)+'%';bar.dataset.stock=s.resources[r.id].stock;bar.dataset.resource=r.id;track.append(bar);row.append(track);button.append(row);}
+      button.append(el('span',s.label+'国','state-letter'));
+      for(const r of model.resources){const row=el('span',undefined,'mini-resource '+r.id);row.append(el('small',names[r.id]));const track=el('span',undefined,'track');const bar=el('i');bar.style.width=(model.scales[r.id]?100*s.resources[r.id].stock/model.scales[r.id]:0)+'%';bar.dataset.stock=s.resources[r.id].stock;bar.dataset.resource=r.id;track.append(bar);row.append(track,el('strong',String(s.resources[r.id].stock)));button.append(row);}
       button.addEventListener('click',()=>select(s.id));
       button.addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();const next=(i+(['ArrowRight','ArrowDown'].includes(e.key)?1:7))%8;document.querySelectorAll('.state-node')[next].focus();}if(e.key==='Escape')select(null);});
       $('state-nodes').append(button);
