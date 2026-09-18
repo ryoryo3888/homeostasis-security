@@ -48,6 +48,7 @@ def check(base):
                  aurora:{count:document.querySelectorAll('.v3-aurora').length,
                    decorative:document.querySelector('.v3-aurora')?.getAttribute('aria-hidden'),
                    animations:[...document.querySelectorAll('.aurora-ribbon')].map(n=>getComputedStyle(n).animationName)},
+                 earthLayers:['#v3-earth img','.v3-aurora'].map(s=>{const r=document.querySelector(s).getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}}),
                  turnDisabled:[...document.querySelectorAll('.turn-control button')].every(b=>b.disabled),
                  horizontalOverflow:document.documentElement.scrollWidth>innerWidth,
                  text:document.body.innerText,
@@ -60,6 +61,9 @@ def check(base):
             assert abs(earth['x']+earth['width']/2-(canvas['x']+canvas['width']/2))<1
             assert canvas['width']*.24<=earth['width']<=reference_earth+1 and earth['y']>=bounds['v3-control']['bottom'], (vp['name'],earth['width'],reference_earth)
             assert result['aurora']=={'count':1,'decorative':'true','animations':['none','none']}
+            assert abs(earth['width']-earth['height'])<1
+            for layer in result['earthLayers']:
+                assert all(abs(layer[k]-earth[k])<1 for k in layer), (vp['name'],'Detached Earth/aurora',layer,earth)
             assert earth['bottom']<=result['measurementsTop'] and result['captionBottom']<=result['measurementsTop'], (vp['name'],'Earth/measurement overlap')
             assert result['measurementsBottom']<=canvas['bottom'], (vp['name'],'measurements outside world')
             assert earth['y']<vp['height']*.65 and earth['bottom']<vp['height']

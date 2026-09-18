@@ -3,7 +3,7 @@ from copy import deepcopy
 import hashlib,json
 from pathlib import Path
 import unittest
-from tools.build_v3_candidate import transform
+from tools.build_v3_candidate import transform,render_page
 ROOT=Path(__file__).resolve().parents[2]
 
 class CandidateTests(unittest.TestCase):
@@ -50,7 +50,18 @@ class CandidateTests(unittest.TestCase):
         html=(ROOT/'dashboard_v3.html').read_text();js=(ROOT/'ui/v3/observatory.js').read_text()
         self.assertNotIn('homeostasis-research-layer',html)
         for bad in ('generate_content','gemini','api_key','localStorage','sessionStorage','setInterval','requestAnimationFrame'):self.assertNotIn(bad,js)
-        self.assertEqual(js.count('fetch('),1)
+        self.assertNotIn('fetch(',js)
+    def test_atomic_page_bundle(self):
+        html=(ROOT/'dashboard_v3.html').read_text()
+        self.assertEqual(html,render_page(self.data))
+        self.assertNotIn('src="ui/v3/observatory.js"',html)
+        self.assertNotIn('href="ui/v3/observatory.css"',html)
+        import re
+        embedded=re.search(r'<script id="v3-baseline-data" type="application/json">(.*?)</script>',html,re.S)
+        self.assertEqual(json.loads(embedded.group(1)),self.data)
+    def test_embedded_data_cannot_close_script(self):
+        data=deepcopy(self.data);data['test_text']='</script><script>unexpected</script>'
+        self.assertNotIn(data['test_text'],render_page(data))
     def test_native_source_and_attribution(self):
         data=(ROOT/'ui/v3/vendor/ne_110m_land.geojson').read_bytes()
         self.assertEqual(hashlib.sha256(data).hexdigest(),'9e0729ee253ca7d7a5c4ae9395fb1902264c5377c52e224d13dd85010e2835d9')

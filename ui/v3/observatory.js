@@ -61,5 +61,15 @@
     const mapping=el('details');mapping.append(el('summary','国家識別と原本対応'));mapping.append(el('p',model.states.map(s=>`${s.label} = ${s.id}`).join(' ／ ')));$('source-evidence').append(mapping);
   }
   $('clear-selection').addEventListener('click',()=>select(null));
-  fetch('ui/v3/baseline.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('missing baseline');return r.json();}).then(m=>{validate(m);model=m;drawWorld();evidence();select(model.states[0].id);window.V3Candidate=Object.freeze({ready:true,artifactClass:m.artifact_class,visualBaseline:'candidate'});}).catch(()=>{$('load-error').hidden=false;$('load-error').textContent='構造データを検証できません。研究値は表示していません。';$('route-count').textContent='構造データ未検証';$('clear-selection').disabled=true;});
+  try {
+    const m=JSON.parse($('v3-baseline-data').textContent);
+    validate(m);model=m;drawWorld();evidence();select(model.states[0].id);
+    window.V3Candidate=Object.freeze({ready:true,artifactClass:m.artifact_class,visualBaseline:'candidate'});
+  } catch(error) {
+    $('state-nodes').replaceChildren();$('route-lines').replaceChildren();
+    $('load-error').hidden=false;
+    $('load-error').textContent='構造データを検証できません。研究値は表示していません。';
+    $('route-count').textContent='構造データ未検証';$('clear-selection').disabled=true;
+    window.V3Candidate=Object.freeze({ready:false,errorCode:'BASELINE_INITIALIZATION_FAILED'});
+  }
 })();
