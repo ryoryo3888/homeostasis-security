@@ -29,6 +29,7 @@ def check(base):
             browser.call('Page.navigate',{'url':base+'/dashboard_v2.html'},session)
             browser.wait("!!document.querySelector('.control-heading')",session)
             reference=browser.evaluate(FRAME_STYLES+'('+json.dumps({'shell':'.shell','body':'body','panel':'.brand','control':'.controls','brandText':'.brand-en','controlText':'.control-heading'})+')',session)
+            reference_earth=browser.evaluate("document.querySelector('.earth-panel .earth').getBoundingClientRect().width",session)
             browser.call('Page.navigate',{'url':base+'/dashboard_v3.html'},session)
             browser.wait('!!window.V3Candidate?.ready',session)
             browser.evaluate('document.fonts.ready.then(()=>true)',session)
@@ -44,6 +45,9 @@ def check(base):
                  parents:Object.fromEntries(['v3-earth','v3-canvas','v3-network','state-nodes'].map(id=>[id,document.getElementById(id).parentElement.id])),
                  nodes:[...document.querySelectorAll('.state-node')].map(n=>{const b=n.getBoundingClientRect();return {id:n.dataset.state,x:b.x,y:b.y,width:b.width,height:b.height}}),
                  routeCount:document.querySelectorAll('.route').length,
+                 aurora:{count:document.querySelectorAll('.v3-aurora').length,
+                   decorative:document.querySelector('.v3-aurora')?.getAttribute('aria-hidden'),
+                   animations:[...document.querySelectorAll('.aurora-ribbon')].map(n=>getComputedStyle(n).animationName)},
                  turnDisabled:[...document.querySelectorAll('.turn-control button')].every(b=>b.disabled),
                  horizontalOverflow:document.documentElement.scrollWidth>innerWidth,
                  text:document.body.innerText,
@@ -54,7 +58,8 @@ def check(base):
             assert result['parents']==contract['parents']
             assert all(bounds[a]['bottom']<=bounds[b]['y']+.5 for a,b in zip(contract['order'],contract['order'][1:]))
             assert abs(earth['x']+earth['width']/2-(canvas['x']+canvas['width']/2))<1
-            assert earth['width']>=canvas['width']*.3 and earth['y']>=bounds['v3-control']['bottom']
+            assert canvas['width']*.24<=earth['width']<=reference_earth+1 and earth['y']>=bounds['v3-control']['bottom'], (vp['name'],earth['width'],reference_earth)
+            assert result['aurora']=={'count':1,'decorative':'true','animations':['none','none']}
             assert earth['bottom']<=result['measurementsTop'] and result['captionBottom']<=result['measurementsTop'], (vp['name'],'Earth/measurement overlap')
             assert result['measurementsBottom']<=canvas['bottom'], (vp['name'],'measurements outside world')
             assert earth['y']<vp['height']*.65 and earth['bottom']<vp['height']
@@ -84,12 +89,15 @@ def check(base):
             assert browser.evaluate("document.querySelectorAll('.route.focused').length===1",session)
             after=browser.evaluate("(()=>{const b=document.getElementById('v3-earth').getBoundingClientRect();return {x:b.x,y:b.y,width:b.width,height:b.height,bottom:b.bottom}})()",session)
             assert after==earth
+            browser.call('Emulation.setEmulatedMedia',{'features':[{'name':'prefers-reduced-motion','value':'no-preference'}]},session)
+            assert browser.evaluate("[...document.querySelectorAll('.aurora-ribbon')].every(n=>getComputedStyle(n).animationName==='aurora-drift')",session)
+            browser.call('Emulation.setEmulatedMedia',{'features':[{'name':'prefers-reduced-motion','value':'reduce'}]},session)
             browser.evaluate("document.getElementById('clear-selection').click()",session)
             assert browser.evaluate("document.querySelectorAll('.state-node[aria-pressed=true]').length===0 && document.querySelectorAll('.route-row').length===18",session)
             browser.evaluate("document.querySelectorAll('.state-node')[0].click();document.activeElement.blur();window.scrollTo(0,0)",session)
             shot=browser.call('Page.captureScreenshot',{'format':'png'},session)['data']
             (out/f'v3-{vp["name"]}.png').write_bytes(base64.b64decode(shot))
-            result.pop('text');records.append({'viewport':vp,**result})
+            result.pop('text');records.append({'viewport':vp,'v2_earth_width':reference_earth,**result})
             print('V3',vp['name'],'candidate frame/data/keyboard/interaction PASS',flush=True)
             browser.call('Target.closeTarget',{'targetId':target})
         assert not browser.blocked,browser.blocked

@@ -34,7 +34,23 @@
   <div class="world-canvas" id="v3-canvas">
     <div class="earth-system-field panel" aria-hidden="true"></div>
     <svg id="v3-network" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="route-tip" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0 0L5 2.5L0 5" fill="none" stroke="currentColor"/></marker></defs><g id="route-lines"></g></svg>
-    <div id="v3-earth" data-v3-frame="earth"><img src="earth_japan_network_v2.png" alt="地球。画像内の光と線は装飾。A〜Hは地理に対応しない合成国家。"><div class="earth-caption"><span>EARTH / HOMEOSTASIS</span><small>EIGHT INDEPENDENT STATES</small></div></div>
+    <div id="v3-earth" data-v3-frame="earth"><img src="earth_japan_network_v2.png" alt="地球。画像内の光と線は装飾。A〜Hは地理に対応しない合成国家。"><svg class="v3-aurora" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="aurora-curtain" x1="0" y1="1" x2="0.15" y2="0">
+          <stop stop-color="#64ffc6" stop-opacity=".85"/><stop offset=".42" stop-color="#41e6d0" stop-opacity=".4"/><stop offset=".78" stop-color="#9b8fff" stop-opacity=".23"/><stop offset="1" stop-color="#b594ff" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="aurora-edge"><stop stop-color="#79ffe0" stop-opacity="0"/><stop offset=".28" stop-color="#78ffbc"/><stop offset=".65" stop-color="#5ff4e2"/><stop offset="1" stop-color="#b3a0ff" stop-opacity="0"/></linearGradient>
+        <filter id="aurora-soft" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="5"/></filter>
+      </defs>
+      <g class="aurora-ribbon far">
+        <path d="M68 105 Q100 20 145 49 T224 20 T323 87 L325 114 Q270 66 224 62 T145 86 T68 123Z" fill="url(#aurora-curtain)" filter="url(#aurora-soft)"/>
+      </g>
+      <g class="aurora-ribbon">
+        <path d="M51 127 Q89 42 123 64 T188 34 T255 58 T344 106 L344 132 Q296 90 255 107 T188 82 T123 109 T51 145Z" fill="url(#aurora-curtain)" filter="url(#aurora-soft)"/>
+        <path d="M51 145 Q88 107 123 109 T188 82 T255 107 T344 132" fill="none" stroke="url(#aurora-edge)" stroke-width="8" filter="url(#aurora-soft)"/>
+        <path d="M51 145 Q88 107 123 109 T188 82 T255 107 T344 132" fill="none" stroke="url(#aurora-edge)" stroke-width="1.4" opacity=".75"/>
+      </g>
+    </svg><div class="earth-caption"><span>EARTH / HOMEOSTASIS</span><small>EIGHT INDEPENDENT STATES</small></div></div>
     <div id="state-nodes" aria-label="国家と初期資源"></div>
     <div class="world-measurements" aria-label="TURN末観測の状態"><span>世界全体の恒常性 <b>未観測</b></span><span>国家自律性 <b>未観測</b></span><span>必須機能充足 <b>未観測</b></span><span>資源不足・輸送中 <b>未観測</b></span></div>
   </div>
@@ -60,7 +76,7 @@
       <p>資源バーは資源ごとの最大初期在庫を共通上限とする。経路の太さは定義容量に対応。線の強調は選択状態であり、使用量や重要度ではない。</p>
       <div id="source-evidence"></div>
       <p><a href="docs/design/v3/PHASE6_OBSERVATION.md">観測指標の定義と限界</a> · <a href="docs/architecture/V3_CANDIDATE_FRAME.md">V3候補Frame</a></p>
-      <p class="muted">地球画像はV2の視覚資産を継承。画像内の光と線は装飾であり、V3の輸送経路・流量・国家の地理的位置を示さない。外周の破線のみが合成ネットワークの定義経路。</p>
+      <p class="muted">地球画像はV2の視覚資産を継承。画像内の光・線とオーロラは装飾であり、V3の輸送経路・流量・国家の地理的位置を示さない。外周の破線のみが合成ネットワークの定義経路。</p>
     </div>
   </details>
 </section>
