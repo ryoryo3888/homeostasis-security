@@ -14,8 +14,25 @@ from .network import load_network
 from .turn import TurnRunner
 from .validation_runner import _write
 
-SEEDS = (17, 23)
+SEEDS = (17,)
 TURNS = 2
+PILOT_DIRECTORY = '.artifacts/v3-paid-pilot-20260919-phase-contract'
+
+
+def consent_schema():
+    from .agent_adapter import RESPONSE
+    schema = deepcopy(RESPONSE)
+    schema['properties']['decisions']['maxItems'] = 0
+    return schema
+
+
+PILOT_INSTRUCTION = '''
+Transfer semantics: actor_state_id is the sender: its own inventory decreases on dispatch.
+Target is the recipient. Offering a transfer does not acquire resources from the target.
+Choose only opportunities owned by state_id; no action is required.
+In consent phase decisions MUST be an empty array []. Only consents records acceptance or
+refusal of listed choice IDs. Do not repeat an earlier initiative in decisions.
+'''
 
 
 def deterministic(request_json):
@@ -64,10 +81,11 @@ def protocol(root):
             'baseline_digest': digest(b), 'network_digest': digest(n),
             'control': 'surplus_neighbor_v1', 'model': 'gemini-3.5-flash-lite',
             'temperature': 0.3, 'thinking_level': 'minimal', 'maximum_amount': 2, 'max_initiatives': 1,
-            'system_instruction': SYSTEM_INSTRUCTION, 'schemas': [INITIATIVE_RESPONSE, RESPONSE],
-            'max_generation_calls': 64, 'max_count_calls': 64, 'max_output_tokens': 1536,
+            'system_instruction': SYSTEM_INSTRUCTION + PILOT_INSTRUCTION, 'schemas': [INITIATIVE_RESPONSE, consent_schema()],
+            'max_generation_calls': 32, 'max_count_calls': 32, 'max_output_tokens': 1536,
             'max_counted_input_tokens': 37000, 'input_token_margin': 2048,
-            'estimated_budget_usd': '1.00', 'pricing_checked': '2026-09-19',
+            'estimated_budget_usd': '1.00', 'previous_generation_attempts': 9,
+            'previous_attempts_conservative_reserve_usd': '0.14', 'pricing_checked': '2026-09-19',
             'input_usd_per_million': '0.30', 'output_usd_per_million': '2.50',
             'retry': 0, 'artifact_class': 'validation_run', 'research_eligible': False,
             'publication_status': 'withheld',
@@ -117,7 +135,8 @@ def run_arm(root, output, *, seed, arm, exchange):
             prior.append(candidate); opening = candidate
             _write(path/'report.json', report)
         report['status'] = 'completed'
-    except Exception:
+    except Exception as error:
+        report['failure_code'] = getattr(error, 'code', type(error).__name__)
         report['status'] = 'technical_failure'
         _write(path/'report.json', report)
         raise RuntimeError('Pilot stopped; inspect saved evidence. No automatic retry.') from None

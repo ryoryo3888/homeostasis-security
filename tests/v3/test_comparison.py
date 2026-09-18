@@ -7,11 +7,11 @@ import tempfile
 import unittest
 import httpx
 
-from homeostasis_v3.comparison import deterministic, run_arm, compare
+from homeostasis_v3.comparison import deterministic, run_arm, compare, consent_schema
 from homeostasis_v3.comparison_transport import PilotExchange
 from homeostasis_v3.contracts import canonical
 from homeostasis_v3.live_probe import prepare
-from homeostasis_v3.choices import TechnicalFailure
+from homeostasis_v3.choices import TechnicalFailure, check
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -77,3 +77,14 @@ class ComparisonTests(unittest.TestCase):
         with self.assertRaises(TechnicalFailure): compare(control, mock)
         self.assertFalse(mock['research_eligible'])
         self.assertEqual(len(list((self.root/'mock').glob('exchanges-*.json'))), 2)
+
+    def test_consent_forbids_late_decisions(self):
+        from homeostasis_v3.agent_adapter import RESPONSE
+        from homeostasis_v3.contracts import digest
+        answer = {'state_id': 'ECON', 'request_digest': digest({}),
+                  'decisions': [{'choice_id': 'offer-example', 'requested_amount': 2,
+                                 'public_reason': 'Repeat earlier offer'}], 'consents': {}}
+        check(RESPONSE, answer)
+        with self.assertRaises(TechnicalFailure): check(consent_schema(), answer)
+        answer['decisions'] = []
+        check(consent_schema(), answer)

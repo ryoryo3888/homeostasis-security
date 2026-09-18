@@ -7,7 +7,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from homeostasis_v3.comparison import SEEDS, protocol, deterministic, run_arm, compare
+from homeostasis_v3.comparison import SEEDS, PILOT_DIRECTORY, protocol, deterministic, run_arm, compare
 from homeostasis_v3.comparison_transport import PilotExchange
 from homeostasis_v3.choices import ensure
 from homeostasis_v3.contracts import digest
@@ -19,7 +19,7 @@ def main():
     p.add_argument('--execute-paid', action='store_true')
     p.add_argument('--protocol-digest')
     args = p.parse_args()
-    directory = ROOT/'.artifacts/v3-paid-pilot-20260919-current'
+    directory = ROOT/PILOT_DIRECTORY
     spec = protocol(ROOT)
     if not args.execute_paid:
         directory.mkdir(parents=True, exist_ok=False)

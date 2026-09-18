@@ -4,7 +4,7 @@ from pathlib import Path
 
 from .agent_adapter import _object
 from .choices import ensure, check, TechnicalFailure
-from .comparison import protocol
+from .comparison import protocol, PILOT_DIRECTORY
 from .contracts import canonical, digest
 from .gemini_preflight import AttemptJournal
 from .validation_runner import _write
@@ -15,10 +15,10 @@ class PilotExchange:
         import httpx
         ensure(type(credential) is str and bool(credential.strip()), 'CREDENTIAL_REQUIRED')
         self.root = Path(root); self.config = protocol(root); self.seed = None
-        self.path = self.root/'.artifacts/v3-paid-pilot-20260919-current'
+        self.path = self.root/PILOT_DIRECTORY
         self.path.mkdir(parents=True, exist_ok=True)
         self.journal = AttemptJournal(self.path/'attempts.sqlite', configuration={
-            'max_calls': 64, 'protocol_digest': digest(self.config)})
+            'max_calls': self.config['max_generation_calls'], 'protocol_digest': digest(self.config)})
         self.http = httpx.Client(transport=transport or httpx.HTTPTransport(retries=0),
             trust_env=False, follow_redirects=False, timeout=30,
             headers={'x-goog-api-key': credential})
@@ -42,7 +42,8 @@ class PilotExchange:
                     'responseMimeType': 'application/json', 'responseJsonSchema': schema}}
         base = 'https://generativelanguage.googleapis.com/v1beta/models/'+self.config['model']
         # Each reserved slot permits one count request and one generation at most.
-        # 64 * ((37000+2048)*0.30 + 1536*2.50)/1e6 = USD 0.9954816.
+        # 32 slots cost at most USD 0.4977408 at documented rates.
+        # Plus USD 0.14 reserved for nine prior dispatches: total USD 0.6377408.
         # This is a documented-rate estimate, not a provider-enforced billing limit.
         self.journal.reserve(r)
         usage = {'counted_input_tokens': None, 'provider_usage': None, 'generation_attempted': False}
