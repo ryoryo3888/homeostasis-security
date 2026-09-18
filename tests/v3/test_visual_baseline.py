@@ -33,3 +33,7 @@ class ApprovedVisualTests(unittest.TestCase):
         c=json.loads((ROOT/'ui/v3/frame.json').read_text())
         self.assertEqual(c['viewports'],[r['viewport'] for r in self.baseline['records']])
         self.assertEqual(set(c['slots']),{'STATE_DETAIL','NETWORK_DETAIL','METRICS_EVIDENCE'})
+
+    def test_mobile_relative_world_still_rejects_movement(self):
+        r=self.baseline['records'][-1];changed=deepcopy(r);changed['nodes'][0]['y']+=8
+        with self.assertRaises(ValueError):compare_layout(r,changed)
