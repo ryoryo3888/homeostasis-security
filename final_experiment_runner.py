@@ -66,7 +66,7 @@ def _recovery_turn(turn_rows):
     return None
 
 def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
-    if output.exists():raise FileExistsError("output already exists")
+    if os.path.lexists(output):raise FileExistsError("output already exists")
     estimate(runs);checkpoint=output.with_suffix(output.suffix+".checkpoint");completed=[];active=None
     scenario=_load_scenario()
     if resume:
@@ -191,7 +191,7 @@ def main():
     a=parse_args();runs=1 if a.one_run else a.runs;print(json.dumps(estimate(runs),ensure_ascii=False,indent=2))
     if not a.execute:return
     if a.confirm!="YES":raise SystemExit("本番実行には --execute --confirm YES が必要です。APIは呼び出していません。")
-    if a.output.exists():raise SystemExit("出力先が存在します。APIは呼び出していません。")
+    if os.path.lexists(a.output):raise SystemExit("出力先が存在します。APIは呼び出していません。")
     if a.resume:
         read_resumable_checkpoint(a.output.with_suffix(a.output.suffix+".checkpoint"),
                                   runs=runs,seed=a.seed,turn_count=TURNS,
