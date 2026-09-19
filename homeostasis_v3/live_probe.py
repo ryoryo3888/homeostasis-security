@@ -120,6 +120,7 @@ def execute(root, protocol, approval_digest, credential):
                 base_url=ENDPOINT, api_version='v1beta', httpx_client=http, timeout=30000,
                 retry_options=types.HttpRetryOptions(attempts=1))) as client:
                 response = client.models.generate_content(model=MODEL, contents=canonical(request), config=config)
+                journal.record_response(request['request_digest'], response)
                 for key, name in [('input_tokens', 'prompt_token_count'), ('output_tokens', 'candidates_token_count'),
                                   ('thought_tokens', 'thoughts_token_count'), ('total_tokens', 'total_token_count')]:
                     value = getattr(response.usage_metadata, name, None)
