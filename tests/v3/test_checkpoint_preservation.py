@@ -42,6 +42,19 @@ class CheckpointPreservationTests(unittest.TestCase):
         self.assertEqual(self.head.read_bytes(), head)
         self.assertEqual(list(self.directory.glob('.pending-*')), [])
 
+    def test_written_bytes_must_match_before_publication(self):
+        original = checkpoint.os.fsync; target = self.directory / 'synthetic-write.json'
+        def corrupt(fd):
+            original(fd)
+            for pending in self.directory.glob('.pending-*'):
+                pending.write_text(pending.read_text().replace('"value":1', '"value":true'))
+        with patch.object(checkpoint.os, 'fsync', side_effect=corrupt):
+            with self.assertRaisesRegex(TechnicalFailure, 'CHECKPOINT_WRITE_MISMATCH'):
+                self.store._atomic_write(target, '{"value":1}', replace=False)
+        self.assertFalse(target.exists())
+        self.assertEqual(self.store.load(), self.genesis)
+        self.assertEqual(list(self.directory.glob('.pending-*')), [])
+
     def test_identical_orphan_is_reused_without_rewrite(self):
         original = self.store._atomic_write
         def fail_head(path, data, **kwargs):
