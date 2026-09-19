@@ -40,7 +40,8 @@ def _digest(value: Any) -> str:
 
 
 def _check_run(record: dict[str, Any], *, number: int, seed: int,
-               completed_turn: int, model: str, countries: tuple[str, ...]) -> None:
+               completed_turn: int, model: str, countries: tuple[str, ...],
+               schema_version: int | None = None) -> None:
     _require(type(record) is dict, "RESUME_INVALID_RUN")
     _require(type(record.get("run")) is int and record["run"] == number,
              "RESUME_RUN_MISMATCH")
@@ -64,6 +65,9 @@ def _check_run(record: dict[str, Any], *, number: int, seed: int,
     groups: dict[tuple[int, str, str | None], list[dict[str, Any]]] = {}
     for item in audit:
         _require(type(item) is dict, "RESUME_INVALID_AUDIT_ENTRY")
+        if schema_version is not None:
+            _require(type(item.get("schema_version")) is int
+                     and item["schema_version"] == schema_version, "RESUME_PROTOCOL_MISMATCH")
         turn = _integer(item.get("turn"), "RESUME_INVALID_AUDIT_TURN")
         # Even a pre-dispatch journal entry is ambiguous after interruption.
         _require(0 < turn <= completed_turn,
@@ -106,7 +110,8 @@ def _check_run(record: dict[str, Any], *, number: int, seed: int,
 
 def read_resumable_checkpoint(path: Path, *, runs: int, seed: int,
                               turn_count: int, model: str,
-                              country_ids: tuple[str, ...]) -> dict[str, Any]:
+                              country_ids: tuple[str, ...],
+                              schema_version: int | None = None) -> dict[str, Any]:
     """Validate before client creation/dispatch; return saved data unchanged."""
     _require(path.is_file(), "RESUME_CHECKPOINT_NOT_FOUND")
     _require(type(runs) is int and runs > 0 and type(seed) is int
@@ -123,14 +128,14 @@ def read_resumable_checkpoint(path: Path, *, runs: int, seed: int,
             _require(type(record) is dict and record.get("model") == model,
                      "RESUME_MODEL_MISMATCH")
             _check_run(record, number=number, seed=seed + number - 1,
-                       completed_turn=turn_count, model=model, countries=countries)
+                       completed_turn=turn_count, model=model, countries=countries, schema_version=schema_version)
         active = saved.get("active_run")
         if active is not None:
             _require(type(active) is dict and len(completed) < runs, "RESUME_INVALID_ACTIVE_RUN")
             n = _integer(active.get("completed_turn"), "RESUME_INVALID_COMPLETED_TURN")
             _require(n <= turn_count, "RESUME_INVALID_COMPLETED_TURN")
             _check_run(active, number=len(completed) + 1, seed=seed + len(completed),
-                       completed_turn=n, model=model, countries=countries)
+                       completed_turn=n, model=model, countries=countries, schema_version=schema_version)
             _require(type(active.get("memories")) is dict
                      and set(active["memories"]) == set(countries)
                      and all(type(v) is list and len(v) == n for v in active["memories"].values()),

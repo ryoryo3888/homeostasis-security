@@ -212,6 +212,7 @@ class RunnerResumeIntegrationTests(unittest.TestCase):
                     answer = dict(country_id=data['turn_start_observation']['own_country'], proposal_id='p',
                                   response_id='ACCEPT', response_label='受け入れる', reason='synthetic', conditions={},
                                   self_interest=60, sovereignty_burden=5, perceived_global_effect=60,
+                                  action_requires_participation=True,
                                   action=dict(action_id='NO_ACTION', description='synthetic',
                                               parameters=dict(recipient_type='none', target_country=None, resource=None, amount=0)))
                 return SimpleNamespace(text=json.dumps(answer), usage_metadata=None)
@@ -263,6 +264,27 @@ class RunnerResumeIntegrationTests(unittest.TestCase):
                 self.runner.main()
             create.assert_not_called(); key.assert_not_called()
         self.assertFalse(self.output.exists())
+
+    def test_old_protocol_checkpoint_is_not_continued_under_new_semantics(self):
+        original = self.runner._checkpoint
+        def stop_at_boundary(path, data):
+            original(path, data)
+            active = data.get('active_run')
+            if active and active['completed_turn'] == 1:
+                raise KeyboardInterrupt('synthetic boundary stop')
+        with patch.object(self.runner, '_checkpoint', side_effect=stop_at_boundary):
+            with self.assertRaises(KeyboardInterrupt):
+                self.runner.run_live(self.client(), self.output, 1, 7)
+        cp = self.output.with_suffix('.json.checkpoint')
+        data = json.loads(cp.read_text())
+        for entry in data['active_run']['call_audit']:
+            entry['schema_version'] = 2
+        cp.write_text(json.dumps(data)); before = cp.read_bytes()
+        second = self.client()
+        with self.assertRaisesRegex(ValueError, 'RESUME_PROTOCOL_MISMATCH'):
+            self.runner.run_live(second, self.output, 1, 7, True)
+        self.assertEqual(second.models.payloads, [])
+        self.assertEqual(cp.read_bytes(), before)
 
 
 if __name__ == '__main__':
