@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import httpx
 
@@ -239,6 +240,77 @@ class SDKTests(unittest.TestCase):
         with self.assertRaises(TechnicalFailure): restarted(canonical(self.request()))
         self.assertEqual(len(self.sent),1)
 
+    def test_response_payload_survives_validation_failure_and_restart(self):
+        for mode in ('valid', 'invalid_json', 'truncated', 'blocked'):
+            with self.subTest(mode=mode):
+                path = Path(self.temp.name)/(mode+'-receipt.sqlite')
+                model_text = '  ' + canonical({'state_id':'MIL', 'request_digest':self.request()['request_digest'],
+                                               'decisions':[], 'consents':{}}) + '\n'
+                if mode == 'invalid_json': model_text = '  不完全なJSON {\n'
+                def handler(wire):
+                    return httpx.Response(200, headers={'X-Transport-Marker':'transport-only-marker'}, json={
+                        'responseId':'synthetic-receipt-id',
+                        'candidates':[{'content':{'parts':[{'text':model_text}]},
+                                       'finishReason':'STOP' if mode in ('valid','invalid_json') else
+                                       'MAX_TOKENS' if mode == 'truncated' else 'SAFETY'}]})
+                e = OfflineGeminiExchange(handler=handler, journal_path=path, model='offline-model', max_calls=3)
+                self.addCleanup(e.close)
+                if mode == 'valid':
+                    self.assertEqual(e(canonical(self.request())), model_text)
+                else:
+                    with self.assertRaises(TechnicalFailure): e(canonical(self.request()))
+                reopened = AttemptJournal(path, configuration=e.configuration)
+                receipts = reopened.response_records()
+                self.assertEqual(len(receipts),1)
+                self.assertEqual(receipts[0]['request_digest'],self.request()['request_digest'])
+                payload = receipts[0]['sdk_response']
+                self.assertEqual(payload['response_id'],'synthetic-receipt-id')
+                self.assertEqual(payload['candidates'][0]['content']['parts'][0]['text'],model_text)
+                self.assertNotIn('sdk_http_response',payload)
+                self.assertNotIn('transport-only-marker',path.read_bytes().decode('latin1'))
+                self.assertNotIn('offline-dummy',path.read_bytes().decode('latin1'))
+                self.assertNotIn('sdk_response',reopened.records()[0])
+                with self.assertRaises(TechnicalFailure): e(canonical(self.request()))
+                self.assertEqual(len(e.wire_requests),1)
+
+    def test_receipt_storage_failure_stops_without_retry(self):
+        e = self.exchange()
+        with patch.object(AttemptJournal, 'record_response', side_effect=OSError('storage failure')):
+            with self.assertRaises(TechnicalFailure): e(canonical(self.request()))
+        with self.assertRaises(TechnicalFailure): e(canonical(self.request(turn=2)))
+        self.assertEqual(len(self.sent),1)
+        self.assertEqual(e.journal.records()[0]['status'],'failed')
+        self.assertEqual(e.journal.response_records(),[])
+
+    def test_receipt_requires_reserved_attempt_and_cannot_be_replaced(self):
+        from google.genai.types import GenerateContentResponse
+        e = self.exchange()
+        key = self.request()['request_digest']
+        response = GenerateContentResponse(response_id='synthetic-first')
+        with self.assertRaises(TechnicalFailure): e.journal.record_response(key,response)
+        e.journal.reserve(self.request())
+        with self.assertRaises(TechnicalFailure): e.journal.finish(key,'response_validated',{})
+        e.journal.record_response(key,response)
+        before = e.journal.response_records()
+        with self.assertRaises(TechnicalFailure):
+            e.journal.record_response(key,GenerateContentResponse(response_id='synthetic-replacement'))
+        e.journal.finish(key,'response_validated',{})
+        with self.assertRaises(TechnicalFailure): e.journal.record_response(key,response)
+        self.assertEqual(e.journal.response_records(),before)
+
+    def test_legacy_journal_does_not_invent_missing_receipts(self):
+        from contextlib import closing
+        import sqlite3
+        e = self.exchange()
+        e(canonical(self.request()))
+        with closing(sqlite3.connect(self.path)) as db, db:
+            db.execute('DROP TABLE responses')
+        reopened = AttemptJournal(self.path,configuration=e.configuration)
+        self.assertEqual(reopened.response_records(),[])
+        self.assertEqual(reopened.records()[0]['status'],'response_validated')
+        with self.assertRaises(TechnicalFailure): reopened.reserve(self.request())
+        self.assertEqual(len(self.sent),1)
+
     def test_crash_reservation_blocks_later_requests(self):
         e=self.exchange(); e.journal.reserve(self.request())
         restarted=self.exchange()
@@ -298,6 +370,7 @@ class SDKTests(unittest.TestCase):
         self.assertEqual(runner.replay(opening,result['input']),result)
         self.assertEqual(len(e.wire_requests),16)
         self.assertEqual(e.journal.records()[0]['usage']['input_tokens'],10)
+        self.assertEqual(len(e.journal.response_records()),16)
 
 
 if __name__=='__main__': unittest.main()

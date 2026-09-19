@@ -28,7 +28,11 @@ consentでは提示された実際の取引だけについて受諾・拒否を�
 
 
 class AttemptJournal:
-    """Atomic pre-dispatch reservation. Stored values exclude prompts and secrets."""
+    """Reserve attempts and retain SDK replies separately from public summaries.
+
+    Reply payloads exclude transport headers and are never sent to another Agent.
+    They are SDK-decoded evidence, not original HTTP bytes or research results.
+    """
     def __init__(self, path, *, configuration):
         self.path=Path(path); self.path.parent.mkdir(parents=True,exist_ok=True)
         self.configuration=json.loads(canonical(configuration))
@@ -36,6 +40,7 @@ class AttemptJournal:
         with closing(self._connect()) as db, db:
             db.execute('CREATE TABLE IF NOT EXISTS configuration (id INTEGER PRIMARY KEY CHECK(id=1), digest TEXT NOT NULL)')
             db.execute('CREATE TABLE IF NOT EXISTS attempts (request_digest TEXT PRIMARY KEY, state TEXT NOT NULL, phase TEXT NOT NULL, status TEXT NOT NULL, usage TEXT)')
+            db.execute('CREATE TABLE IF NOT EXISTS responses (request_digest TEXT PRIMARY KEY, payload TEXT NOT NULL)')
             db.execute('INSERT OR IGNORE INTO configuration VALUES (1,?)',(self.configuration_hash,))
             ensure(db.execute('SELECT digest FROM configuration').fetchone()[0]==self.configuration_hash,'JOURNAL_CONFIGURATION_MISMATCH')
 
@@ -61,9 +66,29 @@ class AttemptJournal:
         finally:
             db.close()
 
+    def record_response(self,key,response):
+        """Commit once before text/schema validation; never backfill old attempts."""
+        payload=response.model_dump_json(exclude={'sdk_http_response'},exclude_none=True)
+        with closing(self._connect()) as db, db:
+            db.execute('BEGIN IMMEDIATE')
+            row=db.execute('SELECT status FROM attempts WHERE request_digest=?',(key,)).fetchone()
+            ensure(row is not None and row[0]=='reserved','ATTEMPT_NOT_RESERVED')
+            ensure(not db.execute('SELECT 1 FROM responses WHERE request_digest=?',(key,)).fetchone(),
+                   'RESPONSE_ALREADY_RECORDED')
+            db.execute('INSERT INTO responses VALUES (?,?)',(key,payload))
+
+    def response_records(self):
+        """Explicit local audit access; absent receipts remain absent."""
+        with closing(self._connect()) as db, db:
+            return [{'request_digest':key,'sdk_response':json.loads(payload)}
+                    for key,payload in db.execute('SELECT request_digest,payload FROM responses ORDER BY rowid')]
+
     def finish(self,key,status,usage):
         ensure(status in ('response_validated','failed'),'INVALID_ATTEMPT_STATUS')
         with closing(self._connect()) as db, db:
+            if status=='response_validated':
+                ensure(db.execute('SELECT 1 FROM responses WHERE request_digest=?',(key,)).fetchone(),
+                       'RESPONSE_NOT_RECORDED')
             result=db.execute("UPDATE attempts SET status=?,usage=? WHERE request_digest=? AND status='reserved'",
                               (status,canonical(usage),key))
             ensure(result.rowcount==1,'ATTEMPT_NOT_RESERVED')
@@ -134,6 +159,7 @@ class OfflineGeminiExchange:
         usage={'input_tokens':None,'output_tokens':None,'thought_tokens':None,'total_tokens':None}
         try:
             response=self.client.models.generate_content(model=self.configuration['model'],contents=raw,config=config)
+            self.journal.record_response(request['request_digest'],response)
             metadata=response.usage_metadata
             if metadata is not None:
                 for key,attribute in [('input_tokens','prompt_token_count'),('output_tokens','candidates_token_count'),
