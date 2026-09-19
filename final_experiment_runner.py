@@ -16,6 +16,7 @@ from homeostasis_core.emergent_dynamics import (
 )
 from homeostasis_core.experiments import ResearchResult,save_result_atomic
 from homeostasis_core.execution_identity import execution_identity
+from homeostasis_core.execution_lock import exclusive_execution
 from homeostasis_core.gemini_agents import (
     GeminiGateway,MODEL_NAME,SCHEMA_VERSION,build_private_views,create_gemini_client,
     derive_event,run_gemini_turn,
@@ -77,6 +78,11 @@ def _recovery_turn(turn_rows):
     return None
 
 def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
+    if os.path.lexists(output):raise FileExistsError("output already exists")
+    with exclusive_execution(output):
+        return _run_live_locked(client,output,runs,seed,resume)
+
+def _run_live_locked(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
     if os.path.lexists(output):raise FileExistsError("output already exists")
     estimate(runs);checkpoint=output.with_suffix(output.suffix+".checkpoint");completed=[];active=None
     scenario=_load_scenario()
