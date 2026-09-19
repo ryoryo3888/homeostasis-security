@@ -70,9 +70,9 @@ class AgentSpec:
     actions: tuple[str, ...]
 
     def private_context(self) -> str:
-        interests = "\n".join(f"- {item}" for item in self.interests)
-        actions = "、".join(self.actions)
-        return f"役割: {self.role}\n国家利益:\n{interests}\n選択可能な行動: {actions}"
+        # Historical interests/action lists remain available as provenance;
+        # they are not instructions governing a new Agent's judgment.
+        return f"役割: {self.role}"
 
 
 AGENTS = {
@@ -181,28 +181,23 @@ def require_text(data: dict[str, Any], key: str) -> str:
 
 def parse_coordinator_response(text: str) -> dict[str, str]:
     data = parse_json_object(text)
-    proposal = require_text(data, "proposal")
-    if proposal not in COORDINATOR_PROPOSALS:
-        raise ValueError(f"coordinator proposal is outside allowed choices: {proposal}")
-    return {"proposal": proposal, "reason": require_text(data, "reason")}
+    return {key: require_agent_string(data, key) for key in ("proposal", "reason")}
+
+
+def require_agent_string(data: dict[str, Any], key: str) -> str:
+    """Keep an Agent's actual text, including an explicit empty reply."""
+    value = data.get(key)
+    if not isinstance(value, str):
+        raise ValueError(f"missing or invalid string field: {key}")
+    return value
 
 
 def parse_country_response(text: str, country: str) -> dict[str, str]:
     data = parse_json_object(text)
-    action = require_text(data, "action")
-    response = require_text(data, "proposal_response")
     if country not in AGENTS:
         raise ValueError(f"unknown country: {country}")
-    if action not in AGENTS[country].actions:
-        raise ValueError(f"{country} action is outside allowed choices: {action}")
-    if response not in PROPOSAL_RESPONSES:
-        raise ValueError(f"{country} proposal response is invalid: {response}")
-    return {
-        "observation": require_text(data, "observation"),
-        "action": action,
-        "proposal_response": response,
-        "reason": require_text(data, "reason"),
-    }
+    return {key: require_agent_string(data, key)
+            for key in ("observation", "action", "proposal_response", "reason")}
 
 
 def parse_evaluator_response(text: str) -> dict[str, Any]:
@@ -244,10 +239,9 @@ def call_json(client: Any, prompt: str) -> str:
 def call_coordinator(client: Any, observation: dict[str, Any]) -> dict[str, str]:
     prompt = f"""ROLE: COORDINATOR
 あなたは強制権を持たない地球調整機関です。国家へ命令せず、最終判断を上書きしません。
-研究問い: {RESEARCH_QUESTION}
 公開観測: {json.dumps(observation, ensure_ascii=False)}
-選択可能な提案: {'、'.join(COORDINATOR_PROPOSALS)}
-JSONのみを返す: {{"proposal":"選択肢の1つ","reason":"公開情報に基づく理由"}}
+何を考え、伝え、試みるかはあなた自身が判断します。
+JSONのみを返す: {{"proposal":"自由な発言。発言しない場合は空文字", "reason":"自分用の記録。空文字でもよい"}}
 """
     return parse_coordinator_response(call_json(client, prompt))
 
@@ -264,9 +258,10 @@ def call_country(
 あなたは{agent.code}国の独立した意思決定Agentです。他Agentの非公開思考は見えません。
 {agent.private_context()}
 公開観測: {json.dumps(observation, ensure_ascii=False)}
-強制力のない調整機関の提案: {proposal}
-提案への回答: {'、'.join(PROPOSAL_RESPONSES)}
-JSONのみを返す: {{"observation":"認識","action":"許可された行動","proposal_response":"許可された回答","reason":"理由"}}
+調整機関から届いた発言: {proposal}
+何を考え、伝え、試みるかはあなた自身が判断します。
+JSONのみを返す: {{"observation":"自分の認識", "action":"自由な意図・活動の記述", "proposal_response":"自由な返答", "reason":"自分用の記録"}}
+各欄は自由文です。記述・返答をしない欄は空文字で返せます。
 """
     return parse_country_response(call_json(client, prompt), agent.code)
 
