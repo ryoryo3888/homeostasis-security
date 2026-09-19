@@ -9,7 +9,7 @@ class Usage:
     prompt_token_count=10;candidates_token_count=5;total_token_count=15
 def Response(text):
     return types.GenerateContentResponse(candidates=[types.Candidate(
-        content=types.Content(parts=[types.Part(text=text)]))],
+        content=types.Content(parts=[types.Part(text=text)]),finish_reason="STOP")],
         usage_metadata=types.GenerateContentResponseUsageMetadata(
             prompt_token_count=10,candidates_token_count=5,total_token_count=15))
 class Models:

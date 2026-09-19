@@ -1,5 +1,6 @@
 import hashlib,json,tempfile,unittest
 from pathlib import Path
+from test_simulation import sdk_reply
 from homeostasis_core.gemini_agents import (
     GeminiGateway,apply_structured_actions,build_private_views,coordinator_response_schema,country_response_schema,derive_event,eligible_result_paths,evaluator_response_schema,parse_country_json,pilot_is_eligible,
 )
@@ -106,9 +107,7 @@ class AuditFixTests(unittest.TestCase):
         self.assertEqual(again["network_transfers"][0]["delivered"],0)
     def test_invalid_target_does_not_regenerate_a_valid_replacement(self):
         valid=self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"country","resource":"food","amount":5,"target_country":"FOOD"});invalid=json.loads(json.dumps(valid));invalid["action"]["parameters"]["target_country"]="GLOBAL"
-        class R:
-            usage_metadata=None
-            def __init__(self,x):self.text=json.dumps(x)
+        def R(x):return sdk_reply(json.dumps(x))
         class M:
             def __init__(self):self.payloads=[];self.configs=[]
             def generate_content(s,**kw):s.payloads.append(json.loads(kw["contents"]));s.configs.append(kw["config"]);return R(invalid if len(s.payloads)==1 else valid)
@@ -123,9 +122,7 @@ class AuditFixTests(unittest.TestCase):
         self.assertEqual(client.models.configs[0]["response_json_schema"],schema)
     def test_invalid_target_stops_on_first_received_response(self):
         invalid=self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"country","resource":"food","amount":5,"target_country":"GLOBAL"})
-        class R:
-            usage_metadata=None
-            def __init__(self):self.text=json.dumps(invalid)
+        def R():return sdk_reply(json.dumps(invalid))
         class M:
             def generate_content(self,**kw):return R()
         client=type("C",(),{})();client.models=M();g=GeminiGateway(client,retry_limit=2,sleep_fn=lambda _:None)

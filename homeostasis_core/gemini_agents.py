@@ -5,6 +5,7 @@ import hashlib,json,random,time
 from typing import Any,Callable
 from model_response_json import load_response_object
 from provider_retry import retryable_provider_status as _retryable_provider_status
+from provider_response import complete_response_text
 from .metrics import clamp,global_homeostasis
 from .models import CountryState,EnergyPortfolio,ResourcePortfolio,_score
 from .resources import ResourceNetwork,SupplyLink,process_resource_network
@@ -138,8 +139,7 @@ class GeminiGateway:
                     raise RuntimeError("Gemini response could not be preserved; automatic regeneration is disabled") from None
             try:
                 audit["token_usage"]=_usage(r)
-                text=r.text
-                if not isinstance(text,str):raise ValueError("missing response text")
+                text=complete_response_text(r)
                 audit["response_sha256"]=hashlib.sha256(text.encode("utf-8")).hexdigest()
                 parsed=parser(text)
             except Exception as exc:
