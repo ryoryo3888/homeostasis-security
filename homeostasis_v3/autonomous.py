@@ -62,13 +62,34 @@ class AutonomousRound:
         self.maximum_amount,self.max_initiatives=maximum_amount,max_initiatives
         self.observation_hash=None; self.complete=False; self.failed=False
         self._catalogue=[]; self._selections={}; self._extensions={}; self._consented=set()
+        self._exchange,self._budget=exchange,budget
+        self._configuration_hash=digest(self._configuration())
+
+    def _configuration(self):
+        return {'state_ids':list(self.state_ids), 'maximum_amount':self.maximum_amount,
+                'max_initiatives':self.max_initiatives, 'source':self.source,
+                'budget_limit':getattr(self.budget,'limit',None),
+                'schemas':digest([INITIATIVE_RESPONSE,RESPONSE])}
+
+    def _check_configuration(self):
+        ensure(not self.failed,'PLANNING_ROUND_FAILED')
+        try:
+            ensure(self.exchange is self._exchange and self.budget is self._budget and
+                   digest(self._configuration())==self._configuration_hash,
+                   'PLANNING_CONFIGURATION_CHANGED')
+        except Exception:
+            self.failed=True
+            raise
 
     def _ask(self, phase, sid, observation, payload, schema):
+        self._check_configuration()
         request={'version':'v3','phase':phase,'state_id':sid,
                  'observation_digest':observation.hash,'observation':observation.read(),
                  'payload':payload}
         key=self.budget.reserve(request)
+        self._check_configuration()
         raw=self.exchange(canonical({**request,'request_digest':key}))
+        self._check_configuration()
         ensure(type(raw) is str and len(raw.encode('utf-8'))<=65536,'INVALID_RESPONSE_SIZE')
         try: answer=json.loads(raw,object_pairs_hook=_object)
         except (ValueError,TypeError):
@@ -79,7 +100,7 @@ class AutonomousRound:
         return answer
 
     def catalogue(self, observation):
-        ensure(not self.failed,'PLANNING_ROUND_FAILED')
+        self._check_configuration()
         if self.complete:
             ensure(observation.hash==self.observation_hash,'ROUND_OBSERVATION_CHANGED')
             return deepcopy(self._catalogue)
@@ -125,11 +146,13 @@ class AutonomousRound:
             raise
 
     def _choose(self,sid,observation,proposal):
+        self._check_configuration()
         ensure(self.complete and not self.failed and observation.hash==self.observation_hash,'ROUND_NOT_READY')
         ensure(proposal.read() is None,'COORDINATOR_PROTOCOL_NOT_CONFIGURED')
         return deepcopy(self._selections[sid])
 
     def _consent(self,sid,observation,choices):
+        self._check_configuration()
         ensure(self.complete and not self.failed and observation.hash==self.observation_hash,'ROUND_NOT_READY')
         ensure(sid not in self._consented,'DUPLICATE_CONSENT_REQUEST')
         self._consented.add(sid)
@@ -144,11 +167,13 @@ class AutonomousRound:
             raise
 
     def countries(self):
+        self._check_configuration()
         return {sid:CountryInput(lambda view,proposal,sid=sid:self._choose(sid,view,proposal),
                                  lambda view,choices,sid=sid:self._consent(sid,view,choices))
                 for sid in self.state_ids}
 
     def record(self):
+        self._check_configuration()
         ensure(self.complete and not self.failed,'ROUND_NOT_READY')
         return {'observation_digest':self.observation_hash,
                 'source':self.source,'maximum_amount':self.maximum_amount,
