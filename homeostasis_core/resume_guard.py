@@ -108,6 +108,48 @@ def _check_run(record: dict[str, Any], *, number: int, seed: int,
                          "RESUME_RESPONSE_NOT_COMMITTED")
 
 
+def _check_active_history(active: dict[str, Any], countries: tuple[str, ...]) -> None:
+    """Check the runner's existing projections; never repair or replace them.
+
+    These fields become later Agent inputs. Recompute only for comparison
+    against committed rows, using the unchanged mappings in run_live. This
+    neither approves those world rules nor authenticates the whole checkpoint.
+    """
+    expected_memories: dict[str, list[dict[str, Any]]] = {c: [] for c in countries}
+    for row in active["turns"]:
+        state = row["executed_state"]
+        _require(type(state) is dict, "RESUME_INCOMPLETE_OR_INVALID_CHECKPOINT")
+        for country in countries:
+            response = row["country_responses"][country]
+            settlements = [x for x in state.get("atomic_settlements", [])
+                           if x["agent_id"] == country]
+            expected_memories[country].append({
+                "response_id": response["response_id"],
+                "action_id": response["action"]["action_id"],
+                "realized": sum(x["realized"] for x in settlements),
+                "unmet": sum(x["unmet"] for x in settlements),
+                "event": row["snapshot"]["event"],
+                "damage_after": state["reconstruction"]["after"],
+            })
+    # Canonical JSON distinguishes booleans/numbers/strings and extra fields;
+    # Python equality alone would accept True in place of the recorded 1.
+    _require(_digest(active["memories"]) == _digest(expected_memories),
+             "RESUME_MEMORY_CONTENT_MISMATCH")
+    if active["turns"]:
+        state = active["turns"][-1]["executed_state"]
+        world = state["true_world"]
+        expected_history = {
+            "economic_loss": max(0, 100 - world["economy"]),
+            "reserve_gap": max(0, 100 - world["food"]),
+            "trust_loss": max(0, 100 - world["international_trust"]),
+            "alertness": world["conflict_load"],
+            "unmet_resource_demand": state.get("demand_unmet", 0),
+        }
+        _require(type(active.get("history_state")) is dict
+                 and _digest(active["history_state"]) == _digest(expected_history),
+                 "RESUME_HISTORY_STATE_MISMATCH")
+
+
 def read_resumable_checkpoint(path: Path, *, runs: int, seed: int,
                               turn_count: int, model: str,
                               country_ids: tuple[str, ...],
@@ -140,6 +182,7 @@ def read_resumable_checkpoint(path: Path, *, runs: int, seed: int,
                      and set(active["memories"]) == set(countries)
                      and all(type(v) is list and len(v) == n for v in active["memories"].values()),
                      "RESUME_MEMORY_LENGTH_MISMATCH")
+            _check_active_history(active, countries)
             _require(type(active.get("country_states")) is dict
                      and set(active["country_states"]) == set(countries),
                      "RESUME_COUNTRY_STATE_MISMATCH")
