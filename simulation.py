@@ -554,6 +554,27 @@ def calculate_metrics(evaluation: dict, previous_metrics: Optional[dict] = None)
     }
 
 
+
+def metric_provenance(previous_metrics: Optional[dict], *, live_evaluator: bool) -> dict:
+    """Describe the existing calculation; do not alter scores or Agent inputs."""
+    previous = previous_metrics or {}
+    return {
+        "evaluation_source": "model_evaluator_estimates" if live_evaluator else "synthetic_fixture",
+        "metric_source": "calculate_metrics(evaluation, previous_metrics)",
+        "direct_world_measurement": False,
+        "history_dependent_fields": ["tension", "trust", "resilience", "homeostasis"],
+        "bounded_update_fields": ["tension", "trust", "resilience"],
+        "previous_values_used": {
+            "tension": previous.get("tension", 45),
+            "trust": previous.get("trust", 50),
+            "resilience": previous.get("resilience", 60),
+        },
+        "previous_values_source": "previous_turn_metrics" if previous_metrics else "implementation_initial_values",
+        "bounded_update_max_delta": 15,
+        "interpretation": "指標の履歴依存には実装の前値・変化幅制限が含まれる。Agentから創発した履歴依存の証明ではない。",
+    }
+
+
 def evaluate_metrics(
     client: genai.Client,
     event: ExternalEvent,
@@ -887,6 +908,7 @@ def main():
             evaluation = mock_evaluation(event, turn)
             metrics = calculate_metrics(evaluation, previous_metrics)
 
+        provenance = metric_provenance(previous_metrics, live_evaluator=USE_GEMINI)
         previous_metrics = metrics
     
         results.append(
@@ -897,6 +919,7 @@ def main():
                 "external_event": event.public_dict(),
                 "evaluation": evaluation,
                 "metrics": metrics,
+                "metric_provenance": provenance,
                 "country_a": {
                     "action": action_a,
                     "action_status": "declared",
