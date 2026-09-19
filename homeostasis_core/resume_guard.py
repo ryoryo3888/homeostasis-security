@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from pathlib import Path
 from typing import Any
 
@@ -33,9 +34,19 @@ def _integer(value: Any, code: str) -> int:
     return value
 
 
+def _nonfinite_number(value: str) -> None:
+    raise UnsafeResumeError("RESUME_NONFINITE_JSON_NUMBER")
+
+
+def _finite_float(value: str) -> float:
+    number = float(value)
+    _require(math.isfinite(number), "RESUME_NONFINITE_JSON_NUMBER")
+    return number
+
+
 def _digest(value: Any) -> str:
     encoded = json.dumps(value, ensure_ascii=False, sort_keys=True,
-                         separators=(",", ":")).encode("utf-8")
+                         separators=(",", ":"), allow_nan=False).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
 
 
@@ -163,7 +174,8 @@ def read_resumable_checkpoint(path: Path, *, runs: int, seed: int,
              and type(turn_count) is int and turn_count > 0,
              "RESUME_INVALID_REQUEST")
     try:
-        saved = json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=_unique_object)
+        saved = json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=_unique_object,
+                           parse_constant=_nonfinite_number, parse_float=_finite_float)
         _require(type(saved) is dict, "RESUME_INVALID_CHECKPOINT")
         completed = saved.get("completed_runs")
         _require(type(completed) is list and len(completed) <= runs,
