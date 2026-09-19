@@ -274,6 +274,9 @@ class RunnerResumeIntegrationTests(unittest.TestCase):
         self.assertEqual(len(second.models.payloads), 60)
         baseline = self.runner.run_live(self.client(), Path(self.tmp.name)/'baseline.json', 1, 7)
         self.assertEqual(resumed['runs'][0]['turns'], baseline['runs'][0]['turns'])
+        self.assertEqual(second.models.payloads,
+                         [call['public_observation_payload']
+                          for call in baseline['runs'][0]['call_audit']][20:])
         self.assertEqual(len(resumed['runs'][0]['call_audit']), 80)
 
     def test_partial_turn_refused_with_zero_new_provider_calls(self):
