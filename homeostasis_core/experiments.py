@@ -40,16 +40,16 @@ def run_experiment(plan:ExperimentPlan, runner:Callable[[int],Mapping[str,object
 
 def save_result_atomic(result:ResearchResult,path:str|Path)->Path:
     target=Path(path)
-    if target.exists(): raise FileExistsError(f"result already exists: {target}")
+    if os.path.lexists(target): raise FileExistsError(f"result already exists: {target}")
     target.parent.mkdir(parents=True,exist_ok=True)
     fd,temp=tempfile.mkstemp(prefix=".result-",suffix=".tmp",dir=target.parent)
     try:
         with os.fdopen(fd,"w",encoding="utf-8") as stream:
             json.dump(result.to_dict(),stream,ensure_ascii=False,indent=2); stream.flush(); os.fsync(stream.fileno())
-        if target.exists(): raise FileExistsError(f"result already exists: {target}")
-        os.replace(temp,target)
-    except BaseException:
+        # Publish exclusively: an existence check followed by replace can
+        # overwrite a result created by another process between those steps.
+        os.link(temp,target)
+    finally:
         try: os.unlink(temp)
         except FileNotFoundError: pass
-        raise
     return target
