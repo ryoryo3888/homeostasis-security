@@ -7,6 +7,7 @@ import time
 
 from google import genai
 from google.genai import types
+from model_response_json import load_response_object
 
 
 MODEL_NAME = "gemini-3.6-flash"
@@ -364,7 +365,7 @@ def parse_evaluator_response(response_text: str) -> dict:
         cleaned = cleaned.split("\n", 1)[-1]
         cleaned = cleaned.rsplit("```", 1)[0].strip()
 
-    parsed = json.loads(cleaned)
+    parsed = load_response_object(cleaned)
     missing = [field_name for field_name in EVALUATION_FIELDS if field_name not in parsed]
     if missing:
         raise ValueError(f"Evaluatorの必須項目が不足しています: {', '.join(missing)}")

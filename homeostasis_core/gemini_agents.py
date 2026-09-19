@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import hashlib,json,random,time
 from typing import Any,Callable
+from model_response_json import load_response_object
 from .metrics import clamp,global_homeostasis
 from .models import CountryState,EnergyPortfolio,ResourcePortfolio,_score
 from .resources import ResourceNetwork,SupplyLink,process_resource_network
@@ -29,7 +30,7 @@ def evaluator_response_schema():
     scores={k:{"type":"number","minimum":0,"maximum":100} for k in ("national_sovereignty","global_homeostasis","resource_stability","resilience","conflict_load","history_effect")}
     return {"type":"object","additionalProperties":False,"required":[*scores,"assessment"],"properties":{**scores,"assessment":{"type":"string"}}}
 def _object(text,keys):
-    try:d=json.loads(text)
+    try:d=load_response_object(text)
     except (TypeError,json.JSONDecodeError) as e:raise ValueError("invalid JSON response") from e
     if not isinstance(d,dict) or set(d)!=set(keys):raise ValueError(f"response fields must be exactly {sorted(keys)}")
     return d
