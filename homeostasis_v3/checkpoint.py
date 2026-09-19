@@ -19,6 +19,14 @@ class CommitUncertain(TechnicalFailure):
     """HEAD replaced but directory fsync failed; read HEAD before any retry."""
 
 
+def _unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        ensure(key not in result, 'CHECKPOINT_DUPLICATE_JSON_KEY')
+        result[key] = value
+    return result
+
+
 class CheckpointStore:
     def __init__(self, directory):
         self.directory = Path(directory)
@@ -60,14 +68,14 @@ class CheckpointStore:
         head = self.directory / 'HEAD.json'
         if not os.path.lexists(head): return None
         ensure(not head.is_symlink(), 'CHECKPOINT_SYMLINK_FORBIDDEN')
-        pointer = json.loads(head.read_text(encoding='utf-8'))
+        pointer = json.loads(head.read_text(encoding='utf-8'), object_pairs_hook=_unique_object)
         ensure(set(pointer) == {'checkpoint_digest', 'file'}, 'INVALID_HEAD')
         checksum = pointer['checkpoint_digest']
         ensure(type(checksum) is str and len(checksum) == 64 and all(c in '0123456789abcdef' for c in checksum), 'INVALID_HEAD_DIGEST')
         ensure(pointer['file'] == checksum + '.json', 'INVALID_HEAD_PATH')
         record = self.directory / pointer['file']
         ensure(not record.is_symlink(), 'CHECKPOINT_SYMLINK_FORBIDDEN')
-        cp = validate_checkpoint(json.loads(record.read_text(encoding='utf-8')))
+        cp = validate_checkpoint(json.loads(record.read_text(encoding='utf-8'), object_pairs_hook=_unique_object))
         ensure(cp['checkpoint_digest'] == checksum, 'HEAD_DIGEST_MISMATCH')
         return cp
 
