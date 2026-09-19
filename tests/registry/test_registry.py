@@ -100,7 +100,7 @@ class RegistryTests(unittest.TestCase):
                 if name in ('final_experiment_runner.py','homeostasis_core/experiments.py'):source='2c2df0f4cb7f967b258846ac44dc804a9b56db95'
                 if name in ('final_experiment_runner.py','homeostasis_core/resume_guard.py','homeostasis_core/execution_identity.py'):source='16243bf2672139c770af01d2cafe65ee5c25d72a'
                 if name in ('final_experiment_runner.py','homeostasis_core/execution_lock.py'):source='2d8aef00896c66ac650f228d9c1224c58a6154c5'
-                if name=='homeostasis_core/resume_guard.py':source='eefc019882737d2391431c67006ccd7b9abcc8ba'
+                if name=='homeostasis_core/resume_guard.py':source='90b9b2510a923c609f7264e1f16e4df52258c055'
                 self.assertEqual((ROOT/name).read_bytes(),subprocess.check_output(['git','show',source+':'+name],cwd=ROOT),name)
     def test_saved_comparison_membership(self):
         summary=load_json(ROOT/'summary.json');study=self.registry['experiments'][1]
