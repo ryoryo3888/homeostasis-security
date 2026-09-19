@@ -31,10 +31,13 @@ class GeminiFinalTests(unittest.TestCase):
         self.assertEqual(estimate(1)["planned_api_calls"],80);self.assertEqual(estimate(36)["planned_api_calls"],2880);self.assertEqual(estimate(36)["maximum_api_attempts"],8640)
     def test_run_limit(self):
         with self.assertRaises(ValueError):estimate(37)
-    def test_invalid_json_stops_after_bounded_retries(self):
+    def test_invalid_json_stops_without_regeneration(self):
         g=GeminiGateway(Client(True),max_calls=3,retry_limit=3,sleep_fn=lambda _:None)
         with self.assertRaises(RuntimeError):g.call("MIL",1,1,{},parse_country_json)
-        self.assertEqual(len(g.calls),3)
+        self.assertEqual(len(g.calls),1)
+        self.assertEqual(len(g.client.models.payloads),1)
+        self.assertEqual(g.calls[0]["response_status"],"validation_failed")
+        self.assertIs(g.calls[0]["automatic_regeneration"],False)
     def test_structured_conditions_reject_bool_and_identity_mismatch(self):
         invalid={"country_id":"A","proposal_id":"p","response_id":"CONDITIONAL","response_label":"条件付きで応じる","reason":"r","conditions":{"minimum_aid_amount":True},"self_interest":50,"sovereignty_burden":5,"perceived_global_effect":50,"action":{"action_id":"NO_ACTION","description":"none","parameters":{"recipient_type":"none","target_country":None,"resource":None,"amount":0}}}
         with self.assertRaises(ValueError):parse_country_json(json.dumps(invalid))
@@ -81,17 +84,19 @@ class GeminiFinalTests(unittest.TestCase):
             for audit in first:
                 own=audit["agent_id"];payload=audit["public_observation_payload"];self.assertEqual(payload["turn_start_observation"]["own_country"],own);self.assertNotIn("country_responses",payload)
             self.assertNotEqual(run["turns"][0]["research_metrics"]["global_homeostasis"],run["turns"][0]["evaluator_commentary"]["global_homeostasis"])
-    def test_resume_continues_after_last_completed_turn(self):
+    def test_resume_refuses_attempted_uncommitted_turn(self):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/"x.json";first=InterruptingClient(20)
             with self.assertRaises(KeyboardInterrupt):run_live(first,p,1,7)
             checkpoint=json.loads(p.with_suffix(".json.checkpoint").read_text())
             self.assertEqual(checkpoint["active_run"]["completed_turn"],2)
-            second=Client();result=run_live(second,p,1,7,True)
-            self.assertEqual(len(result["runs"][0]["turns"]),8)
-            self.assertEqual(len(second.models.payloads),60)
-            self.assertEqual(len(result["runs"][0]["call_audit"]),81)
-            self.assertEqual(result["runs"][0]["call_audit"][20]["turn"],3)
+            original=p.with_suffix(".json.checkpoint").read_bytes()
+            second=Client()
+            with self.assertRaisesRegex(ValueError,"RESUME_UNCOMMITTED_DECISION"):
+                run_live(second,p,1,7,True)
+            self.assertEqual(second.models.payloads,[])
+            self.assertEqual(p.with_suffix(".json.checkpoint").read_bytes(),original)
+            self.assertFalse(p.exists())
     def test_cli_defaults_to_dry_run_without_output(self):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/"x.json";out=subprocess.check_output(["python3","-B","final_experiment_runner.py","--output",str(p)],text=True)
