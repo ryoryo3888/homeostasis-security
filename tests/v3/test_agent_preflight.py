@@ -140,6 +140,11 @@ class PreflightTests(unittest.TestCase):
             self.assertEqual(report['api_calls'],0)
             self.assertFalse(report['research_eligible'])
             self.assertFalse(report['formal_experiment_ready'])
+            protocol=json.loads((Path(temp)/'run/protocol.json').read_text())
+            for record in (report,protocol):
+                self.assertEqual(record['decision_origin'],'synthetic_fixture')
+                self.assertEqual(record['fixture'],'synthetic_abstention')
+                self.assertEqual(record['fixture_behavior'],'always_empty_decisions_not_agent_chosen_abstention')
             cp=CheckpointStore(Path(temp)/'run/checkpoints').load()
             self.assertEqual(cp['turn'],3)
             self.assertEqual(cp['audit']['RECOVERY']['applied'],[])
@@ -162,6 +167,8 @@ class PreflightTests(unittest.TestCase):
             report=json.loads((path/'report.json').read_text())
             self.assertEqual(report['status'],'technical_failure')
             self.assertFalse(report['automatic_retry'])
+            self.assertEqual(report['decision_origin'],'synthetic_fixture')
+            self.assertEqual(report['completed_turns'],0)
             self.assertNotIn('sensitive-error',(path/'report.json').read_text())
 
     def test_second_turn_failure_preserves_first_checkpoint(self):
