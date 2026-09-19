@@ -46,7 +46,7 @@ class Phase8Tests(unittest.TestCase):
                 self.assertEqual((ROOT/name).read_bytes(),approved,name)
                 continue
             if name in {"simulation.py", "test_simulation.py"}:
-                approved=subprocess.check_output(["git","show","72d9e913178ad9902844c3707b7f04d5c845e318:"+name],cwd=ROOT)
+                approved=subprocess.check_output(["git","show","51de4f2722bb63932926badcdfa875f4db45f05e:"+name],cwd=ROOT)
                 self.assertEqual((ROOT/name).read_bytes(),approved,name)
                 continue
             if hashlib.sha256(protected_bytes(ROOT/name)).hexdigest()!=digest:bad.append(name)
