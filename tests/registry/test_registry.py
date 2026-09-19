@@ -89,7 +89,7 @@ class RegistryTests(unittest.TestCase):
             if name.endswith('.json') and not name.startswith(('tests/','docs/architecture/')) or name.startswith(('simulation','experiment_runner','final_experiment_runner','homeostasis_core/')):
                 source=repair if name in repaired else base
                 if name=='simulation_v2.py':source=v2_repair
-                if name=='simulation.py':source='ef68f3e682f4e61ad30ca7402a1fb18e751a8509'
+                if name=='simulation.py':source='72d9e913178ad9902844c3707b7f04d5c845e318'
                 if name in ('simulation_final.py','homeostasis_core/gemini_agents.py'):source='d8bc495d61e95917d602e5a8b27ebd76fa121f72'
                 if name=='homeostasis_core/gemini_agents.py':source='79f52bcd67ec1d038506258732b58ec761606b34'
                 if name=='homeostasis_core/resume_guard.py':source='79f52bcd67ec1d038506258732b58ec761606b34'
