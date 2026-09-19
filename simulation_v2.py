@@ -17,6 +17,7 @@ import random
 import tempfile
 import time
 from typing import Any, Callable
+from model_response_json import load_response_object
 
 
 MODEL_NAME = "gemini-3.6-flash"
@@ -164,7 +165,7 @@ def parse_json_object(text: str) -> dict[str, Any]:
         if start < 0 or end < start:
             raise ValueError("response does not contain a JSON object")
         cleaned = cleaned[start : end + 1]
-    value = json.loads(cleaned)
+    value = load_response_object(cleaned)
     if not isinstance(value, dict):
         raise ValueError("response JSON must be an object")
     return value
