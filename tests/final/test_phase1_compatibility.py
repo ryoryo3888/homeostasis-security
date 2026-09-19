@@ -66,7 +66,7 @@ class Phase1CompatibilityTests(unittest.TestCase):
                 approved = subprocess.check_output(["git", "show", "ef68f3e682f4e61ad30ca7402a1fb18e751a8509:" + filename], cwd=ROOT)
                 self.assertEqual((ROOT / filename).read_bytes(), approved, filename)
                 continue
-            if filename in {"simulation.py", "test_simulation.py"}:
+            if filename in {"simulation.py", "test_simulation.py", "experiment_runner.py"}:
                 approved = subprocess.check_output(["git", "show", "51de4f2722bb63932926badcdfa875f4db45f05e:" + filename], cwd=ROOT)
                 self.assertEqual((ROOT / filename).read_bytes(), approved, filename)
                 continue
