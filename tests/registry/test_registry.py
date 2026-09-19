@@ -82,7 +82,7 @@ class RegistryTests(unittest.TestCase):
         # not a general exception, and does not reattribute any historical run.
         repair='57127a5bb8c6a8c60f42a35b2f09f4fdb2a259ed'
         repaired={'final_experiment_runner.py','homeostasis_core/gemini_agents.py',
-                  'homeostasis_core/resume_guard.py','homeostasis_core/execution_identity.py',
+                  'homeostasis_core/resume_guard.py','homeostasis_core/execution_identity.py','homeostasis_core/execution_lock.py',
                   'response_receipts.py','provider_retry.py','provider_response.py'}
         v2_repair='614d77a37bcdc2a243edd80f23734df87c2f2e07'
         names=subprocess.check_output(['git','ls-tree','-r','--name-only',base],cwd=ROOT,text=True).splitlines()
@@ -99,6 +99,7 @@ class RegistryTests(unittest.TestCase):
                 if name=='response_receipts.py':source='35a6a17eae3897b3ab49a64face7c11ecb0dc437'
                 if name in ('final_experiment_runner.py','homeostasis_core/experiments.py'):source='2c2df0f4cb7f967b258846ac44dc804a9b56db95'
                 if name in ('final_experiment_runner.py','homeostasis_core/resume_guard.py','homeostasis_core/execution_identity.py'):source='16243bf2672139c770af01d2cafe65ee5c25d72a'
+                if name in ('final_experiment_runner.py','homeostasis_core/execution_lock.py'):source='2d8aef00896c66ac650f228d9c1224c58a6154c5'
                 self.assertEqual((ROOT/name).read_bytes(),subprocess.check_output(['git','show',source+':'+name],cwd=ROOT),name)
     def test_saved_comparison_membership(self):
         summary=load_json(ROOT/'summary.json');study=self.registry['experiments'][1]
