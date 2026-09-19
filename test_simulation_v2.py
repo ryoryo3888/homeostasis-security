@@ -78,9 +78,7 @@ class SimulationV2Tests(unittest.TestCase):
             sim.parse_country_response(bad, "A")
 
     def test_retry_succeeds_after_temporary_failure(self):
-        class TemporaryError(Exception):
-            code = 503
-            status = "UNAVAILABLE"
+        from google.genai.errors import APIError
 
         class FlakyModels:
             def __init__(self):
@@ -89,7 +87,7 @@ class SimulationV2Tests(unittest.TestCase):
             def generate_content(self, **kwargs):
                 self.count += 1
                 if self.count == 1:
-                    raise TemporaryError("503 UNAVAILABLE")
+                    raise APIError(503, {"error": {"code": 503, "status": "UNAVAILABLE"}})
                 return SimpleNamespace(text="ok")
 
         models = FlakyModels()
