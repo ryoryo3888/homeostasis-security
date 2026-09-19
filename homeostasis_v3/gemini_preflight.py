@@ -57,6 +57,12 @@ class AttemptJournal:
             ensure(db.execute('SELECT digest FROM configuration').fetchone()[0]==self.configuration_hash,'JOURNAL_CONFIGURATION_MISMATCH')
             ensure(not db.execute("SELECT 1 FROM attempts WHERE status!='response_validated' LIMIT 1").fetchone(),
                    'UNRESOLVED_ATTEMPT_REQUIRES_REVIEW')
+            # A historic validated label is not a substitute for the reply.
+            # Stop before reserving another call; never invent missing evidence.
+            ensure(not db.execute('SELECT 1 FROM attempts a LEFT JOIN responses r '
+                                  'ON a.request_digest=r.request_digest '
+                                  'WHERE r.request_digest IS NULL LIMIT 1').fetchone(),
+                   'PRIOR_RESPONSE_NOT_RECORDED')
             ensure(not db.execute('SELECT 1 FROM attempts WHERE request_digest=?',(request['request_digest'],)).fetchone(),
                    'DUPLICATE_DISPATCH_FORBIDDEN')
             ensure(db.execute('SELECT COUNT(*) FROM attempts').fetchone()[0]<self.configuration['max_calls'],'CALL_LIMIT_EXCEEDED')
