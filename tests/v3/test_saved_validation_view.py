@@ -23,6 +23,9 @@ class SavedViewTests(unittest.TestCase):
     def test_formal_promotion_rejected(self):
         p=deepcopy(self.package);p['research_eligible']=True
         with self.assertRaises(AssertionError):project(p)
+    def test_synthetic_cannot_be_relabelled_as_agent_decision(self):
+        p=deepcopy(self.package);p['decision_origin']='agent_chosen_abstention'
+        with self.assertRaises(AssertionError):project(p)
     def test_corrupted_evidence_rejected(self):
         p=deepcopy(self.package);p['cases'][0]['turns'][0]['evidence']['ledger']['value'][0]['consumed']+=1
         with self.assertRaises(AssertionError):project(p)
