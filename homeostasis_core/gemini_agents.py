@@ -222,7 +222,9 @@ def pilot_is_eligible(result_path,manifest_path):
     if not (d.get("result_file")==result_path.name and d.get("status")=="accepted" and d.get("include_in_research_aggregation") is True):return False
     # An acceptance label cannot turn an explicitly technical artifact into an
     # Agent research result. API-free aggregation alone is not such evidence.
-    result=json.loads(result_path.read_text())
+    raw=result_path.read_bytes()
+    if d.get("result_sha256")!=hashlib.sha256(raw).hexdigest():return False
+    result=json.loads(raw)
     if type(result) is not dict:return False
     scopes=[result]
     if type(result.get("metadata")) is dict:scopes.append(result["metadata"])

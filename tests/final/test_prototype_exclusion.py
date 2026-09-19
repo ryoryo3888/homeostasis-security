@@ -1,4 +1,5 @@
 """Offline classification checks; never reclassify or rewrite historical files."""
+import hashlib
 import json
 from pathlib import Path
 import tempfile
@@ -17,6 +18,7 @@ class PrototypeExclusionTests(unittest.TestCase):
             result.write_text(json.dumps(value),encoding='utf-8')
             manifest=result.with_suffix('.audit.json')
             manifest.write_text(json.dumps({'result_file':result.name,'status':'accepted',
+                                            'result_sha256':hashlib.sha256(result.read_bytes()).hexdigest(),
                                             'include_in_research_aggregation':True}))
             return pilot_is_eligible(result,manifest),eligible_result_paths(result.parent)
 
