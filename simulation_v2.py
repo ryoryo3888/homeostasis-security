@@ -7,6 +7,7 @@ possible only through the explicit CLI entry point at the bottom of this file.
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from getpass import getpass
@@ -221,7 +222,7 @@ def parse_evaluator_response(text: str) -> dict[str, Any]:
 def public_observation(turn: int, state: dict[str, Any], damage: int) -> dict[str, Any]:
     return {
         "turn": turn,
-        "source_event": SOURCE_EVENT,
+        "source_event": deepcopy(SOURCE_EVENT),
         "remaining_lost_capacity_tons": damage,
         "world_indicators": {
             key: state[key]
