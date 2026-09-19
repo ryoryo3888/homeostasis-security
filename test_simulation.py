@@ -8,6 +8,14 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 import simulation
+from google.genai import types
+from pathlib import Path
+from response_receipts import ResponseReceipts
+
+
+def sdk_reply(text):
+    return types.GenerateContentResponse(candidates=[types.Candidate(
+        content=types.Content(parts=[types.Part(text=text)]))])
 
 
 class FakeModels:
@@ -36,10 +44,10 @@ class FakeModels:
                 "trust_signal": 52,
                 "recovery_capacity": 64,
             }
-            return SimpleNamespace(text=json.dumps(payload))
+            return sdk_reply(json.dumps(payload))
 
-        return SimpleNamespace(
-            text=(
+        return sdk_reply(
+            (
                 "現在認識: 国境付近の状況には不確実性がある。\n"
                 "懸念: 国家の安全と法的帰結を同時に検討する必要がある。\n"
                 "行動: 観測態勢を維持し、今回の外部イベントに対応する。\n"
@@ -244,7 +252,7 @@ class SimulationTest(unittest.TestCase):
                     original_generate = fake_models.generate_content
                     def generate(*args, **kwargs):
                         response = original_generate(*args, **kwargs)
-                        return SimpleNamespace(text=malformed) if fake_models.total_calls == invalid_call else response
+                        return sdk_reply(malformed) if fake_models.total_calls == invalid_call else response
                     fake_models.generate_content = generate
                     agents = []
                     original_agent = simulation.Agent
@@ -266,7 +274,9 @@ class SimulationTest(unittest.TestCase):
                             ):
                                 with self.assertRaises(ValueError):
                                     simulation.main()
-                            self.assertEqual(os.listdir(directory), [])
+                            self.assertEqual(os.listdir(directory), ['.artifacts'])
+                            store = ResponseReceipts.for_output(Path(directory)/'simulation_result_independent_agents_no_hotline.json')
+                            self.assertEqual(len(list(store.directory.glob('*.json'))), invalid_call)
                         finally:
                             os.chdir(previous_cwd)
                     self.assertEqual(fake_models.total_calls, invalid_call)
