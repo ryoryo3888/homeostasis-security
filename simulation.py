@@ -392,6 +392,8 @@ def call_evaluator(
 
 観測状況、外部イベントの実態、両国の認識と行動の意味的関係だけを評価し、
 指定された11項目を0〜100の整数で返してください。
+以下の行動はAgentの選択・宣言です。実行、通信の送受信、交渉の成立を確認した記録ではありません。
+行動に関する採点は宣言内容についての推定であり、実現済みの世界状態とは扱わないでください。
 
 評価原則:
 - actual_threat_level: 外部イベントの実態と両国の今回行動が生む、現時点の客観的危険度。
@@ -733,16 +735,16 @@ def extract_belief(decision: str) -> str:
 
 def build_world_state(action_a: str, action_b: str) -> str:
     return (
-        f"A国は「{action_a}」を実行した。"
-        f"B国は「{action_b}」を実行した。"
-        "両国は互いに相手国の行動を観測できる。"
+        f"A国Agentは行動として「{action_a}」を選択した。"
+        f"B国Agentは行動として「{action_b}」を選択した。"
+        "これはAgentの行動選択の記録であり、実行結果や相手国への到達を確認した記録ではない。"
         "ただし、相手がその行動を選んだ内部的な意図や判断理由は直接観測できない。"
     )
 
 
 def build_turn_state(previous_world_state: str, event: ExternalEvent) -> str:
     return (
-        f"前TURNまでに観測された状況:\n{previous_world_state}\n\n"
+        f"前TURNまでの記録（行動選択と実現結果は別）:\n{previous_world_state}\n\n"
         f"今回の外部イベント:\n{event.observable_description}\n"
         f"情報の公的な信頼度: {int(round(event.information_reliability * 100))}%"
     )
@@ -897,12 +899,16 @@ def main():
                 "metrics": metrics,
                 "country_a": {
                     "action": action_a,
+                    "action_status": "declared",
+                    "realization_status": "unverified",
                     "reason": reason_a,
                     "concern": concern_a,
                     "belief": belief_a,
                 },
                 "country_b": {
                     "action": action_b,
+                    "action_status": "declared",
+                    "realization_status": "unverified",
                     "reason": reason_b,
                     "concern": concern_b,
                     "belief": belief_b,
