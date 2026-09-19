@@ -44,14 +44,36 @@ class JsonCountryAdapter:
         check(ID, state_id); check(TEXT, source)
         self.state_id, self.catalogue = state_id, catalogue
         self.exchange, self.budget, self.source = exchange, budget, source
+        self._catalogue, self._exchange, self._budget = catalogue, exchange, budget
+        self._configuration_failed = False
+        self._configuration_hash = digest(self._configuration())
+
+    def _configuration(self):
+        return {'state_id': self.state_id, 'source': self.source,
+                'budget_limit': getattr(self.budget, 'limit', None),
+                'response_schema': RESPONSE}
+
+    def _check_configuration(self):
+        ensure(not self._configuration_failed, 'ADAPTER_CONFIGURATION_FAILED')
+        try:
+            ensure(self.catalogue is self._catalogue and self.exchange is self._exchange
+                   and self.budget is self._budget
+                   and digest(self._configuration()) == self._configuration_hash,
+                   'ADAPTER_CONFIGURATION_CHANGED')
+        except Exception:
+            self._configuration_failed = True
+            raise
 
     def _request(self, phase, observation, payload):
+        self._check_configuration()
         request = {'version': 'v3', 'phase': phase, 'state_id': self.state_id,
                    'observation_digest': observation.hash,
                    'observation': observation.read(), 'payload': payload}
         key = self.budget.reserve(request)
+        self._check_configuration()
         # Serialized JSON prevents a provider from mutating host input objects.
         raw = self.exchange(canonical({**request, 'request_digest': key}))
+        self._check_configuration()
         ensure(type(raw) is str and len(raw.encode('utf-8')) <= 65536, 'INVALID_RESPONSE_SIZE')
         try:
             answer = json.loads(raw, object_pairs_hook=_object)
@@ -63,8 +85,10 @@ class JsonCountryAdapter:
         return answer
 
     def choose(self, observation, proposal):
+        self._check_configuration()
         catalogue = [t for t in self.catalogue(observation)
                      if t['actor_state_id'] == self.state_id]
+        self._check_configuration()
         answer = self._request('choice', observation,
                                {'catalogue': catalogue, 'proposal': proposal.read()})
         ensure(not answer['consents'], 'PREMATURE_CONSENT_FORBIDDEN')
@@ -81,6 +105,7 @@ class JsonCountryAdapter:
         return selected
 
     def consent(self, observation, choices):
+        self._check_configuration()
         # No proposal is manufactured when there are no choices to consider.
         records = choices.read()
         if not records:
@@ -91,4 +116,5 @@ class JsonCountryAdapter:
         return answer['consents']
 
     def callbacks(self):
+        self._check_configuration()
         return CountryInput(self.choose, self.consent)
