@@ -370,8 +370,12 @@ def parse_evaluator_response(response_text: str) -> dict:
     if missing:
         raise ValueError(f"Evaluatorの必須項目が不足しています: {', '.join(missing)}")
 
+    for field_name in EVALUATION_FIELDS:
+        value = parsed[field_name]
+        if type(value) not in (int, float) or not 0 <= value <= 100 or value != int(value):
+            raise ValueError(f"Evaluatorの{field_name}は0〜100の整数が必要です。値を補正せず停止します。")
     return {
-        field_name: clamp_score(parsed[field_name])
+        field_name: int(parsed[field_name])
         for field_name in EVALUATION_FIELDS
     }
 

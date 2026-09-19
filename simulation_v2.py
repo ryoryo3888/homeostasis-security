@@ -209,6 +209,10 @@ def parse_evaluator_response(text: str) -> dict[str, Any]:
     missing = [key for key in EVALUATOR_FIELDS if key not in data]
     if missing:
         raise ValueError(f"Evaluator fields missing: {', '.join(missing)}")
+    for key in EVALUATOR_FIELDS:
+        value = data[key]
+        if type(value) not in (int, float) or not 0 <= value <= 100:
+            raise ValueError(f"Evaluator {key} must be a number from 0 through 100; do not repair invalid scores")
     parsed = {key: clamp_score(data[key]) for key in EVALUATOR_FIELDS}
     parsed["assessment"] = require_text(data, "assessment")
     return parsed
