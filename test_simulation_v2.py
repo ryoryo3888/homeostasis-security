@@ -71,7 +71,7 @@ class SimulationV2Tests(unittest.TestCase):
 
     def test_invalid_agent_response_is_detected(self):
         bad = json.dumps({
-            "observation": "観測", "action": "許可されない行動",
+            "observation": "観測", "action": ["壊れた通信形式"],
             "proposal_response": "受け入れる", "reason": "理由",
         }, ensure_ascii=False)
         with self.assertRaises(ValueError):
