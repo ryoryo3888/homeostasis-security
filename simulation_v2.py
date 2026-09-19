@@ -19,6 +19,7 @@ import time
 from typing import Any, Callable
 from model_response_json import load_response_object
 from provider_retry import retryable_provider_status
+from provider_response import complete_response_text
 
 
 MODEL_NAME = "gemini-3.6-flash"
@@ -236,7 +237,7 @@ def call_json(client: Any, prompt: str) -> str:
         contents=prompt,
         config={"response_mime_type": "application/json"},
     )
-    return response.text
+    return complete_response_text(response)
 
 
 def call_coordinator(client: Any, observation: dict[str, Any]) -> dict[str, str]:

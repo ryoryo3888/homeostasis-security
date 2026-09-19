@@ -3,6 +3,7 @@ from copy import deepcopy
 import json
 from types import SimpleNamespace
 import unittest
+from test_simulation import sdk_reply
 
 from homeostasis_core.gemini_agents import (
     GeminiGateway, SCHEMA_VERSION, apply_structured_actions,
@@ -138,7 +139,7 @@ class ActionParticipationTests(unittest.TestCase):
             else:
                 country = request['turn_start_observation']['own_country']
                 answer = self.answer(country, dependent=(country == 'B'))
-            return SimpleNamespace(text=json.dumps(answer), usage_metadata=None)
+            return sdk_reply(json.dumps(answer))
 
         gateway = GeminiGateway(SimpleNamespace(models=SimpleNamespace(generate_content=generate)))
         views = {c: dict(own_country=c, observed_world=self.world, own_state=self.states[c])
