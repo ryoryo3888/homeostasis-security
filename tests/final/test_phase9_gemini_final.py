@@ -1,12 +1,17 @@
 import json,subprocess,tempfile,unittest
 from pathlib import Path
+from google.genai import types
+from response_receipts import ResponseReceipts
 from final_experiment_runner import estimate,run_live
 from homeostasis_core.gemini_agents import GeminiGateway,parse_country_json,run_gemini_turn
 
 class Usage:
     prompt_token_count=10;candidates_token_count=5;total_token_count=15
-class Response:
-    def __init__(self,text):self.text=text;self.usage_metadata=Usage()
+def Response(text):
+    return types.GenerateContentResponse(candidates=[types.Candidate(
+        content=types.Content(parts=[types.Part(text=text)]))],
+        usage_metadata=types.GenerateContentResponseUsageMetadata(
+            prompt_token_count=10,candidates_token_count=5,total_token_count=15))
 class Models:
     def __init__(self,invalid=False):self.payloads=[];self.invalid=invalid
     def generate_content(self,**kw):
@@ -79,6 +84,9 @@ class GeminiFinalTests(unittest.TestCase):
             p=Path(d)/"x.json";p.with_suffix(".json.checkpoint").write_text('{"completed_runs":[]}');c=Client()
             result=run_live(c,p,1,7,True)
             run=result["runs"][0];self.assertEqual(len(run["turns"]),8);self.assertEqual(len(run["call_audit"]),80);self.assertEqual(run["token_usage"]["total_tokens"],1200);self.assertTrue(p.exists());self.assertFalse(p.with_suffix(".json.checkpoint").exists())
+            receipts=ResponseReceipts.for_output(p)
+            self.assertEqual(len(list(receipts.directory.glob("*.json"))),80)
+            receipts.verify(run["call_audit"])
             first=[x for x in run["call_audit"] if x["turn"]==1 and x["agent_type"]=="country"]
             self.assertEqual(len({x["snapshot_id"] for x in first}),1);self.assertEqual(len({x["agent_archetype"] for x in first}),8)
             for audit in first:
