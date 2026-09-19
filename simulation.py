@@ -2,7 +2,10 @@ from dataclasses import dataclass, field
 from getpass import getpass
 from typing import Dict, List, Optional
 import json
+import os
+from pathlib import Path
 import random
+import tempfile
 import time
 
 from google import genai
@@ -788,7 +791,27 @@ def build_turn_state(previous_world_state: str, event: ExternalEvent) -> str:
     )
 
 
+def save_result_exclusive(destination: Path, data: dict) -> None:
+    """Publish a complete JSON file only if no result already owns the name."""
+    destination = Path(destination)
+    if os.path.lexists(destination):
+        raise FileExistsError(f"既存の結果を上書きせず停止します: {destination}")
+    fd, staged = tempfile.mkstemp(prefix=".simulation-result-", dir=destination.parent)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as stream:
+            json.dump(data, stream, ensure_ascii=False, indent=2)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.link(staged, destination)
+    finally:
+        os.unlink(staged)
+
+
 def main():
+    output_file = (f"simulation_result_independent_agents_{EXPERIMENT_CONDITION}.json"
+                   if USE_GEMINI else "simulation_result_development.json")
+    if os.path.lexists(output_file):
+        raise FileExistsError(f"既存の結果を上書きせず停止します: {output_file}")
     client = None
 
     if USE_GEMINI:
@@ -975,18 +998,7 @@ def main():
         "results": results,
     }
 
-    if USE_GEMINI:
-        output_file = f"simulation_result_independent_agents_{EXPERIMENT_CONDITION}.json"
-    else:
-        output_file = "simulation_result_development.json"
-
-    with open(output_file, "w", encoding="utf-8") as f:
-        json.dump(
-            output_data,
-            f,
-            ensure_ascii=False,
-            indent=2,
-        )
+    save_result_exclusive(Path(output_file), output_data)
 
     print("\n====================")
     print("SIMULATION END")
