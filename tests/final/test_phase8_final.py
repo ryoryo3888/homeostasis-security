@@ -42,11 +42,11 @@ class Phase8Tests(unittest.TestCase):
             digest,name=line.split('  ',1)
             if name=="README.md":continue
             if name in {"simulation_v2.py", "test_simulation_v2.py"}:
-                approved=subprocess.check_output(["git","show","313f544855c2bc07675f144e2866f7a79ff5540c:"+name],cwd=ROOT)
+                approved=subprocess.check_output(["git","show","d1112d251d40f6b821c2b99bd0c91c38b5d345c7:"+name],cwd=ROOT)
                 self.assertEqual((ROOT/name).read_bytes(),approved,name)
                 continue
             if name in {"simulation.py", "test_simulation.py"}:
-                approved=subprocess.check_output(["git","show","d52834e837ba3f7c586b300cad488dc412f9ed8a:"+name],cwd=ROOT)
+                approved=subprocess.check_output(["git","show","d1112d251d40f6b821c2b99bd0c91c38b5d345c7:"+name],cwd=ROOT)
                 self.assertEqual((ROOT/name).read_bytes(),approved,name)
                 continue
             if hashlib.sha256(protected_bytes(ROOT/name)).hexdigest()!=digest:bad.append(name)

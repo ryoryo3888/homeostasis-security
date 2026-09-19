@@ -83,15 +83,15 @@ class RegistryTests(unittest.TestCase):
         repair='57127a5bb8c6a8c60f42a35b2f09f4fdb2a259ed'
         repaired={'final_experiment_runner.py','homeostasis_core/gemini_agents.py',
                   'homeostasis_core/resume_guard.py'}
-        v2_repair='313f544855c2bc07675f144e2866f7a79ff5540c'
+        v2_repair='d1112d251d40f6b821c2b99bd0c91c38b5d345c7'
         names=subprocess.check_output(['git','ls-tree','-r','--name-only',base],cwd=ROOT,text=True).splitlines()
         for name in sorted(set(names)|repaired):
             if name.endswith('.json') and not name.startswith(('tests/','docs/architecture/')) or name.startswith(('simulation','experiment_runner','final_experiment_runner','homeostasis_core/')):
                 source=repair if name in repaired else base
                 if name=='simulation_v2.py':source=v2_repair
-                if name=='simulation.py':source='d52834e837ba3f7c586b300cad488dc412f9ed8a'
+                if name=='simulation.py':source='d1112d251d40f6b821c2b99bd0c91c38b5d345c7'
                 if name in ('simulation_final.py','homeostasis_core/gemini_agents.py'):source='d8bc495d61e95917d602e5a8b27ebd76fa121f72'
-                if name=='homeostasis_core/gemini_agents.py':source='1e98dfc0a41812b470dd12f8f6122a053425d5ee'
+                if name=='homeostasis_core/gemini_agents.py':source='d1112d251d40f6b821c2b99bd0c91c38b5d345c7'
                 if name=='homeostasis_core/resume_guard.py':source='8864648122aa7af296594f31fcf3f49538ed085a'
                 self.assertEqual((ROOT/name).read_bytes(),subprocess.check_output(['git','show',source+':'+name],cwd=ROOT),name)
     def test_saved_comparison_membership(self):

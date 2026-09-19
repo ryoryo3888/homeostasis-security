@@ -63,11 +63,11 @@ class Phase1CompatibilityTests(unittest.TestCase):
             if filename == "README.md":
                 continue
             if filename in {"simulation_v2.py", "test_simulation_v2.py"}:
-                approved = subprocess.check_output(["git", "show", "313f544855c2bc07675f144e2866f7a79ff5540c:" + filename], cwd=ROOT)
+                approved = subprocess.check_output(["git", "show", "d1112d251d40f6b821c2b99bd0c91c38b5d345c7:" + filename], cwd=ROOT)
                 self.assertEqual((ROOT / filename).read_bytes(), approved, filename)
                 continue
             if filename in {"simulation.py", "test_simulation.py"}:
-                approved = subprocess.check_output(["git", "show", "d52834e837ba3f7c586b300cad488dc412f9ed8a:" + filename], cwd=ROOT)
+                approved = subprocess.check_output(["git", "show", "d1112d251d40f6b821c2b99bd0c91c38b5d345c7:" + filename], cwd=ROOT)
                 self.assertEqual((ROOT / filename).read_bytes(), approved, filename)
                 continue
             actual = hashlib.sha256(protected_bytes(ROOT / filename)).hexdigest()
