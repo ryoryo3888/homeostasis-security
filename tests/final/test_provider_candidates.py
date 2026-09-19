@@ -1,6 +1,7 @@
 """Do not pick an SDK candidate or accept a stopped/incomplete generation."""
 from contextlib import redirect_stdout
 import io
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -105,6 +106,23 @@ class ProviderCandidateTests(unittest.TestCase):
                 self.assertEqual(generate.call_count,1)
             finally:
                 os.chdir(previous)
+
+    def test_old_receipts_cannot_resume_from_a_selected_or_incomplete_candidate(self):
+        with tempfile.TemporaryDirectory() as directory:
+            store = ResponseReceipts.for_output(Path(directory)/'synthetic.json'); store.prepare()
+            text = '{"original":true}'
+            for turn, (count, finish) in enumerate(((2,'STOP'),(1,'MAX_TOKENS')), 1):
+                audit = dict(run=1, turn=turn, agent_id='A', agent_type='country', model='offline',
+                             schema_version=3, attempt=1, snapshot_id='synthetic', observation_digest='synthetic')
+                reference = store.record(audit, reply(text, count=count, finish=finish))
+                # Reproduce an older successful record that selected the first
+                # candidate. The immutable original must now prevent resume.
+                audit.update(response_receipt=reference, receipt_required=True, response_status='validated',
+                             response_sha256=hashlib.sha256(text.encode()).hexdigest(), structured_response=json.loads(text))
+                before = {p.name:p.read_bytes() for p in store.directory.glob('*.json')}
+                with self.assertRaisesRegex(ValueError, 'AMBIGUOUS|INCOMPLETE'):
+                    store.verify([audit])
+                self.assertEqual({p.name:p.read_bytes() for p in store.directory.glob('*.json')}, before)
 
 
 if __name__ == '__main__': unittest.main()
