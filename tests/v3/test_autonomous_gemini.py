@@ -103,6 +103,21 @@ class AutonomousTests(unittest.TestCase):
         self.assertEqual(round.record()['extension_status'],'unimplemented_not_executed')
         self.assertEqual(cp['audit']['RECOVERY']['applied'],[])
 
+    def test_scope_record_does_not_change_inputs_or_world(self):
+        round=self.make_round(); cp=self.run_round(round)
+        before=deepcopy(cp); requests=deepcopy(self.requests)
+        record=round.record(); scope=record['decision_scope']
+        self.assertEqual(scope['executable_action_types'],['transfer'])
+        self.assertEqual(scope['route_scope'],'existing_one_hop_routes')
+        self.assertEqual(scope['extension_requests'],'recorded_only_not_executable')
+        self.assertFalse(scope['general_action_execution'])
+        self.assertEqual(scope['coordinator_protocol'],'not_configured')
+        scope['executable_action_types'].append('invented')
+        self.assertEqual(round.record()['decision_scope']['executable_action_types'],['transfer'])
+        self.assertEqual(self.requests,requests)
+        self.assertEqual(cp,before)
+        self.assertEqual(self.runner.replay(self.opening,cp['input']),cp)
+
     def test_forged_authority_and_terms_rejected(self):
         mutations=[lambda a,r:a.update(world_state={}),
                    lambda a,r:a.update(state_id='OTHER'),
