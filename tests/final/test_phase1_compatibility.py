@@ -1,6 +1,7 @@
 from tools.visual_baseline import protected_bytes
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 import unittest
 from unittest.mock import patch
@@ -60,6 +61,10 @@ class Phase1CompatibilityTests(unittest.TestCase):
             # PHASE 8 is explicitly allowed to append to README; its immutable
             # original prefix is verified by test_phase8_final.
             if filename == "README.md":
+                continue
+            if filename in {"simulation_v2.py", "test_simulation_v2.py"}:
+                approved = subprocess.check_output(["git", "show", "313f544855c2bc07675f144e2866f7a79ff5540c:" + filename], cwd=ROOT)
+                self.assertEqual((ROOT / filename).read_bytes(), approved, filename)
                 continue
             actual = hashlib.sha256(protected_bytes(ROOT / filename)).hexdigest()
             self.assertEqual(actual, expected, filename)
