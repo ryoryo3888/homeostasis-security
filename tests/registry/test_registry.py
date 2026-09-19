@@ -95,6 +95,7 @@ class RegistryTests(unittest.TestCase):
                 if name=='homeostasis_core/resume_guard.py':source='79f52bcd67ec1d038506258732b58ec761606b34'
                 if name in ('final_experiment_runner.py','homeostasis_core/gemini_agents.py','response_receipts.py'):source='f2aa9fcce4cc90c6c5645480886a769b1ddedfcb'
                 if name in ('homeostasis_core/gemini_agents.py','provider_retry.py','provider_response.py'):source='614d77a37bcdc2a243edd80f23734df87c2f2e07'
+                if name=='response_receipts.py':source='35a6a17eae3897b3ab49a64face7c11ecb0dc437'
                 self.assertEqual((ROOT/name).read_bytes(),subprocess.check_output(['git','show',source+':'+name],cwd=ROOT),name)
     def test_saved_comparison_membership(self):
         summary=load_json(ROOT/'summary.json');study=self.registry['experiments'][1]
