@@ -14,9 +14,11 @@ class FakeModels:
     def __init__(self):
         self.total_calls = 0
         self.evaluator_calls = 0
+        self.prompts = []
 
     def generate_content(self, model, contents, config=None):
         self.total_calls += 1
+        self.prompts.append(contents)
 
         if config and config.get("response_mime_type") == "application/json":
             self.evaluator_calls += 1
@@ -81,6 +83,11 @@ class SimulationTest(unittest.TestCase):
         for result in output["results"]:
             self.assertTrue(result["country_a"]["action"])
             self.assertTrue(result["country_b"]["action"])
+            for country in ("country_a", "country_b"):
+                self.assertEqual(result[country]["action_status"], "declared")
+                self.assertEqual(result[country]["realization_status"], "unverified")
+            self.assertNotIn("を実行した。", result["world_state"])
+            self.assertIn("実行結果や相手国への到達を確認した記録ではない", result["world_state"])
             self.assertIn("external_event", result)
             self.assertEqual(
                 set(result["evaluation"]),
@@ -95,7 +102,23 @@ class SimulationTest(unittest.TestCase):
             ):
                 self.assertIn(legacy_metric, result["metrics"])
 
+        if turn_count > 1:
+            second_turn_agent_prompts = fake_models.prompts[3:5]
+            for prompt in second_turn_agent_prompts:
+                self.assertIn("行動選択と実現結果は別", prompt)
+                self.assertNotIn("を実行した。", prompt)
+        for prompt in fake_models.prompts[2::3]:
+            self.assertIn("行動に関する採点は宣言内容についての推定", prompt)
         return output
+
+    def test_declarations_do_not_establish_delivery_or_realization(self):
+        state = simulation.build_world_state("ホットラインで停戦を提案する", "食料を輸送する")
+        self.assertIn("ホットラインで停戦を提案する", state)
+        self.assertIn("食料を輸送する", state)
+        self.assertIn("を選択した。", state)
+        self.assertNotIn("を実行した。", state)
+        self.assertNotIn("互いに相手国の行動を観測できる", state)
+        self.assertIn("実行結果や相手国への到達を確認した記録ではない", state)
 
     def test_two_turn_smoke(self):
         self.run_fake_simulation(2)
