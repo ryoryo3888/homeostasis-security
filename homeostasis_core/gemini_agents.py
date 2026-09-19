@@ -4,6 +4,7 @@ from dataclasses import dataclass
 import hashlib,json,random,time
 from typing import Any,Callable
 from model_response_json import load_response_object
+from provider_retry import retryable_provider_status as _retryable_provider_status
 from .metrics import clamp,global_homeostasis
 from .models import CountryState,EnergyPortfolio,ResourcePortfolio,_score
 from .resources import ResourceNetwork,SupplyLink,process_resource_network
@@ -84,19 +85,6 @@ def _usage(r):
             if isinstance(v,int) and not isinstance(v,bool):return v
         return None
     return {"input_tokens":g("prompt_token_count","prompt_tokens"),"output_tokens":g("candidates_token_count","output_tokens"),"total_tokens":g("total_token_count","total_tokens")}
-def _retryable_provider_status(error):
-    """Require an explicit transient API rejection, not an ambiguous SDK error."""
-    from google.genai.errors import APIError
-    if not isinstance(error,APIError):return None
-    code=error.code
-    if type(code) is not int or code not in (429,503):return None
-    details=error.details
-    rejection=details.get("error") if isinstance(details,dict) else None
-    if not isinstance(rejection,dict):return None
-    if type(rejection.get("code")) is not int or rejection["code"]!=code:return None
-    if rejection.get("status")!={429:"RESOURCE_EXHAUSTED",503:"UNAVAILABLE"}[code]:return None
-    return code
-
 @dataclass
 class GeminiGateway:
     client:Any;model:str=MODEL_NAME;max_calls:int=240;retry_limit:int=3;sleep_fn:Callable[[float],None]=time.sleep;audit_hook:Callable|None=None;response_hook:Callable|None=None
