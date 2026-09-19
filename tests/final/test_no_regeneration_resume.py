@@ -195,9 +195,18 @@ class ResumeGateTests(unittest.TestCase):
 
     def test_known_provider_retry_identical_request_allowed(self):
         data = fixture(); logs = data['active_run']['call_audit']
-        failure = deepcopy(logs[0]); failure.update(response_status='provider_error', structured_response=None)
+        failure = deepcopy(logs[0]); failure.update(response_status='provider_error', provider_status_code=503, structured_response=None)
         logs[0]['attempt'] = 2; logs.insert(0, failure)
         self.assertEqual(self.read(data), data)
+
+    def test_retry_without_explicit_provider_status_is_not_accepted(self):
+        for code in (None, True, '503', 400, 408, 500):
+            with self.subTest(code=code):
+                data=fixture(); logs=data['active_run']['call_audit']
+                failure=deepcopy(logs[0]); failure.update(response_status='provider_error',structured_response=None)
+                if code is not None: failure['provider_status_code']=code
+                logs[0]['attempt']=2; logs.insert(0,failure)
+                self.reject(data,'REGENERATED_OR_AMBIGUOUS_RESPONSE')
 
     def test_legacy_ambiguous_retry_is_not_accepted(self):
         data = fixture(); logs = data['active_run']['call_audit']
@@ -207,7 +216,7 @@ class ResumeGateTests(unittest.TestCase):
 
     def test_retry_with_changed_payload_is_rejected(self):
         data = fixture(); logs = data['active_run']['call_audit']
-        failure = deepcopy(logs[0]); failure.update(response_status='provider_error', structured_response=None)
+        failure = deepcopy(logs[0]); failure.update(response_status='provider_error', provider_status_code=503, structured_response=None)
         failure['public_observation_payload'] = {'changed': True}
         failure['observation_digest'] = digest(failure['public_observation_payload'])
         logs[0]['attempt'] = 2; logs.insert(0, failure)

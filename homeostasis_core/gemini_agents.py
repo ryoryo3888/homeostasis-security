@@ -84,12 +84,25 @@ def _usage(r):
             if isinstance(v,int) and not isinstance(v,bool):return v
         return None
     return {"input_tokens":g("prompt_token_count","prompt_tokens"),"output_tokens":g("candidates_token_count","output_tokens"),"total_tokens":g("total_token_count","total_tokens")}
+def _retryable_provider_status(error):
+    """Require an explicit transient API rejection, not an ambiguous SDK error."""
+    from google.genai.errors import APIError
+    if not isinstance(error,APIError):return None
+    code=error.code
+    if type(code) is not int or code not in (429,503):return None
+    details=error.details
+    rejection=details.get("error") if isinstance(details,dict) else None
+    if not isinstance(rejection,dict):return None
+    if type(rejection.get("code")) is not int or rejection["code"]!=code:return None
+    if rejection.get("status")!={429:"RESOURCE_EXHAUSTED",503:"UNAVAILABLE"}[code]:return None
+    return code
+
 @dataclass
 class GeminiGateway:
     client:Any;model:str=MODEL_NAME;max_calls:int=240;retry_limit:int=3;sleep_fn:Callable[[float],None]=time.sleep;audit_hook:Callable|None=None
     def __post_init__(self):self.calls=[]
     def call(self,agent_name,run,turn,payload,parser,*,agent_type="unknown",archetype=None,snapshot_id=None,json_schema=None,validation_help=None):
-        """Retry provider failures only; never regenerate a received decision.
+        """Retry explicit transient API rejections, never ambiguous outcomes.
 
         validation_help is retained for call-site compatibility but is never
         sent as corrective feedback. An invalid response terminates this call.
@@ -108,12 +121,17 @@ class GeminiGateway:
             try:
                 r=self.client.models.generate_content(model=self.model,contents=request_contents,config=config)
             except Exception as exc:
-                # No returned response exists here. Retain the existing bounded
-                # provider-error retry policy, with exactly the same request.
+                # A timeout or SDK parsing exception can occur after generation.
+                # Absence of a returned SDK object does not prove no decision.
                 error=exc
-                audit["response_status"]="provider_error"
+                code=_retryable_provider_status(exc)
+                audit["response_status"]="provider_error" if code is not None else "provider_failure_no_retry"
                 audit["failure_type"]=type(exc).__name__
+                if code is not None:audit["provider_status_code"]=code
+                else:audit["automatic_regeneration"]=False
                 if self.audit_hook:self.audit_hook(self.calls)
+                if code is None:
+                    raise RuntimeError("Provider outcome is not safely retryable; automatic regeneration is disabled") from None
                 if attempt<self.retry_limit:self.sleep_fn(0)
                 continue
 
