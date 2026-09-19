@@ -13,6 +13,7 @@ from google import genai
 from google.genai import types
 from model_response_json import load_response_object
 from response_receipts import ResponseReceipts
+from provider_retry import retryable_provider_status
 
 
 MODEL_NAME = "gemini-3.6-flash"
@@ -248,19 +249,13 @@ def generate_content_with_retry(client: genai.Client, *, response_recorder=None,
             response = client.models.generate_content(**kwargs)
         except Exception as error:
             error_text = str(error)
-            error_code = getattr(error, "code", None)
-            error_status = getattr(error, "status", None)
+            error_code = retryable_provider_status(error)
 
             if "GenerateRequestsPerDayPerProjectPerModel" in error_text:
                 print("Geminiの日次上限に到達しました。本日は再試行しても通らないため停止します。")
                 raise
 
-            is_unavailable = (
-                error_code == 503
-                or error_status == "UNAVAILABLE"
-                or ("503" in error_text and "UNAVAILABLE" in error_text)
-            )
-            if is_unavailable:
+            if error_code == 503:
                 if unavailable_retries >= 2 or attempt == max_attempts - 1:
                     raise
                 base_delay = 30 * (2 ** unavailable_retries)
@@ -273,7 +268,7 @@ def generate_content_with_retry(client: genai.Client, *, response_recorder=None,
                 time.sleep(wait_seconds)
                 continue
 
-            if "429" in error_text or "RESOURCE_EXHAUSTED" in error_text:
+            if error_code == 429:
                 if rate_limit_retries >= 1 or attempt == max_attempts - 1:
                     raise
                 rate_limit_retries += 1
