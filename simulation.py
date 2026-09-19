@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from getpass import getpass
 from typing import Dict, List, Optional
 import json
+import hashlib
 import os
 from pathlib import Path
 import random
@@ -11,6 +12,7 @@ import time
 from google import genai
 from google.genai import types
 from model_response_json import load_response_object
+from response_receipts import ResponseReceipts
 
 
 MODEL_NAME = "gemini-3.6-flash"
@@ -236,14 +238,14 @@ class Agent:
 """.strip()
 
 
-def generate_content_with_retry(client: genai.Client, **kwargs):
+def generate_content_with_retry(client: genai.Client, *, response_recorder=None, **kwargs):
     max_attempts = 3
     unavailable_retries = 0
     rate_limit_retries = 0
 
     for attempt in range(max_attempts):
         try:
-            return client.models.generate_content(**kwargs)
+            response = client.models.generate_content(**kwargs)
         except Exception as error:
             error_text = str(error)
             error_code = getattr(error, "code", None)
@@ -281,6 +283,12 @@ def generate_content_with_retry(client: genai.Client, **kwargs):
 
             raise
 
+        # Persistence is outside provider retry handling. A storage failure
+        # after receiving a decision must never request another decision.
+        if response_recorder is not None:
+            response_recorder(response, kwargs, attempt + 1)
+        return response
+
     raise RuntimeError("Gemini APIの最大試行回数に到達しました。")
 
 
@@ -290,6 +298,7 @@ def call_agent(
     world_state: str,
     communication_context: str,
     international_law: InternationalLaw,
+    response_recorder=None,
 ) -> str:
     prompt = f"""
 あなたは架空国家 {agent.name} の意思決定Agentです。
@@ -335,6 +344,7 @@ def call_agent(
 
     response = generate_content_with_retry(
         client,
+        response_recorder=response_recorder,
         model=MODEL_NAME,
         contents=prompt,
     )
@@ -394,6 +404,7 @@ def call_evaluator(
     reason_b: str,
     belief_b: str,
     international_law: InternationalLaw,
+    response_recorder=None,
 ) -> dict:
     prompt = f"""
 あなたは国家間相互作用を観測する中立Evaluatorです。
@@ -460,6 +471,7 @@ B国:
 
     response = generate_content_with_retry(
         client,
+        response_recorder=response_recorder,
         model=MODEL_NAME,
         contents=prompt,
         config={"response_mime_type": "application/json"},
@@ -597,6 +609,7 @@ def evaluate_metrics(
     belief_b: str,
     international_law: InternationalLaw,
     previous_metrics: Optional[dict] = None,
+    response_recorder=None,
 ) -> tuple[dict, dict]:
     evaluation = call_evaluator(
         client=client,
@@ -609,6 +622,7 @@ def evaluate_metrics(
         reason_b=reason_b,
         belief_b=belief_b,
         international_law=international_law,
+        response_recorder=response_recorder,
     )
     return calculate_metrics(evaluation, previous_metrics), evaluation
 
@@ -807,14 +821,19 @@ def save_result_exclusive(destination: Path, data: dict) -> None:
         os.unlink(staged)
 
 
-def main():
+def main(*, receipt_output=None, receipt_run=1):
     output_file = (f"simulation_result_independent_agents_{EXPERIMENT_CONDITION}.json"
                    if USE_GEMINI else "simulation_result_development.json")
     if os.path.lexists(output_file):
         raise FileExistsError(f"既存の結果を上書きせず停止します: {output_file}")
     client = None
+    received_responses = []
 
     if USE_GEMINI:
+        if type(receipt_run) is not int or receipt_run < 1:
+            raise ValueError("receipt_run must be a positive integer")
+        receipts = ResponseReceipts.for_output(receipt_output or output_file)
+        receipts.prepare()
         api_key = getpass("Gemini API Key: ")
         client = genai.Client(
             api_key=api_key,
@@ -822,6 +841,20 @@ def main():
                 retry_options=types.HttpRetryOptions(attempts=1),
             ),
         )
+
+    def recorder(turn, actor, role):
+        def preserve(response, request, attempt):
+            identity = {
+                "run": receipt_run, "turn": turn, "agent_id": actor, "agent_type": role,
+                "model": request["model"], "schema_version": 2, "attempt": attempt,
+                "snapshot_id": f"v1-run-{receipt_run}-turn-{turn}",
+                "observation_digest": hashlib.sha256(json.dumps(
+                    request, ensure_ascii=False, sort_keys=True,
+                    separators=(",", ":"), allow_nan=False).encode("utf-8")).hexdigest(),
+            }
+            reference = receipts.record(identity, response)
+            received_responses.append({**identity, "response_receipt": reference})
+        return preserve
 
     country_a = Agent(
         name="A国",
@@ -895,6 +928,7 @@ def main():
                 world_state=world_state_before,
                 communication_context=communication_context,
                 international_law=INTERNATIONAL_LAW,
+                response_recorder=recorder(turn, country_a.name, "country"),
             )
 
             print("\nB国Agentが判断中...")
@@ -904,6 +938,7 @@ def main():
                 world_state=world_state_before,
                 communication_context=communication_context,
                 international_law=INTERNATIONAL_LAW,
+                response_recorder=recorder(turn, country_b.name, "country"),
             )
         else:
             combined_response = mock_decisions(turn)
@@ -939,6 +974,7 @@ def main():
                 belief_b=belief_b,
                 international_law=INTERNATIONAL_LAW,
                 previous_metrics=previous_metrics,
+                response_recorder=recorder(turn, "evaluator", "evaluator"),
             )
         else:
             evaluation = mock_evaluation(event, turn)
@@ -998,6 +1034,8 @@ def main():
         "results": results,
     }
 
+    if USE_GEMINI:
+        output_data["response_receipts"] = received_responses
     save_result_exclusive(Path(output_file), output_data)
 
     print("\n====================")

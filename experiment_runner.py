@@ -293,7 +293,9 @@ def run_experiment(args: argparse.Namespace) -> None:
             simulation.USE_GEMINI = True
             simulation.getpass = lambda _prompt: api_key
             simulation.generate_content_with_retry = seeded_generator
-            simulation.main()
+            # Keep response evidence outside the disposable staging directory,
+            # including when generation, validation or publication fails.
+            simulation.main(receipt_output=destination, receipt_run=run_number)
             generated = temp_dir / f"simulation_result_independent_agents_{simulation.EXPERIMENT_CONDITION}.json"
             data = json.loads(generated.read_text(encoding="utf-8"))
             validate_result(data, args.condition)
