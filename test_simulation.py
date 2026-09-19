@@ -88,6 +88,12 @@ class SimulationTest(unittest.TestCase):
                 self.assertEqual(result[country]["realization_status"], "unverified")
             self.assertNotIn("を実行した。", result["world_state"])
             self.assertIn("実行結果や相手国への到達を確認した記録ではない", result["world_state"])
+            provenance = result["metric_provenance"]
+            self.assertEqual(provenance["evaluation_source"], "model_evaluator_estimates")
+            self.assertFalse(provenance["direct_world_measurement"])
+            previous = output["results"][result["turn"] - 2]["metrics"] if result["turn"] > 1 else None
+            self.assertEqual(result["metrics"], simulation.calculate_metrics(result["evaluation"], previous))
+            self.assertEqual(provenance["previous_values_used"], {key: (previous or {}).get(key, default) for key, default in (("tension",45),("trust",50),("resilience",60))})
             self.assertIn("external_event", result)
             self.assertEqual(
                 set(result["evaluation"]),
@@ -119,6 +125,28 @@ class SimulationTest(unittest.TestCase):
         self.assertNotIn("を実行した。", state)
         self.assertNotIn("互いに相手国の行動を観測できる", state)
         self.assertIn("実行結果や相手国への到達を確認した記録ではない", state)
+
+    def test_provenance_does_not_mutate_previous_metrics(self):
+        previous = {"tension": 0, "trust": 100, "resilience": 13}
+        before = dict(previous)
+        provenance = simulation.metric_provenance(previous, live_evaluator=False)
+        self.assertEqual(provenance["evaluation_source"], "synthetic_fixture")
+        self.assertEqual(provenance["previous_values_source"], "previous_turn_metrics")
+        self.assertEqual(provenance["previous_values_used"], before)
+        provenance["previous_values_used"]["tension"] = 999
+        self.assertEqual(previous, before)
+        initial = simulation.metric_provenance(None, live_evaluator=False)
+        self.assertEqual(initial["previous_values_source"], "implementation_initial_values")
+        self.assertEqual(initial["bounded_update_max_delta"], 15)
+
+    def test_same_evaluation_can_retain_implementation_history(self):
+        evaluation = {field: 50 for field in simulation.EVALUATION_FIELDS}
+        low = simulation.calculate_metrics(evaluation, {"tension": 0, "trust": 0, "resilience": 0})
+        high = simulation.calculate_metrics(evaluation, {"tension": 100, "trust": 100, "resilience": 100})
+        for key in ("tension", "trust", "resilience"):
+            self.assertEqual(low[key], 15)
+            self.assertEqual(high[key], 85)
+        self.assertNotEqual(low["homeostasis"], high["homeostasis"])
 
     def test_two_turn_smoke(self):
         self.run_fake_simulation(2)
