@@ -155,4 +155,13 @@ class AutonomousRound:
                 'max_initiatives':self.max_initiatives,
                 'extension_requests':deepcopy(self._extensions),
                 'extension_status':'unimplemented_not_executed',
+                'decision_scope':{
+                    'executable_action_types':['transfer'],
+                    'route_scope':'existing_one_hop_routes',
+                    'agent_authored_terms':['requested_amount','minimum_amount','allow_partial','conditions'],
+                    'multi_hop_delivery':'requires_later_independent_intermediate_choices',
+                    'extension_requests':'recorded_only_not_executable',
+                    'coordinator_protocol':'not_configured',
+                    'general_action_execution':False,
+                },
                 'catalogue_digest':digest(self._catalogue)}
