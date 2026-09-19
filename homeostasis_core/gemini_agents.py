@@ -218,7 +218,21 @@ def derive_event(world,history,counts,recent_events=(),cooldown=2):
     candidates=event_candidates(world,history,counts);blocked=set(tuple(recent_events)[-cooldown:])
     return next((x["event"] for x in candidates if x["event"] not in blocked),candidates[0]["event"])
 def pilot_is_eligible(result_path,manifest_path):
-    d=json.loads(manifest_path.read_text());return d.get("result_file")==result_path.name and d.get("status")=="accepted" and d.get("include_in_research_aggregation") is True
+    d=json.loads(manifest_path.read_text())
+    if not (d.get("result_file")==result_path.name and d.get("status")=="accepted" and d.get("include_in_research_aggregation") is True):return False
+    # An acceptance label cannot turn an explicitly technical artifact into an
+    # Agent research result. API-free aggregation alone is not such evidence.
+    result=json.loads(result_path.read_text())
+    if type(result) is not dict:return False
+    scopes=[result]
+    if type(result.get("metadata")) is dict:scopes.append(result["metadata"])
+    for scope in scopes:
+        if scope.get("research_eligible") is False or scope.get("gemini_executed") is False:return False
+        if scope.get("classification") in ("deterministic prototype run","API未実行の決定論的試作結果"):return False
+        if scope.get("mode") in ("deterministic_prototype","development","dry-run"):return False
+        if scope.get("artifact_class") in ("deterministic_prototype","synthetic_validation","validation_run"):return False
+        if scope.get("decision_origin") in ("deterministic_policy","synthetic_fixture"):return False
+    return True
 def eligible_result_paths(directory):
     out=[]
     for result in sorted(directory.glob("gemini-run-*.json")):
