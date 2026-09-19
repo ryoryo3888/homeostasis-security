@@ -75,12 +75,19 @@ class RegistryTests(unittest.TestCase):
         for name in ['dashboard_v1.html','dashboard_v2.html','homeostasis-research-layer.js','homeostasis-research-integration.js','ui/content-slots.js','ui/layout-guard.js']:
             self.assertNotIn('research/experiments/',(ROOT/name).read_text())
         before=(ROOT/'ui/content.json').read_bytes();validate_registry(self.registry);self.assertEqual((ROOT/'ui/content.json').read_bytes(),before)
-    def test_original_engine_and_research_bytes_unchanged(self):
+    def test_original_research_preserved_with_exact_backend_repair(self):
         base=load_json(ROOT/'research/experiments/inventory.json')['scope_commit']
+        # The registry's source provenance and historical artifacts stay at base.
+        # Only these exact repair bytes supersede the old ENGINE freeze. This is
+        # not a general exception, and does not reattribute any historical run.
+        repair='f010dde9084d0c5d255228e4920880f98e8b165c'
+        repaired={'final_experiment_runner.py','homeostasis_core/gemini_agents.py',
+                  'homeostasis_core/resume_guard.py'}
         names=subprocess.check_output(['git','ls-tree','-r','--name-only',base],cwd=ROOT,text=True).splitlines()
-        for name in names:
+        for name in sorted(set(names)|repaired):
             if name.endswith('.json') and not name.startswith(('tests/','docs/architecture/')) or name.startswith(('simulation','experiment_runner','final_experiment_runner','homeostasis_core/')):
-                self.assertEqual((ROOT/name).read_bytes(),subprocess.check_output(['git','show',base+':'+name],cwd=ROOT),name)
+                source=repair if name in repaired else base
+                self.assertEqual((ROOT/name).read_bytes(),subprocess.check_output(['git','show',source+':'+name],cwd=ROOT),name)
     def test_saved_comparison_membership(self):
         summary=load_json(ROOT/'summary.json');study=self.registry['experiments'][1]
         paths=[f for c in summary['conditions'] for f in c['files']]

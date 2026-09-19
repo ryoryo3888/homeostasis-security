@@ -19,6 +19,7 @@ from homeostasis_core.gemini_agents import (
     derive_event,run_gemini_turn,
 )
 from homeostasis_core.models import load_country_configuration
+from homeostasis_core.resume_guard import read_resumable_checkpoint
 from homeostasis_core.resources import RESOURCE_TYPES,calculate_energy_stability,load_resource_network
 
 COUNTRIES=("MIL","RES","FOOD","SMALL","ISLAND","ECON","FRAGILE","NEUTRAL")
@@ -67,8 +68,10 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
     if output.exists():raise FileExistsError("output already exists")
     estimate(runs);checkpoint=output.with_suffix(output.suffix+".checkpoint");completed=[];active=None
     scenario=_load_scenario()
-    if resume and checkpoint.exists():
-        saved=json.loads(checkpoint.read_text());completed=saved["completed_runs"];active=saved.get("active_run")
+    if resume:
+        saved=read_resumable_checkpoint(checkpoint,runs=runs,seed=seed,
+                                        turn_count=TURNS,model=MODEL_NAME,country_ids=COUNTRIES)
+        completed=saved["completed_runs"];active=saved.get("active_run")
     elif checkpoint.exists():raise FileExistsError("checkpoint exists; use --resume")
     for run_number in range(len(completed)+1,runs+1):
         run_seed=seed+run_number-1
@@ -183,6 +186,10 @@ def main():
     if not a.execute:return
     if a.confirm!="YES":raise SystemExit("本番実行には --execute --confirm YES が必要です。APIは呼び出していません。")
     if a.output.exists():raise SystemExit("出力先が存在します。APIは呼び出していません。")
+    if a.resume:
+        read_resumable_checkpoint(a.output.with_suffix(a.output.suffix+".checkpoint"),
+                                  runs=runs,seed=a.seed,turn_count=TURNS,
+                                  model=MODEL_NAME,country_ids=COUNTRIES)
     key=os.environ.get("GEMINI_API_KEY","").strip() or getpass("Gemini API Key（表示されません）: ").strip()
     if not key:raise SystemExit("GEMINI_API_KEYがないため停止しました。APIは呼び出していません。")
     run_live(create_gemini_client(key),a.output,runs,a.seed,a.resume)
