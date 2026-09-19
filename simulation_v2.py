@@ -18,6 +18,7 @@ import tempfile
 import time
 from typing import Any, Callable
 from model_response_json import load_response_object
+from provider_retry import retryable_provider_status
 
 
 MODEL_NAME = "gemini-3.6-flash"
@@ -134,19 +135,17 @@ def generate_content_with_retry(
             return client.models.generate_content(**kwargs)
         except Exception as error:
             text = str(error)
-            code = getattr(error, "code", None)
-            status = getattr(error, "status", None)
+            code = retryable_provider_status(error)
             if "GenerateRequestsPerDayPerProjectPerModel" in text:
                 raise
-            unavailable = code == 503 or status == "UNAVAILABLE" or ("503" in text and "UNAVAILABLE" in text)
-            if unavailable:
+            if code == 503:
                 if unavailable_retries >= 2 or attempt == max_attempts - 1:
                     raise
                 delay = 30 * (2**unavailable_retries) + jitter_fn(0, 3)
                 unavailable_retries += 1
                 sleep_fn(delay)
                 continue
-            if "429" in text or "RESOURCE_EXHAUSTED" in text:
+            if code == 429:
                 if rate_limit_retries >= 1 or attempt == max_attempts - 1:
                     raise
                 rate_limit_retries += 1
