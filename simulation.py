@@ -14,6 +14,7 @@ from google.genai import types
 from model_response_json import load_response_object
 from response_receipts import ResponseReceipts
 from provider_retry import retryable_provider_status
+from provider_response import complete_response_text
 
 
 MODEL_NAME = "gemini-3.6-flash"
@@ -343,7 +344,7 @@ def call_agent(
         model=MODEL_NAME,
         contents=prompt,
     )
-    decision = response.text
+    decision = complete_response_text(response)
     parse_agent_decision(decision)
     return decision.strip()
 
@@ -471,7 +472,7 @@ B国:
         contents=prompt,
         config={"response_mime_type": "application/json"},
     )
-    return parse_evaluator_response(response.text)
+    return parse_evaluator_response(complete_response_text(response))
 
 
 def _bounded_update(previous: int, target: float, max_delta: int = 15) -> int:

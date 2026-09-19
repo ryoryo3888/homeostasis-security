@@ -2,6 +2,7 @@
 import json
 from types import SimpleNamespace
 import unittest
+from test_simulation import sdk_reply
 
 import httpx
 from google import genai
@@ -19,7 +20,7 @@ class ProviderRetryBoundaryTests(unittest.TestCase):
                 def generate(**kwargs):
                     requests.append(kwargs)
                     if len(requests)==1: raise error
-                    return SimpleNamespace(text='{"replacement":true}',usage_metadata=None)
+                    return sdk_reply('{"replacement":true}')
                 gateway=GeminiGateway(SimpleNamespace(models=SimpleNamespace(generate_content=generate)),
                                       sleep_fn=lambda _:None)
                 with self.assertRaises(RuntimeError): gateway.call('A',1,1,{},json.loads)
@@ -35,7 +36,7 @@ class ProviderRetryBoundaryTests(unittest.TestCase):
                 requests.append(kwargs)
                 if len(requests)==1:
                     raise errors.APIError(code,{'error':{'code':code,'status':status,'message':'fixture'}})
-                return SimpleNamespace(text='{"answer":"unchanged"}',usage_metadata=None)
+                return sdk_reply('{"answer":"unchanged"}')
             gateway=GeminiGateway(SimpleNamespace(models=SimpleNamespace(generate_content=generate)),
                                   sleep_fn=lambda _:None)
             self.assertEqual(gateway.call('A',1,1,{'fixed':'input'},json.loads),{'answer':'unchanged'})

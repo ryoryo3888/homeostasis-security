@@ -58,6 +58,7 @@ class ResponseReceiptTests(unittest.TestCase):
     def test_full_sdk_reply_saved_before_text_or_usage_access(self):
         for field in ("text", "usage_metadata"):
             class BrokenResponse:
+                candidates = response('synthetic').candidates
                 def model_dump_json(self, **kwargs):
                     return response('{"raw":"preserved"}').model_dump_json(**kwargs)
                 @property

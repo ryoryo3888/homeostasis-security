@@ -2,6 +2,7 @@
 import json
 from types import SimpleNamespace
 import unittest
+from test_simulation import sdk_reply
 
 import simulation
 import simulation_v2
@@ -75,7 +76,7 @@ class ModelJsonIntegrityTests(unittest.TestCase):
         calls = []
         def generate(**kwargs):
             calls.append(kwargs)
-            return SimpleNamespace(text=ambiguous if len(calls)==1 else valid, usage_metadata=None)
+            return sdk_reply(ambiguous if len(calls)==1 else valid)
         gateway = GeminiGateway(SimpleNamespace(models=SimpleNamespace(generate_content=generate)),
                                 retry_limit=3,sleep_fn=lambda _:None)
         with self.assertRaises(RuntimeError):
