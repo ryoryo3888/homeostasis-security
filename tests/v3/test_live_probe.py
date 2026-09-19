@@ -11,6 +11,7 @@ import httpx
 from homeostasis_v3.live_probe import prepare, execute, validate_answer
 from homeostasis_v3.choices import TechnicalFailure
 from homeostasis_v3.contracts import canonical
+from homeostasis_v3.gemini_preflight import AttemptJournal
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -93,6 +94,17 @@ class LiveProbeTests(unittest.TestCase):
         with self.assertRaises(TechnicalFailure): self.run_probe(handler=invalid)
         with self.assertRaises(TechnicalFailure): self.run_probe()
         self.assertFalse(self.calls)
+        journal = AttemptJournal(self.root/'.artifacts/v3-live-single-probe/attempts.sqlite',
+                                 configuration={'max_calls':1,'protocol_digest':self.protocol['protocol_digest']})
+        receipt = journal.response_records()[0]
+        self.assertEqual(receipt['request_digest'],self.protocol['request']['request_digest'])
+        self.assertEqual(receipt['sdk_response']['candidates'][0]['content']['parts'][0]['text'],'{}')
+
+    def test_receipt_storage_failure_prevents_success_and_retry(self):
+        with patch.object(AttemptJournal,'record_response',side_effect=OSError('storage failure')):
+            with self.assertRaises(TechnicalFailure): self.run_probe()
+        with self.assertRaises(TechnicalFailure): self.run_probe()
+        self.assertEqual(len(self.calls),1)
 
     def test_cannot_propose_for_another_country(self):
         request = self.protocol['request']
