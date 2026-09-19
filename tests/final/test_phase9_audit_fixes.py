@@ -104,7 +104,7 @@ class AuditFixTests(unittest.TestCase):
         self.assertEqual(halted["network_transfers"][0]["delivered"],0);self.assertIn("MIL",halted["network_policy"]["suspended"])
         again=apply_structured_actions(self.states,accept,world,0,resource_network=network,world_pool={},network_policy=halted["network_policy"])
         self.assertEqual(again["network_transfers"][0]["delivered"],0)
-    def test_invalid_target_is_retried_with_feedback_then_accepted(self):
+    def test_invalid_target_does_not_regenerate_a_valid_replacement(self):
         valid=self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"country","resource":"food","amount":5,"target_country":"FOOD"});invalid=json.loads(json.dumps(valid));invalid["action"]["parameters"]["target_country"]="GLOBAL"
         class R:
             usage_metadata=None
@@ -114,9 +114,14 @@ class AuditFixTests(unittest.TestCase):
             def generate_content(s,**kw):s.payloads.append(json.loads(kw["contents"]));s.configs.append(kw["config"]);return R(invalid if len(s.payloads)==1 else valid)
         client=type("C",(),{})();client.models=M();g=GeminiGateway(client,retry_limit=2,sleep_fn=lambda _:None)
         schema=country_response_schema(("MIL","FOOD"));help_data={"allowed_country_ids":["MIL","FOOD"],"correct_json_examples":{"country":{"recipient_type":"country","target_country":"FOOD","resource":"food","amount":5}}}
-        got=g.call("MIL",1,1,{},lambda text:parse_country_json(text,{"MIL","FOOD"}),json_schema=schema,validation_help=help_data)
-        feedback=client.models.payloads[1]["validation_feedback"];self.assertEqual(got["action"]["parameters"]["target_country"],"FOOD");self.assertEqual(feedback["allowed_country_ids"],["MIL","FOOD"]);self.assertIn("country",feedback["correct_json_examples"]);self.assertEqual(client.models.configs[0]["response_json_schema"],schema)
-    def test_invalid_target_stops_after_retry_limit(self):
+        with self.assertRaisesRegex(RuntimeError,"automatic regeneration is disabled"):
+            g.call("MIL",1,1,{},lambda text:parse_country_json(text,{"MIL","FOOD"}),json_schema=schema,validation_help=help_data)
+        self.assertEqual(len(client.models.payloads),1)
+        self.assertNotIn("validation_feedback",client.models.payloads[0])
+        self.assertIsNone(g.calls[0]["structured_response"])
+        self.assertEqual(g.calls[0]["response_status"],"validation_failed")
+        self.assertEqual(client.models.configs[0]["response_json_schema"],schema)
+    def test_invalid_target_stops_on_first_received_response(self):
         invalid=self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"country","resource":"food","amount":5,"target_country":"GLOBAL"})
         class R:
             usage_metadata=None
@@ -125,6 +130,7 @@ class AuditFixTests(unittest.TestCase):
             def generate_content(self,**kw):return R()
         client=type("C",(),{})();client.models=M();g=GeminiGateway(client,retry_limit=2,sleep_fn=lambda _:None)
         with self.assertRaises(RuntimeError):g.call("MIL",1,1,{},lambda text:parse_country_json(text,{"MIL","FOOD"}))
-        self.assertEqual(len(g.calls),2)
+        self.assertEqual(len(g.calls),1)
+        self.assertIs(g.calls[0]["automatic_regeneration"],False)
 
 if __name__=='__main__':unittest.main()
