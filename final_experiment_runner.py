@@ -15,7 +15,7 @@ from homeostasis_core.emergent_dynamics import (
 )
 from homeostasis_core.experiments import ResearchResult,save_result_atomic
 from homeostasis_core.gemini_agents import (
-    GeminiGateway,MODEL_NAME,build_private_views,create_gemini_client,
+    GeminiGateway,MODEL_NAME,SCHEMA_VERSION,build_private_views,create_gemini_client,
     derive_event,run_gemini_turn,
 )
 from homeostasis_core.models import load_country_configuration
@@ -70,7 +70,7 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
     scenario=_load_scenario()
     if resume:
         saved=read_resumable_checkpoint(checkpoint,runs=runs,seed=seed,
-                                        turn_count=TURNS,model=MODEL_NAME,country_ids=COUNTRIES)
+                                        turn_count=TURNS,model=MODEL_NAME,country_ids=COUNTRIES,schema_version=SCHEMA_VERSION)
         completed=saved["completed_runs"];active=saved.get("active_run")
     elif checkpoint.exists():raise FileExistsError("checkpoint exists; use --resume")
     for run_number in range(len(completed)+1,runs+1):
@@ -189,7 +189,7 @@ def main():
     if a.resume:
         read_resumable_checkpoint(a.output.with_suffix(a.output.suffix+".checkpoint"),
                                   runs=runs,seed=a.seed,turn_count=TURNS,
-                                  model=MODEL_NAME,country_ids=COUNTRIES)
+                                  model=MODEL_NAME,country_ids=COUNTRIES,schema_version=SCHEMA_VERSION)
     key=os.environ.get("GEMINI_API_KEY","").strip() or getpass("Gemini API Key（表示されません）: ").strip()
     if not key:raise SystemExit("GEMINI_API_KEYがないため停止しました。APIは呼び出していません。")
     run_live(create_gemini_client(key),a.output,runs,a.seed,a.resume)

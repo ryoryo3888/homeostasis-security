@@ -80,7 +80,7 @@ class RegistryTests(unittest.TestCase):
         # The registry's source provenance and historical artifacts stay at base.
         # Only these exact repair bytes supersede the old ENGINE freeze. This is
         # not a general exception, and does not reattribute any historical run.
-        repair='f010dde9084d0c5d255228e4920880f98e8b165c'
+        repair='57127a5bb8c6a8c60f42a35b2f09f4fdb2a259ed'
         repaired={'final_experiment_runner.py','homeostasis_core/gemini_agents.py',
                   'homeostasis_core/resume_guard.py'}
         names=subprocess.check_output(['git','ls-tree','-r','--name-only',base],cwd=ROOT,text=True).splitlines()

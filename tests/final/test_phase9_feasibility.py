@@ -53,7 +53,7 @@ class FeasibilityTests(unittest.TestCase):
                     self.assertTrue(validate_action_feasible("A",action,choices))
     def test_apply_revalidates_without_mutating_on_violation(self):
         before=copy.deepcopy(self.states)
-        answer={"country_id":"A","proposal_id":"p","response_id":"ACCEPT","response_label":"受け入れる","reason":"r","conditions":{},"self_interest":50,"sovereignty_burden":1,"perceived_global_effect":50,"action":{"action_id":"DRAW_WORLD_POOL","description":"x","parameters":{"recipient_type":"country","target_country":"B","resource":"food","amount":1}}}
+        answer={"country_id":"A","proposal_id":"p","response_id":"ACCEPT","response_label":"受け入れる","reason":"r","conditions":{},"self_interest":50,"sovereignty_burden":1,"perceived_global_effect":50,"action_requires_participation":True,"action":{"action_id":"DRAW_WORLD_POOL","description":"x","parameters":{"recipient_type":"country","target_country":"B","resource":"food","amount":1}}}
         reject=copy.deepcopy(answer);reject["country_id"]="B";reject["response_id"]="REJECT";reject["response_label"]="拒否する";reject["action"]={"action_id":"NO_ACTION","description":"x","parameters":{"recipient_type":"none","target_country":None,"resource":None,"amount":0}}
         with self.assertRaises(ValueError):apply_structured_actions(self.states,{"A":answer,"B":reject},{"food":50,"energy":50,"economy":50,"environment":50,"international_trust":50,"conflict_load":50},0,world_pool={},resource_network=self.network)
         self.assertEqual(self.states,before)
