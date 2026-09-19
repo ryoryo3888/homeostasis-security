@@ -46,6 +46,8 @@ def run_validation(baseline, network, directory, *, turns=8):
     directory.mkdir(parents=True, exist_ok=False)
     store = CheckpointStore(directory/'checkpoints')
     protocol = {'version': 'v3', 'artifact_class': 'validation_run',
+                'decision_origin': 'synthetic_fixture',
+                'fixture_behavior': 'always_empty_decisions_not_agent_chosen_abstention',
                 'fixture': 'synthetic_abstention', 'turns': turns, 'states': states,
                 'baseline_digest': digest(baseline), 'network_digest': digest(network),
                 'runner_config': runner.config,
@@ -55,6 +57,9 @@ def run_validation(baseline, network, directory, *, turns=8):
                 'research_eligible': False, 'publication_status': 'withheld'}
     _write(directory/'protocol.json', protocol)
     report = {'status': 'running', 'protocol_digest': digest(protocol),
+              'decision_origin': 'synthetic_fixture',
+              'fixture': 'synthetic_abstention',
+              'fixture_behavior': 'always_empty_decisions_not_agent_chosen_abstention',
               'completed_turns': 0, 'planned_turns': turns, 'api_calls': 0,
               'artifact_class': 'validation_run', 'research_eligible': False,
               'publication_status': 'withheld', 'replay_verified': 0,
