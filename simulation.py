@@ -885,6 +885,7 @@ def main(*, receipt_output=None, receipt_run=1):
         "A国とB国の間には軍事衝突はなく、外交関係は中立です。"
         "両国は相手国の現在の内部意図を知りません。"
     )
+    agent_world_state = world_state
 
     results = []
     previous_metrics = None
@@ -896,7 +897,7 @@ def main(*, receipt_output=None, receipt_run=1):
 
     for turn in range(1, TURN_COUNT + 1):
         event = EXTERNAL_EVENTS[turn - 1]
-        world_state_before = build_turn_state(world_state, event)
+        world_state_before = build_turn_state(agent_world_state, event)
 
         print("\n====================")
         print(f"TURN {turn}")
@@ -956,6 +957,12 @@ def main(*, receipt_output=None, receipt_run=1):
         print(decision_b)
     
         world_state = build_world_state(action_a, action_b)
+        # This full choice record belongs to the observer. Each country keeps
+        # its own decision in private memory; no delivery/observation law has
+        # established that the other country can see it, even with a hotline.
+        agent_world_state = (
+            "前TURNの行動選択について、実現・公開・相手国への到達を確認した観測記録はありません。"
+        )
 
         if USE_GEMINI:
             metrics, evaluation = evaluate_metrics(
@@ -1010,6 +1017,7 @@ def main(*, receipt_output=None, receipt_run=1):
 
     output_data = {
         "schema_version": 2,
+        "observation_policy": "unverified_other_country_choices_withheld",
         "mode": "gemini" if USE_GEMINI else "development",
         "experiment_condition": EXPERIMENT_CONDITION,
         "turn_count": TURN_COUNT,
