@@ -90,6 +90,7 @@ class RegistryTests(unittest.TestCase):
                 source=repair if name in repaired else base
                 if name=='simulation_v2.py':source=v2_repair
                 if name=='simulation.py':source='c05a746f0d712ecb8e07cba48ba5f74bfec6c702'
+                if name in ('simulation_final.py','homeostasis_core/gemini_agents.py'):source='d8bc495d61e95917d602e5a8b27ebd76fa121f72'
                 self.assertEqual((ROOT/name).read_bytes(),subprocess.check_output(['git','show',source+':'+name],cwd=ROOT),name)
     def test_saved_comparison_membership(self):
         summary=load_json(ROOT/'summary.json');study=self.registry['experiments'][1]
