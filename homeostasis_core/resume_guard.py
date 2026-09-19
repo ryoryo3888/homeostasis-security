@@ -155,7 +155,8 @@ def _check_active_history(active: dict[str, Any], countries: tuple[str, ...]) ->
 def read_resumable_checkpoint(path: Path, *, runs: int, seed: int,
                               turn_count: int, model: str,
                               country_ids: tuple[str, ...],
-                              schema_version: int | None = None) -> dict[str, Any]:
+                              schema_version: int | None = None,
+                              execution_identity: dict[str, Any] | None = None) -> dict[str, Any]:
     """Validate before client creation/dispatch; return saved data unchanged."""
     _require(path.is_file(), "RESUME_CHECKPOINT_NOT_FOUND")
     _require(type(runs) is int and runs > 0 and type(seed) is int
@@ -197,6 +198,14 @@ def read_resumable_checkpoint(path: Path, *, runs: int, seed: int,
                     _require(active[current] == last[committed], "RESUME_STATE_MISMATCH")
                 _require(active["current_damage"] == last["reconstruction"]["after"],
                          "RESUME_DAMAGE_MISMATCH")
+        if execution_identity is not None:
+            recorded = saved.get("execution_identity")
+            # A wholly unstarted checkpoint has no prior decisions to mix.
+            # Never reconstruct identity for any already-started legacy run.
+            if completed or active is not None or recorded is not None:
+                _require(type(recorded) is dict, "RESUME_EXECUTION_IDENTITY_MISSING")
+                _require(_digest(recorded) == _digest(execution_identity),
+                         "RESUME_EXECUTION_IDENTITY_MISMATCH")
         return saved
     except UnsafeResumeError:
         raise

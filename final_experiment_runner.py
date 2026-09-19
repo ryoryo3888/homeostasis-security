@@ -15,6 +15,7 @@ from homeostasis_core.emergent_dynamics import (
     initial_world_from_scenario, reconstruction_step,
 )
 from homeostasis_core.experiments import ResearchResult,save_result_atomic
+from homeostasis_core.execution_identity import execution_identity
 from homeostasis_core.gemini_agents import (
     GeminiGateway,MODEL_NAME,SCHEMA_VERSION,build_private_views,create_gemini_client,
     derive_event,run_gemini_turn,
@@ -26,6 +27,16 @@ from homeostasis_core.resources import RESOURCE_TYPES,calculate_energy_stability
 COUNTRIES=("MIL","RES","FOOD","SMALL","ISLAND","ECON","FRAGILE","NEUTRAL")
 TURNS=8;PLANNED_CALLS_PER_RUN=80;RETRY_LIMIT=3;MAX_CALLS_PER_RUN=240;MAX_RUNS=36
 SCENARIO_PATH=Path("scenarios/scenario_01_farmland_missile.json")
+SOURCE_ROOT=Path(__file__).resolve().parent
+COUNTRY_CONFIGURATION_PATH=Path("config/country_archetypes.json")
+RESOURCE_NETWORK_PATH=Path("scenarios/resource_network_sample.json")
+
+def _execution_identity(runs:int,seed:int)->dict:
+    return execution_identity(SOURCE_ROOT,
+        {"scenario":SCENARIO_PATH,"country_configuration":COUNTRY_CONFIGURATION_PATH,
+         "resource_network":RESOURCE_NETWORK_PATH},
+        {"runs":runs,"seed":seed,"turns":TURNS,"model":MODEL_NAME,"schema_version":SCHEMA_VERSION,
+         "countries":list(COUNTRIES),"retry_limit":RETRY_LIMIT,"max_calls_per_run":MAX_CALLS_PER_RUN})
 
 def estimate(runs:int)->dict:
     if isinstance(runs,bool) or not isinstance(runs,int) or not 1<=runs<=MAX_RUNS:raise ValueError("runs must be 1..36")
@@ -69,9 +80,11 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
     if os.path.lexists(output):raise FileExistsError("output already exists")
     estimate(runs);checkpoint=output.with_suffix(output.suffix+".checkpoint");completed=[];active=None
     scenario=_load_scenario()
+    identity=_execution_identity(runs,seed)
     if resume:
         saved=read_resumable_checkpoint(checkpoint,runs=runs,seed=seed,
-                                        turn_count=TURNS,model=MODEL_NAME,country_ids=COUNTRIES,schema_version=SCHEMA_VERSION)
+                                        turn_count=TURNS,model=MODEL_NAME,country_ids=COUNTRIES,schema_version=SCHEMA_VERSION,
+                                        execution_identity=identity)
         completed=saved["completed_runs"];active=saved.get("active_run")
     elif checkpoint.exists():raise FileExistsError("checkpoint exists; use --resume")
     receipts=ResponseReceipts.for_output(output)
@@ -81,9 +94,9 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
     for run_number in range(len(completed)+1,runs+1):
         run_seed=seed+run_number-1
         gateway=GeminiGateway(client,max_calls=MAX_CALLS_PER_RUN,retry_limit=RETRY_LIMIT)
-        configured=load_country_configuration(Path("config/country_archetypes.json"))
+        configured=load_country_configuration(COUNTRY_CONFIGURATION_PATH)
         initial_states=_initial_states(configured)
-        resource_network=load_resource_network(Path("scenarios/resource_network_sample.json"),COUNTRIES)
+        resource_network=load_resource_network(RESOURCE_NETWORK_PATH,COUNTRIES)
         freshness=_freshness(initial_states)
         if active is not None:
             if active.get("run")!=run_number or active.get("seed")!=run_seed:raise ValueError("checkpoint run or seed mismatch")
@@ -106,7 +119,7 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
                          "memories":memories,"current_world":current_world,"country_states":country_states,
                          "world_pool":world_pool,"network_policy":network_policy,"history_state":history_state,
                          "current_damage":current_damage,"call_audit":calls}
-            _checkpoint(checkpoint,{"completed_runs":completed,"active_run":in_progress})
+            _checkpoint(checkpoint,{"completed_runs":completed,"active_run":in_progress,"execution_identity":identity})
         gateway.audit_hook=save_attempt_audit
         gateway.response_hook=receipts.record
         for turn in range(len(turn_rows)+1,TURNS+1):
@@ -153,13 +166,13 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
                     "current_world":current_world,"country_states":country_states,"world_pool":world_pool,
                     "network_policy":network_policy,"history_state":history_state,"current_damage":current_damage,
                     "call_audit":gateway.calls}
-            _checkpoint(checkpoint,{"completed_runs":completed,"active_run":active})
+            _checkpoint(checkpoint,{"completed_runs":completed,"active_run":active,"execution_identity":identity})
         token_totals={k:sum(x["token_usage"][k] for x in gateway.calls if x["token_usage"][k] is not None)
                       for k in ("input_tokens","output_tokens","total_tokens")}
         completed.append({"run":run_number,"seed":run_seed,"model":MODEL_NAME,"research_mode":"emergent-worldlines",
                           "turns":turn_rows,"response_convergence_detected":all(x["response_convergence"] for x in turn_rows),
                           "call_audit":gateway.calls,"token_usage":token_totals,"resume_point":{"completed_turn":TURNS}})
-        active=None;_checkpoint(checkpoint,{"completed_runs":completed,"active_run":None})
+        active=None;_checkpoint(checkpoint,{"completed_runs":completed,"active_run":None,"execution_identity":identity})
     rows=[]
     for r in completed:
         recovery_turn=_recovery_turn(r["turns"])
@@ -170,7 +183,7 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
     rows=tuple(rows)
     metadata={"mode":"gemini","research_mode":"emergent-worldlines","model":MODEL_NAME,"seed":seed,"runs":runs,
               "turns":TURNS,"provider":"GeminiGateway","fixed_initial_events":1,
-              "derived_event_turns":list(range(2,TURNS+1))}
+              "derived_event_turns":list(range(2,TURNS+1)),"execution_identity":identity}
     homeostasis=[x["final_homeostasis"] for x in rows];sovereignty=[x["sovereignty_maintenance"] for x in rows]
     recovered_turns=[x["recovery_turns"] for x in rows if x["recovered"]]
     summary={"average_homeostasis":statistics.fmean(homeostasis),
@@ -195,7 +208,8 @@ def main():
     if a.resume:
         read_resumable_checkpoint(a.output.with_suffix(a.output.suffix+".checkpoint"),
                                   runs=runs,seed=a.seed,turn_count=TURNS,
-                                  model=MODEL_NAME,country_ids=COUNTRIES,schema_version=SCHEMA_VERSION)
+                                  model=MODEL_NAME,country_ids=COUNTRIES,schema_version=SCHEMA_VERSION,
+                                  execution_identity=_execution_identity(runs,a.seed))
     key=os.environ.get("GEMINI_API_KEY","").strip() or getpass("Gemini API Key（表示されません）: ").strip()
     if not key:raise SystemExit("GEMINI_API_KEYがないため停止しました。APIは呼び出していません。")
     run_live(create_gemini_client(key),a.output,runs,a.seed,a.resume)
