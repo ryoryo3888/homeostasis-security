@@ -9,6 +9,7 @@ import tempfile
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
+from google.genai import types
 
 ROOT = Path(__file__).resolve().parents[2]
 # Load the real read-only gate without constructing any model/client.
@@ -263,7 +264,8 @@ class RunnerResumeIntegrationTests(unittest.TestCase):
                                   action_requires_participation=True,
                                   action=dict(action_id='NO_ACTION', description='synthetic',
                                               parameters=dict(recipient_type='none', target_country=None, resource=None, amount=0)))
-                return SimpleNamespace(text=json.dumps(answer), usage_metadata=None)
+                return types.GenerateContentResponse(candidates=[types.Candidate(
+                    content=types.Content(parts=[types.Part(text=json.dumps(answer))]))])
         return SimpleNamespace(models=Models())
 
     def test_clean_committed_boundary_continues_without_reissuing(self):
@@ -287,6 +289,33 @@ class RunnerResumeIntegrationTests(unittest.TestCase):
                          [call['public_observation_payload']
                           for call in baseline['runs'][0]['call_audit']][20:])
         self.assertEqual(len(resumed['runs'][0]['call_audit']), 80)
+
+    def test_changed_or_missing_original_receipt_blocks_before_next_call(self):
+        from response_receipts import ResponseReceipts
+        original = self.runner._checkpoint
+        def stop_at_boundary(path, data):
+            original(path, data)
+            active = data.get('active_run')
+            if active and active['completed_turn'] == 1 and len(active['call_audit']) == 10:
+                raise KeyboardInterrupt('synthetic boundary stop')
+        with patch.object(self.runner, '_checkpoint', side_effect=stop_at_boundary):
+            with self.assertRaises(KeyboardInterrupt):
+                self.runner.run_live(self.client(), self.output, 1, 7)
+        checkpoint = self.output.with_suffix('.json.checkpoint')
+        before = checkpoint.read_bytes()
+        receipts = ResponseReceipts.for_output(self.output)
+        path = next(receipts.directory.glob('*.json'))
+        original_receipt = path.read_bytes()
+        for change in ('changed', 'missing'):
+            with self.subTest(change=change):
+                if change == 'changed': path.write_bytes(original_receipt + b' ')
+                else: path.unlink()
+                client = self.client()
+                with self.assertRaisesRegex(ValueError, 'RESPONSE_RECEIPT_'):
+                    self.runner.run_live(client, self.output, 1, 7, True)
+                self.assertEqual(client.models.payloads, [])
+                self.assertEqual(checkpoint.read_bytes(), before)
+                self.assertFalse(self.output.exists())
 
     def test_partial_turn_refused_with_zero_new_provider_calls(self):
         original = self.runner._checkpoint

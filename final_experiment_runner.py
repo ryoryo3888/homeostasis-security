@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse,json,os,tempfile,statistics
 from getpass import getpass
 from pathlib import Path
+from response_receipts import ResponseReceipts
 from homeostasis_core.emergent_dynamics import (
     AFFECTED_COUNTRY, INITIAL_EVENT, initial_damage_from_scenario,
     initial_world_from_scenario, reconstruction_step,
@@ -73,6 +74,10 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
                                         turn_count=TURNS,model=MODEL_NAME,country_ids=COUNTRIES,schema_version=SCHEMA_VERSION)
         completed=saved["completed_runs"];active=saved.get("active_run")
     elif checkpoint.exists():raise FileExistsError("checkpoint exists; use --resume")
+    receipts=ResponseReceipts.for_output(output)
+    for record in completed+([active] if active is not None else []):
+        receipts.verify(record["call_audit"])
+    receipts.prepare(resume=resume)
     for run_number in range(len(completed)+1,runs+1):
         run_seed=seed+run_number-1
         gateway=GeminiGateway(client,max_calls=MAX_CALLS_PER_RUN,retry_limit=RETRY_LIMIT)
@@ -103,6 +108,7 @@ def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
                          "current_damage":current_damage,"call_audit":calls}
             _checkpoint(checkpoint,{"completed_runs":completed,"active_run":in_progress})
         gateway.audit_hook=save_attempt_audit
+        gateway.response_hook=receipts.record
         for turn in range(len(turn_rows)+1,TURNS+1):
             if turn==1:
                 event=INITIAL_EVENT;event_origin="fixed_initial_condition"
