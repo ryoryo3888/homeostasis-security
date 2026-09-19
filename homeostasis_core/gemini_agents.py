@@ -87,24 +87,54 @@ class GeminiGateway:
     client:Any;model:str=MODEL_NAME;max_calls:int=240;retry_limit:int=3;sleep_fn:Callable[[float],None]=time.sleep;audit_hook:Callable|None=None
     def __post_init__(self):self.calls=[]
     def call(self,agent_name,run,turn,payload,parser,*,agent_type="unknown",archetype=None,snapshot_id=None,json_schema=None,validation_help=None):
+        """Retry provider failures only; never regenerate a received decision.
+
+        validation_help is retained for call-site compatibility but is never
+        sent as corrective feedback. An invalid response terminates this call.
+        Raw provider text is not added to potentially public audit exports.
+        """
         error=None
+        request_contents=json.dumps(payload,ensure_ascii=False)
         for attempt in range(1,self.retry_limit+1):
             if len(self.calls)>=self.max_calls:raise RuntimeError("API call limit reached")
-            attempt_payload=json.loads(json.dumps(payload))
-            if error is not None:attempt_payload["validation_feedback"]={"error":str(error),"missing_or_invalid_fields":"Use the error above; target_country is always required inside action.parameters.","allowed_country_ids":(validation_help or {}).get("allowed_country_ids",[]),"feasible_actions":(validation_help or {}).get("feasible_actions",[]),"correct_json_examples":(validation_help or {}).get("correct_json_examples",{}),"instruction":"Return a complete new JSON object and choose exactly one current feasible_actions entry; never infer or translate an ID."}
+            attempt_payload=json.loads(request_contents)
             audit={"run":run,"turn":turn,"agent_id":agent_name,"agent_type":agent_type,"agent_archetype":archetype,"snapshot_id":snapshot_id,"observation_digest":_digest(attempt_payload),"public_observation_payload":attempt_payload,"structured_response":None,"model":self.model,"schema_version":SCHEMA_VERSION,"attempt":attempt,"token_usage":{"input_tokens":None,"output_tokens":None,"total_tokens":None}}
             self.calls.append(audit)
             if self.audit_hook:self.audit_hook(self.calls)
+            config={"response_mime_type":"application/json"}
+            if json_schema is not None:config["response_json_schema"]=json_schema
             try:
-                config={"response_mime_type":"application/json"}
-                if json_schema is not None:config["response_json_schema"]=json_schema
-                r=self.client.models.generate_content(model=self.model,contents=json.dumps(attempt_payload,ensure_ascii=False),config=config);parsed=parser(r.text);audit["structured_response"]=parsed;audit["token_usage"]=_usage(r)
-                if self.audit_hook:self.audit_hook(self.calls)
-                return parsed
+                r=self.client.models.generate_content(model=self.model,contents=request_contents,config=config)
             except Exception as exc:
+                # No returned response exists here. Retain the existing bounded
+                # provider-error retry policy, with exactly the same request.
                 error=exc
+                audit["response_status"]="provider_error"
+                audit["failure_type"]=type(exc).__name__
+                if self.audit_hook:self.audit_hook(self.calls)
                 if attempt<self.retry_limit:self.sleep_fn(0)
-        raise RuntimeError(f"Gemini response failed validation after {self.retry_limit} attempts") from error
+                continue
+
+            # Everything after receipt is OUTSIDE the provider retry handler.
+            # Parsing, feasibility validation or audit persistence must not
+            # cause a fresh model decision or fabricate a no-action result.
+            audit["token_usage"]=_usage(r)
+            try:
+                text=r.text
+                if not isinstance(text,str):raise ValueError("missing response text")
+                audit["response_sha256"]=hashlib.sha256(text.encode("utf-8")).hexdigest()
+                parsed=parser(text)
+            except Exception as exc:
+                audit["response_status"]="validation_failed"
+                audit["failure_type"]=type(exc).__name__
+                audit["automatic_regeneration"]=False
+                if self.audit_hook:self.audit_hook(self.calls)
+                raise RuntimeError("Gemini response failed validation; automatic regeneration is disabled") from None
+            audit["structured_response"]=parsed
+            audit["response_status"]="validated"
+            if self.audit_hook:self.audit_hook(self.calls)
+            return parsed
+        raise RuntimeError(f"Gemini provider call failed after {self.retry_limit} attempts") from error
 def create_gemini_client(api_key):
     from google import genai
     from google.genai import types
