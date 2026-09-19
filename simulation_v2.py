@@ -27,7 +27,7 @@ TURN_COUNT = 5
 RESEARCH_QUESTION = "国家主権を維持したまま、地球規模の恒常性は成立するのか？"
 
 SOURCE_EVENT = {
-    "origin": "v1 二国間の恒常性シミュレーション／第3ターン",
+    "origin": "V2独立シナリオの初期事象（V1実行結果の継承ではない）",
     "event": "A国のミサイルがB国の民間農地へ着弾",
     "lost_annual_rice_capacity_tons": 8000,
     "recovery_turns": 4,
