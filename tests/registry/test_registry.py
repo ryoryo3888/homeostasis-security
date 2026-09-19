@@ -84,7 +84,7 @@ class RegistryTests(unittest.TestCase):
         repaired={'final_experiment_runner.py','homeostasis_core/gemini_agents.py',
                   'homeostasis_core/resume_guard.py','homeostasis_core/execution_identity.py','homeostasis_core/execution_lock.py',
                   'response_receipts.py','provider_retry.py','provider_response.py'}
-        v2_repair='614d77a37bcdc2a243edd80f23734df87c2f2e07'
+        v2_repair='0f90c6be8048d8c51b255803c5156a354b351c4a'
         names=subprocess.check_output(['git','ls-tree','-r','--name-only',base],cwd=ROOT,text=True).splitlines()
         for name in sorted(set(names)|repaired):
             if name in repaired or name.endswith('.json') and not name.startswith(('tests/','docs/architecture/')) or name.startswith(('simulation','experiment_runner','final_experiment_runner','homeostasis_core/')):
