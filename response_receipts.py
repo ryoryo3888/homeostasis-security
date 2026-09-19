@@ -88,7 +88,8 @@ class ResponseReceipts:
             if audit.get("response_status") == "validated":
                 from google.genai.types import GenerateContentResponse
                 from model_response_json import load_response_object
-                text = GenerateContentResponse.model_validate(saved["sdk_response"]).text
+                from provider_response import complete_response_text
+                text = complete_response_text(GenerateContentResponse.model_validate(saved["sdk_response"]))
                 if (not isinstance(text, str)
                         or hashlib.sha256(text.encode("utf-8")).hexdigest() != audit.get("response_sha256")
                         or _bytes(load_response_object(text)) != _bytes(audit.get("structured_response"))):
