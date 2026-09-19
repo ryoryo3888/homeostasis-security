@@ -13,7 +13,7 @@ class AuditFixTests(unittest.TestCase):
         }
     def response(self,c,action="NO_ACTION",response="REJECT",params=None):
         labels={"ACCEPT":"受け入れる","REJECT":"拒否する","CONDITIONAL":"条件付きで応じる"}
-        return {"country_id":c,"proposal_id":"p","response_id":response,"response_label":labels[response],"reason":"r","conditions":({"required_countries":["MIL"],"maximum_sovereignty_burden":20} if response=="CONDITIONAL" else {}),"self_interest":50,"sovereignty_burden":10,"perceived_global_effect":50,"action":{"action_id":action,"description":"d","parameters":params if params is not None else {"recipient_type":"none","target_country":None,"resource":None,"amount":0}}}
+        return {"country_id":c,"proposal_id":"p","response_id":response,"response_label":labels[response],"reason":"r","conditions":({"required_countries":["MIL"],"maximum_sovereignty_burden":20} if response=="CONDITIONAL" else {}),"self_interest":50,"sovereignty_burden":10,"perceived_global_effect":50,"action_requires_participation":True,"action":{"action_id":action,"description":"d","parameters":params if params is not None else {"recipient_type":"none","target_country":None,"resource":None,"amount":0}}}
     def test_private_views_include_only_own_archetype_and_state(self):
         views=build_private_views("s1",1,{"food":60},self.states,{"MIL":90,"FOOD":80})
         self.assertEqual(views["MIL"]["archetype"],"軍事大国");self.assertEqual(views["FOOD"]["own_state"]["food_reserves"],42)
