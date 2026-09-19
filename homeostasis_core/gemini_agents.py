@@ -99,7 +99,7 @@ def _retryable_provider_status(error):
 
 @dataclass
 class GeminiGateway:
-    client:Any;model:str=MODEL_NAME;max_calls:int=240;retry_limit:int=3;sleep_fn:Callable[[float],None]=time.sleep;audit_hook:Callable|None=None
+    client:Any;model:str=MODEL_NAME;max_calls:int=240;retry_limit:int=3;sleep_fn:Callable[[float],None]=time.sleep;audit_hook:Callable|None=None;response_hook:Callable|None=None
     def __post_init__(self):self.calls=[]
     def call(self,agent_name,run,turn,payload,parser,*,agent_type="unknown",archetype=None,snapshot_id=None,json_schema=None,validation_help=None):
         """Retry explicit transient API rejections, never ambiguous outcomes.
@@ -114,6 +114,7 @@ class GeminiGateway:
             if len(self.calls)>=self.max_calls:raise RuntimeError("API call limit reached")
             attempt_payload=json.loads(request_contents)
             audit={"run":run,"turn":turn,"agent_id":agent_name,"agent_type":agent_type,"agent_archetype":archetype,"snapshot_id":snapshot_id,"observation_digest":_digest(attempt_payload),"public_observation_payload":attempt_payload,"structured_response":None,"model":self.model,"schema_version":SCHEMA_VERSION,"attempt":attempt,"token_usage":{"input_tokens":None,"output_tokens":None,"total_tokens":None}}
+            if self.response_hook:audit["receipt_required"]=True
             self.calls.append(audit)
             if self.audit_hook:self.audit_hook(self.calls)
             config={"response_mime_type":"application/json"}
@@ -138,8 +139,17 @@ class GeminiGateway:
             # Everything after receipt is OUTSIDE the provider retry handler.
             # Parsing, feasibility validation or audit persistence must not
             # cause a fresh model decision or fabricate a no-action result.
-            audit["token_usage"]=_usage(r)
+            if self.response_hook:
+                try:
+                    audit["response_receipt"]=self.response_hook(audit,r)
+                except Exception as exc:
+                    audit["response_status"]="receipt_failed"
+                    audit["failure_type"]=type(exc).__name__
+                    audit["automatic_regeneration"]=False
+                    if self.audit_hook:self.audit_hook(self.calls)
+                    raise RuntimeError("Gemini response could not be preserved; automatic regeneration is disabled") from None
             try:
+                audit["token_usage"]=_usage(r)
                 text=r.text
                 if not isinstance(text,str):raise ValueError("missing response text")
                 audit["response_sha256"]=hashlib.sha256(text.encode("utf-8")).hexdigest()
