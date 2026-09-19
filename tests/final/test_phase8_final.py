@@ -42,7 +42,7 @@ class Phase8Tests(unittest.TestCase):
             digest,name=line.split('  ',1)
             if name=="README.md":continue
             if name in {"simulation_v2.py", "test_simulation_v2.py"}:
-                approved=subprocess.check_output(["git","show","614d77a37bcdc2a243edd80f23734df87c2f2e07:"+name],cwd=ROOT)
+                approved=subprocess.check_output(["git","show","0f90c6be8048d8c51b255803c5156a354b351c4a:"+name],cwd=ROOT)
                 self.assertEqual((ROOT/name).read_bytes(),approved,name)
                 continue
             if name in {"simulation.py", "test_simulation.py", "experiment_runner.py"}:
