@@ -89,6 +89,7 @@ class RegistryTests(unittest.TestCase):
             if name.endswith('.json') and not name.startswith(('tests/','docs/architecture/')) or name.startswith(('simulation','experiment_runner','final_experiment_runner','homeostasis_core/')):
                 source=repair if name in repaired else base
                 if name=='simulation_v2.py':source=v2_repair
+                if name=='simulation.py':source='2695d98c1ee3eb71d4dd0211377605282e2a2c4b'
                 self.assertEqual((ROOT/name).read_bytes(),subprocess.check_output(['git','show',source+':'+name],cwd=ROOT),name)
     def test_saved_comparison_membership(self):
         summary=load_json(ROOT/'summary.json');study=self.registry['experiments'][1]

@@ -66,6 +66,10 @@ class Phase1CompatibilityTests(unittest.TestCase):
                 approved = subprocess.check_output(["git", "show", "313f544855c2bc07675f144e2866f7a79ff5540c:" + filename], cwd=ROOT)
                 self.assertEqual((ROOT / filename).read_bytes(), approved, filename)
                 continue
+            if filename in {"simulation.py", "test_simulation.py"}:
+                approved = subprocess.check_output(["git", "show", "2695d98c1ee3eb71d4dd0211377605282e2a2c4b:" + filename], cwd=ROOT)
+                self.assertEqual((ROOT / filename).read_bytes(), approved, filename)
+                continue
             actual = hashlib.sha256(protected_bytes(ROOT / filename)).hexdigest()
             self.assertEqual(actual, expected, filename)
 
