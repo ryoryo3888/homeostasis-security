@@ -208,6 +208,72 @@ class SimulationTest(unittest.TestCase):
         self.assertEqual(simulation.extract_action(decision), "自由に選んだ行動。")
         self.assertEqual(simulation.extract_reason(decision), "国家利益に基づく理由。")
 
+    def test_absent_empty_and_duplicate_sections_are_not_agent_decisions(self):
+        fields = {
+            "現在認識": simulation.extract_belief,
+            "懸念": simulation.extract_concern,
+            "行動": simulation.extract_action,
+            "理由": simulation.extract_reason,
+        }
+        for heading, extract in fields.items():
+            others = "\n".join(f"{name}: 記載済み。" for name in fields if name != heading)
+            for malformed in (others, others + f"\n{heading}: \n",
+                              others + f"\n{heading}: 一案。\n{heading}: 別案。", ""):
+                with self.subTest(heading=heading, response=malformed):
+                    with self.assertRaises(ValueError):
+                        extract(malformed)
+
+    def test_explicit_abstention_and_unlisted_actions_are_preserved(self):
+        for action in ("何もしない。", "未知の行動の提案。"):
+            decision = (
+                "**現在認識：** 観測した事実。\n補足の観測。\n"
+                "**懸念：** なし。\n"
+                f"**行動：** {action}\n"
+                "**理由：** 自らの判断。"
+            )
+            self.assertEqual(simulation.extract_action(decision), action)
+            self.assertEqual(simulation.extract_belief(decision), "観測した事実。 補足の観測。")
+            self.assertEqual(simulation.extract_concern(decision), "なし。")
+            self.assertEqual(simulation.extract_reason(decision), "自らの判断。")
+
+    def test_malformed_reply_stops_before_further_calls_or_turn_mutation(self):
+        for invalid_call in (1, 2, 4, 5):
+            for malformed in (None, "", "現在認識: 事実。\n懸念: なし。\n理由: 理由。"):
+                with self.subTest(invalid_call=invalid_call, response=malformed):
+                    fake_models = FakeModels()
+                    original_generate = fake_models.generate_content
+                    def generate(*args, **kwargs):
+                        response = original_generate(*args, **kwargs)
+                        return SimpleNamespace(text=malformed) if fake_models.total_calls == invalid_call else response
+                    fake_models.generate_content = generate
+                    agents = []
+                    original_agent = simulation.Agent
+                    def create_agent(*args, **kwargs):
+                        agent = original_agent(*args, **kwargs)
+                        agents.append(agent)
+                        return agent
+                    with tempfile.TemporaryDirectory() as directory:
+                        previous_cwd = os.getcwd()
+                        os.chdir(directory)
+                        try:
+                            with (
+                                patch.object(simulation, "TURN_COUNT", 2),
+                                patch.object(simulation, "USE_GEMINI", True),
+                                patch.object(simulation, "getpass", return_value="test-key"),
+                                patch.object(simulation.genai, "Client", return_value=SimpleNamespace(models=fake_models)),
+                                patch.object(simulation, "Agent", side_effect=create_agent),
+                                redirect_stdout(io.StringIO()),
+                            ):
+                                with self.assertRaises(ValueError):
+                                    simulation.main()
+                            self.assertEqual(os.listdir(directory), [])
+                        finally:
+                            os.chdir(previous_cwd)
+                    self.assertEqual(fake_models.total_calls, invalid_call)
+                    completed_turns = 0 if invalid_call < 3 else 1
+                    self.assertEqual(fake_models.evaluator_calls, completed_turns)
+                    self.assertEqual([len(agent.memory) for agent in agents], [completed_turns] * 2)
+
 
 if __name__ == "__main__":
     unittest.main()

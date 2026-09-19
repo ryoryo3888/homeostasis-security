@@ -334,7 +334,9 @@ def call_agent(
         model=MODEL_NAME,
         contents=prompt,
     )
-    return response.text.strip()
+    decision = response.text
+    parse_agent_decision(decision)
+    return decision.strip()
 
 
 EVALUATION_FIELDS = (
@@ -699,34 +701,35 @@ def split_decisions(response_text: str):
 
 
 def _extract_section(decision: str, heading: str, stop_headings: tuple[str, ...]) -> str:
+    if not isinstance(decision, str):
+        raise ValueError("Agent回答がテキストではありません。判断を補完せず停止します。")
     lines = [
         line.strip().replace("**", "").replace("：", ":")
         for line in decision.splitlines()
     ]
 
-    for i, line in enumerate(lines):
-        if line.startswith(heading + ":"):
-            first = line.split(":", 1)[1].strip()
-            parts = [first] if first else []
-
-            for following in lines[i + 1:]:
-                if any(following.startswith(h + ":") for h in stop_headings):
-                    break
-                if following:
-                    parts.append(following)
-
-            return " ".join(parts).strip()
-
-    return ""
+    matches = [i for i, line in enumerate(lines) if line.startswith(heading + ":")]
+    if len(matches) != 1:
+        raise ValueError(f"Agent回答の「{heading}」が欠落または重複しています。判断を補完せず停止します。")
+    i = matches[0]
+    first = lines[i].split(":", 1)[1].strip()
+    parts = [first] if first else []
+    for following in lines[i + 1:]:
+        if any(following.startswith(h + ":") for h in stop_headings):
+            break
+        if following:
+            parts.append(following)
+    if not parts:
+        raise ValueError(f"Agent回答の「{heading}」が空です。判断を補完せず停止します。")
+    return " ".join(parts).strip()
 
 
 def extract_action(decision: str) -> str:
-    value = _extract_section(
+    return _extract_section(
         decision,
         "行動",
         ("現在認識", "懸念", "理由"),
     )
-    return value or decision.splitlines()[0].strip()
 
 
 def extract_concern(decision: str) -> str:
@@ -746,12 +749,21 @@ def extract_reason(decision: str) -> str:
 
 
 def extract_belief(decision: str) -> str:
-    value = _extract_section(
+    return _extract_section(
         decision,
         "現在認識",
         ("懸念", "行動", "理由"),
     )
-    return value or "相手国の意図は未確認"
+
+
+def parse_agent_decision(decision: str) -> dict[str, str]:
+    """Read the four requested sections without inventing missing Agent content."""
+    return {
+        "action": extract_action(decision),
+        "reason": extract_reason(decision),
+        "concern": extract_concern(decision),
+        "belief": extract_belief(decision),
+    }
 
 
 def build_world_state(action_a: str, action_b: str) -> str:
@@ -869,19 +881,15 @@ def main():
             combined_response = mock_decisions(turn)
             decision_a, decision_b = split_decisions(combined_response)
 
+        parsed_a = parse_agent_decision(decision_a)
+        parsed_b = parse_agent_decision(decision_b)
         country_a.memory.append(decision_a)
         country_b.memory.append(decision_b)
 
-        action_a = extract_action(decision_a)
-        action_b = extract_action(decision_b)
-        reason_a = extract_reason(decision_a)
-        reason_b = extract_reason(decision_b)
-        concern_a = extract_concern(decision_a)
-        concern_b = extract_concern(decision_b)
-        belief_a = extract_belief(decision_a)
-        belief_b = extract_belief(decision_b)
-        action_a = action_a or decision_a.replace("行動：", "行動:").split("行動:", 1)[-1].split("理由:", 1)[0].strip()
-        action_b = action_b or decision_b.replace("行動：", "行動:").split("行動:", 1)[-1].split("理由:", 1)[0].strip()
+        action_a, action_b = parsed_a["action"], parsed_b["action"]
+        reason_a, reason_b = parsed_a["reason"], parsed_b["reason"]
+        concern_a, concern_b = parsed_a["concern"], parsed_b["concern"]
+        belief_a, belief_b = parsed_a["belief"], parsed_b["belief"]
         print("\n=== A国の判断 ===")
         print(decision_a)
     
