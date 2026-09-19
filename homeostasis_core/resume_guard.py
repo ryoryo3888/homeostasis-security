@@ -95,6 +95,8 @@ def _check_run(record: dict[str, Any], *, number: int, seed: int,
                      "RESUME_CHANGED_REQUEST")
             if attempt < len(items):
                 _require(item.get("response_status") == "provider_error"
+                         and type(item.get("provider_status_code")) is int
+                         and item["provider_status_code"] in (429, 503)
                          and item.get("structured_response") is None
                          and "response_sha256" not in item,
                          "RESUME_REGENERATED_OR_AMBIGUOUS_RESPONSE")

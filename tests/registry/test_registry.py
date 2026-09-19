@@ -91,8 +91,8 @@ class RegistryTests(unittest.TestCase):
                 if name=='simulation_v2.py':source=v2_repair
                 if name=='simulation.py':source='d1112d251d40f6b821c2b99bd0c91c38b5d345c7'
                 if name in ('simulation_final.py','homeostasis_core/gemini_agents.py'):source='d8bc495d61e95917d602e5a8b27ebd76fa121f72'
-                if name=='homeostasis_core/gemini_agents.py':source='d1112d251d40f6b821c2b99bd0c91c38b5d345c7'
-                if name=='homeostasis_core/resume_guard.py':source='8864648122aa7af296594f31fcf3f49538ed085a'
+                if name=='homeostasis_core/gemini_agents.py':source='79f52bcd67ec1d038506258732b58ec761606b34'
+                if name=='homeostasis_core/resume_guard.py':source='79f52bcd67ec1d038506258732b58ec761606b34'
                 self.assertEqual((ROOT/name).read_bytes(),subprocess.check_output(['git','show',source+':'+name],cwd=ROOT),name)
     def test_saved_comparison_membership(self):
         summary=load_json(ROOT/'summary.json');study=self.registry['experiments'][1]
