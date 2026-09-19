@@ -41,7 +41,7 @@ class CheckpointStore:
             with os.fdopen(fd, 'w', encoding='utf-8') as handle:
                 handle.write(data); handle.flush(); os.fsync(handle.fileno())
             # Validate the exact written bytes before making them visible.
-            ensure(json.loads(Path(temp).read_text(encoding='utf-8')) == json.loads(data), 'CHECKPOINT_WRITE_MISMATCH')
+            ensure(Path(temp).read_bytes() == data.encode('utf-8'), 'CHECKPOINT_WRITE_MISMATCH')
             if replace:
                 os.replace(temp, path)
             else:
