@@ -299,80 +299,21 @@ def update_sovereignty(previous: int, evaluator: dict[str, Any], responses: dict
     return clamp_score(previous + delta)
 
 
+class WorldUpdateNotApprovedError(RuntimeError):
+    """A technical stop, not an Agent decision or an unchanged-world result."""
+
+
+def require_approved_world_update() -> None:
+    raise WorldUpdateNotApprovedError(
+        "V2_WORLD_UPDATE_NOT_APPROVED: 評価役の採点を世界状態へ書き戻す旧経路は停止中です。"
+        "Rioが承認した世界更新仕様が未実装のため、新規実験は開始できません。"
+        "Agentの無行動や世界の不変を示す研究結果ではありません。"
+    )
+
+
 def run_simulation(client: Any) -> dict[str, Any]:
-    state = dict(INITIAL_WORLD_STATE)
-    state["global_homeostasis"] = calculate_global_homeostasis(state)
-    initial_state = dict(state)
-    damage = SOURCE_EVENT["lost_annual_rice_capacity_tons"]
-    turns: list[dict[str, Any]] = []
-
-    for turn in range(1, TURN_COUNT + 1):
-        # 1. Carry forward the physical damage before any new decision.
-        damage_before = damage
-        observation = public_observation(turn, state, damage_before)
-        # 2. Each decision maker later receives only public observation plus its own context.
-        # 3. The non-coercive coordinator selects a proposal independently.
-        coordinator = call_coordinator(client, observation)
-        # 4-5. Countries decide independently and respond to the proposal in the same call.
-        countries = {
-            code: call_country(client, agent, observation, coordinator["proposal"])
-            for code, agent in AGENTS.items()
-        }
-        responses = {code: result["proposal_response"] for code, result in countries.items()}
-        # 6. Integrate observable outcomes. B's restoration reduces persistent damage gradually.
-        recovery = 2000 if countries["B"]["action"] == "農地復旧" and damage > 0 else 0
-        damage = max(0, damage - recovery)
-        # 7. A separate Evaluator scores the six global indicators.
-        evaluator = call_evaluator(client, observation, coordinator, countries, damage)
-        for key in ("food", "energy", "economy", "environment", "international_trust", "conflict_load"):
-            state[key] = evaluator[key]
-        # 8. Sovereignty and global homeostasis are deterministic calculations.
-        state["national_sovereignty"] = update_sovereignty(state["national_sovereignty"], evaluator, responses)
-        state["global_homeostasis"] = calculate_global_homeostasis(state)
-        # 9. Record the complete public result for this turn.
-        action_log = [
-            f"地球調整機関: {coordinator['proposal']}",
-            *(f"{code}国: {result['action']} / {result['proposal_response']}" for code, result in countries.items()),
-        ]
-        turns.append(
-            {
-                "turn": turn,
-                "persistent_effects": {
-                    "lost_capacity_before_actions_tons": damage_before,
-                    "recovered_this_turn_tons": recovery,
-                    "remaining_lost_capacity_tons": damage,
-                },
-                "coordinator_proposal": coordinator,
-                "countries": countries,
-                "proposal_responses": responses,
-                "world_state": dict(state),
-                "evaluator": evaluator,
-                "action_log": action_log,
-            }
-        )
-
-    change = state["global_homeostasis"] - initial_state["global_homeostasis"]
-    return {
-        "metadata": {
-            "schema_version": 1,
-            "engine": "homeostasis-security-v2",
-            "mode": "gemini",
-            "model": MODEL_NAME,
-            "turn_count": TURN_COUNT,
-            "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        },
-        "research_question": RESEARCH_QUESTION,
-        "source_event": dict(SOURCE_EVENT),
-        "initial_world_state": initial_state,
-        "turns": turns,
-        "final_result": {
-            "outcome": "recovered" if change > 0 else "worsened" if change < 0 else "unchanged",
-            "global_homeostasis_change": change,
-            "remaining_lost_capacity_tons": damage,
-            "national_sovereignty": state["national_sovereignty"],
-            "global_homeostasis": state["global_homeostasis"],
-        },
-    }
+    """Reject new runs before contacting any Agent; retain saved historical runs."""
+    require_approved_world_update()
 
 
 def save_result(result: dict[str, Any], destination: Path) -> None:
@@ -412,20 +353,10 @@ def main() -> None:
     args = parse_args()
     if args.output.exists():
         raise SystemExit(f"出力先が既に存在するため停止しました: {args.output}")
-    print(f"モデル: {MODEL_NAME}")
-    print("5ターンで、各ターン5回（調整機関、A国、B国、C国、Evaluator）のAPI呼び出しを行います。")
-    print(f"出力先: {args.output}")
-    confirmed = "YES" if args.yes else input("実行する場合だけ YES と入力してください: ").strip()
-    if confirmed != "YES":
-        raise SystemExit("キャンセルしました。Gemini APIは呼んでいません。")
-    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
-    if not api_key:
-        api_key = getpass("Gemini API Key（表示されません）: ").strip()
-    if not api_key:
-        raise SystemExit("APIキーがないため停止しました。Gemini APIは呼んでいません。")
-    result = run_simulation(create_gemini_client(api_key))
-    save_result(result, args.output)
-    print(f"保存しました: {args.output}")
+    try:
+        require_approved_world_update()
+    except WorldUpdateNotApprovedError as error:
+        raise SystemExit(str(error)) from None
 
 
 if __name__ == "__main__":
