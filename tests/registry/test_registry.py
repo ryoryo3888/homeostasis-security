@@ -82,17 +82,18 @@ class RegistryTests(unittest.TestCase):
         # not a general exception, and does not reattribute any historical run.
         repair='57127a5bb8c6a8c60f42a35b2f09f4fdb2a259ed'
         repaired={'final_experiment_runner.py','homeostasis_core/gemini_agents.py',
-                  'homeostasis_core/resume_guard.py'}
+                  'homeostasis_core/resume_guard.py','response_receipts.py'}
         v2_repair='ef68f3e682f4e61ad30ca7402a1fb18e751a8509'
         names=subprocess.check_output(['git','ls-tree','-r','--name-only',base],cwd=ROOT,text=True).splitlines()
         for name in sorted(set(names)|repaired):
-            if name.endswith('.json') and not name.startswith(('tests/','docs/architecture/')) or name.startswith(('simulation','experiment_runner','final_experiment_runner','homeostasis_core/')):
+            if name in repaired or name.endswith('.json') and not name.startswith(('tests/','docs/architecture/')) or name.startswith(('simulation','experiment_runner','final_experiment_runner','homeostasis_core/')):
                 source=repair if name in repaired else base
                 if name=='simulation_v2.py':source=v2_repair
                 if name=='simulation.py':source='72d9e913178ad9902844c3707b7f04d5c845e318'
                 if name in ('simulation_final.py','homeostasis_core/gemini_agents.py'):source='d8bc495d61e95917d602e5a8b27ebd76fa121f72'
                 if name=='homeostasis_core/gemini_agents.py':source='79f52bcd67ec1d038506258732b58ec761606b34'
                 if name=='homeostasis_core/resume_guard.py':source='79f52bcd67ec1d038506258732b58ec761606b34'
+                if name in ('final_experiment_runner.py','homeostasis_core/gemini_agents.py','response_receipts.py'):source='f2aa9fcce4cc90c6c5645480886a769b1ddedfcb'
                 self.assertEqual((ROOT/name).read_bytes(),subprocess.check_output(['git','show',source+':'+name],cwd=ROOT),name)
     def test_saved_comparison_membership(self):
         summary=load_json(ROOT/'summary.json');study=self.registry['experiments'][1]
