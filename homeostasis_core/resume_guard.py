@@ -91,7 +91,7 @@ def _check_run(record: dict[str, Any], *, number: int, seed: int,
         for attempt, item in enumerate(items, 1):
             _require(type(item.get("attempt")) is int and item["attempt"] == attempt,
                      "RESUME_ATTEMPT_ORDER_MISMATCH")
-            _require(item["public_observation_payload"] == items[0]["public_observation_payload"],
+            _require(_digest(item["public_observation_payload"]) == _digest(items[0]["public_observation_payload"]),
                      "RESUME_CHANGED_REQUEST")
             if attempt < len(items):
                 _require(item.get("response_status") == "provider_error"
@@ -106,7 +106,7 @@ def _check_run(record: dict[str, Any], *, number: int, seed: int,
                 status = item.get("response_status")
                 _require(status in (None, "validated")
                          and type(item.get("structured_response")) is dict
-                         and item["structured_response"] == expected[key],
+                         and _digest(item["structured_response"]) == _digest(expected[key]),
                          "RESUME_RESPONSE_NOT_COMMITTED")
 
 
@@ -195,8 +195,8 @@ def read_resumable_checkpoint(path: Path, *, runs: int, seed: int,
                                            ("country_states", "country_states"),
                                            ("world_pool", "world_pool"),
                                            ("network_policy", "network_policy")):
-                    _require(active[current] == last[committed], "RESUME_STATE_MISMATCH")
-                _require(active["current_damage"] == last["reconstruction"]["after"],
+                    _require(_digest(active[current]) == _digest(last[committed]), "RESUME_STATE_MISMATCH")
+                _require(_digest(active["current_damage"]) == _digest(last["reconstruction"]["after"]),
                          "RESUME_DAMAGE_MISMATCH")
         if execution_identity is not None:
             recorded = saved.get("execution_identity")
