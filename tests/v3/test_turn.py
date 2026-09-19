@@ -218,9 +218,9 @@ class TurnTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as path:
             store = CheckpointStore(path); store.save(self.g, expected_digest=None)
             original = store._atomic_write
-            def fail(path, data):
+            def fail(path, data, **kwargs):
                 if path.name == 'HEAD.json': raise OSError('synthetic disk failure')
-                return original(path, data)
+                return original(path, data, **kwargs)
             with patch.object(store, '_atomic_write', side_effect=fail):
                 with self.assertRaises(OSError): store.save(self.run_choices(), expected_digest=self.g['checkpoint_digest'])
             self.assertEqual(store.load(), self.g)
