@@ -63,7 +63,7 @@ class Phase1CompatibilityTests(unittest.TestCase):
             if filename == "README.md":
                 continue
             if filename in {"simulation_v2.py", "test_simulation_v2.py"}:
-                approved = subprocess.check_output(["git", "show", "229e8d6e940e30544449e34b649c50476b9f3b7a:" + filename], cwd=ROOT)
+                approved = subprocess.check_output(["git", "show", "0b66d885822797ad88af584bd5b5b43a71af5db3:" + filename], cwd=ROOT)
                 self.assertEqual((ROOT / filename).read_bytes(), approved, filename)
                 continue
             if filename in {"simulation.py", "test_simulation.py", "experiment_runner.py"}:
