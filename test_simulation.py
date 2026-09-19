@@ -15,7 +15,7 @@ from response_receipts import ResponseReceipts
 
 def sdk_reply(text):
     return types.GenerateContentResponse(candidates=[types.Candidate(
-        content=types.Content(parts=[types.Part(text=text)]))])
+        content=types.Content(parts=[types.Part(text=text)]), finish_reason="STOP")])
 
 
 class FakeModels:

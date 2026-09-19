@@ -2,6 +2,7 @@
 import json
 from types import SimpleNamespace
 import unittest
+from test_simulation import sdk_reply
 
 import simulation
 import simulation_v2
@@ -42,7 +43,7 @@ class EvaluatorScoreValidationTests(unittest.TestCase):
         calls=[]
         def generate(**kwargs):
             calls.append(kwargs)
-            return SimpleNamespace(text=json.dumps(answer))
+            return sdk_reply(json.dumps(answer))
         client=SimpleNamespace(models=SimpleNamespace(generate_content=generate))
         with self.assertRaises(ValueError):
             simulation.call_evaluator(client,simulation.EXTERNAL_EVENTS[0],'世界',

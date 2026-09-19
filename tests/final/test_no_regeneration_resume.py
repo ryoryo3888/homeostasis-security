@@ -265,7 +265,7 @@ class RunnerResumeIntegrationTests(unittest.TestCase):
                                   action=dict(action_id='NO_ACTION', description='synthetic',
                                               parameters=dict(recipient_type='none', target_country=None, resource=None, amount=0)))
                 return types.GenerateContentResponse(candidates=[types.Candidate(
-                    content=types.Content(parts=[types.Part(text=json.dumps(answer))]))])
+                    content=types.Content(parts=[types.Part(text=json.dumps(answer))]),finish_reason="STOP")])
         return SimpleNamespace(models=Models())
 
     def test_clean_committed_boundary_continues_without_reissuing(self):
