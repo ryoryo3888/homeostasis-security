@@ -83,10 +83,12 @@ class RegistryTests(unittest.TestCase):
         repair='57127a5bb8c6a8c60f42a35b2f09f4fdb2a259ed'
         repaired={'final_experiment_runner.py','homeostasis_core/gemini_agents.py',
                   'homeostasis_core/resume_guard.py'}
+        v2_repair='313f544855c2bc07675f144e2866f7a79ff5540c'
         names=subprocess.check_output(['git','ls-tree','-r','--name-only',base],cwd=ROOT,text=True).splitlines()
         for name in sorted(set(names)|repaired):
             if name.endswith('.json') and not name.startswith(('tests/','docs/architecture/')) or name.startswith(('simulation','experiment_runner','final_experiment_runner','homeostasis_core/')):
                 source=repair if name in repaired else base
+                if name=='simulation_v2.py':source=v2_repair
                 self.assertEqual((ROOT/name).read_bytes(),subprocess.check_output(['git','show',source+':'+name],cwd=ROOT),name)
     def test_saved_comparison_membership(self):
         summary=load_json(ROOT/'summary.json');study=self.registry['experiments'][1]
