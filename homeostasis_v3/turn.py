@@ -138,11 +138,20 @@ class TurnRunner:
         self.pool_location, self.context_id, self.search_budget = pool_location, context_id, search_budget
         ensure(pool_location in {c['state_id'] for c in baseline['world']['countries']}, 'INVALID_POOL_LOCATION')
         check(ID, context_id)
-        self.config = {'baseline': digest(baseline), 'network': digest(network), 'policy': self.policy.record(),
-                       'pool_location': pool_location, 'context_id': context_id, 'rules': RULES, 'search_budget': search_budget}
+        self.config = deepcopy(self._configuration())
         self.config_hash = digest(self.config)
 
+    def _configuration(self):
+        return {'baseline': digest(self.baseline), 'network': digest(self.network), 'policy': self.policy.record(),
+                'pool_location': self.pool_location, 'context_id': self.context_id,
+                'rules': RULES, 'search_budget': self.search_budget}
+
+    def _check_configuration(self):
+        ensure(digest(self.config) == self.config_hash and
+               digest(self._configuration()) == self.config_hash, 'TURN_CONFIGURATION_CHANGED')
+
     def genesis(self):
+        self._check_configuration()
         w = {'physical': deepcopy(self.baseline), 'network': deepcopy(self.network),
              'pool': {r['resource_id']: 0 for r in self.baseline['world']['resources']},
              'shipments': [], 'production_pending': [], 'seen_choice_ids': []}
@@ -164,6 +173,7 @@ class TurnRunner:
 
     def replay(self, opening, recorded_input):
         """Rehydrate offline input without invoking the original actor callbacks."""
+        self._check_configuration()
         ensure(recorded_input['config'] == self.config, 'REPLAY_CONFIG_MISMATCH')
         ensure(recorded_input['opening'] == opening['checkpoint_digest'], 'REPLAY_OPENING_MISMATCH')
         record = deepcopy(recorded_input)
@@ -182,8 +192,14 @@ class TurnRunner:
         catalogue is a trusted Python factory; countries can select IDs/amounts
         only. Callback exceptions propagate, with no completed checkpoint.
         """
+        self._check_configuration()
         validate_checkpoint(opening)
         ensure(opening['config_hash'] == self.config_hash and opening['context_id'] == self.context_id, 'CONFIGURATION_MISMATCH')
+        def invoke(callback, *args):
+            self._check_configuration()
+            result = callback(*args)
+            self._check_configuration()
+            return result
         w = deepcopy(opening['world_state']); turn = opening['turn'] + 1
         before = totals(w); phases = progress; evidence = {}
         def phase(name, data):
@@ -221,11 +237,11 @@ class TurnRunner:
         state = engine.restore_history(core, turn=turn, shipments=w['shipments'], seen_choice_ids=w['seen_choice_ids'])
         observation = Snapshot.of({'turn': turn, 'world_state': w, 'settlement_snapshot': engine.read(state)})
         phase('OBSERVATION_FREEZE', observation.read())
-        proposal = None if coordinator is None else coordinator(observation)
+        proposal = None if coordinator is None else invoke(coordinator, observation)
         if proposal is not None: check(PROPOSAL, proposal)
         proposal = Snapshot.of(proposal)
         phase('COORDINATOR_INPUT', proposal.read())
-        templates = [] if catalogue is None else deepcopy(catalogue(observation))
+        templates = [] if catalogue is None else deepcopy(invoke(catalogue, observation))
         ensure(type(templates) is list, 'INVALID_CATALOGUE')
         for template in templates: check(TEMPLATE, template)
         ensure(len({t['choice_id'] for t in templates}) == len(templates), 'CHOICE_ID_COLLISION')
@@ -234,7 +250,7 @@ class TurnRunner:
         ensure(set(countries) <= set(ids), 'UNKNOWN_COUNTRY_ADAPTER')
         selections = {}; choices = []; principals = {s: auth.issue('country', s) for s in ids}
         for sid in ids:
-            selected = [] if sid not in countries else countries[sid].choose(observation, proposal)
+            selected = [] if sid not in countries else invoke(countries[sid].choose, observation, proposal)
             ensure(type(selected) is list, 'INVALID_SELECTION_LIST')
             selections[sid] = sorted(deepcopy(selected), key=lambda s: s['choice_id'])
         phase('CHOICE_COLLECTION', selections)
@@ -249,7 +265,7 @@ class TurnRunner:
         consent_record = {}
         for sid in ids + (['world_pool'] if pool_consent else []):
             callback = pool_consent if sid == 'world_pool' else (countries[sid].consent if sid in countries else None)
-            answers = {} if callback is None else callback(observation, choice_view)
+            answers = {} if callback is None else invoke(callback, observation, choice_view)
             ensure(type(answers) is dict and set(answers) <= set(by_id), 'INVALID_CONSENT_REFERENCE')
             consent_record[sid] = deepcopy(answers)
             principal = auth.issue('pool') if sid == 'world_pool' else principals[sid]
@@ -299,6 +315,7 @@ class TurnRunner:
                         'selections': selections, 'consents': consent_record, 'proposal': proposal.read(), 'config': self.config}
         phase('AUDIT', {'input_digest': digest(input_record), 'output_digest': end_hash})
         phase('CHECKPOINT', {'adoption': 'validated atomic CheckpointStore save required', 'world_hash': end_hash})
+        self._check_configuration()
         cp = seal({'kind': 'v3_offline_turn_checkpoint', 'context_id': self.context_id, 'config_hash': self.config_hash,
                    'turn': turn, 'world_state': w, 'ledger': ledger, 'history': history, 'phases': phases,
                    'audit': evidence, 'input': input_record, 'input_digest': digest(input_record),
