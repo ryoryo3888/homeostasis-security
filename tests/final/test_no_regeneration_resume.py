@@ -25,12 +25,16 @@ def digest(value):
 def fixture(n=1, completed=False):
     rows, audit = [], []
     for turn in range(1, n + 1):
-        country = {'action': 'synthetic', 'turn': turn}
+        country = {'response_id': 'REJECT', 'action': {'action_id': 'NO_ACTION'}, 'turn': turn}
         proposal, evaluation = {'proposal': turn}, {'assessment': turn}
-        state = {'true_world': {'synthetic': turn}, 'country_states': {'A': {'stock': turn}},
+        state = {'true_world': {'economy': 90 + turn, 'food': 70 + turn,
+                               'international_trust': 80, 'conflict_load': 10},
+                 'country_states': {'A': {'stock': turn}}, 'demand_unmet': 2,
+                 'atomic_settlements': [{'agent_id': 'A', 'realized': turn, 'unmet': 1}],
                  'world_pool': {}, 'network_policy': {}, 'reconstruction': {'after': 1}}
         rows.append({'turn': turn, 'proposal': proposal, 'country_responses': {'A': country},
-                     'evaluator_commentary': evaluation, 'executed_state': state})
+                     'evaluator_commentary': evaluation, 'executed_state': state,
+                     'snapshot': {'event': f'synthetic-{turn}'}})
         for role, actor, answer in [('coordinator', 'coord', proposal),
                                     ('country', 'A', country), ('evaluator', 'eval', evaluation)]:
             payload = {'turn': turn, 'actor': actor}
@@ -44,7 +48,12 @@ def fixture(n=1, completed=False):
         return {'completed_runs': [record], 'active_run': None}
     record.update(completed_turn=n, current_world=state['true_world'],
                   country_states=state['country_states'], world_pool={}, network_policy={},
-                  current_damage=1, history_state={}, memories={'A': [{} for _ in range(n)]})
+                  current_damage=1,
+                  history_state={'economic_loss': 10 - n, 'reserve_gap': 30 - n,
+                                 'trust_loss': 20, 'alertness': 10, 'unmet_resource_demand': 2},
+                  memories={'A': [{'response_id': 'REJECT', 'action_id': 'NO_ACTION',
+                                   'realized': turn, 'unmet': 1, 'event': f'synthetic-{turn}',
+                                   'damage_after': 1} for turn in range(1, n + 1)]})
     return {'completed_runs': [], 'active_run': record}
 
 
@@ -154,6 +163,36 @@ class ResumeGateTests(unittest.TestCase):
         data = fixture(); data['active_run']['memories']['A'] = []
         self.reject(data, 'MEMORY_LENGTH_MISMATCH')
 
+    def test_memory_content_and_order_must_match_committed_turns(self):
+        for field, changed in (('response_id', 'ACCEPT'), ('action_id', 'MEDIATE'),
+                               ('realized', 99), ('unmet', 0), ('event', 'invented'),
+                               ('damage_after', 0), ('extra_instruction', 'invented')):
+            with self.subTest(field=field):
+                data = fixture(2)
+                data['active_run']['memories']['A'][0][field] = changed
+                self.reject(data, 'MEMORY_CONTENT_MISMATCH')
+        data = fixture(2); data['active_run']['memories']['A'].reverse()
+        self.reject(data, 'MEMORY_CONTENT_MISMATCH')
+
+    def test_memory_json_types_are_not_coerced(self):
+        for changed in (True, 1.0, '1'):
+            with self.subTest(value=changed):
+                data = fixture(); data['active_run']['memories']['A'][0]['realized'] = changed
+                self.reject(data, 'MEMORY_CONTENT_MISMATCH')
+
+    def test_history_values_must_match_committed_world(self):
+        original = fixture()
+        for field in (*original['active_run']['history_state'], 'extra_instruction'):
+            with self.subTest(field=field):
+                data = deepcopy(original); data['active_run']['history_state'][field] = 999
+                self.reject(data, 'HISTORY_STATE_MISMATCH')
+        data = fixture(); del data['active_run']['history_state']['alertness']
+        self.reject(data, 'HISTORY_STATE_MISMATCH')
+
+    def test_missing_memory_evidence_is_not_filled_in(self):
+        data = fixture(); del data['active_run']['turns'][0]['snapshot']
+        self.reject(data, 'INCOMPLETE_OR_INVALID_CHECKPOINT')
+
     def test_known_provider_retry_identical_request_allowed(self):
         data = fixture(); logs = data['active_run']['call_audit']
         failure = deepcopy(logs[0]); failure.update(response_status='provider_error', structured_response=None)
@@ -235,6 +274,9 @@ class RunnerResumeIntegrationTests(unittest.TestCase):
         self.assertEqual(len(second.models.payloads), 60)
         baseline = self.runner.run_live(self.client(), Path(self.tmp.name)/'baseline.json', 1, 7)
         self.assertEqual(resumed['runs'][0]['turns'], baseline['runs'][0]['turns'])
+        self.assertEqual(second.models.payloads,
+                         [call['public_observation_payload']
+                          for call in baseline['runs'][0]['call_audit']][20:])
         self.assertEqual(len(resumed['runs'][0]['call_audit']), 80)
 
     def test_partial_turn_refused_with_zero_new_provider_calls(self):
@@ -253,6 +295,44 @@ class RunnerResumeIntegrationTests(unittest.TestCase):
             self.runner.run_live(second, self.output, 1, 7, True)
         self.assertEqual(second.models.payloads, [])
         self.assertEqual(cp.read_bytes(), before); self.assertFalse(self.output.exists())
+
+    def test_changed_memory_or_history_refused_before_any_new_call(self):
+        original = self.runner._checkpoint
+        def stop_at_boundary(path, data):
+            original(path, data)
+            active = data.get('active_run')
+            if active and active['completed_turn'] == 2:
+                raise KeyboardInterrupt('synthetic boundary stop')
+        with patch.object(self.runner, '_checkpoint', side_effect=stop_at_boundary):
+            with self.assertRaises(KeyboardInterrupt):
+                self.runner.run_live(self.client(), self.output, 1, 7)
+        cp = self.output.with_suffix('.json.checkpoint')
+        saved = json.loads(cp.read_text())
+        for kind in ('memory', 'history'):
+            with self.subTest(kind=kind):
+                data = deepcopy(saved)
+                if kind == 'memory':
+                    data['active_run']['memories']['MIL'][0]['response_id'] = 'REJECT'
+                    code = 'MEMORY_CONTENT_MISMATCH'
+                else:
+                    data['active_run']['history_state']['economic_loss'] += 1
+                    code = 'HISTORY_STATE_MISMATCH'
+                cp.write_text(json.dumps(data)); before = cp.read_bytes()
+                client = self.client()
+                with self.assertRaisesRegex(ValueError, code):
+                    self.runner.run_live(client, self.output, 1, 7, True)
+                self.assertEqual(client.models.payloads, [])
+                self.assertEqual(cp.read_bytes(), before)
+                self.assertFalse(self.output.exists())
+                args = SimpleNamespace(one_run=True, runs=1, seed=7, execute=True,
+                                       confirm='YES', output=self.output, resume=True)
+                with patch.object(self.runner, 'parse_args', return_value=args), \
+                     patch.object(self.runner, 'create_gemini_client') as create, \
+                     patch.object(self.runner, 'getpass') as key:
+                    with self.assertRaisesRegex(ValueError, code):
+                        self.runner.main()
+                    create.assert_not_called(); key.assert_not_called()
+                self.assertEqual(cp.read_bytes(), before)
 
     def test_cli_refuses_missing_checkpoint_before_client_or_key(self):
         args = SimpleNamespace(one_run=True, runs=1, seed=7, execute=True, confirm='YES',
