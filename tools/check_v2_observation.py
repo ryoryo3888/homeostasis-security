@@ -28,6 +28,7 @@ def check(base):
             url = base + '/results/v2-five-runs/index.html'
             browser.call('Page.navigate', {'url':url}, session)
             browser.wait("document.body?.dataset.observationReady === 'true' && document.querySelector('.earth').naturalWidth > 0", session)
+            assert browser.evaluate("[...document.querySelectorAll('.version-switch a')].map(a=>a.textContent)", session) == ['v1：二国間の恒常性','v2：地球規模の恒常性']
             browser.evaluate("window._errors=[];addEventListener('error',e=>_errors.push(e.message))", session)
             for trial in data['trials']:
                 number = trial['trial']
