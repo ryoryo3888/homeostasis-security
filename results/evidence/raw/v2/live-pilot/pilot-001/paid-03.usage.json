@@ -1,0 +1,1 @@
+{"payload":{"billing_verified":false,"estimated_usd":"0.00313875","sequence":3,"usage":{"candidatesTokenCount":346,"promptTokenCount":570,"promptTokensDetails":[{"modality":"TEXT","tokenCount":570}],"serviceTier":"standard","thoughtsTokenCount":377,"totalTokenCount":1293},"within_configured_limits":true},"sha256":"ef9741fb179cb61fd85d4ad0e3a6e7cbffc4072c45182d0b5cd0b0c05f8eade9"}

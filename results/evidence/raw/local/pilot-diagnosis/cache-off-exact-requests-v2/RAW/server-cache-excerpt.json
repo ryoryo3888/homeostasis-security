@@ -1,0 +1,1 @@
+{"payload":{"full_log_sha256":"ad5295b6e388d84a225dea9fe433f9b4f1b15cf3a7a98930541f5d4de87f9c97","lines":["srv    load_model: prompt cache is disabled - use `--cache-ram N` to enable it"],"scope":"filtered server log, not complete log"},"sha256":"8c75171407663b56cc1c26b54ef52311fff2132041ac467880a17ba6a655e19d"}

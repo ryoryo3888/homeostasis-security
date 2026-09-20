@@ -1,0 +1,8 @@
+{
+  "schema": "homeostasis-public-evidence-integrity-1",
+  "source_raw_immutable": true,
+  "derived_from_manifest": "raw-inventory.json",
+  "all_published_files_have_source_sha256": true,
+  "byte_identical_files": 3440,
+  "redacted_public_copies": 8
+}

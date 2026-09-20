@@ -1,0 +1,1 @@
+{"max_calls":48,"max_input_bytes":500000,"max_output_tokens":4096,"mode":"offline_mock_transport","model":"offline-model","prompt_digest":"2a52781c3bb875ecdc48420b746737732b4bf1f277807be2af18b1a7b5cc4ef9","retry_attempts":1,"schema_digest":"f72207a9c22e6c02aed309b88062ccfa3d26148543d3da4bc93387678ad52690","sdk_version":"2.20.0"}

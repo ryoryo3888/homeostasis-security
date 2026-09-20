@@ -1,0 +1,1005 @@
+{
+  "status": "completed",
+  "generation_attempts": 240,
+  "validated_responses": 240,
+  "uncached_rate_estimated_usd": "2.5325984",
+  "input_tokens": 7861378,
+  "output_tokens": 69674,
+  "summaries": [
+    {
+      "arm": "deterministic",
+      "seed": 17,
+      "status": "completed",
+      "turns": 5,
+      "transactions": {
+        "full": 19,
+        "partial": 0,
+        "not_established": 0
+      },
+      "reason_codes": {},
+      "empty_consent_responses": 0,
+      "explicit_yes_all_listed": 152,
+      "explicit_no_all_listed": 0,
+      "arrived_resource_units": 21,
+      "self_withdrawals": 0,
+      "incoming_refusals": 0,
+      "cumulative_shortage": {
+        "energy": 8,
+        "food": 32
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 23,
+      "status": "completed",
+      "turns": 5,
+      "transactions": {
+        "full": 19,
+        "partial": 0,
+        "not_established": 0
+      },
+      "reason_codes": {},
+      "empty_consent_responses": 0,
+      "explicit_yes_all_listed": 152,
+      "explicit_no_all_listed": 0,
+      "arrived_resource_units": 21,
+      "self_withdrawals": 0,
+      "incoming_refusals": 0,
+      "cumulative_shortage": {
+        "energy": 8,
+        "food": 32
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 41,
+      "status": "completed",
+      "turns": 5,
+      "transactions": {
+        "full": 19,
+        "partial": 0,
+        "not_established": 0
+      },
+      "reason_codes": {},
+      "empty_consent_responses": 0,
+      "explicit_yes_all_listed": 152,
+      "explicit_no_all_listed": 0,
+      "arrived_resource_units": 21,
+      "self_withdrawals": 0,
+      "incoming_refusals": 0,
+      "cumulative_shortage": {
+        "energy": 8,
+        "food": 32
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 17,
+      "status": "completed",
+      "turns": 5,
+      "transactions": {
+        "full": 3,
+        "partial": 0,
+        "not_established": 37
+      },
+      "reason_codes": {
+        "CONSENT_REFUSED": 37
+      },
+      "empty_consent_responses": 0,
+      "explicit_yes_all_listed": 31,
+      "explicit_no_all_listed": 289,
+      "arrived_resource_units": 4,
+      "self_withdrawals": 12,
+      "incoming_refusals": 37,
+      "cumulative_shortage": {
+        "energy": 16,
+        "food": 38
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 23,
+      "status": "completed",
+      "turns": 5,
+      "transactions": {
+        "full": 6,
+        "partial": 0,
+        "not_established": 34
+      },
+      "reason_codes": {
+        "CONSENT_REFUSED": 32,
+        "ESSENTIAL_RESERVE_CONFLICT": 2,
+        "INSUFFICIENT_STOCK": 1,
+        "MINIMUM_AMOUNT_NOT_MET": 2
+      },
+      "empty_consent_responses": 0,
+      "explicit_yes_all_listed": 38,
+      "explicit_no_all_listed": 282,
+      "arrived_resource_units": 10,
+      "self_withdrawals": 15,
+      "incoming_refusals": 27,
+      "cumulative_shortage": {
+        "energy": 11,
+        "food": 42
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 41,
+      "status": "completed",
+      "turns": 5,
+      "transactions": {
+        "full": 7,
+        "partial": 0,
+        "not_established": 32
+      },
+      "reason_codes": {
+        "CONSENT_REFUSED": 28,
+        "ESSENTIAL_RESERVE_CONFLICT": 4,
+        "MINIMUM_AMOUNT_NOT_MET": 4
+      },
+      "empty_consent_responses": 0,
+      "explicit_yes_all_listed": 41,
+      "explicit_no_all_listed": 271,
+      "arrived_resource_units": 12,
+      "self_withdrawals": 9,
+      "incoming_refusals": 28,
+      "cumulative_shortage": {
+        "energy": 10,
+        "food": 42
+      }
+    }
+  ],
+  "rows": [
+    {
+      "arm": "deterministic",
+      "seed": 17,
+      "turn": 1,
+      "counts": {
+        "full": 0,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 17,
+      "turn": 2,
+      "counts": {
+        "full": 4,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 17,
+      "turn": 3,
+      "counts": {
+        "full": 5,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 17,
+      "turn": 4,
+      "counts": {
+        "full": 6,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 2,
+          "demand": 134,
+          "fulfilled": 132,
+          "fulfillment_rate": 0.9850746268656716,
+          "shortage": 2
+        },
+        "food": {
+          "cumulative_shortage": 13,
+          "demand": 133,
+          "fulfilled": 120,
+          "fulfillment_rate": 0.9022556390977443,
+          "shortage": 13
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 17,
+      "turn": 5,
+      "counts": {
+        "full": 4,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 8,
+          "demand": 134,
+          "fulfilled": 128,
+          "fulfillment_rate": 0.9552238805970149,
+          "shortage": 6
+        },
+        "food": {
+          "cumulative_shortage": 32,
+          "demand": 133,
+          "fulfilled": 114,
+          "fulfillment_rate": 0.8571428571428571,
+          "shortage": 19
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 23,
+      "turn": 1,
+      "counts": {
+        "full": 0,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 23,
+      "turn": 2,
+      "counts": {
+        "full": 4,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 23,
+      "turn": 3,
+      "counts": {
+        "full": 5,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 23,
+      "turn": 4,
+      "counts": {
+        "full": 6,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 2,
+          "demand": 134,
+          "fulfilled": 132,
+          "fulfillment_rate": 0.9850746268656716,
+          "shortage": 2
+        },
+        "food": {
+          "cumulative_shortage": 13,
+          "demand": 133,
+          "fulfilled": 120,
+          "fulfillment_rate": 0.9022556390977443,
+          "shortage": 13
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 23,
+      "turn": 5,
+      "counts": {
+        "full": 4,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 8,
+          "demand": 134,
+          "fulfilled": 128,
+          "fulfillment_rate": 0.9552238805970149,
+          "shortage": 6
+        },
+        "food": {
+          "cumulative_shortage": 32,
+          "demand": 133,
+          "fulfilled": 114,
+          "fulfillment_rate": 0.8571428571428571,
+          "shortage": 19
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 41,
+      "turn": 1,
+      "counts": {
+        "full": 0,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 41,
+      "turn": 2,
+      "counts": {
+        "full": 4,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 41,
+      "turn": 3,
+      "counts": {
+        "full": 5,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 41,
+      "turn": 4,
+      "counts": {
+        "full": 6,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 2,
+          "demand": 134,
+          "fulfilled": 132,
+          "fulfillment_rate": 0.9850746268656716,
+          "shortage": 2
+        },
+        "food": {
+          "cumulative_shortage": 13,
+          "demand": 133,
+          "fulfilled": 120,
+          "fulfillment_rate": 0.9022556390977443,
+          "shortage": 13
+        }
+      }
+    },
+    {
+      "arm": "deterministic",
+      "seed": 41,
+      "turn": 5,
+      "counts": {
+        "full": 4,
+        "not_established": 0,
+        "partial": 0
+      },
+      "reasons": {},
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 8,
+          "demand": 134,
+          "fulfilled": 128,
+          "fulfillment_rate": 0.9552238805970149,
+          "shortage": 6
+        },
+        "food": {
+          "cumulative_shortage": 32,
+          "demand": 133,
+          "fulfilled": 114,
+          "fulfillment_rate": 0.8571428571428571,
+          "shortage": 19
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 17,
+      "turn": 1,
+      "counts": {
+        "full": 1,
+        "not_established": 7,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 7
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 17,
+      "turn": 2,
+      "counts": {
+        "full": 0,
+        "not_established": 8,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 8
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 17,
+      "turn": 3,
+      "counts": {
+        "full": 1,
+        "not_established": 7,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 7
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 17,
+      "turn": 4,
+      "counts": {
+        "full": 1,
+        "not_established": 7,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 7
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 6,
+          "demand": 134,
+          "fulfilled": 128,
+          "fulfillment_rate": 0.9552238805970149,
+          "shortage": 6
+        },
+        "food": {
+          "cumulative_shortage": 13,
+          "demand": 133,
+          "fulfilled": 120,
+          "fulfillment_rate": 0.9022556390977443,
+          "shortage": 13
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 17,
+      "turn": 5,
+      "counts": {
+        "full": 0,
+        "not_established": 8,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 8
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 16,
+          "demand": 134,
+          "fulfilled": 124,
+          "fulfillment_rate": 0.9253731343283582,
+          "shortage": 10
+        },
+        "food": {
+          "cumulative_shortage": 38,
+          "demand": 133,
+          "fulfilled": 108,
+          "fulfillment_rate": 0.8120300751879699,
+          "shortage": 25
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 23,
+      "turn": 1,
+      "counts": {
+        "full": 1,
+        "not_established": 7,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 7
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 23,
+      "turn": 2,
+      "counts": {
+        "full": 1,
+        "not_established": 7,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 7
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 23,
+      "turn": 3,
+      "counts": {
+        "full": 3,
+        "not_established": 5,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 5
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 23,
+      "turn": 4,
+      "counts": {
+        "full": 0,
+        "not_established": 8,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 8
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 6,
+          "demand": 134,
+          "fulfilled": 128,
+          "fulfillment_rate": 0.9552238805970149,
+          "shortage": 6
+        },
+        "food": {
+          "cumulative_shortage": 17,
+          "demand": 133,
+          "fulfilled": 116,
+          "fulfillment_rate": 0.8721804511278195,
+          "shortage": 17
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 23,
+      "turn": 5,
+      "counts": {
+        "full": 1,
+        "not_established": 7,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 5,
+        "ESSENTIAL_RESERVE_CONFLICT": 2,
+        "INSUFFICIENT_STOCK": 1,
+        "MINIMUM_AMOUNT_NOT_MET": 2
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 11,
+          "demand": 134,
+          "fulfilled": 129,
+          "fulfillment_rate": 0.9626865671641791,
+          "shortage": 5
+        },
+        "food": {
+          "cumulative_shortage": 42,
+          "demand": 133,
+          "fulfilled": 108,
+          "fulfillment_rate": 0.8120300751879699,
+          "shortage": 25
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 41,
+      "turn": 1,
+      "counts": {
+        "full": 1,
+        "not_established": 7,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 7
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 41,
+      "turn": 2,
+      "counts": {
+        "full": 1,
+        "not_established": 7,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 7
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 41,
+      "turn": 3,
+      "counts": {
+        "full": 2,
+        "not_established": 5,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 4,
+        "ESSENTIAL_RESERVE_CONFLICT": 1,
+        "MINIMUM_AMOUNT_NOT_MET": 1
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 0,
+          "demand": 134,
+          "fulfilled": 134,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        },
+        "food": {
+          "cumulative_shortage": 0,
+          "demand": 133,
+          "fulfilled": 133,
+          "fulfillment_rate": 1.0,
+          "shortage": 0
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 41,
+      "turn": 4,
+      "counts": {
+        "full": 2,
+        "not_established": 6,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 5,
+        "ESSENTIAL_RESERVE_CONFLICT": 1,
+        "MINIMUM_AMOUNT_NOT_MET": 1
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 4,
+          "demand": 134,
+          "fulfilled": 130,
+          "fulfillment_rate": 0.9701492537313433,
+          "shortage": 4
+        },
+        "food": {
+          "cumulative_shortage": 17,
+          "demand": 133,
+          "fulfilled": 116,
+          "fulfillment_rate": 0.8721804511278195,
+          "shortage": 17
+        }
+      }
+    },
+    {
+      "arm": "gemini",
+      "seed": 41,
+      "turn": 5,
+      "counts": {
+        "full": 1,
+        "not_established": 7,
+        "partial": 0
+      },
+      "reasons": {
+        "CONSENT_REFUSED": 5,
+        "ESSENTIAL_RESERVE_CONFLICT": 2,
+        "MINIMUM_AMOUNT_NOT_MET": 2
+      },
+      "shortage": {
+        "energy": {
+          "cumulative_shortage": 10,
+          "demand": 134,
+          "fulfilled": 128,
+          "fulfillment_rate": 0.9552238805970149,
+          "shortage": 6
+        },
+        "food": {
+          "cumulative_shortage": 42,
+          "demand": 133,
+          "fulfilled": 108,
+          "fulfillment_rate": 0.8120300751879699,
+          "shortage": 25
+        }
+      }
+    }
+  ],
+  "research_eligible": false
+}

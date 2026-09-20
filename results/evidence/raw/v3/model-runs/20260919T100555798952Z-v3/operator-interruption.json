@@ -1,0 +1,9 @@
+{
+  "kind": "operator_interruption",
+  "reason_code": "USER_REQUESTED_RESTART_AND_ASSUMPTION_AUDIT",
+  "explanation": "Stopped after the user rejected assistant-defined action availability and requested starting the experiment design over. This is an operator stop, not a simulated refusal or technical model failure. The original report and journals remain unchanged. Only the first TURN was adopted.",
+  "stopped_at": "2026-09-19T10:58:54.965549+00:00",
+  "source_report_sha256": "aba00977e78257563f559fa0138d577741315a017d7fe4b2126cbe173608b8e0",
+  "transport_head": "b25e4f1f013f6e90b12ae6be2e79ce3bfa51b06a36f7572f85083bd00f65b0ee",
+  "engine_head": "1ee20a454094fbb6513e5c1e44ced8425e59460fd288c5d5092f432801ab7841"
+}

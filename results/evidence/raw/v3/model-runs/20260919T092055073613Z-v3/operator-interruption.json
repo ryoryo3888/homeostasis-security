@@ -1,0 +1,8 @@
+{
+  "kind": "operator_interruption",
+  "reason_code": "DISABLED_RESERVE_DIAGNOSTIC_LABEL",
+  "explanation": "Operator stopped this local trial after observing a disabled reserve mislabeled as a failure cause. One TURN was adopted; partial next-TURN replies are not adopted. Original report and journals are retained unchanged.",
+  "source_report_sha256": "6ad1bc34bad7ff9357f6e4ad6f416fb3af930d6bad7fb529b261ffaf1d38c967",
+  "transport_head": "98ba3e2012dd882b1e508fc13d95576f3ff1b79dc8a049fd9d4c90c7ea7f4510",
+  "engine_head": "1480aaff0de0e30dbb6fcb16f6f924941d3b7668c80a0d0399ed5ebd5fa90ecd"
+}
