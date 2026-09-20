@@ -73,7 +73,7 @@ def build_html(source, data):
   <div class="brand panel"><div class="brand-en">HOMEOSTASIS SECURITY v2</div>
     <h1>地球規模の恒常性シミュレーション</h1><p>保存済みの自由対話実験｜同じ初期条件から、どんな対話や関係が生まれたか</p>
     <div class="experiment-meta"><span>Gemini Agent 実験結果</span><span>5回／各8ターン</span><span>A国・B国・C国・地球調整機関</span><span>gemini-3.6-flash</span></div>
-    <nav class="version-switch" aria-label="観測記録の切替"><a href="dashboard_v1.html">v1</a><a href="dashboard_v2.html">v2：以前の5ターン記録</a><span aria-current="page">v2：5回の自由対話</span></nav>
+    <nav class="version-switch" aria-label="バージョン切替"><a href="dashboard_v1.html">v1：二国間の恒常性</a><a href="results/v2-five-runs/index.html" class="active" aria-current="page">v2：地球規模の恒常性</a></nav>
   </div>
   <div class="origin panel"><div><b>発生元</b><strong>V2独立シナリオの初期事象</strong></div><div class="event"><b>事件</b><strong>A国のミサイルがB国の民間農地へ着弾</strong></div><div class="impact"><b>初期被害</b><strong>年間8,000tの米生産能力を喪失</strong></div><div class="flow">自由に発言・提案 <span>→</span> 相手の反応を観測 ／ 物理的な復旧量は未測定</div></div>
 </section>
@@ -84,6 +84,7 @@ def build_html(source, data):
 <h2 class="section-title">GLOBAL STATE｜今回の実験における世界の変化</h2><section class="metrics">{''.join(f'<div class="metric panel"><span>{name}</span><strong>未測定</strong></div>' for name in ('食料','経済','エネルギー','環境','国際的信用','紛争負荷'))}</section>
 <section id="records" class="observation panel"><h2>発言の原文と、ターンごとの観測</h2><p class="scope">宛先に含まれる参加者だけに発言を配信。この画面では観測者として全宛先の発言を確認できます。自分用メモ・モデル内部の思考は掲載していません。</p><p class="scope">AIによる観測解説は実験後に作成し、Agentには渡していません。輸送・復旧・市場などに関する発言は、世界で実行されたことの確認ではありません。</p><noscript><p>JavaScriptが無効のため全40ターンを続けて表示しています。</p></noscript>{transcripts}</section>
 <section class="observation panel"><h2>5回の比較</h2><p class="scope">AIによる観測解説（実験後に作成）</p><div class="comparison">{summaries}</div><p>5回とも対話は協力・合意を語る方向へ進んだ。その中で、宛先の分け方や発言を続ける期間には違いが現れた。ここで確認できるのは対話上の違いであり、物理的な復旧や制度の履行ではない。</p><p>同じターンの承認表明と成立宣言は、それぞれ前ターンまでの情報に基づく発言。同じターンに互いの承認を確認したとは限らない。</p><p>1条件を5回繰り返した予備観測。初期役割・事件・数値の影響や、別条件での再現性・創発そのものの証明までは確かめていない。第8ターン後の経過は未観測。</p><details><summary>実験条件と保存記録</summary><p>各回は初期状態から開始し、前の回の対話や観測解説を引き継いでいない。追加の事件は与えていない。シードの指定は行っていない。</p><p>{escape(data['operational_difference'])}</p><p>以下の数値は既存の初期条件。今回の対話に伴う変化を測定した値ではない。</p><pre>{initial}</pre><a href="results/v2-five-runs/data.json">発言の原文・宛先・記録IDを含む保存データ</a></details></section>
+<p class="observation"><a href="dashboard_v2.html">以前のV2観測記録（1回・5ターン）を開く</a></p>
 </main></body></html>\n'''
 
 
