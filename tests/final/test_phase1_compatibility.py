@@ -51,6 +51,9 @@ class Phase1CompatibilityTests(unittest.TestCase):
             load_v2_first_run(LEGACY)
 
     def test_existing_tracked_files_match_baseline(self):
+        # Resolve only the explicit historical moves; keep the original hashes.
+        archived = {item['original_path']: item['path'] for item in
+                    json.loads((ROOT / 'archive/manifest.json').read_text())['files']}
         self.assertTrue(BASELINE.is_file(), "baseline SHA-256 list is missing")
         records = {}
         for line in BASELINE.read_text(encoding="utf-8").splitlines():
@@ -58,8 +61,8 @@ class Phase1CompatibilityTests(unittest.TestCase):
             records[filename] = digest
         self.assertEqual(len(records), 117)
         for filename, expected in records.items():
-            # PHASE 8 is explicitly allowed to append to README; its immutable
-            # original prefix is verified by test_phase8_final.
+            # Repository organization preserves the complete previous README
+            # in its history block, verified by test_phase8_final.
             if filename == "README.md":
                 continue
             if filename in {"simulation_v2.py", "test_simulation_v2.py"}:
@@ -70,7 +73,7 @@ class Phase1CompatibilityTests(unittest.TestCase):
                 approved = subprocess.check_output(["git", "show", "fe73d5acfdb259e48c0576012ca8a777b3a0b37d:" + filename], cwd=ROOT)
                 self.assertEqual((ROOT / filename).read_bytes(), approved, filename)
                 continue
-            actual = hashlib.sha256(protected_bytes(ROOT / filename)).hexdigest()
+            actual = hashlib.sha256(protected_bytes(ROOT / archived.get(filename, filename))).hexdigest()
             self.assertEqual(actual, expected, filename)
 
 
