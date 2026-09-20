@@ -22,6 +22,8 @@ def main():
     parser.add_argument('--turns', type=int, default=2)
     parser.add_argument('--num-ctx', type=int, default=16384)
     parser.add_argument('--num-predict', type=int, default=2048)
+    parser.add_argument('--structured-output', action='store_true',
+                        help='Send the existing reply schema as the local API output format')
     parser.add_argument('--prepared', type=Path)
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
@@ -32,7 +34,8 @@ def main():
                           follow_redirects=False, timeout=180) as client:
             if args.prepare:
                 settings = prepare(client, model=args.model, seed=args.seed, turns=args.turns,
-                                   num_ctx=args.num_ctx, num_predict=args.num_predict)
+                                   num_ctx=args.num_ctx, num_predict=args.num_predict,
+                                   structured_output=args.structured_output)
                 result = {'protocol': settings, 'protocol_digest': digest(settings)}
             else:
                 if not args.prepared or not args.output:
