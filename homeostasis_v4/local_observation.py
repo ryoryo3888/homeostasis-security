@@ -1,7 +1,8 @@
 """Local-only V4 pilot; unchanged dialogue/world, no repairs or retries.
 
-Ollama 0.34.2 is pinned because its generate API supports truncate=false and
-shift=false. This adapter never starts servers, pulls models or loads secrets.
+Ollama 0.34.2 is pinned for truncate=false and shift=false. Thinking uses chat
+because generate applies the output grammar before reasoning (Ollama #17544).
+This adapter never starts servers, pulls models or loads secrets.
 """
 import base64
 from copy import deepcopy
@@ -166,12 +167,14 @@ def local_reply_format():
 
 
 def prepare(client, *, model, seed, turns, num_ctx=16384, num_predict=2048, synthetic=False,
-            structured_output=False, request_timeout_seconds=180, run_deadline_seconds=1200):
+            structured_output=False, request_timeout_seconds=180, run_deadline_seconds=1200,
+            thinking=False):
     ensure(type(seed) is int and 0 <= seed < 2**31 - 800, 'INVALID_SEED')
     ensure(type(turns) is int and 1 <= turns <= 8, 'PILOT_TURN_LIMIT')
     ensure(type(num_ctx) is int and 4096 <= num_ctx <= 32768, 'PILOT_CONTEXT_LIMIT')
     ensure(type(num_predict) is int and 1 <= num_predict <= 8192, 'PILOT_OUTPUT_LIMIT')
     ensure(type(structured_output) is bool, 'INVALID_STRUCTURED_OUTPUT_OPTION')
+    ensure(type(thinking) is bool, 'INVALID_LOCAL_THINKING_OPTION')
     validate_runtime_limits(request_timeout_seconds, run_deadline_seconds)
     model_identity = identity(client, model)
     world = runner()
@@ -179,9 +182,10 @@ def prepare(client, *, model, seed, turns, num_ctx=16384, num_predict=2048, synt
             'evidence_origin': 'injected_transport_test' if synthetic else 'local_model',
             'hardware': hardware(),
             'seed': seed, 'seed_scope': 'Ollama generation seed = run seed + zero-based request sequence; deterministic world has no RNG',
+            'api_endpoint': '/api/chat' if thinking else '/api/generate',
             'generation_config': {'model': model,
                 'format': local_reply_format() if structured_output else 'json', 'stream': False,
-                'think': False, 'truncate': False, 'shift': False, 'keep_alive': '5m',
+                'think': thinking, 'truncate': False, 'shift': False, 'keep_alive': '5m',
                 'options': {'num_ctx': num_ctx, 'num_predict': num_predict}},
             'unspecified_sampling': 'Use recorded model parameters and pinned server defaults; not assumed equal to Gemini',
             'turns': turns, 'participants': world.states, 'max_generations': turns * len(world.states),
@@ -190,6 +194,33 @@ def prepare(client, *, model, seed, turns, num_ctx=16384, num_predict=2048, synt
             'source_hashes': source_hashes(), 'world_config': world.config,
             'external_shocks': [], 'automatic_retries': False, 'observer_feedback': False,
             'formal_research_eligibility': False}
+
+
+def exchange_request(settings, raw, index):
+    endpoint = settings.get('api_endpoint', '/api/generate')  # Original saved protocols.
+    config = settings['generation_config']
+    ensure(endpoint in ('/api/generate', '/api/chat'), 'INVALID_LOCAL_ENDPOINT')
+    ensure(type(config.get('think')) is bool, 'INVALID_LOCAL_THINKING_OPTION')
+    ensure(not config['think'] or endpoint == '/api/chat', 'LOCAL_THINKING_REQUIRES_CHAT')
+    body = {**config, 'options': {**config['options'], 'seed': settings['seed'] + index}}
+    if endpoint == '/api/chat':
+        body['messages'] = [{'role': 'system', 'content': SYSTEM_INSTRUCTION},
+                            {'role': 'user', 'content': raw}]
+    else:
+        body.update(system=SYSTEM_INSTRUCTION, prompt=raw)
+    return endpoint, body
+
+
+def response_text(data, endpoint):
+    if endpoint == '/api/chat':
+        message = data.get('message')
+        ensure(isinstance(message, dict) and message.get('role') == 'assistant'
+               and not message.get('tool_calls'), 'UNEXPECTED_LOCAL_CHAT_MESSAGE')
+        text = message.get('content')
+    else:
+        text = data.get('response')
+    ensure(isinstance(text, str) and text.strip(), 'LOCAL_RESPONSE_TEXT_REQUIRED')
+    return text  # Never substitute thinking or repair the model's final answer.
 
 
 class LocalExchange:
@@ -204,12 +235,12 @@ class LocalExchange:
         ensure(self.sequence < s['max_generations'], 'PILOT_CALL_LIMIT')
         ensure(same_identity(identity(self.client, s['model_identity']['model']), s['model_identity']), 'LOCAL_MODEL_CHANGED')
         index = self.sequence; self.sequence += 1
-        body = {**s['generation_config'], 'system': SYSTEM_INSTRUCTION, 'prompt': raw,
-                'options': {**s['generation_config']['options'], 'seed': s['seed'] + index}}
-        self.evidence.write(f'call-{index:03d}.request.json', {'timestamp': timestamp(), 'body': body})
+        endpoint, body = exchange_request(s, raw, index)
+        self.evidence.write(f'call-{index:03d}.request.json', {
+            'timestamp': timestamp(), 'endpoint': endpoint, 'body': body})
         response = None; chunks = []; started = time.monotonic(); error = None
         try:
-            request = self.client.build_request('POST', ENDPOINT + '/api/generate', json=body)
+            request = self.client.build_request('POST', ENDPOINT + endpoint, json=body)
             response = self.client.send(request, stream=True)
             for chunk in response.iter_bytes():
                 chunks.append(chunk)
@@ -229,14 +260,15 @@ class LocalExchange:
         ensure(not data.get('remote_host') and not data.get('remote_model'), 'REMOTE_RESPONSE_FORBIDDEN')
         ensure(data.get('model') == body['model'] and data.get('done') is True
                and data.get('done_reason') == 'stop', 'INCOMPLETE_LOCAL_RESPONSE')
-        ensure(isinstance(data.get('response'), str), 'LOCAL_RESPONSE_TEXT_REQUIRED')
+        text = response_text(data, endpoint)
         print(f'Local response {index + 1}/{s["max_generations"]} saved.', flush=True)
-        return data['response']
+        return text
 
 
 def execute(directory, settings, *, protocol_digest, client, telemetry=memory_sample):
     ensure(digest(settings) == protocol_digest, 'PREPARED_LOCAL_PROTOCOL_CHANGED')
     validate_runtime_limits(settings['request_timeout_seconds'], settings['run_deadline_seconds'])
+    exchange_request(settings, '', 0)  # Validate transport before creating evidence or making calls.
     ensure(source_hashes() == settings['source_hashes'], 'LOCAL_SOURCE_CHANGED')
     world = runner()
     ensure(world.config == settings['world_config'], 'LOCAL_WORLD_CHANGED')
@@ -288,7 +320,8 @@ def execute(directory, settings, *, protocol_digest, client, telemetry=memory_sa
             'final_checkpoint_digest': checkpoint['checkpoint_digest'],
             'paid_api_calls': 0, 'automatic_retries': 0,
             'raw_bytes': sum(p.stat().st_size for p in (directory / 'RAW').iterdir()),
-            'model_mode': 'local; think=false; defaults recorded; no seed reproducibility guarantee'})
+            'model_mode': 'local; think=' + str(settings['generation_config']['think']).lower()
+                          + '; defaults recorded; no seed reproducibility guarantee'})
         return result
 
 
@@ -308,15 +341,14 @@ def replay(directory):
         candidate = read_record(path)
         for offset, actor in enumerate(world.states):
             index = checkpoint['dialogue']['turn'] * len(world.states) + offset
-            request = read_record(directory / f'RAW/call-{index:03d}.request.json')['body']
-            expected = {**settings['generation_config'], 'system': SYSTEM_INSTRUCTION,
-                'prompt': canonical(candidate['input']['requests'][actor]),
-                'options': {**settings['generation_config']['options'], 'seed': settings['seed'] + index}}
-            ensure(request == expected, 'LOCAL_WIRE_REQUEST_MISMATCH')
+            request = read_record(directory / f'RAW/call-{index:03d}.request.json')
+            endpoint, expected = exchange_request(settings, canonical(candidate['input']['requests'][actor]), index)
+            ensure(request['body'] == expected and request.get('endpoint', '/api/generate') == endpoint,
+                   'LOCAL_WIRE_REQUEST_MISMATCH')
             wire = read_record(directory / f'RAW/call-{index:03d}.wire.json')
             response = load_response_object(base64.b64decode(wire['body_base64']).decode())
             ensure(wire['status_code'] == 200 and wire['error_type'] is None
-                   and response.get('response') == candidate['input']['raw_replies'][actor]
+                   and response_text(response, endpoint) == candidate['input']['raw_replies'][actor]
                    and response.get('done') is True and response.get('done_reason') == 'stop',
                    'LOCAL_WIRE_RESPONSE_MISMATCH')
         checkpoint = world.replay(checkpoint, candidate)
