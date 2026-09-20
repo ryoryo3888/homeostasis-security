@@ -46,6 +46,7 @@ def profile():
     ensure(date.today() <= date(2026, 12, 31), 'PRICE_WINDOW_EXPIRED')
     return {'kind': 'v4_exploratory_observation', 'model': MODEL, 'turns': 5,
             'participants': 8, 'max_calls': 40, 'max_input_tokens': 32000,
+            'settlement_search_budget': 1000000,
             'max_output_tokens_including_thoughts': 8192,
             'max_input_bytes': 1000000, 'input_usd_per_million': '0.75',
             'output_usd_per_million': '3.75', 'usd_reservation_limit': '2.1888',
@@ -199,7 +200,8 @@ def execute(directory, credential, *, protocol_digest, inner=None):
     ensure(protocol_digest == digest(settings), 'PREPARED_PROTOCOL_CHANGED')
     baseline = load_baseline(ROOT / 'scenarios/v3/synthetic_baseline.json')
     network = load_network(ROOT / 'scenarios/v3/synthetic_network.json', baseline)
-    world = TurnRunner(baseline, network, pool_location='MIL', context_id='v4-free-dialogue-observation')
+    world = TurnRunner(baseline, network, pool_location='MIL', context_id='v4-free-dialogue-observation',
+                       search_budget=settings['settlement_search_budget'])
     live_transport = inner is None
     provider_mode = 'live_gemini' if live_transport else 'injected_transport_not_certified_live'
     runner = DialogueRunner(world, source='Gemini V4 exploratory observation' if live_transport
