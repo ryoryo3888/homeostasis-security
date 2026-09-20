@@ -1,4 +1,5 @@
 import copy,hashlib,json,subprocess,sys,tempfile,unittest
+from unittest.mock import patch
 from pathlib import Path
 from tools.experiment_registry import ROOT,REGISTRY,ALLOWLIST,RegistryError,load_json,pointer,safe_path,validate_registry
 
@@ -54,6 +55,14 @@ class RegistryTests(unittest.TestCase):
     def test_hash_mismatch(self):
         catalog=copy.deepcopy(self.allowlist);catalog['artifacts'][0]['sha256']='0'*64
         with self.assertRaises(RegistryError):validate_registry(self.registry,allowlist=catalog)
+    def test_publication_anchor_exception_does_not_hide_other_changes(self):
+        read_bytes=Path.read_bytes
+        for suffix in [b'\n// extra unapproved source change',b'\n']:
+            def altered(path):
+                raw=read_bytes(path)
+                return raw+suffix if path==ROOT/'homeostasis-research-layer.js' else raw
+            with patch.object(Path,'read_bytes',altered),self.assertRaises(RegistryError):
+                validate_registry(self.registry)
     def test_probe_cannot_be_approved_as_research(self):
         catalog=copy.deepcopy(self.allowlist);catalog['artifacts'][0]['classification']='probe'
         with self.assertRaises(RegistryError):validate_registry(self.registry,allowlist=catalog)
