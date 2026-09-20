@@ -63,7 +63,17 @@ def check(base):
                     expected = [m['body'] for m in trial['messages'] if m['sent_round'] == turn]
                     assert actual['visible'] == [[number,turn]], (name,number,turn,'selection')
                     assert actual['bodies'] == expected, (name,number,turn,'text changed')
-                    assert actual['metrics'] == ['未測定'] * 8
+                    messages = [m for m in trial['messages'] if m['sent_round'] == turn]
+                    senders = {m['sender'] for m in messages}
+                    assert actual['metrics'] == [
+                        f"{sum(m['sent_round'] <= turn for m in trial['messages']):,}通",
+                        f"{sum(d['round'] <= turn for d in trial['decisions']):,}件",
+                        f'{len(messages):,}通', f'{len(senders)} / 4',
+                        f'{4-len(senders)}件', f"{sum(len(m['to']) for m in messages):,}件",
+                        f"{sum(bool(m.get('reply_to')) for m in messages):,}通",
+                        f"{sum(len(m['body']) for m in messages):,}字",
+                    ], (name,number,turn,actual['metrics'])
+                    assert browser.evaluate("document.querySelectorAll('#sovereignty,#homeostasis').length",session) == 0
                     assert not actual['overflow'] and not actual['errors'], (name,actual)
                     assert actual['controls'] == [turn==1,turn==8]
                     assert actual['hash'] == f'#run={number}&turn={turn}'
@@ -125,7 +135,7 @@ def check(base):
         browser.evaluate('window.HomeostasisLayout.assertIntegrity()',session)
         assert not browser.blocked, browser.blocked
     (out/'v2-observation.json').write_text(json.dumps(records,indent=2)+'\n')
-    print('V2 observation: 120 selections, original text, unmeasured metrics, deep links and V1/V2 return journeys PASS')
+    print('V2 observation: 120 selections, original text, saved-record counts, deep links and V1/V2 return journeys PASS')
 
 
 def main():
