@@ -2,7 +2,7 @@
   "schema_version": 1,
   "v1": [],
   "v2": [{
-    "slot": "STORY_OBSERVATION",
+    "slot": "RESEARCH_FINDINGS",
     "content": {
       "id": "v2-five-dialogue-runs",
       "title": "新しい観測記録：5回・各8ターンの自由対話",
