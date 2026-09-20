@@ -19,6 +19,27 @@ SUMMARIES = [
 ]
 
 
+def observation_counts(trial, turn):
+    """Count saved records only; no inferred sentiment or physical-world score."""
+    messages = [m for m in trial['messages'] if m['sent_round'] == turn]
+    decisions = [d for d in trial['decisions'] if d['round'] == turn]
+    if len(decisions) != len(ACTORS) or {d['actor'] for d in decisions} != set(ACTORS):
+        raise ValueError('Missing/duplicate decision records')
+    for decision in decisions:
+        if decision['message_ids'] != [m['id'] for m in messages if m['sender'] == decision['actor']]:
+            raise ValueError('Decision and message records differ')
+    return {
+        'messages': len(messages),
+        'speakers': len({m['sender'] for m in messages}),
+        'silent': sum(not d['message_ids'] for d in decisions),
+        'recipients': sum(len(m['to']) for m in messages),
+        'replies': sum(bool(m.get('reply_to')) for m in messages),
+        'characters': sum(len(m['body']) for m in messages),
+        'messageTotal': sum(m['sent_round'] <= turn for m in trial['messages']),
+        'decisionTotal': sum(d['round'] <= turn for d in trial['decisions']),
+    }
+
+
 def turn_markup(trial, turn):
     records = [m for m in trial['messages'] if m['sent_round'] == turn]
     quiet = [LABELS[a] for a in ACTORS if not any(m['sender'] == a for m in records)]
@@ -27,7 +48,8 @@ def turn_markup(trial, turn):
     note += '各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。'
     if turn == 8:
         note += 'ここで観測期間が終了。第8ターンの発言への次ターンの反応は未観測。'
-    parts = [f'<section class="record-turn" data-trial="{trial["trial"]}" data-round="{turn}">',
+    counts = escape(json.dumps(observation_counts(trial, turn), separators=(',', ':')), quote=True)
+    parts = [f'<section class="record-turn" data-trial="{trial["trial"]}" data-round="{turn}" data-counts="{counts}">',
              f'<h2>第{trial["trial"]}回・第{turn}ターン</h2>',
              '<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>',
              f'<p>{escape(note)}</p></aside>']
@@ -48,11 +70,29 @@ def turn_markup(trial, turn):
     return '\n'.join(parts + ['</section>'])
 
 
-EARTH_METRICS = '<section class="earth-metrics" aria-label="地球全体の6指標">\n' + \
-    '<h2 class="section-title">GLOBAL STATE｜今回の実験における世界の変化</h2><section class="metrics">' + \
-    ''.join(f'<div class="metric panel"><span>{name}</span><strong>未測定</strong></div>'
-            for name in ('食料','経済','エネルギー','環境','国際的信用','紛争負荷')) + \
-    '</section>\n</section>\n'
+METRICS = (
+    ('messages', '発言数', '通'),
+    ('speakers', '送信した参加者', ' / 4'),
+    ('silent', '送信なしの判断', '件'),
+    ('recipients', '宛先数（延べ）', '件'),
+    ('replies', '過去の発言への返信', '通'),
+    ('characters', '本文の文字数', '字'),
+)
+PRIMARY_LABELS = (
+    ('<span>国家主権</span><strong id="sovereignty"></strong>',
+     '<span>この回の累計発言</span><strong id="messageTotal"></strong>'),
+    ('<span>地球全体の恒常性</span><strong id="homeostasis"></strong>',
+     '<span>この回の判断記録</span><strong id="decisionTotal"></strong>'),
+)
+
+
+def metrics_markup(counts):
+    cards = ''.join(f'<div class="metric panel"><span>{label}</span>'
+                    f'<strong id="metric-{key}" data-count="{key}" data-unit="{unit}">{counts[key]:,}{unit}</strong></div>'
+                    for key, label, unit in METRICS)
+    return ('<section class="earth-metrics" aria-label="このターンの対話記録">\n'
+            '<h2 class="section-title">DIALOGUE TRACE｜このターンの対話記録</h2>'
+            f'<section class="metrics">{cards}</section>\n</section>\n')
 
 
 def build_html(source, data):
@@ -62,9 +102,16 @@ def build_html(source, data):
     if len(styles) != 5 or 'V2 Earth System Field' not in styles[3]:
         raise ValueError('Frozen source shape changed; review required')
     earth = re.search(r'    <section class="earth-panel panel">.*?    </section>', source, re.S).group()
+    for old, new in PRIMARY_LABELS:
+        if earth.count(old) != 1:
+            raise ValueError('Original metric label changed; review required')
+        earth = earth.replace(old, new, 1)
+    first_counts = observation_counts(data['trials'][0], 1)
+    for key, unit in [('messageTotal', '通'), ('decisionTotal', '件')]:
+        earth = earth.replace(f'id="{key}"></strong>', f'id="{key}">{first_counts[key]}{unit}</strong>', 1)
     # Only the additional-runs page gets this explicitly requested lower section.
     # The original Earth contents and the original dashboard remain unchanged.
-    earth = earth.removesuffix('    </section>') + EARTH_METRICS + '    </section>'
+    earth = earth.removesuffix('    </section>') + metrics_markup(first_counts) + '    </section>'
     styles = '\n'.join(styles[i] for i in (0, 1, 3, 4))
     countries = ''.join(f'<article class="agent panel {a.lower()}"><h2>{LABELS[a]}</h2><p class="role">{escape(data["initial"]["roles"][a])}</p><div class="action" id="count-{a}">記録を読み込み中</div><div class="response" id="to-{a}"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p></article>' for a in ACTORS[:3])
     run_options = ''.join(f'<option value="{n}">第{n}回</option>' for n in range(1, 6))
@@ -77,7 +124,7 @@ def build_html(source, data):
 <base href="../../"><title>HOMEOSTASIS SECURITY v2｜5回の自由対話・観測記録</title>
 {styles}
 <link rel="stylesheet" href="results/v2-five-runs/observation.css?layout=metrics-inside-earth">
-<script defer src="results/v2-five-runs/observation.js"></script>
+<script defer src="results/v2-five-runs/observation.js?view=recorded-counts"></script>
 </head><body><main class="shell">
 <section class="mast">
   <div class="brand panel"><div class="brand-en">HOMEOSTASIS SECURITY v2</div>
@@ -85,15 +132,15 @@ def build_html(source, data):
     <div class="experiment-meta"><span>Gemini Agent 実験結果</span><span>5回／各8ターン</span><span>A国・B国・C国・地球調整機関</span><span>gemini-3.6-flash</span></div>
     <nav class="version-switch" aria-label="バージョン切替"><a href="dashboard_v1.html">v1：二国間の恒常性</a><a href="dashboard_v2.html">v2：地球規模の恒常性</a><a href="results/v2-five-runs/index.html" class="active" aria-current="page">v2追加：5回分</a></nav>
   </div>
-  <div class="origin panel"><div><b>発生元</b><strong>V2独立シナリオの初期事象</strong></div><div class="event"><b>事件</b><strong>A国のミサイルがB国の民間農地へ着弾</strong></div><div class="impact"><b>初期被害</b><strong>年間8,000tの米生産能力を喪失</strong></div><div class="flow">自由に発言・提案 <span>→</span> 相手の反応を観測 ／ 物理的な復旧量は未測定</div></div>
+  <div class="origin panel"><div><b>発生元</b><strong>V2独立シナリオの初期事象</strong></div><div class="event"><b>事件</b><strong>A国のミサイルがB国の民間農地へ着弾</strong></div><div class="impact"><b>初期被害</b><strong>年間8,000tの米生産能力を喪失</strong></div><div class="flow">自由に発言・提案 <span>→</span> 相手の反応を観測 ／ 保存した対話と判断を集計</div></div>
 </section>
 <section class="controls panel" aria-label="観測記録の操作"><div class="turn-operations"><label for="trialSelect">実験 <select id="trialSelect">{run_options}</select></label><div class="turn-label"><span class="control-heading">SIMULATION CONTROL</span><strong id="turnNumber">1</strong> / 8</div><div class="turn-buttons"><button class="turn-button nav-button" id="prevTurn" type="button">‹ 前へ</button>{turn_buttons}<button class="turn-button nav-button" id="nextTurn" type="button">次へ ›</button></div></div><div class="event-now" id="selectionStatus" role="status" aria-live="polite">保存された実験記録を表示。操作による追加実験・API通信はありません。</div></section>
 <section class="hero"><div class="agent-stack" id="agents">{countries}</div>
 <div class="world-column">
 {earth}
 </div>
-<aside class="coordinator panel"><h2>地球調整機関</h2><div class="role">強制権を持たない地球調整機関</div><div class="proposal" id="count-COORDINATOR"></div><div class="proposal-reason" id="to-COORDINATOR"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p><div class="evaluation"><b>観測範囲</b><p>発言・宛先・送信しなかった判断を保存。協定成立や支援実施は、発言者の主張として読む。</p></div><div class="damage"><b><span>農地被害の残存</span><span>未測定</span></b><p><small>活動要求は全回0件。発言だけから復旧量・輸送量・資源変化を計算していない。</small></p></div></aside></section>
-<section id="records" class="observation panel"><h2>発言の原文と、ターンごとの観測</h2><p class="scope">宛先に含まれる参加者だけに発言を配信。この画面では観測者として全宛先の発言を確認できます。自分用メモ・モデル内部の思考は掲載していません。</p><p class="scope">AIによる観測解説は実験後に作成し、Agentには渡していません。輸送・復旧・市場などに関する発言は、世界で実行されたことの確認ではありません。</p><noscript><p>JavaScriptが無効のため全40ターンを続けて表示しています。</p></noscript>{transcripts}</section>
+<aside class="coordinator panel"><h2>地球調整機関</h2><div class="role">強制権を持たない地球調整機関</div><div class="proposal" id="count-COORDINATOR"></div><div class="proposal-reason" id="to-COORDINATOR"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p><div class="evaluation"><b>観測範囲</b><p>発言・宛先・送信しなかった判断を保存。協定成立や支援実施は、発言者の主張として読む。</p></div><div class="damage"><b><span>初期被害（実験条件）</span><span>年間8,000t</span></b><p><small>開始時に設定した米生産能力の喪失。対話後の残存被害や復旧量を示す値ではありません。</small></p></div></aside></section>
+<section id="records" class="observation panel"><h2>発言の原文と、ターンごとの観測</h2><p class="scope">宛先に含まれる参加者だけに発言を配信。この画面では観測者として全宛先の発言を確認できます。自分用メモ・モデル内部の思考は掲載していません。</p><p class="scope">上の数値は保存記録の集計です。「宛先数」は1通を3者へ送れば3件。「返信」は返信先の記録がある発言。文字数は本文を改行も含めて数えています。累計は選択中のターンまでです。</p><p class="scope">AIによる観測解説は実験後に作成し、Agentには渡していません。食料・経済・国家主権などの変化を測定した記録はありません。対話の数を、世界の回復や協力の評価点には換算していません。</p><noscript><p>JavaScriptが無効のため全40ターンを続けて表示しています。上部の集計は第1回・第1ターンです。</p></noscript>{transcripts}</section>
 <section class="observation panel"><h2>5回の比較</h2><p class="scope">AIによる観測解説（実験後に作成）</p><div class="comparison">{summaries}</div><p>5回とも対話は協力・合意を語る方向へ進んだ。その中で、宛先の分け方や発言を続ける期間には違いが現れた。ここで確認できるのは対話上の違いであり、物理的な復旧や制度の履行ではない。</p><p>同じターンの承認表明と成立宣言は、それぞれ前ターンまでの情報に基づく発言。同じターンに互いの承認を確認したとは限らない。</p><p>1条件を5回繰り返した予備観測。初期役割・事件・数値の影響や、別条件での再現性・創発そのものの証明までは確かめていない。第8ターン後の経過は未観測。</p><details><summary>実験条件と保存記録</summary><p>各回は初期状態から開始し、前の回の対話や観測解説を引き継いでいない。追加の事件は与えていない。シードの指定は行っていない。</p><p>{escape(data['operational_difference'])}</p><p>以下の数値は既存の初期条件。今回の対話に伴う変化を測定した値ではない。</p><pre>{initial}</pre><a href="results/v2-five-runs/data.json">発言の原文・宛先・記録IDを含む保存データ</a></details></section>
 <p class="observation"><a href="dashboard_v2.html">以前のV2観測記録（1回・5ターン）を開く</a></p>
 </main></body></html>\n'''
