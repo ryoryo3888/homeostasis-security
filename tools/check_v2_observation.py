@@ -46,7 +46,7 @@ def check(base):
             assert browser.evaluate("[...document.querySelectorAll('.version-switch a')].map(a=>[a.textContent,a.getAttribute('href'),a.getAttribute('aria-current')])", session) == [
                 ['v1：二国間の恒常性','dashboard_v1.html',None],
                 ['v2：地球規模の恒常性','dashboard_v2.html',None],
-                ['v2追加：5回分','results/v2-five-runs/index.html','page']]
+                ['V2：自由対話','results/v2-five-runs/index.html','page']]
             browser.evaluate("window._errors=[];addEventListener('error',e=>_errors.push(e.message))", session)
             for trial in data['trials']:
                 number = trial['trial']
@@ -116,10 +116,11 @@ def check(base):
                 nav = browser.evaluate('''(() => {
                     const n=document.querySelector('.version-switch');
                     const boxes=[...n.children].map(a=>a.getBoundingClientRect());
-                    return {count:boxes.length,inside:boxes.every(r=>r.left>=0 && r.right<=innerWidth),
+                    return {label:n.querySelector('a[href="results/v2-five-runs/index.html"]').textContent,
+                        count:boxes.length,inside:boxes.every(r=>r.left>=0 && r.right<=innerWidth),
                         overlap:boxes.some((a,i)=>boxes.slice(i+1).some(b=>a.left<b.right && a.right>b.left && a.top<b.bottom && a.bottom>b.top))};
                 })()''', session)
-                assert nav == {'count':3,'inside':True,'overlap':False}, (name,version,nav)
+                assert nav == {'label':'V2：自由対話','count':3,'inside':True,'overlap':False}, (name,version,nav)
                 if version == 'v2':
                     # Original V2: retain its own six scores and bars, directly
                     # below Earth and above the V1 → 16 conditions → V2 narrative.
