@@ -2,7 +2,7 @@
 
 AI Agentが状況を受け取り、何を話し、何を選び、その後に何が起きるかを観測するプロジェクトです。
 現在の入口と、過去の実装・実験記録を以下に整理しています。
-未使用の画面・Pythonの控えなど40件は[保管フォルダ](archive/README.md)にまとめています。
+未使用の画面・Pythonの控えと確認済みの重複・中間物など46件は[保管フォルダ](archive/README.md)にまとめています。
 
 ## 現在の公開版
 
@@ -22,6 +22,7 @@ AI Agentが状況を受け取り、何を話し、何を選び、その後に何
 | 目的 | 入口 |
 | --- | --- |
 | 現行コード・保存データ・旧資料の場所を探す | [リポジトリ案内と保管一覧](docs/REPOSITORY_MAP.md) |
+| 未登録JSON16件の扱いと保管理由を確認する | [追加調査](docs/UNREGISTERED_JSON_AUDIT.md) |
 | Agentの自由、人が決めた条件、測定の限界を確認する | [観測の透明化](docs/architecture/OBSERVATION_TRANSPARENCY.md) |
 | ローカルLLMの小規模試行を準備する | [V4 Local pilot](docs/architecture/LOCAL_PILOT.md) |
 | run条件・失敗・RAW / DERIVEDの保存方法を確認する | [Evidence Format](docs/architecture/EVIDENCE_FORMAT_V1.md) |

@@ -6,6 +6,9 @@ Pythonの控え9件を[archive](../archive/README.md)へ移しました。root�
 加えて旧比較図4件と過去の実行キャッシュ1件も保管しました。移動した計40件の内容はすべて同一で、旧パス・新パス・ハッシュを[移動台帳](../archive/manifest.json)に残しています。
 現行V1〜V4の公開URLは維持しています。旧バックアップの単独URLは移動対象です。
 
+[未登録JSON16件の追加調査](UNREGISTERED_JSON_AUDIT.md)で、重複4件・中間集計2件をさらに保管しました。
+現在のrootは96件、保管は計46件です。現行の参照先5件と固有の過去記録5件は元の場所を維持しています。
+
 ## 現在の版と実装の対応
 
 | 公開名 | 保存済み画面・データ | 実装の入口 | 注意点 |
@@ -203,22 +206,22 @@ READMEの更新に伴う照合値の変更は、台帳の非実験資料であ�
 </details>
 
 <details>
-<summary>台帳未登録のJSON（旧結果・バックアップ・中間評価） — 16件</summary>
+<summary>台帳未登録のJSON — 16件（追加調査済み、うち6件を保管）</summary>
 
 - [contrast_scores.json](../contrast_scores.json)
-- [contrast_scores_hotline.json](../contrast_scores_hotline.json)
-- [contrast_scores_no_hotline.json](../contrast_scores_no_hotline.json)
+- [contrast_scores_hotline.json](../archive/legacy-derived/contrast_scores_hotline.json)
+- [contrast_scores_no_hotline.json](../archive/legacy-derived/contrast_scores_no_hotline.json)
 - [simulation_result.json](../simulation_result.json)
 - [simulation_result_backup.json](../simulation_result_backup.json)
-- [simulation_result_before_rich_data.json](../simulation_result_before_rich_data.json)
-- [simulation_result_demo_gemini.json](../simulation_result_demo_gemini.json)
+- [simulation_result_before_rich_data.json](../archive/duplicate-results/simulation_result_before_rich_data.json)
+- [simulation_result_demo_gemini.json](../archive/duplicate-results/simulation_result_demo_gemini.json)
 - [simulation_result_development.json](../simulation_result_development.json)
 - [simulation_result_independent_agents_hotline.json](../simulation_result_independent_agents_hotline.json)
 - [simulation_result_independent_agents_hotline_backup.json](../simulation_result_independent_agents_hotline_backup.json)
-- [simulation_result_independent_agents_hotline_final.json](../simulation_result_independent_agents_hotline_final.json)
+- [simulation_result_independent_agents_hotline_final.json](../archive/duplicate-results/simulation_result_independent_agents_hotline_final.json)
 - [simulation_result_independent_agents_no_hotline.json](../simulation_result_independent_agents_no_hotline.json)
 - [simulation_result_independent_agents_no_hotline_backup.json](../simulation_result_independent_agents_no_hotline_backup.json)
-- [simulation_result_independent_agents_no_hotline_before_final_run.json](../simulation_result_independent_agents_no_hotline_before_final_run.json)
+- [simulation_result_independent_agents_no_hotline_before_final_run.json](../archive/duplicate-results/simulation_result_independent_agents_no_hotline_before_final_run.json)
 - [simulation_result_independent_agents_no_hotline_failed_backup.json](../simulation_result_independent_agents_no_hotline_failed_backup.json)
 - [simulation_result_independent_agents_no_hotline_final.json](../simulation_result_independent_agents_no_hotline_final.json)
 
@@ -284,7 +287,7 @@ READMEの更新に伴う照合値の変更は、台帳の非実験資料であ�
 
 | 場所 | 役割・整理結果 |
 | --- | --- |
-| [archive](../archive/) | 控え40件を集約。旧`contrast_backup/`と追跡済み`__pycache__/`もここへ保管 |
+| [archive](../archive/) | 控え46件を集約。旧`contrast_backup/`と追跡済み`__pycache__/`もここへ保管 |
 | [homeostasis_core](../homeostasis_core/) | 旧final系統と、現行でも使うロック・記録などの共通部品 |
 | [homeostasis_v3](../homeostasis_v3/) / [homeostasis_v4](../homeostasis_v4/) | 現在のV4の世界処理・対話処理 |
 | [config](../config/) / [scenarios](../scenarios/) | 実験条件・世界の初期条件。観測結果とは別 |
