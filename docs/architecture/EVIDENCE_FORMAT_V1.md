@@ -2,6 +2,7 @@
 
 大量観測前に固定する最小の保存形式。最終的な研究設計・評価指標を決める文書ではない。
 順序は、この形式の検証 → ローカルLLMの少数試行 → 実験記録のGitHub保存。
+Agentの自由、世界の条件、指標の意味と限界は[観測前の説明](OBSERVATION_TRANSPARENCY.md)を参照。
 
 - `manifest.json`：run ID、開始時刻、seedと適用範囲、provider/model、取得できるモデル版・digest、実際のgeneration config、実験・世界設定、ソースハッシュ・commit・runtime・継続元・試行目的。
 - `RAW/`：実際の入力・応答、世界の初期状態と推移、event・transfer・shock、実行時の計測、失敗。モデルの発言と世界で実行された結果は区別する。
