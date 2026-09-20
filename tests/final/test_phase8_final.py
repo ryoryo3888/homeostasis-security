@@ -34,10 +34,20 @@ class Phase8Tests(unittest.TestCase):
     def test_v1_bridge_is_explicit_and_nonexecuting(self):
         event=convert_v1_event({"actor":"A","target":"B","turn":3});self.assertEqual(event["origin"]["system"],"v1");out=export_local_security_input({"country":"MIL","action":"de-escalate","turn":5});self.assertTrue(out["requires_manual_v1_execution"])
     def test_reproducible(self):self.assertEqual(run_final_simulation(),run_final_simulation())
-    def test_readme_original_prefix_preserved(self):
-        current=(ROOT/"README.md").read_bytes();original=subprocess.check_output(["git","show","ba3232f:README.md"],cwd=ROOT);self.assertTrue(current.startswith(original))
+    def test_readme_original_preserved_in_history_block(self):
+        # The authorized repository organization places the current guide first.
+        # Retain the whole pre-organization README, not only its oldest prefix.
+        current=(ROOT/"README.md").read_bytes()
+        original=subprocess.check_output(["git","show","c7c0faad77f80a2c05bd412c68f69159d7b89782:README.md"],cwd=ROOT)
+        start=b'<!-- HOMEOSTASIS_RETAINED_README_BEGIN -->\n'
+        end=b'<!-- HOMEOSTASIS_RETAINED_README_END -->'
+        self.assertEqual(current.count(start),1)
+        self.assertEqual(current.count(end),1)
+        retained=current.split(start,1)[1].split(end,1)[0]
+        self.assertEqual(retained,original)
     def test_protected_baseline_except_readme(self):
         bad=[]
+        archived={item['original_path']:item['path'] for item in json.loads((ROOT/'archive/manifest.json').read_text())['files']}
         for line in (ROOT/'tests/layout/protected-baseline.sha256').read_text().splitlines():
             digest,name=line.split('  ',1)
             if name=="README.md":continue
@@ -49,6 +59,28 @@ class Phase8Tests(unittest.TestCase):
                 approved=subprocess.check_output(["git","show","fe73d5acfdb259e48c0576012ca8a777b3a0b37d:"+name],cwd=ROOT)
                 self.assertEqual((ROOT/name).read_bytes(),approved,name)
                 continue
-            if hashlib.sha256(protected_bytes(ROOT/name)).hexdigest()!=digest:bad.append(name)
+            if hashlib.sha256(protected_bytes(ROOT/archived.get(name,name))).hexdigest()!=digest:bad.append(name)
         self.assertEqual(bad,[])
+    def test_archived_backups_preserve_exact_source_and_paths(self):
+        manifest=json.loads((ROOT/'archive/manifest.json').read_text())
+        base='c7c0faad77f80a2c05bd412c68f69159d7b89782'
+        self.assertEqual(manifest['source_commit'],base)
+        originals=subprocess.check_output(['git','ls-tree','--name-only',base],cwd=ROOT,text=True).splitlines()
+        expected={name for name in originals if name.startswith(('simulation_before_','dashboard_before_','dashboard_v1_before_','index_before_')) or name in {
+            'simulation_backup.py','index_failed_globe_trial.html','index.html.txt',
+            'dashboard_experiments_restored_v8.html','dashboard_final_working.html','dashboard_reason_test.html',
+            'dashboard_working_complete.html','dashboard_working_final_ui.html'}}
+        self.assertEqual(len(expected),35)
+        self.assertEqual(len(manifest['files']),35)
+        self.assertEqual({item['original_path'] for item in manifest['files']},expected)
+        for item in manifest['files']:
+            name=item['original_path']
+            folder='legacy-python' if name.endswith('.py') else 'legacy-pages'
+            self.assertEqual(item['path'],f'archive/{folder}/{name}')
+            self.assertFalse((ROOT/name).exists())
+            path=ROOT/item['path']
+            self.assertFalse(path.is_symlink())
+            original=subprocess.check_output(['git','show',base+':'+name],cwd=ROOT)
+            self.assertEqual(path.read_bytes(),original,name)
+            self.assertEqual(hashlib.sha256(original).hexdigest(),item['sha256'],name)
 if __name__=='__main__':unittest.main()

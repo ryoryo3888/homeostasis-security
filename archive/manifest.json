@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "source_commit": "c7c0faad77f80a2c05bd412c68f69159d7b89782",
+  "purpose": "unchanged historical source backups; not active runtime or new experiment evidence",
+  "files": [
+    {
+      "original_path": "dashboard_before_arrow_fix.html",
+      "path": "archive/legacy-pages/dashboard_before_arrow_fix.html",
+      "sha256": "708f0948ee024dda850e42b512efb7bc6258486d9a3bf54b6c44996cc943b6a8"
+    },
+    {
+      "original_path": "dashboard_before_contrast_ui.html",
+      "path": "archive/legacy-pages/dashboard_before_contrast_ui.html",
+      "sha256": "2a8f826d8768b9a5d3e193a0bc3ab812993c14e519e0695f9632b169af3db248"
+    },
+    {
+      "original_path": "dashboard_before_dynamic_metrics.html",
+      "path": "archive/legacy-pages/dashboard_before_dynamic_metrics.html",
+      "sha256": "73cbd3a8f81704e960ff715dff0e78e8c5982361c4a66987ed37f1776adb4935"
+    },
+    {
+      "original_path": "dashboard_before_earth_motion.html",
+      "path": "archive/legacy-pages/dashboard_before_earth_motion.html",
+      "sha256": "c02d04e8fb431aefceb33497428fa1b0f5549542559d1f874ac61539efdb54e0"
+    },
+    {
+      "original_path": "dashboard_before_impact_fix.html",
+      "path": "archive/legacy-pages/dashboard_before_impact_fix.html",
+      "sha256": "a299945b28a91d5112b7924c416b034203ce26a9658f45a7129cf0be369d454d"
+    },
+    {
+      "original_path": "dashboard_before_layout_repair.html",
+      "path": "archive/legacy-pages/dashboard_before_layout_repair.html",
+      "sha256": "215812e3a5359ec434408ac6e72ab6c9c6d4a349d7a8f7743cc7f6bb79b79a41"
+    },
+    {
+      "original_path": "dashboard_before_signal_pulse.html",
+      "path": "archive/legacy-pages/dashboard_before_signal_pulse.html",
+      "sha256": "fe8a19971a58d1e3dfba747dddd21589b449db06bd38ae92d630701fbbb253cd"
+    },
+    {
+      "original_path": "dashboard_before_turn_labels.html",
+      "path": "archive/legacy-pages/dashboard_before_turn_labels.html",
+      "sha256": "ba6859f3921fa35497437804cf576864049efd3a15c21cb517cbc472d435779e"
+    },
+    {
+      "original_path": "dashboard_before_worldtext_fix.html",
+      "path": "archive/legacy-pages/dashboard_before_worldtext_fix.html",
+      "sha256": "639db45698cf24b6a191e19a7a086a4bb8bf57ef342b4eba52d61489db54da92"
+    },
+    {
+      "original_path": "dashboard_experiments_restored_v8.html",
+      "path": "archive/legacy-pages/dashboard_experiments_restored_v8.html",
+      "sha256": "348f2a61135a535937823d5e49f21d6de3727c2fa353ada1f15e9eb71cbf9056"
+    },
+    {
+      "original_path": "dashboard_final_working.html",
+      "path": "archive/legacy-pages/dashboard_final_working.html",
+      "sha256": "73cbd3a8f81704e960ff715dff0e78e8c5982361c4a66987ed37f1776adb4935"
+    },
+    {
+      "original_path": "dashboard_reason_test.html",
+      "path": "archive/legacy-pages/dashboard_reason_test.html",
+      "sha256": "2a397c225af2d048a6eef78aaa420a82203736a739d323d0c976d2dc2d3cdca3"
+    },
+    {
+      "original_path": "dashboard_v1_before_belief_fix.html",
+      "path": "archive/legacy-pages/dashboard_v1_before_belief_fix.html",
+      "sha256": "4cf2cf92e101efacf95a0cadd92846853872d4e5a11def848ce54e4e7d8ba6ab"
+    },
+    {
+      "original_path": "dashboard_v1_before_chart_fix.html",
+      "path": "archive/legacy-pages/dashboard_v1_before_chart_fix.html",
+      "sha256": "a758bffd054885d311beaadcb94716fb8bd0df4ca1d3adefaf0dce64a66729d0"
+    },
+    {
+      "original_path": "dashboard_v1_before_chart_fix2.html",
+      "path": "archive/legacy-pages/dashboard_v1_before_chart_fix2.html",
+      "sha256": "a758bffd054885d311beaadcb94716fb8bd0df4ca1d3adefaf0dce64a66729d0"
+    },
+    {
+      "original_path": "dashboard_v1_before_concern_fix.html",
+      "path": "archive/legacy-pages/dashboard_v1_before_concern_fix.html",
+      "sha256": "9c824560d1ba07b5391c7e9182aa10fde08385d021b99b5948900ed65ff8dea9"
+    },
+    {
+      "original_path": "dashboard_v1_before_data_bind.html",
+      "path": "archive/legacy-pages/dashboard_v1_before_data_bind.html",
+      "sha256": "a4edd76a7d412f18c31afc908dd3df63bc83fc96c1ecdf83c54b5e63994b05f4"
+    },
+    {
+      "original_path": "dashboard_v1_before_earth_image.html",
+      "path": "archive/legacy-pages/dashboard_v1_before_earth_image.html",
+      "sha256": "52416ee54f71e56527d704e8b7da5f44ea1e4dc0fdfa0881af3bcf2c22c27041"
+    },
+    {
+      "original_path": "dashboard_v1_before_json_fix.html",
+      "path": "archive/legacy-pages/dashboard_v1_before_json_fix.html",
+      "sha256": "49959b48a51d0e633a275e370688a194de2ffd11b2546c7140cb4d340ce8dc32"
+    },
+    {
+      "original_path": "dashboard_v1_before_paid_run.html",
+      "path": "archive/legacy-pages/dashboard_v1_before_paid_run.html",
+      "sha256": "0187d2322f7c3ab5dff99dd664b38c4d9e60272c1dba5fc1ed16b9e7cc99c1da"
+    },
+    {
+      "original_path": "dashboard_working_complete.html",
+      "path": "archive/legacy-pages/dashboard_working_complete.html",
+      "sha256": "639db45698cf24b6a191e19a7a086a4bb8bf57ef342b4eba52d61489db54da92"
+    },
+    {
+      "original_path": "dashboard_working_final_ui.html",
+      "path": "archive/legacy-pages/dashboard_working_final_ui.html",
+      "sha256": "639db45698cf24b6a191e19a7a086a4bb8bf57ef342b4eba52d61489db54da92"
+    },
+    {
+      "original_path": "index.html.txt",
+      "path": "archive/legacy-pages/index.html.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original_path": "index_before_earth_ui.html",
+      "path": "archive/legacy-pages/index_before_earth_ui.html",
+      "sha256": "f844150ad95d59e73cd404bce0fa1e41c2078457b215d19ad6570133592ac126"
+    },
+    {
+      "original_path": "index_before_globe_core.html",
+      "path": "archive/legacy-pages/index_before_globe_core.html",
+      "sha256": "55e0acc8853a4afcb22470b513125542b8f981ec5d015c965761884fcc5fda61"
+    },
+    {
+      "original_path": "index_failed_globe_trial.html",
+      "path": "archive/legacy-pages/index_failed_globe_trial.html",
+      "sha256": "70e8d419721c930326417ceb208c7aab00854efc8d59c6192aaaea3be20c9d2f"
+    },
+    {
+      "original_path": "simulation_backup.py",
+      "path": "archive/legacy-python/simulation_backup.py",
+      "sha256": "11cca89ee2f5905a315bcb6a6783f34e910748c878966ca76f837aa7c60ff1c9"
+    },
+    {
+      "original_path": "simulation_before_belief_update.py",
+      "path": "archive/legacy-python/simulation_before_belief_update.py",
+      "sha256": "335730afff5bfa6378ffd3fe05a4eabcc39b1047a765d2f9d6fc16ee556e5f5c"
+    },
+    {
+      "original_path": "simulation_before_concern_fix.py",
+      "path": "archive/legacy-python/simulation_before_concern_fix.py",
+      "sha256": "d34e6a9ec6fdeee811771a2f4e2329da6cbba99ef4207c3d14a8e0e8ae88bf15"
+    },
+    {
+      "original_path": "simulation_before_contrast_experiment.py",
+      "path": "archive/legacy-python/simulation_before_contrast_experiment.py",
+      "sha256": "1731497c7c437c4b0d9d4530b01d0e8baf40f9adbdcb6d6186e32d541de74b71"
+    },
+    {
+      "original_path": "simulation_before_independent_agents.py",
+      "path": "archive/legacy-python/simulation_before_independent_agents.py",
+      "sha256": "268728f1a6fc1fd1d7be92ed53bfa75f8a90ae300c74c65475ccc13c3b6ec34f"
+    },
+    {
+      "original_path": "simulation_before_overall_impact.py",
+      "path": "archive/legacy-python/simulation_before_overall_impact.py",
+      "sha256": "9147123ec1f670752777d97ef3c596a129bb6e8b22b05d5c6fe271260b1a3e23"
+    },
+    {
+      "original_path": "simulation_before_paid_run.py",
+      "path": "archive/legacy-python/simulation_before_paid_run.py",
+      "sha256": "abbc7f20a3e9d2f9e65683770cac309d1f342a5ffdfebef51edade715fa9d4a3"
+    },
+    {
+      "original_path": "simulation_before_parser_fix.py",
+      "path": "archive/legacy-python/simulation_before_parser_fix.py",
+      "sha256": "9ad78ce54895ea8086da85bc08378df9a67b626ce5ced4ee487af67bd89132e1"
+    },
+    {
+      "original_path": "simulation_before_quota_fix.py",
+      "path": "archive/legacy-python/simulation_before_quota_fix.py",
+      "sha256": "74ba4d63410c6848fd490eb7aa60aeaa642c96ddeeb7dc779e0b08a87ab903f8"
+    }
+  ]
+}
