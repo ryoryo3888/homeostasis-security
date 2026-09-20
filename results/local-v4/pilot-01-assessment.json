@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "scope": "local feasibility pilot; not formal research or a completed two-turn run",
+  "run_id": "local-3630a0e5-68c9-4ea8-b17f-aa3a0c035585",
+  "evidence_hash": "ed43c801793f83af4223f067841e27c7bbbfcbf9610831ba32d932e891869314",
+  "raw_evidence_hash": "70cebaa1efb4fb8a3e185edd58ded65b889ef92723244b36985c17bb7d84f62a",
+  "status": "failure",
+  "stop_reason": "PILOT_DEADLINE_REACHED",
+  "planned_turns": 2,
+  "completed_turns": 1,
+  "generation_attempts": 15,
+  "parsed_replies": 15,
+  "attempted_second_turn_replies": 7,
+  "elapsed_seconds": 1240.2208595409757,
+  "raw_bytes": 2620595,
+  "raw_files": 51,
+  "per_call_seconds": {
+    "min": 55.8345065000467,
+    "median": 79.01576895796461,
+    "max": 125.79895675001899
+  },
+  "prompt_tokens_range": [
+    10324,
+    10979
+  ],
+  "committed_first_turn": {
+    "outgoing_messages": 9,
+    "activity_requests": 10,
+    "receipt_statuses": {
+      "invalid_activity_request": 7,
+      "environment_unsupported": 3
+    },
+    "receipt_reasons": {
+      "INVISIBLE_CONDITION_REFERENCE": 2,
+      "SCHEMA_ERROR": 5,
+      "not_applicable": 3
+    },
+    "executed_activity_requests": 0,
+    "standing_offers": 0
+  },
+  "second_turn_outputs_semantically_equal_to_same_actor_first_turn": [
+    "ECON",
+    "FOOD",
+    "FRAGILE",
+    "ISLAND",
+    "MIL",
+    "NEUTRAL",
+    "RES"
+  ],
+  "memory": {
+    "model_allocation_bytes": 3164518480,
+    "system_swap_before_mib": 7170.69,
+    "system_swap_after_mib": 17443.12,
+    "scope": "point samples, not continuous peak; system-wide swap includes other apps and preexisting usage; daemon RSS is not full model memory"
+  },
+  "paid_api_calls": 0,
+  "automatic_retries": 0,
+  "same_seed_regeneration_tested": false,
+  "scale_up_ready": false,
+  "calls": [
+    {
+      "sequence": 0,
+      "actor": "ECON",
+      "seconds": 65.36926633300027,
+      "prompt_tokens": 10331,
+      "output_tokens": 397,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 2,
+      "activities": 2
+    },
+    {
+      "sequence": 1,
+      "actor": "FOOD",
+      "seconds": 56.995915749983396,
+      "prompt_tokens": 10330,
+      "output_tokens": 178,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 1,
+      "activities": 1
+    },
+    {
+      "sequence": 2,
+      "actor": "FRAGILE",
+      "seconds": 55.8345065000467,
+      "prompt_tokens": 10331,
+      "output_tokens": 200,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 1,
+      "activities": 1
+    },
+    {
+      "sequence": 3,
+      "actor": "ISLAND",
+      "seconds": 79.01576895796461,
+      "prompt_tokens": 10334,
+      "output_tokens": 179,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 1,
+      "activities": 2
+    },
+    {
+      "sequence": 4,
+      "actor": "MIL",
+      "seconds": 84.73701695905766,
+      "prompt_tokens": 10329,
+      "output_tokens": 136,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 1,
+      "activities": 1
+    },
+    {
+      "sequence": 5,
+      "actor": "NEUTRAL",
+      "seconds": 103.45467404200463,
+      "prompt_tokens": 10330,
+      "output_tokens": 308,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 1,
+      "activities": 1
+    },
+    {
+      "sequence": 6,
+      "actor": "RES",
+      "seconds": 93.418339790951,
+      "prompt_tokens": 10324,
+      "output_tokens": 225,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 1,
+      "activities": 1
+    },
+    {
+      "sequence": 7,
+      "actor": "SMALL",
+      "seconds": 102.65444391698111,
+      "prompt_tokens": 10326,
+      "output_tokens": 345,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 1,
+      "activities": 1
+    },
+    {
+      "sequence": 8,
+      "actor": "ECON",
+      "seconds": 125.79895675001899,
+      "prompt_tokens": 10979,
+      "output_tokens": 397,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 2,
+      "activities": 2
+    },
+    {
+      "sequence": 9,
+      "actor": "FOOD",
+      "seconds": 93.19839754200075,
+      "prompt_tokens": 10644,
+      "output_tokens": 178,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 1,
+      "activities": 1
+    },
+    {
+      "sequence": 10,
+      "actor": "FRAGILE",
+      "seconds": 82.93044749996625,
+      "prompt_tokens": 10727,
+      "output_tokens": 200,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 1,
+      "activities": 1
+    },
+    {
+      "sequence": 11,
+      "actor": "ISLAND",
+      "seconds": 70.52451341704,
+      "prompt_tokens": 10692,
+      "output_tokens": 179,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 1,
+      "activities": 2
+    },
+    {
+      "sequence": 12,
+      "actor": "MIL",
+      "seconds": 67.2695387499989,
+      "prompt_tokens": 10747,
+      "output_tokens": 136,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 1,
+      "activities": 1
+    },
+    {
+      "sequence": 13,
+      "actor": "NEUTRAL",
+      "seconds": 78.85099158296362,
+      "prompt_tokens": 10948,
+      "output_tokens": 308,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 1,
+      "activities": 1
+    },
+    {
+      "sequence": 14,
+      "actor": "RES",
+      "seconds": 73.24666945904028,
+      "prompt_tokens": 10752,
+      "output_tokens": 225,
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outgoing_messages": 1,
+      "activities": 1
+    }
+  ]
+}
