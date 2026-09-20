@@ -1,1 +1,16 @@
-{"schema_version":1,"v1":[],"v2":[]}
+{
+  "schema_version": 1,
+  "v1": [],
+  "v2": [{
+    "slot": "RESEARCH_FINDINGS",
+    "content": {
+      "id": "v2-five-dialogue-runs",
+      "title": "新しい観測記録：5回・各8ターンの自由対話",
+      "paragraphs": [
+        "同じ初期事件から5回、A国・B国・C国・地球調整機関の対話を観測しました。下のリンクで回とターンを選び、発言の原文と実験後の観測解説を読めます。",
+        "このページに残している以前の5ターン実験とは別の記録です。今回の自由対話では、物理的な復旧量や世界の指標変化は測定していません。"
+      ],
+      "evidence": "results/v2-five-runs/index.html"
+    }
+  }]
+}

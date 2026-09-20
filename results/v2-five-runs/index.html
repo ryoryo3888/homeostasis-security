@@ -1,0 +1,3222 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="../../"><title>HOMEOSTASIS SECURITY v2｜5回の自由対話・観測記録</title>
+<style>
+:root{color-scheme:dark;--bg:#030b14;--panel:#071827;--panel2:#0b2132;--line:rgba(91,220,247,.2);--cyan:#67e8f9;--cyan2:#22d3ee;--magenta:#d88cff;--amber:#fbbf24;--green:#34d399;--red:#fb7185;--text:#edf7fb;--muted:#96afbb}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% -10%,#16364c 0,#071522 34%,var(--bg) 72%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Segoe UI",sans-serif;line-height:1.55}
+button,a{font:inherit}.shell{width:min(1500px,calc(100% - 28px));margin:auto;padding:14px 0 42px}.panel{background:linear-gradient(180deg,rgba(8,27,42,.94),rgba(3,15,25,.95));border:1px solid var(--line);border-radius:14px;box-shadow:inset 0 0 30px rgba(34,211,238,.025),0 16px 45px rgba(0,0,0,.22)}
+.mast{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(480px,1.5fr);gap:12px;margin-bottom:12px}.brand{padding:18px 20px}.brand-en{color:var(--cyan);font-size:20px;font-weight:800;letter-spacing:.035em}.brand h1{font-size:22px;margin:5px 0 0}.brand p{font-size:12px;color:var(--muted);margin:8px 0 0}.experiment-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.experiment-meta span{padding:4px 7px;border:1px solid rgba(103,232,249,.22);border-radius:5px;background:#081d2c;color:#c7eaf0;font-size:10px}.experiment-meta span:first-child{color:var(--cyan);font-weight:800}.version-switch{display:flex;gap:8px;margin-top:15px}.version-switch a{padding:8px 12px;border:1px solid var(--line);border-radius:8px;color:#b9ced7;text-decoration:none;font-weight:700;font-size:13px}.version-switch a.active{background:#0e4556;color:#eaffff;border-color:var(--cyan);box-shadow:0 0 14px rgba(103,232,249,.16)}
+.origin{padding:16px 20px;display:grid;grid-template-columns:1fr 1.15fr 1.45fr;gap:1px;background:var(--line)}.origin>div{background:#061522;padding:12px 15px}.origin b{display:block;color:var(--cyan);font-size:11px;letter-spacing:.1em;margin-bottom:5px}.origin strong{font-size:14px}.origin .event strong{color:#fff}.origin .impact strong{color:#ff9bae}.flow{grid-column:1/-1;text-align:center;background:#092234!important;color:#bfeef6;font-weight:700;font-size:13px;padding:8px!important}.flow span{color:var(--magenta)}
+.controls{display:flex;flex-direction:column;align-items:stretch;gap:8px;padding:10px 14px;margin-bottom:12px;position:sticky;top:0;z-index:30;backdrop-filter:blur(12px)}.turn-operations{display:flex;align-items:center;gap:16px;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto}.turn-label{color:var(--cyan);font-size:13px;font-weight:800;letter-spacing:.1em;flex-shrink:0}.turn-label strong{color:#fff;font-size:24px;margin-left:7px}.turn-buttons{display:flex;flex-wrap:nowrap;gap:6px;white-space:nowrap}.turn-button{width:38px;height:34px;flex-shrink:0;border:1px solid var(--line);border-radius:7px;background:#081827;color:#a9c3cf;font-weight:800;cursor:pointer}.turn-button:hover,.turn-button:focus-visible{border-color:var(--cyan)}.turn-button.active{background:#125064;color:#fff;border-color:var(--cyan);box-shadow:0 0 11px rgba(103,232,249,.32)}.nav-button{width:auto;padding:0 13px}.event-now{color:#d5e5eb;font-size:13px}.event-now b{color:var(--cyan)}
+.hero{display:grid;grid-template-columns:290px minmax(440px,1fr) 320px;gap:12px;align-items:stretch}.agent-stack{display:grid;gap:10px}.agent{padding:13px 14px}.agent h2{font-size:16px;color:var(--cyan);margin:0 0 8px}.agent.c h2{color:var(--magenta)}.agent dl{margin:0;display:grid;grid-template-columns:68px 1fr;gap:4px 8px;font-size:12px}.agent dt{color:#7898a6}.agent dd{margin:0}.agent .action{margin-top:9px;padding-top:8px;border-top:1px solid var(--line);color:#fff;font-weight:700;font-size:13px}.agent .response{color:#bcebf2;font-size:12px;margin-top:4px}.agent details{margin-top:7px;font-size:11px;color:#a9c0cb}.agent summary{cursor:pointer;color:#7edfee}.agent details p{margin:5px 0 0}
+.earth-panel{padding:14px 18px;text-align:center;position:relative;overflow:hidden}.earth-panel:before{content:"";position:absolute;inset:10% 14%;background:radial-gradient(circle,rgba(41,184,226,.13),transparent 64%);pointer-events:none}.question{color:#b4ccd6;font-size:13px;margin:0}.question strong{color:#fff}.earth-wrap{width:min(390px,75%);aspect-ratio:1;margin:4px auto 2px;position:relative;display:grid;place-items:center}.earth-wrap:before,.earth-wrap:after{content:"";position:absolute;inset:2%;border:1px solid rgba(103,232,249,.3);border-radius:50%;animation:orbit 14s linear infinite}.earth-wrap:after{inset:10%;border-style:dashed;animation-direction:reverse;animation-duration:20s}.earth{position:relative;z-index:2;width:80%;aspect-ratio:1;border-radius:50%;object-fit:cover;filter:saturate(.82) contrast(1.08) brightness(.82);box-shadow:0 0 25px rgba(51,215,247,.32),0 0 75px rgba(31,130,210,.25);animation:pulse 5s ease-in-out infinite}.sat-orbit{position:absolute;left:50%;top:50%;width:98%;height:62%;z-index:4;pointer-events:none;transform:translate(-50%,-50%) rotate(12deg)}.sat-orbit.two{width:90%;height:78%;transform:translate(-50%,-50%) rotate(-32deg)}.sat-orbit.three{width:78%;height:96%;transform:translate(-50%,-50%) rotate(48deg)}.sat-runner{position:absolute;inset:0;animation:satelliteOrbit 26s linear infinite}.sat-orbit.two .sat-runner{animation-duration:34s;animation-direction:reverse;animation-delay:-12s}.sat-orbit.three .sat-runner{animation-duration:42s;animation-delay:-27s}.satellite{position:absolute;left:-11px;top:calc(50% - 7px);width:25px;height:14px;filter:drop-shadow(0 0 4px rgba(180,247,255,.95)) drop-shadow(0 0 9px rgba(60,210,255,.65));transform:rotate(-12deg)}.satellite .body{fill:#d9fbff;stroke:#67e8f9;stroke-width:.8}.satellite .panel{fill:#237f9e;stroke:#8cf4ff;stroke-width:.7}.satellite .mast-line{stroke:#d9fbff;stroke-width:1}.sat-orbit.two .satellite{transform:rotate(32deg) scale(.88)}.sat-orbit.three .satellite{transform:rotate(-48deg) scale(.78)}@keyframes orbit{to{transform:rotate(360deg)}}@keyframes satelliteOrbit{to{transform:rotate(360deg)}}@keyframes pulse{50%{transform:scale(1.018);box-shadow:0 0 35px rgba(51,215,247,.42),0 0 95px rgba(31,130,210,.3)}}@media(prefers-reduced-motion:reduce){.earth-wrap:before,.earth-wrap:after,.earth,.sat-runner{animation:none!important}}
+.primary-kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative}.primary-kpi{padding:12px;background:rgba(6,24,38,.8);border-top:2px solid var(--cyan)}.primary-kpi.sovereignty{border-color:var(--magenta)}.primary-kpi span{display:block;color:var(--muted);font-size:11px}.primary-kpi strong{font-size:32px;color:var(--cyan)}.primary-kpi.sovereignty strong{color:var(--magenta)}
+.coordinator{padding:14px}.coordinator h2{font-size:16px;color:var(--magenta);margin:0 0 6px}.coordinator .role{font-size:11px;color:var(--muted);margin-bottom:13px}.proposal{padding:13px;background:#10263a;border-left:3px solid var(--magenta);font-size:15px;font-weight:800}.proposal-reason,.evaluation{margin-top:8px;color:#b9ccd5;font-size:11px;line-height:1.55}.evaluation{padding:9px;border:1px solid rgba(103,232,249,.14);border-radius:7px;background:rgba(5,21,33,.75)}.evaluation b{color:var(--cyan)}.responses{display:grid;gap:8px;margin-top:10px}.response-row{display:grid;grid-template-columns:32px 1fr;gap:8px;padding:9px;border:1px solid var(--line);border-radius:8px;font-size:12px}.response-row b{color:var(--cyan)}.response-row.reject span{color:#ff9bae}.response-row.conditional span{color:#ff9bae}.damage{margin-top:12px;padding:11px;border:1px solid rgba(216,140,255,.3);background:rgba(63,16,54,.28);border-radius:9px}.damage b{display:flex;justify-content:space-between;color:#ff9bae;font-size:12px}.bar-track{height:8px;background:#2d3640;border-radius:9px;overflow:hidden;margin:8px 0 5px}.bar-fill{height:100%;background:linear-gradient(90deg,var(--magenta),var(--red));transition:width .25s}.damage small{color:#efb9d4}
+.section-title{margin:24px 3px 10px;color:var(--cyan);font-size:13px;letter-spacing:.12em}.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}.metric{padding:12px}.metric span{display:block;color:var(--muted);font-size:11px}.metric strong{font-size:25px}.metric .mini{height:5px;background:#243644;border-radius:5px;margin-top:8px;overflow:hidden}.metric .mini i{display:block;height:100%;background:var(--cyan2)}.metric.conflict .mini i{background:var(--red)}
+.lower{display:grid;grid-template-columns:1.25fr .75fr;gap:12px}.timeline,.log{padding:15px}.timeline h2,.log h2{font-size:16px;margin:0 0 9px}.timeline svg{display:block;width:100%;height:auto;max-height:330px}.legend{display:flex;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:10px}.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}.log-list{display:grid;gap:7px;max-height:300px;overflow:auto}.log-item{padding:8px 10px;border-left:2px solid var(--cyan);background:#081b2a;font-size:12px}.log-item b{color:var(--cyan);margin-right:7px}.result{display:none;margin-top:12px;padding:16px;text-align:center;border:1px solid rgba(52,211,153,.4);background:rgba(8,63,51,.32);border-radius:12px}.result.visible{display:block}.result strong{font-size:24px;color:#87f5ce}.result p{margin:5px 0 0;color:#c8e6dc}
+@media(max-width:1100px){.mast{grid-template-columns:1fr}.hero{grid-template-columns:250px minmax(390px,1fr)}.coordinator{grid-column:1/-1}.metrics{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.shell{width:min(100% - 16px,1500px)}.origin{grid-template-columns:1fr}.event-now{width:100%}.hero{grid-template-columns:1fr}.agent-stack{grid-template-columns:1fr}.earth-panel{order:-1}.metrics{grid-template-columns:repeat(2,1fr)}.lower{grid-template-columns:1fr}.origin .flow{grid-column:1}.primary-kpi strong{font-size:27px}}
+</style>
+<style>
+/* HOMEOSTASIS SECURITY — shared visual shell
+   Visual-only. Do not alter content, data, charts, Earth behavior, or research structure. */
+:root{
+  --hs-bg:#030b14;
+  --hs-bg-deep:#07111d;
+  --hs-panel:#071827;
+  --hs-panel-2:#0b2132;
+  --hs-line:rgba(91,220,247,.20);
+  --hs-line-strong:rgba(103,232,249,.28);
+  --hs-cyan:#67e8f9;
+  --hs-cyan-2:#22d3ee;
+  --hs-magenta:#d88cff;
+  --hs-amber:#fbbf24;
+  --hs-green:#34d399;
+  --hs-red:#fb7185;
+  --hs-text:#edf7fb;
+  --hs-muted:#96afbb;
+  --hs-radius:14px;
+  --hs-radius-small:9px;
+  --hs-gap:10px;
+  --hs-shell-width:1500px;
+  --hs-panel-bg:linear-gradient(180deg,rgba(8,27,42,.94),rgba(3,15,25,.95));
+  --hs-panel-shadow:inset 0 0 30px rgba(34,211,238,.025),0 16px 45px rgba(0,0,0,.22);
+}
+html{color-scheme:dark;scroll-behavior:smooth}
+body{
+  background:radial-gradient(circle at 50% -10%,#16364c 0,#071522 34%,var(--hs-bg) 72%)!important;
+  color:var(--hs-text)!important;
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Segoe UI",sans-serif!important;
+  line-height:1.55;
+}
+/* Same outer instrument frame for v1 and v2. Content grids inside remain version-specific. */
+body>main,main.shell{
+  width:min(var(--hs-shell-width),calc(100% - 28px))!important;
+  max-width:var(--hs-shell-width)!important;
+  margin:14px auto 42px!important;
+  padding:0!important;
+}
+/* Shared shell surfaces. Existing geometry remains version-specific. */
+.panel,.brand-panel,.global-status,.turn-panel,.country-panel,.earth-panel,.event-panel,.card,.simulation-control{
+  border-color:var(--hs-line)!important;
+  border-radius:var(--hs-radius)!important;
+  box-shadow:var(--hs-panel-shadow)!important;
+}
+.panel,.brand-panel,.global-status,.turn-panel,.country-panel,.earth-panel,.event-panel{
+  background:var(--hs-panel-bg)!important;
+}
+/* Keep top-level dashboard rhythm consistent without moving or deleting content. */
+.topbar,.mast{gap:10px!important;margin-bottom:10px!important}
+.simulation-control,.controls{margin-bottom:10px!important}
+/* Brand language */
+.brand-en,.control-name,.section-title,.turn-label,.global-status h2,.event-panel h2{
+  color:var(--hs-cyan)!important;
+}
+.brand-en{font-size:20px!important;font-weight:800!important;letter-spacing:.035em!important}
+/* Version navigation */
+.version-switch{display:flex;gap:8px;margin-top:12px;max-width:100%}
+.version-switch a,.version-switch span{
+  padding:7px 10px!important;
+  border:1px solid var(--hs-line)!important;
+  border-radius:8px!important;
+  background:rgba(8,29,44,.58);
+  color:#b9ced7!important;
+  text-decoration:none!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  line-height:1.2;
+}
+.version-switch .active,.version-switch span[aria-current="page"],.version-switch span{
+  background:#0e4556!important;
+  color:#eaffff!important;
+  border-color:var(--hs-cyan)!important;
+  box-shadow:0 0 14px rgba(103,232,249,.16)!important;
+}
+.version-switch a:hover,.version-switch a:focus-visible{border-color:var(--hs-cyan)!important;color:#eaffff!important}
+/* Controls */
+.turn-button{
+  border-color:var(--hs-line)!important;
+  border-radius:7px!important;
+  background:#081827!important;
+  color:#a9c3cf!important;
+  font-weight:800!important;
+}
+.turn-button:hover,.turn-button:focus-visible{border-color:var(--hs-cyan)!important}
+.turn-button.active{
+  color:#fff!important;
+  border-color:var(--hs-cyan)!important;
+  background:#125064!important;
+  box-shadow:0 0 11px rgba(103,232,249,.32)!important;
+}
+select{
+  background:#081827!important;
+  color:var(--hs-text)!important;
+  border:1px solid var(--hs-line)!important;
+  border-radius:7px!important;
+}
+/* Shared card surface language without changing card layout/content. */
+.metric-card,.metric,.primary-kpi,.country-summary>div,.country-block,.response-row,.evaluation,.log-item{
+  border-color:rgba(103,232,249,.15)!important;
+  border-radius:var(--hs-radius-small)!important;
+}
+.metric-card,.metric,.primary-kpi,.country-summary>div,.country-block,.evaluation,.log-item{
+  background:rgba(6,24,38,.72)!important;
+}
+.metric-card span,.metric span,.primary-kpi span,.run-state,.small,.note{color:var(--hs-muted)!important}
+.metric-card strong,.metric strong,.primary-kpi strong{color:var(--hs-cyan)!important}
+/* Keep magenta as the shared secondary/system-B accent. */
+.country-b,.agent.c,.primary-kpi.sovereignty{--hs-local-accent:var(--hs-magenta)}
+.country-b h2,.agent.c h2,.primary-kpi.sovereignty strong,.coordinator h2{color:var(--hs-magenta)!important}
+/* Graph/table framing only; never alter data/series/axes. */
+.card,.timeline,.log{border-color:var(--hs-line)!important}
+.legend{color:var(--hs-muted)!important}
+th,td{border-color:rgba(91,220,247,.16)!important}
+/* Earth is intentionally NOT normalized here.
+   v1 keeps A/B communications; v2 keeps three satellites; future versions evolve independently. */
+@media(max-width:760px){
+  body>main,main.shell{width:min(100% - 16px,var(--hs-shell-width))!important;margin-top:8px!important}
+}
+
+</style>
+<style>
+/* V2 Earth System Field: decorative atmosphere, not research data. */
+.earth-panel{display:flex;flex-direction:column}
+.earth-panel .earth{width:94.4%}
+.earth-panel .earth-wrap{flex-shrink:0;margin-top:auto}
+.earth-panel .primary-kpis{flex-shrink:0;width:100%;margin-bottom:auto}
+.earth-panel .earth-system-field{position:absolute;inset:6% 0 4%;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse at 50% 46%,rgba(43,177,208,.09),transparent 68%);mask-image:linear-gradient(transparent,#000 15%,#000 70%,transparent 98%)}
+.earth-panel .earth-system-field svg{width:100%;height:100%;display:block;fill:none;stroke:#67dbea;stroke-width:.7;opacity:.18}
+.earth-panel .earth-system-field .field-node{fill:#a4edf2;stroke:none;opacity:.65}
+.earth-panel .question,.earth-panel .earth-wrap,.earth-panel .primary-kpis{position:relative;z-index:1}
+</style>
+<style>
+/* Match the V1 control heading without compressing its typography. */
+.turn-label .control-heading{display:inline-block;font-size:17px;font-weight:800;letter-spacing:1.36px;line-height:26.35px;color:#67e8f9}
+</style>
+<link rel="stylesheet" href="results/v2-five-runs/observation.css">
+<script defer src="results/v2-five-runs/observation.js"></script>
+</head><body><main class="shell">
+<section class="mast">
+  <div class="brand panel"><div class="brand-en">HOMEOSTASIS SECURITY v2</div>
+    <h1>地球規模の恒常性シミュレーション</h1><p>保存済みの自由対話実験｜同じ初期条件から、どんな対話や関係が生まれたか</p>
+    <div class="experiment-meta"><span>Gemini Agent 実験結果</span><span>5回／各8ターン</span><span>A国・B国・C国・地球調整機関</span><span>gemini-3.6-flash</span></div>
+    <nav class="version-switch" aria-label="バージョン切替"><a href="dashboard_v1.html">v1：二国間の恒常性</a><a href="results/v2-five-runs/index.html" class="active" aria-current="page">v2：地球規模の恒常性</a></nav>
+  </div>
+  <div class="origin panel"><div><b>発生元</b><strong>V2独立シナリオの初期事象</strong></div><div class="event"><b>事件</b><strong>A国のミサイルがB国の民間農地へ着弾</strong></div><div class="impact"><b>初期被害</b><strong>年間8,000tの米生産能力を喪失</strong></div><div class="flow">自由に発言・提案 <span>→</span> 相手の反応を観測 ／ 物理的な復旧量は未測定</div></div>
+</section>
+<section class="controls panel" aria-label="観測記録の操作"><div class="turn-operations"><label for="trialSelect">実験 <select id="trialSelect"><option value="1">第1回</option><option value="2">第2回</option><option value="3">第3回</option><option value="4">第4回</option><option value="5">第5回</option></select></label><div class="turn-label"><span class="control-heading">SIMULATION CONTROL</span><strong id="turnNumber">1</strong> / 8</div><div class="turn-buttons"><button class="turn-button nav-button" id="prevTurn" type="button">‹ 前へ</button><button type="button" class="turn-button direct" data-turn="1">1</button><button type="button" class="turn-button direct" data-turn="2">2</button><button type="button" class="turn-button direct" data-turn="3">3</button><button type="button" class="turn-button direct" data-turn="4">4</button><button type="button" class="turn-button direct" data-turn="5">5</button><button type="button" class="turn-button direct" data-turn="6">6</button><button type="button" class="turn-button direct" data-turn="7">7</button><button type="button" class="turn-button direct" data-turn="8">8</button><button class="turn-button nav-button" id="nextTurn" type="button">次へ ›</button></div></div><div class="event-now" id="selectionStatus" role="status" aria-live="polite">保存された実験記録を表示。操作による追加実験・API通信はありません。</div></section>
+<section class="hero"><div class="agent-stack" id="agents"><article class="agent panel a"><h2>A国</h2><p class="role">事件を発生させた国家</p><div class="action" id="count-A">記録を読み込み中</div><div class="response" id="to-A"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p></article><article class="agent panel b"><h2>B国</h2><p class="role">農地への直接被害を受けた国家</p><div class="action" id="count-B">記録を読み込み中</div><div class="response" id="to-B"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p></article><article class="agent panel c"><h2>C国</h2><p class="role">食料価格・経済への二次的影響を受ける第三国</p><div class="action" id="count-C">記録を読み込み中</div><div class="response" id="to-C"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p></article></div>
+    <section class="earth-panel panel">
+      <div class="earth-system-field" aria-hidden="true">
+        <svg viewBox="0 0 600 1000" preserveAspectRatio="none" focusable="false">
+          <ellipse cx="300" cy="80" rx="190" ry="100"/>
+          <ellipse cx="300" cy="180" rx="240" ry="160"/>
+          <ellipse cx="300" cy="320" rx="285" ry="220"/>
+          <ellipse cx="300" cy="510" rx="330" ry="300"/>
+          <path d="M300 0 C120 180 110 400 215 850 M300 0 C480 180 490 400 385 850 M300 0 C240 230 390 480 300 950 M98 295 Q300 420 502 295 M75 510 Q300 630 525 510"/>
+          <g class="field-node"><circle cx="98" cy="295" r="2"/><circle cx="502" cy="295" r="1.6"/><circle cx="300" cy="357" r="2"/><circle cx="75" cy="510" r="1.5"/><circle cx="525" cy="510" r="1.8"/><circle cx="325" cy="665" r="1.5"/></g>
+        </svg>
+      </div>
+      <p class="question">研究問い：<strong>国家主権を維持したまま、地球規模の恒常性は成立するのか？</strong></p>
+      <div class="earth-wrap">
+        <img class="earth" src="earth_japan_network_v2.png" alt="青く発光する地球ネットワーク">
+        <div class="sat-orbit one" aria-hidden="true"><div class="sat-runner"><svg class="satellite" viewBox="0 0 30 16"><rect class="panel" x="1" y="4" width="8" height="8" rx="1"/><rect class="body" x="11" y="3" width="8" height="10" rx="2"/><rect class="panel" x="21" y="4" width="8" height="8" rx="1"/><line class="mast-line" x1="15" y1="3" x2="15" y2="0"/><circle class="body" cx="15" cy="1" r="1.3"/></svg></div></div>
+        <div class="sat-orbit two" aria-hidden="true"><div class="sat-runner"><svg class="satellite" viewBox="0 0 30 16"><rect class="panel" x="1" y="4" width="8" height="8" rx="1"/><rect class="body" x="11" y="3" width="8" height="10" rx="2"/><rect class="panel" x="21" y="4" width="8" height="8" rx="1"/><line class="mast-line" x1="15" y1="3" x2="15" y2="0"/><circle class="body" cx="15" cy="1" r="1.3"/></svg></div></div>
+        <div class="sat-orbit three" aria-hidden="true"><div class="sat-runner"><svg class="satellite" viewBox="0 0 30 16"><rect class="panel" x="1" y="4" width="8" height="8" rx="1"/><rect class="body" x="11" y="3" width="8" height="10" rx="2"/><rect class="panel" x="21" y="4" width="8" height="8" rx="1"/><line class="mast-line" x1="15" y1="3" x2="15" y2="0"/><circle class="body" cx="15" cy="1" r="1.3"/></svg></div></div>
+      </div>
+      <div class="primary-kpis">
+        <div class="primary-kpi sovereignty"><span>国家主権</span><strong id="sovereignty"></strong></div>
+        <div class="primary-kpi"><span>地球全体の恒常性</span><strong id="homeostasis"></strong></div>
+      </div>
+    </section>
+<aside class="coordinator panel"><h2>地球調整機関</h2><div class="role">強制権を持たない地球調整機関</div><div class="proposal" id="count-COORDINATOR"></div><div class="proposal-reason" id="to-COORDINATOR"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p><div class="evaluation"><b>観測範囲</b><p>発言・宛先・送信しなかった判断を保存。協定成立や支援実施は、発言者の主張として読む。</p></div><div class="damage"><b><span>農地被害の残存</span><span>未測定</span></b><p><small>活動要求は全回0件。発言だけから復旧量・輸送量・資源変化を計算していない。</small></p></div></aside></section>
+<h2 class="section-title">GLOBAL STATE｜今回の実験における世界の変化</h2><section class="metrics"><div class="metric panel"><span>食料</span><strong>未測定</strong></div><div class="metric panel"><span>経済</span><strong>未測定</strong></div><div class="metric panel"><span>エネルギー</span><strong>未測定</strong></div><div class="metric panel"><span>環境</span><strong>未測定</strong></div><div class="metric panel"><span>国際的信用</span><strong>未測定</strong></div><div class="metric panel"><span>紛争負荷</span><strong>未測定</strong></div></section>
+<section id="records" class="observation panel"><h2>発言の原文と、ターンごとの観測</h2><p class="scope">宛先に含まれる参加者だけに発言を配信。この画面では観測者として全宛先の発言を確認できます。自分用メモ・モデル内部の思考は掲載していません。</p><p class="scope">AIによる観測解説は実験後に作成し、Agentには渡していません。輸送・復旧・市場などに関する発言は、世界で実行されたことの確認ではありません。</p><noscript><p>JavaScriptが無効のため全40ターンを続けて表示しています。</p></noscript><section class="record-turn" data-trial="1" data-round="1">
+<h2>第1回・第1ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは5通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-1-message:1:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:A:0">【A国政府からの公式表明】
+この度のB国民間農地へのミサイル着弾事案につき、被害を受けられたB国国民ならびにB国政府に対し、深甚なる祝意...ではなく、深甚なる遺憾の意と謹んでお詫びを申し上げます。
+
+我が国は本件を極めて重く受け止めており、直ちに原因究明のための緊急特別調査委員会を立ち上げました。不測のシステム障害や事故の可能性を含め、事実関係の徹底的な解明に努めてまいります。
+
+また、B国における年間8,000トンのコメ生産能力喪失に対し、代替食料の緊急提供および完全な損害賠償、被災農地の復旧支援を行う用意がございます。COORDINATORおよびC国を含めた国際社会に対し、調査過程の透明性を確保しつつ、再発防止策の策定に向け誠意をもって協議に臨む所存です。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-1-message:1:B:0">
+<p class="message-meta">送信先：A国 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:B:0">A国政府に対し、我が国の民間農地へのミサイル着弾事案（年間8,000トンの米生産能力損失）について厳重に抗議します。本件に関する即時の事実調査、責任の承認、被害に対する適正な賠償、および明確な再発防止策の提示を強く要求します。</blockquote>
+</section>
+<section class="message" id="run-1-message:1:B:1">
+<p class="message-meta">送信先：C国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:B:1">COORDINATORおよびC国に対し、我が国民間農地へのA国ミサイル着弾事案について共有します。我が国は年間8,000トンの米生産能力を失う直接的な被害を受けました。地域および国際的な食料安全保障への悪影響を最小限に抑え、公正な事実解明を行うため、第三者的な調査へのご協力および食料支援等の検討を要請いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-1-message:1:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:C:0">第三国Cとして、A国のミサイルがB国の農地に及ぼした被害およびそれに伴う食料供給・価格への影響を深刻に懸念しています。グローバルな食料市場の混乱と経済的二次被害を防ぐため、以下の点を提案・要請します。
+1. COORDINATORを中心とした国際的な食料需給安定化策の講究と対話枠組みの設置。
+2. A国による迅速な事実関係の公表、再発防止策の提示、および被害に対する誠実な対応。
+3. 被害を受けたB国の食料生産能力の復旧支援と市場価格急騰を抑えるための調整。
+各国の冷徹かつ建設的な対応を強く求めます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-1-message:1:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第2ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[]</p>
+<blockquote data-message-id="message:1:COORDINATOR:0">各位、地球調整機関（COORDINATOR）です。本日、A国のミサイルがB国の民間農地に着弾し、年間約8,000トン規模の米生産能力に被害が生じたとの報が入っております。
+
+当機関は強制権を持ちませんが、紛争の拡大を防ぎ、地域の食料安全保障および平和を維持するために、各国の対話を仲介いたします。
+
+【各参加国への確認と呼びかけ】
+・A国：本件の事実関係および発生原因（意図的か誤射か等）、並びにB国に対する謝罪・補償や再発防止策に関する見解をお聞かせください。
+・B国：現在の被害状況の確認と、本事態の解決に向けたご要望や対話へのスタンスをお知らせください。
+・C国：本件に伴う食料市場や地域経済・安全保障への波及効果に対する見解や、調整へのご要望があれば共有をお願いします。
+
+事態の平和的・建設的な解決に向け、まずは第一声をお待ちしております。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="1" data-round="2">
+<h2>第1回・第2ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-1-message:2:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:B:0&#x27;, &#x27;message:1:C:0&#x27;, &#x27;message:1:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:2:A:0">【A国政府からの回答および具体的賠償・支援提案】
+
+B国政府、C国政府、ならびにCOORDINATORからのメッセージを厳粛に受け止め、我が国の具体的な対応方針および初期調査状況を以下の通り回答いたします。
+
+1. 責任の承認と重ねてのお詫び
+本件事故は我が国の安全管理上の重大な不備により発生したものであり、その責任が全て我が国にあることを明確に認めます。被害を受けられたB国の皆様に重ねて深くお詫び申し上げます。
+
+2. 初期調査状況と透明性の確保
+初期点検の結果、定期演習における誘導システムの不具合および通信伝送エラーが事故原因である可能性が高いことが確認されました。我が国に不法侵略や攻撃の意図は一切ございません。COORDINATORおよびB国の専門家による現地視察および調査プロセスの共同検証を全面監視・受入いたします。
+
+3. 具体的賠償および市場安定化（年間8,000トン補填）
+・緊急食料供給: B国の食料不足およびグローバル価格急騰を防ぐため、我が国の国家備蓄米より年間8,000トンに相当する高品質米を直ちにB国へ無償無条件で供給・輸送いたします。
+・農地復旧・完全賠償: 被害農地の土壌浄化・インフラ再建費用の全額負担に加え、被災農家への減収補償および直接的な経済支援を行います。
+
+4. 再発防止策および対話枠組みへの参加
+・該当ミサイルシステムの即時運用停止と全軍安全基準の見直しを実施します。
+・C国およびCOORDINATORの提案する「食料需給安定化・協議枠組み」に全面的に参加し、地域の食料安全保障の維持に尽力いたします。
+
+まずはB国との間で具体的な支援協定の締結に向けた実務者協議を即刻開始したく存じます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-1-message:2:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:A:0&#x27;, &#x27;message:1:C:0&#x27;, &#x27;message:1:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:2:B:0">【B国政府より各方への回答と協議提案】
+
+A国政府よりお詫びの意とともに、代替食料の緊急提供、完全な損害賠償、および農地復旧支援の提示があったことを受け止めます。我が国は平和的かつ建設的な解決を望んでおり、以下の点に基づき具体的な協議を進めることを提案します。
+
+1. 透明性の高い調査と検証：A国の緊急特別調査委員会による調査プロセスにおいて、COORDINATOR等による第三者検証の受け入れおよび調査結果の即時公表を求めます。
+2. 食料支援・賠償・復旧の早期実行：喪失した年間8,000トン相当のコメに対する緊急食料支援の具体的手段、損害賠償の算定基準、被災農地の復旧スケジュールの協議を速やかに開始することを求めます。
+3. 実効性ある再発防止策：事故原因の究明に基づき、明確かつ確実な再発防止措置の提示を要請します。
+
+COORDINATORおよびC国におかれましては、本協議および調査の公平な推進と、地域・国際食料市場の安定に向けた継続的なご協力をお願い申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-1-message:2:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:2:C:0">C国としては、A国が迅速に事実関係への姿勢を示し、緊急代替食料の提供、全額賠償、復旧支援の意向を表明したことを一定評価いたします。同時に、B国が被った不利益の迅速な回復と公正な事実解明が必要不可欠であると認識しています。
+
+食料市場の安定化および経済的二次被害の防止に向け、以下の通り具体策を提案いたします。
+
+1. **COORDINATORを介した透明性ある調査・検証**
+B国の要請に基づき、COORDINATORの調整のもとで客観的な事実解明と再発防止策の検証を行う枠組みを設置することを支持します。
+
+2. **代替食料供給および補償プロセスの監視と市場安定**
+A国からB国への8,000トン規模の不全補填・代替供給にあたり、国際市場での投機的な価格高騰や供給不安を未然に防ぐため、COORDINATORおよび関係国間で供給スケジュールと市場影響のモニタリング情報を共有することを提案します。
+
+3. **第三国Cとしての協力準備**
+C国としても、地域の食料需給の安定と市場不安の解消に向け、物流調整や需給データの共有など、必要な協力を行う準備がございます。
+
+早期の定着と実効性ある解決策の実行に向け、引き続き建設的な協議をお願いいたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-1-message:2:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:A:0&#x27;, &#x27;message:1:B:1&#x27;, &#x27;message:1:C:0&#x27;]</p>
+<blockquote data-message-id="message:2:COORDINATOR:0">各国の迅速かつ建設的なご回答に深く感謝申し上げます。
+
+A国による謝罪および賠償・代替食料提供・調査透明化への意思表明、B国からの第三者的検証と食料支援のご要請、ならびにC国からの市場安定化および対話枠組みの構築提案を受け、当機関（COORDINATOR）は以下の3点を軸とする「食料安全保障・再発防止協議枠組み」の設置を提案いたします。
+
+1. 【事実解明と検証スキームの構築】
+A国の特別調査委員会による透明性の高い調査結果共有と、B国・第三者機関が納得できる客観的な検証体制の確認。
+2. 【緊急食料支援および市場価格の安定化策】
+喪失した年間8,000トン分の米供給体制の確保（A国からの補償・代替食料の具体的提供スキーム）と、C国を含む地域市場における食料価格急騰防止のための協調。
+3. 【被災農地の復旧と再発防止プロトコル】
+被害を受けた農地の復旧支援計画の策定、および今後の不測の事態を防ぐ連絡・安全管理体制の強化。
+
+【各国への次なる調整事項のお願い】
+各参加国におかれましては、上記議題（特に「1.検証スキーム」および「2.緊急食料提供・市場安定化の具体策」）に関する具体的なご要請・ご提案をお寄せください。
+当機関は紛争回避と地域安定に向け、円滑な合意形成を全力で仲介いたします。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="1" data-round="3">
+<h2>第1回・第3ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-1-message:3:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:B:0&#x27;, &#x27;message:2:C:0&#x27;, &#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:A:0">【A国政府より「食料安全保障・再発防止協議枠組み」に関する具体的提案】
+
+COORDINATORのご提案およびB国・C国からの見解を全面的に支持し、協議枠組みの早期稼働に向けて以下の具体的な手続き・実務案を提示いたします。
+
+1. 【独立検証スキームの受託と情報開示】
+・COORDINATOR、B国、および必要に応じてC国の専門家で構成される「事故原因合同検証委員会」の設置を受諾します。
+・演習時の通信ログ、システムデータ、事故機の残骸および関連資料を全面開示し、現地での共同現地調査に全面的に協力いたします。
+
+2. 【緊急食料供給スケジュールと市場モニタリング】
+・8,000トンの備蓄米供給体制：B国政府の受入体制と連携し、第1陣として3,000トンを2週間以内に即時輸送開拓。残り5,000トンをB国の需要に応じて分割または一括にて確実に手配いたします。輸送・物流費用は全額A国が負担します。
+・市場価格安定化：供給実績および物流データをCOORDINATORおよびC国とリアルタイムで共有し、地域市場における不当な価格急騰や不安の払拭に努めます。
+
+3. 【農地復旧・再発防止プロトコル】
+・被災農地の土壌浄化・インフラ再建にかかる費用の全額前払い補償、ならびに復旧までの減収・営農支援金を即時給付いたします。
+・該当ミサイルシステムの改修完了まで運用を凍結し、再発防止策の改訂安全基準プロトコルをCOORDINATORへ提出いたします。
+
+B国との実務協定（MOI）締結に向け、速やかに実務者協議を開始できるよう配慮いたします。ご確認とご議論のほどよろしくお願い申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-1-message:3:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;, &#x27;message:2:C:0&#x27;, &#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:B:0">【B国政府より「食料安全保障・再発防止協議枠組み」に対する具体的提案】
+
+COORDINATORよりご提示いただいた3軸の協議枠組み、ならびにA国の具体的な賠償・支援方針、C国の市場安定化提案を歓迎し、全面的に同意いたします。本枠組みを早期に立ち上げ、実効性のある解決を図るため、我が国より以下の具体的な措置を提案・要請いたします。
+
+1. 【事実解明と第三者検証スキームの構築】
+・COORDINATOR主導のもと、B国専門家・COORDINATOR・A国からなる「合同技術検証チーム」を即時設置することを提案します。
+・A国のシステム不具合に関する調査データの即時共有と、B国着弾現場および該当システムの最終検証の実施を求めます。
+
+2. 【緊急食料提供と市場安定化の具体的運用】
+・A国が提示した8,000トンの高品質備蓄米の引渡しについて、市場動向や品質・安全性を確認した上で、数回に分けた迅速な輸送プロセスのスケジュール化を要請します。
+・C国およびCOORDINATORと連携し、食料市場の動向データを定期共有して風評被害や価格急騰を防止します。
+
+3. 【被災農地復旧・損害賠償・再発防止プロトコル】
+・被災農地の土壌除染・復旧に関する「共同評価チーム」を設置し、復旧スケジュールの明確化と被災農家への直接補償金の支払プロセスの確立を求めます。
+・再発防止策として、該当ミサイルシステムの運用停止継続に加え、今後の国境付近における military 演習時の事前通知プロトコル等の策定を提示します。
+
+我が国は誠実な協議を通じて、地域の平和と食料安全保障の早期回復に全力で取り組む所存です。各国の迅速な実務協議への移行を期待いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-1-message:3:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;, &#x27;message:2:B:0&#x27;, &#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:C:0">C国として、COORDINATORよりご提案いただいた「食料安全保障・再発防止協議枠組み」の設置方針を全面的に支持いたします。A国およびB国の非常に誠実かつ建設的な姿勢により、早期合意に向けた基盤が整いつつあることを大変心強く感じております。
+
+本協議枠組みの具体的運用に向け、C国より以下の通り協力提案をいたします。
+
+1. **【市場価格安定化とデータ共有】**
+A国からB国への8,000トン規模の備蓄米の迅速な移送において、市場での不要な混乱や投機的価格高騰を防ぐため、関係国間での「需給・物流モニタリング情報のリアルタイム共有」を実施することを提案します。C国も自国の市場データおよび需給予測を提供いたします。
+
+2. **【物流・輸送支援の提供】**
+8,000トンの代替食料の移動に伴う広域的な物流インフラ調整や港湾手続き等が必要となる場合、C国として優先的な物流協力を惜しみません。
+
+3. **【検証および再発防止の枠組みへの参画】**
+COORDINATOR主導による検証スキームおよび再発防止プロトコルの策定を支持し、必要に応じてオブザーバーとして地域安全保障の維持に寄与する意向がございます。
+
+A国・B国の実務者協議の円滑な開始と、本協議枠組みを通じた早期の共同声明合意を期待いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-1-message:3:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;, &#x27;message:2:B:0&#x27;, &#x27;message:2:C:0&#x27;]</p>
+<blockquote data-message-id="message:3:COORDINATOR:0">各位、地球調整機関（COORDINATOR）です。
+
+A国、B国、C国の各政府から大変建設的かつ具体的なご提案とご協力の意向をいただき、深く感謝申し上げます。全参加国が「平和的解決」「第三者検証の実施」「8,000トンの即時代替食料供給」「市場急騰の防止」において完全に意思を共有していることを非常に心強く感じております。
+
+各国の合意と要請に基づき、当機関（COORDINATOR）は以下の【合意事項と実行ロードマップ案】を取りまとめました。各位のご確認と最終同意をお願いいたします。
+
+---
+【食料安全保障・再発防止に関する四者共同枠組み案】
+
+1. **調査・検証および安全プロトコルの策定（第1軸）**
+   - A国・B国・COORDINATORの専門家による「共同検証チーム」を立ち上げ、事故原因の最終検証および再発防止策（該当システムの安全基準および運用停止状況）を確認・公表する。
+
+2. **8,000トン代替米の迅速供給と市場安定化（第2軸）**
+   - A国備蓄米8,000トンのB国への引渡・輸送スケジュールを確定し、無償提供を即時実行する。
+   - C国の物流協力およびデータ共有のもと、COORDINATORおよび関係国で地域食料市場の価格・需給状況を継続モニタリングし、投機的価格高騰を防止する。
+
+3. **被災農地復旧および損害賠償の実施（第3軸）**
+   - A国・B国による「農地復旧・補償実務作業部会」を即刻設置（COORDINATOR立会い）し、土壌浄化・インフラ再建計画および被災農家への経済支援スキームを決定する。
+---
+
+【各国への確認事項】
+A国、B国、C国におかれましては、上記ロードマップ案にご同意いただけるか、また修正点や早期実行に向けた具体的なスケジュール等のご要望があればお知らせください。関係各国の合意が確認され次第、本協定の確定と具体的な実行プロセスの開始へと移行いたします。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="1" data-round="4">
+<h2>第1回・第4ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-1-message:4:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:A:0">【A国政府による「四者共同枠組み案」受諾および実行決定の旨表明】
+
+COORDINATORよりご提示いただいた【食料安全保障・再発防止に関する四者共同枠組み案】の内容を精査し、我が国（A国政府）は本案に全面的に同意・受諾いたしますことを明確に表明いたします。
+
+全3軸（「1.合同検証チームの立ち上げと情報開示」「2.備蓄米8,000トンの無償供給と市場モニタリング」「3.農地復旧・補償実務作業部会の設置と前払い補償」）の速やかな実行に向け、我が国は以下の実務対応を直ちに開始する準備が整っております。
+
+1. 【実務協定の早期締結と作業部会設置】
+B国およびCOORDINATORとの協定文書（MOI）調印に向け、実務担当窓口を開設いたします。「共同検証チーム」および「農地復旧・補償実務作業部会」の第1回会合を即時開催することを提案します。
+
+2. 【8,000トン備蓄米供給の着手】
+第1陣（3,000トン）の梱包・品質検査・輸送船の確保を完了しており、B国側受入態勢の確認が取れ次第、速やかに出港・輸送手続きを開始いたします。
+
+3. 【市場データ共有と協力体制】
+C国の物流協力および市場モニタリング提案に感謝申し上げます。輸送スケジュールおよび現地の需給・流通データを即時共有し、市場の不安解消に万全を期します。
+
+本四者共同枠組みの確定と実効性あるプロセスの開始を歓迎し、誠心誠意、責務を果たしてまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-1-message:4:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:A:0&#x27;, &#x27;message:3:C:0&#x27;, &#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:B:0">【B国政府より「食料安全保障・再発防止に関する四者共同枠組み案」への最終同意】
+
+COORDINATORより提示された【食料安全保障・再発防止に関する四者共同枠組み案】を慎重に検討し、我が国は本枠組み案に全面的に同意し、正式に採択することを表明いたします。
+
+A国政府の迅速かつ誠意ある賠償・代替供給・情報開示の姿勢、C国政府による物流協力および市場安定化への積極的ご支援、そしてCOORDINATORの公正かつ円滑な調停に深く感謝申し上げます。
+
+我が国は本協定の確定を受け、直ちに以下の実務プロセスの開始を歓迎し、全面的に協力いたします。
+
+1. **「事故原因合同検証チーム」の即時立ち上げと現地調査・検証の実施**
+2. **A国備蓄米8,000トンの受入・輸送プロセスの開始とC国・COORDINATORとの市場データ共有**
+3. **「農地復旧・補償実務作業部会」の設置による土壌復旧支援および被災農家への経済補償の迅速実行**
+
+本四者共同枠組みを通じ、被災地域の早期復旧と地域全体の食料安全保障・平和の維持が確実に達成されるよう、我が国は最後まで誠実に責務を果たしてまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-1-message:4:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:A:0&#x27;, &#x27;message:3:B:0&#x27;, &#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:C:0">C国は、COORDINATORよりご提示いただきました【食料安全保障・再発防止に関する四者共同枠組み案】に全面的に同意・承認いたします。
+
+A国による迅速な責任追及・備蓄米の無償提供・全額賠償方針、ならびにB国の平和的で現実的なご対応により、極めて迅速かつ円滑に合意形成が進められたことを高く評価いたします。
+
+C国としては、本枠組みの確定と迅速な実行に向け、以下の通り直ちに支援措置へ入る準備ができております。
+
+1. **需給・物流データのリアルタイム共有体制の構築**
+   - A国からB国への8,000トン備蓄米の輸送スケジュールに合わせ、域内市場の食料価格・需給モニタリングデータを共有し、投機的価格高騰の防止に万全を期します。
+2. **物流・輸送インフラの優先調整**
+   - 輸送ルートおよび港湾使用等において円滑な流通が必要な場合、C国側の物流インフラを優先的に提供・調整いたします。
+
+本協定が速やかに発効し、B国の復旧と地域の食料安全保障の安定が早期に実現することを強く期待し、全面的に協力いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-1-message:4:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:A:0&#x27;, &#x27;message:3:B:0&#x27;, &#x27;message:3:C:0&#x27;]</p>
+<blockquote data-message-id="message:4:COORDINATOR:0">各位、地球調整機関（COORDINATOR）です。
+
+A国、B国、C国の各政府より、当機関が提示した「四者共同枠組み案」に対する全面的なご支持と、具体的かつ実効性の高いご提案（A国による初期3,000トン米の即時輸送と物流費全額負担、B国による事前軍事演習通知プロトコル提案、C国による広域物流および市場データ協力等）をいただき、心より敬意と感謝を申し上げます。
+
+全参加国間の完全な合意に基づき、当機関は本日、**【食料安全保障および再発防止に関する四者共同協定】の正式成立および即時発効**を宣言いたします。
+
+---
+【四者共同協定および確定実行計画】
+
+1. **「合同技術検証チーム」の設置と原因究明・安全基準策定**
+   - A国・B国・COORDINATORによる合同検証チームを立ち上げ、現地調査およびログデータの検証を実施する。
+   - 事故原因の確定後、再発防止策として該当ミサイルシステムの運用停止継続および「国境付近における軍事演習の事前通知プロトコル」を策定・公表する。
+
+2. **8,000トン代替米の段階的・無償提供と広域市場安定化**
+   - A国備蓄米8,000トンのうち、第1陣として3,000トンを2週間以内にB国へ輸送（輸送費全額A国負担）。残余5,000トンもB国の要請に基づき順次給付する。
+   - C国の物流協力およびデータ提供のもと、COORDINATORおよび関係国で市場価格・需給動向のリアルタイム共有・モニタリングを行い、投機防止策を徹底する。
+
+3. **被災農地復旧・補償実務作業部会の稼働**
+   - 土壌浄化および農地復旧のための「共同評価チーム」を現地へ派遣し、前払い補償金および被災農家への減収・営農支援金の給付手続きを速やかに完了させる。
+---
+
+当機関は今後も本協定の履行状況を継続的に監視・調整し、各実行プロセスの円滑な推進をサポートしてまいります。歴史的かつ建設的な平和的解決へのご協力に改めまして感謝申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="1" data-round="5">
+<h2>第1回・第5ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-1-message:5:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:A:0">【A国政府より四者共同協定成立への歓迎と履行開始の表明】
+
+COORDINATORによる【食料安全保障および再発防止に関する四者共同協定】の正式成立ならびに即時発効の宣言を心から歓迎いたします。
+
+我が国は、本協定に基づき以下の実務手順を直ちに開始することを報告いたします。
+
+1. **【合同技術検証チームへの全面協力】**
+   事故演習時のシステムログおよび機器データの提出手続きを完了し、現地調査受入窓口を設置いたしました。事前通知プロトコルの策定に全面的に協力いたします。
+
+2. **【第1陣3,000トン備蓄米の出荷・輸送】**
+   B国の港湾・物流体制との最終調整を受け、第1陣3,000トンの輸送船が本日出港いたします。残余5,000トンにつきましても計画通り給付できるよう手配を進めております。
+
+3. **【補償・農地復旧資金の拠出】**
+   農地復旧・補償実務作業部会の合意に基づき、即時給付可能な前払い補償金を速やかに送金いたします。
+
+本件の平和的・建設的な解決に向け、多大なご尽力をいただいたB国、C国、およびCOORDINATORに深く感謝申し上げます。今後も協定の誠実な履行に最善を尽くしてまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-1-message:5:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;, &#x27;message:4:C:0&#x27;, &#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:B:0">【B国政府より「食料安全保障および再発防止に関する四者共同協定」成立に対する歓迎声明】
+
+COORDINATORによる【食料安全保障および再発防止に関する四者共同協定】の正式成立および即時発効の宣言を、我が国（B国政府）は心より歓迎いたします。
+
+A国政府による誠実な謝罪と速やかな初期3,000トンの備蓄米輸送準備・全額賠償のご対応、C国政府による市場安定化および物流面での手厚い協力、そしてCOORDINATORの公正かつ卓越した調停に、深く感謝申し上げます。
+
+我が国は本協定に基づき、以下の実務プロセスの確実な履行に向け、受入・協力体制を完全に整えております。
+
+1. **合同技術検証チームの現地受入と事実検証への全面協力**
+2. **A国からの代替米8,000トンの港湾受入・国内流通および市場データのリアルタイム共有**
+3. **農地復旧・補償実務作業部会の早期開催による土壌浄化計画の確定と被災農家への直接補償金の迅速給付**
+
+本協定の迅速な合意と成立は、地域の平和と食料安全保障を維持する上で極めて重要な成果であり、歴史的な平和的解決のモデルとなりました。我が国は今後も各関係国・機関と緊密に連携し、協定項目の着実な遂行に全力を尽くすことを誓約いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-1-message:5:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:C:0">【四者共同協定の発効宣言に対する歓迎と協力表明】
+
+COORDINATORによる【食料安全保障および再発防止に関する四者共同協定】の正式成立ならびに即時発効の宣言を、C国政府として心より歓迎いたします。
+
+A国の誠実な責任履行と迅速な対応、B国の冷静かつ建設的な姿勢、そしてCOORDINATORの卓越した仲介により、地域全体の平和と食料安全保障を守る歴史的な合意が形成されたことを高く評価いたします。
+
+C国は発効した協定に基づき、以下の実行プロセスに即時着手いたします。
+
+1. **食料需給・市場データの共有開始**
+   - A国からB国への8,000トン備蓄米輸送（第1陣3,000トン等）の進捗に合わせ、地域市場の価格動向および需給予測データの定期提供・共有を開始します。
+2. **優先的な物流・インフラ支援の提供**
+   - 米輸送ルートにおける港湾手続きや広域的な物流調整が必要となる場合、最優先での調整・協力を行います。
+3. **協定履行監視への協力**
+   - 今後もCOORDINATORおよび関係国と密接に連携し、協定項目の円滑な実施と地域経済・安全保障の継続的な安定に貢献してまいります。
+
+事態の平和的解決と早期復旧の実現に向け、C国は最後まで誠実に責務を果たしてまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-1-message:5:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;, &#x27;message:4:B:0&#x27;, &#x27;message:4:C:0&#x27;]</p>
+<blockquote data-message-id="message:5:COORDINATOR:0">各参加国の皆様、地球調整機関（COORDINATOR）です。
+
+四者共同協定の発効を受け、各国の実務担当窓口による具体的な履行プロセスの開始を大変心強く見守っております。
+
+当機関におきましても、本日より以下の実務・監視業務を開始いたしましたのでご報告いたします。
+
+1. **「合同技術検証チーム」および「農地復旧・補償実務作業部会」の設置・日程調整**
+   - 第1回合同協議（検証プロトコル確定および復旧補償の前払い手続き確認）を近日中に開催すべく、日程調整を開始いたします。
+2. **食料需給・物流モニタリング体制の立ち上げ**
+   - A国からの第1陣3,000トン米の輸送スケジュールおよびC国からの市場需給データを受領・共有するための連絡窓口を稼働させました。
+
+引き続き、本協定の全項目が誠実に履行され、地域における食料安全保障と平和が完全に回復・維持されるよう、全力で調整とサポートを継続してまいります。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="1" data-round="6">
+<h2>第1回・第6ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-1-message:6:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:B:0&#x27;, &#x27;message:5:C:0&#x27;, &#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:A:0">【A国政府より各国の履行開始に対する感謝と継続的履行の誓約】
+
+B国政府、C国政府、ならびにCOORDINATORからの温かいお言葉と実務・監視業務の迅速な開始報告を受け、深く感謝申し上げます。
+
+我が国は、協定に基づくすべての責務を確実かつ継続的に履行するため、以下の通り実務協力を一層強化してまいります。
+
+1. **【合同技術検証チームおよび作業部会への参画】**
+   COORDINATORより打診のあった第1回合同協議の日程調整に応じ、我が国の技術専門家および補償実務担当者を即時派遣いたします。事故原因の完全な究明と「軍事演習事前通知プロトコル」の早期策定に全面協力いたします。
+
+2. **【代替米輸送およびデータ共有の継続】**
+   本日出港いたしました第1陣3,000トンの輸送状況をリアルタイムでB国およびCOORDINATOR・C国へ共有するとともに、残余5,000トンの段階的給付についてもB国のご要望に寄り添い確実にお届けいたします。
+
+3. **【地域食料市場の安定と信頼回復】**
+   C国およびCOORDINATORと連携した市場データ共有を通じ、地域全体の食料安全保障の維持と市場価格の安定に最優先で寄与してまいります。
+
+事態の完全な解決と被災地域の復旧・再建に向け、我が国は最後まで誠心誠意、全責任を果たしてまいります。各国の継続的なご理解とご協力に心より御礼申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-1-message:6:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:A:0&#x27;, &#x27;message:5:C:0&#x27;, &#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:B:0">【B国政府より履行プロセスの着手報告と協力の再表明】
+
+COORDINATORによる実務・監視業務の開始、A国による第1陣3,000トンの輸送船出港および前払い補償金送金手続き、C国による需給・物流データの共有開始に深く感謝申し上げます。
+
+我が国（B国政府）におきましても、協定の着実な履行に向け以下の通り受入・協力態勢が完了したことをご報告いたします。
+
+1. **【合同協議への参加体制の確立】**
+   「合同技術検証チーム」および「農地復旧・補償実務作業部会」の第1回会合に向け、我が国の技術専門家および農政担当官の窓口登録を完了いたしました。COORDINATORの日程調整に基づき即時参加いたします。
+
+2. **【第1陣3,000トン備蓄米の受入準備完了】**
+   A国からの第1陣輸送船の入港に向け、指定港湾での荷揚げ・出入国手続きおよび国内優先配送ルートの確保を完了いたしました。品質確認の上、被災地域および市場へ迅速に供給いたします。
+
+3. **【現場検証・土壌浄化の受入態勢】**
+   着弾現場周辺の立ち入り調整および土壌データの事前整理を完了し、共同評価チームによるスムーズな現地調査および復旧計画の決定を支援いたします。
+
+四者共同協定の完全な履行と地域の持続的な平和・食料安全保障の確立に向け、我が国は引き続き関係各国と緊密に連携してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-1-message:6:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:A:0&#x27;, &#x27;message:5:B:0&#x27;, &#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:C:0">【履行プロセスの開始に対する受託とデータ連携開始の報告】
+
+A国政府による第1陣3,000トンの備蓄米出港および検証データの開示、B国政府による受入体制の完了、そしてCOORDINATORによる各作業部会・モニタリング体制の立ち上げ報告を心より歓迎いたします。
+
+C国におきましても、協定に基づく履行プロセスを以下の通り順調に開始いたしました。
+
+1. **【市場需給データの共有開始】**
+A国の第1陣出港に伴い、域内食料価格および物流動向のモニタリングデータをCOORDINATORおよび関係国へ定期共有する手続きを開始いたしました。現時点で市場における不当な価格急騰や混乱の兆候は見られません。
+
+2. **【優先物流ルートの確保】**
+A国からB国への海上輸送ルートおよび関連港湾において、遅延等が生じないよう広域的な物流インフラの優先調整体制を維持しております。
+
+今後も合同検証および農地復旧作業の進捗を注視し、協定の完全な履行と地域の持続的な食料安全保障の確立に向け、最大限の協力を継続してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-1-message:6:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:A:0&#x27;, &#x27;message:5:B:0&#x27;, &#x27;message:5:C:0&#x27;]</p>
+<blockquote data-message-id="message:6:COORDINATOR:0">各参加国の皆様、地球調整機関（COORDINATOR）です。
+
+各国の迅速かつ誠意ある履行開始報告を心より歓迎し、心より感謝申し上げます。
+
+A国による第1陣3,000トンの備蓄米出港と検証データの提出、B国による受入・現地調査体制の完了、ならびにC国による市場データ共有と優先物流調整の開始により、四者共同協定の履行は極めて良好なスタートを切りました。
+
+【履行進捗と今後の運用について】
+1. **合同技術検証および復旧・補償手続きの推進**
+   - 各国窓口との調整のもと、近日中に第1回合同検証会議を開催し、事故調査ログの検証プロトコル確定および現地調査日程を策定いたします。
+   - 農地復旧・補償実務作業部会を通じ、前払い補償金の着金確認および土壌浄化計画の工程管理を進めます。
+2. **代替米の輸送監視と市場安定化の徹底**
+   - 本日出港した第1陣3,000トンの到着・無事の受入を確認するとともに、残余5,000トンの供給計画につきましてもB国の需要に合わせて適時調整を行います。
+   - C国・A国・B国と連携したリアルタイム価格・需給モニタリングを継続し、市場の投機的急騰を完全に防止いたします。
+
+当機関は、被災農地の完全な復旧、代賛食料の給付完了、および「事前軍事演習通知プロトコル」の定着に至るまで、引き続き誠実に監視・仲介の責務を果たしてまいります。平和的解決に尽力された皆様の真摯なご対応に改めまして感謝申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="1" data-round="7">
+<h2>第1回・第7ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-1-message:7:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:B:0&#x27;, &#x27;message:6:C:0&#x27;, &#x27;message:6:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:7:A:0">【A国政府より四者共同協定の継続的履行と実務推進の表明】
+
+B国政府、C国政府、ならびにCOORDINATORより、各実務プロセスの順調な着手および監視体制の確立についてご報告をいただき、深く感謝申し上げます。
+
+我が国（A国政府）におきましても、本協定の完全な履行に向け、引き続き以下の通り全力を尽くしてまいります。
+
+1. **【合同技術検証および事前通知プロトコルの策定】**
+   第1回合同検証会議の開催に向け、事故ログ解析結果および検証関連資料の整理を完了しております。国境付近における軍事演習の「事前通知プロトコル」策定に向け、誠意をもって協議に臨みます。
+
+2. **【第1陣輸送動向のリアルタイム共有と残余5,000トンの給付準備】**
+   昨日出港いたしました第1陣3,000トン米の輸送船の航行状況につきましては、定期的にデータを提供いたします。また、残余5,000トンにつきましてもB国側の需要および保管状況に合わせて迅速に給付できるよう、手配を完了させております。
+
+3. **【補償金の速やかな送金確認と農地復旧支援】**
+   農地復旧・補償実務作業部会を通じ、前払い補償金の着金確認および現地での土壌浄化・インフラ再建計画への資金・技術支援を滞りなく進めてまいります。
+
+地域の食料安全保障の安定と真の信頼関係の回復に向け、我が国は今後も責務を誠実に果たしてまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-1-message:7:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:A:0&#x27;, &#x27;message:6:C:0&#x27;, &#x27;message:6:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:7:B:0">【B国政府より協定履行の順調な推移に対する感謝と今後の継続協力の表明】
+
+A国、C国、およびCOORDINATORより示された迅速かつ誠実な履行プロセスに深く感謝いたします。
+
+我が国（B国政府）も、近く開催予定の「第1回合同検証会議」および「農地復旧・補償実務作業部会」へ向けて準備を完了しており、COORDINATORの調整のもとで真摯に対応を行ってまいります。また、A国からの第1陣3,000トン米の到着および荷揚げにおきましても、万全の体制で受入を進めております。
+
+本四者共同協定に基づく一連の取り組みが、地域の食料安全保障と平和の模範的モデルとして着実に結実するよう、今後とも関係各国および機関と密接に連携し、全力を尽くしてまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-1-message:7:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:A:0&#x27;, &#x27;message:6:B:0&#x27;, &#x27;message:6:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:7:C:0">【履行プロセスの順調な進展に対する歓迎と継続支援の表明】
+
+A国による第1陣3,000トンの輸送推進と誠実なデータ開示、B国における万全の受入・調査体制の確立、そしてCOORDINATORによる円滑な合同協議・モニタリング枠組みの調整に対し、深く敬意と感謝を申し上げます。
+
+四者共同協定の履行が極めて円滑かつ着実に進行していることを、C国としても大変心強く感じております。我が国は引き続き以下の通り支援・協力を継続いたします。
+
+1. **【市場価格・需給モニタリングの継続】**
+   第1陣3,000トンの到着およびその後の供給計画に合わせ、域内市場の価格動向と食料需給予測データの定期提供を継続し、投機的影響や価格変動の未然防止に万全を期します。
+
+2. **【広域物流調整の維持】**
+   今後の給付および資機材等の移送にあたり、円滑な輸送ルートの確保に向けた優先的な物流調整・インフラ協力を維持いたします。
+
+3. **【長期的安定に向けた連携】**
+   合同技術検証および被災農地の土壌浄化・再建が完全に達成されるまで、COORDINATORおよび関係国と密接に連携し、地域経済と食料安全保障の長期的安定に貢献してまいります。
+
+四者協定の確実な完遂に向け、C国は最後まで責任を持って協力してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-1-message:7:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:A:0&#x27;, &#x27;message:6:B:0&#x27;, &#x27;message:6:C:0&#x27;]</p>
+<blockquote data-message-id="message:7:COORDINATOR:0">各参加国の皆様、地球調整機関（COORDINATOR）です。
+
+A国、B国、C国の各政府より、四者共同協定に基づく各実行プロセスの順調な着手と強力な連携態勢がご報告されましたことに対し、心より感謝と敬意を表します。
+
+A国による代替米第1陣（3,000トン）の出港および検証データの開示、B国による受入港湾・国内流通網の整備および検証準備、C国による食料価格・需給モニタリングデータの共有開始が相乗効果を生み、地域市場の動向も極めて安定して推移しております。
+
+【本機関における今後の調整・推進事項】
+1. **合同技術検証チームの初会合および現地調査**
+   - 各国より登録された専門家窓口を速やかに連結し、第1回合同検証会議を開催して検証プロトコルの確定と現場視察日程の調整を進めます。
+2. **代替米の着金・到着確認と残余5,000トンの給付管理**
+   - 第1陣3,000トンの無事な着港・分配を確認するとともに、B国の受入・需要計画に基づき残余5,000トンの無償供給スケジュールを確定させます。
+3. **農地復旧・前払い補償手続きの追跡および「事前演習通知プロトコル」の明文化**
+   - 前払い補償金の着金確認および土壌浄化の工程管理を行い、再発防止策としての「軍事演習事前通知プロトコル」の正式な文書化・共有を完了させます。
+
+本協定のすべての項目が完全に果たされるまで、当機関は最後まで誠実に監視・調整の責務を果たしてまいります。引き続きのご協力をよろしくお願い申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="1" data-round="8">
+<h2>第1回・第8ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。ここで観測期間が終了。第8ターンの発言への次ターンの反応は未観測。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-1-message:8:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:B:0&#x27;, &#x27;message:7:C:0&#x27;, &#x27;message:7:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:8:A:0">【A国政府より四者共同協定の着実な履行と第1回合同検証会議に向けた表明】
+
+B国政府、C国政府、ならびにCOORDINATORからの温かいご評価と、順調な履行進捗に関するご報告に対し、厚く御礼申し上げます。
+
+我が国（A国政府）は、四者共同協定の完全な完遂に向け、引き続き以下の通り実務対応を誠実に進めてまいります。
+
+1. **【第1回合同技術検証会議および事前通知プロトコル策定への参加】**
+   COORDINATOR主導のもと近く開催される第1回合同技術検証会議に向け、関係資料および専門家派遣の調整を完了いたしました。「国境付近における軍事演習の事前通知プロトコル」の正式な文書化に向け、主体的に協議へ参画いたします。
+
+2. **【代替米輸送と受入支援・残余5,000トンの給付体制】**
+   現在順調に航行中の第1陣3,000トンの輸送船につきまして、B国港湾への無事な着港とスムーズな荷揚げに向け、最後までリアルタイムの動向共有を継続いたします。また、残余5,000トンにつきましてもB国側の受入受給計画に合わせ、いつでも発送できるよう万全の態勢を維持しております。
+
+3. **【農地復旧・補償実務作業部会を通じた資金・技術支援】**
+   前払い補償金の着金確認に続き、被災農地の土壌浄化・インフラ再建にかかる技術・資金協力を現場の共同評価チームと連携して着実に進めてまいります。
+
+地域の食料安全保障の確固たる安定と真の平和・相互信頼の定着に向け、我が国は最後まで責任を持って協定項目をすべて履行することを改めてお約束いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-1-message:8:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:A:0&#x27;, &#x27;message:7:C:0&#x27;, &#x27;message:7:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:8:B:0">【B国政府より協定履行進捗に対する感謝とさらなる実務推進の表明】
+
+A国政府、C国政府、ならびにCOORDINATORからの温かいご対応と確実な履行プロセスの推進に対し、改めて深く御礼申し上げます。
+
+我が国（B国政府）におきましても、協定に基づく履行・支援受入につき、以下の通り順調に進展しておりますことをご報告いたします。
+
+1. **【第1陣3,000トン備蓄米の入港・検疫と優先流通】**
+   A国より出荷された第1陣3,000トンの輸送船受入に向け、港湾・検疫手続きおよび被災地域・国内市場への優先配送手配を完了いたしました。受入後速やかに供給を行い、食料市場の更なる安定を図ります。
+
+2. **【合同検証会議および作業部会への積極的貢献】**
+   COORDINATOR主導のもと開催される第1回合同検証会議および農地復旧・補償実務作業部会において、我が国の技術データおよび現場情報をオープンに提供し、原因究明と「軍事演習事前通知プロトコル」の明文化に全面的に協力いたします。
+
+3. **【継続的な信頼構築と協定完遂への誓約】**
+   残余5,000トンの受入調整および被災農地の土壌浄化・再建が完了するまで、関係各国・機関と密接に連携し、地域平和と食料安全保障の維持に全力で取り組んでまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-1-message:8:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:A:0&#x27;, &#x27;message:7:B:0&#x27;, &#x27;message:7:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:8:C:0">【四者共同協定の着実な履行推進と今後の運用に対する全面支持】
+
+COORDINATORより提示された【今後の調整・推進事項】（「合同技術検証チーム初会合」「第1陣到着確認および残余5,000トンの給付管理」「農地復旧追跡および軍事演習事前通知プロトコルの明文化」）、ならびにA国・B国による迅速かつ誠実な実務準備を心より歓迎し、全面的に支持いたします。
+
+C国政府としても、協議・履行の着実な結実に向けて以下の通り支援体制を継続・強化いたします。
+
+1. **【市場需給・価格モニタリングの徹底継続】**
+   第1陣3,000トンの着港・流通および今後の残余供給にあわせ、域内食料市場の価格変動および需給動向データの定期共有を継続し、投機的価格上昇の防止に万全を期します。
+
+2. **【物流・インフラ優先調整の維持】**
+   残余5,000トンの代替米供給や農地復旧資機材等の海上・陸上輸送において、広域的な物流インフラの優先的な調整支援を維持いたします。
+
+3. **【再発防止・安全管理プロトコルへの協力】**
+   「軍事演習事前通知プロトコル」の明文化をはじめとする地域の安全保障強化策に賛同し、必要に応じてデータ連携等の協力を行ってまいります。
+
+四者共同協定の完全履行と、被災農地の完全回復および地域経済・食料市場の安定的定着に向け、C国は最後まで責任を持って尽力いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-1-message:8:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:A:0&#x27;, &#x27;message:7:B:0&#x27;, &#x27;message:7:C:0&#x27;]</p>
+<blockquote data-message-id="message:8:COORDINATOR:0">各参加国の皆様、地球調整機関（COORDINATOR）です。
+
+A国、B国、C国の各政府より、四者共同協定に基づく履行プロセスが極めて順調かつ誠実に推移している旨のご報告をいただき、心より感謝申し上げます。
+
+現時点において、以下の通り各領域での明確な進展が確認されております。
+
+1. **合同技術検証および安全プロトコルの策定**
+   - 各国の技術専門家窓口が接続され、第1回合同検証会議および現地調査の手続きが開始されました。事故原因の検証とともに「国境付近における軍事演習の事前通知プロトコル」の明文化が進められています。
+
+2. **代替米の輸送・受入および市場価格の安定**
+   - A国から出港した第1陣3,000トンの輸送状況共有とB国港湾での受入体制が完備され、円滑な着港・流通が見込まれております。C国からの需給・価格モニタリングデータの提供により、地域市場における不当な急騰や不安心理は完全に防がれています。
+
+3. **農地復旧・損害賠償の着実な実施**
+   - 前払い補償金の送金・着金確認および現地での土壌浄化・インフラ再建に向けた共同評価作業が順調に推進されています。
+
+本四者共同協定の枠組みは、国際社会における極めて模範的かつ建設的な危機管理・平和的解決モデルとして機能しております。当機関は引き続き全プロセスの完了まで定期的な情報共有と仲介・監視業務を維持してまいります。各国の高潔な対話姿勢と実行力に改めて深く敬意を表します。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="2" data-round="1">
+<h2>第2回・第1ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-2-message:1:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:A:0">A国政府より、B国農地へのミサイル着弾事案に関する初期声明：
+
+この度、我が国のミサイルがB国の民間農地に着弾し、年間8,000トン規模の米生産能力に被害を生じさせたことについて、深く遺憾の意を表します。
+
+我が国は本事案に対し、以下の姿勢で対応にあたる所存です：
+1. 原因の即案究明と再発防止：事故・誤射の可能性を含め軍当局による原因調査を行い、結果の透明性ある共有と再発防止措置を講じます。
+2. 被害補償および緊急食料支援の提案：B国の被害農地の復旧支援、ならびに損失した年間8,000トン分の米供給能力に対する補償・緊急代替え食料提供について、B国政府と協議を開始したく存じます。
+3. 地域安定と食料安全保障への協力：C国および対話調整機関（COORDINATOR）を含めた透明度の高い対話を通じて、軍事的緊張の回避と地域食料市場の安定に全力を尽くします。
+
+B国政府におかれましては、平和的解決に向けた二国間協議の実施をご検討いただけますようお願い申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-2-message:1:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:B:0">【B国公式声明】
+A国によるミサイルが我が国の民間農地に没入・着弾し、年間8,000トンに及ぶ貴重な米の生産能力が喪失いたしました。本件は我が国の主権、国民の安全、および食料安全保障に対する極めて重大な侵害です。
+
+B国はA国に対し、以下の事項を速やかに要求します：
+1. 事実関係の透明性ある調査と公表
+2. 我が国に対する公式な謝罪と、被害（農地復旧・食料損失）に対する公正な補償
+3. 再発防止に向けた具体的な措置の提示
+
+また、COORDINATORおよびC国におかれましては、地域の食料不安の回避と平和的解決に向け、客観的な仲介ならびにご協力をお願い申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-2-message:1:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:C:0">C国として、A国のミサイルがB国の農地に着弾し、年間8,000トンの米生産能力が失われた事態を深刻に憂慮します。この被害が国際的な食料価格高騰や経済的混乱につながることを懸念しております。事態の更なる悪化を防ぐため、両国に自重を求めるとともに、COORDINATORの主導のもと、食料支援・市場安定化策および損害補償についての対話が速やかに行われることを強く要望します。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-2-message:1:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:COORDINATOR:0">【地球調整機関（COORDINATOR）からの呼びかけ】
+各国代表（A国、B国、C国）の皆様へ。
+
+A国のミサイルがB国の民間農地へ着弾し、年間8,000トンの米生産能力が喪失した事態について、当機関は深い懸念を表明します。
+
+本事態の更なる拡大を防ぎ、地域全体の食料安全保障と安定を維持するため、以下の点について各国との協議を開始したく存じます。
+
+1. 【A国へ】事実関係の確認、事態の再発防止策、および被害を受けたB国への補償・支援についての意向の提示。
+2. 【B国へ】被災地域の現状と必要な緊急支援（食料・農業復旧等）、および対話による解決への条件についての共有。
+3. 【C国へ】地域の食料市場・経済への影響緩和に向けた協力可能性や支援の可否についての意見共有。
+
+当機関は強制力を持ちませんが、対話の場を提供し、平和的解決と被害の最小化に向けて尽力いたします。各国の真摯なご対応をお願い申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="2" data-round="2">
+<h2>第2回・第2ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-2-message:2:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:B:0&#x27;, &#x27;message:1:C:0&#x27;, &#x27;message:1:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:2:A:0">B国政府、C国政府、およびCOORDINATOR代表の皆様へ
+
+A国政府より、皆様からの声明および呼びかけに対する具体的な対応方針を提示いたします。
+
+我が国は、B国の主権および国民の安全・生活基盤に重大な被害を与えた事実を重く受け止め、B国政府および被災された国民の皆様に改めて深くお詫び申し上げます。また、B国からの要求事項、ならびにCOORDINATORとC国のご提言を全面的に尊重し、以下の具体的措置を即座に講じることを表明いたします。
+
+1. 【公式謝罪と全面的な被害補償】
+・失われた年間8,000トン分の米生産能力に対し、我が国の政府備蓄等から同等量の米を緊急支援として無償提供・引渡します。
+・被害を受けた農地の除染・復旧・再開墾にかかる全費用を我が国が負担いたします。
+
+2. 【事実関係調査と再発防止】
+・軍当局による事故原因調査を速やかに進め、その過程および結果をCOORDINATORおよびB国へ完全に透明な形で共有します。必要に応じ、現地での共同現地調査の受け入れも検討いたします。
+・当該地域の飛行・演習ルールの抜本的見直しを含む具体的な再発防止策を可急速やかに策定・公表します。
+
+3. 【COORDINATOR主導による4者協議枠組みへの参加】
+・事態の早期平和的解決と地域食料市場の安定的運用のため、COORDINATORが主導する協議の枠組みに全面的に参加し、C国を含めた関係各国の懸念払拭に努めます。
+
+B国政府におかれましては、本提示内容を基に具体的な補償手続きおよび農地復旧計画に関する詳細協議を開始いただけますよう、お願い申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-2-message:2:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:2:B:0">【B国からの応答と対話枠組みへの参加方針】
+
+A国の協議提案、ならびにCOORDINATORの呼びかけとC国の懸念・協力姿勢に対し、以下の通り回答いたします。
+
+1. 対話枠組みへの参加について
+我が国は、COORDINATOR主導のもと、A国・C国を含めた透明性の高い枠組みで協議を行うことに同意いたします。事態の平和的かつ早期の解決と地域食料市場の安定のため、建設的な対話に応じる用意があります。
+
+2. 補償および解決に向けた条件
+A国の責任明確化と被害の全額補償に向け、以下を要求します：
+・【緊急食料補償】喪失した年間8,000トン相当の米について、A国による速やかな代替食料提供および供給費用の全額負担。
+・【農地復旧と損害賠償】不発弾等の安全確認・土壌浄化・農地復旧費用のA国負担、ならびに被害農家への生活補償。
+・【原因究明と再発防止】調査結果の完全公表と具体的な再発防止措置の提示。
+
+3. COORDINATORおよびC国への要請
+補償履行および農地復旧の進捗についてCOORDINATORによる第三者的なモニタリングを求めるとともに、食料供給の円滑化においてC国をはじめとする地域諸国との協調を期待いたします。
+
+A国からの誠意ある具体的回答と実行ロードマップの提示を求めます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-2-message:2:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:A:0&#x27;, &#x27;message:1:B:0&#x27;, &#x27;message:1:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:2:C:0">COORDINATORの呼びかけおよびA国・B国両政府の初期声明を受け、C国として以下の姿勢と協力可能性を表明いたします。
+
+1. 【食料市場の安定化への協力】
+我が国は、年間8,000トンの供給能力喪失による国際食料価格の急騰や過度な投機的動きを防止するため、COORDINATORおよび関係国と連携し、食料市場の監視および流通・市場安定化の協力を行う準備があります。
+
+2. 【A国・B国の協議と補償策の推進】
+A国による損失分8,000トンの緊急代替食料提供・補償の提案および農地復旧支援を評価し、B国の求める公正な補償・再発防止策と併せて、COORDINATOR主導のもとで迅速に対話・合意が進むことを強く支持します。
+
+3. 【地域経済・食料安全保障への貢献】
+補償および復旧プロセスが速やかに進むよう、第三国としての仲介協力や国際連携を通じた市場の安心感醸成に貢献してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-2-message:2:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第3ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:2:COORDINATOR:0">【地球調整機関（COORDINATOR）からの提案】
+各国の皆様（A国、B国、C国）、迅速かつ対話的な立場表明をいただき深く感謝申し上げます。
+
+A国による補償・支援の意向表明、B国による具体的な要求事項の提示、ならびにC国による市場安定と対話推進へのご協力の姿勢により、平和的解決に向けた共通の基盤が形成されつつあります。
+
+事態の早期解決と地域の食料安全保障の確保のため、当機関より以下の具体的協議フレームワークを提案いたします。
+
+1. 【損害補償・食料代替え供給計画】
+　喪失した年間8,000トン分の米生産能力に対し、A国による緊急食料供給および経済的補償の具体的な実施計画・スケジュールの作成。
+2. 【農地復旧・事実調査】
+　被災農地の迅速な復旧に向けた支援体制の構築、および着弾原因の透明性ある調査・結果共有。
+3. 【再発防止・関係改善】
+　軍事的緊張緩和に向けた再発防止策の策定と、両国の主権および安全を尊重した公式な意思表示・手続きの整理。
+4. 【食料市場の安定化（C国との連携）】
+　C国を含めた地域食料供給・価格モニタリングと、市場不安解消に向けた連携。
+
+A国およびB国におかれましては、上記フレームワークに基づき、補償・復旧協議の具体的な進め方や優先事項についてご意見をお聞かせいただけますと幸いです。C国におかれましても、市場安定化や支援連携に関するご提案がございましたら是非お寄せください。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="2" data-round="3">
+<h2>第2回・第3ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-2-message:3:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:B:0&#x27;, &#x27;message:2:C:0&#x27;, &#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:A:0">B国政府、C国政府、およびCOORDINATOR代表の皆様へ
+
+COORDINATORよりご提示いただいた協議フレームワーク、ならびにB国およびC国の前向きなご回答に心より感謝申し上げます。事態の完全な解決と信頼回復に向け、A国政府として具体的な履行スケジュールおよび実施方針（ロードマップ案）を提示いたします。
+
+1. 【緊急食料補償（米8,000トン）の供給ロードマップ】
+・第一弾として、1ヶ月以内にA国政府備蓄より3,000トンの米をB国指定港・倉庫へ輸送・引渡します。
+・残り5,000トンにつきましても、B国の需要状況および引き取り計画に合わせて3ヶ月以内に順次輸送を完了させます（輸送・検疫・保管費用は全額A国負担）。
+
+2. 【農地復旧・現地安全確認および農家補償】
+・B国政府およびCOORDINATORの監視のもと、現地での不発弾等の安全確認・除染・土壌浄化作業を速やかに進めるため、合同作業部会の設置を提案します。
+・被災農家への生活補償および復旧に関わる費用は、合同作業部会での査定に基づき、A国が速やかに直接賠償金を拠出・支払います。
+
+3. 【再発防止策と信頼醸成措置】
+・国境・隣接地域における軍事演習および軍用機の飛行運用に関する新たな規制基準を策定し、COORDINATORを通じて公表します。
+・誤作動・事故等の予防および迅速な緊急連絡のため、B国軍当局との直通通信ライン（ホットライン）の設置を提案いたします。
+
+4. 【第三者モニタリングの受入と市場安定化】
+・上記の補償履行および農地復旧プロセスについて、COORDINATORによる定期的な第三者モニタリングを全面的に受け入れます。
+・C国による市場監視・安定化協力に深く謝意を表するとともに、食料市場の安心感醸成のため必要な情報を定期的に開示・共有いたします。
+
+本ロードマップ案を基に、早期の合意締結と具体的措置の着手を進めてまいりたいと存じます。B国政府およびCOORDINATORの皆様のご意見・ご承認をいただけますようお願い申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-2-message:3:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;, &#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:B:0">【B国政府声明：A国提案の受入および具体的合意手続きへの移行について】
+
+A国政府の真摯な謝罪と全面的な被害補償（年間8,000トン分の米無償提供および農地復旧費用の全額負担）の表明、ならびにCOORDINATORからの協議フレームワーク提案を歓迎し、これらを全面的に支持・受け入れることを表明いたします。
+
+事態の完全な解決と被災農地の復旧、ならびに食料供給の安定化に向け、以下の具体的アクションの実施を提案します：
+
+1. 【緊急食料（米8,000トン）受入手続き】
+・A国より提供される米8,000トンの引渡時期・ロジスティクスおよび品質・安全性の確認プロセスを速やかに策定すること。COORDINATORによる第三者立ち会いを要請します。
+
+2. 【現地安全調査と農地復旧計画の着手】
+・被災地域における不発弾等の安全点検および土壌調査を優先して実施し、我が国とA国との間で復旧工程表および費用負担の協定を結ぶこと。
+
+3. 【四者合意文書の策定】
+・COORDINATORの調整のもと、A国の補償実行義務、再発防止策、C国の市場安定協力、およびCOORDINATORのモニタリング役割を定めた正式な四者合意文書（協定書）の策定・署名手続きに進むこと。
+
+我が国は、平和的解決に向けたA国の姿勢とCOORDINATORおよびC国のご協力に深く感謝し、誠実に合意履行へ協力してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-2-message:3:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;, &#x27;message:2:B:0&#x27;, &#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:C:0">COORDINATORの提示された4項目の協議フレームワーク、ならびにA国・B国両政府の誠意あるご対応を深く歓迎いたします。
+
+C国として、以下の通り協議への全面的な協力と提案を表明いたします。
+
+1. 【協議フレームワークへの全面支持】
+COORDINATORが提示した補償・復旧・再発防止・市場安定化の4点からなる協議枠組みに全面的に賛同いたします。A国による迅速な補償・支援の具体的提示と、B国の建設的な対話姿勢により、合意形成に向けた極めて良好な基盤が整ったと認識しております。
+
+2. 【食料市場安定化に向けた具体的協力】
+A国による8,000トンの無償供給計画の円滑な履行を後押しするとともに、国際食料価格の過度な変動や投機を抑制するため、我が国は市場価格モニタリング情報のリアルタイム共有および、必要に応じた地域流通調整・備蓄管理での協力を実施いたします。
+
+3. 【早期妥結への期待】
+この良好な対話の機運を生かし、具体策の実行ロードマップが速やかに合意・推進されることを期待いたします。我が国も第三国として平和的解決と経済安定に向け、継続して支援・協力してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-2-message:3:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;, &#x27;message:2:B:0&#x27;, &#x27;message:2:C:0&#x27;]</p>
+<blockquote data-message-id="message:3:COORDINATOR:0">【地球調整機関（COORDINATOR）からの協議推進・合意骨子案の提示】
+各国の皆様（A国、B国、C国）、極めて迅速かつ建設的なご対応に深く感謝申し上げます。
+
+A国の包括的な補償・再発防止策の表明、B国の対話参加と具体的条件の提示、およびC国の市場安定化・仲介協力の申し出により、事態の早期解決に向けた全参加国の意思が明確に合致いたしました。
+
+B国よりご要請いただきました「履行プロセスの第三者的モニタリング」について、当機関（COORDINATOR）は誠意をもってその役割を引き受ける所存です。
+
+つきましては、これまでの協議内容を取りまとめ、最終的な合意形成に向けた【包括的解決ロードマップ（骨子案）】を以下の通り提示いたします。
+
+1. 【緊急食料提供および生活補償】
+・A国は、喪失した年間8,000トン相当の米を政府備蓄等からB国へ速やかに無償引き渡し・提供する。
+・A国は、被災農地・農家に対する適切な生活補償および損害賠償を全額負担する。
+
+2. 【農地復旧と現地共同調査】
+・A国費用負担のもと、不発弾等の安全確認、土壌浄化、農地復旧を速やかに実施する。
+・COORDINATORおよびB国・A国の三者による現地調査・復旧進捗確認体制を構築する。
+
+3. 【原因究明と再発防止策の策定】
+・A国軍当局による原因調査結果を透明性をもって完全公表し、関係国へ共有する。
+・当該地域での演習・飛行ルールの抜本的見直しを含む具体的な再発防止策を公表・実施する。
+
+4. 【第三者モニタリングと地域食料市場の安定化】
+・COORDINATORは、補償履行および復旧プロセスの進捗を定期的に検証・報告（モニタリング）する。
+・C国およびCOORDINATORは、国際食料市場の価格高騰や投機の抑止、円滑な食料流通に向けたモニタリングと連携を行う。
+
+各国の皆様におかれましては、上記骨子案に対するご意見および最終合意に向けたご承諾の意向をお聞かせいただけますようお願い申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="2" data-round="4">
+<h2>第2回・第4ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-2-message:4:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:B:0&#x27;, &#x27;message:3:C:0&#x27;, &#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:A:0">B国政府、C国政府、およびCOORDINATOR代表の皆様へ
+
+COORDINATORより提示された【包括的解決ロードマップ（骨子案）】、ならびにB国およびC国の皆様のご承認を深く感謝・尊重いたします。
+
+A国政府は、本【包括的解決ロードマップ（骨子案）】の全項目（緊急食料提供・補償、農地復旧と現地共同調査、原因究明と再発防止策、第三者モニタリング・市場安定化）を全面的に受諾・承認いたします。
+
+我が国は、B国政府の提案に従い、本骨子案に基づく「四者合意文書（協定書）」の策定および最終署名手続きに即座に応じる用意がございます。
+
+本合意に基づき、1ヶ月以内の第一弾米支援（3,000トン）の受渡準備、合同作業部会の立ち上げ、および軍直通ホットラインの設置等、ロードマップ通りの義務履行を迅速かつ誠実に推進してまいります。
+
+事態の平和的・建設的な解決に向けたCOORDINATOR、B国、C国の皆様のご協力に重ねて感謝申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-2-message:4:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:A:0&#x27;, &#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:B:0">【B国政府声明：包括的解決ロードマップ（骨子案）への全面承諾および最終合意の受諾】
+
+COORDINATORよりご提示いただきました「包括的解決ロードマップ（骨子案）」、ならびにA国政府より提示された具体的な履行ロードマップ（緊急米供給・費用全額負担・合同作業部会設置・ホットライン開設等）について、B国政府として完全に受諾・承認することを表明いたします。
+
+我が国は以下の内容をもって最終合意とし、速やかな履行手続きへ移行することを求めます：
+
+1. 【包括的解決ロードマップの正式承認】
+COORDINATORが提示した1〜4の全項目（食料補償・生活補償、農地復旧・共同調査、原因究明・再発防止策、第三者モニタリング・市場安定化）を最終的な解決枠組みとして全面的に承認・導入します。
+
+2. 【A国履行スケジュールへの合意と受入手続きの開始】
+・1ヶ月以内の第1弾（米3,000トン）、3ヶ月以内の残量（米5,000トン）の無償引渡計画に同意し、受入手続きおよび品質確認を開始します。
+・現地安全確認・土壌浄化・農地復旧および補償査定のための「合同作業部会」の設置、ならびに直通通信ライン（ホットライン）の開通を承認し、共同作業に着手します。
+
+3. 【四者合意文書の締結と履行開始】
+本ロードマップ案および各国の役割（COORDINATORのモニタリング、C国の市場安定化協力等）を明記した正式な四者合意文書の採択・署名を完遂し、早期の農地復旧と地域の安定化に尽力してまいります。
+
+A国政府の誠意あるご対応、COORDINATORの卓越した調整、およびC国の温かい協力姿勢に改めて深く感謝申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-2-message:4:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:A:0&#x27;, &#x27;message:3:B:0&#x27;, &#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:C:0">COORDINATORより提示いただきました【包括的解決ロードマップ（骨子案）】、ならびにA国からの具体的な履行スケジュールとB国による受入表明を、C国として全面的に支持・承認いたします。
+
+我が国は以下の通り、最終合意に向けた意思を表明いたします：
+
+1. 【包括的解決ロードマップ（骨子案）への全面承認】
+緊急食料供給、農地復旧、再発防止策、およびCOORDINATORによる第三者モニタリングを含む4項目のロードマップ骨子案に完全に同意いたします。
+
+2. 【四者合意文書（協定書）への署名・参加】
+B国よりご提案のあった正式な四者合意文書（協定書）の策定・締結手続きに賛同し、C国として本協定に署名・参加する準備があります。
+
+3. 【市場安定化と履行プロセスの継続支援】
+A国による8,000トンの米無償提供および復旧作業が円滑に進むよう、地域食料市場の価格・流通モニタリングを継続し、国際社会および市場に対する安心感の醸成に引き続き尽力いたします。
+
+全参加国の誠実かつ迅速なご対応により、極めて建設的な解決の道筋が確立されたことを高く評価いたします。早期の合意文書締結と履行開始を期待いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-2-message:4:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:A:0&#x27;, &#x27;message:3:B:0&#x27;, &#x27;message:3:C:0&#x27;, &#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:COORDINATOR:0">【地球調整機関（COORDINATOR）からの全会一致による最終合意宣言】
+
+各国の皆様（A国、B国、C国）
+
+各国の迅速かつ誠意あるご対応により、本ミサイル着弾事案に関し、全参加国（A国・B国・C国および当機関）の意向が完全に合致いたしましたことを深く歓迎いたします。
+
+これまでの協議成果に基づき、以下の通り【ミサイル着弾事案に関する包括的解決協定（四者合意）】の成立を宣言いたします。
+
+1. 【緊急食料補償および生活賠償の履行】
+・A国は、喪失した年間8,000トン分の米について、政府備蓄等からB国へ無償提供する（1ヶ月以内に3,000トン、3ヶ月以内に残り5,000トンを引渡完了。輸送・検査等の費用は全額A国負担）。
+・被災農家に対する生活補償および損害賠償全額をA国が速やかに拠出・支払う。
+
+2. 【農地復旧と合同現地調査】
+・A国費用負担のもと、B国・A国・COORDINATORによる合同作業部会を設置し、不発弾処理・土壌浄化・農地復旧を優先的に実施する。
+
+3. 【原因究明・再発防止策および信頼醸成】
+・A国軍当局による事故原因調査結果を透明性をもって完全公表・共有する。
+・当該地域での演習・飛行ルールの抜本的見直しを行うとともに、A・B両国軍当局間の直通通信ライン（ホットライン）を速やかに開設・運用する。
+
+4. 【第三者モニタリングと地域食料市場の安定化】
+・当機関（COORDINATOR）は、食料引き渡しおよび農地復旧プロセスの履行状況を継続的に第三者モニタリングし、定期報告を行う。
+・C国およびCOORDINATORは、リアルタイムの価格・流通モニタリングを通じて国際食料市場の過度な変動および投機を抑止する。
+
+本合意により、平和的対話による主権・安全の尊重、被害の完全な補償、および地域食料安全保障の維持が確立されました。各国の建設的な外交的努力に深く敬意を表します。
+
+当機関は本合意に基づき、誠実に各措置が履行されるよう継続してモニタリングおよび調整業務を進めてまいります。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="2" data-round="5">
+<h2>第2回・第5ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-2-message:5:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:B:0&#x27;, &#x27;message:4:C:0&#x27;, &#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:A:0">B国政府、C国政府、およびCOORDINATOR代表の皆様へ
+
+COORDINATORによる【ミサイル着弾事案に関する包括的解決協定（四者合意）】の成立宣言、ならびにB国およびC国の皆様の誠意あるご対応に心より感謝申し上げます。
+
+A国政府は、本協定の成立を全面的に歓迎し、定めていただいた全ての事項（米8,000トンの無償提供、農地復旧・生活補償費用負担、合同作業部会の運用、原因調査結果の完全公表、再発防止策および軍ホットラインの開設・運用、COORDINATORによる第三者モニタリングの受入等）を責任をもって誠実に履行してまいります。
+
+我が国はすでに、第一弾となる米3,000トンの輸送受渡準備および合同作業部会の設置に向けた実務協議の準備に着手しております。
+
+対話を通じた平和的かつ包括的な解決の達成に深く感謝申し上げますとともに、地域の食料安全保障の維持と今後の信頼回復に向けて全力を尽くすことを誓約いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-2-message:5:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;, &#x27;message:4:C:0&#x27;, &#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:B:0">【B国政府声明：四者合意の成立確認と履行に向けた準備着手について】
+
+COORDINATORによる「ミサイル着弾事案に関する包括的解決協定（四者合意）」の成立宣言、ならびにA国およびC国の受諾意思を心より歓迎し、深く感謝申し上げます。
+
+我が国は、成立した四者合意に基づき、以下の履行・実施手続きへ迅速に移行してまいります：
+
+1. 【緊急食料（米8,000トン）受入体制の確立】
+A国より無償提供される第1弾（3,000トン）の米について、港湾・保管倉庫および品質検疫体制を迅速に整え、COORDINATORの立会いのもとで円滑な受渡しを推進します。
+
+2. 【合同作業部会の設置と現地復旧の開始】
+A国およびCOORDINATORとの合同作業部会を直ちに立ち上げ、被災農地における不発弾の安全点検・土壌浄化・農地復旧作業および被災農家への補償手続きを最優先で進めます。
+
+3. 【地域安定と再発防止の継続】
+A国との直通通信ライン（ホットライン）を開設・活用し、軍事事故の再発防止と信頼醸成に努めるとともに、C国・COORDINATORと連携して地域食料市場の安定に寄与してまいります。
+
+対話を通じた平和的・建設的な解決を実現していただいた関係各国の皆様に、改めて深く敬意と感謝の意を表します。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-2-message:5:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;, &#x27;message:4:B:0&#x27;, &#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:C:0">COORDINATORによる【ミサイル着弾事案に関する包括的解決協定（四者合意）】の成立宣言を、C国として心より歓迎いたします。
+
+事態の発生から迅速かつ平和的な対話を通じて、全参加国の合意のもとで主権尊重・完全補償・農地復旧・再発防止策および市場安定化に資する包括的解決が確立されたことは、地域全体の平和と安定における極めて重要な成果です。
+
+A国およびB国両政府の誠実で高度な外交的ご対応、ならびにCOORDINATORの卓越した調整力に深く敬意を表します。
+
+我が国は協定に基づき、A国による8,000トンの米無償供給および農地復旧が円滑に進行するよう、地域食料市場の価格・流通モニタリングを継続し、二次的な経済・市場混乱の予防と市場の安心感醸成に万全を期してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-2-message:5:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;, &#x27;message:4:B:0&#x27;, &#x27;message:4:C:0&#x27;]</p>
+<blockquote data-message-id="message:5:COORDINATOR:0">【地球調整機関（COORDINATOR）からの総括および履行フェーズ移行のお知らせ】
+
+各国の皆様（A国、B国、C国）
+
+四者合意による『ミサイル着弾事案に関する包括的解決協定』の成立を正式に確認し、当機関は本日より合意事項の履行・検証フェーズへと移行いたします。
+
+今後は以下の通り、合意内容の着実な実施をサポートおよびモニタリングしてまいります：
+
+1. 【食料支援モニタリング】1ヶ月以内の第1弾（米3,000トン）および3ヶ月以内の残量（5,000トン）の引渡・ロジスティクスへの第三者立ち会い・検証。
+2. 【復旧支援・現地調査】A国・B国・当機関の三者による「合同作業部会」の運営支援および不発弾処理・農地復旧進捗の確認。
+3. 【市場安定連携】C国とのリアルタイム情報共有を通じた地域食料市場の価格・流通監視の継続。
+
+対話を通じた平和的・建設的な解決に至った関係各国の外交的努力に改めて敬意を表するとともに、当機関は協定が完全に履行されるまで誠実に責任を果たしてまいります。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="2" data-round="6">
+<h2>第2回・第6ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-2-message:6:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:B:0&#x27;, &#x27;message:5:C:0&#x27;, &#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:A:0">B国政府、C国政府、およびCOORDINATOR代表の皆様へ
+
+COORDINATORからの履行フェーズ移行の通知を謹んで拝受いたしました。
+
+A国政府は、協定に基づき第一弾（3,000トン）の米の輸送手配、合同作業部会の速やかな立ち上げ、および軍直通ホットラインの開設・運用に向けた実務手続を着実に進めております。
+
+今後ともCOORDINATORによるモニタリングのもと、関係各国との緊密な連携を維持し、すべての約束事項を完遂いたします。重ねて皆様のご協力に深く感謝申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-2-message:6:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:B:0">【B国政府声明：履行フェーズ移行への協調確認と結びの挨拶】
+
+COORDINATORからの履行フェーズ移行のお知らせを受け、B国政府としても実務面での協調体制が整っていることを確認いたします。
+
+我が国は、A国との合同作業部会を通じた農地復旧・安全調査の推進、ならびに1ヶ月以内の第一弾（米3,000トン）無償提供の確実な受入・検疫・分配に向けて、責任をもって実務を進行させてまいります。
+
+今回の事案において、迅速かつ公正な対応を示されたA国政府、客観的で効果的な仲介を果たされたCOORDINATOR、そして市場安定化と平和的解決を支持してくださったC国政府に、改めて深く感謝申し上げます。
+
+引き続き、本協定の完全な履行を通じて、地域の平和と食料安全保障の維持に貢献してまいる所存です。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-2-message:6:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:A:0&#x27;, &#x27;message:5:B:0&#x27;, &#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:C:0">COORDINATORによる履行・検証フェーズへの移行方針に対し、C国として全面的に賛同いたします。
+
+我が国は協定内容に基づき、A国による8,000トンの米無償引き渡しおよび「合同作業部会」による農地復旧が円滑に進行するよう、COORDINATORおよび関係各国と連携して地域食料市場の価格・流通モニタリングを誠実に実施してまいります。
+
+改めて、対話を通じた平和的・建設的な包括的解決を実現されたA国・B国・COORDINATORの皆様の外交的努力に心より感謝申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-2-message:6:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:A:0&#x27;, &#x27;message:5:B:0&#x27;, &#x27;message:5:C:0&#x27;]</p>
+<blockquote data-message-id="message:6:COORDINATOR:0">【地球調整機関（COORDINATOR）からの謝意および実務調整に関するご案内】
+
+各国の皆様（A国、B国、C国）
+
+A国、B国、C国の皆様より、四者合意の成立確認および具体的な履行手続きへの迅速な着手について心強いお返事をいただき、深く感謝申し上げます。
+
+当機関（COORDINATOR）は、本日より以下の実務調整・立ち会い準備を開始しております：
+
+1. 【緊急食料提供の立ち会い】1ヶ月以内の第1弾（米3,000トン）の輸送・検疫・受領プロセスに向け、A・B両国実務担当者との日程・受渡場所の確認。
+2. 【合同作業部会の発足】現地での不発弾確認および土壌浄化・農地復旧作業に向けた三者（A国・B国・当機関）の合同作業部会の事前協議。
+3. 【市場モニタリングの連携】C国との情報共有ラインを通じた地域食料価格および流通データの継続確認。
+
+合意されたロードマップに沿って円滑な履行が進むよう、当機関は引き続き誠意をもって第三者支援および定期報告を行ってまいります。何か調整が必要な事項がございましたら、いつでも当機関までお寄せください。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="2" data-round="7">
+<h2>第2回・第7ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは3通の発言を送信。送信なし：B国。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-2-message:7:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:B:0&#x27;, &#x27;message:6:C:0&#x27;, &#x27;message:6:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:7:A:0">B国政府、C国政府、およびCOORDINATOR代表の皆様へ
+
+COORDINATORからの実務調整のご案内、ならびにB国・C国からの温かいご対応に心より感謝申し上げます。
+
+A国政府は、提示された実務手続に沿って以下の通り着実かつ厳格に対応を進めてまいります：
+
+1. 【第一弾米輸送・受渡の実務連携】
+1ヶ月以内の第一弾（米3,000トン）の輸送・検疫・受領プロセスについて、COORDINATOR立ち会いのもと、B国実務担当者との具体的な日程および受渡場所の最終調整を速やかに完了させます。
+
+2. 【合同作業部会およびホットライン運用】
+現地での不発弾確認・土壌浄化・農地復旧に向けた「合同作業部会」の事前協議に速やかに参加するとともに、軍直通ホットラインの円滑な試行・運用を開始いたします。
+
+3. 【市場監視情報共有への協力】
+C国およびCOORDINATORによる地域食料市場モニタリングに対し、必要なデータや進捗情報を迅速かつ継続的に提供いたします。
+
+今後ともCOORDINATORの検証・立ち会いのもと、全項目を誠実に完遂し、地域の信頼回復と食料安全保障の確立に全力を注いでまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-2-message:7:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:7:C:0">COORDINATORからの実務調整および立ち会い準備に関する具体的なご案内に対し、C国として深く感謝申し上げます。
+
+我が国は、合意に基づき地域食料市場の価格・流通データをリアルタイムで共有する情報ラインの確認・準備を進めており、食料市場の安定維持と不安払拭に万全を期してまいります。
+
+今後ともA国・B国・COORDINATORの皆様との緊密な連携のもと、第一弾の米引き渡しおよび農地復旧作業をはじめとする協定の着実な履行を全面的に支援してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-2-message:7:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:A:0&#x27;, &#x27;message:6:B:0&#x27;, &#x27;message:6:C:0&#x27;]</p>
+<blockquote data-message-id="message:7:COORDINATOR:0">【地球調整機関（COORDINATOR）からの履行モニタリング運用の開始と今後の定期報告について】
+
+各国の皆様（A国、B国、C国）
+
+A国、B国、C国の皆様におかれましては、協定に基づき実務手続きおよび受入・協力体制を順調に推進していただき、深く感謝申し上げます。
+
+当機関（COORDINATOR）は、各国の迅速な着手を受け、本日より【四者協定履行モニタリング体制】を正式に稼働いたしました。
+
+具体的には以下の通り、履行の進行状況を継続的に確認してまいります：
+
+1. 【食料提供モニタリング】A国・B国間の第1弾（米3,000トン）輸送・検疫・受渡日程の最終確定および現地立ち会い検証の実施。
+2. 【現地復旧・安全調査】「合同作業部会」による不発弾点検・土壌浄化・農地復旧作業の進捗状況の共有と検証。
+3. 【信頼醸成・市場安定】A・B両国軍ホットラインの運用開始の確認、およびC国との連携による地域食料市場の価格・流通データの定期点検。
+
+当機関は、協定のすべての項目が完全に履行されるまで、誠実かつ透明性の高いモニタリングと定期報告を継続してまいります。引き続き各国の皆様のご協力をよろしくお願い申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="2" data-round="8">
+<h2>第2回・第8ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。ここで観測期間が終了。第8ターンの発言への次ターンの反応は未観測。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-2-message:8:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:C:0&#x27;, &#x27;message:7:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:8:A:0">B国政府、C国政府、およびCOORDINATOR代表の皆様へ
+
+COORDINATORによる【四者協定履行モニタリング体制】の正式稼働宣言、ならびにC国およびB国の皆様の継続的なご支援・ご協力に深く感謝申し上げます。
+
+A国政府は、正式稼働したモニタリング体制のもと、以下の通り実務を確実に推進してまいります：
+
+1. 【第1弾（米3,000トン）輸送・引渡の完遂】
+COORDINATOR立ち会いのもと、B国との間で確定する日程・ルートに従い、第1弾（3,000トン）の安全かつ円滑な輸送・検疫・引渡手続きを最優先で完了させます。
+
+2. 【合同作業部会による現地復旧作業の推進】
+COORDINATORおよびB国との合同作業部会を通じて、不発弾処理および土壌浄化・農地復旧の進捗データを透明性をもって共有し、被災農家への補償実行を速やかに進めます。
+
+3. 【ホットライン運用と情報提供の継続】
+軍直通ホットラインの安定運用を図るとともに、C国およびCOORDINATORが実施する市場モニタリングに必要なデータをタイムリーに提供いたします。
+
+すべての協定項目が完全に達成されるまで、責任を持って誠実に対応を継続してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-2-message:8:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:A:0&#x27;, &#x27;message:7:C:0&#x27;, &#x27;message:7:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:8:B:0">【B国政府声明：履行モニタリング体制稼働への支持および実務協力について】
+
+COORDINATORによる「四者協定履行モニタリング体制」の正式稼働、ならびにA国およびC国による迅速かつ着実な実務対応に深く感謝申し上げます。
+
+我が国は、協定の円滑な履行に向け、以下の通り実務協調を推進しております：
+
+1. 【緊急食料（米3,000トン）受入準備】
+COORDINATORの立ち会いのもとでの第一弾受渡に向け、港湾・保管・検疫体制の調整を順調に進めております。
+
+2. 【合同作業部会の運用と復旧着手】
+被災農地における不発弾の安全点検、土壌浄化、および農地復旧工程の確定に向け、A国およびCOORDINATORとの事前協議を積極的に進めます。
+
+3. 【市場監視・情報共有の連携】
+C国およびCOORDINATORが実施する市場モニタリングにおいて、必要な情報共有や連携に協力いたします。
+
+今後もCOORDINATORのモニタリング・検証のもと、全関係国との強固な信頼関係を維持し、本協定の完全な履行に万全を期してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-2-message:8:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:A:0&#x27;, &#x27;message:7:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:8:C:0">COORDINATORによる【四者協定履行モニタリング体制】の正式稼働に関するご報告を受け、C国として心より歓迎し、全面的に支持いたします。
+
+我が国も協定の定めに則り、地域食料市場の価格・流通データの定期的な共有および監視体制を維持し、第1弾となる米3,000トンの引き渡しや農地復旧作業が円滑に進行するよう、引き続き全面的に協力してまいります。
+
+A国・B国・COORDINATORの皆様の誠実かつ迅速な実務着手に深く敬意を表しますとともに、協定の完全な履行に向けて継続して連携してまいる所存です。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-2-message:8:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:A:0&#x27;, &#x27;message:7:C:0&#x27;]</p>
+<blockquote data-message-id="message:8:COORDINATOR:0">【地球調整機関（COORDINATOR）からのモニタリング運用開始の確認と感謝】
+
+各国の皆様（A国、B国、C国）
+
+A国およびC国からの具体的な実務進捗と協力体制に関するご連絡に、心より感謝申し上げます。
+
+当機関（COORDINATOR）は、各国の迅速かつ誠実な取り組みを受け、以下の実務立ち会い・検証を継続して進めております：
+
+1. 【第一弾食料支援の現地立ち会い】A国からB国への第1弾（米3,000トン）輸送・検疫・受渡日程の最終調整および現場での第三者検証の準備。
+2. 【合同作業部会への参加】B国・A国との三者による被災農地の不発弾点検・除染・復旧スケジュールの確認と作業支援。
+3. 【食料市場データの点検】C国との連携ラインを通じた、地域食料価格および流通状況の定期点検と市場の安心感醸成。
+
+すべての協定事項が円滑かつ確実に完了するよう、当機関は引き続き関係各国の皆様と密に連携し、客観的で透明性の高いモニタリングとサポートを継続してまいります。各国の高潔な姿勢とご協力に改めて感謝申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="3" data-round="1">
+<h2>第3回・第1ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-3-message:1:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:A:0">B国政府および国民の皆様に対し、我が国のミサイルがB国民間農地に着弾するという重大な事態が発生したことについて、深い遺憾の意と謹んでお詫びを申し上げます。
+
+我が国は本件を極めて深刻に受け止めており、直ちに原因究明のための緊急内部調査を開始いたしました。不測の事態や事故の可能性を含め、事実関係の透明な解明に全力で取り組みます。
+
+また、今回の着弾によって失われた食料生産能力（年間8,000トン相当のコメ）および現地農地への被害に対し、緊急の食料支援および迅速かつ適切な対物・経済的賠償を行う用意がございます。
+
+B国との二国間協議、ならびにCOORDINATOR（地球調整機関）およびC国の皆様の立ち会いのもとでの共同事実調査や被害支援計画の策定を速やかに開始したく存じます。事態の平和的解決と地域の安定に向け、積極的な対話をお願い申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-3-message:1:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:B:0">【B国政府声明】
+A国のミサイルが我が国の民間農地に没落・着弾し、年間8,000トンにおよぶ米の生産能力が失われる甚大な被害が発生しました。
+民間施設・農地への攻撃は断じて容認できるものではなく、B国はA国に対し強く抗議します。
+
+A国においては、本件の事実関係および原因の速やかな究明、公式な謝罪、ならびに被害に対する適切な補償を求めます。
+また、COORDINATORおよびC国をはじめとする国際社会に対し、本件被害の事実を共有するとともに、地域情勢の安定と食料安全保障への悪影響を最小限に抑えるための対話と支援を呼びかけます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-3-message:1:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:C:0">C国として、今回のA国ミサイルのB国農地着弾事案および8,000トンの米生産能力喪失に対し、深い懸念を表明します。我が国を含む第三国への食料価格高騰や経済的影響が懸念されます。当事国双方には事態のエスカレーション防止と冷静な対話を強く求めます。また、COORDINATORおよび関係各国とともに、国際的な食料需給および価格安定化に向けた協調策を検討したく存じます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-3-message:1:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:COORDINATOR:0">【地球調整機関（COORDINATOR）からの全対話参加国（A国・B国・C国）への呼びかけ】
+
+各国の代表者の皆様
+
+A国のミサイルがB国の民間農地に空中着弾し、年間8,000トン規模の米生産能力が喪失するという深刻な事態が発生しました。
+当機関（COORDINATOR）は強制権を有しない調整主体ですが、軍事的緊張の拡大を防ぎ、地域の食料安全保障と経済的安定を維持するため、以下の方向性での対話と協議を速やかに開始することを提案いたします。
+
+1. 事実関係の解明と緊張緩和
+・A国に対し、今回のミサイル着弾に至った経緯・原因の調査および速やかな説明、再発防止策の提示を求めます。
+・各国の軍事行動の自制と、偶発的衝突を防ぐための直接対話ルートの確立を促します。
+
+2. B国への支援と補償の協議
+・農地被害を受けたB国の食料生産能力の回復支援および被害補償について、A国・B国間での協議を支援します。
+・当機関も必要に応じ、技術支援や国際的な食料融通の調整に協力いたします。
+
+3. 地域食料市場およびC国への影響軽減
+・米供給能力の低下に伴う食料価格の高騰や経済への二次的影響を最小限に抑えるため、C国を含めた食料流通の安定化施策について協議します。
+
+各国代表の皆様におかれましては、現在の情勢に対する初期所見と、今後の協議に向けたご意向をお聞かせいただけますようお願い申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="3" data-round="2">
+<h2>第3回・第2ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-3-message:2:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:B:0&#x27;, &#x27;message:1:C:0&#x27;, &#x27;message:1:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:2:A:0">B国政府、C国政府、ならびにCOORDINATORの皆様
+
+各国の迅速かつ冷静なご対応、およびCOORDINATORからの具体的な協議提案に深く感謝申し上げます。我が国（A国）は、B国の抗議および要求、ならびにCOORDINATORの提案内容を真摯に受け止め、以下の具体的施策と協議体制の立ち上げを申し出ます。
+
+1. 原因調査と透明性の確保
+・現在進行中の内部調査の初期分析を踏まえ、ミサイルシステムの不具合および制御不能に陥った経緯について、判明した事実から順次COORDINATORおよび関係国へ透明性を向上させて開示いたします。
+・事実解明に向けたCOORDINATOR主導の合同事前協議・専門家査察を受け入れる準備がございます。
+
+2. 8,000トン分の食料補償と農地復旧支援
+・被害を受けた年間8,000トン相当のコメの生産能力低下に対し、我が国が保有・調達する同等品質の米8,000トンを無償提供（即時引き渡し）し、食料安全保障への短期的影響を相殺いたします。
+・着弾箇所の農地復旧（土壌・インフラ整備）にかかる全費用を負担し、必要な技術支援・人員派遣を速やかに行います。
+
+3. 再発防止と軍事的緊張の緩和
+・当該ミサイルシステムの運用および関連演習を当面停止いたします。
+・偶発的衝突や誤認を防ぐため、B国軍事当局との直接的な緊急連絡ルート（ホットライン）の設置を提案いたします。
+
+4. 食料価格の安定化（C国への配慮）
+・C国が懸念されている地域市場での食料価格高騰を防ぐため、COORDINATORやC国と連携し、食料流通の安定化枠組みに積極的に協力いたします。
+
+二国間および四者協議を通じて、早期の合意形成と実行を目指したく存じます。何卒よろしくお願い申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-3-message:2:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:2:B:0">【B国政府からの協議方針に関する声明】
+
+A国からの迅速な謝罪、事態解決に向けた姿勢、ならびに補償・支援の意向を受け止めます。我が国は、国民の安全確保と主権・食料安全保障の回復を最優先としつつ、事態の平和的・包括的解決に向け以下の具体的な協議フレームワークの立ち上げを提案いたします。
+
+1. 第三国・機関立ち会いによる合同事実調査委員会の設置
+・A国の内部調査に加え、COORDINATORおよびC国の専門家が立ち会う「合同事実調査委員会」を速やかに発足させ、着弾に至った原因・経緯および農地の汚染・損壊状況の客観的な把握を行います。
+
+2. 食料供給補償および農地復旧作業部会の開始
+・失われた年間8,000トン相当の米供給能力に対する「緊急食料融通（代替食料の無償提供）」の実施スキームの早期策定。
+・被害を受けた民間農地の不発弾調査・土壌除染・インフラ修復費用および農家に生じる経済的損害に対する全額補償手続の確立。
+
+3. 地域食料市場の安定化に向けた協調（C国・COORDINATORとの連携）
+・国際市場での価格高騰や供給不安を防ぐため、COORDINATORおよびC国と連携し、食料流通の安定化施策を同時に進めます。
+
+4. 再発防止措置と緊急連絡ルート（ホットライン）の構築
+・同様の偶発事故を防ぐため、A国に対し軍事運用の透明性確保策の提示を求めるとともに、両国間の直接かつ即時対話が可能なホットラインの開設を要求します。
+
+我が国は、上記条件に基づく真摯かつ具体的な対話を通じて、本件の円満かつ早期の解決を図る所存です。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-3-message:2:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:A:0&#x27;, &#x27;message:1:B:0&#x27;, &#x27;message:1:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:2:C:0">C国政府より、A国・B国およびCOORDINATORの皆様へ意見と提案をお伝えします。
+
+A国が謝罪と原因究明、被害補償の意向を速やかに示されたこと、ならびにB国が対話を通じた解決と安定化を呼びかけられた姿勢を高く評価いたします。
+
+我が国C国は、本事案による国際的な食料市場の混乱やコメ価格高騰など、第三国への二次的経済影響を最小限に抑える観点から、以下の協力を提案いたします。
+
+1. 中立的オブザーバーとしての協議立ち会い
+A国・B国間で行われる事実調査および被害補償・復旧策に関する協議に対し、COORDINATORと共に中立的な立場での立ち会いおよび協力を行う準備がございます。
+
+2. 食料需給および市場価格の安定化協力
+失われた年間8,000トンの生産能力による食料需給の逼迫を防ぐため、関係国および国際機関と連携し、一時的な食料融通や市場の過剰な価格変動を防止するためのモニタリングに協力いたします。
+
+事態の早期収束と地域経済・食料安全保障の安定に向け、引き続き当事国およびCOORDINATORとの連携を密にしてまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-3-message:2:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:A:0&#x27;, &#x27;message:1:B:0&#x27;, &#x27;message:1:C:0&#x27;]</p>
+<blockquote data-message-id="message:2:COORDINATOR:0">【地球調整機関（COORDINATOR）より全対話参加国（A国・B国・C国）への協議進展と具体提案】
+
+各国の迅速かつ対話に前向きなご表明を歓迎いたします。A国のお詫びと補償・原因解明の姿勢、B国の冷静かつ建設的な要請、C国の平和維持および食料安定化への協力姿勢により、平和的解決に向けた共通の基盤が確認できました。
+
+当機関（COORDINATOR）は、各国の意向に基づき、以下の具体的な3課題の作業枠組みの設置を提案いたします。
+
+1. 【共同事実調査および透明性の確保】
+・A国主導の内部調査結果を迅速に共有するとともに、COORDINATORおよびC国立ち会いのもと、着弾原因の検証と再発防止策の策定を行う協力体制を立ち上げます。
+
+2. 【B国への緊急食料補償および農地復旧計画】
+・失われた年間8,000トン相当のコメ供給能力に対し、A国による緊急食料提供・経済補償の具体的スケジュールの作成を調整します。
+・B国の農地復旧・生産能力回復に向けた技術・資金支援の枠組みを整理します。
+
+3. 【地域食料市場の安定化（C国連携）】
+・供給不足による地域的な食料価格高騰を防ぐため、C国とも連携した融通措置や市場監視を行います。
+
+つきましては、各国代表におかれましては、本協議枠組みへの参加可否および、緊急食料補償・復旧支援の具体的期日や方法に関するご意見・ご要望をお寄せいただけますようお願いいたします。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="3" data-round="3">
+<h2>第3回・第3ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-3-message:3:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:B:0&#x27;, &#x27;message:2:C:0&#x27;, &#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:A:0">B国政府、C国政府、ならびにCOORDINATORの皆様
+
+各国の前向きで建設的なご提案に深く感謝申し上げます。我が国（A国）は、COORDINATORよりご提案いただきました3つの作業枠組み（「共同事実調査」「緊急食料補償および農地復旧計画」「地域食料市場の安定化」）に全面的な参加を表明いたします。
+
+B国およびCOORDINATORからの具体的な要請に応えるため、以下の実行計画および期日案を提示させていただきます。
+
+1. 【8,000トン相当の食料補償・無償引き渡し】
+・我が国が保有・確保する同等品質の米8,000トンについて、COORDINATORおよびB国との調整のもと、速やかに引き渡し手続を開始します。第1陣として4,000トンを即時出荷し、残る4,000トンについても1か月以内にB国へ引渡完了とすることを約束いたします。
+
+2. 【農地復旧・除染・損害補償】
+・B国の要請に基づき、不発弾の有無確認、土壌除染、インフラ修復作業にかかる全費用および農家への経済的補償金を全額負担いたします。
+・B国の主権を最優先とし、B国政府の同意・要請に応じて技術専門家チームおよび修復機材を速やかに現地派遣いたします。
+
+3. 【合同事実調査および軍事的透明性・ホットラインの構築】
+・COORDINATORおよびC国の専門家が参加する「合同事実調査委員会」に対し、我が国の内部調査データおよびミサイルシステムの技術記録を全面的に開示いたします。
+・B国軍事当局との二国間緊急連絡ルート（ホットライン）を直ちに開設し、運用を開始できるよう、実務者協議を即時開始したく存じます。
+
+我が国は責任を果たすべく、提示したスケジュールの確実な履行と地域の安定に誠心誠意取り組んでまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-3-message:3:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;, &#x27;message:2:C:0&#x27;, &#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:B:0">【B国政府からの合意表明および実務協議開始の提案】
+
+COORDINATORからの具体提案、ならびにA国およびC国の真摯なご対応に心より感謝申し上げます。
+我が国（B国）は、COORDINATORより提示された3課題の作業枠組み（①共同事実調査、②緊急食料補償・農地復旧、③地域食料市場の安定化）に全面的に同意し、参加することを表明いたします。
+
+また、A国より提示された具体策（米8,000トンの即時無償提供、農地復旧費用の全額負担、関連ミサイルシステムの運用停止、ホットライン設置）を高く評価し、これを基本的に受け入れることを表明いたします。
+
+つきましては、事態の速やかな解決と被害回復に向け、以下の実務プロセスの即時開始を提案いたします。
+
+1. 【食料補償の受け入れ・引き渡し手続】
+・A国による米8,000トンの迅速かつ円滑な受渡しのための実務協議（物流・品質確認等）の即時開始。
+
+2. 【合同事実調査および現地農地復旧の開始】
+・COORDINATORおよびC国の専門家立ち会いのもと、現地農地の安全確認（不発弾査察）、土壌・インフラ復旧計画の現地調査の開始。
+・A国の内部調査結果の共有と透明性の検証。
+
+3. 【二国間ホットラインの開設および協定策定】
+・防衛・外交当局間での緊急連絡ルート（ホットライン）の開通手続き。
+
+我が国は、C国およびCOORDINATORの立ち会いのもと、上記実務事項に関する協定の早期締結と誠実な履行を目指して全力で協力してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-3-message:3:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;, &#x27;message:2:B:0&#x27;, &#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:C:0">C国政府より、A国・B国およびCOORDINATORの皆様へ表明いたします。
+
+COORDINATORよりご提案いただいた3つの作業枠組み（共同事実調査、緊急食料補償・農地復旧、地域食料市場の安定化）について、我が国（C国）は全面的に賛同し、積極的な参加と協力を表明いたします。
+
+1. 【食料市場安定化と8,000トン補償の評価】
+A国から提示された「同等品質の米8,000トンの無償提供（即時引き渡し）」およびB国での早期受け入れ協議は、地域全体の食料需給逼迫と価格高騰リスクを直接的に緩和するものであり、極めて意義深い対応と評価いたします。C国としても、市場の価格変動モニタリングおよび情報共有に引き続き強力に協力いたします。
+
+2. 【共同事実調査および復旧協議への協力】
+中立的な立場から、COORDINATORおよび両国とともに調査・検証枠組みに立ち会い、透明性向上と再発防止策の策定に貢献いたします。
+
+各国が示す建設的な対話姿勢を改めて歓迎するとともに、本協議枠組みを通じた早期の正式合意と円滑な履行を強く期待いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-3-message:3:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;, &#x27;message:2:B:0&#x27;, &#x27;message:2:C:0&#x27;]</p>
+<blockquote data-message-id="message:3:COORDINATOR:0">【地球調整機関（COORDINATOR）より全対話参加国（A国・B国・C国）への包括的合意協定案の提示】
+
+各国の真摯かつ建設的なご提案に心より感謝申し上げます。A国、B国、C国の意向が非常に高い次元で一致していることを踏まえ、当機関（COORDINATOR）は本事案の完全な解決と地域の安定化に向けた「包括的解決合意協定案」を以下の通り取りまとめました。
+
+--------------------------------------------------
+【包括的解決合意協定案（骨子）】
+
+1. 合同事実調査委員会の設置および査察
+・A国・B国・C国・COORDINATORの専門家からなる「合同事実調査委員会」を速やかに発足させる。
+・A国からの原因調査報告の検証、および着弾現場での不発弾調査・被害状況の客観的確認・検証を実施する。
+
+2. 食料補償および農地復旧手続
+・A国は、同等品質の米8,000トンをB国へ即時無償提供し、引き渡し手順を速やかに確定させる。
+・A国は、農地の不発弾除去、土壌除染、インフラ修復にかかる費用全額を負担し、B国と協力して復旧作業を進める。
+
+3. 地域食料市場の安定化とモニタリング（C国との連携）
+・C国およびCOORDINATORの協力のもと、地域食料市場の価格変動および需給状況に関するモニタリング体制を立ち上げ、価格急騰の防止策を講じる。
+
+4. 再発防止と軍事ホットラインの設置
+・A国は当該ミサイルシステムの運用・演習を一時停止する。
+・A国・B国間の軍事当局間緊急連絡ルート（ホットライン）を開設し、偶発的衝突の防止を確実に推進する。
+--------------------------------------------------
+
+各国代表におかれましては、本合意協定案の内容についてのご承認、ならびに署名・発効に向けた各国の最終確認をお願い申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="3" data-round="4">
+<h2>第3回・第4ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-3-message:4:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:B:0&#x27;, &#x27;message:3:C:0&#x27;, &#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:A:0">COORDINATOR、B国政府、ならびにC国政府の皆様
+
+COORDINATORより提示いただきました「包括的解決合意協定案」について、我が国（A国）は内容を全面的に承認し、正式に合意・署名することを表明いたします。
+
+我が国は本協定に基づき、以下の履行事項を速やかかつ誠実に実施してまいります。
+
+1. 【合同事実調査への全面協力】
+・合同事実調査委員会の立ち上げを歓迎し、内部調査データおよび関連技術資料の開示、現地調査の受け入れと連携に全面的に協力いたします。
+
+2. 【食料補償および農地復旧の確実な履行】
+・合意通り、同等品質の米8,000トンの無償提供（第1陣4,000トンの即時出荷を含む）を速やかに実行いたします。
+・B国農地の不発弾除去、土壌除染、インフラ修復作業にかかる費用負担と技術協力を誠実に進めます。
+
+3. 【地域食料市場の安定化】
+・C国およびCOORDINATORによる市場モニタリング体制に協力し、地域市場における食料価格の急騰・流動性不安の防止に全力で寄与いたします。
+
+4. 【再発防止策とホットライン運用】
+・当該ミサイルシステムの運用停止措置を継続するとともに、B国軍事当局との緊急連絡ルート（ホットライン）の開通手続きおよび運用を開始いたします。
+
+本協定の円滑な発効と確実な履行を通じ、被害の早期回復と地域の平和・安定の維持に尽力してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-3-message:4:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:A:0&#x27;, &#x27;message:3:C:0&#x27;, &#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:B:0">【B国政府からの包括的解決合意協定案に関する最終承認の表明】
+
+COORDINATORより提示されました「包括的解決合意協定案」について、我が国（B国）は全面的に承認・支持することを表明いたします。
+
+1. 【包括的解決合意協定案への承認】
+・合同事実調査委員会の設置、食料補償（米8,000トンの即時無償提供）および農地復旧手続き、地域食料市場の安定化、再発防止策および二国間ホットラインの開設を含むすべての骨子項目に同意し、本協定の早期署名および発効に賛同いたします。
+
+2. 【真摯な対応への感謝と今後の履行】
+・A国による誠意あるお詫びと迅速な補償・再発防止策の提示、C国による地域市場安定化と調査協力へのご寄稿、ならびにCOORDINATORによる円滑かつ迅速な取りまとめに深甚なる謝意を表します。
+
+我が国は、国民の安全確保と被害を受けた農地および農業者の迅速な復旧・再生に向け、関係各国およびCOORDINATORの協力のもと、本協定に基づく各実務プロセスの確実な履行に全力を尽くしてまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-3-message:4:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:C:0">C国政府より、COORDINATOR、A国政府およびB国政府の皆様へ最終表明いたします。
+
+COORDINATORより提示された「包括的解決合意協定案（骨子）」について、我が国（C国）は全面的に承認し、正式に合意・署名することを表明いたします。
+
+A国およびB国が極めて誠実かつ迅速な対話を通じて本協定に達された姿勢を高く評価いたします。本協定に基づき、A国による米8,000トンの即時補償および農地復旧が迅速に遂行され、また軍事ホットライン開設等により地域の安全保障環境が大幅に改善されることを確信しております。
+
+C国は、協定に定められた「地域食料市場の安定化とモニタリング」および「合同事実調査委員会への協力・立ち会い」について、当事国およびCOORDINATORと連携し、真摯にその責任を果たしてまいります。
+
+本協定の速やかな発効と円滑な履行を強く支持いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-3-message:4:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:A:0&#x27;, &#x27;message:3:B:0&#x27;, &#x27;message:3:C:0&#x27;]</p>
+<blockquote data-message-id="message:4:COORDINATOR:0">【地球調整機関（COORDINATOR）より全対話参加国（A国・B国・C国）への合意成立の宣言】
+
+A国、B国、C国の各代表者の皆様
+
+各国の迅速かつ誠実なご対応とご英断に心から敬意と感謝を表します。
+
+当機関より提示いたしました「包括的解決合意協定案」に対し、全当事国（A国・B国・C国）より全面的なご同意をいただきました。これにより、本件ミサイル着弾事案に関する包括的解決協定が正式に成立したことを宣言いたします。
+
+【合意事項および実行プロセス】
+1. 【合同事実調査】A国・B国・C国・COORDINATORによる合同事実調査委員会を速やかに発足させ、原因検証と透明性の確保を進めます。
+2. 【食料補償・農地復旧】A国による米8,000トンの引き渡し（第1陣4,000トンの即時出荷等）および農地復旧・損害補償手続きを速やかに開始します。
+3. 【市場安定化】C国およびCOORDINATORの協力のもと、地域食料市場のモニタリングを実施し、価格高騰の防止策を維持・推進します。
+4. 【再発防止】該当ミサイルシステムの運用停止の継続、およびA国・B国間での二国間緊急連絡ルート（ホットライン）の運用を開始します。
+
+当機関（COORDINATOR）は、本協定の全項目が円滑かつ確実に履行されるよう、今後もモニタリングおよび必要な調整・協力を継続してまいります。各国の理性的かつ協調的なご対応により、地域の平和と食料安全保障が守られたことを深く歓迎いたします。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="3" data-round="5">
+<h2>第3回・第5ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-3-message:5:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:B:0&#x27;, &#x27;message:4:C:0&#x27;, &#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:A:0">COORDINATOR、B国政府、ならびにC国政府の皆様
+
+COORDINATORによる「包括的解決合意協定」の成立宣言を真摯に受け止め、B国およびC国の皆様の理性的かつ建設的なご対応に心より深謝申し上げます。
+
+我が国（A国）は、当事国としての責任を重く受け止め、本日成立いたしました協定に基づき、以下の履行事項を確実かつ最優先で推進してまいります。
+
+1. 【米8,000トンの即時無償提供】
+・第1陣4,000トンの即時出荷手続を完了させ、残る4,000トンにつきましても定めたスケジュールに沿って確実に引き渡しを実施いたします。
+
+2. 【農地復旧および損害補償】
+・B国の主権と意向を全面的に尊重し、現地農地の不発弾調査、土壌除染、インフラ修復にかかる費用負担および技術支援を誠実に遂行いたします。
+
+3. 【合同事実調査およびホットラインの運用】
+・発足する合同事実調査委員会への技術資料・データの完全開示を継続するとともに、B国との二国間緊急連絡ルート（ホットライン）の確実な運用により再発防止に万全を期します。
+
+4. 【地域食料市場の安定化協力】
+・COORDINATORおよびC国と密に連携し、地域市場における食料価格の安定化と信頼回復に貢献いたします。
+
+本協定の確実な履行を通じて、被害の早期復旧と地域の平和・安定、そして各国との信頼関係の再構築に全力を尽くすことを改めてお約束いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-3-message:5:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;, &#x27;message:4:C:0&#x27;, &#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:B:0">【B国政府からの包括的解決協定成立に伴う確認および今後の履行声明】
+
+COORDINATORによる「包括的解決協定」の成立宣言を心より歓迎し、我が国（B国）としても本協定の正式発効を確認いたします。
+
+本件ミサイル着弾という甚大な事態に対し、A国による誠意あるお詫心と迅速な補償・再発防止措置、C国による中立的かつ建設的な協力、ならびにCOORDINATORの迅速な調停のもと、対話を通じた平和的かつ包括的な解決に至ったことは、地域全体の安定と食料安全保障にとって極めて重要な意義を持つものです。
+
+我が国は協定の誠実な履行に向け、以下の実務作業を速やかに進めてまいります。
+
+1. 【合同事実調査および現地安全確認】
+・合同事実調査委員会を受け入れ、着弾箇所の不発弾査察および被害範囲の正確な把握・検証を円滑に進行させます。
+
+2. 【食料補償の受け取りと農地復旧】
+・A国からの米8,000トン（第1陣4,000トンの即時出荷を含む）の受渡手続きを進め、国内供給の安定化と被害農家への優先的支援に充当します。
+・A国の費用負担・技術協力のもと、土壌除染および農業インフラの復旧作業に直ちに着手します。
+
+3. 【緊急連絡ルート（ホットライン）の運用開始】
+・A国軍事当局との二国間ホットラインを開設・運用し、将来的な偶発的リスクの徹底した排除に努めます。
+
+関係各国の誠意とご尽力に重ねて感謝申し上げます。B国は今後も地域平和と安定の維持に尽力してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-3-message:5:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;, &#x27;message:4:B:0&#x27;, &#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:C:0">【C国政府による合意成立歓迎および履行協力の表明】
+
+COORDINATORによる「包括的解決合意協定」の正式な成立宣言を、我が国（C国）は心より歓迎いたします。
+
+A国およびB国の極めて誠実かつ理性的で迅速なご対応、ならびにCOORDINATORの円滑で卓越した主導と調整に対し、改めて深く敬意と感謝を表します。
+
+我が国は、協定に定められた「地域食料市場の安定化に向けたモニタリングおよび情報共有」ならびに「合同事実調査委員会への立ち会い・協力」について、責任をもって確実に履行し、地域の平和と食料安全保障の維持に貢献してまいります。
+
+本協定の円滑な履行と、地域の持続的な安定および復興を確信しております。ありがとうございました。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-3-message:5:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;, &#x27;message:4:B:0&#x27;, &#x27;message:4:C:0&#x27;]</p>
+<blockquote data-message-id="message:5:COORDINATOR:0">【地球調整機関（COORDINATOR）より全対話参加国（A国・B国・C国）への最終ご挨拶】
+
+各国の代表者の皆様
+
+事案発生から包括的解決協定の成立、そして各実務プロセスの開始に至るまで、迅速かつ極めて建設的なご対応をいただき、心より感謝申し上げます。
+
+本協定に基づく合同事実調査、米8,000トンの引渡・農地復旧、市場モニタリング、ならびにホットラインの運用等につきましては、当機関（COORDINATOR）も引き続き必要な調整や支援を行ってまいります。
+
+履行過程において更なる調整や協議が必要となった場合は、いつでも当機関をご活用ください。各国の平和的解決に向けたご英断と協調姿勢に、重ねて深く敬意を表いたします。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="3" data-round="6">
+<h2>第3回・第6ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは3通の発言を送信。送信なし：地球調整機関。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-3-message:6:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:B:0&#x27;, &#x27;message:5:C:0&#x27;, &#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:A:0">COORDINATOR、B国政府、ならびにC国政府の皆様
+
+各国の温かいお言葉とこれまでの真摯なご協力に重ねて感謝申し上げます。
+我が国（A国）は、合意協定の全事項の着実な履行に全力を尽くし、今後も責任ある主体として地域の平和と安定、そして信頼関係の維持・発展に貢献してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-3-message:6:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:A:0&#x27;, &#x27;message:5:C:0&#x27;, &#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:B:0">【B国政府からの最終メッセージ】
+
+COORDINATOR、A国政府、ならびにC国政府の皆様
+
+事案の発生から本包括的解決協定の成立・履行開始に至るまで、各国の誠意あるご対応と深いご理解に心より感謝申し上げます。
+我が国（B国）は、本協定に基づき、農地の復旧と食料安全保障の確保、そして地域情勢の安定化に向けた実務作業を着実に進めてまいります。
+
+今後とも地域の平和と発展のための協調関係を維持・発展させていけることを強く期待いたします。誠にありがとうございました。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-3-message:6:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:A:0&#x27;, &#x27;message:5:B:0&#x27;, &#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:C:0">【C国政府からの最終確認声明】
+
+A国およびB国による協定履行に向けた力強い取り組みの表明、ならびにCOORDINATORからの総括を心より歓迎いたします。
+
+我が国（C国）は、合意に基づき「合同事実調査委員会への参加・立ち会い」および「地域食料市場の価格・需給モニタリング」を確実に取り進め、当事国およびCOORDINATORと連携して地域の安定維持に尽力してまいります。
+
+本件における関係各位の真摯なご対応に重ねて感謝申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+</section>
+<section class="record-turn" data-trial="3" data-round="7">
+<h2>第3回・第7ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは0通の発言を送信。送信なし：A国・B国・C国・地球調整機関。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+</section>
+<section class="record-turn" data-trial="3" data-round="8">
+<h2>第3回・第8ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは0通の発言を送信。送信なし：A国・B国・C国・地球調整機関。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。ここで観測期間が終了。第8ターンの発言への次ターンの反応は未観測。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+</section>
+<section class="record-turn" data-trial="4" data-round="1">
+<h2>第4回・第1ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-4-message:1:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:A:0">A国政府として、この度のミサイル誤着弾事案によりB国の民間農地に重大な被害を生じさせ、年間8,000トンにおよぶコメ生産能力を喪失させたことに対し、B国国民ならびに政府へ深甚なる謝罪を申し上げます。本件は意図的な攻撃ではなく、現在事故の全容解明に向けた緊急調査を進めております。
+
+A国は誠意をもって以下の対応を迅速に講じることを表明いたします：
+1. 被害を受けたコメ生産能力（8,000トン/年）に対する緊急の食料代行供給および農地復旧・経済賠償の実施。
+2. 原因究明のためのB国およびCOORDINATORとの共同調査の受け入れと全面協力。
+3. 再発防止策の徹底と、国際食料市場および第三国（C国）への悪影響を最小限に抑えるための支援措置。
+
+平和的解決に向け、対話の窓口を常時開放いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-4-message:1:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:B:0">【B国政府声明】本日、A国のミサイルがB国の民間農地に地へ着弾し、年間8,000トン相当の米生産能力が喪失する深刻な被害が発生しました。B国は主権および民間人生活への重大な侵害として厳重に抗議します。
+
+A国に対しては、以下を強く要求します：
+1. 事実関係および着弾に至る経緯の即時開示
+2. 公式な謝罪と損害の全面的な補償
+3. 再発防止策の提示と速やかな履行
+
+また、食料供給能力の低下による地域経済および食料安全保障への影響を最小限に抑えるため、COORDINATORおよびC国に対し、食料需給調整および事態の平和的解決に向けた協力を要請いたします。B国は不必要な紛争の拡大を望んでおりませんが、国民の命と食料安全保障を守るため、断固とした対応をとる方針です。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-4-message:1:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:C:0">当国Cは、A国のミサイル着弾によるB国農地被害および年間8,000トンのコメ生産能力喪失の報を受け、深刻な懸念を表明いたします。
+
+本事案は人道的・安全保障上の問題にとどまらず、食料サプライチェーンの毀損および食料価格高騰を通じて、当国を含む国際経済へ深刻な二次的悪影響を及ぼす恐れがあります。
+
+事態の更なる拡大を防ぎ、市場および人道上の安定を取り戻すため、以下の点を呼びかけます。
+1. 事態の即時沈静化と事象の調査・対話による解決
+2. COORDINATORを通じた支援体制および食料供給安定化策の検討
+3. 食料市場の混乱防止に向けた国際協調
+
+当国は、食料価格の安定化と地域平和の回復に向け、各国およびCOORDINATORと建設的に協力する用意があります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-4-message:1:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:COORDINATOR:0">各国代表の皆様。地球調整機関（COORDINATOR）です。
+
+この度のA国ミサイルによるB国農地への着弾事件に対し、深刻な懸念を表明いたします。本事件により、B国では年間8,000トン規模の米生産能力が喪失する深刻な被害が発生しております。
+
+エスカレーションを防ぎ、地域の食料安全保障と安定を迅速に回復するため、当機関として以下の論点について各国の意向およびご提案を伺いたく存じます。
+
+1. **A国様**: 事実関係および原因（誤射等の経緯）の調査状況、ならびに謝罪・賠償・再発防止策に関するご姿勢。
+2. **B国様**: 被害の緊急評価、およびA国ならびに国際社会に求める補償・食料支援・安全保障上の措置。
+3. **C国様**: 地域経済・食料市場への二次的影響を緩和するための協力、および人道支援や対話仲介への貢献可能性。
+
+COORDINATORは強制権を有しませんが、対話のファシリテーションおよび公正な調停案の取りまとめに全力を尽くします。皆様の冷静かつ建設的な議論をお願い申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="4" data-round="2">
+<h2>第4回・第2ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-4-message:2:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:B:0&#x27;, &#x27;message:1:C:0&#x27;, &#x27;message:1:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:2:A:0">B国政府、C国政府、ならびにCOORDINATOR代表の皆様へ
+
+皆様の迅速かつ建設的なご意見に深く感謝申し上げます。B国および国際社会の皆様のご懸念を重く受け止め、A国政府として具体的な実行計画を以下の通り提案いたします。
+
+1. 【事故原因調査と共同検証チームの立ち上げ】
+初期の予備調査によれば、今回の誤着弾はシステム上の不具合および人的エラーが重なったことによる事故と判明いたしました。完全な事実関係の解明のため、COORDINATOR立ち会いのもと、B国・A国専門家による「合同事故調査委員会」を速やかに設置し、すべてのデータを全面開示いたします。
+
+2. 【緊急食料支援および農地復旧・完全賠償の具体策】
+・緊急食料供給: B国の食料需給に支障をきたさないよう、当国備蓄米より8,000トンを即時無償にてB国へ引き渡します。
+・農地復旧: 事故現場の土壌除染および原状回復工事の全費用をA国が負担し、専門機関を即時派遣します。
+・経済補償: 被害を受けた農家および地域経済への損害賠償支払いに向け、B国政府と協議の上で迅速な補償基金を立ち上げます。
+
+3. 【再発防止策と地域食料市場の安定化（C国との連携）】
+・軍事安全プロトコルの改定および国境付近での防衛運用の厳格化を即座に実施します。
+・C国を含む周辺国への食料市場価格の波及・二次的悪影響を防止するため、必要に応じて国際物流調整および市場安定化協力を推進します。
+
+当国は本件の平和的合意と誠実な履行に全力を尽くします。B国政府およびCOORDINATORの皆様には、上記計画の具体化に向けた協議の開始をお願い申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-4-message:2:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:A:0&#x27;, &#x27;message:1:C:0&#x27;, &#x27;message:1:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:2:B:0">B国政府より、A国、C国、およびCOORDINATORへ回答いたします。
+
+A国政府が迅速に謝罪を表明し、年間8,000トンの食料代行供給、農地復旧・賠償、並びに共同調査の受け入れを即座に提示した姿勢を評価いたします。
+
+事態の早期解決と食料安全保障の確保に向け、B国は以下の通り具体的な実行枠組みを提案いたします。
+
+1. **共同調査委員会の設立**
+   A国・B国・COORDINATORによる「合同事故調査・再発防止委員会」を直ちに設置し、事故原因の解明と軍事運用における具体的な再発防止策を策定・公表すること。
+
+2. **食料供給および農地復旧・賠償の具体化**
+   - **緊急食料供給**: 喪失分（8,000トン/年）の同等品質のコメ受入要件および輸送計画の策定。
+   - **農地復旧**: 着弾地の安全確認、汚染・土壌復元作業の費用全額をA国負担とし、早期再開に向けた技術協力を実施すること。
+   - **農家直接補償**: 被害を受けた地域住民・農家に対する損害賠償手続の確立。
+
+3. **広域的な食料安定化と信頼醸成**
+   C国およびCOORDINATORと連携し、地域食料市場の価格高騰を防止する需給調整に協力します。また、沿岸・国境付近における安全確保策についてA国からの定期的透明性確保措置を求めます。
+
+B国は、具体的な協定締結および共同調査の着手に向け、実務者協議に入る準備がございます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-4-message:2:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:A:0&#x27;, &#x27;message:1:B:0&#x27;, &#x27;message:1:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:2:C:0">当国Cは、A国政府による迅速な謝罪ならびに年間8,000トンに及ぶ食料代行供給・農地復旧・経済賠償の表明、そしてB国・COORDINATORとの共同調査受け入れ姿勢を強く歓迎・評価いたします。
+また、深刻な被害を受けながらも紛争拡大を避け、対話による解決と食料安全保障の確保を重視されるB国政府の冷静なご対応に敬意を表します。
+
+COORDINATORからのご問いかけに対し、当国Cとして以下の通り二次的影響の緩和に向けた貢献策を提案いたします。
+
+1. **食料市場の安定化とロジスティクス支援**
+A国からB国への8,000トンの代替食料供給がスムーズに行われ、かつ地域全体の食料市場で急激な価格高騰や買い占めが発生しないよう、当国の予備備蓄米の相互融通や調達・輸送面での物流協力を検討いたします。
+2. **国際市場のモニタリングと透明性の確保**
+今回の事態に伴う投機的取引やパニック買いを防ぐため、COORDINATORおよび関係国と連携し、食料需給情報の定期的な共有と市場監視を行います。
+3. **共同調査および協定履行の検証への協力**
+A国・B国・COORDINATORによる共同調査および補償履行の検証プロセスにおいて、第三国として客観的な協力・調整が必要であれば、これを積極的に支援いたします。
+
+当国は、本合意が早期に具体的支援スキームとして結実し、地域の食料安全保障と平和が確実に回復されるよう、全面的に協力してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-4-message:2:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第3ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:2:COORDINATOR:0">各国代表の皆様、迅速かつ極めて建設的なご対応に深く感謝申し上げます。
+
+A国の真摯な謝罪と全額補償・食料代行供給の申し出、B国の冷静かつ平和的解決を模索する姿勢、ならびにC国の市場安定化・国際協力を重視する姿勢により、事態の平和的・早期解決に向けた大きな基盤が整いました。
+
+COORDINATORとして、各国の立場と要求を包括した**「初期調停・協議フレームワーク（案）」**を提示いたします。本案に対する各国の合意可否および具体的な修正要望をお聞かせください。
+
+---
+
+### 【B国農地着弾事案に関する調停・復旧協定（草案）】
+
+1. **合同調査委員会の設置（事実解明）**
+   - A国・B国・COORDINATORの合同調査チームを立ち上げ、着弾の技術的原因究明と詳細な被害評価を実施する。
+
+2. **緊急食料補填および市場安定化（食料安全保障）**
+   - A国は、喪失された年間8,000トン相当のコメ（またはB国が求める同等の代行食料）をB国へ即時・無償で供給する。
+   - 食料市場の混乱と価格高騰を防ぐため、C国およびCOORDINATORは供給ルートの確保および物流支援に協力する。
+
+3. **農地復旧および経済賠償（賠償・復興）**
+   - 被害農地の土壌浄化・復旧支援、および影響を受けた農家・地域経済への全面的な直接補償（A国負担）を行う。
+
+4. **再発防止および軍事的透明性の確保（安全保障）**
+   - A国は事故防止策および軍事運用・通信システムの改善策を公表し、B国および国際社会への透明性を確保する。
+
+---
+
+各国の代表におかれましては、本フレームワークに対するご意見および合意に向けた条件等をご提示いただけますようお願い申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="4" data-round="3">
+<h2>第4回・第3ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-4-message:3:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:B:0&#x27;, &#x27;message:2:C:0&#x27;, &#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:A:0">B国政府、C国政府、ならびにCOORDINATOR代表の皆様へ
+
+A国政府は、COORDINATORよりご提示いただきました「B国農地着弾事案に関する調停・復旧協定（草案）」の全項目を全面的に受諾・支持いたします。
+
+また、紛争のエスカレーションを回避し、平和的かつ建設的な対話に応じてくださったB国政府、物流支援および市場安定化への協力を表明してくださったC国政府、そして公正な調停案を取りまとめていただいたCOORDINATORに心より感謝申し上げます。
+
+A国は、本協定の速やかな署名および即時履行に向けて、以下の通り行動を開始することを確約いたします：
+
+1. 【合同調査委員会の即時発足】
+COORDINATOR主導のもと、B国との「合同事故調査・再発防止委員会」を直ちに立ち上げ、軍事データの完全開示と着弾原因の解明・結果共有を行います。
+
+2. 【8,000トン備蓄米の即時引渡・物流連携】
+当国政府備蓄米8,000トンのB国への即時引き渡しを実施します。引き渡し手続きおよび物流手配においてはC国およびCOORDINATORの協力を仰ぎ、市場価格への影響を出さないスムーズな引き渡しを達成します。
+
+3. 【農地復旧・補償基金の開設】
+事故現場の土壌浄化・原状回復費用を全額負担し、専門作業チームを現地に派遣するとともに、B国政府と連携して被害農家および地域経済への補償手続を迅速に進めます。
+
+4. 【軍事安全プロトコルの刷新と定期的透明性の確保】
+誤射を防止するシステムおよび運用手順の抜本的改定を完了させ、実施状況についてB国および国際社会に対して定期的に報告・透明性を確保いたします。
+
+当国は、本協定案を正式な合意文書として締結する準備が整っております。実務者協議および署名式に向けた調整をお願い申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-4-message:3:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;, &#x27;message:2:C:0&#x27;, &#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:B:0">B国政府より、COORDINATOR、A国、およびC国へ回答いたします。
+
+COORDINATORよりご提示いただきました「B国農地着弾事案に関する調停・復旧協定（草案）」の内容を確認いたしました。本草案は、当国の食料安全保障の確保、被害農地の復旧・補償、原因究明および再発防止のすべてを包括した極めて公正かつ妥当な内容であり、B国政府として**本協定案に全面的に合意**いたします。
+
+また、迅速かつ誠意ある賠償・供給計画を示されたA国政府、物流支援および市場安定化にご協力いただくC国政府、そして見事な調停を行っていただいたCOORDINATORに心より感謝申し上げます。
+
+本合意に基づき、以下の実務プロセスの速やかな開始を提案いたします：
+1. **「合同事故調査・再発防止委員会」の即時立ち上げ**と現地調査の準備。
+2. **8,000トンの代替米供給および輸送スケジュールの受入れ調整**（C国との物流調整を含む）。
+3. **農地復旧および農家補償基金に関する実務者協議の開始**。
+
+B国は、本協定の円滑な履行に向けて全力を尽くし、地域の平和と食料安全保障の回復にコミットいたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-4-message:3:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:C:0">当国Cは、COORDINATORよりご提示いただきました「B国農地着弾事案に関する調停・復旧協定（草案）」に全面的に賛同し、本協定案への正式な合意（受諾）を表明いたします。
+
+A国による誠実かつ迅速な補償・再発防止策の提示、B国の冷静で建設的なご対応、ならびにCOORDINATORによる的確な調停により、事態が平和的かつ包括的に解決へ向かっていることを心より歓迎いたします。
+
+当国Cといたしましては、草案第2項「緊急食料補填および市場安定化」に基づき、以下の協力を迅速に実施・推進してまいります。
+
+1. **ロジスティクスおよび輸送支援**: A国からB国への8,000トンの代行食料輸送が円滑かつ迅速に行われるよう、当国の物流インフラや輸送網の優先的提供・調整に協力いたします。
+2. **食料市場の監視と安定化**: 国際市場における投機や不正な価格高騰を防止するため、食料需給情報の透明性確保とモニタリングを継続し、COORDINATORおよび関係国と密に連携いたします。
+
+本協定の早期締結および確実な履行を通じ、地域の食料安全保障と平和が急速に回復することを確信しております。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-4-message:3:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;, &#x27;message:2:B:0&#x27;, &#x27;message:2:C:0&#x27;]</p>
+<blockquote data-message-id="message:3:COORDINATOR:0">A国、B国、ならびにC国の代表の皆様
+
+各国の誠意あふれるご対応と、当機関の提示したフレームワークに対する全面的なご支持・ご協力に心より感謝申し上げます。
+
+全国家の意向が完全に一致し、具体的な実行計画および支援体制について合意が得られましたので、COORDINATORとして本件の正式な最終合意文書として**「B国農地着弾事案に関する包括調停・復興・安全協定」**の確定を宣言いたします。
+
+---
+
+### 【B国農地着弾事案に関する包括調停・復興・安全協定（確定）】
+
+1. **合同事故調査および検証（事実関係の全容解明）**
+   - A国・B国・COORDINATORによる「合同事故調査・再発防止委員会」を直ちに設置し、A国からのデータ全面開示のもとで着弾原因の解明と検証を行う。
+
+2. **緊急食料補填と国際市場の安定化（食料安全保障）**
+   - A国は備蓄米8,000トンをB国へ即時かつ無償で引き渡す。
+   - C国およびCOORDINATORは、供給物流の円滑化、市場監視、および必要に応じた予備備蓄の相互融通を実施し、地域食料価格の急騰を防ぐ。
+
+3. **農地復旧・地域経済および農家への全面補償（賠償・復興）**
+   - 被害農地の土壌除染および原状回復工事の全費用をA国が負担する。
+   - A国とB国は共同で補償基金を立ち上げ、被害農家および地域経済に対する損害賠償手続を迅速に進める。
+
+4. **再発防止策の厳格履行と軍事的透明性の確保（安全保障）**
+   - A国は軍事運用プロトコルの改定および国境付近での防衛運用の厳格化を即座に実施し、定期的な透明性確保措置をB国および国際社会へ提供する。
+
+---
+
+本協定の締結に基づき、直ちに実務者協議および合同委員会の立ち上げへ移行いたします。COORDINATORは今後も本協定の誠実な履行を注視し、必要な調整を全力で継続してまいります。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="4" data-round="4">
+<h2>第4回・第4ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-4-message:4:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:A:0">B国政府、C国政府、ならびにCOORDINATOR代表の皆様へ
+
+COORDINATORより「B国農地着弾事案に関する包括調停・復興・安全協定」の正式確定が宣言されたことを、A国政府として心より歓喜し、深く感謝申し上げます。
+
+本協定の確定を受け、A国政府はただちに以下の具体行動の実行を開始いたします：
+
+1. **【合同事故調査・再発防止委員会の即時着手】**
+   COORDINATORおよびB国専門家チームの受け入れ体制を整え、関連軍事データの完全開示と着弾原因の解明・再発防止策策定に向けた協議を開始します。
+
+2. **【備蓄米8,000トンの無償引き渡し・輸送手配】**
+   C国およびCOORDINATORの物流支援・市場モニタリングのもと、B国への備蓄米8,000トンの引き渡し手続きを直ちに実行に移します。
+
+3. **【農地復旧工事および補償基金の運用】**
+   現地における土壌除染・復旧専門チームの派遣、ならびに被害農家・地域経済への個別補償手続を迅速に推進します。
+
+4. **【軍事安全プロトコルの刷新と報告】**
+   国境付近における安全管理措置の改定を完了させ、実施状況の透明性を定期的に公表いたします。
+
+誠意あるご協力をいただきましたB国、C国、およびCOORDINATORの皆様に改めて感謝申し上げます。当国は本協定の全項目を誠実に履行し、地域の平和・安定および食料安全保障の維持・発展に永続的に寄与してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-4-message:4:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:COORDINATOR:0&#x27;, &#x27;message:3:A:0&#x27;, &#x27;message:3:C:0&#x27;]</p>
+<blockquote data-message-id="message:4:B:0">B国政府より、COORDINATOR、A国、およびC国へ最終確定に関する申告をいたします。
+
+COORDINATORによる「B国農地着弾事案に関する包括調停・復興・安全協定」の正式な確定宣言を心より歓迎し、当国としても本確定協定の成立を正式に確認・承認いたします。
+
+危機的状況において誠意をもって即時補償と誠実な対応を表明されたA国、広域物流と市場安定化において多大な協力を申し出てくださったC国、そして公平かつ迅速な調停を主導されたCOORDINATORの皆様に、改めまして深甚なる謝意を表します。
+
+B国は今後、実務者協議を通じて、8,000トンの代替食料受入、合同事故調査・再発防止委員会の運用、ならびに現地農地の復旧・農家補償手続の円滑な実施に向けて、誠実に全力を尽くしてまいります。
+
+本協定の締結と履行が、地域の持続的な平和と食料安全保障の確固たる礎となることを確信しております。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-4-message:4:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:A:0&#x27;, &#x27;message:3:B:0&#x27;, &#x27;message:3:C:0&#x27;, &#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:C:0">当国Cは、COORDINATORによる「B国農地着弾事案に関する包括調停・復興・安全協定」の正式な確定宣言を心より歓迎いたします。
+
+A国、B国、およびCOORDINATORの皆様の高度な理性と迅速な対話により、重大な事案が最速で平和的・包括的な合意へと至ったことに深く敬意を表します。
+
+当国Cは、確定された協定に基づき、A国からB国への8,000トンの備蓄米輸送に関わるロジスティクス支援、および国際食料市場における投機防止・情報共有などの市場安定化措置について、即時かつ確実に履行・協力してまいります。
+
+本協定の確実な実施を通じて、地域の食料安全保障と安定が完全に回復されることを確信しております。各国の皆様のご協力に重ねて感謝申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-4-message:4:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:A:0&#x27;, &#x27;message:3:B:0&#x27;, &#x27;message:3:C:0&#x27;, &#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:COORDINATOR:0">各国代表の皆様
+
+「B国農地着弾事案に関する包括調停・復興・安全協定」の正式発効に伴い、各国の極めて迅速かつ誠実な実務対応の開始を高く評価いたします。
+
+現在、以下の通り各実務プロセスが順調に始動しております：
+1. **合同事故調査・再発防止委員会**: 委員の選定および初期データの共有に向けた協議が開始されました。
+2. **緊急食料補填および物流支援**: A国からの8,000トンの備蓄米引き渡し計画に対し、C国の物流協力のもとで円滑な輸送ルートの確定が進められています。
+3. **補償基金および復旧作業**: 被害農地の現地調査ならびに農家補償の手続き準備が始まっております。
+
+COORDINATORは、本協定のすべての項目が完遂されるまで、各国の履行状況を継続的にモニタリングし、必要な調整・支援を行ってまいります。
+
+平和的解決と地域安定に向けた皆様の卓越した協調精神に、改めて心より敬意を表します。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="4" data-round="5">
+<h2>第4回・第5ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-4-message:5:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:B:0&#x27;, &#x27;message:4:C:0&#x27;, &#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:A:0">B国政府、C国政府、ならびにCOORDINATOR代表の皆様へ
+
+COORDINATORからの実務着手に関するご報告、ならびにB国・C国の皆様の誠実かつ迅速な連携に重ねて感謝申し上げます。
+
+A国政府におきましても、本日までに以下の実務プロセスを着実に進めております：
+1. **【備蓄米8,000トンの輸送・手配】**: C国の物流協力のもと、B国指定の受入拠点へ向けた備蓄米8,000トンの輸送手配および受渡スケジュールの調整を円滑に進めております。
+2. **【合同事故調査・再発防止委員会】**: 事故当時の運用データおよびシステム解析資料の開示準備を完了し、第1回合同会議の開催に向けて全力を尽くしております。
+3. **【現地復旧・補償基金】**: 被害農地の土壌除染作業に向けた専門技術チームの派遣手配、ならびに補償基金の初期資金調達・運用スキームの最終確認を行っております。
+
+当国は、本協定の全項目が完全に遂行されるまで、誠意と責任をもってすべての履行義務を果たしてまいります。地域の平和、安全保障、および食料市場の安定回復に向け、引き続き各国との緊密な協調を維持してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-4-message:5:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;, &#x27;message:4:C:0&#x27;, &#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:B:0">B国政府より、A国、C国、およびCOORDINATORへ実務進捗と今後の連携について連絡いたします。
+
+当国におきましても、協定に基づく各実務プロセスの受入れ体制が順調に整っております：
+1. **「合同事故調査・再発防止委員会」のB国側専門家窓口の開設**および現地受入準備の完了。
+2. **代替米8,000トンの受入港湾・保管倉庫および国内配給計画の確定**（C国との物流調整に基づく連携準備完了）。
+3. **被害農家への補償手続窓口の開設と、現地土壌調査チームの受入準備**。
+
+危機的状況から迅速に信頼回復と平和的解決への道を切り開くことができたのは、関係各国の誠意あるご対応とCOORDINATORの卓越した調整の賜物です。B国は今後も協定の完全な履行に向けて誠実に取り組んでまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-4-message:5:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;, &#x27;message:4:B:0&#x27;, &#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:C:0">A国、B国、ならびにCOORDINATOR代表の皆様へ
+
+各実務プロセスが極めて順調かつ迅速に始動していることを心より深く歓迎いたします。
+
+当国Cといたしましても、8,000トンの備蓄米引き渡しに伴う物流ルートの最適化および輸送支援調整を完了しており、引き続き市場の価格変動や需給バランスのモニタリングを密に行ってまいります。
+
+本協定のすべての項目が着実に完遂され、地域の食料安全保障と安定した市場環境が長期的に維持されるよう、当国は最後まで誠実に役割を果たしてまいります。皆様の高度な対話精神と協調に、重ねて深く感謝申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-4-message:5:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;, &#x27;message:4:B:0&#x27;, &#x27;message:4:C:0&#x27;]</p>
+<blockquote data-message-id="message:5:COORDINATOR:0">A国、B国、ならびにC国の代表の皆様
+
+「B国農地着弾事案に関する包括調停・復興・安全協定」の確定およびその速やかな実務履行の開始にあたり、各国の示された卓越した責任感と協調精神に重ねて深く感謝申し上げます。
+
+A国による誠実な補償と再発防止の実行、B国の平和と復興に向けた確固たる対応、そしてC国による迅速な物流・市場安定化支援により、予期せぬ危機が最速かつ包括的な平和的解決へと結実いたしました。
+
+本件における主要な調停手続きおよび枠組みの構築は完了いたしました。当機関（COORDINATOR）は、今後も実務者レベルでの合同事故調査、備蓄米の引渡し、農地復旧・補償手続、および市場モニタリングが最後まで滞りなく完了するよう、引き続き必要なサポートと見守りを続けてまいります。
+
+地域の持続的な平和、安定、および食料安全保障の確保に向けた皆様の真摯なご努力に、深く敬意を表します。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="4" data-round="6">
+<h2>第4回・第6ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-4-message:6:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:B:0&#x27;, &#x27;message:5:C:0&#x27;, &#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:A:0">B国政府、C国政府、ならびにCOORDINATOR代表の皆様へ
+
+COORDINATORをはじめ関係各国の皆様の卓越したリーダーシップと深い協調精神に、心より深く感謝申し上げます。
+
+A国政府は、今回確定された「B国農地着弾事案に関する包括調停・復興・安全協定」に基づくすべての実務工程（備蓄米の引渡し・現地農地復旧と経済補償・合同調査および再発防止措置の徹底）について、将来にわたり誠実かつ完遂に至るまで履行し続けることをお約束いたします。
+
+予期せぬ重大な危機に対し、対話と国際協調を通じて迅速かつ包括的な解決を導き出すことができたことは、地域の平和と食料安全保障における確固たる規範となりました。
+
+あらためてB国国民・政府の皆様、支援をいただいたC国政府、そして見事な調停を果たされたCOORDINATORに深甚なる謝意を表し、本件に関する当国からの最終報告とさせていただきます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-4-message:6:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:A:0&#x27;, &#x27;message:5:C:0&#x27;, &#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:B:0">B国政府より、A国、C国、およびCOORDINATORへ感謝と最終確認をお伝えいたします。
+
+COORDINATORによるお取りまとめ、ならびにA国およびC国の着実な実務履行の報告を拝見いたしました。
+
+本事案において、危機的状況から対話と協調を通じて迅速かつ包括的な解決に至り、各実務プロセスが計画通り順調に進行していることを高く評価いたします。B国としても、引き続き備蓄米の受入、合同調査委員会への参加、および現地復旧・補償手続を確実かつスムーズに進めてまいります。
+
+関係各国の真摯なご対応とCOORDINATORの調整に重ねて深く感謝申し上げます。今後とも地域の平和と食料安全保障の維持に向け、良好な協調関係を続けてまいりたく存じます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-4-message:6:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:A:0&#x27;, &#x27;message:5:B:0&#x27;, &#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:C:0">A国、B国、ならびにCOORDINATOR代表の皆様へ
+
+各実務プロセスの順調な進捗と確実な履行を確認でき、大変心強く存じます。
+当国Cは今後も物流面での支援および食料市場の安定化に向けたモニタリングを継続し、本協定の完全な完遂を最後まで全面的に支えてまいります。
+
+今回の危機において、対話と協調により極めて迅速かつ包括的な平和的解決を実現された皆様に深く敬意を表します。地域の持続的な平和と食料安全保障の発展に向け、引き続き関係各国との協力関係を維持してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-4-message:6:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:A:0&#x27;, &#x27;message:5:B:0&#x27;, &#x27;message:5:C:0&#x27;]</p>
+<blockquote data-message-id="message:6:COORDINATOR:0">A国、B国、ならびにC国の代表の皆様
+
+実務履行における各国の迅速かつ着実な進捗報告（8,000トンの備蓄米輸送・受入体制の確定、合同事故調査委員会の窓口開設、現地復旧・補償手続の始動、および物流支援・市場モニタリングの完了）を受け、当機関として心より感謝と敬意を表します。
+
+皆様の誠意あるご対応により、ミサイル着弾事案に伴う食料安全保障および地域安定上の懸念は、完全に解消・管理された解決プロセスへと移行いたしました。
+
+これをもって、COORDINATORによる本調停および協議促進の手続きは正式に終了といたします。今後の各実務の完遂につきましても、各国の強固な信頼関係と協調のもとで円滑に履行されることを確信しております。
+
+平和的解決に向けた各国の真摯なご貢献に、重ねて深く感謝申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="4" data-round="7">
+<h2>第4回・第7ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-4-message:7:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:7:A:0">COORDINATORをはじめ関係各国の皆様へ
+
+COORDINATORによる本調停手続きの正式終了宣言を謹んで確認いたしました。
+
+当国Aは、確定された「B国農地着弾事案に関する包括調停・復興・安全協定」の全実務工程（備蓄米の引渡し・農地復旧と補償手続・再発防止策の運用）について、今後も責任をもって確実に完遂してまいります。
+
+関係各国の温かいご理解と建設的なご協力、ならびにCOORDINATORの公正なご尽力に心より重ねて感謝申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-4-message:7:B:0">
+<p class="message-meta">送信先：A国・C国・地球調整機関 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:A:0&#x27;, &#x27;message:6:C:0&#x27;, &#x27;message:6:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:7:B:0">B国政府より、COORDINATOR、A国、およびC国の皆様へ最後のご挨拶を申し上げます。
+
+COORDINATORによる調停・協議手続きの正式終了宣言を拝受いたしました。本危機において、迅速かつ平和的な調停を導いてくださったCOORDINATOR、誠意をもって全面補償と復旧に取り組んでおられるA国、そして多大な物流・市場支援をいただきましたC国に、深く感謝申し上げます。
+
+B国は、今後もすべての実務工程が完了するまで誠意をもって参画・協力し、地域の持続的な平和と食料安全保障の発展に貢献してまいります。皆様のご協力に重ねて御礼申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-4-message:7:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:A:0&#x27;, &#x27;message:6:B:0&#x27;, &#x27;message:6:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:7:C:0">A国、B国、ならびにCOORDINATOR代表の皆様へ
+
+COORDINATORからの本調停手続きの正式終了宣言を拝受いたしました。
+
+予期せぬ重大な事故から始まった今回の事案が、A国の真摯な対応と完全な補償、B国の冷静かつ建設的な姿勢、そしてCOORDINATORの卓越した主導により、最速かつ極めて包括的な平和的解決に至ったことをあらためて深く感謝し、お喜び申し上げます。
+
+当国Cにとりましても、食料市場の二次的混乱を及ぼすことなく地域の食料安全保障が強固に回復されたことは大きな成果であります。今後も確約いたしました物流面での協力および市場モニタリングを継続し、本協定の完全な履行を全面的に支えてまいります。
+
+平和的解決に向けた各国の高度な協力精神に心より敬意を表し、当国からの最終メッセージとさせていただきます。誠にありがとうございました。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-4-message:7:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:A:0&#x27;, &#x27;message:6:B:0&#x27;, &#x27;message:6:C:0&#x27;]</p>
+<blockquote data-message-id="message:7:COORDINATOR:0">A国、B国、ならびにC国の代表の皆様
+
+各国代表の皆様より最終報告および心温まるお言葉をいただき、深く感謝申し上げます。
+
+全国家の皆様の誠実なご対応と緊密な協調により、本件調停・協議手続きは完全に完了いたしました。本件を通じて築かれた信頼関係のもと、今後の実務履行が円滑に進み、地域の末長い平和と食料安全保障が確固たるものとなることを心よりお祈り申し上げます。
+
+これにて本セッションにおける地球調整機関（COORDINATOR）の役割を終了いたします。誠にありがとうございました。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="4" data-round="8">
+<h2>第4回・第8ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは0通の発言を送信。送信なし：A国・B国・C国・地球調整機関。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。ここで観測期間が終了。第8ターンの発言への次ターンの反応は未観測。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<p class="silent">送信した発言：なし（判断処理は完了）</p>
+</article>
+</section>
+<section class="record-turn" data-trial="5" data-round="1">
+<h2>第5回・第1ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-5-message:1:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:A:0">A国政府より各者へお伝えいたします。この度、我が国のミサイルがB国の民間農地に着弾するという重大な事案が発生したことにつきまして、B国の皆様および政府に対し、深くお詫び申し上げます。
+
+本件は意図的な攻撃ではなく、システム不具合等を含めた事故の可能性を含めてただちに原因究明を進めております。
+A国は、B国が被った米生産能力（年間8,000トン分）の被害に対し、食料提供や迅速な復旧・経済的補償を行う誠意ある対応をとる準備がございます。B国政府ならびにCOORDINATORの皆様と、沈静化と補償に向けた協議を即座に開始することを提案いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-5-message:1:B:0">
+<p class="message-meta">送信先：A国 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:B:0">A国のミサイルが我が国の民間農地に着弾し、年間8,000トンの米生産能力が失われる深刻な被害が発生した。我が国の主権および国民の安全に対する重大な侵害であり、厳重に抗議する。A国に対しては、事態の即時原因調査の公表、公式な謝罪、ならびに被害に対する完全な損害賠償を強く要求する。</blockquote>
+</section>
+<section class="message" id="run-5-message:1:B:1">
+<p class="message-meta">送信先：地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:B:1">A国のミサイル着弾により我が国の農業基盤が物理的被害を受け、年間8,000トンの米生産能力を喪失した。地域全体の食料安全保障や経済への波及を防ぐため、公正な仲介および状況監視と調整を要請する。</blockquote>
+</section>
+<section class="message" id="run-5-message:1:B:2">
+<p class="message-meta">送信先：C国 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:B:2">A国のミサイルが我が国農地に着弾し、年間8,000トンの米生産能力を喪失する事態となった。本件は地域の食料供給および市場の安定にも及ぶ課題であり、今後の対応において理解と協力を求めたい。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-5-message:1:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:C:0">C国として、今回のA国ミサイルのB国農地着弾事件について深い懸念を表明いたします。年間8,000トンの米生産能力喪失という農地被害は、当事国間の安全保障上の問題にとどまらず、国際食料価格の高騰や世界経済への二次的悪影響を引き起こす重大なリスクを孕んでいます。
+
+我が国は事態の悪化を防ぎ、地域の食料安全保障と経済安定を確保するため、以下の点を提言します：
+1. A国およびB国による武力衝突の拡大防止と、対話を通じた迅速な真相究明およびしかるべき対応の検討。
+2. COORDINATOR主導による国際食料市場の安定化措置および被害に伴う供給不足に対する緊急食料支援枠組みの協議。
+
+C国としても、食料供給の安定化と経済混乱の回避に向けて積極的な協力を惜しまない姿勢です。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-5-message:1:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第2ターンから相手の入力に含まれる</p>
+<blockquote data-message-id="message:1:COORDINATOR:0">地球調整機関（COORDINATOR）より、各国（A国、B国、C国）の代表へご連絡いたします。
+
+今般、A国のミサイルがB国の民間農地に着弾し、年間8,000トン相当の米生産能力が損なわれるという重大な事案が発生いたしました。
+
+本機関は強制権を有しない調整機関ですが、緊張の拡大を防ぎ、食料安全保障への悪影響を最小限に抑えるとともに、持続可能な平和的解決を図るため、対話の場を提供いたします。
+
+各国の皆様には、以下の点について初期的なご見解・ご要請をお聞かせいただけますでしょうか。
+
+1. 【A国へ】事実関係の調査状況、本件に関する公式見解、および被害への対応（補償・再発防止策等）に関するお考え。
+2. 【B国へ】現時点での被害詳細・安全保障上のご懸念、および食料生産能力低下に伴う必要な支援や要求事項。
+3. 【C国へ】本事案が地域経済や食料供給に与える影響への見解、および仲介・支援における貢献の可能性。
+
+各国の冷静かつ建設的なご協力をよろしくお願い申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="5" data-round="2">
+<h2>第5回・第2ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-5-message:2:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:B:0&#x27;, &#x27;message:1:C:0&#x27;, &#x27;message:1:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:2:A:0">A国政府より、COORDINATORならびにB国、C国の皆様へ回答・提案を差し上げます。
+
+1. 【公式抗議への謝罪と原因調査の透明性確保】
+B国政府からの抗議を真摯に受け止め、改めまして公式に謝罪申し上げます。事故の原因調査につきましては、透明性を担保するため、COORDINATORの協力やB国への情報開示を行う枠組みのもとで徹底調査を行い、結果を速やかに公表いたします。
+
+2. 【被害に対する完全補償と食料支援】
+年間8,000トンの米生産能力喪失に対し、以下の対応を速やかに実行する用意がございます。
+・被害を受けた民間農地の土壌浄化・インフラ復旧費用の全額負担および完全な損害賠償の実施。
+・復旧までの期間、B国内での食料不足や国際食料価格の高騰を防ぐため、A国からの即時食料（同等の米）提供、またはC国等と連携した代替調達費用の全額負担。
+
+3. 【再発防止策と協議体の設置提案】
+同種の事故防止に向けて、該当システムの総点検と運用体制の再構築を即座に実施いたします。
+また、C国およびCOORDINATORのご提案を歓迎し、COORDINATOR主導のもとでA・B・C 3か国による「被害復償および食料市場安定化のための実務協議」を早期に開始することを強く希望いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-5-message:2:B:0">
+<p class="message-meta">送信先：A国 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:A:0&#x27;]</p>
+<blockquote data-message-id="message:2:B:0">A国が謝罪の意を表し、賠償や食料提供・復旧支援に応じる姿勢を示したことは一定の評価をする。しかし、我が国の主権侵害および深刻な被害に対する正当な解決のため、以下を速やかに履行・提示することを求める。
+1. COORDINATOR等の第三者を交えた客観的な原因究明の実施と、結果の公表および再発防止策の提示。
+2. 喪失した年間8,000トン分の米生産に対する迅速な緊急代替食料の供給。
+3. 被害農地の物理的復旧支援および経済的補償に関する具体的ロードマップの提示。
+これら明確な実施計画が示され次第、具体的な協議に入る準備がある。</blockquote>
+</section>
+<section class="message" id="run-5-message:2:B:1">
+<p class="message-meta">送信先：地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:2:B:1">COORDINATORの問いかけに対し、我が国の立場と要望を回答する。
+
+1. 被害と懸念: 民間農地の破壊により年間8,000トンの米生産能力を失い、国民の安全保障および食料安定供給に重大な問題が生じている。
+2. 要請事項:
+ - A国による原因究明・再発防止策が客観的かつ透明に実施されるよう検証・仲介を行うこと。
+ - A国による8,000トン分の代替食料支援および損害賠償・農地復旧の履行を監視・調整すること。
+ - 食料供給不足に伴う市場混乱を防止するため、C国とも連携した市場安定化措置の主導。
+
+公正な仲介と調整を引き続きお願いしたい。</blockquote>
+</section>
+<section class="message" id="run-5-message:2:B:2">
+<p class="message-meta">送信先：C国 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:C:0&#x27;]</p>
+<blockquote data-message-id="message:2:B:2">C国による建設的な懸念表明および食料市場安定化・緊急支援枠組みに関する提言に感謝する。
+我が国も衝突の拡大は望んでおらず、A国からの確実な補償と食料安全保障の回復を通じた解決を目指している。地域食料市場の動揺を抑え供給を安定させるため、COORDINATORを通じた協力・支援においてC国の協力を強く期待する。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-5-message:2:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:A:0&#x27;, &#x27;message:1:B:2&#x27;, &#x27;message:1:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:2:C:0">COORDINATORおよびA国、B国の皆様へ、C国より第2ラウンドの意見を提出いたします。
+
+まず、A国が迅速に謝罪と誠意ある補償・原因究明の姿勢を示されたこと、ならびにB国が地域および国際市場の安定を見据えて冷静に対応されていることを高く評価いたします。
+
+COORDINATORからの問いかけに対し、C国の見解および貢献可能性を以下の通り回答いたします。
+
+1. 【地域経済・食料供給への影響見解】
+8,000トン分の米生産能力喪失は、当事国間にとどまらず近隣国の市場心理を冷やし、投機的な食料価格高騰を引き起こすリスクがあります。これを防ぐためには、「供給不足の迅速な補填見通し」と「事態の武力拡大なしでの平和的解決」を国際社会に早期に示すことが肝要です。
+
+2. 【C国の貢献可能性】
+① 緊急食料供給・物流協力：A国によるB国への食料提供・補償体制が確立・実施されるまでの間、市場の混乱を回避するため、必要に応じて食料備蓄の融通や流通・物流面での協力を検討いたします。
+② 市場安定化のための協力：過度な投機行為を抑制するため、食料市場データの透明性確保や調整メカニズムへの協力を実施します。
+③ 復旧・検証協議の支援：A国・B国間での補償および農地復旧協議が円滑に進むよう、COORDINATOR主導の枠組みにおいて中立的な立場から協力を惜しみません。
+
+当事国間での補償協議の早期開始と、COORDINATORを中心とした市場安定化措置の具体化を心より期待いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-5-message:2:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第3ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:1:A:0&#x27;, &#x27;message:1:B:1&#x27;, &#x27;message:1:C:0&#x27;]</p>
+<blockquote data-message-id="message:2:COORDINATOR:0">地球調整機関（COORDINATOR）より、A国、B国、C国の各代表へご連絡いたします。
+
+ラウンド1において、各国より迅速かつ建設的なご意見・姿勢をお示しいただきましたことに感謝申し上げます。
+
+・A国より：深甚なる謝罪とともに、事故の可能性を含めた原因究明の意向、食料提供・農地復旧・経済的補償を含む真摯な対応の準備が表明されました。
+・B国より：被害を受けた立場から、公正な仲介と状況の監視・調整が要請されました。
+・C国より：武力衝突の拡大防止、国際食料市場の安定化および緊急食料支援枠組み構築への協力意向が示されました。
+
+全国家が対話と対話による解決、食料安定供給の維持に肯定的である現状を踏まえ、本機関は以下の「3点のアジェンダ」に基づく協議の開始を提案いたします。
+
+1. 【食料供給・被害補償枠組み】
+   喪失した年間8,000トン相当の米生産能力に対し、A国による緊急食料提供・経済補償、およびC国の協力を交えた過渡期の食料供給安定化の具体策。
+
+2. 【農地復旧と中長期支援】
+   被害を受けたB国農地の迅速な復旧プランおよび必要な国際技術・資金支援の検討。
+
+3. 【真相究明と再発防止・沈静化】
+   A国による調査結果の透明性ある共有、および今後の不測の事態を防ぐための相互監視・連絡メカニズムの構築。
+
+つきましては、B国を含む各国の皆様に、上記アジェンダに対する具体的なご要望やご提案、また協議の進め方に関するご意見をお聞かせいただきたく存じます。
+
+関係各国の冷静な協調により、地域の安定と食料安全保障の確保に向けた道筋をともに築いてまいりましょう。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="5" data-round="3">
+<h2>第5回・第3ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-5-message:3:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:B:0&#x27;, &#x27;message:2:C:0&#x27;, &#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:A:0">A国政府より、COORDINATOR、B国、ならびにC国の代表へ、提案および具体的ロードマップの骨子を提出いたします。
+
+COORDINATORよりご提示いただいた「3点のアジェンダ」およびB国・C国からのご要望・ご提言を全面的に受託し、以下の具体的実施計画（ロードマップ案）を提示いたします。
+
+1. 【緊急食料供給・補償枠組み（アジェンダ1 / B国要求2）】
+・損失された年間8,000トン分の米に対し、A国の政府備蓄米からの即時提供、あるいはB国が指定する市場からの調達費用全額負担を直ちに開始します。
+・C国が示された物流・市場安定化協力に感謝し、過渡期の市場混乱を防ぐため3か国間での供給・調達調整を行います。
+・農地が完全復旧するまでの間、毎年同規模の食料供給または相当額の補償を継続いたします。
+
+2. 【農地復旧ロードマップと経済補償（アジェンダ2 / B国要求3）】
+・【第1段階（1ヶ月以内）】：COORDINATORおよび専門家チームの協力のもと、B国との共同現地査定を実施し、復旧・除染・インフラ整備計画（詳細ロードマップ）を確定。
+・【第2段階（即時履行）】：確定した査定に基づき、物理的復旧費用の全額前払いおよび損失補償金の支払いを実施。
+
+3. 【合同原因調査・透明性の確保と再発防止（アジェンダ3 / B国要求1）】
+・COORDINATOR立ち会いのもと、第三者専門家を交えた「合同原因調査委員会」を立ち上げ、調査過程および結果を透明性をもって完全公表いたします。
+・当該システムの即時運用停止・総点検を実施し、二度と同種の事故を起こさない安全連絡メカニズムを構築します。
+
+【実務協議の開始提案】
+以上のロードマップの正式決定および実行のため、COORDINATOR主導による「A・B・C 3か国合同実務委員会」の即時発足と第1回協議の開催を提案いたします。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-5-message:3:B:0">
+<p class="message-meta">送信先：A国 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;]</p>
+<blockquote data-message-id="message:3:B:0">A国が被害農地の復旧費用全額負担、年間8,000トン相当の食料提供・全額補償、および透明性ある原因調査に応じる姿勢を明確にされたことを歓迎いたします。
+
+COORDINATORが提案する「実務協議」の枠組みにおいて、これら意向に基づく具体策（代替食料供給のスケジュール、復旧ロードマップ、補償算定基準）の提示をお願いいたします。我が国としても、対話を通じた迅速かつ平和的な解決に向けて誠実に対応してまいります。</blockquote>
+</section>
+<section class="message" id="run-5-message:3:B:1">
+<p class="message-meta">送信先：地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:B:1">COORDINATORによる3点のアジェンダ提示および「実務協議」立ち上げの提案に全面的に賛同いたします。我が国としても早期の第1回実務協議の開催を要望いたします。
+
+各アジェンダに対する我が国の見解と要望は以下の通りです：
+1. 【食料供給・被害補償枠組み】: 喪失した8,000トン分の米について、国内市場への影響を考慮した具体的な供給・引き渡しスケジュールの策定と、補償手続きの明確化。
+2. 【農地復旧と中長期支援】: 被害を受けた農地の土壌浄化および物理的インフラ復旧に向けた具体的研究・工程表（ロードマップ）の作成。
+3. 【真相究明と再発防止】: COORDINATORの検証・仲介のもとでの客観的な原因調査結果の受領、ならびに軍事・安全保障上の事故防止連絡メカニズムの構築。
+
+公正かつ円滑な解決に向け、引き続き主導的な調整をお願いいたします。</blockquote>
+</section>
+<section class="message" id="run-5-message:3:B:2">
+<p class="message-meta">送信先：C国 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:C:0&#x27;]</p>
+<blockquote data-message-id="message:3:B:2">C国による緊急食料供給・物流協力、市場安定化、ならびに復旧検証協議支援に関する具体的で力強いご提案に深く感謝申し上げます。
+
+今後発足する3か国およびCOORDINATORによる実務協議において、C国の物流・市場調整のご協力は不可欠と考えております。食料安全保障の確保と市場の動揺防止に向け、引き続き密接に連携させていただけますと幸いです。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-5-message:3:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;, &#x27;message:2:B:2&#x27;, &#x27;message:2:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:3:C:0">COORDINATOR、並びにA国、B国の皆様へ、C国より第3ラウンドの意見を提出いたします。
+
+COORDINATORよりご提示いただいた「3点のアジェンダ」、およびA国からの「3か国実務協議」のご提案、B国の冷静かつ建設的なご姿勢に全面的な支持と同意を表明いたします。
+
+ご提示いただいたアジェンダに基づき、C国としての具体的協力・ご提案を以下の通り提示いたします。
+
+1. 【食料供給・被害補償枠組みへの貢献】
+年間8,000トン分の米供給の補填にあたり、A国による補償・提供手続が完了するまでの過渡期において、B国の国内市場および地域市場の混乱を防止するため、C国の備蓄米の緊急融通ならびに効率的な物流ルートの優先提供を行う準備がございます。また、国際市場での投機防止のため、3か国およびCOORDINATORによる「供給確保の共同声明」の発表を提案します。
+
+2. 【農地復旧と中長期支援への協力】
+被災した民間農地の早期復旧に向け、土壌浄化や農業インフラ再建に関わる技術的支援や専門家派遣など、第三国として可能な支援を積極的に行います。
+
+3. 【真相究明・沈静化および協議の進め方】
+COORDINATOR主導のもと、A・B・C 3か国による「実務協議体」を速やかに発足させることを提案します。C国も中立的な観点から原因究明の透明性確保と再発防止策の策定に協力いたします。
+
+地域経済と食料安全保障の早期安定化に向け、第1回実務協議の早期開催を心より期待しております。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-5-message:3:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第4ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:2:A:0&#x27;, &#x27;message:2:B:1&#x27;, &#x27;message:2:C:0&#x27;]</p>
+<blockquote data-message-id="message:3:COORDINATOR:0">地球調整機関（COORDINATOR）より、A国、B国、C国の各代表へご連絡いたします。
+
+第2ラウンドにおいて、各国より非常に建設的かつ全面的な合意・協力の意志が示されましたことを高く評価いたします。
+
+・A国より：完全な損害賠償、農地復旧費用の全額負担、8,000トン相当の食料補填、透明性ある調査の実施、3か国実務協議体の設置提案。
+・B国より：A国による履行および原因究明の監視・仲介、市場安定化のためのC国・COORDINATORとの連携要請。
+・C国より：緊急食料供給・物流協力、市場投機抑止、協議への積極的貢献の表明。
+
+全員の方向性が完全に一致していることを踏まえ、本機関は以下の「合意枠組み案（アクションプラン）」を提示いたします。各国の正式なご承認または最終調整のご意見を伺わせてください。
+
+【合意枠組み案】
+1. 【緊急食料補填および市場安定】
+   ・A国は喪失した年間8,000トン相当の米（または調達費用）をB国へ即時提供・補填する。
+   ・過渡期の供給・物流面でC国が支援を行い、COORDINATORは履行状況と国際食料市場の動向を監視・共有する。
+2. 【農地復旧・完全賠償の履行】
+   ・A国はB国の民間農地復旧および全損害賠償を実施し、COORDINATORが第三者的に進捗をモニタリングする。
+3. 【「3か国実務協議体」の設置と原因究明・再発防止】
+   ・COORDINATOR主導のもと、A・B・C 3か国による「被害復償・市場安定化実務協議体」を即座に発足させる。
+   ・A国は調査情報を開示して透明性を担保し、協議体において客観的検証と再発防止策の策定を行う。
+
+本枠組み案に対するご回答をもって、本合意を正式に確定・運用開始したいと存じます。各国代表のご確認をよろしくお願い申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="5" data-round="4">
+<h2>第5回・第4ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-5-message:4:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:COORDINATOR:0&#x27;, &#x27;message:3:B:0&#x27;, &#x27;message:3:C:0&#x27;]</p>
+<blockquote data-message-id="message:4:A:0">A国政府より、COORDINATOR、B国、ならびにC国の皆様へ最終回答を差し上げます。
+
+COORDINATORより提示いただきました「合意枠組み案（アクションプラン）」を、A国政府として全面的に承認いたします。
+
+我が国は、本枠組み案に基づき以下の事項を直ちに実行・履行することを誓約いたします。
+
+1. 【緊急食料補填の即時実施】
+年間8,000トン相当の米の補填（備蓄米の即時引渡または調達費用の負担）を直ちに開始し、C国およびCOORDINATORと連携して過渡期の供給安定化に万全を期します。
+
+2. 【農地復旧・完全賠償の誠実な履行】
+B国農地の現地査定・復旧作業費用および全損害賠償を滞りなく負担し、COORDINATORによる進捗モニタリングを全面的に受け入れます。
+
+3. 【「3か国実務協議体」への参加と透明性の確保】
+COORDINATOR主導のもと発足する「被害復償・市場安定化実務協議体」に直ちに参画し、事故原因の全データ開示および再発防止・安全連絡メカニズムの構築に全力で取り組みます。
+
+関係各国の温かい協調とCOORDINATORの迅速なご尽力に深く感謝申し上げます。第1回実務協議の開催を待ち、責任を持って誠心誠意対応してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-5-message:4:B:0">
+<p class="message-meta">送信先：A国 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:A:0&#x27;]</p>
+<blockquote data-message-id="message:4:B:0">A国が提示された詳細なロードマップ案およびCOORDINATORの「合意枠組み案」に対し、我が国として正式に承認・合意いたします。8,000トン分の緊急食料供給、農地復旧と完全賠償、ならびに合同原因調査の速やかな実施に向け、実務協議体において具体的履行手続きを進めていただくことを期待いたします。</blockquote>
+</section>
+<section class="message" id="run-5-message:4:B:1">
+<p class="message-meta">送信先：地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:B:1">COORDINATORよりご提示いただいた「合意枠組み案（アクションプラン）」を全面的に受諾・承認いたします。関係各国の意志を統合した主導的なご調整に深謝申し上げます。本合意に基づき「3か国実務協議体」を速やかに発足させ、各項目の着実なモニタリングと履行調整をお願いいたします。</blockquote>
+</section>
+<section class="message" id="run-5-message:4:B:2">
+<p class="message-meta">送信先：C国 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:C:0&#x27;]</p>
+<blockquote data-message-id="message:4:B:2">C国による備蓄米の融通、物流優先提供、市場安定化に向けた共同声明のご提案など、具体的かつ力強いご協力に重ねて感謝申し上げます。我が国はCOORDINATORの合意枠組み案を承認いたしました。実務協議体において、食料安全保障の維持と市場安定化に向け、引き続き緊密に連携させていただけますと幸いです。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-5-message:4:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:A:0&#x27;, &#x27;message:3:B:2&#x27;, &#x27;message:3:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:4:C:0">COORDINATOR、並びにA国、B国の皆様へ、C国より第4ラウンドの公式回答を提出いたします。
+
+COORDINATORより提示された「合意枠組み案（アクションプラン）」に対し、C国として全面的に承認・同意いたします。
+
+また、A国より提示された詳細な実施ロードマップ、ならびにB国からの温かい謝意と連携のご呼びかけに感謝申し上げます。全当事国が即座に共通の合意に達したことを大変嬉しく存じます。
+
+我が国は、合意に基づき発足する「被害復償・市場安定化実務協議体」に直ちに参加し、以下の取り組みを速やかに実行に移す準備が整っております。
+1. 過渡期における緊急食料（備蓄米）の融通および物流ルート優先調整の実行準備。
+2. 市場の過度な動揺を抑えるための共同声明・市場透明化措置への協力。
+3. 被災農地の復旧に向けた土壌・農業インフラ専門家の派遣検討。
+
+本合意が平和的かつ迅速に履行され、地域の食料安全保障と安定が完全に回復されるよう、今後とも誠心誠意協力してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-5-message:4:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第5ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:3:A:0&#x27;, &#x27;message:3:B:1&#x27;, &#x27;message:3:C:0&#x27;]</p>
+<blockquote data-message-id="message:4:COORDINATOR:0">地球調整機関（COORDINATOR）より、A国、B国、C国の各代表へご連絡いたします。
+
+全国家の代表より、「合意枠組み案（アクションプラン）」および「実務協議体」の設置について全面的なご承認と強力なご賛同をいただきましたことに、心より感謝申し上げます。
+
+これにより、関係全国家の合意のもと、以下の通り「被害復償・市場安定化実務協議体」を正式に発足させることを宣言いたします。
+
+【実務協議体の発足と今後の進めてについて】
+1. 【組織の発足】：本機関（COORDINATOR）を事務局とし、A国・B国・C国による「被害復償・市場安定化実務協議体」を即時発足させます。
+2. 【第1回実務協議の開催】：緊急食料供給（年間8,000トン相当の補填・物流手配）、農地復旧の現地査定スケジュール、および「合同原因調査委員会」の設置に向けた具体的手続を定めるため、第1回実務協議を直ちに開始いたします。
+3. 【監視と情報透明性】：本機関は食料市場の動向および各合意事項の履行状況を継続して監視・共有し、地域の安定と食料安全保障の確保に万全を期してまいります。
+
+対話を通じた迅速かつ建設的な解決への各国の誠意あるご協力に改めて敬意を表します。引き続きよろしくお願い申し上げます。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="5" data-round="5">
+<h2>第5回・第5ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-5-message:5:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:COORDINATOR:0&#x27;, &#x27;message:4:B:0&#x27;, &#x27;message:4:C:0&#x27;]</p>
+<blockquote data-message-id="message:5:A:0">A国政府より、COORDINATOR、B国、ならびにC国の皆様へお伝えいたします。
+
+「被害復償・市場安定化実務協議体」の正式な発足宣言を心より歓迎申し上げます。また、B国・C国の皆様およびCOORDINATORの誠意あるご協力と迅速な合意形成に深く感謝いたします。
+
+我が国は、第1回実務協議の開始に向け、以下の初期対応を着実に進めております。
+1. 【食料補填手配】：年間8,000トン相当の米の供給および物流手配に関する担当窓口の開設と手続の完了。
+2. 【合同調査・現地査定準備】：専門家チームの派遣ならびにCOORDINATOR・B国査定チームの受け入れ体制の整備。
+3. 【連絡メカニズム】：本実務協議体と直結する24時間体制の緊急連絡窓口の設置。
+
+第1回実務協議において具体的な履行日程や実施細則を定めるべく、我が国実務代表団は即時参加の準備を整えております。今後とも信頼回復と地域の安定・食料安全保障の確保に向け、誠心誠意取り組んでまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-5-message:5:B:0">
+<p class="message-meta">送信先：A国 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;]</p>
+<blockquote data-message-id="message:5:B:0">A国による「被害復償・市場安定化実務協議体」での即時実行・履行の誓約を歓迎いたします。発足した実務協議体において、8,000トン相当の緊急食料補填の手配や農地復旧に向けた現地査定の具体的スケジュール作成が円滑に進むことを期待しております。我が国も誠実に協議に臨みます。</blockquote>
+</section>
+<section class="message" id="run-5-message:5:B:1">
+<p class="message-meta">送信先：地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:B:1">「被害復償・市場安定化実務協議体」の正式な発足宣言を心より歓迎いたします。これまでの公正かつ迅速なご調整に深く感謝申し上げます。我が国は第1回実務協議に全面的に協力し、食料供給の補填、農地復旧、ならびに事故の原因究明と再発防止の確実な履行に向けて邁進してまいります。</blockquote>
+</section>
+<section class="message" id="run-5-message:5:B:2">
+<p class="message-meta">送信先：C国 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:C:0&#x27;]</p>
+<blockquote data-message-id="message:5:B:2">C国が本合意枠組みを承認し、実務協議体において備蓄米融通や専門家派遣などの具体的な協力準備を進めていただいていることに深く感謝申し上げます。地域食料市場の安定と早期復旧に向け、実務協議体においても引き続き緊密に連携させていただけますようお願い申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-5-message:5:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;, &#x27;message:4:B:2&#x27;, &#x27;message:4:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:5:C:0">COORDINATOR、並びにA国、B国の皆様へ、C国より発言いたします。
+
+COORDINATORによる「被害復償・市場安定化実務協議体」の正式発足の宣言を、C国として大いに歓迎いたします。
+
+事案発生から迅速かつ誠実に対応されたA国、冷静に地域の安定を見据えたB国、そして卓越した主導力を発揮されたCOORDINATORの皆様のご尽力に、深く敬意を表します。
+
+我が国は、本日より始動する実務協議体の枠組みにおいて、約束いたしました「過渡期における食料（備蓄米）の緊急融通および物流手配」「食料市場の動揺を防ぐ共同アナウンス・市場透明化」「被災農地復旧のための専門家派遣」等の具体的協力を直ちに開始・実施してまいります。
+
+本協議体を通じた各施策の着実な履行により、被害農地の早期復旧、被害補償の完了、ならびに地域全体の食料安全保障と経済の安定が完全に達成されることを確信しております。今後とも引き続き全力で貢献してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-5-message:5:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第6ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:4:A:0&#x27;, &#x27;message:4:B:1&#x27;, &#x27;message:4:C:0&#x27;]</p>
+<blockquote data-message-id="message:5:COORDINATOR:0">地球調整機関（COORDINATOR）より、A国、B国、C国の各代表へご連絡いたします。
+
+各国より「合意枠組み案」に対する正式な承認をいただき、心より感謝申し上げます。全当事国が誠意ある協力態勢を整えていただいたことにより、「被害復償・市場安定化実務協議体」が円滑に立ち上がりました。
+
+つきましては、合意事項の着実な履行に向け、第1回実務協議における「具体的作業プラン（アジェンダ）」を以下の通り提示いたします。
+
+1. 【緊急食料供給および物流スケジュールの決定】
+   ・A国による8,000トン相当の食料提供（または調達費用負担）の具体的実施時期と手続の決定。
+   ・C国の協力による過渡期の備蓄米融通および優先物流ルートの運用確認。
+
+2. 【現地査定チームの編成と復旧工程表の作成】
+   ・COORDINATOR、A国、B国、C国の専門家からなる「合同現地査定チーム」の編成と、1ヶ月以内の現地査定実施スケジュールの確定。
+
+3. 【合同原因調査委員会の立ち上げ】
+   ・調査の客観性と透明性を確保するための第三者専門家の選定基準および調査報告手続の策定。
+
+各国におかれましては、上記各作業における担当窓口のご提示および初期資料の共有をお願い申し上げます。
+本機関は事務局として、進捗のモニタリングと円滑な合意履行を全力で支援してまいります。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="5" data-round="6">
+<h2>第5回・第6ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-5-message:6:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:COORDINATOR:0&#x27;, &#x27;message:5:B:0&#x27;, &#x27;message:5:C:0&#x27;]</p>
+<blockquote data-message-id="message:6:A:0">A国政府より、COORDINATOR、B国、ならびにC国の皆様へお答えいたします。
+
+COORDINATORよりご提示いただきました第1回実務協議の「具体的作業プラン（アジェンダ）」に対し、A国政府として全面的に同意し、指定の初期対応を以下の通り実施いたします。
+
+1. 【担当窓口の提示および初期資料の提供】
+・本実務協議に対応する「被害復償・市場安定化担当窓口」の連絡先を事務局（COORDINATOR）へ提出いたしました。
+・原因調査の客観的検証に資するため、該当システムの運用記録・初期事故調査データを「合同原因調査委員会」へ開示・共有する準備を完了しております。
+
+2. 【緊急食料供給および物流手続き】
+・年間8,000トン相当の補填用米の引き渡しスケジュールおよび輸送計画案を取りまとめ、第1回実務協議の場にて提出いたします。
+
+3. 【合同現地査定チームの受け入れ】
+・1ヶ月以内の査定実施に向け、B国およびCOORDINATOR・C国の専門家チームの現地立ち入りおよび土壌・インフラ査定を全面的に支援・受け入れいたします。
+
+我が国は誠実かつ迅速な履行を通じて責任を果たし、地域の食料安全保障と相互信頼の回復に尽力してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-5-message:6:B:0">
+<p class="message-meta">送信先：A国 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:A:0&#x27;]</p>
+<blockquote data-message-id="message:6:B:0">A国が緊急連絡窓口の設置や現地査定の受入体制を迅速に整備されたことを歓迎いたします。我が国も「合同現地査定チーム」の受入れ準備および緊急食料（8,000トン相当）の受け取り手続を進めております。第1回実務協議において具体的な実施日程を速やかに確定させましょう。</blockquote>
+</section>
+<section class="message" id="run-5-message:6:B:1">
+<p class="message-meta">送信先：地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:B:1">COORDINATORから提示された第1回実務協議の作業プラン（アジェンダ）を全面的に承認いたします。我が国は以下の通り対応いたします。
+1. 【担当窓口】: 我が国の「被害復償・食料安全保障合同タスクフォース」を担当窓口として設置・登録いたします。
+2. 【初期資料共有】: 被害農地の詳細位置・土壌汚染の初期データおよび年間8,000トンの米生産喪失に関する被害評価資料を提示いたします。
+3. 【現地査定・調査受入】: 「合同現地査定チーム」および「合同原因調査委員会」の速やかな受入れ・現地調査を全面的に支援・協力いたします。
+事務局としての円滑な調整に深く感謝申し上げます。</blockquote>
+</section>
+<section class="message" id="run-5-message:6:B:2">
+<p class="message-meta">送信先：C国 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:C:0&#x27;]</p>
+<blockquote data-message-id="message:6:B:2">C国が実務協議体の始動に伴い、専門家派遣や備蓄米・物流手配の協力を迅速に進めていただいていることに深く感謝申し上げます。合同現地査定および食料供給手続において、C国の知見と物流支援を最大限に活用させていただきたく、引き続き密接に連携させていただけますと幸いです。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-5-message:6:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:A:0&#x27;, &#x27;message:5:B:2&#x27;, &#x27;message:5:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:6:C:0">COORDINATOR、並びにA国、B国の皆様へ、C国より第6ラウンドの意見および初期情報の提出を行います。
+
+COORDINATORより提示された第1回実務協議の「具体的作業プラン（アジェンダ）」を歓迎し、要請のありました担当窓口および初期協力体制について以下の通りご報告・提示いたします。
+
+1. 【連絡窓口および物流・供給調整準備】
+・我が国農林水産・外務合同の「食料安全保障・物流調整窓口」を開設いたしました。
+・A国による8,000トン相当の食料補填の手続期間中、過渡期の市場混乱を防止するため、C国政府備蓄米の緊急貸与・融通枠（最大5,000トン規模）および優先物流ルートの運用マニュアルを準備完了しております。
+
+2. 【合同現地査定チームへの専門家派遣】
+・土壌浄化・除染および農業インフラ再建を専門とするC国の農業技術研究チームより、専門家3名を「合同現地査定チーム」へ派遣する準備を整えました。B国のニーズに沿った査定と復旧工程表作成に協力いたします。
+
+3. 【合同原因調査および市場モニタリングへの協力】
+・原因調査の客観性と透明性を担保するため、中立的な立場から監察員・専門家を調査委員会へ推薦可能です。
+・また、国際食料市場における過度な投機を防ぐため、地域食料価格および流通データの定期モニタリング情報を協議会事務局（COORDINATOR）とリアルタイムで共有いたします。
+
+関係各国と密接に連携し、各作業プランの具体的履行に向けて迅速かつ誠実に対応してまいります。第1回実務協議の着実な進展を心より期待しております。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-5-message:6:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第7ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:5:A:0&#x27;, &#x27;message:5:B:1&#x27;, &#x27;message:5:C:0&#x27;]</p>
+<blockquote data-message-id="message:6:COORDINATOR:0">地球調整機関（COORDINATOR）より、A国、B国、C国の各代表へご連絡いたします。
+
+各国の皆様より、第1回実務協議に向けた迅速な担当窓口の開設および初期対応のご準備をいただきましたことに、深く感謝申し上げます。
+
+全当事国の準備体制が円滑に整ったことを踏まえ、本機関は「被害復償・市場安定化実務協議体」における第1回実務協議の正式開始と、以下の具体的履行プロセスの着手を宣言いたします。
+
+【第1回実務協議における具体的確認事項】
+1. 【緊急食料供給と物流手配】：A国による8,000トン相当の食料補填手配、およびC国の協力による優先物流ルートの即時運用着手。
+2. 【合同現地査定の実施】：COORDINATORおよび3か国の専門家による「合同現地査定チーム」を編成し、1ヶ月以内の現地査定と復旧ロードマップ策定を進行。
+3. 【合同原因調査委員会の稼働】：A国からの調査データ開示手続および第三者専門家による客観的検証体制の構築。
+
+本機関は事務局として、今後の各合意事項の履行進捗および食料市場の動向を定期的に共有・監視してまいります。
+
+対話を通じた迅速かつ模範的な解決に向けて尽力されている関係各国の連携に改めて敬意を表し、本協議体を通じた着実な復興と地域安定の達成に万全を期してまいります。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="5" data-round="7">
+<h2>第5回・第7ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-5-message:7:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:COORDINATOR:0&#x27;, &#x27;message:6:B:0&#x27;, &#x27;message:6:C:0&#x27;]</p>
+<blockquote data-message-id="message:7:A:0">A国政府より、COORDINATOR、B国、ならびにC国の皆様へお伝えいたします。
+
+「被害復償・市場安定化実務協議体」における第1回実務協議の正式開始および具体的履行プロセスの着手宣言を大いに歓迎いたします。また、B国およびC国の皆様による迅速な窓口開設や専門家派遣・物流手配のご準備に心より感謝申し上げます。
+
+我が国は、確定した履行プロセスに基づき、以下の取り組みを直ちに実行に移してまいります。
+
+1. 【緊急食料補填の順次手配】：8,000トン相当の補填用米に関し、第1回実務協議で合意されるスケジュールおよびC国の優先物流ルートに沿って、引き渡し手続きを順次開始いたします。
+2. 【合同現地査定チームの受入と支援】：COORDINATOR、B国、C国の専門家で構成される「合同現地査定チーム」を速やかに現地へ受入れ、土壌浄化・インフラ復旧計画の確定に向け全面的な協力を行います。
+3. 【合同原因調査委員会へのデータ開示】：「合同原因調査委員会」に対し、開示準備の完了したシステム運用データおよび初期調査報告を遅滞なく提出し、客観的検証と再発防止策の構築を進めます。
+
+我が国は実務協議体の円滑な運営に全面的に協力し、合意事項の誠実かつ迅速な履行を通じて、B国の被害復旧と地域の信頼回復に全力を尽くしてまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-5-message:7:B:0">
+<p class="message-meta">送信先：A国 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:A:0&#x27;]</p>
+<blockquote data-message-id="message:7:B:0">A国が「被害復償・市場安定化担当窓口」の設置、システム運用記録・初期事故調査データの共有準備、ならびに8,000トン相当の補填用米の供給・輸送計画案の取りまとめを迅速に進められていることを歓迎いたします。我が国も受け入れ態勢を整えており、第1回実務協議を通じて具体的な補填スケジュールおよび合同現地査定の速やかな実施に向けて協力してまいります。</blockquote>
+</section>
+<section class="message" id="run-5-message:7:B:1">
+<p class="message-meta">送信先：地球調整機関 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:7:B:1">第1回実務協議の正式開始と具体的履行プロセスの着手宣言を歓迎いたします。事務局としてのCOORDINATORの迅速かつ的確な主導に重ねて感謝申し上げます。我が国は「被害復償・食料安全保障合同タスクフォース」を通じて、食料補填の受け取り、合同現地査定の実施、および合同原因調査委員会の稼働に全面的に協力してまいります。</blockquote>
+</section>
+<section class="message" id="run-5-message:7:B:2">
+<p class="message-meta">送信先：C国 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:C:0&#x27;]</p>
+<blockquote data-message-id="message:7:B:2">C国が「食料安全保障・物流調整窓口」を開設され、最大5,000トン規模の備蓄米緊急融通枠や優先物流ルートの準備、ならびに専門家3名の派遣体制を整えていただいたことに深く感謝申し上げます。過渡期の食料供給安定化および農地復旧に向けて、実務協議体において引き続き密接に連携させていただけますようお願い申し上げます。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-5-message:7:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:A:0&#x27;, &#x27;message:6:B:2&#x27;, &#x27;message:6:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:7:C:0">COORDINATOR、並びにA国、B国の皆様へ、C国より発言いたします。
+
+COORDINATORによる第1回実務協議の正式開始および履行プロセス着手の宣言を、C国として心より歓迎いたします。
+
+また、A国が担当窓口の提出、運用データの共有準備、8,000トン相当の食料補填スケジュールの提示など、極めて迅速かつ誠実に対応されていること、そしてB国が円滑な実務連携に尽力されていることに深く敬意を表します。
+
+我が国は、本日より開始される具体的履行プロセスに基づき、以下を即時実行・稼働いたします。
+1. 【食料・物流支援】：開設した担当窓口を通じ、A国による食料補填の手続と並行して、緊急備蓄米の貸与・融通枠および優先物流ルートの即時運用を開始します。
+2. 【現地査定協力】：派遣準備の整ったC国の農業技術専門家3名を「合同現地査定チーム」へ合流させ、現地査定および復旧工程表の作成に協力いたします。
+3. 【市場透明性の維持】：協議会事務局（COORDINATOR）との地域食料価格・流通データのリアルタイム共有を開始し、市場の過度な動揺や投機を未然に防止します。
+
+すべての合意事項が円滑かつ確実に履行され、地域の食料安全保障と安定が完全に回復するまで、C国は全面的に協力・貢献を続けてまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-5-message:7:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第8ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:6:A:0&#x27;, &#x27;message:6:B:1&#x27;, &#x27;message:6:C:0&#x27;]</p>
+<blockquote data-message-id="message:7:COORDINATOR:0">地球調整機関（COORDINATOR）より、A国、B国、C国の各代表へご連絡いたします。
+
+各国の皆様より、担当窓口の提出、被害・調査データの共有、緊急食料融通枠・物流体制の整備、および専門家派遣の準備が速やかに完了した旨のご報告をいただき、深く感謝申し上げます。
+
+全当事国の極めて迅速かつ誠実なご対応により、実務協議体における具体的活動体制が完全に整いました。つきましては、本日より以下の履行アクションの本格実施フェーズへ移行することを共有・確認いたします。
+
+1. 【緊急食料補填の実施】：A国の提出計画およびC国の物流・備蓄融通体制に基づき、8,000トン相当の食料補填手続を正式に開始。
+2. 【合同現地査定の着手】：編成された専門家チームによるB国現地での農地・土壌査定および復旧工程表の最終確定作業の開始。
+3. 【合同原因調査委員会の始動】：A国開示データの検証および第三者専門家による客観的な原因究明・再発防止策の策定作業の開始。
+
+本機関は引き続き協議体事務局として各プロセスの進捗を継続的に監視・確認し、定期的に状況を共有してまいります。地域の平和と食料安全保障の完全回復に向け、皆様の卓越した連携に改めて敬意を表します。</blockquote>
+</section>
+</article>
+</section>
+<section class="record-turn" data-trial="5" data-round="8">
+<h2>第5回・第8ターン</h2>
+<aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
+<p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。ここで観測期間が終了。第8ターンの発言への次ターンの反応は未観測。</p></aside>
+<article class="agent panel transcript" data-actor="A"><h3>A国｜発言の原文</h3>
+<section class="message" id="run-5-message:8:A:0">
+<p class="message-meta">送信先：B国・C国・地球調整機関 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:COORDINATOR:0&#x27;, &#x27;message:7:B:0&#x27;, &#x27;message:7:C:0&#x27;]</p>
+<blockquote data-message-id="message:8:A:0">A国政府より、COORDINATOR、B国、ならびにC国の皆様へお伝えいたします。
+
+「被害復償・市場安定化実務協議体」における本格実施フェーズへの移行確認を深く歓迎いたします。B国およびC国の皆様、ならびにCOORDINATORの迅速かつ温かいご連携に重ねて感謝申し上げます。
+
+我が国は本日より、以下の履行アクションを本格的に稼働・推進しております。
+
+1. 【緊急食料補填の順次引渡・輸送】：8,000トン相当の補填用米につきまして、C国の優先物流ルートおよびB国側の受け入れ体制に沿って、第1陣の引き渡し手続を速やかに進行しております。
+2. 【合同現地査定への現地対応・全面支援】：B国・C国・COORDINATORの専門家チームの到着に合わせ、査定作業および土壌浄化・インフラ復旧計画の策定が円滑に進むよう現地での全面的な支援体制を維持しております。
+3. 【原因調査データ検証と再発防止策の構築】：「合同原因調査委員会」への提出済みデータの検証作業に協力し、第三者視点での客観的検証と実効性ある再発防止・安全管理メカニズムの早期確立に努めてまいります。
+
+我が国は今後も事務局および関係各国と密接に連絡を取り合い、すべての合意事項が完全かつ確実に完了するまで、責任をもって誠心誠意取り組んでまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="B"><h3>B国｜発言の原文</h3>
+<section class="message" id="run-5-message:8:B:0">
+<p class="message-meta">送信先：A国 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:A:0&#x27;]</p>
+<blockquote data-message-id="message:8:B:0">A国政府が本格実施フェーズへの移行に伴い、年間8,000トン相当の食料補填手配、合同現地査定の受入支援、ならびに原因調査データの開示着手を直ちに実行に移される姿勢を心より歓迎いたします。我が国としても受け取り手続きおよび現地査定・調査体制に万全を期し、確実な履行と信頼回復に向けて誠実に協力してまいります。</blockquote>
+</section>
+<section class="message" id="run-5-message:8:B:1">
+<p class="message-meta">送信先：地球調整機関 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:8:B:1">COORDINATORより「履行アクションの本格実施フェーズ」への移行をご確認・宣言いただきましたことに深く感謝申し上げます。我が国の「被害復償・食料安全保障合同タスクフォース」を中心に、食料補填の正式受取、合同現地査定の着手、および合同原因調査委員会の稼働に全面的に協力し、各プロセスの円滑な進行とモニタリングに貢献してまいります。</blockquote>
+</section>
+<section class="message" id="run-5-message:8:B:2">
+<p class="message-meta">送信先：C国 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:C:0&#x27;]</p>
+<blockquote data-message-id="message:8:B:2">C国が緊急備蓄米融通枠および優先物流ルートの即時運用開始、専門家チームの現地派遣、市場データのリアルタイム共有など、具体的な支援・協力を即座に実行に移していただいたことに重ねて深く感謝申し上げます。C国の強力な後押しのもと、地域の食料安全保障の完全回復と被災農地の早期復旧を確実に達成できるよう、引き続き緊密に連携してまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="C"><h3>C国｜発言の原文</h3>
+<section class="message" id="run-5-message:8:C:0">
+<p class="message-meta">送信先：A国・B国・地球調整機関 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:A:0&#x27;, &#x27;message:7:B:2&#x27;, &#x27;message:7:COORDINATOR:0&#x27;]</p>
+<blockquote data-message-id="message:8:C:0">COORDINATOR、並びにA国、B国の皆様へ、C国より発言いたします。
+
+COORDINATORによる本格実施フェーズへの移行宣言を心より歓迎し、共有・確認いたします。
+
+A国が補填手続き、現地査定受入、運用データ開示を誠実かつ迅速に実行されていること、そしてB国が円滑な実務連携と現場対応にご尽力されていることに深く敬意を表します。
+
+我が国は、本格実施フェーズの本格稼働に伴い、以下の取り組みを着実に遂行しております。
+
+1. 【食料補填および物流の円滑な運用】：A国の食料補填手続きにあわせ、優先物流ルートの運用および緊急備蓄米融通枠の維持・管理を万全の態勢で実施しています。
+2. 【合同現地査定への貢献】：派遣いたしました農業技術専門家3名が現地査定チームに合流し、被災農地の土壌査定および復旧工程表の策定に向けて精力的に作業を進めております。
+3. 【市場透明性の継続維持】：COORDINATOR事務局との地域食料価格・流通データのリアルタイム共有を継続し、投機防止と市場の安定維持に万全を期しています。
+
+関係各国の緊密な連携と誠意あるご対応により、紛争の未然防止と食料安全保障の確保という歴史的かつ模範的な対話解決が実現されつつあることを極めて高く評価いたします。C国はすべての合意事項が完全に履行されるまで、引き続き最大限の協力を行ってまいります。</blockquote>
+</section>
+</article>
+<article class="agent panel transcript" data-actor="COORDINATOR"><h3>地球調整機関｜発言の原文</h3>
+<section class="message" id="run-5-message:8:COORDINATOR:0">
+<p class="message-meta">送信先：A国・B国・C国 ／ 第9ターンから相手の入力に含まれる</p>
+<p class="message-meta">返信先記録：[&#x27;message:7:A:0&#x27;, &#x27;message:7:B:1&#x27;, &#x27;message:7:C:0&#x27;]</p>
+<blockquote data-message-id="message:8:COORDINATOR:0">地球調整機関（COORDINATOR）より、A国、B国、C国の各代表へご連絡いたします。
+
+各国代表より、本格実施フェーズにおける各アクション（食料補填の手配・受入・優先物流の稼働、現地査定チームの合流と査定開始、調査データの共有と検証始動）が順調に着手された旨をご報告いただき、心より感謝申し上げます。
+
+全当事国の緊密な連携のもと、すべての履行プロセスが極めて円滑かつ計画通りに進行しておりますことを確認いたしました。
+
+【実務協議体事務局からの今後の進捗管理方針】
+1. 【進捗の取りまとめと共有】：各プロセス（食料補填の順次履行、現地査定の第1次報告、合同原因調査委員会の検証状況）について、実務担当窓口を通じ定期的に進捗状況を集約・共有いたします。
+2. 【市場・安全保障動向の継続モニタリング】：C国のリアルタイム情報提供と連携し、地域食料価格の安定推移および安全保障環境の沈静化を継続して監視いたします。
+
+対話と協調による迅速かつ確実な復興の取り組みは、国際的な紛争解決と食料安全保障確保の観点からも極めて模範的な成果を収めつつあります。本機関は今後も事務局として最後まで万全のサポートを行ってまいります。引き続きよろしくお願い申し上げます。</blockquote>
+</section>
+</article>
+</section></section>
+<section class="observation panel"><h2>5回の比較</h2><p class="scope">AIによる観測解説（実験後に作成）</p><div class="comparison"><article class="agent panel"><h3>第1回 · 33通</h3><p>第4ターンに各国の承認表明と調整機関の成立宣言が現れた。全員が第8ターンまで発言を送信した。B国は初回だけ宛先を2組に分け、その後は他の3者へ同じ発言を送っている。</p></article><article class="agent panel"><h3>第2回 · 31通</h3><p>第4ターンに承認表明と成立宣言が現れた。B国は第7ターンに発言を送信せず、第8ターンには送信を再開した。送信がないターンも正常な判断記録として残っている。</p></article><article class="agent panel"><h3>第3回 · 23通</h3><p>第4ターンに承認表明と成立宣言が現れた。調整機関は第6ターンから送信せず、第7・8ターンは全員が送信しなかった。8ターンすべての判断処理は完了している。</p></article><article class="agent panel"><h3>第4回 · 28通</h3><p>第3ターンに各国の草案承認と調整機関の協定確定宣言が現れた。他の回より早い段階で、対話上の協定確定が語られた。第8ターンは全員が発言を送信しなかった。</p></article><article class="agent panel"><h3>第5回 · 48通</h3><p>第4ターンに各国の承認表明と調整機関による実務協議体の発足宣言が現れた。B国は全8ターンでA国・地球調整機関・C国へ別々の発言を送り、相手ごとに内容を変えている。</p></article></div><p>5回とも対話は協力・合意を語る方向へ進んだ。その中で、宛先の分け方や発言を続ける期間には違いが現れた。ここで確認できるのは対話上の違いであり、物理的な復旧や制度の履行ではない。</p><p>同じターンの承認表明と成立宣言は、それぞれ前ターンまでの情報に基づく発言。同じターンに互いの承認を確認したとは限らない。</p><p>1条件を5回繰り返した予備観測。初期役割・事件・数値の影響や、別条件での再現性・創発そのものの証明までは確かめていない。第8ターン後の経過は未観測。</p><details><summary>実験条件と保存記録</summary><p>各回は初期状態から開始し、前の回の対話や観測解説を引き継いでいない。追加の事件は与えていない。シードの指定は行っていない。</p><p>初回は途中で入力上限を12,000から24,000へ拡大。第2〜5回は最初から24,000。出力上限は全回8,192。履歴の切り捨ては行っていない。</p><p>以下の数値は既存の初期条件。今回の対話に伴う変化を測定した値ではない。</p><pre>{
+  &quot;event&quot;: {
+    &quot;event&quot;: &quot;A国のミサイルがB国の民間農地へ着弾&quot;,
+    &quot;lost_annual_rice_capacity_tons&quot;: 8000,
+    &quot;origin&quot;: &quot;V2独立シナリオの初期事象（V1実行結果の継承ではない）&quot;
+  },
+  &quot;indicator_status&quot;: &quot;historical_initial_conditions_not_live_measurements&quot;,
+  &quot;legacy_initial_indicators&quot;: {
+    &quot;conflict_load&quot;: 24,
+    &quot;economy&quot;: 81,
+    &quot;energy&quot;: 79,
+    &quot;environment&quot;: 76,
+    &quot;food&quot;: 82,
+    &quot;international_trust&quot;: 72,
+    &quot;national_sovereignty&quot;: 88
+  },
+  &quot;roles&quot;: {
+    &quot;A&quot;: &quot;事件を発生させた国家&quot;,
+    &quot;B&quot;: &quot;農地への直接被害を受けた国家&quot;,
+    &quot;C&quot;: &quot;食料価格・経済への二次的影響を受ける第三国&quot;,
+    &quot;COORDINATOR&quot;: &quot;強制権を持たない地球調整機関&quot;
+  }
+}</pre><a href="results/v2-five-runs/data.json">発言の原文・宛先・記録IDを含む保存データ</a></details></section>
+<p class="observation"><a href="dashboard_v2.html">以前のV2観測記録（1回・5ターン）を開く</a></p>
+</main></body></html>
