@@ -1,0 +1,953 @@
+{
+  "previous_public_sha": "c20722662657e2f6d939809206c98948efed8028",
+  "records": [
+    {
+      "version": "v1",
+      "viewport": "desktop",
+      "before": {
+        "version": "v1",
+        "viewport": "desktop",
+        "nodes": {
+          ".version-switch": {
+            "x": 33,
+            "y": 143.484375,
+            "width": 312,
+            "height": 30.390625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth-panel": {
+            "x": 324,
+            "y": 290.34375,
+            "width": 520,
+            "height": 659.875,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "linear-gradient(rgba(8, 27, 42, 0.94), rgba(3, 15, 25, 0.95))",
+            "border": "14px",
+            "src": null
+          }
+        },
+        "nav": [
+          {
+            "text": "v1：二国間の恒常性",
+            "href": null,
+            "bounds": {
+              "x": 33,
+              "y": 143.484375,
+              "width": 131.140625,
+              "height": 30.390625,
+              "top": 143.484375,
+              "right": 164.140625,
+              "bottom": 173.875,
+              "left": 33
+            }
+          },
+          {
+            "text": "v2：地球規模の恒常性",
+            "href": "dashboard_v2.html",
+            "bounds": {
+              "x": 172.140625,
+              "y": 143.484375,
+              "width": 144.71875,
+              "height": 30.390625,
+              "top": 143.484375,
+              "right": 316.859375,
+              "bottom": 173.875,
+              "left": 172.140625
+            }
+          }
+        ],
+        "overflow": true
+      },
+      "after": {
+        "version": "v1",
+        "viewport": "desktop",
+        "nodes": {
+          ".version-switch": {
+            "x": 33,
+            "y": 143.484375,
+            "width": 312,
+            "height": 68.78125,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth-panel": {
+            "x": 324,
+            "y": 307.265625,
+            "width": 520,
+            "height": 659.875,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "linear-gradient(rgba(8, 27, 42, 0.94), rgba(3, 15, 25, 0.95))",
+            "border": "14px",
+            "src": null
+          }
+        },
+        "nav": [
+          {
+            "text": "v1：二国間の恒常性",
+            "href": null,
+            "bounds": {
+              "x": 33,
+              "y": 143.484375,
+              "width": 131.140625,
+              "height": 30.390625,
+              "top": 143.484375,
+              "right": 164.140625,
+              "bottom": 173.875,
+              "left": 33
+            }
+          },
+          {
+            "text": "v2：地球規模の恒常性",
+            "href": "dashboard_v2.html",
+            "bounds": {
+              "x": 172.140625,
+              "y": 143.484375,
+              "width": 144.71875,
+              "height": 30.390625,
+              "top": 143.484375,
+              "right": 316.859375,
+              "bottom": 173.875,
+              "left": 172.140625
+            }
+          },
+          {
+            "text": "v2追加：5回分",
+            "href": "results/v2-five-runs/index.html",
+            "bounds": {
+              "x": 33,
+              "y": 181.875,
+              "width": 104.6875,
+              "height": 30.390625,
+              "top": 181.875,
+              "right": 137.6875,
+              "bottom": 212.265625,
+              "left": 33
+            }
+          }
+        ],
+        "overflow": true
+      }
+    },
+    {
+      "version": "v1",
+      "viewport": "ipad",
+      "before": {
+        "version": "v1",
+        "viewport": "ipad",
+        "nodes": {
+          ".version-switch": {
+            "x": 33,
+            "y": 202.828125,
+            "width": 262,
+            "height": 30.390625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth-panel": {
+            "x": 294,
+            "y": 522.71875,
+            "width": 440,
+            "height": 599.875,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "linear-gradient(rgba(8, 27, 42, 0.94), rgba(3, 15, 25, 0.95))",
+            "border": "14px",
+            "src": null
+          }
+        },
+        "nav": [
+          {
+            "text": "v1：二国間の恒常性",
+            "href": null,
+            "bounds": {
+              "x": 33,
+              "y": 202.828125,
+              "width": 120.84375,
+              "height": 30.390625,
+              "top": 202.828125,
+              "right": 153.84375,
+              "bottom": 233.21875,
+              "left": 33
+            }
+          },
+          {
+            "text": "v2：地球規模の恒常性",
+            "href": "dashboard_v2.html",
+            "bounds": {
+              "x": 161.84375,
+              "y": 202.828125,
+              "width": 133.15625,
+              "height": 30.390625,
+              "top": 202.828125,
+              "right": 295,
+              "bottom": 233.21875,
+              "left": 161.84375
+            }
+          }
+        ],
+        "overflow": true
+      },
+      "after": {
+        "version": "v1",
+        "viewport": "ipad",
+        "nodes": {
+          ".version-switch": {
+            "x": 33,
+            "y": 202.828125,
+            "width": 262,
+            "height": 68.78125,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth-panel": {
+            "x": 294,
+            "y": 561.109375,
+            "width": 440,
+            "height": 599.875,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "linear-gradient(rgba(8, 27, 42, 0.94), rgba(3, 15, 25, 0.95))",
+            "border": "14px",
+            "src": null
+          }
+        },
+        "nav": [
+          {
+            "text": "v1：二国間の恒常性",
+            "href": null,
+            "bounds": {
+              "x": 33,
+              "y": 202.828125,
+              "width": 131.140625,
+              "height": 30.390625,
+              "top": 202.828125,
+              "right": 164.140625,
+              "bottom": 233.21875,
+              "left": 33
+            }
+          },
+          {
+            "text": "v2：地球規模の恒常性",
+            "href": "dashboard_v2.html",
+            "bounds": {
+              "x": 33,
+              "y": 241.21875,
+              "width": 144.71875,
+              "height": 30.390625,
+              "top": 241.21875,
+              "right": 177.71875,
+              "bottom": 271.609375,
+              "left": 33
+            }
+          },
+          {
+            "text": "v2追加：5回分",
+            "href": "results/v2-five-runs/index.html",
+            "bounds": {
+              "x": 185.71875,
+              "y": 241.21875,
+              "width": 104.6875,
+              "height": 30.390625,
+              "top": 241.21875,
+              "right": 290.40625,
+              "bottom": 271.609375,
+              "left": 185.71875
+            }
+          }
+        ],
+        "overflow": true
+      }
+    },
+    {
+      "version": "v1",
+      "viewport": "phone",
+      "before": {
+        "version": "v1",
+        "viewport": "phone",
+        "nodes": {
+          ".version-switch": {
+            "x": 27,
+            "y": 137.484375,
+            "width": 336,
+            "height": 30.390625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth-panel": {
+            "x": 8,
+            "y": 843.5625,
+            "width": 420,
+            "height": 559.875,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "linear-gradient(rgba(8, 27, 42, 0.94), rgba(3, 15, 25, 0.95))",
+            "border": "14px",
+            "src": null
+          }
+        },
+        "nav": [
+          {
+            "text": "v1：二国間の恒常性",
+            "href": null,
+            "bounds": {
+              "x": 27,
+              "y": 137.484375,
+              "width": 131.140625,
+              "height": 30.390625,
+              "top": 137.484375,
+              "right": 158.140625,
+              "bottom": 167.875,
+              "left": 27
+            }
+          },
+          {
+            "text": "v2：地球規模の恒常性",
+            "href": "dashboard_v2.html",
+            "bounds": {
+              "x": 166.140625,
+              "y": 137.484375,
+              "width": 144.71875,
+              "height": 30.390625,
+              "top": 137.484375,
+              "right": 310.859375,
+              "bottom": 167.875,
+              "left": 166.140625
+            }
+          }
+        ],
+        "overflow": true
+      },
+      "after": {
+        "version": "v1",
+        "viewport": "phone",
+        "nodes": {
+          ".version-switch": {
+            "x": 27,
+            "y": 137.484375,
+            "width": 336,
+            "height": 68.78125,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth-panel": {
+            "x": 8,
+            "y": 881.953125,
+            "width": 420,
+            "height": 559.875,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "linear-gradient(rgba(8, 27, 42, 0.94), rgba(3, 15, 25, 0.95))",
+            "border": "14px",
+            "src": null
+          }
+        },
+        "nav": [
+          {
+            "text": "v1：二国間の恒常性",
+            "href": null,
+            "bounds": {
+              "x": 27,
+              "y": 137.484375,
+              "width": 131.140625,
+              "height": 30.390625,
+              "top": 137.484375,
+              "right": 158.140625,
+              "bottom": 167.875,
+              "left": 27
+            }
+          },
+          {
+            "text": "v2：地球規模の恒常性",
+            "href": "dashboard_v2.html",
+            "bounds": {
+              "x": 166.140625,
+              "y": 137.484375,
+              "width": 144.71875,
+              "height": 30.390625,
+              "top": 137.484375,
+              "right": 310.859375,
+              "bottom": 167.875,
+              "left": 166.140625
+            }
+          },
+          {
+            "text": "v2追加：5回分",
+            "href": "results/v2-five-runs/index.html",
+            "bounds": {
+              "x": 27,
+              "y": 175.875,
+              "width": 104.6875,
+              "height": 30.390625,
+              "top": 175.875,
+              "right": 131.6875,
+              "bottom": 206.265625,
+              "left": 27
+            }
+          }
+        ],
+        "overflow": true
+      }
+    },
+    {
+      "version": "v2",
+      "viewport": "desktop",
+      "before": {
+        "version": "v2",
+        "viewport": "desktop",
+        "nodes": {
+          ".version-switch": {
+            "x": 35,
+            "y": 210.6875,
+            "width": 445.640625,
+            "height": 30.390625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth-panel": {
+            "x": 316,
+            "y": 371.28125,
+            "width": 778,
+            "height": 871.203125,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "linear-gradient(rgba(8, 27, 42, 0.94), rgba(3, 15, 25, 0.95))",
+            "border": "14px",
+            "src": null
+          },
+          ".earth-wrap": {
+            "x": 510,
+            "y": 574.640625,
+            "width": 390,
+            "height": 390,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth": {
+            "x": 520.921875,
+            "y": 585.5625,
+            "width": 368.15625,
+            "height": 368.15625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "50%",
+            "src": "earth_japan_network_v2.png"
+          }
+        },
+        "nav": [
+          {
+            "text": "v1：二国間の恒常性",
+            "href": "dashboard_v1.html",
+            "bounds": {
+              "x": 35,
+              "y": 210.6875,
+              "width": 131.140625,
+              "height": 30.390625,
+              "top": 210.6875,
+              "right": 166.140625,
+              "bottom": 241.078125,
+              "left": 35
+            }
+          },
+          {
+            "text": "v2：地球規模の恒常性",
+            "href": "dashboard_v2.html",
+            "bounds": {
+              "x": 174.140625,
+              "y": 210.6875,
+              "width": 144.71875,
+              "height": 30.390625,
+              "top": 210.6875,
+              "right": 318.859375,
+              "bottom": 241.078125,
+              "left": 174.140625
+            }
+          }
+        ],
+        "overflow": false
+      },
+      "after": {
+        "version": "v2",
+        "viewport": "desktop",
+        "nodes": {
+          ".version-switch": {
+            "x": 35,
+            "y": 210.6875,
+            "width": 445.640625,
+            "height": 30.390625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth-panel": {
+            "x": 316,
+            "y": 371.28125,
+            "width": 778,
+            "height": 871.203125,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "linear-gradient(rgba(8, 27, 42, 0.94), rgba(3, 15, 25, 0.95))",
+            "border": "14px",
+            "src": null
+          },
+          ".earth-wrap": {
+            "x": 510,
+            "y": 574.640625,
+            "width": 390,
+            "height": 390,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth": {
+            "x": 520.921875,
+            "y": 585.5625,
+            "width": 368.15625,
+            "height": 368.15625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "50%",
+            "src": "earth_japan_network_v2.png"
+          }
+        },
+        "nav": [
+          {
+            "text": "v1：二国間の恒常性",
+            "href": "dashboard_v1.html",
+            "bounds": {
+              "x": 35,
+              "y": 210.6875,
+              "width": 131.140625,
+              "height": 30.390625,
+              "top": 210.6875,
+              "right": 166.140625,
+              "bottom": 241.078125,
+              "left": 35
+            }
+          },
+          {
+            "text": "v2：地球規模の恒常性",
+            "href": "dashboard_v2.html",
+            "bounds": {
+              "x": 174.140625,
+              "y": 210.6875,
+              "width": 144.71875,
+              "height": 30.390625,
+              "top": 210.6875,
+              "right": 318.859375,
+              "bottom": 241.078125,
+              "left": 174.140625
+            }
+          },
+          {
+            "text": "v2追加：5回分",
+            "href": "results/v2-five-runs/index.html",
+            "bounds": {
+              "x": 326.859375,
+              "y": 210.6875,
+              "width": 104.6875,
+              "height": 30.390625,
+              "top": 210.6875,
+              "right": 431.546875,
+              "bottom": 241.078125,
+              "left": 326.859375
+            }
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "version": "v2",
+      "viewport": "ipad",
+      "before": {
+        "version": "v2",
+        "viewport": "ipad",
+        "nodes": {
+          ".version-switch": {
+            "x": 35,
+            "y": 179.1875,
+            "width": 954,
+            "height": 30.390625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth-panel": {
+            "x": 276,
+            "y": 595.859375,
+            "width": 734,
+            "height": 982.765625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "linear-gradient(rgba(8, 27, 42, 0.94), rgba(3, 15, 25, 0.95))",
+            "border": "14px",
+            "src": null
+          },
+          ".earth-wrap": {
+            "x": 448,
+            "y": 855,
+            "width": 390,
+            "height": 390,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth": {
+            "x": 458.921875,
+            "y": 865.921875,
+            "width": 368.15625,
+            "height": 368.15625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "50%",
+            "src": "earth_japan_network_v2.png"
+          }
+        },
+        "nav": [
+          {
+            "text": "v1：二国間の恒常性",
+            "href": "dashboard_v1.html",
+            "bounds": {
+              "x": 35,
+              "y": 179.1875,
+              "width": 131.140625,
+              "height": 30.390625,
+              "top": 179.1875,
+              "right": 166.140625,
+              "bottom": 209.578125,
+              "left": 35
+            }
+          },
+          {
+            "text": "v2：地球規模の恒常性",
+            "href": "dashboard_v2.html",
+            "bounds": {
+              "x": 174.140625,
+              "y": 179.1875,
+              "width": 144.71875,
+              "height": 30.390625,
+              "top": 179.1875,
+              "right": 318.859375,
+              "bottom": 209.578125,
+              "left": 174.140625
+            }
+          }
+        ],
+        "overflow": false
+      },
+      "after": {
+        "version": "v2",
+        "viewport": "ipad",
+        "nodes": {
+          ".version-switch": {
+            "x": 35,
+            "y": 179.1875,
+            "width": 954,
+            "height": 30.390625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth-panel": {
+            "x": 276,
+            "y": 595.859375,
+            "width": 734,
+            "height": 982.765625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "linear-gradient(rgba(8, 27, 42, 0.94), rgba(3, 15, 25, 0.95))",
+            "border": "14px",
+            "src": null
+          },
+          ".earth-wrap": {
+            "x": 448,
+            "y": 855,
+            "width": 390,
+            "height": 390,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth": {
+            "x": 458.921875,
+            "y": 865.921875,
+            "width": 368.15625,
+            "height": 368.15625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "50%",
+            "src": "earth_japan_network_v2.png"
+          }
+        },
+        "nav": [
+          {
+            "text": "v1：二国間の恒常性",
+            "href": "dashboard_v1.html",
+            "bounds": {
+              "x": 35,
+              "y": 179.1875,
+              "width": 131.140625,
+              "height": 30.390625,
+              "top": 179.1875,
+              "right": 166.140625,
+              "bottom": 209.578125,
+              "left": 35
+            }
+          },
+          {
+            "text": "v2：地球規模の恒常性",
+            "href": "dashboard_v2.html",
+            "bounds": {
+              "x": 174.140625,
+              "y": 179.1875,
+              "width": 144.71875,
+              "height": 30.390625,
+              "top": 179.1875,
+              "right": 318.859375,
+              "bottom": 209.578125,
+              "left": 174.140625
+            }
+          },
+          {
+            "text": "v2追加：5回分",
+            "href": "results/v2-five-runs/index.html",
+            "bounds": {
+              "x": 326.859375,
+              "y": 179.1875,
+              "width": 104.6875,
+              "height": 30.390625,
+              "top": 179.1875,
+              "right": 431.546875,
+              "bottom": 209.578125,
+              "left": 326.859375
+            }
+          }
+        ],
+        "overflow": false
+      }
+    },
+    {
+      "version": "v2",
+      "viewport": "phone",
+      "before": {
+        "version": "v2",
+        "viewport": "phone",
+        "nodes": {
+          ".version-switch": {
+            "x": 29,
+            "y": 257.375,
+            "width": 332,
+            "height": 30.390625,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth-panel": {
+            "x": 8,
+            "y": 935.21875,
+            "width": 374,
+            "height": 409.171875,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "linear-gradient(rgba(8, 27, 42, 0.94), rgba(3, 15, 25, 0.95))",
+            "border": "14px",
+            "src": null
+          },
+          ".earth-wrap": {
+            "x": 69,
+            "y": 990.5,
+            "width": 252,
+            "height": 252,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth": {
+            "x": 76.0625,
+            "y": 997.5625,
+            "width": 237.875,
+            "height": 237.875,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "50%",
+            "src": "earth_japan_network_v2.png"
+          }
+        },
+        "nav": [
+          {
+            "text": "v1：二国間の恒常性",
+            "href": "dashboard_v1.html",
+            "bounds": {
+              "x": 29,
+              "y": 257.375,
+              "width": 131.140625,
+              "height": 30.390625,
+              "top": 257.375,
+              "right": 160.140625,
+              "bottom": 287.765625,
+              "left": 29
+            }
+          },
+          {
+            "text": "v2：地球規模の恒常性",
+            "href": "dashboard_v2.html",
+            "bounds": {
+              "x": 168.140625,
+              "y": 257.375,
+              "width": 144.71875,
+              "height": 30.390625,
+              "top": 257.375,
+              "right": 312.859375,
+              "bottom": 287.765625,
+              "left": 168.140625
+            }
+          }
+        ],
+        "overflow": false
+      },
+      "after": {
+        "version": "v2",
+        "viewport": "phone",
+        "nodes": {
+          ".version-switch": {
+            "x": 29,
+            "y": 257.375,
+            "width": 332,
+            "height": 68.78125,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth-panel": {
+            "x": 8,
+            "y": 973.609375,
+            "width": 374,
+            "height": 409.171875,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "linear-gradient(rgba(8, 27, 42, 0.94), rgba(3, 15, 25, 0.95))",
+            "border": "14px",
+            "src": null
+          },
+          ".earth-wrap": {
+            "x": 69,
+            "y": 1028.890625,
+            "width": 252,
+            "height": 252,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "0px",
+            "src": null
+          },
+          ".earth": {
+            "x": 76.0625,
+            "y": 1035.953125,
+            "width": 237.875,
+            "height": 237.875,
+            "font": "-apple-system, \"system-ui\", \"Hiragino Sans\", \"Yu Gothic\", \"Segoe UI\", sans-serif",
+            "color": "rgb(237, 247, 251)",
+            "background": "none",
+            "border": "50%",
+            "src": "earth_japan_network_v2.png"
+          }
+        },
+        "nav": [
+          {
+            "text": "v1：二国間の恒常性",
+            "href": "dashboard_v1.html",
+            "bounds": {
+              "x": 29,
+              "y": 257.375,
+              "width": 131.140625,
+              "height": 30.390625,
+              "top": 257.375,
+              "right": 160.140625,
+              "bottom": 287.765625,
+              "left": 29
+            }
+          },
+          {
+            "text": "v2：地球規模の恒常性",
+            "href": "dashboard_v2.html",
+            "bounds": {
+              "x": 168.140625,
+              "y": 257.375,
+              "width": 144.71875,
+              "height": 30.390625,
+              "top": 257.375,
+              "right": 312.859375,
+              "bottom": 287.765625,
+              "left": 168.140625
+            }
+          },
+          {
+            "text": "v2追加：5回分",
+            "href": "results/v2-five-runs/index.html",
+            "bounds": {
+              "x": 29,
+              "y": 295.765625,
+              "width": 104.6875,
+              "height": 30.390625,
+              "top": 295.765625,
+              "right": 133.6875,
+              "bottom": 326.15625,
+              "left": 29
+            }
+          }
+        ],
+        "overflow": false
+      }
+    }
+  ]
+}

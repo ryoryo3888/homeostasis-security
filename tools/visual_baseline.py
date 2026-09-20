@@ -1,9 +1,13 @@
-"""Normalize only the nonvisual protection loader when comparing approved UI bytes."""
+"""Compare retained UI baselines after reversing explicitly approved additions."""
 from pathlib import Path
+from tools.navigation_revision import original_navigation
 LOADER='<script src="ui/layout-guard.js"></script>\n<script src="ui/content-slots.js"></script>\n'
 def protected_bytes(path: Path) -> bytes:
     data=path.read_bytes()
-    if path.name in ('dashboard_v1.html','dashboard_v2.html'):
+    versions = {'dashboard_v1.html':'v1','dashboard_v2.html':'v2',
+                'preview_v1_unified.html':'v1','preview_v2_unified.html':'v2'}
+    if path.name in versions:
         if data.count(LOADER.encode())>1:raise ValueError('Duplicate protection loader')
         data=data.replace(LOADER.encode(),b'',1)
+        data=original_navigation(data, versions[path.name])
     return data
