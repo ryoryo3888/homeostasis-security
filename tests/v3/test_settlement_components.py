@@ -75,6 +75,38 @@ class ComponentSearchTests(unittest.TestCase):
                         expected = f.e.read(f.run_batch(choices, policy=policy))
                     self.assertEqual(actual, expected)
 
+    def test_pruned_search_matches_exhaustive_for_same_360_cases(self):
+        with patch.object(SettlementEngine, '_cartesian_fits', return_value=False):
+            self.test_matches_exhaustive_audit_across_constraints_and_policies()
+
+    def test_pruned_pool_and_domestic_requests_match_exhaustive(self):
+        with patch.object(SettlementEngine, '_cartesian_fits', return_value=False):
+            self.test_pool_and_domestic_requests_match_exhaustive()
+
+    def test_all_routes_and_resources_can_be_requested_together(self):
+        f = self.fixture()
+        choices = [f.choice(route['route_id']+'-'+resource, route['source'], route['destination'],
+                   route['route_id'], 100, resource=resource)
+                   for route in f.n['routes'] for resource in ('food', 'energy')]
+        state = f.e.read(f.run_batch(choices))
+        self.assertEqual(len(choices), 36)
+        self.assertEqual(f.e._totals(state), f.e._totals(f.e.read(f.s)))
+        self.assertTrue(state['shipments'])
+
+    def test_fractional_upper_bound_never_changes_integer_fulfillment_or_ties(self):
+        f = self.fixture()
+        f.n['shared_capacities'][0]['capacity'] = 7
+        f.build()
+        choices = [f.choice(route['route_id']+'-'+resource, route['source'], route['destination'],
+                   route['route_id'], 2, resource=resource)
+                   for route in f.n['routes'] if route['source'] in ('MIL','ISLAND')
+                   and not route['route_id'].endswith('cross') for resource in ('food','energy')]
+        with patch.object(SettlementEngine, '_cartesian_fits', return_value=False):
+            actual = f.e.read(f.run_batch(choices))
+        f.build()
+        with patch.object(SettlementEngine, '_allocate', exhaustive):
+            self.assertEqual(actual, f.e.read(f.run_batch(choices)))
+
     def test_eight_partial_transfers_fit_without_changing_allocations(self):
         f = self.fixture()
         choices = [f.choice(f'c{i}', r['source'], r['destination'], r['route_id'], 100)
