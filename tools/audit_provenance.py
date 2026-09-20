@@ -16,7 +16,8 @@ SYSTEMS = {
         'realization': [],
         'evaluation_and_metrics': ['simulation.py'],
         'display': ['dashboard_v1.html', 'tools/build_ui_previews.py'],
-        'saved_patterns': ['simulation_result*.json', 'result_*.json', 'summary.json'],
+        'saved_patterns': ['simulation_result*.json', 'archive/duplicate-results/simulation_result*.json',
+                           'result_*.json', 'summary.json'],
         'gap': 'Action realization is unverified; historical metric inertia is implementation-dependent.',
     },
     'v2': {

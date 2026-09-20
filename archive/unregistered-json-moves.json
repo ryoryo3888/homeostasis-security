@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "source_commit": "a47f155f543c38ccd48487055b45eb606364f708",
+  "purpose": "six independently audited unregistered duplicates/intermediates; original bytes preserved",
+  "files": [
+    {
+      "original_path": "contrast_scores_hotline.json",
+      "path": "archive/legacy-derived/contrast_scores_hotline.json",
+      "sha256": "f06108446054cef6f037088cd200e7f3ed18993fbb0e4ae7d8b27bbe75816c4d"
+    },
+    {
+      "original_path": "contrast_scores_no_hotline.json",
+      "path": "archive/legacy-derived/contrast_scores_no_hotline.json",
+      "sha256": "00c5d1085e96aa62a33f164919f54fe1d412c7eaae33b6e5634edca7018f233b"
+    },
+    {
+      "original_path": "simulation_result_before_rich_data.json",
+      "path": "archive/duplicate-results/simulation_result_before_rich_data.json",
+      "sha256": "4bf375d1d229237cf1d1fd90afe14bd7b73faf95e9b45226da4fc2760d10bb9d"
+    },
+    {
+      "original_path": "simulation_result_demo_gemini.json",
+      "path": "archive/duplicate-results/simulation_result_demo_gemini.json",
+      "sha256": "4bf375d1d229237cf1d1fd90afe14bd7b73faf95e9b45226da4fc2760d10bb9d"
+    },
+    {
+      "original_path": "simulation_result_independent_agents_hotline_final.json",
+      "path": "archive/duplicate-results/simulation_result_independent_agents_hotline_final.json",
+      "sha256": "4edc4a11642230ce533994dbee21bbeb750b73d7cf9f398a8afeba17afd4fa31"
+    },
+    {
+      "original_path": "simulation_result_independent_agents_no_hotline_before_final_run.json",
+      "path": "archive/duplicate-results/simulation_result_independent_agents_no_hotline_before_final_run.json",
+      "sha256": "32f1a42a93302cde3cad71b158579e3a7190ba7ad3a032145d19c87869d9e8e2"
+    }
+  ]
+}
