@@ -1,20 +1,48 @@
 import base64
 from copy import deepcopy
+import contextlib
+import io
 import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import httpx
 
 from homeostasis_v3.contracts import canonical, digest
 from homeostasis_v4.dialogue import SYSTEM_INSTRUCTION, REPLY, parse_reply
 from homeostasis_v4.evidence import EvidenceRun, read_record, verify
-from homeostasis_v4.local_observation import execute, prepare, replay, same_identity
+from homeostasis_v4.local_observation import execute, prepare, replay, same_identity, LocalExchange
 from tests.v3.test_v4_dialogue import empty, offer, respond
 
 
 class LocalPilotTests(unittest.TestCase):
+    def test_prepared_runtime_limits_drive_cli_and_stop_new_calls(self):
+        from tools import run_v4_local as cli
+        with tempfile.TemporaryDirectory() as tmp, self.provider() as client:
+            settings = prepare(client, model='qwen3:1.7b', seed=73, turns=2, synthetic=True,
+                               request_timeout_seconds=300, run_deadline_seconds=3600)
+            prepared = Path(tmp) / 'prepared.json'
+            prepared.write_text(json.dumps({'protocol': settings, 'protocol_digest': digest(settings)}))
+            with patch.object(cli.httpx, 'Client') as factory, patch.object(cli, 'execute', return_value={
+                    'status': 'success'}) as run, patch('sys.argv', ['run_v4_local', '--execute',
+                    '--prepared', str(prepared), '--output', str(Path(tmp)/'run'),
+                    '--request-timeout', '1', '--run-deadline', '1']), contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(cli.main(), 0)
+                self.assertEqual(factory.call_args.kwargs['timeout'], 300)
+                self.assertEqual(run.call_args.args[1], settings)
+            with patch('homeostasis_v4.local_observation.time.monotonic', return_value=0):
+                exchange = LocalExchange(client, None, settings)
+            with patch('homeostasis_v4.local_observation.time.monotonic', return_value=3601):
+                with self.assertRaisesRegex(Exception, 'PILOT_DEADLINE_REACHED'):
+                    exchange('{}')
+            self.assertEqual(self.calls, [])
+            for timeout, deadline in ((0, 1200), (601, 1200), (180, 0), (180, 7201), (True, 1200)):
+                with self.subTest(timeout=timeout, deadline=deadline), self.assertRaises(Exception):
+                    prepare(client, model='qwen3:1.7b', seed=73, turns=2,
+                            request_timeout_seconds=timeout, run_deadline_seconds=deadline)
+
     def test_structured_format_is_existing_contract_and_keeps_free_requests(self):
         with tempfile.TemporaryDirectory() as tmp, self.provider() as client:
             settings = prepare(client, model='qwen3:1.7b', seed=73, turns=2,
