@@ -88,9 +88,11 @@ class BudgetTransport(httpx.BaseTransport):
         ensure(self.blocked is None, 'PREVIOUS_PAID_CALL_UNRESOLVED')
         return settings
 
-    def prepare_round(self, raws):
+    def prepare_round(self, raws, *, expected_count=None):
         settings = self._check()
-        ensure(not self.pending and len(raws) == settings['participants'], 'INVALID_ROUND_REQUEST_SET')
+        count = settings['participants'] if expected_count is None else expected_count
+        ensure(type(count) is int and 0 < count <= settings['participants'] and
+               not self.pending and len(raws) == count, 'INVALID_ROUND_REQUEST_SET')
         upper = price(settings, settings['max_input_tokens'], settings['max_output_tokens_including_thoughts'])
         ensure(self.calls + len(raws) <= settings['max_calls'] and
                self.reserved + upper * len(raws) <= Decimal(settings['usd_reservation_limit']), 'ROUND_BUDGET_EXHAUSTED')
