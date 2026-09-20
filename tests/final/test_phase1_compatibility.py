@@ -52,8 +52,9 @@ class Phase1CompatibilityTests(unittest.TestCase):
 
     def test_existing_tracked_files_match_baseline(self):
         # Resolve only the explicit historical moves; keep the original hashes.
-        archived = {item['original_path']: item['path'] for item in
-                    json.loads((ROOT / 'archive/manifest.json').read_text())['files']}
+        archived = {item['original_path']: item['path']
+                    for manifest in ('archive/manifest.json', 'archive/unregistered-json-moves.json')
+                    for item in json.loads((ROOT / manifest).read_text())['files']}
         self.assertTrue(BASELINE.is_file(), "baseline SHA-256 list is missing")
         records = {}
         for line in BASELINE.read_text(encoding="utf-8").splitlines():

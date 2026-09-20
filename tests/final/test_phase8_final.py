@@ -47,7 +47,9 @@ class Phase8Tests(unittest.TestCase):
         self.assertEqual(retained,original)
     def test_protected_baseline_except_readme(self):
         bad=[]
-        archived={item['original_path']:item['path'] for item in json.loads((ROOT/'archive/manifest.json').read_text())['files']}
+        archived={item['original_path']:item['path']
+                  for manifest in ('archive/manifest.json','archive/unregistered-json-moves.json')
+                  for item in json.loads((ROOT/manifest).read_text())['files']}
         for line in (ROOT/'tests/layout/protected-baseline.sha256').read_text().splitlines():
             digest,name=line.split('  ',1)
             if name=="README.md":continue

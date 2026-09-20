@@ -99,8 +99,10 @@ class RegistryTests(unittest.TestCase):
     def test_original_research_preserved_with_exact_backend_repair(self):
         base=load_json(ROOT/'research/experiments/inventory.json')['scope_commit']
         # The archive manifest changes location only; compare against the same
-        # historical source bytes. Its exact approved set is checked in Phase8.
-        archived={item['original_path']:item['path'] for item in load_json(ROOT/'archive/manifest.json')['files']}
+        # historical source bytes. Both approved move sets have exact-byte tests.
+        archived={item['original_path']:item['path']
+                  for manifest in ('archive/manifest.json','archive/unregistered-json-moves.json')
+                  for item in load_json(ROOT/manifest)['files']}
         # The registry's source provenance and historical artifacts stay at base.
         # Only these exact repair bytes supersede the old ENGINE freeze. This is
         # not a general exception, and does not reattribute any historical run.
