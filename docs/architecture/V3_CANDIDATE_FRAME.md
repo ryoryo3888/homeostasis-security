@@ -1,5 +1,8 @@
 # V3 Phase 7A — Candidate Visual Frame
 
+Current public name: **V4：相互依存**. This document retains the historical V3
+implementation identifiers; see [approved version names](VERSION_NUMBERING_REVISION.md).
+
 Status: **APPROVED VISUAL FRAME**, following explicit user approval of the
 magenta/purple aurora revision and authorization to freeze it. See
 [V3 Approved Visual Baseline](V3_APPROVED_VISUAL_BASELINE.md). The candidate

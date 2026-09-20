@@ -43,7 +43,7 @@ def check(base):
                         if(n.id===id || n.querySelector('#'+id)) window.__v3Relocations.push(id);
                 }))).observe(document,{childList:true,subtree:true});
             """},session)
-            browser.call('Page.navigate',{'url':base+'/dashboard_v3.html'},session)
+            browser.call('Page.navigate',{'url':base+'/dashboard_v4.html'},session)
             browser.wait('!!window.V3Candidate?.ready',session)
             browser.evaluate('document.fonts.ready.then(()=>true)',session)
             inherited=browser.evaluate(FRAME_STYLES+'('+json.dumps({'shell':'.shell','body':'body','panel':'.brand','control':'#v3-control','brandText':'.identity','controlText':'#v3-control h2'})+')',session)
@@ -90,7 +90,9 @@ def check(base):
                 near_x=max(node['x'],min(cx,node['x']+node['width']));near_y=max(node['y'],min(cy,node['y']+node['height']))
                 assert (near_x-cx)**2+(near_y-cy)**2 >= (earth['width']*232/520)**2, (vp['name'],node,earth)
             assert not result['horizontalOverflow'] and result['turnDisabled'] and result['reducedMotion']
-            assert result['nav']==['dashboard_v1.html','dashboard_v2.html','dashboard_v3.html']
+            assert result['nav']==['dashboard_v1.html','dashboard_v2.html','dashboard_v4.html']
+            assert browser.evaluate("document.title",session)=='HOMEOSTASIS SECURITY — V4'
+            assert browser.evaluate("document.querySelector('nav [aria-current=page]').textContent",session)=='V4：相互依存'
             assert 'STRUCTURE / BASELINE STATE' in result['text'] and '正式世界線なし' in result['text']
             for banned in ('10秒','30秒','秒で理解','読み方','初心者向け','研究者向け','支援国','被災国'):assert banned not in result['text']
             browser.call('Page.bringToFront',session=session)
