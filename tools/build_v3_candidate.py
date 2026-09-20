@@ -66,7 +66,10 @@ def main():
     data=transform(b,n)
     for item in data['provenance'].values():item['file_sha256']=hashlib.sha256((ROOT/item['path']).read_bytes()).hexdigest()
     (ROOT/'ui/v3/baseline.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    (ROOT/'dashboard_v3.html').write_text(render_page(data),encoding='utf-8')
-    print('V3 candidate: synthetic baseline only; no TURN execution')
+    html=render_page(data)
+    # Retain old bookmarks; internal v3 identifiers remain historical provenance.
+    for name in ('dashboard_v3.html','dashboard_v4.html'):
+        (ROOT/name).write_text(html,encoding='utf-8')
+    print('V4 candidate (legacy v3 data): synthetic baseline only; no TURN execution')
 
 if __name__=='__main__':main()
