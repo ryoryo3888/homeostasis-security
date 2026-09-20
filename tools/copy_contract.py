@@ -4,6 +4,7 @@ from html.parser import HTMLParser
 import json,re,subprocess
 from tools.navigation_revision import add_return_link
 from tools.v2_metrics_position_revision import revise_anchor
+from tools.v2_turn_width_revision import add_turn_width
 ROOT=Path(__file__).resolve().parents[1]
 REVISION=json.loads((ROOT/'tests/layout/copy_revision.json').read_text())
 MARK='<!-- HOMEOSTASIS_RESEARCH_NARRATIVE_PREVIEW -->\n<script>\n'
@@ -33,6 +34,7 @@ def prove_source_delta():
         old=old_source('dashboard_'+version+'.html')
         if version=='v1':old=revise(old,REVISION['v1_static_replacements'])
         expected=add_return_link(replace_script(old,source),version)
+        if version=='v2':expected=add_turn_width(expected)
         for name in [f'dashboard_{version}.html',f'preview_{version}_unified.html']:
             assert (ROOT/name).read_text()==expected,name
     for path in ['homeostasis-research-integration.js','homeostasis-research-layer.css','homeostasis-ui-system.css','ui/layout-guard.js','ui/content-slots.js']:
