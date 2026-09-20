@@ -11,9 +11,14 @@
   function render(updateURL = true) {
     select.value = String(trial);
     text('turnNumber', turn);
-    text('sovereignty', '未測定'); text('homeostasis', '未測定');
     const active = sections.find(s => +s.dataset.trial === trial && +s.dataset.round === turn);
     sections.forEach(s => {s.hidden = s !== active});
+    const counts = JSON.parse(active.dataset.counts);
+    text('messageTotal', counts.messageTotal.toLocaleString('ja-JP') + '通');
+    text('decisionTotal', counts.decisionTotal.toLocaleString('ja-JP') + '件');
+    document.querySelectorAll('[data-count]').forEach(node => {
+      node.textContent = counts[node.dataset.count].toLocaleString('ja-JP') + node.dataset.unit;
+    });
     for (const actor of actors) {
       const article = active.querySelector(`[data-actor="${actor}"]`);
       const count = article.querySelectorAll('[data-message-id]').length;
