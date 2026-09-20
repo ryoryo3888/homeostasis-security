@@ -73,7 +73,7 @@ def build_html(source, data):
   <div class="brand panel"><div class="brand-en">HOMEOSTASIS SECURITY v2</div>
     <h1>地球規模の恒常性シミュレーション</h1><p>保存済みの自由対話実験｜同じ初期条件から、どんな対話や関係が生まれたか</p>
     <div class="experiment-meta"><span>Gemini Agent 実験結果</span><span>5回／各8ターン</span><span>A国・B国・C国・地球調整機関</span><span>gemini-3.6-flash</span></div>
-    <nav class="version-switch" aria-label="バージョン切替"><a href="dashboard_v1.html">v1：二国間の恒常性</a><a href="results/v2-five-runs/index.html" class="active" aria-current="page">v2：地球規模の恒常性</a></nav>
+    <nav class="version-switch" aria-label="バージョン切替"><a href="dashboard_v1.html">v1：二国間の恒常性</a><a href="dashboard_v2.html">v2：地球規模の恒常性</a><a href="results/v2-five-runs/index.html" class="active" aria-current="page">v2追加：5回分</a></nav>
   </div>
   <div class="origin panel"><div><b>発生元</b><strong>V2独立シナリオの初期事象</strong></div><div class="event"><b>事件</b><strong>A国のミサイルがB国の民間農地へ着弾</strong></div><div class="impact"><b>初期被害</b><strong>年間8,000tの米生産能力を喪失</strong></div><div class="flow">自由に発言・提案 <span>→</span> 相手の反応を観測 ／ 物理的な復旧量は未測定</div></div>
 </section>
