@@ -24,6 +24,8 @@ def main():
     parser.add_argument('--num-predict', type=int, default=2048)
     parser.add_argument('--structured-output', action='store_true',
                         help='Send the existing reply schema as the local API output format')
+    parser.add_argument('--thinking', action='store_true',
+                        help='Enable model reasoning through the chat API; final answer only drives the world')
     parser.add_argument('--request-timeout', type=int, default=180,
                         help='Seconds per HTTP operation, fixed in the prepared protocol')
     parser.add_argument('--run-deadline', type=int, default=1200,
@@ -50,6 +52,7 @@ def main():
                 settings = prepare(client, model=args.model, seed=args.seed, turns=args.turns,
                                    num_ctx=args.num_ctx, num_predict=args.num_predict,
                                    structured_output=args.structured_output,
+                                   thinking=args.thinking,
                                    request_timeout_seconds=timeout, run_deadline_seconds=deadline)
                 result = {'protocol': settings, 'protocol_digest': digest(settings)}
             else:
