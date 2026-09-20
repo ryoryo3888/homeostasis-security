@@ -2,6 +2,7 @@
 .version-switch{flex-wrap:wrap}
 .world-column{min-width:0;display:flex;flex-direction:column}
 .world-column>.earth-panel{flex:1}
+.earth-metrics{position:relative;z-index:1;flex-shrink:0;width:100%;text-align:left}
 .earth-metrics>.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media(max-width:760px){.world-column{order:-1}.earth-metrics>.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .observation{padding:18px 20px;margin-top:18px;scroll-margin-top:110px;overflow-wrap:anywhere}

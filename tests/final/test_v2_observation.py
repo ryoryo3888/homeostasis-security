@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 import unittest
 
-from tools.build_v2_observation import build_html, turn_markup
+from tools.build_v2_observation import EARTH_METRICS, build_html, turn_markup
 from tools.export_v2_observation import digest, export_trials
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -79,7 +79,9 @@ class ObservationTests(unittest.TestCase):
         self.assertEqual((DATA.parent / 'index.html').read_text(), generated)
         start = self.source.index('    <section class="earth-panel panel">')
         end = self.source.index('    </section>', start) + len('    </section>')
-        self.assertIn(self.source[start:end], generated)
+        # The one authorized metrics insertion is the only Earth-subtree delta.
+        self.assertEqual(generated.count(EARTH_METRICS), 1)
+        self.assertIn(self.source[start:end], generated.replace(EARTH_METRICS, '', 1))
         self.assertNotIn('1ターンにつき2,000t回復', generated)
         self.assertNotIn('復旧まで4ターン', generated)
         self.assertIn('AIによる観測解説（実験後に作成）', generated)

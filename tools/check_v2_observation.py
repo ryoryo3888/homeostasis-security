@@ -69,13 +69,14 @@ def check(base):
                     assert actual['hash'] == f'#run={number}&turn={turn}'
                     geometry = browser.evaluate('''(() => {
                         const earth=document.querySelector('.earth-panel'), group=document.querySelector('.earth-metrics'), metrics=group.getBoundingClientRect(), e=earth.getBoundingClientRect();
-                        return {sameColumn:earth.parentElement===group.parentElement,
-                            adjacent:earth.nextElementSibling===group, below:metrics.top>=e.bottom,
-                            aligned:Math.abs(metrics.left-e.left)<1 && Math.abs(metrics.width-e.width)<1,
+                        return {insideEarth:group.parentElement===earth,
+                            adjacent:group.previousElementSibling===earth.querySelector('.primary-kpis'),
+                            below:metrics.top>=earth.querySelector('.primary-kpis').getBoundingClientRect().bottom,
+                            contained:metrics.left>=e.left && metrics.right<=e.right && metrics.bottom<=e.bottom,
                             cards:[...group.querySelectorAll('.metric')].map(n=>{const r=n.getBoundingClientRect();return r.left>=metrics.left-1 && r.right<=metrics.right+1}),
                             worldBeforeAgents:document.querySelector('.world-column').getBoundingClientRect().bottom<=document.querySelector('#agents').getBoundingClientRect().top};
                     })()''', session)
-                    assert all(geometry[k] for k in ('sameColumn','adjacent','below','aligned')), (name,geometry)
+                    assert all(geometry[k] for k in ('insideEarth','adjacent','below','contained')), (name,geometry)
                     assert len(geometry['cards'])==6 and all(geometry['cards']), (name,geometry)
                     if width<=760:
                         assert geometry['worldBeforeAgents'], (name,geometry)
