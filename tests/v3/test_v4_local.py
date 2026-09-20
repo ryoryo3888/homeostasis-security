@@ -1,4 +1,5 @@
 import base64
+from copy import deepcopy
 import json
 from pathlib import Path
 import tempfile
@@ -9,11 +10,55 @@ import httpx
 from homeostasis_v3.contracts import canonical, digest
 from homeostasis_v4.dialogue import SYSTEM_INSTRUCTION
 from homeostasis_v4.evidence import EvidenceRun, read_record, verify
-from homeostasis_v4.local_observation import execute, prepare, replay
+from homeostasis_v4.local_observation import execute, prepare, replay, same_identity
 from tests.v3.test_v4_dialogue import empty, offer, respond
 
 
 class LocalPilotTests(unittest.TestCase):
+    def test_parameter_display_order_does_not_change_identity_or_raw_metadata(self):
+        expected = {'digest': 'a' * 64, 'details': {
+            'parameters': 'temperature 0.6\nstop "first"\ntop_p 0.95\nstop "second"',
+            'template': 'original'}}
+        actual = deepcopy(expected)
+        actual['details']['parameters'] = 'top_p 0.95\nstop "first"\nstop "second"\ntemperature 0.6'
+        originals = deepcopy((actual, expected))
+        self.assertTrue(same_identity(actual, expected))
+        self.assertEqual((actual, expected), originals)
+        for field, value in (
+            ('parameters', 'top_p 0.94\nstop "first"\nstop "second"\ntemperature 0.6'),
+            ('parameters', 'top_p 0.95\nstop "second"\nstop "first"\ntemperature 0.6'),
+            ('parameters', 'top_p 0.95\nstop "first"\ntemperature 0.6'),
+            ('template', 'changed'),
+        ):
+            changed = deepcopy(actual); changed['details'][field] = value
+            self.assertFalse(same_identity(changed, expected))
+        changed = deepcopy(actual); changed['digest'] = 'b' * 64
+        self.assertFalse(same_identity(changed, expected))
+
+    def test_live_guard_allows_only_parameter_order_change(self):
+        for parameters, succeeds in (('top_p 0.95\ntemperature 0.6', True),
+                                     ('top_p 0.94\ntemperature 0.6', False)):
+            with self.subTest(parameters=parameters), tempfile.TemporaryDirectory() as tmp:
+                base = self.provider()
+                original_handler = base._transport.handle_request
+                show_count = 0
+                def handler(request):
+                    nonlocal show_count
+                    response = original_handler(request)
+                    if request.url.path == '/api/show':
+                        show_count += 1
+                        body = response.json()
+                        body['parameters'] = 'temperature 0.6\ntop_p 0.95' if show_count == 1 else parameters
+                        return httpx.Response(200, json=body)
+                    return response
+                with base, httpx.Client(transport=httpx.MockTransport(handler)) as client:
+                    result = self.run_fixture(Path(tmp) / 'run', client)
+                    self.assertEqual(result['status'], 'success' if succeeds else 'failure')
+                    self.assertEqual(len(self.calls), 16 if succeeds else 0)
+                    if not succeeds:
+                        terminal = read_record(Path(tmp) / 'run/terminal.json')
+                        self.assertEqual(terminal['error']['code'], 'LOCAL_MODEL_CHANGED')
+
     def provider(self, fault=None):
         self.calls = []; self.urls = []
         def handle(request):
