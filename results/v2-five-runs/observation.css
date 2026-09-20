@@ -1,4 +1,8 @@
 /* New record content only. Earth, satellites and the original dashboard are untouched. */
+.world-column{min-width:0;display:flex;flex-direction:column}
+.world-column>.earth-panel{flex:1}
+.earth-metrics>.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:760px){.world-column{order:-1}.earth-metrics>.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .observation{padding:18px 20px;margin-top:18px;scroll-margin-top:110px;overflow-wrap:anywhere}
 .observation h2{font-size:22px;color:var(--cyan)}
 .observation h3{font-size:16px;margin:0 0 10px;color:var(--cyan)}
