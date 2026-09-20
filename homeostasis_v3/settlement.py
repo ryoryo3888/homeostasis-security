@@ -239,13 +239,43 @@ class SettlementEngine:
                                  'route_load': routes, 'shared_load': groups, 'transport_load': transport}
 
     def _allocate(self, state, choices, prepared, policy):
-        domains = []; search_size = 1
-        for c,p in zip(choices,prepared):
-            maximum = p['feasible_amount']
-            domain_size = 1 if not maximum else (maximum-c['minimum_amount']+2 if c['allow_partial'] else 2)
-            search_size *= domain_size
-            ensure(search_size <= self.search_budget, 'SEARCH_BUDGET_EXCEEDED')
-            domains.append([0] if not maximum else ([0,*range(c['minimum_amount'],maximum+1)] if c['allow_partial'] else [0,c['requested_amount']]))
+        # Separate only genuinely independent constraint/objective components.
+        # One actor's choices must stay together: fulfillment averages resources
+        # within an actor before comparing actors, including zero-only choices.
+        active = [i for i,p in enumerate(prepared) if p['feasible_amount']]
+        parent = {i:i for i in active}
+        def root(i):
+            while parent[i] != i:
+                parent[i] = parent[parent[i]];i = parent[i]
+            return i
+        def join(a,b):
+            parent[root(a)] = root(b)
+        owners = {}; by_id = {choices[i]['choice_id']:i for i in active}
+        for i in active:
+            c,p = choices[i],prepared[i]
+            keys = [('actor',c['actor_state_id']),('stock',p['source'],c['resource'])]
+            if p['route'] is not None:
+                keys += [('route',p['route']),('group',p['group']),('transport',p['physical_source'])]
+            for key in keys:
+                if key in owners:join(i,owners[key])
+                else:owners[key] = i
+            for condition in c['conditions']:
+                # Arrival evidence is frozen history, never a current allocation.
+                if condition['kind'] != 'arrived_amount' and condition['choice_id'] in by_id:
+                    join(i,by_id[condition['choice_id']])
+        components = {}
+        for i in active:components.setdefault(root(i),[]).append(i)
+        components = sorted(components.values(),key=lambda items:items[0])
+        # Bound total enumerations before allocating ranges or publishing any
+        # result. An over-budget connected component still fails without fallback.
+        search_size = 0
+        for component in components:
+            size = 1
+            for i in component:
+                c,p = choices[i],prepared[i]
+                size *= p['feasible_amount']-c['minimum_amount']+2 if c['allow_partial'] else 2
+                ensure(search_size+size <= self.search_budget, 'SEARCH_BUDGET_EXCEEDED')
+            search_size += size
         tie_order = sorted(range(len(choices)), key=lambda i: (hashlib.sha256((policy.tie_seed+':'+choices[i]['choice_id']).encode()).hexdigest(),choices[i]['choice_id']))
         def score(amounts):
             # Aggregate within actor/resource before dimensionless averaging:
@@ -260,15 +290,30 @@ class SettlementEngine:
             actor_ratios = tuple(sorted(sum(v,Fraction(0))/len(v) for v in ratios.values()))
             tie = tuple(amounts[i] for i in tie_order)
             return (actor_ratios,tie) if policy.allocation == 'leximin_actor_fulfillment' else (tie,)
-        best = None;best_score = None
+        # Actor sets are disjoint between components. Lexicographic comparison
+        # of sorted fulfillment ratios is preserved when merging the same fixed
+        # other ratios. The global seeded tie order is preserved too. Thus exact
+        # component optima compose to the same global optimum as the full product.
+        best = (0,)*len(choices)
         from itertools import product
-        for candidate in product(*domains):
-            failed,_ = self._constraints(state,choices,prepared,candidate,policy)
-            if failed:continue
-            candidate_score = score(candidate)
-            if best_score is None or candidate_score > best_score:
-                best,best_score = candidate,candidate_score
-        ensure(best is not None, 'NO_VALID_ALLOCATION')
+        for component in components:
+            domains = []
+            for i in component:
+                c,p = choices[i],prepared[i]
+                domains.append([0,*range(c['minimum_amount'],p['feasible_amount']+1)]
+                               if c['allow_partial'] else [0,c['requested_amount']])
+            component_best = None;best_score = None
+            for quantities in product(*domains):
+                candidate = list(best)
+                for i,q in zip(component,quantities):candidate[i] = q
+                candidate = tuple(candidate)
+                failed,_ = self._constraints(state,choices,prepared,candidate,policy)
+                if failed:continue
+                candidate_score = score(candidate)
+                if best_score is None or candidate_score > best_score:
+                    component_best,best_score = candidate,candidate_score
+            ensure(component_best is not None, 'NO_VALID_ALLOCATION')
+            best = component_best
         return best
 
     def settle(self, principal, state, submissions, consents, *, policy_id, condition_catalogue=()):
