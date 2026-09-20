@@ -229,3 +229,30 @@ class FreeDialogueTests(unittest.TestCase):
         self.assertEqual(second['world']['audit']['SHOCK'], [])
         self.assertTrue(all(r['view']['external_events_this_turn'] == [shock] for r in self.requests[:8]))
         self.assertTrue(all(r['view']['external_events_this_turn'] == [] for r in self.requests[8:]))
+
+    def test_all_36_free_offers_execute_next_turn_with_replay(self):
+        from homeostasis_v4.observation_run import profile
+        self.world = TurnRunner(self.world.baseline, self.world.network, pool_location='MIL',
+                               context_id='free-stress', search_budget=profile()['settlement_search_budget'])
+        self.runner = DialogueRunner(self.world, source='synthetic 36-offer fixture')
+        self.opening = self.runner.genesis()
+        def decide(view):
+            reply = empty()
+            if view['turn'] == 1:
+                for route in self.world.network['routes']:
+                    if route['source'] != view['actor']: continue
+                    for resource in ('food', 'energy'):
+                        reply['activities'].append(offer(id=route['route_id']+'-'+resource,
+                            target=route['destination'], route=route['route_id'], resource=resource, amount=100))
+            else:
+                for o in view['offers']:
+                    if o['terms']['target'] == view['actor']:
+                        reply['activities'].append({'body': 'synthetic acceptance', 'operation': 'respond_transfer',
+                            'arguments': {'offer_id': o['id'], 'terms_digest': o['terms_digest'], 'accepted': True}})
+            return reply
+        first = self.run_turn(decide=decide)
+        second = self.run_turn(first, decide)
+        self.assertEqual(len(second['dialogue']['offers']), 36)
+        self.assertTrue(second['world']['world_state']['shipments'])
+        self.assertEqual(self.runner.replay(first, second), second)
+        self.assertEqual(len(self.requests), 16)
