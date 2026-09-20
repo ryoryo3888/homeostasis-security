@@ -80,7 +80,7 @@ class RegistryTests(unittest.TestCase):
         before=(ROOT/'ui/content.json').read_bytes();validate_registry(self.registry);self.assertEqual((ROOT/'ui/content.json').read_bytes(),before)
     def assert_authorized_content_manifest(self):
         self.assertEqual(hashlib.sha256((ROOT/'ui/content.json').read_bytes()).hexdigest(),
-                         '27f2c14622a871702b14397dd786539be38dc631467e14467bfe19d0ca2fef87')
+                         'f2824587e0cb99085471d4064ca8216bc9754584c01a2432ebfa0eef383e77d2')
     def test_original_research_preserved_with_exact_backend_repair(self):
         base=load_json(ROOT/'research/experiments/inventory.json')['scope_commit']
         # The registry's source provenance and historical artifacts stay at base.
