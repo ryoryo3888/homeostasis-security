@@ -23,7 +23,7 @@ from homeostasis_v3.contracts import canonical, digest
 from homeostasis_v3.network import load_network
 from homeostasis_v3.physical import load_baseline
 from homeostasis_v3.turn import TurnRunner
-from homeostasis_v4.dialogue import DialogueRunner, SYSTEM_INSTRUCTION
+from homeostasis_v4.dialogue import DialogueRunner, SYSTEM_INSTRUCTION, REPLY
 from homeostasis_v4.evidence import EvidenceRun, FORMAT, read_record, timestamp, verify
 from homeostasis_v4.observation_run import sources
 from model_response_json import load_response_object
@@ -137,18 +137,21 @@ def hardware():
     return result
 
 
-def prepare(client, *, model, seed, turns, num_ctx=16384, num_predict=2048, synthetic=False):
+def prepare(client, *, model, seed, turns, num_ctx=16384, num_predict=2048, synthetic=False,
+            structured_output=False):
     ensure(type(seed) is int and 0 <= seed < 2**31 - 800, 'INVALID_SEED')
     ensure(type(turns) is int and 1 <= turns <= 8, 'PILOT_TURN_LIMIT')
     ensure(type(num_ctx) is int and 4096 <= num_ctx <= 32768, 'PILOT_CONTEXT_LIMIT')
     ensure(type(num_predict) is int and 1 <= num_predict <= 8192, 'PILOT_OUTPUT_LIMIT')
+    ensure(type(structured_output) is bool, 'INVALID_STRUCTURED_OUTPUT_OPTION')
     model_identity = identity(client, model)
     world = runner()
     return {'kind': 'local_v4_pilot', 'model_identity': model_identity,
             'evidence_origin': 'injected_transport_test' if synthetic else 'local_model',
             'hardware': hardware(),
             'seed': seed, 'seed_scope': 'Ollama generation seed = run seed + zero-based request sequence; deterministic world has no RNG',
-            'generation_config': {'model': model, 'format': 'json', 'stream': False,
+            'generation_config': {'model': model,
+                'format': deepcopy(REPLY) if structured_output else 'json', 'stream': False,
                 'think': False, 'truncate': False, 'shift': False, 'keep_alive': '5m',
                 'options': {'num_ctx': num_ctx, 'num_predict': num_predict}},
             'unspecified_sampling': 'Use recorded model parameters and pinned server defaults; not assumed equal to Gemini',

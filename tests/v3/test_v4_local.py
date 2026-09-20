@@ -8,13 +8,35 @@ import unittest
 import httpx
 
 from homeostasis_v3.contracts import canonical, digest
-from homeostasis_v4.dialogue import SYSTEM_INSTRUCTION
+from homeostasis_v4.dialogue import SYSTEM_INSTRUCTION, REPLY, parse_reply
 from homeostasis_v4.evidence import EvidenceRun, read_record, verify
 from homeostasis_v4.local_observation import execute, prepare, replay, same_identity
 from tests.v3.test_v4_dialogue import empty, offer, respond
 
 
 class LocalPilotTests(unittest.TestCase):
+    def test_structured_format_is_existing_contract_and_keeps_free_requests(self):
+        with tempfile.TemporaryDirectory() as tmp, self.provider() as client:
+            settings = prepare(client, model='qwen3:1.7b', seed=73, turns=2,
+                               synthetic=True, structured_output=True)
+            self.assertEqual(settings['generation_config']['format'], REPLY)
+            self.assertIsNot(settings['generation_config']['format'], REPLY)
+            path = Path(tmp) / 'run'
+            result = execute(path, settings, protocol_digest=digest(settings), client=client,
+                             telemetry=lambda c, m: {'timestamp': 'fixture', 'measurements': {}})
+            self.assertEqual(result['status'], 'success')
+            self.assertEqual(replay(path)['replayed_turns'], 2)
+            self.assertTrue(all(c['format'] == REPLY for c in self.calls))
+            view = json.loads(self.calls[0]['prompt'])['view']
+            proposals = {'outgoing': [], 'private_note': 'A freely chosen note', 'activities': [
+                {'body': 'An institution not defined by the environment',
+                 'operation': 'invented_institution', 'arguments': {'proposal': ['free', 7]}},
+                {'body': 'A free-text activity without a known operation'}]}
+            from jsonschema import Draft202012Validator
+            Draft202012Validator(settings['generation_config']['format']).validate(proposals)
+            self.assertEqual(parse_reply(canonical(proposals), view), proposals)
+            Draft202012Validator(settings['generation_config']['format']).validate(empty())
+
     def test_parameter_display_order_does_not_change_identity_or_raw_metadata(self):
         expected = {'digest': 'a' * 64, 'details': {
             'parameters': 'temperature 0.6\nstop "first"\ntop_p 0.95\nstop "second"',
