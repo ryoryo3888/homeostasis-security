@@ -19,7 +19,7 @@ from homeostasis_core.execution_lock import exclusive_execution
 from model_response_json import load_response_object
 from provider_response import complete_response_text
 from simulation_v2 import create_gemini_client
-from v2_dialogue import ACTORS, Dialogue, PROTOCOL_VERSION, clone, digest, encode
+from v2_dialogue import ACTORS, Dialogue, PROTOCOL_VERSION, clone, digest, encode, parse_reply
 
 
 SYSTEM_INSTRUCTION = """あなたは入力のactorで識別される、この環境の参加者です。
@@ -176,7 +176,15 @@ def _response_text(journal, sequence, request, client, manifest):
         raise ExecutionStopped("SDK_REQUEST_IDENTITY_MISMATCH")
     if source_identity() != manifest["source_identity"]:
         raise ExecutionStopped("EXECUTION_SOURCE_CHANGED")
-    return complete_response_text(GenerateContentResponse.model_validate(receipt["sdk_response"]))
+    text = complete_response_text(GenerateContentResponse.model_validate(receipt["sdk_response"]))
+    reply = parse_reply(text)
+    visible_ids = {message["id"] for message in
+                   load_response_object(request["kwargs"]["contents"])["messages"]}
+    if any(not set(message.get("reply_to", [])) <= visible_ids
+           for message in reply["outgoing"]):
+        raise ExecutionStopped("INVISIBLE_REPLY_REFERENCE")
+    # Detect a broken response before spending calls on the rest of its round.
+    return text
 
 
 def run_dialogue(client, directory, *, model, rounds, max_calls, max_input_bytes,

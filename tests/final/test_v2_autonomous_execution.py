@@ -96,7 +96,11 @@ class AutonomousExecutionTests(unittest.TestCase):
     def test_malformed_and_truncated_sdk_responses_are_saved_but_never_delivered(self):
         for response in (sdk_response({}), sdk_response(output(), "MAX_TOKENS")):
             with self.subTest(response=response), tempfile.TemporaryDirectory() as temporary:
-                client = SimpleNamespace(models=SimpleNamespace(generate_content=lambda **kwargs: response))
+                calls = []
+                def respond(**kwargs):
+                    calls.append(kwargs)
+                    return response
+                client = SimpleNamespace(models=SimpleNamespace(generate_content=respond))
                 directory = Path(temporary) / "run"
                 with self.assertRaises(runtime.ExecutionStopped):
                     runtime.run_dialogue(client, directory, **SETTINGS)
@@ -105,6 +109,7 @@ class AutonomousExecutionTests(unittest.TestCase):
                 stopped = journal.read("stopped.json")
                 self.assertEqual(stopped["delivery_state"]["messages"], [])
                 self.assertTrue(stopped["not_an_agent_decision"])
+                self.assertEqual(len(calls), 1)
 
     def test_ambiguous_provider_failure_is_not_retried_or_resumed(self):
         calls = []
