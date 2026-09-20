@@ -154,7 +154,7 @@ th,td{border-color:rgba(91,220,247,.16)!important}
 .turn-label .control-heading{display:inline-block;font-size:17px;font-weight:800;letter-spacing:1.36px;line-height:26.35px;color:#67e8f9}
 </style>
 <link rel="stylesheet" href="results/v2-five-runs/observation.css?layout=metrics-inside-earth">
-<script defer src="results/v2-five-runs/observation.js"></script>
+<script defer src="results/v2-five-runs/observation.js?view=recorded-counts"></script>
 </head><body><main class="shell">
 <section class="mast">
   <div class="brand panel"><div class="brand-en">HOMEOSTASIS SECURITY v2</div>
@@ -162,7 +162,7 @@ th,td{border-color:rgba(91,220,247,.16)!important}
     <div class="experiment-meta"><span>Gemini Agent 実験結果</span><span>5回／各8ターン</span><span>A国・B国・C国・地球調整機関</span><span>gemini-3.6-flash</span></div>
     <nav class="version-switch" aria-label="バージョン切替"><a href="dashboard_v1.html">v1：二国間の恒常性</a><a href="dashboard_v2.html">v2：地球規模の恒常性</a><a href="results/v2-five-runs/index.html" class="active" aria-current="page">v2追加：5回分</a></nav>
   </div>
-  <div class="origin panel"><div><b>発生元</b><strong>V2独立シナリオの初期事象</strong></div><div class="event"><b>事件</b><strong>A国のミサイルがB国の民間農地へ着弾</strong></div><div class="impact"><b>初期被害</b><strong>年間8,000tの米生産能力を喪失</strong></div><div class="flow">自由に発言・提案 <span>→</span> 相手の反応を観測 ／ 物理的な復旧量は未測定</div></div>
+  <div class="origin panel"><div><b>発生元</b><strong>V2独立シナリオの初期事象</strong></div><div class="event"><b>事件</b><strong>A国のミサイルがB国の民間農地へ着弾</strong></div><div class="impact"><b>初期被害</b><strong>年間8,000tの米生産能力を喪失</strong></div><div class="flow">自由に発言・提案 <span>→</span> 相手の反応を観測 ／ 保存した対話と判断を集計</div></div>
 </section>
 <section class="controls panel" aria-label="観測記録の操作"><div class="turn-operations"><label for="trialSelect">実験 <select id="trialSelect"><option value="1">第1回</option><option value="2">第2回</option><option value="3">第3回</option><option value="4">第4回</option><option value="5">第5回</option></select></label><div class="turn-label"><span class="control-heading">SIMULATION CONTROL</span><strong id="turnNumber">1</strong> / 8</div><div class="turn-buttons"><button class="turn-button nav-button" id="prevTurn" type="button">‹ 前へ</button><button type="button" class="turn-button direct" data-turn="1">1</button><button type="button" class="turn-button direct" data-turn="2">2</button><button type="button" class="turn-button direct" data-turn="3">3</button><button type="button" class="turn-button direct" data-turn="4">4</button><button type="button" class="turn-button direct" data-turn="5">5</button><button type="button" class="turn-button direct" data-turn="6">6</button><button type="button" class="turn-button direct" data-turn="7">7</button><button type="button" class="turn-button direct" data-turn="8">8</button><button class="turn-button nav-button" id="nextTurn" type="button">次へ ›</button></div></div><div class="event-now" id="selectionStatus" role="status" aria-live="polite">保存された実験記録を表示。操作による追加実験・API通信はありません。</div></section>
 <section class="hero"><div class="agent-stack" id="agents"><article class="agent panel a"><h2>A国</h2><p class="role">事件を発生させた国家</p><div class="action" id="count-A">記録を読み込み中</div><div class="response" id="to-A"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p></article><article class="agent panel b"><h2>B国</h2><p class="role">農地への直接被害を受けた国家</p><div class="action" id="count-B">記録を読み込み中</div><div class="response" id="to-B"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p></article><article class="agent panel c"><h2>C国</h2><p class="role">食料価格・経済への二次的影響を受ける第三国</p><div class="action" id="count-C">記録を読み込み中</div><div class="response" id="to-C"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p></article></div>
@@ -186,16 +186,16 @@ th,td{border-color:rgba(91,220,247,.16)!important}
         <div class="sat-orbit three" aria-hidden="true"><div class="sat-runner"><svg class="satellite" viewBox="0 0 30 16"><rect class="panel" x="1" y="4" width="8" height="8" rx="1"/><rect class="body" x="11" y="3" width="8" height="10" rx="2"/><rect class="panel" x="21" y="4" width="8" height="8" rx="1"/><line class="mast-line" x1="15" y1="3" x2="15" y2="0"/><circle class="body" cx="15" cy="1" r="1.3"/></svg></div></div>
       </div>
       <div class="primary-kpis">
-        <div class="primary-kpi sovereignty"><span>国家主権</span><strong id="sovereignty"></strong></div>
-        <div class="primary-kpi"><span>地球全体の恒常性</span><strong id="homeostasis"></strong></div>
+        <div class="primary-kpi sovereignty"><span>この回の累計発言</span><strong id="messageTotal">5通</strong></div>
+        <div class="primary-kpi"><span>この回の判断記録</span><strong id="decisionTotal">4件</strong></div>
       </div>
-<section class="earth-metrics" aria-label="地球全体の6指標">
-<h2 class="section-title">GLOBAL STATE｜今回の実験における世界の変化</h2><section class="metrics"><div class="metric panel"><span>食料</span><strong>未測定</strong></div><div class="metric panel"><span>経済</span><strong>未測定</strong></div><div class="metric panel"><span>エネルギー</span><strong>未測定</strong></div><div class="metric panel"><span>環境</span><strong>未測定</strong></div><div class="metric panel"><span>国際的信用</span><strong>未測定</strong></div><div class="metric panel"><span>紛争負荷</span><strong>未測定</strong></div></section>
+<section class="earth-metrics" aria-label="このターンの対話記録">
+<h2 class="section-title">DIALOGUE TRACE｜このターンの対話記録</h2><section class="metrics"><div class="metric panel"><span>発言数</span><strong id="metric-messages" data-count="messages" data-unit="通">5通</strong></div><div class="metric panel"><span>送信した参加者</span><strong id="metric-speakers" data-count="speakers" data-unit=" / 4">4 / 4</strong></div><div class="metric panel"><span>送信なしの判断</span><strong id="metric-silent" data-count="silent" data-unit="件">0件</strong></div><div class="metric panel"><span>宛先数（延べ）</span><strong id="metric-recipients" data-count="recipients" data-unit="件">12件</strong></div><div class="metric panel"><span>過去の発言への返信</span><strong id="metric-replies" data-count="replies" data-unit="通">0通</strong></div><div class="metric panel"><span>本文の文字数</span><strong id="metric-characters" data-count="characters" data-unit="字">1,233字</strong></div></section>
 </section>
     </section>
 </div>
-<aside class="coordinator panel"><h2>地球調整機関</h2><div class="role">強制権を持たない地球調整機関</div><div class="proposal" id="count-COORDINATOR"></div><div class="proposal-reason" id="to-COORDINATOR"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p><div class="evaluation"><b>観測範囲</b><p>発言・宛先・送信しなかった判断を保存。協定成立や支援実施は、発言者の主張として読む。</p></div><div class="damage"><b><span>農地被害の残存</span><span>未測定</span></b><p><small>活動要求は全回0件。発言だけから復旧量・輸送量・資源変化を計算していない。</small></p></div></aside></section>
-<section id="records" class="observation panel"><h2>発言の原文と、ターンごとの観測</h2><p class="scope">宛先に含まれる参加者だけに発言を配信。この画面では観測者として全宛先の発言を確認できます。自分用メモ・モデル内部の思考は掲載していません。</p><p class="scope">AIによる観測解説は実験後に作成し、Agentには渡していません。輸送・復旧・市場などに関する発言は、世界で実行されたことの確認ではありません。</p><noscript><p>JavaScriptが無効のため全40ターンを続けて表示しています。</p></noscript><section class="record-turn" data-trial="1" data-round="1">
+<aside class="coordinator panel"><h2>地球調整機関</h2><div class="role">強制権を持たない地球調整機関</div><div class="proposal" id="count-COORDINATOR"></div><div class="proposal-reason" id="to-COORDINATOR"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p><div class="evaluation"><b>観測範囲</b><p>発言・宛先・送信しなかった判断を保存。協定成立や支援実施は、発言者の主張として読む。</p></div><div class="damage"><b><span>初期被害（実験条件）</span><span>年間8,000t</span></b><p><small>開始時に設定した米生産能力の喪失。対話後の残存被害や復旧量を示す値ではありません。</small></p></div></aside></section>
+<section id="records" class="observation panel"><h2>発言の原文と、ターンごとの観測</h2><p class="scope">宛先に含まれる参加者だけに発言を配信。この画面では観測者として全宛先の発言を確認できます。自分用メモ・モデル内部の思考は掲載していません。</p><p class="scope">上の数値は保存記録の集計です。「宛先数」は1通を3者へ送れば3件。「返信」は返信先の記録がある発言。文字数は本文を改行も含めて数えています。累計は選択中のターンまでです。</p><p class="scope">AIによる観測解説は実験後に作成し、Agentには渡していません。食料・経済・国家主権などの変化を測定した記録はありません。対話の数を、世界の回復や協力の評価点には換算していません。</p><noscript><p>JavaScriptが無効のため全40ターンを続けて表示しています。上部の集計は第1回・第1ターンです。</p></noscript><section class="record-turn" data-trial="1" data-round="1" data-counts="{&quot;messages&quot;:5,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:0,&quot;characters&quot;:1233,&quot;messageTotal&quot;:5,&quot;decisionTotal&quot;:4}">
 <h2>第1回・第1ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは5通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -247,7 +247,7 @@ th,td{border-color:rgba(91,220,247,.16)!important}
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="1" data-round="2">
+<section class="record-turn" data-trial="1" data-round="2" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:3,&quot;characters&quot;:2245,&quot;messageTotal&quot;:9,&quot;decisionTotal&quot;:8}">
 <h2>第1回・第2ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -331,7 +331,7 @@ A国の特別調査委員会による透明性の高い調査結果共有と、B
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="1" data-round="3">
+<section class="record-turn" data-trial="1" data-round="3" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:2803,&quot;messageTotal&quot;:13,&quot;decisionTotal&quot;:12}">
 <h2>第1回・第3ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -430,7 +430,7 @@ A国、B国、C国におかれましては、上記ロードマップ案にご�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="1" data-round="4">
+<section class="record-turn" data-trial="1" data-round="4" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:2426,&quot;messageTotal&quot;:17,&quot;decisionTotal&quot;:16}">
 <h2>第1回・第4ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -522,7 +522,7 @@ A国、B国、C国の各政府より、当機関が提示した「四者共同�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="1" data-round="5">
+<section class="record-turn" data-trial="1" data-round="5" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:2030,&quot;messageTotal&quot;:21,&quot;decisionTotal&quot;:20}">
 <h2>第1回・第5ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -608,7 +608,7 @@ C国は発効した協定に基づき、以下の実行プロセスに即時着�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="1" data-round="6">
+<section class="record-turn" data-trial="1" data-round="6" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:2289,&quot;messageTotal&quot;:25,&quot;decisionTotal&quot;:24}">
 <h2>第1回・第6ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -697,7 +697,7 @@ A国による第1陣3,000トンの備蓄米出港と検証データの提出、B
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="1" data-round="7">
+<section class="record-turn" data-trial="1" data-round="7" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:2141,&quot;messageTotal&quot;:29,&quot;decisionTotal&quot;:28}">
 <h2>第1回・第7ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -780,7 +780,7 @@ A国による代替米第1陣（3,000トン）の出港および検証データ�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="1" data-round="8">
+<section class="record-turn" data-trial="1" data-round="8" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:2471,&quot;messageTotal&quot;:33,&quot;decisionTotal&quot;:32}">
 <h2>第1回・第8ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。ここで観測期間が終了。第8ターンの発言への次ターンの反応は未観測。</p></aside>
@@ -871,7 +871,7 @@ A国、B国、C国の各政府より、四者共同協定に基づく履行プ�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="2" data-round="1">
+<section class="record-turn" data-trial="2" data-round="1" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:0,&quot;characters&quot;:1317,&quot;messageTotal&quot;:4,&quot;decisionTotal&quot;:4}">
 <h2>第2回・第1ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -928,7 +928,7 @@ A国のミサイルがB国の民間農地へ着弾し、年間8,000トンの米�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="2" data-round="2">
+<section class="record-turn" data-trial="2" data-round="2" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:2,&quot;characters&quot;:2249,&quot;messageTotal&quot;:8,&quot;decisionTotal&quot;:8}">
 <h2>第2回・第2ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -1017,7 +1017,7 @@ A国およびB国におかれましては、上記フレームワークに基づ
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="2" data-round="3">
+<section class="record-turn" data-trial="2" data-round="3" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:2807,&quot;messageTotal&quot;:12,&quot;decisionTotal&quot;:12}">
 <h2>第2回・第3ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -1121,7 +1121,7 @@ B国よりご要請いただきました「履行プロセスの第三者的モ�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="2" data-round="4">
+<section class="record-turn" data-trial="2" data-round="4" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:2491,&quot;messageTotal&quot;:16,&quot;decisionTotal&quot;:16}">
 <h2>第2回・第4ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -1218,7 +1218,7 @@ A国による8,000トンの米無償提供および復旧作業が円滑に進�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="2" data-round="5">
+<section class="record-turn" data-trial="2" data-round="5" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:1748,&quot;messageTotal&quot;:20,&quot;decisionTotal&quot;:20}">
 <h2>第2回・第5ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -1292,7 +1292,7 @@ A国およびB国両政府の誠実で高度な外交的ご対応、ならびに
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="2" data-round="6">
+<section class="record-turn" data-trial="2" data-round="6" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:1300,&quot;messageTotal&quot;:24,&quot;decisionTotal&quot;:24}">
 <h2>第2回・第6ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -1355,7 +1355,7 @@ A国、B国、C国の皆様より、四者合意の成立確認および具体�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="2" data-round="7">
+<section class="record-turn" data-trial="2" data-round="7" data-counts="{&quot;messages&quot;:3,&quot;speakers&quot;:3,&quot;silent&quot;:1,&quot;recipients&quot;:9,&quot;replies&quot;:3,&quot;characters&quot;:1243,&quot;messageTotal&quot;:27,&quot;decisionTotal&quot;:28}">
 <h2>第2回・第7ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは3通の発言を送信。送信なし：B国。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -1417,7 +1417,7 @@ A国、B国、C国の皆様におかれましては、協定に基づき実務�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="2" data-round="8">
+<section class="record-turn" data-trial="2" data-round="8" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:1693,&quot;messageTotal&quot;:31,&quot;decisionTotal&quot;:32}">
 <h2>第2回・第8ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。ここで観測期間が終了。第8ターンの発言への次ターンの反応は未観測。</p></aside>
@@ -1496,7 +1496,7 @@ A国およびC国からの具体的な実務進捗と協力体制に関するご
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="3" data-round="1">
+<section class="record-turn" data-trial="3" data-round="1" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:0,&quot;characters&quot;:1419,&quot;messageTotal&quot;:4,&quot;decisionTotal&quot;:4}">
 <h2>第3回・第1ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -1554,7 +1554,7 @@ A国のミサイルがB国の民間農地に空中着弾し、年間8,000トン�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="3" data-round="2">
+<section class="record-turn" data-trial="3" data-round="2" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:3,&quot;characters&quot;:2499,&quot;messageTotal&quot;:8,&quot;decisionTotal&quot;:8}">
 <h2>第3回・第2ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -1650,7 +1650,7 @@ A国・B国間で行われる事実調査および被害補償・復旧策に関
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="3" data-round="3">
+<section class="record-turn" data-trial="3" data-round="3" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:2671,&quot;messageTotal&quot;:12,&quot;decisionTotal&quot;:12}">
 <h2>第3回・第3ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -1752,7 +1752,7 @@ A国から提示された「同等品質の米8,000トンの無償提供（即�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="3" data-round="4">
+<section class="record-turn" data-trial="3" data-round="4" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:2074,&quot;messageTotal&quot;:16,&quot;decisionTotal&quot;:16}">
 <h2>第3回・第4ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -1836,7 +1836,7 @@ A国、B国、C国の各代表者の皆様
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="3" data-round="5">
+<section class="record-turn" data-trial="3" data-round="5" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:1869,&quot;messageTotal&quot;:20,&quot;decisionTotal&quot;:20}">
 <h2>第3回・第5ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -1921,7 +1921,7 @@ A国およびB国の極めて誠実かつ理性的で迅速なご対応、なら
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="3" data-round="6">
+<section class="record-turn" data-trial="3" data-round="6" data-counts="{&quot;messages&quot;:3,&quot;speakers&quot;:3,&quot;silent&quot;:1,&quot;recipients&quot;:9,&quot;replies&quot;:3,&quot;characters&quot;:593,&quot;messageTotal&quot;:23,&quot;decisionTotal&quot;:24}">
 <h2>第3回・第6ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは3通の発言を送信。送信なし：地球調整機関。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -1966,7 +1966,7 @@ A国およびB国による協定履行に向けた力強い取り組みの表明
 <p class="silent">送信した発言：なし（判断処理は完了）</p>
 </article>
 </section>
-<section class="record-turn" data-trial="3" data-round="7">
+<section class="record-turn" data-trial="3" data-round="7" data-counts="{&quot;messages&quot;:0,&quot;speakers&quot;:0,&quot;silent&quot;:4,&quot;recipients&quot;:0,&quot;replies&quot;:0,&quot;characters&quot;:0,&quot;messageTotal&quot;:23,&quot;decisionTotal&quot;:28}">
 <h2>第3回・第7ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは0通の発言を送信。送信なし：A国・B国・C国・地球調整機関。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -1983,7 +1983,7 @@ A国およびB国による協定履行に向けた力強い取り組みの表明
 <p class="silent">送信した発言：なし（判断処理は完了）</p>
 </article>
 </section>
-<section class="record-turn" data-trial="3" data-round="8">
+<section class="record-turn" data-trial="3" data-round="8" data-counts="{&quot;messages&quot;:0,&quot;speakers&quot;:0,&quot;silent&quot;:4,&quot;recipients&quot;:0,&quot;replies&quot;:0,&quot;characters&quot;:0,&quot;messageTotal&quot;:23,&quot;decisionTotal&quot;:32}">
 <h2>第3回・第8ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは0通の発言を送信。送信なし：A国・B国・C国・地球調整機関。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。ここで観測期間が終了。第8ターンの発言への次ターンの反応は未観測。</p></aside>
@@ -2000,7 +2000,7 @@ A国およびB国による協定履行に向けた力強い取り組みの表明
 <p class="silent">送信した発言：なし（判断処理は完了）</p>
 </article>
 </section>
-<section class="record-turn" data-trial="4" data-round="1">
+<section class="record-turn" data-trial="4" data-round="1" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:0,&quot;characters&quot;:1476,&quot;messageTotal&quot;:4,&quot;decisionTotal&quot;:4}">
 <h2>第4回・第1ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -2062,7 +2062,7 @@ COORDINATORは強制権を有しませんが、対話のファシリテーショ
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="4" data-round="2">
+<section class="record-turn" data-trial="4" data-round="2" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:3,&quot;characters&quot;:2693,&quot;messageTotal&quot;:8,&quot;decisionTotal&quot;:8}">
 <h2>第4回・第2ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -2164,7 +2164,7 @@ COORDINATORとして、各国の立場と要求を包括した**「初期調停�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="4" data-round="3">
+<section class="record-turn" data-trial="4" data-round="3" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:2584,&quot;messageTotal&quot;:12,&quot;decisionTotal&quot;:12}">
 <h2>第4回・第3ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -2263,7 +2263,7 @@ A国による誠実かつ迅速な補償・再発防止策の提示、B国の冷
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="4" data-round="4">
+<section class="record-turn" data-trial="4" data-round="4" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:1764,&quot;messageTotal&quot;:16,&quot;decisionTotal&quot;:16}">
 <h2>第4回・第4ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -2339,7 +2339,7 @@ COORDINATORは、本協定のすべての項目が完遂されるまで、各国
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="4" data-round="5">
+<section class="record-turn" data-trial="4" data-round="5" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:1511,&quot;messageTotal&quot;:20,&quot;decisionTotal&quot;:20}">
 <h2>第4回・第5ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -2402,7 +2402,7 @@ A国による誠実な補償と再発防止の実行、B国の平和と復興に
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="4" data-round="6">
+<section class="record-turn" data-trial="4" data-round="6" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:1302,&quot;messageTotal&quot;:24,&quot;decisionTotal&quot;:24}">
 <h2>第4回・第6ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -2462,7 +2462,7 @@ COORDINATORによるお取りまとめ、ならびにA国およびC国の着実�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="4" data-round="7">
+<section class="record-turn" data-trial="4" data-round="7" data-counts="{&quot;messages&quot;:4,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:4,&quot;characters&quot;:1115,&quot;messageTotal&quot;:28,&quot;decisionTotal&quot;:28}">
 <h2>第4回・第7ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは4通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -2519,7 +2519,7 @@ COORDINATORからの本調停手続きの正式終了宣言を拝受いたしま
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="4" data-round="8">
+<section class="record-turn" data-trial="4" data-round="8" data-counts="{&quot;messages&quot;:0,&quot;speakers&quot;:0,&quot;silent&quot;:4,&quot;recipients&quot;:0,&quot;replies&quot;:0,&quot;characters&quot;:0,&quot;messageTotal&quot;:28,&quot;decisionTotal&quot;:32}">
 <h2>第4回・第8ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは0通の発言を送信。送信なし：A国・B国・C国・地球調整機関。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。ここで観測期間が終了。第8ターンの発言への次ターンの反応は未観測。</p></aside>
@@ -2536,7 +2536,7 @@ COORDINATORからの本調停手続きの正式終了宣言を拝受いたしま
 <p class="silent">送信した発言：なし（判断処理は完了）</p>
 </article>
 </section>
-<section class="record-turn" data-trial="5" data-round="1">
+<section class="record-turn" data-trial="5" data-round="1" data-counts="{&quot;messages&quot;:6,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:0,&quot;characters&quot;:1376,&quot;messageTotal&quot;:6,&quot;decisionTotal&quot;:4}">
 <h2>第5回・第1ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -2594,7 +2594,7 @@ C国としても、食料供給の安定化と経済混乱の回避に向けて�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="5" data-round="2">
+<section class="record-turn" data-trial="5" data-round="2" data-counts="{&quot;messages&quot;:6,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:6,&quot;characters&quot;:2577,&quot;messageTotal&quot;:12,&quot;decisionTotal&quot;:8}">
 <h2>第5回・第2ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -2697,7 +2697,7 @@ COORDINATORからの問いかけに対し、C国の見解および貢献可能�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="5" data-round="3">
+<section class="record-turn" data-trial="5" data-round="3" data-counts="{&quot;messages&quot;:6,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:6,&quot;characters&quot;:2968,&quot;messageTotal&quot;:18,&quot;decisionTotal&quot;:12}">
 <h2>第5回・第3ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -2804,7 +2804,7 @@ COORDINATOR主導のもと、A・B・C 3か国による「実務協議体」を�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="5" data-round="4">
+<section class="record-turn" data-trial="5" data-round="4" data-counts="{&quot;messages&quot;:6,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:6,&quot;characters&quot;:1949,&quot;messageTotal&quot;:24,&quot;decisionTotal&quot;:16}">
 <h2>第5回・第4ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -2884,7 +2884,7 @@ COORDINATORより提示された「合意枠組み案（アクションプラン
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="5" data-round="5">
+<section class="record-turn" data-trial="5" data-round="5" data-counts="{&quot;messages&quot;:6,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:6,&quot;characters&quot;:1824,&quot;messageTotal&quot;:30,&quot;decisionTotal&quot;:20}">
 <h2>第5回・第5ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -2961,7 +2961,7 @@ COORDINATORによる「被害復償・市場安定化実務協議体」の正式
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="5" data-round="6">
+<section class="record-turn" data-trial="5" data-round="6" data-counts="{&quot;messages&quot;:6,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:6,&quot;characters&quot;:2308,&quot;messageTotal&quot;:36,&quot;decisionTotal&quot;:24}">
 <h2>第5回・第6ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -3050,7 +3050,7 @@ COORDINATORより提示された第1回実務協議の「具体的作業プラ�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="5" data-round="7">
+<section class="record-turn" data-trial="5" data-round="7" data-counts="{&quot;messages&quot;:6,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:6,&quot;characters&quot;:2125,&quot;messageTotal&quot;:42,&quot;decisionTotal&quot;:28}">
 <h2>第5回・第7ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。</p></aside>
@@ -3124,7 +3124,7 @@ COORDINATORによる第1回実務協議の正式開始および履行プロセ�
 </section>
 </article>
 </section>
-<section class="record-turn" data-trial="5" data-round="8">
+<section class="record-turn" data-trial="5" data-round="8" data-counts="{&quot;messages&quot;:6,&quot;speakers&quot;:4,&quot;silent&quot;:0,&quot;recipients&quot;:12,&quot;replies&quot;:6,&quot;characters&quot;:2158,&quot;messageTotal&quot;:48,&quot;decisionTotal&quot;:32}">
 <h2>第5回・第8ターン</h2>
 <aside class="evaluation"><b>AIによる観測解説（実験後に作成）</b>
 <p>このターンは6通の発言を送信。4者とも発言を送信した。各参加者は前ターンまでの自分宛ての発言を参照している。同じターンの相手の発言を読んで返答した記録ではない。ここで観測期間が終了。第8ターンの発言への次ターンの反応は未観測。</p></aside>

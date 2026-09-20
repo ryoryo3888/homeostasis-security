@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 import unittest
 
-from tools.build_v2_observation import EARTH_METRICS, build_html, turn_markup
+from tools.build_v2_observation import PRIMARY_LABELS, build_html, metrics_markup, observation_counts, turn_markup
 from tools.export_v2_observation import digest, export_trials
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -79,13 +79,49 @@ class ObservationTests(unittest.TestCase):
         self.assertEqual((DATA.parent / 'index.html').read_text(), generated)
         start = self.source.index('    <section class="earth-panel panel">')
         end = self.source.index('    </section>', start) + len('    </section>')
-        # The one authorized metrics insertion is the only Earth-subtree delta.
-        self.assertEqual(generated.count(EARTH_METRICS), 1)
-        self.assertIn(self.source[start:end], generated.replace(EARTH_METRICS, '', 1))
+        # Only the approved record-count labels/values and lower metrics change.
+        counts = observation_counts(self.data['trials'][0], 1)
+        metrics = metrics_markup(counts)
+        self.assertEqual(generated.count(metrics), 1)
+        normalized = generated.replace(metrics, '', 1)
+        for key, unit in [('messageTotal', '通'), ('decisionTotal', '件')]:
+            normalized = normalized.replace(f'id="{key}">{counts[key]}{unit}</strong>', f'id="{key}"></strong>', 1)
+        for old, new in PRIMARY_LABELS:
+            normalized = normalized.replace(new, old, 1)
+        self.assertIn(self.source[start:end], normalized)
         self.assertNotIn('1ターンにつき2,000t回復', generated)
         self.assertNotIn('復旧まで4ターン', generated)
         self.assertIn('AIによる観測解説（実験後に作成）', generated)
-        self.assertIn('物理的な復旧量は未測定', generated)
+        self.assertIn('食料・経済・国家主権などの変化を測定した記録はありません', generated)
+        self.assertNotIn('未測定', generated)
+        self.assertNotIn('GLOBAL STATE', generated)
+
+    def test_counts_distinguish_broadcast_replies_silence_and_future(self):
+        trial = {'messages': [
+            {'id':'a','sender':'A','to':['B','C'],'sent_round':1,'body':'ab'},
+            {'id':'b','sender':'B','to':['A'],'sent_round':2,'body':'😀あ','reply_to':'a'},
+            {'id':'c','sender':'C','to':['A','B'],'sent_round':2,'body':'xy\n'},
+            {'id':'future','sender':'A','to':['B'],'sent_round':4,'body':'future record'},
+        ]}
+        trial['decisions'] = [
+            {'actor':a,'round':t,'message_ids':[m['id'] for m in trial['messages'] if m['sender']==a and m['sent_round']==t]}
+            for t in range(1,5) for a in ('A','B','C','COORDINATOR')]
+        self.assertEqual(observation_counts(trial, 2), {
+            'messages':2,'speakers':2,'silent':2,'recipients':3,'replies':1,
+            'characters':5,'messageTotal':3,'decisionTotal':8})
+        self.assertEqual(observation_counts(trial, 3), {
+            'messages':0,'speakers':0,'silent':4,'recipients':0,'replies':0,
+            'characters':0,'messageTotal':3,'decisionTotal':12})
+
+    def test_missing_decisions_cannot_be_presented_as_silence(self):
+        trial = deepcopy(self.data['trials'][0])
+        trial['decisions'] = trial['decisions'][1:]
+        with self.assertRaisesRegex(ValueError, 'Missing/duplicate'):
+            observation_counts(trial, 1)
+        trial = deepcopy(self.data['trials'][0])
+        trial['decisions'][0]['message_ids'] = []
+        with self.assertRaisesRegex(ValueError, 'records differ'):
+            observation_counts(trial, 1)
 
     def test_export_rejects_changed_evidence_and_activity_claims(self):
         base = {'round':8,'initial':self.data['initial'],'messages':[],
