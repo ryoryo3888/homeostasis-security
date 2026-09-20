@@ -98,6 +98,9 @@ class RegistryTests(unittest.TestCase):
                          'f2824587e0cb99085471d4064ca8216bc9754584c01a2432ebfa0eef383e77d2')
     def test_original_research_preserved_with_exact_backend_repair(self):
         base=load_json(ROOT/'research/experiments/inventory.json')['scope_commit']
+        # The archive manifest changes location only; compare against the same
+        # historical source bytes. Its exact approved set is checked in Phase8.
+        archived={item['original_path']:item['path'] for item in load_json(ROOT/'archive/manifest.json')['files']}
         # The registry's source provenance and historical artifacts stay at base.
         # Only these exact repair bytes supersede the old ENGINE freeze. This is
         # not a general exception, and does not reattribute any historical run.
@@ -124,7 +127,7 @@ class RegistryTests(unittest.TestCase):
                 if name in ('final_experiment_runner.py','homeostasis_core/resume_guard.py','homeostasis_core/execution_identity.py'):source='16243bf2672139c770af01d2cafe65ee5c25d72a'
                 if name in ('final_experiment_runner.py','homeostasis_core/execution_lock.py'):source='2d8aef00896c66ac650f228d9c1224c58a6154c5'
                 if name=='homeostasis_core/resume_guard.py':source='90b9b2510a923c609f7264e1f16e4df52258c055'
-                self.assertEqual((ROOT/name).read_bytes(),subprocess.check_output(['git','show',source+':'+name],cwd=ROOT),name)
+                self.assertEqual((ROOT/archived.get(name,name)).read_bytes(),subprocess.check_output(['git','show',source+':'+name],cwd=ROOT),name)
     def test_saved_comparison_membership(self):
         summary=load_json(ROOT/'summary.json');study=self.registry['experiments'][1]
         paths=[f for c in summary['conditions'] for f in c['files']]
