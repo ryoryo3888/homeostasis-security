@@ -66,7 +66,7 @@ def build_html(source, data):
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <base href="../../"><title>HOMEOSTASIS SECURITY v2｜5回の自由対話・観測記録</title>
 {styles}
-<link rel="stylesheet" href="results/v2-five-runs/observation.css">
+<link rel="stylesheet" href="results/v2-five-runs/observation.css?layout=metrics-under-earth">
 <script defer src="results/v2-five-runs/observation.js"></script>
 </head><body><main class="shell">
 <section class="mast">
@@ -79,9 +79,12 @@ def build_html(source, data):
 </section>
 <section class="controls panel" aria-label="観測記録の操作"><div class="turn-operations"><label for="trialSelect">実験 <select id="trialSelect">{run_options}</select></label><div class="turn-label"><span class="control-heading">SIMULATION CONTROL</span><strong id="turnNumber">1</strong> / 8</div><div class="turn-buttons"><button class="turn-button nav-button" id="prevTurn" type="button">‹ 前へ</button>{turn_buttons}<button class="turn-button nav-button" id="nextTurn" type="button">次へ ›</button></div></div><div class="event-now" id="selectionStatus" role="status" aria-live="polite">保存された実験記録を表示。操作による追加実験・API通信はありません。</div></section>
 <section class="hero"><div class="agent-stack" id="agents">{countries}</div>
+<div class="world-column">
 {earth}
-<aside class="coordinator panel"><h2>地球調整機関</h2><div class="role">強制権を持たない地球調整機関</div><div class="proposal" id="count-COORDINATOR"></div><div class="proposal-reason" id="to-COORDINATOR"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p><div class="evaluation"><b>観測範囲</b><p>発言・宛先・送信しなかった判断を保存。協定成立や支援実施は、発言者の主張として読む。</p></div><div class="damage"><b><span>農地被害の残存</span><span>未測定</span></b><p><small>活動要求は全回0件。発言だけから復旧量・輸送量・資源変化を計算していない。</small></p></div></aside></section>
+<section class="earth-metrics" aria-label="地球全体の6指標">
 <h2 class="section-title">GLOBAL STATE｜今回の実験における世界の変化</h2><section class="metrics">{''.join(f'<div class="metric panel"><span>{name}</span><strong>未測定</strong></div>' for name in ('食料','経済','エネルギー','環境','国際的信用','紛争負荷'))}</section>
+</section></div>
+<aside class="coordinator panel"><h2>地球調整機関</h2><div class="role">強制権を持たない地球調整機関</div><div class="proposal" id="count-COORDINATOR"></div><div class="proposal-reason" id="to-COORDINATOR"></div><p><a class="record-link" href="#records">原文を読む ↓</a></p><div class="evaluation"><b>観測範囲</b><p>発言・宛先・送信しなかった判断を保存。協定成立や支援実施は、発言者の主張として読む。</p></div><div class="damage"><b><span>農地被害の残存</span><span>未測定</span></b><p><small>活動要求は全回0件。発言だけから復旧量・輸送量・資源変化を計算していない。</small></p></div></aside></section>
 <section id="records" class="observation panel"><h2>発言の原文と、ターンごとの観測</h2><p class="scope">宛先に含まれる参加者だけに発言を配信。この画面では観測者として全宛先の発言を確認できます。自分用メモ・モデル内部の思考は掲載していません。</p><p class="scope">AIによる観測解説は実験後に作成し、Agentには渡していません。輸送・復旧・市場などに関する発言は、世界で実行されたことの確認ではありません。</p><noscript><p>JavaScriptが無効のため全40ターンを続けて表示しています。</p></noscript>{transcripts}</section>
 <section class="observation panel"><h2>5回の比較</h2><p class="scope">AIによる観測解説（実験後に作成）</p><div class="comparison">{summaries}</div><p>5回とも対話は協力・合意を語る方向へ進んだ。その中で、宛先の分け方や発言を続ける期間には違いが現れた。ここで確認できるのは対話上の違いであり、物理的な復旧や制度の履行ではない。</p><p>同じターンの承認表明と成立宣言は、それぞれ前ターンまでの情報に基づく発言。同じターンに互いの承認を確認したとは限らない。</p><p>1条件を5回繰り返した予備観測。初期役割・事件・数値の影響や、別条件での再現性・創発そのものの証明までは確かめていない。第8ターン後の経過は未観測。</p><details><summary>実験条件と保存記録</summary><p>各回は初期状態から開始し、前の回の対話や観測解説を引き継いでいない。追加の事件は与えていない。シードの指定は行っていない。</p><p>{escape(data['operational_difference'])}</p><p>以下の数値は既存の初期条件。今回の対話に伴う変化を測定した値ではない。</p><pre>{initial}</pre><a href="results/v2-five-runs/data.json">発言の原文・宛先・記録IDを含む保存データ</a></details></section>
 <p class="observation"><a href="dashboard_v2.html">以前のV2観測記録（1回・5ターン）を開く</a></p>
