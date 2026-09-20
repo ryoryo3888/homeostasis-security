@@ -208,9 +208,14 @@ class SettlementEngine:
         ensure(c['snapshot_hash'] == digest(s) and c['turn'] == s['turn'], 'STALE_CHOICE')
         return self._prepare(s,c,self.policies[policy_id],self._consents([c],consents))
 
-    def _constraints(self, state, choices, prepared, amounts, policy):
+    def _constraints(self, state, choices, prepared, amounts, policy, *, possible_amounts=None):
         spending = {}; routes = {}; groups = {}; transport = {}; failures = set()
         chosen = {c['choice_id']:q for c,q in zip(choices,amounts)}
+        # During exact branch search, an unfinished reference may still take its
+        # individual maximum. This can only postpone rejection, never certify a
+        # completed allocation. Resource reservations still use actual amounts.
+        if possible_amounts is not None:
+            chosen = {c['choice_id']:q for c,q in zip(choices,possible_amounts)}
         arrivals = {}
         for shipment in state['shipments']:
             if shipment['arrival_turn'] is not None:
@@ -237,6 +242,10 @@ class SettlementEngine:
         if any(q > self.transport[s] for s,q in transport.items()):failures.add('TRANSPORT_CAPACITY_EXCEEDED')
         return sorted(failures), {'stock_reservations': [{'owner':s,'resource':r,'amount':q} for (s,r),q in sorted(spending.items())],
                                  'route_load': routes, 'shared_load': groups, 'transport_load': transport}
+
+    def _cartesian_fits(self, size):
+        """Algorithm selection only; both paths maximize the identical score."""
+        return size <= self.search_budget
 
     def _allocate(self, state, choices, prepared, policy):
         # Separate only genuinely independent constraint/objective components.
@@ -266,15 +275,14 @@ class SettlementEngine:
         components = {}
         for i in active:components.setdefault(root(i),[]).append(i)
         components = sorted(components.values(),key=lambda items:items[0])
-        # Bound total enumerations before allocating ranges or publishing any
-        # result. An over-budget connected component still fails without fallback.
+        # Estimate the Cartesian work without allocating ranges. Large products
+        # use bounded exact search; exhaustion still produces no allocation.
         search_size = 0
         for component in components:
             size = 1
             for i in component:
                 c,p = choices[i],prepared[i]
                 size *= p['feasible_amount']-c['minimum_amount']+2 if c['allow_partial'] else 2
-                ensure(search_size+size <= self.search_budget, 'SEARCH_BUDGET_EXCEEDED')
             search_size += size
         tie_order = sorted(range(len(choices)), key=lambda i: (hashlib.sha256((policy.tie_seed+':'+choices[i]['choice_id']).encode()).hexdigest(),choices[i]['choice_id']))
         def score(amounts):
@@ -290,13 +298,143 @@ class SettlementEngine:
             actor_ratios = tuple(sorted(sum(v,Fraction(0))/len(v) for v in ratios.values()))
             tie = tuple(amounts[i] for i in tie_order)
             return (actor_ratios,tie) if policy.allocation == 'leximin_actor_fulfillment' else (tie,)
+        def upper_score(amounts,possible,remaining,reservations):
+            if policy.allocation != 'leximin_actor_fulfillment':return score(possible)
+            asked = {}; actual = {}; optimistic = {}; actors = {}
+            for i,(c,q) in enumerate(zip(choices,amounts)):
+                key = c['actor_state_id'],c['resource']
+                asked[key] = asked.get(key,0)+c['requested_amount']
+                actual[key] = actual.get(key,0)+q
+                optimistic[key] = optimistic.get(key,0)+possible[i]
+                actors.setdefault(c['actor_state_id'],set()).add(c['resource'])
+            upper = []
+            for actor,resources in actors.items():
+                future = [i for i in remaining if choices[i]['actor_state_id']==actor]
+                if not future or any(prepared[i].get('kind')!='transfer' for i in future):
+                    upper.append(sum(Fraction(optimistic[actor,r],asked[actor,r]) for r in resources)/len(resources))
+                    continue
+                # Relax integer quantities and all competition for future
+                # capacity. Fractional knapsack is an *upper* bound on this
+                # actor's attainable fulfillment, never an allocation to apply.
+                routes = {prepared[i]['route'] for i in future}
+                groups = {prepared[i]['group'] for i in future}
+                capacity = min(self.transport[actor]-reservations['transport_load'].get(actor,0),
+                    sum(self.routes[r]['capacity']-reservations['route_load'].get(r,0) for r in routes),
+                    sum(self.groups[g]-reservations['shared_load'].get(g,0) for g in groups))
+                value = sum(Fraction(actual[actor,r],asked[actor,r]) for r in resources)/len(resources)
+                efficiencies = sorted(resources,key=lambda r:Fraction(1,asked[actor,r]*self.costs[r]),reverse=True)
+                for resource in efficiencies:
+                    maximum = sum(prepared[i]['feasible_amount'] for i in future if choices[i]['resource']==resource)
+                    # Ignoring source-stock and per-route contention only makes
+                    # the bound larger; it cannot prune a feasible improvement.
+                    amount = min(Fraction(maximum),Fraction(capacity,self.costs[resource]))
+                    value += amount/asked[actor,resource]/len(resources)
+                    capacity -= amount*self.costs[resource]
+                upper.append(value)
+            return (tuple(sorted(upper)),tuple(possible[i] for i in tie_order))
         # Actor sets are disjoint between components. Lexicographic comparison
         # of sorted fulfillment ratios is preserved when merging the same fixed
         # other ratios. The global seeded tie order is preserved too. Thus exact
         # component optima compose to the same global optimum as the full product.
         best = (0,)*len(choices)
         from itertools import product
+        visited = 0
         for component in components:
+            if not self._cartesian_fits(search_size):
+                # For unconditional transfers, different senders share only
+                # corridor capacity. Collapse a sender's feasible vectors by
+                # their corridor loads, retaining its best fulfillment/tie.
+                # Combining equal-load prefixes preserves sorted leximin order
+                # when the same future actor ratios are appended.
+                actors = sorted({choices[i]['actor_state_id'] for i in component})
+                parts = [[i for i in component if choices[i]['actor_state_id']==actor] for actor in actors]
+                work = 0
+                for part in parts:
+                    size = 1
+                    for i in part:
+                        size *= prepared[i]['feasible_amount']-choices[i]['minimum_amount']+2 if choices[i]['allow_partial'] else 2
+                    work += size
+                if (all(prepared[i].get('kind')=='transfer' and not choices[i]['conditions'] for i in component)
+                        and work <= self.search_budget-visited):
+                    group_ids = sorted({prepared[i]['group'] for i in component})
+                    combinations = {(0,)*len(group_ids):best}
+                    for part in parts:
+                        domains = [[0,*range(choices[i]['minimum_amount'],prepared[i]['feasible_amount']+1)]
+                                   if choices[i]['allow_partial'] else [0,choices[i]['requested_amount']] for i in part]
+                        options = {};option_scores = {}
+                        for quantities in product(*domains):
+                            visited += 1
+                            ensure(visited <= self.search_budget, 'SEARCH_BUDGET_EXCEEDED')
+                            candidate = list(best)
+                            for i,q in zip(part,quantities):candidate[i] = q
+                            failed,reservations = self._constraints(state,choices,prepared,candidate,policy)
+                            if failed:continue
+                            loads = tuple(reservations['shared_load'].get(g,0) for g in group_ids)
+                            candidate_score = score(candidate)
+                            if loads not in options or candidate_score > option_scores[loads]:
+                                options[loads] = quantities;option_scores[loads] = candidate_score
+                        joined = {};joined_scores = {}
+                        for before,prefix in combinations.items():
+                            for loads,quantities in options.items():
+                                visited += 1
+                                ensure(visited <= self.search_budget, 'SEARCH_BUDGET_EXCEEDED')
+                                total = tuple(a+b for a,b in zip(before,loads))
+                                if any(q > self.groups[g] for g,q in zip(group_ids,total)):continue
+                                candidate = list(prefix)
+                                for i,q in zip(part,quantities):candidate[i] = q
+                                candidate = tuple(candidate);candidate_score = score(candidate)
+                                if total not in joined or candidate_score > joined_scores[total]:
+                                    joined[total] = candidate;joined_scores[total] = candidate_score
+                        combinations = joined
+                    ensure(bool(combinations), 'NO_VALID_ALLOCATION')
+                    best = max(combinations.values(),key=score)
+                    continue
+                # A large Cartesian product may contain mostly impossible
+                # prefixes. Search it exactly with early physical rejection and
+                # an optimistic objective bound; never approximate an outcome.
+                candidate = list(best); potential = list(best)
+                for i in component:potential[i] = prepared[i]['feasible_amount']
+                best_score = score(best)
+                memo = {}
+                references = {c['choice_id'] for choice in choices for c in choice['conditions']}
+                relevant = [i for i in component if choices[i]['conditions'] or choices[i]['choice_id'] in references]
+                def search(depth):
+                    nonlocal best,best_score,visited
+                    i = component[depth];c,p = choices[i],prepared[i]
+                    values = (range(p['feasible_amount'],c['minimum_amount']-1,-1)
+                              if c['allow_partial'] else (c['requested_amount'],))
+                    from itertools import chain
+                    for q in chain(values,(0,)):
+                        visited += 1
+                        ensure(visited <= self.search_budget, 'SEARCH_BUDGET_EXCEEDED')
+                        candidate[i] = potential[i] = q
+                        failed,reservations = self._constraints(state,choices,prepared,candidate,policy,
+                                                                possible_amounts=potential)
+                        if failed:continue
+                        totals = {}
+                        for choice,amount in zip(choices,candidate):
+                            key = choice['actor_state_id'],choice['resource']
+                            totals[key] = totals.get(key,0)+amount
+                        # Prefixes with the same remaining choices, reservations,
+                        # actor/resource totals and condition evidence have the
+                        # same future feasibility and primary score. Retain the
+                        # better seeded tie prefix; no request is removed.
+                        key = (depth,tuple(sorted(totals.items())),
+                            tuple((r['owner'],r['resource'],r['amount']) for r in reservations['stock_reservations']),
+                            tuple(sorted(reservations['route_load'].items())),
+                            tuple(sorted(reservations['shared_load'].items())),
+                            tuple(sorted(reservations['transport_load'].items())),
+                            tuple((j,candidate[j]) for j in relevant))
+                        tie = tuple(candidate[j] for j in tie_order)
+                        if key in memo and memo[key] >= tie:continue
+                        memo[key] = tie
+                        if upper_score(candidate,potential,component[depth+1:],reservations) <= best_score:continue
+                        if depth+1 == len(component):
+                            best = tuple(candidate);best_score = score(best)
+                        else:search(depth+1)
+                    candidate[i] = 0;potential[i] = p['feasible_amount']
+                search(0)
+                continue
             domains = []
             for i in component:
                 c,p = choices[i],prepared[i]
