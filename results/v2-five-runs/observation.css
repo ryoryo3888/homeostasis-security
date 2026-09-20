@@ -1,4 +1,5 @@
 /* New record content only. Earth, satellites and the original dashboard are untouched. */
+.version-switch{flex-wrap:wrap}
 .world-column{min-width:0;display:flex;flex-direction:column}
 .world-column>.earth-panel{flex:1}
 .earth-metrics>.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
