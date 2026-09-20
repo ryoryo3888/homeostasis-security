@@ -10,6 +10,20 @@ from urllib.parse import urlsplit
 from check_layout import Browser, QuietHandler, ROOT
 
 
+def follow_version_link(browser, session, href):
+    """Click the visible button, including hit testing; never substitute a URL load."""
+    point = browser.evaluate('''(() => {
+        const a=document.querySelector('.version-switch a[href='+JSON.stringify(%s)+']');
+        if (!a) throw Error('Missing version link');
+        a.scrollIntoView({block:'center',behavior:'instant'});
+        const r=a.getBoundingClientRect(), x=r.x+r.width/2, y=r.y+r.height/2;
+        if (document.elementFromPoint(x,y)?.closest('a')!==a) throw Error('Version link obscured');
+        return {x,y};
+    })()''' % json.dumps(href), session)
+    browser.call('Input.dispatchMouseEvent', {'type':'mousePressed','button':'left','clickCount':1,**point}, session)
+    browser.call('Input.dispatchMouseEvent', {'type':'mouseReleased','button':'left','clickCount':1,**point}, session)
+
+
 def check(base):
     data = json.loads((ROOT / 'results/v2-five-runs/data.json').read_text())
     out = ROOT / '.artifacts/layout'
@@ -81,7 +95,23 @@ def check(base):
             browser.wait("Math.abs(document.querySelector('.record-turn:not([hidden]) [data-actor=A]').getBoundingClientRect().top - 110) < 2", session)
             shot = browser.call('Page.captureScreenshot', {'format':'png'}, session)['data']
             (out / f'v2-observation-records-{name}.png').write_bytes(base64.b64decode(shot))
-            records.append({'viewport':name,'selections_verified':40,'original_messages_verified':163})
+            # Exercise the complete return journey on each viewport, not just
+            # the outgoing links on the additional-runs page.
+            for version in ('v1','v2'):
+                follow_version_link(browser, session, f'dashboard_{version}.html')
+                browser.wait(f"location.pathname.endsWith('/dashboard_{version}.html') && !!window.HomeostasisLayout && !!document.querySelector('.rn-spine')", session)
+                browser.evaluate('window.HomeostasisLayout.assertIntegrity()',session)
+                nav = browser.evaluate('''(() => {
+                    const n=document.querySelector('.version-switch');
+                    const boxes=[...n.children].map(a=>a.getBoundingClientRect());
+                    return {count:boxes.length,inside:boxes.every(r=>r.left>=0 && r.right<=innerWidth),
+                        overlap:boxes.some((a,i)=>boxes.slice(i+1).some(b=>a.left<b.right && a.right>b.left && a.top<b.bottom && a.bottom>b.top))};
+                })()''', session)
+                assert nav == {'count':3,'inside':True,'overlap':False}, (name,version,nav)
+                follow_version_link(browser, session, 'results/v2-five-runs/index.html')
+                browser.wait("location.pathname.endsWith('/results/v2-five-runs/index.html') && document.body?.dataset.observationReady === 'true'", session)
+                assert browser.evaluate("document.querySelector('#trialSelect').options.length",session) == 5
+            records.append({'viewport':name,'selections_verified':40,'original_messages_verified':163,'return_journeys':['v1','v2']})
             browser.call('Target.closeTarget', {'targetId':target})
         # Entry point remains the existing V2 page and its approved content slot.
         target = browser.call('Target.createTarget', {'url':'about:blank'})['targetId']
@@ -94,7 +124,7 @@ def check(base):
         browser.evaluate('window.HomeostasisLayout.assertIntegrity()',session)
         assert not browser.blocked, browser.blocked
     (out/'v2-observation.json').write_text(json.dumps(records,indent=2)+'\n')
-    print('V2 observation: 120 selections, original text, unmeasured metrics, deep links and entry point PASS')
+    print('V2 observation: 120 selections, original text, unmeasured metrics, deep links and V1/V2 return journeys PASS')
 
 
 def main():
