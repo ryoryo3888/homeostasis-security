@@ -4,6 +4,7 @@ Ollama 0.34.2 is pinned because its generate API supports truncate=false and
 shift=false. This adapter never starts servers, pulls models or loads secrets.
 """
 import base64
+from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
@@ -77,6 +78,26 @@ def identity(client, model):
             'metadata_scope': 'selected API fields; generated Modelfile and local paths excluded'}
 
 
+def same_identity(actual, expected):
+    """Ignore parameter-key display order, preserving values and repeated order."""
+    def normalized(value):
+        result = deepcopy(value)
+        parameters = result.get('details', {}).get('parameters')
+        if isinstance(parameters, str):
+            groups = {}
+            for line in parameters.splitlines():
+                if not line.strip():
+                    continue
+                parts = line.strip().split(None, 1)
+                if len(parts) != 2:
+                    return result  # Unknown representation: compare it exactly.
+                key, argument = parts
+                groups.setdefault(key, []).append(argument)
+            result['details']['parameters'] = groups
+        return result
+    return normalized(actual) == normalized(expected)
+
+
 def memory_sample(client, model):
     result = {'timestamp': timestamp(), 'measurements': {},
               'scope': 'samples, not continuous peak measurement; RSS excludes some shared GPU accounting'}
@@ -148,7 +169,7 @@ class LocalExchange:
         ensure(source_hashes() == s['source_hashes'], 'LOCAL_SOURCE_CHANGED')
         ensure(time.monotonic() - self.started < s['run_deadline_seconds'], 'PILOT_DEADLINE_REACHED')
         ensure(self.sequence < s['max_generations'], 'PILOT_CALL_LIMIT')
-        ensure(identity(self.client, s['model_identity']['model']) == s['model_identity'], 'LOCAL_MODEL_CHANGED')
+        ensure(same_identity(identity(self.client, s['model_identity']['model']), s['model_identity']), 'LOCAL_MODEL_CHANGED')
         index = self.sequence; self.sequence += 1
         body = {**s['generation_config'], 'system': SYSTEM_INSTRUCTION, 'prompt': raw,
                 'options': {**s['generation_config']['options'], 'seed': s['seed'] + index}}
@@ -207,7 +228,7 @@ def execute(directory, settings, *, protocol_digest, client, telemetry=memory_sa
         evidence.write('memory-before.json', telemetry(client, manifest['model']))
         status = 'success'; error = None
         try:
-            ensure(identity(client, manifest['model']) == settings['model_identity'], 'LOCAL_MODEL_CHANGED')
+            ensure(same_identity(identity(client, manifest['model']), settings['model_identity']), 'LOCAL_MODEL_CHANGED')
             budget = ExchangeBudget(settings['max_generations'])
             for turn in range(1, settings['turns'] + 1):
                 candidate = world.run(checkpoint, exchange=exchange, budget=budget)
@@ -215,7 +236,7 @@ def execute(directory, settings, *, protocol_digest, client, telemetry=memory_sa
                 evidence.write(f'turn-{turn:03d}.json', candidate)
                 checkpoint = candidate
                 print(f'Local TURN {turn}/{settings["turns"]} verified and saved.', flush=True)
-            ensure(identity(client, manifest['model']) == settings['model_identity'], 'LOCAL_MODEL_CHANGED')
+            ensure(same_identity(identity(client, manifest['model']), settings['model_identity']), 'LOCAL_MODEL_CHANGED')
         except BaseException as exc:
             status = 'interrupted' if isinstance(exc, (KeyboardInterrupt, SystemExit)) else 'failure'
             error = {'exception_type': type(exc).__name__, 'code': getattr(exc, 'code', None),
