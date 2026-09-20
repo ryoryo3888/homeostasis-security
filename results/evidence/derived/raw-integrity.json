@@ -3,6 +3,6 @@
   "source_raw_immutable": true,
   "derived_from_manifest": "raw-inventory.json",
   "all_published_files_have_source_sha256": true,
-  "byte_identical_files": 3440,
+  "byte_identical_files": 3439,
   "redacted_public_copies": 8
 }

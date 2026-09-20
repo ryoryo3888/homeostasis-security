@@ -14,4 +14,6 @@
 
 公開前スキャンは `derived/secret-privacy-scan.json` に保存しています。APIキー、Bearer token、GitHub token、秘密鍵などの秘密情報パターンは検出されず、公開コピーに残ったprivacy findingもゼロでした。
 
+実験外の運用・認証メタデータや開発時の記録は実験RAWではないため、公開対象から除外しています。
+
 V3の`preflight`やV4の`sdk-validation`は、実験観測と技術検証を区別できるように別の実行群として残しています。これらを正式な研究結論やモデル間の優劣へ自動的に集計してはいません。
