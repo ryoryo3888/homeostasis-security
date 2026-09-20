@@ -65,18 +65,20 @@ class Phase8Tests(unittest.TestCase):
         manifest=json.loads((ROOT/'archive/manifest.json').read_text())
         base='c7c0faad77f80a2c05bd412c68f69159d7b89782'
         self.assertEqual(manifest['source_commit'],base)
-        originals=subprocess.check_output(['git','ls-tree','--name-only',base],cwd=ROOT,text=True).splitlines()
-        expected={name for name in originals if name.startswith(('simulation_before_','dashboard_before_','dashboard_v1_before_','index_before_')) or name in {
+        originals=subprocess.check_output(['git','ls-tree','-r','--name-only',base],cwd=ROOT,text=True).splitlines()
+        expected={name for name in originals if name.startswith(('simulation_before_','dashboard_before_','dashboard_v1_before_','index_before_','contrast_backup/','__pycache__/')) or name in {
             'simulation_backup.py','index_failed_globe_trial.html','index.html.txt',
             'dashboard_experiments_restored_v8.html','dashboard_final_working.html','dashboard_reason_test.html',
             'dashboard_working_complete.html','dashboard_working_final_ui.html'}}
-        self.assertEqual(len(expected),35)
-        self.assertEqual(len(manifest['files']),35)
+        self.assertEqual(len(expected),40)
+        self.assertEqual(len(manifest['files']),40)
         self.assertEqual({item['original_path'] for item in manifest['files']},expected)
         for item in manifest['files']:
             name=item['original_path']
             folder='legacy-python' if name.endswith('.py') else 'legacy-pages'
-            self.assertEqual(item['path'],f'archive/{folder}/{name}')
+            if name.startswith('contrast_backup/'):folder='legacy-figures'
+            if name.startswith('__pycache__/'):folder='legacy-bytecode'
+            self.assertEqual(item['path'],f'archive/{folder}/{Path(name).name}')
             self.assertFalse((ROOT/name).exists())
             path=ROOT/item['path']
             self.assertFalse(path.is_symlink())

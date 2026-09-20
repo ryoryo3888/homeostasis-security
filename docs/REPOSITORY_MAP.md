@@ -3,7 +3,7 @@
 現行の入口、観測データ、過去資料を区別するための案内です。
 現行の入口と実験データは従来の場所に保持し、使われていない過去画面の控え26件と
 Pythonの控え9件を[archive](../archive/README.md)へ移しました。rootのファイルは137件から102件へ減っています。
-移動した35件の内容はすべて同一で、旧パス・新パス・ハッシュを[移動台帳](../archive/manifest.json)に残しています。
+加えて旧比較図4件と過去の実行キャッシュ1件も保管しました。移動した計40件の内容はすべて同一で、旧パス・新パス・ハッシュを[移動台帳](../archive/manifest.json)に残しています。
 現行V1〜V4の公開URLは維持しています。旧バックアップの単独URLは移動対象です。
 
 ## 現在の版と実装の対応
@@ -50,7 +50,7 @@ V4の`homeostasis_v3/`、`scenarios/v3/`、`tests/v3/`、`ui/v3/`は内部の継
   原記録から集計・抽出したものです。原記録の代わりに上書きしません。
 - **検証例**：`ui/v3/validation/`は動作検証用です。実Agentの観測数に足しません。
 - **旧結果・失敗・中間物**：`results/final/`の監査記録・checkpoint、rootの未登録JSON、
-  `contrast_backup/`等を保持します。未登録は「捨ててよい」という意味ではありません。
+  旧`contrast_backup/`の図は[archive/legacy-figures](../archive/legacy-figures/)へ移して保持します。未登録は「捨ててよい」という意味ではありません。
 - **新しいローカルrun**：取得するrunごとに独立した出力先を使い、`manifest.json`、
   `RAW/`、`terminal.json`、`DERIVED/`を[既存形式](architecture/EVIDENCE_FORMAT_V1.md)で保存します。
   実行・照合後に公開対象を確認し、失敗も含めて保存します。開発相談チャットは研究生ログに含めません。
@@ -279,3 +279,22 @@ READMEの更新に伴う照合値の変更は、台帳の非実験資料であ�
 - [README.md](../README.md)
 
 </details>
+
+## root以外の整理と残す理由
+
+| 場所 | 役割・整理結果 |
+| --- | --- |
+| [archive](../archive/) | 控え40件を集約。旧`contrast_backup/`と追跡済み`__pycache__/`もここへ保管 |
+| [homeostasis_core](../homeostasis_core/) | 旧final系統と、現行でも使うロック・記録などの共通部品 |
+| [homeostasis_v3](../homeostasis_v3/) / [homeostasis_v4](../homeostasis_v4/) | 現在のV4の世界処理・対話処理 |
+| [config](../config/) / [scenarios](../scenarios/) | 実験条件・世界の初期条件。観測結果とは別 |
+| [research](../research/) / [results](../results/) | 実験台帳、保存結果、失敗監査。現行の参照先を維持 |
+| [ui](../ui/) | 現行画面のテンプレート・資産・保存検証例 |
+| [tests](../tests/) | 版をまたぐ修復・データ保護・画面の検証。旧番号も継続使用 |
+| [tools](../tools/) | 生成・照合・実行の入口 |
+| [docs](./) | 設計・変更の記録。古い時点の説明は履歴として残す |
+| [requirements](../requirements/) / [.github](../.github/) | 依存関係と自動検証 |
+
+rootに残る実験JSON、集計、画面・資産には既存の読み込み先があります。
+見た目だけを理由に移すと保存結果の閲覧や照合が壊れるため、現位置のまま用途を上の一覧に示しています。
+今回の整理は実験条件、Agentへの指示、結果の採用可否を変更しません。
