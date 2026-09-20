@@ -28,7 +28,10 @@ def check(base):
             url = base + '/results/v2-five-runs/index.html'
             browser.call('Page.navigate', {'url':url}, session)
             browser.wait("document.body?.dataset.observationReady === 'true' && document.querySelector('.earth').naturalWidth > 0", session)
-            assert browser.evaluate("[...document.querySelectorAll('.version-switch a')].map(a=>a.textContent)", session) == ['v1：二国間の恒常性','v2：地球規模の恒常性']
+            assert browser.evaluate("[...document.querySelectorAll('.version-switch a')].map(a=>[a.textContent,a.getAttribute('href'),a.getAttribute('aria-current')])", session) == [
+                ['v1：二国間の恒常性','dashboard_v1.html',None],
+                ['v2：地球規模の恒常性','dashboard_v2.html',None],
+                ['v2追加：5回分','results/v2-five-runs/index.html','page']]
             browser.evaluate("window._errors=[];addEventListener('error',e=>_errors.push(e.message))", session)
             for trial in data['trials']:
                 number = trial['trial']
