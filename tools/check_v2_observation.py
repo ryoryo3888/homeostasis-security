@@ -43,10 +43,12 @@ def check(base):
             url = base + '/results/v2-five-runs/index.html'
             browser.call('Page.navigate', {'url':url}, session)
             browser.wait("document.body?.dataset.observationReady === 'true' && document.querySelector('.earth').naturalWidth > 0", session)
+            assert browser.evaluate("document.title",session)=='HOMEOSTASIS SECURITY V3：自由対話｜観測記録'
+            assert browser.evaluate("document.querySelector('.brand-en').textContent",session)=='HOMEOSTASIS SECURITY V3：自由対話'
             assert browser.evaluate("[...document.querySelectorAll('.version-switch a')].map(a=>[a.textContent,a.getAttribute('href'),a.getAttribute('aria-current')])", session) == [
                 ['v1：二国間の恒常性','dashboard_v1.html',None],
                 ['v2：地球規模の恒常性','dashboard_v2.html',None],
-                ['V2：自由対話','results/v2-five-runs/index.html','page']]
+                ['V3：自由対話','results/v2-five-runs/index.html','page']]
             browser.evaluate("window._errors=[];addEventListener('error',e=>_errors.push(e.message))", session)
             for trial in data['trials']:
                 number = trial['trial']
@@ -120,7 +122,7 @@ def check(base):
                         count:boxes.length,inside:boxes.every(r=>r.left>=0 && r.right<=innerWidth),
                         overlap:boxes.some((a,i)=>boxes.slice(i+1).some(b=>a.left<b.right && a.right>b.left && a.top<b.bottom && a.bottom>b.top))};
                 })()''', session)
-                assert nav == {'label':'V2：自由対話','count':3,'inside':True,'overlap':False}, (name,version,nav)
+                assert nav == {'label':'V3：自由対話','count':3,'inside':True,'overlap':False}, (name,version,nav)
                 if version == 'v2':
                     # Original V2: retain its own six scores and bars, directly
                     # below Earth and above the V1 → 16 conditions → V2 narrative.

@@ -151,3 +151,12 @@ Gemini Agentによる5ターンの実験では、各国と地球調整機関が�
 を使用し、Earthや操作領域を移動して場所を作らないでください。
 [Layout Contract](docs/architecture/LAYOUT_CONTRACT.md) の `make check` で無料検証します。
 V3は多国間・資源ネットワークの研究方向です。この基盤追加はV3 UI開発の開始ではありません。
+
+## 現在のバージョン名（2026-09-20）
+
+- [V1：二国間の恒常性](dashboard_v1.html)
+- [V2：地球規模の恒常性](dashboard_v2.html)
+- [V3：自由対話](results/v2-five-runs/index.html) — 5回・各8ターンの保存済み観測記録
+- [V4：相互依存（制作中）](dashboard_v4.html) — これまでV3と呼んでいた多国間・有限資源モデル
+
+上記以前の説明・設計資料にある多国間モデルの「V3」は現在のV4です。実験結果・内部識別子・旧URLは保持しています。[番号整理の範囲](docs/architecture/VERSION_NUMBERING_REVISION.md)。

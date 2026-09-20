@@ -54,6 +54,7 @@ class CandidateTests(unittest.TestCase):
     def test_atomic_page_bundle(self):
         html=(ROOT/'dashboard_v3.html').read_text()
         self.assertEqual(html,render_page(self.data))
+        self.assertEqual((ROOT/'dashboard_v4.html').read_text(),html)
         self.assertNotIn('src="ui/v3/observatory.js"',html)
         self.assertNotIn('href="ui/v3/observatory.css"',html)
         import re

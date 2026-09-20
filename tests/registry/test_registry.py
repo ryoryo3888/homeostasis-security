@@ -88,7 +88,13 @@ class RegistryTests(unittest.TestCase):
             self.assertNotIn('research/experiments/',(ROOT/name).read_text())
         before=(ROOT/'ui/content.json').read_bytes();validate_registry(self.registry);self.assertEqual((ROOT/'ui/content.json').read_bytes(),before)
     def assert_authorized_content_manifest(self):
-        self.assertEqual(hashlib.sha256((ROOT/'ui/content.json').read_bytes()).hexdigest(),
+        raw=(ROOT/'ui/content.json').read_bytes()
+        # Rio renamed the saved dialogue observation to V3; all other bytes
+        # retain the original approved entry and evidence destination.
+        label='V3：自由対話｜5回・各8ターンの観測記録'.encode()
+        self.assertEqual(raw.count(label),1)
+        raw=raw.replace(label,'新しい観測記録：5回・各8ターンの自由対話'.encode(),1)
+        self.assertEqual(hashlib.sha256(raw).hexdigest(),
                          'f2824587e0cb99085471d4064ca8216bc9754584c01a2432ebfa0eef383e77d2')
     def test_original_research_preserved_with_exact_backend_repair(self):
         base=load_json(ROOT/'research/experiments/inventory.json')['scope_commit']

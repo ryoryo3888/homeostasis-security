@@ -6,6 +6,26 @@ from copy import deepcopy
 ROOT = Path(__file__).resolve().parents[1]
 LOCKED_BOUNDS = ('v3-identity', 'v3-control', 'v3-world', 'v3-canvas', 'v3-earth')
 
+# Rio reassigned the public names: saved dialogue is V3; this model is V4.
+# Only these literal display/link edits may differ from the retained template.
+V4_REPLACEMENTS = (
+    ('<title>HOMEOSTASIS SECURITY — V3</title>', '<title>HOMEOSTASIS SECURITY — V4</title>'),
+    ('<a class="identity" href="dashboard_v3.html">HOMEOSTASIS SECURITY v3</a>',
+     '<a class="identity" href="dashboard_v4.html">HOMEOSTASIS SECURITY v4</a>'),
+    ('<a href="dashboard_v3.html" aria-current="page">V3：相互依存</a>',
+     '<a href="dashboard_v4.html" aria-current="page">V4：相互依存</a>'),
+    ('>V3候補Frame</a>', '>V4候補Frame</a>'),
+    ('であり、V3の輸送経路', 'であり、V4の輸送経路'),
+    ('<span>V3 VISUAL BASELINE — CANDIDATE</span>', '<span>V4 VISUAL BASELINE — CANDIDATE</span>'),
+)
+
+def original_template(data):
+    for old, new in V4_REPLACEMENTS:
+        if data.count(new.encode()) != 1:
+            raise ValueError('Approved V4 display revision missing or altered')
+        data = data.replace(new.encode(), old.encode(), 1)
+    return data
+
 def compare_layout(expected, actual):
     """Small renderer rounding tolerance; not permission to redesign."""
     def compare(a, b, path):
@@ -44,5 +64,7 @@ def compare_layout(expected, actual):
 
 def verify_sources(manifest, root=ROOT):
     for name, expected in manifest.items():
-        if hashlib.sha256((root/name).read_bytes()).hexdigest()!=expected:
+        data=(root/name).read_bytes()
+        if name=='ui/v3/page.html':data=original_template(data)
+        if hashlib.sha256(data).hexdigest()!=expected:
             raise ValueError('Explicit visual revision approval required: '+name)
