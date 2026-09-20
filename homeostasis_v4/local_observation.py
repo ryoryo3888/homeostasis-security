@@ -137,13 +137,21 @@ def hardware():
     return result
 
 
+def validate_runtime_limits(request_timeout_seconds, run_deadline_seconds):
+    ensure(type(request_timeout_seconds) is int and 1 <= request_timeout_seconds <= 600,
+           'INVALID_LOCAL_REQUEST_TIMEOUT')
+    ensure(type(run_deadline_seconds) is int and 1 <= run_deadline_seconds <= 7200,
+           'INVALID_LOCAL_RUN_DEADLINE')
+
+
 def prepare(client, *, model, seed, turns, num_ctx=16384, num_predict=2048, synthetic=False,
-            structured_output=False):
+            structured_output=False, request_timeout_seconds=180, run_deadline_seconds=1200):
     ensure(type(seed) is int and 0 <= seed < 2**31 - 800, 'INVALID_SEED')
     ensure(type(turns) is int and 1 <= turns <= 8, 'PILOT_TURN_LIMIT')
     ensure(type(num_ctx) is int and 4096 <= num_ctx <= 32768, 'PILOT_CONTEXT_LIMIT')
     ensure(type(num_predict) is int and 1 <= num_predict <= 8192, 'PILOT_OUTPUT_LIMIT')
     ensure(type(structured_output) is bool, 'INVALID_STRUCTURED_OUTPUT_OPTION')
+    validate_runtime_limits(request_timeout_seconds, run_deadline_seconds)
     model_identity = identity(client, model)
     world = runner()
     return {'kind': 'local_v4_pilot', 'model_identity': model_identity,
@@ -156,7 +164,8 @@ def prepare(client, *, model, seed, turns, num_ctx=16384, num_predict=2048, synt
                 'options': {'num_ctx': num_ctx, 'num_predict': num_predict}},
             'unspecified_sampling': 'Use recorded model parameters and pinned server defaults; not assumed equal to Gemini',
             'turns': turns, 'participants': world.states, 'max_generations': turns * len(world.states),
-            'request_timeout_seconds': 180, 'run_deadline_seconds': 1200,
+            'request_timeout_seconds': request_timeout_seconds,
+            'run_deadline_seconds': run_deadline_seconds,
             'source_hashes': source_hashes(), 'world_config': world.config,
             'external_shocks': [], 'automatic_retries': False, 'observer_feedback': False,
             'formal_research_eligibility': False}
@@ -206,6 +215,7 @@ class LocalExchange:
 
 def execute(directory, settings, *, protocol_digest, client, telemetry=memory_sample):
     ensure(digest(settings) == protocol_digest, 'PREPARED_LOCAL_PROTOCOL_CHANGED')
+    validate_runtime_limits(settings['request_timeout_seconds'], settings['run_deadline_seconds'])
     ensure(source_hashes() == settings['source_hashes'], 'LOCAL_SOURCE_CHANGED')
     world = runner()
     ensure(world.config == settings['world_config'], 'LOCAL_WORLD_CHANGED')
