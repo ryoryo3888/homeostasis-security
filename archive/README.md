@@ -7,9 +7,11 @@
 | --- | --- |
 | [legacy-pages](legacy-pages/) | 過去の画面ソース25件と空の`index.html.txt`。26件 |
 | [legacy-python](legacy-python/) | 過去のPythonソース。9件 |
+| [legacy-figures](legacy-figures/) | 過去の比較図4件。現行の図は元の場所に保持 |
+| [legacy-bytecode](legacy-bytecode/) | 過去の実行キャッシュ1件。現行実行では使用しない |
 | [manifest.json](manifest.json) | 移動元、移動先、内容のSHA-256、移動前commit |
 
-35件ともファイル内容は変更していません。原本を削除する整理ではなく、置き場所の整理です。
+40件ともファイル内容は変更していません。原本を削除する整理ではなく、置き場所の整理です。
 現在の入口は[README](../README.md)、版とファイルの対応は[リポジトリ案内](../docs/REPOSITORY_MAP.md)にあります。
 
 過去のHTMLはソース資料として保管しています。相対パスを含むため、このフォルダでの画面動作は保証しません。

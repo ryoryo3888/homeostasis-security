@@ -4,6 +4,31 @@
   "purpose": "unchanged historical source backups; not active runtime or new experiment evidence",
   "files": [
     {
+      "original_path": "__pycache__/simulation.cpython-313.pyc",
+      "path": "archive/legacy-bytecode/simulation.cpython-313.pyc",
+      "sha256": "74ad3c7eb23b622c38ef546f8c7c368d2e3a866416ae781ef90dda7b5d52ff58"
+    },
+    {
+      "original_path": "contrast_backup/contrast_misperception.png",
+      "path": "archive/legacy-figures/contrast_misperception.png",
+      "sha256": "87b46268a1d00ab7188b4ce5ea353d891d2af7afb5e376e5b0470afd2a54341b"
+    },
+    {
+      "original_path": "contrast_backup/contrast_resilience.png",
+      "path": "archive/legacy-figures/contrast_resilience.png",
+      "sha256": "a10bcc568a240de505a03aa7a924385aaed32ae61636d017dc9402d9803d1598"
+    },
+    {
+      "original_path": "contrast_backup/contrast_tension.png",
+      "path": "archive/legacy-figures/contrast_tension.png",
+      "sha256": "cca657ee80e56b4c63e2119890f4af96db7d3f140b2bfb734d60d3fbf4957786"
+    },
+    {
+      "original_path": "contrast_backup/contrast_trust.png",
+      "path": "archive/legacy-figures/contrast_trust.png",
+      "sha256": "0102efbf3299beb09415dfaaee5fa5fe98f976536ba6bff324d58b2388a963e4"
+    },
+    {
       "original_path": "dashboard_before_arrow_fix.html",
       "path": "archive/legacy-pages/dashboard_before_arrow_fix.html",
       "sha256": "708f0948ee024dda850e42b512efb7bc6258486d9a3bf54b6c44996cc943b6a8"
