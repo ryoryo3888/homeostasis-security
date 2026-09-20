@@ -1,6 +1,7 @@
 """Compare retained UI baselines after reversing explicitly approved additions."""
 from pathlib import Path
 from tools.navigation_revision import original_navigation
+from tools.v2_metrics_position_revision import original_anchor
 LOADER='<script src="ui/layout-guard.js"></script>\n<script src="ui/content-slots.js"></script>\n'
 def protected_bytes(path: Path) -> bytes:
     data=path.read_bytes()
@@ -10,4 +11,6 @@ def protected_bytes(path: Path) -> bytes:
         if data.count(LOADER.encode())>1:raise ValueError('Duplicate protection loader')
         data=data.replace(LOADER.encode(),b'',1)
         data=original_navigation(data, versions[path.name])
+    if path.name in versions or path.name == 'homeostasis-research-layer.js':
+        data=original_anchor(data)
     return data

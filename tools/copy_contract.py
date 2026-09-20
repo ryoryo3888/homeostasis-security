@@ -3,6 +3,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 import json,re,subprocess
 from tools.navigation_revision import add_return_link
+from tools.v2_metrics_position_revision import revise_anchor
 ROOT=Path(__file__).resolve().parents[1]
 REVISION=json.loads((ROOT/'tests/layout/copy_revision.json').read_text())
 MARK='<!-- HOMEOSTASIS_RESEARCH_NARRATIVE_PREVIEW -->\n<script>\n'
@@ -27,7 +28,7 @@ def old_source(path):
 
 def prove_source_delta():
     source=(ROOT/'homeostasis-research-layer.js').read_text()
-    assert source==revise(old_source('homeostasis-research-layer.js'),REVISION['narrative_replacements'])
+    assert source==revise_anchor(revise(old_source('homeostasis-research-layer.js'),REVISION['narrative_replacements']))
     for version in ['v1','v2']:
         old=old_source('dashboard_'+version+'.html')
         if version=='v1':old=revise(old,REVISION['v1_static_replacements'])
