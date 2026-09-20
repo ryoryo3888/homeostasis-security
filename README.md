@@ -1,5 +1,65 @@
 # HOMEOSTASIS SECURITY
 
+AI Agentが状況を受け取り、何を話し、何を選び、その後に何が起きるかを観測するプロジェクトです。
+現在の入口と、過去の実装・実験記録を以下に整理しています。
+未使用の画面・Pythonの控え35件は[保管フォルダ](archive/README.md)にまとめています。
+
+## 現在の公開版
+
+| 版 | 画面 | 記録の位置づけ |
+| --- | --- | --- |
+| V1：二国間の恒常性 | [開く](https://ryoryo3888.github.io/homeostasis-security/dashboard_v1.html) | 16条件・36 runの保存済み結果。代表runはこの36 runに含まれる |
+| V2：地球規模の恒常性 | [開く](https://ryoryo3888.github.io/homeostasis-security/dashboard_v2.html) | 独立シナリオの保存済み1 run・5ターン |
+| V3：自由対話 | [開く](https://ryoryo3888.github.io/homeostasis-security/results/v2-five-runs/index.html) | 5回・各8ターンの保存済み対話。発言だけから資源変化を算出しない |
+| V4：相互依存 | [開く](https://ryoryo3888.github.io/homeostasis-security/dashboard_v4.html) | 開発中の有限資源モデル。画面の検証データと実LLMの観測記録は別に扱う |
+
+公開名と内部ファイル名の数字は一部異なります。旧V3の実装は現在のV4です。
+`dashboard_v3.html`もV4への互換入口として残しています。
+[番号整理の記録](docs/architecture/VERSION_NUMBERING_REVISION.md)で対応を確認できます。
+
+## 作業と資料の入口
+
+| 目的 | 入口 |
+| --- | --- |
+| 現行コード・保存データ・旧資料の場所を探す | [リポジトリ案内と保管一覧](docs/REPOSITORY_MAP.md) |
+| Agentの自由、人が決めた条件、測定の限界を確認する | [観測の透明化](docs/architecture/OBSERVATION_TRANSPARENCY.md) |
+| ローカルLLMの小規模試行を準備する | [V4 Local pilot](docs/architecture/LOCAL_PILOT.md) |
+| run条件・失敗・RAW / DERIVEDの保存方法を確認する | [Evidence Format](docs/architecture/EVIDENCE_FORMAT_V1.md) |
+| 既存V1・V2の保存結果を照合する | [実験台帳](research/experiments/README.md) |
+| 公開画面の変更範囲・検証手順を確認する | [Visual Constitution](docs/architecture/HOMEOSTASIS_VISUAL_CONSTITUTION.md) / [Layout Contract](docs/architecture/LAYOUT_CONTRACT.md) |
+
+現在の工程は、透明化・証拠形式の準備 → ローカルLLMで小規模試行 →
+実測を確認して観測数を増やす → 生ログ公開 → 横断解析・追加検証です。
+最終的な研究文書は観測後にまとめます。技術的な失敗も記録し、観測数へ成功例だけを選びません。
+
+V1・V2は保存済み結果の閲覧を維持しています。`simulation_v2.py`による新規世界更新は、
+未承認のルールを補わないため停止しています。現在の自由対話の入口はV3・V4です。
+V2の初期事件は独立シナリオであり、V1の実行結果を引き継いだものではありません。
+
+## 保存済み画面を見る
+
+追加API通信なしで、ローカルでも公開画面を閲覧できます。
+
+```bash
+python3 -m http.server 8000
+```
+
+リポジトリ直下で起動し、<http://localhost:8000/dashboard_v1.html>を開きます。
+終了は`Ctrl+C`です。実験の再実行とは別の操作です。
+
+## 過去の説明を保管
+
+下記は整理前のREADMEを原文のまま保管したものです。
+旧名称の「最終版」「V3」、旧実行手順、V1からV2への接続説明には、その後の修復・番号整理と
+一致しない記述があります。現在の入口と状態には上記の案内を使用してください。
+保存時の説明を消さずに検証できるよう、原文と参照先を同じ場所に残しています。
+
+<details>
+<summary>旧README全文（履歴資料・現在の実行手順ではありません）</summary>
+
+<!-- HOMEOSTASIS_RETAINED_README_BEGIN -->
+# HOMEOSTASIS SECURITY
+
 HOMEOSTASIS SECURITYは、国家の安全保障反応を生体の免疫反応として捉え、脅威に対する反応が強すぎる「過剰反応」、おおむね釣り合う「適応反応」、弱すぎる「過少反応」をマルチエージェント・シミュレーションで観察するプロジェクトです。
 
 目的は、国家タイプ、国際法、Hotline（直接対話経路）の違いが、脅威認知、防衛反応、エスカレーション圧、信頼、回復力にどう関連するかを探索することです。「緊張が低いほど常に良い」とはせず、高い脅威に対する必要な防衛反応も適応に含めます。
@@ -160,3 +220,6 @@ V3は多国間・資源ネットワークの研究方向です。この基盤追
 - [V4：相互依存（制作中）](dashboard_v4.html) — これまでV3と呼んでいた多国間・有限資源モデル
 
 上記以前の説明・設計資料にある多国間モデルの「V3」は現在のV4です。実験結果・内部識別子・旧URLは保持しています。[番号整理の範囲](docs/architecture/VERSION_NUMBERING_REVISION.md)。
+<!-- HOMEOSTASIS_RETAINED_README_END -->
+
+</details>
