@@ -19,6 +19,56 @@ from tests.v3.test_v4_dialogue import empty, offer, respond
 
 
 class LocalPilotTests(unittest.TestCase):
+    def test_thinking_uses_chat_and_only_final_answer_drives_world(self):
+        with tempfile.TemporaryDirectory() as tmp, self.provider() as client:
+            settings = prepare(client, model='qwen3:1.7b', seed=73, turns=2,
+                               synthetic=True, structured_output=True, thinking=True)
+            path = Path(tmp) / 'run'
+            result = execute(path, settings, protocol_digest=digest(settings), client=client,
+                             telemetry=lambda c, m: {})
+            self.assertEqual(result['status'], 'success')
+            self.assertEqual(replay(path)['replayed_turns'], 2)
+            self.assertEqual(settings['api_endpoint'], '/api/chat')
+            self.assertTrue(all(c['think'] for c in self.calls))
+            self.assertTrue(all('prompt' not in c and 'system' not in c for c in self.calls))
+            for call in self.calls[8:]:
+                text = call['messages'][1]['content']; view = json.loads(text)['view']
+                self.assertEqual(call['messages'][0], {'role': 'system', 'content': SYSTEM_INSTRUCTION})
+                self.assertNotIn('THINKING_MUST_NOT_BE_AN_AGENT_ANSWER', text)
+                if view['actor'] not in ('MIL', 'RES'):
+                    self.assertNotIn('private offer', text)
+                if view['actor'] != 'MIL':
+                    self.assertNotIn('private memory', text)
+            wire = read_record(path / 'RAW/call-000.wire.json')
+            data = json.loads(base64.b64decode(wire['body_base64']))
+            self.assertEqual(data['message']['thinking'], 'THINKING_MUST_NOT_BE_AN_AGENT_ANSWER')
+            self.assertIn('think=true', read_record(path / 'DERIVED/execution-summary.json')['report']['model_mode'])
+            # Even a valid final-answer-shaped thinking field cannot replace empty content.
+            with self.provider('thinking_only') as empty_client:
+                failed = Path(tmp) / 'thinking-only'
+                result = execute(failed, settings, protocol_digest=digest(settings), client=empty_client,
+                                 telemetry=lambda c, m: {})
+                self.assertEqual(result['status'], 'failure')
+                self.assertEqual(len(self.calls), 1)
+                self.assertEqual(replay(failed)['replayed_turns'], 0)
+                self.assertEqual(read_record(failed / 'terminal.json')['error']['code'], 'LOCAL_RESPONSE_TEXT_REQUIRED')
+
+    def test_legacy_generate_protocol_and_records_still_replay(self):
+        with tempfile.TemporaryDirectory() as tmp, self.provider() as client:
+            settings = prepare(client, model='qwen3:1.7b', seed=73, turns=2, synthetic=True)
+            settings.pop('api_endpoint')
+            original = Path(tmp) / 'original'
+            execute(original, settings, protocol_digest=digest(settings), client=client, telemetry=lambda c,m: {})
+            legacy = Path(tmp) / 'legacy'
+            evidence = EvidenceRun(legacy, read_record(original / 'manifest.json'))
+            for raw in sorted((original / 'RAW').iterdir()):
+                value = read_record(raw)
+                if raw.name.endswith('.request.json'):
+                    value.pop('endpoint')
+                evidence.write(raw.name, value)
+            evidence.finish('success', completed_turns=2)
+            self.assertEqual(replay(legacy)['replayed_turns'], 2)
+
     def test_local_grammar_preserves_activity_alternatives_and_arbitrary_arguments(self):
         from jsonschema import Draft202012Validator
         original = deepcopy(REPLY)
@@ -148,11 +198,16 @@ class LocalPilotTests(unittest.TestCase):
             if path == '/api/show':
                 return httpx.Response(200, json={'parameters': 'temperature 0.6', 'template': 'fixture',
                     'model_info': {}, 'details': {}, 'system': 'extra instructions' if fault == 'system' else ''})
-            self.assertEqual(path, '/api/generate')
+            self.assertIn(path, ('/api/generate', '/api/chat'))
             body = json.loads(request.content); self.calls.append(body)
-            self.assertEqual(body['system'], SYSTEM_INSTRUCTION)
+            if path == '/api/chat':
+                self.assertEqual(body['messages'][0], {'role': 'system', 'content': SYSTEM_INSTRUCTION})
+                prompt = body['messages'][1]['content']
+            else:
+                self.assertEqual(body['system'], SYSTEM_INSTRUCTION)
+                prompt = body['prompt']
             self.assertFalse(body['truncate']); self.assertFalse(body['shift'])
-            view = json.loads(body['prompt'])['view']; reply = empty()
+            view = json.loads(prompt)['view']; reply = empty()
             if view['turn'] == 1 and view['actor'] == 'MIL':
                 reply.update(outgoing=[{'to': ['RES'], 'body': 'private offer'}],
                              private_note='private memory', activities=[offer()])
@@ -170,10 +225,15 @@ class LocalPilotTests(unittest.TestCase):
                 return httpx.Response(200, stream=Partial())
             if fault == 'interrupt':
                 raise KeyboardInterrupt()
-            return httpx.Response(503 if fault == 'http' else 200, json={
+            data = {
                 'model': 'qwen3:1.7b', 'response': '{' if fault == 'json' else canonical(reply),
                 'done': True, 'done_reason': 'length' if fault == 'length' else 'stop',
-                'prompt_eval_count': 100, 'eval_count': 50})
+                'prompt_eval_count': 100, 'eval_count': 50}
+            if path == '/api/chat':
+                text = data.pop('response')
+                data['message'] = {'role': 'assistant', 'content': '' if fault == 'thinking_only' else text,
+                                   'thinking': text if fault == 'thinking_only' else 'THINKING_MUST_NOT_BE_AN_AGENT_ANSWER'}
+            return httpx.Response(503 if fault == 'http' else 200, json=data)
         return httpx.Client(transport=httpx.MockTransport(handle), trust_env=False, follow_redirects=False)
 
     def run_fixture(self, directory, client):
