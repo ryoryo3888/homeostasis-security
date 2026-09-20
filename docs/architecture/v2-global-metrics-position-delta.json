@@ -1,0 +1,227 @@
+{
+  "previous_public_sha": "79454caa2cd4b51137278dacadb611f1d9e1998f",
+  "records": [
+    {
+      "version": "v1",
+      "viewport": "desktop",
+      "turn": 1,
+      "all_nodes_unchanged": true
+    },
+    {
+      "version": "v1",
+      "viewport": "desktop",
+      "turn": 3,
+      "all_nodes_unchanged": true
+    },
+    {
+      "version": "v1",
+      "viewport": "desktop",
+      "turn": 8,
+      "all_nodes_unchanged": true
+    },
+    {
+      "version": "v1",
+      "viewport": "ipad",
+      "turn": 1,
+      "all_nodes_unchanged": true
+    },
+    {
+      "version": "v1",
+      "viewport": "ipad",
+      "turn": 3,
+      "all_nodes_unchanged": true
+    },
+    {
+      "version": "v1",
+      "viewport": "ipad",
+      "turn": 8,
+      "all_nodes_unchanged": true
+    },
+    {
+      "version": "v2",
+      "viewport": "desktop",
+      "turn": 1,
+      "world_unchanged": true,
+      "all_text_and_styles_unchanged": true,
+      "metrics_before": {
+        "x": 14,
+        "y": 3288.078125,
+        "width": 1412,
+        "height": 94.796875
+      },
+      "metrics_after": {
+        "x": 14,
+        "y": 1296.625,
+        "width": 1412,
+        "height": 94.796875
+      },
+      "research_before": {
+        "x": 14,
+        "y": 1242.484375,
+        "width": 1412,
+        "height": 1991.453125
+      },
+      "research_after": {
+        "x": 14,
+        "y": 1391.421875,
+        "width": 1412,
+        "height": 1991.453125
+      }
+    },
+    {
+      "version": "v2",
+      "viewport": "desktop",
+      "turn": 3,
+      "world_unchanged": true,
+      "all_text_and_styles_unchanged": true,
+      "metrics_before": {
+        "x": 14,
+        "y": 3288.078125,
+        "width": 1412,
+        "height": 94.796875
+      },
+      "metrics_after": {
+        "x": 14,
+        "y": 1296.625,
+        "width": 1412,
+        "height": 94.796875
+      },
+      "research_before": {
+        "x": 14,
+        "y": 1242.484375,
+        "width": 1412,
+        "height": 1991.453125
+      },
+      "research_after": {
+        "x": 14,
+        "y": 1391.421875,
+        "width": 1412,
+        "height": 1991.453125
+      }
+    },
+    {
+      "version": "v2",
+      "viewport": "desktop",
+      "turn": 5,
+      "world_unchanged": true,
+      "all_text_and_styles_unchanged": true,
+      "metrics_before": {
+        "x": 14,
+        "y": 3325.265625,
+        "width": 1412,
+        "height": 94.796875
+      },
+      "metrics_after": {
+        "x": 14,
+        "y": 1333.8125,
+        "width": 1412,
+        "height": 94.796875
+      },
+      "research_before": {
+        "x": 14,
+        "y": 1279.671875,
+        "width": 1412,
+        "height": 1991.453125
+      },
+      "research_after": {
+        "x": 14,
+        "y": 1428.609375,
+        "width": 1412,
+        "height": 1991.453125
+      }
+    },
+    {
+      "version": "v2",
+      "viewport": "ipad",
+      "turn": 1,
+      "world_unchanged": true,
+      "all_text_and_styles_unchanged": true,
+      "metrics_before": {
+        "x": 14,
+        "y": 4323.859375,
+        "width": 996,
+        "height": 198.59375
+      },
+      "metrics_after": {
+        "x": 14,
+        "y": 2114.171875,
+        "width": 996,
+        "height": 198.59375
+      },
+      "research_before": {
+        "x": 14,
+        "y": 2060.03125,
+        "width": 996,
+        "height": 2209.6875
+      },
+      "research_after": {
+        "x": 14,
+        "y": 2312.765625,
+        "width": 996,
+        "height": 2209.6875
+      }
+    },
+    {
+      "version": "v2",
+      "viewport": "ipad",
+      "turn": 3,
+      "world_unchanged": true,
+      "all_text_and_styles_unchanged": true,
+      "metrics_before": {
+        "x": 14,
+        "y": 4306.8125,
+        "width": 996,
+        "height": 198.59375
+      },
+      "metrics_after": {
+        "x": 14,
+        "y": 2097.125,
+        "width": 996,
+        "height": 198.59375
+      },
+      "research_before": {
+        "x": 14,
+        "y": 2042.984375,
+        "width": 996,
+        "height": 2209.6875
+      },
+      "research_after": {
+        "x": 14,
+        "y": 2295.71875,
+        "width": 996,
+        "height": 2209.6875
+      }
+    },
+    {
+      "version": "v2",
+      "viewport": "ipad",
+      "turn": 5,
+      "world_unchanged": true,
+      "all_text_and_styles_unchanged": true,
+      "metrics_before": {
+        "x": 14,
+        "y": 4342.453125,
+        "width": 996,
+        "height": 198.59375
+      },
+      "metrics_after": {
+        "x": 14,
+        "y": 2132.765625,
+        "width": 996,
+        "height": 198.59375
+      },
+      "research_before": {
+        "x": 14,
+        "y": 2078.625,
+        "width": 996,
+        "height": 2209.6875
+      },
+      "research_after": {
+        "x": 14,
+        "y": 2331.359375,
+        "width": 996,
+        "height": 2209.6875
+      }
+    }
+  ]
+}

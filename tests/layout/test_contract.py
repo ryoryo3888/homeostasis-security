@@ -16,7 +16,7 @@ class LayoutSourceTests(unittest.TestCase):
             data=(ROOT/name).read_bytes()
             if name.endswith('.html'):
                 self.assertEqual(data.count(LOADER.encode()),1,name)
-                data=protected_bytes(ROOT/name)
+            data=protected_bytes(ROOT/name)
             self.assertEqual(hashlib.sha256(data).hexdigest(),digest,name)
     def test_generated_previews_equal_dashboards(self):
         for version in ['v1','v2']:
