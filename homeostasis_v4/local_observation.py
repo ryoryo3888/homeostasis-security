@@ -144,6 +144,27 @@ def validate_runtime_limits(request_timeout_seconds, run_deadline_seconds):
            'INVALID_LOCAL_RUN_DEADLINE')
 
 
+def local_reply_format():
+    """Equivalent reply contract in llama.cpp's supported union representation.
+
+    The converter cannot combine properties with sibling anyOf. Distribute the
+    shared object constraints into both alternatives instead of dropping them.
+    Free arguments remain explicit: they may contain arbitrary property names.
+    """
+    schema = deepcopy(REPLY)
+    activity = schema['properties']['activities']['items']
+    alternatives = activity.pop('anyOf')
+    activity['properties']['arguments']['additionalProperties'] = True
+    branches = []
+    for alternative in alternatives:
+        ensure(set(alternative) == {'required'}, 'UNSUPPORTED_LOCAL_ACTIVITY_SCHEMA')
+        branch = deepcopy(activity)
+        branch['required'] = list(dict.fromkeys(activity['required'] + alternative['required']))
+        branches.append(branch)
+    schema['properties']['activities']['items'] = {'anyOf': branches}
+    return schema
+
+
 def prepare(client, *, model, seed, turns, num_ctx=16384, num_predict=2048, synthetic=False,
             structured_output=False, request_timeout_seconds=180, run_deadline_seconds=1200):
     ensure(type(seed) is int and 0 <= seed < 2**31 - 800, 'INVALID_SEED')
@@ -159,7 +180,7 @@ def prepare(client, *, model, seed, turns, num_ctx=16384, num_predict=2048, synt
             'hardware': hardware(),
             'seed': seed, 'seed_scope': 'Ollama generation seed = run seed + zero-based request sequence; deterministic world has no RNG',
             'generation_config': {'model': model,
-                'format': deepcopy(REPLY) if structured_output else 'json', 'stream': False,
+                'format': local_reply_format() if structured_output else 'json', 'stream': False,
                 'think': False, 'truncate': False, 'shift': False, 'keep_alive': '5m',
                 'options': {'num_ctx': num_ctx, 'num_predict': num_predict}},
             'unspecified_sampling': 'Use recorded model parameters and pinned server defaults; not assumed equal to Gemini',
