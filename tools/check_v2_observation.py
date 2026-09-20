@@ -50,6 +50,18 @@ def check(base):
                     assert not actual['overflow'] and not actual['errors'], (name,actual)
                     assert actual['controls'] == [turn==1,turn==8]
                     assert actual['hash'] == f'#run={number}&turn={turn}'
+                    geometry = browser.evaluate('''(() => {
+                        const earth=document.querySelector('.earth-panel'), group=document.querySelector('.earth-metrics'), metrics=group.getBoundingClientRect(), e=earth.getBoundingClientRect();
+                        return {sameColumn:earth.parentElement===group.parentElement,
+                            adjacent:earth.nextElementSibling===group, below:metrics.top>=e.bottom,
+                            aligned:Math.abs(metrics.left-e.left)<1 && Math.abs(metrics.width-e.width)<1,
+                            cards:[...group.querySelectorAll('.metric')].map(n=>{const r=n.getBoundingClientRect();return r.left>=metrics.left-1 && r.right<=metrics.right+1}),
+                            worldBeforeAgents:document.querySelector('.world-column').getBoundingClientRect().bottom<=document.querySelector('#agents').getBoundingClientRect().top};
+                    })()''', session)
+                    assert all(geometry[k] for k in ('sameColumn','adjacent','below','aligned')), (name,geometry)
+                    assert len(geometry['cards'])==6 and all(geometry['cards']), (name,geometry)
+                    if width<=760:
+                        assert geometry['worldBeforeAgents'], (name,geometry)
             # Reloadable deep link; an empty turn must not masquerade as loading.
             browser.call('Page.navigate', {'url':url+'#run=3&turn=8'}, session)
             browser.wait("document.body?.dataset.observationReady === 'true'", session)
