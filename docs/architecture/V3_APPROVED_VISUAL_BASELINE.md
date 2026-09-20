@@ -1,5 +1,8 @@
 # V3 — Approved Visual Baseline
 
+Current public name: **V4：相互依存**. This document retains the historical V3
+implementation identifiers; see [approved version names](VERSION_NUMBERING_REVISION.md).
+
 The user approved the published aurora revision (「バッチリ！」), then explicitly
 instructed us to proceed with formal visual-baseline protection (「進めて！」).
 This approves the existing visual frame, not a research result or paid run.

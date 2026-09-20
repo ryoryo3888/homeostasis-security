@@ -5,7 +5,7 @@ No runtime DOM relocation, arbitrary HTML stripping or replacement hash baseline
 """
 NAV = '<nav class="version-switch" aria-label="バージョン切替">'
 WRAPPED_NAV = '<nav class="version-switch" aria-label="バージョン切替" style="flex-wrap:wrap">'
-LINK = '<a href="results/v2-five-runs/index.html">v2追加：5回分</a>'
+LINK = '<a href="results/v2-five-runs/index.html">V3：自由対話</a>'
 OLD = {
     'v1': NAV + '\n      <span aria-current="page">v1：二国間の恒常性</span>\n      <a href="dashboard_v2.html">v2：地球規模の恒常性</a>\n    </nav>',
     'v2': NAV + '\n        <a href="dashboard_v1.html">v1：二国間の恒常性</a>\n        <a href="dashboard_v2.html" class="active" aria-current="page">v2：地球規模の恒常性</a>\n      </nav>',
