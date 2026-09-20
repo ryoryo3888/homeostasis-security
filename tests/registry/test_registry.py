@@ -1,4 +1,4 @@
-import copy,json,subprocess,sys,tempfile,unittest
+import copy,hashlib,json,subprocess,sys,tempfile,unittest
 from pathlib import Path
 from tools.experiment_registry import ROOT,REGISTRY,ALLOWLIST,RegistryError,load_json,pointer,safe_path,validate_registry
 
@@ -71,10 +71,16 @@ class RegistryTests(unittest.TestCase):
             p=Path(directory)/'x.json';p.write_text('{"schema_version":1,"schema_version":2}')
             with self.assertRaises(RegistryError):load_json(p)
     def test_no_automatic_publication(self):
-        manifest=load_json(ROOT/'ui/content.json');self.assertEqual(manifest,{'schema_version':1,'v1':[],'v2':[]})
+        # 2026-09-20: the user requested the five completed V2 dialogue runs in
+        # the viewer. This one manually reviewed content-slot link is explicit
+        # publication, not a registry side effect or a visual-baseline revision.
+        self.assert_authorized_content_manifest()
         for name in ['dashboard_v1.html','dashboard_v2.html','homeostasis-research-layer.js','homeostasis-research-integration.js','ui/content-slots.js','ui/layout-guard.js']:
             self.assertNotIn('research/experiments/',(ROOT/name).read_text())
         before=(ROOT/'ui/content.json').read_bytes();validate_registry(self.registry);self.assertEqual((ROOT/'ui/content.json').read_bytes(),before)
+    def assert_authorized_content_manifest(self):
+        self.assertEqual(hashlib.sha256((ROOT/'ui/content.json').read_bytes()).hexdigest(),
+                         '27f2c14622a871702b14397dd786539be38dc631467e14467bfe19d0ca2fef87')
     def test_original_research_preserved_with_exact_backend_repair(self):
         base=load_json(ROOT/'research/experiments/inventory.json')['scope_commit']
         # The registry's source provenance and historical artifacts stay at base.
@@ -87,6 +93,8 @@ class RegistryTests(unittest.TestCase):
         v2_repair='0b66d885822797ad88af584bd5b5b43a71af5db3'
         names=subprocess.check_output(['git','ls-tree','-r','--name-only',base],cwd=ROOT,text=True).splitlines()
         for name in sorted(set(names)|repaired):
+            if name=='ui/content.json':
+                self.assert_authorized_content_manifest();continue
             if name in repaired or name.endswith('.json') and not name.startswith(('tests/','docs/architecture/')) or name.startswith(('simulation','experiment_runner','final_experiment_runner','homeostasis_core/')):
                 source=repair if name in repaired else base
                 if name=='simulation_v2.py':source=v2_repair
