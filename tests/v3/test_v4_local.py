@@ -93,6 +93,7 @@ class LocalPilotTests(unittest.TestCase):
                 wire = read_record(path / 'RAW/call-000.wire.json')
                 self.assertEqual(bool(base64.b64decode(wire['body_base64'])), fault not in ('timeout', 'interrupt'))
                 self.assertTrue(read_record(path / 'RAW/failure.json')['not_an_agent_decision'])
+                self.assertTrue((path / 'RAW/memory-after.json').is_file())
 
     def test_replay_binds_checkpoints_to_actual_exchange_records(self):
         with tempfile.TemporaryDirectory() as tmp, self.provider() as client:

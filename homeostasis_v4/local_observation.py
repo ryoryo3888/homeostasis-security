@@ -221,6 +221,7 @@ def execute(directory, settings, *, protocol_digest, client, telemetry=memory_sa
             error = {'exception_type': type(exc).__name__, 'code': getattr(exc, 'code', None),
                      'turn_failure': getattr(exc, 'record', None), 'not_an_agent_decision': True}
             evidence.write('failure.json', {'timestamp': timestamp(), **error})
+        evidence.write('memory-after.json', telemetry(client, manifest['model']))
         elapsed = time.monotonic() - exchange.started
         evidence.write('execution-end.json', {'timestamp': timestamp(), 'elapsed_seconds': elapsed,
                                              'generation_attempts': exchange.sequence})
