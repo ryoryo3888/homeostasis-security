@@ -32,6 +32,10 @@ MESSAGE = obj({'to': {**arr(ID), 'minItems': 1, 'uniqueItems': True}, 'body': ST
 MESSAGE['properties']['reply_to'] = {**arr(ID), 'uniqueItems': True}
 ACTIVITY = obj({'body': STRING})
 ACTIVITY['properties'].update(operation=STRING, arguments={'type': 'object'})
+# A structured request already records the Agent's action without explanatory
+# prose. Preserve an omitted description; never manufacture one for the Agent.
+ACTIVITY['required'] = []
+ACTIVITY['anyOf'] = [{'required': ['body']}, {'required': ['operation', 'arguments']}]
 REPLY = obj({'outgoing': arr(MESSAGE), 'activities': arr(ACTIVITY), 'private_note': STRING})
 TRANSFER = obj({'id': ID, 'target': ID, 'resource': ID, 'route': ID,
                 'amount': POS, 'minimum_amount': POS,
@@ -133,7 +137,8 @@ def _template(offer, observation):
 
 def _selection(offer, source):
     return {'choice_id': offer['id'], 'requested_amount': offer['terms']['amount'],
-            'provenance': {'source': source, 'public_reason': offer['body'] or '[host metadata: empty body]'}}
+            'provenance': {'source': source, 'public_reason': offer['body'] if offer['body'] else
+                ('[host metadata: description omitted]' if offer['body'] is None else '[host metadata: empty body]')}}
 
 
 def advance(previous, views, replies, observation, source):
@@ -166,7 +171,7 @@ def advance(previous, views, replies, observation, source):
                     for condition in arguments['conditions']:
                         known = public_ids if condition['kind'] == 'arrived_amount' else set(visible_offers) | public_ids
                         ensure(condition['choice_id'] in known, 'INVISIBLE_CONDITION_REFERENCE')
-                    offer = {'id': offer_id, 'sender': actor, 'body': request['body'],
+                    offer = {'id': offer_id, 'sender': actor, 'body': request.get('body'),
                              'terms': deepcopy(arguments), 'created_turn': turn, 'status': 'pending'}
                     offer['terms_digest'] = digest({'id': offer_id, 'sender': actor, 'body': offer['body'], 'terms': arguments})
                     materialize_choice(_selection(offer, source), [_template(offer, observation)])
