@@ -2,6 +2,7 @@ import base64
 from copy import deepcopy
 import contextlib
 import io
+import itertools
 import json
 from pathlib import Path
 import tempfile
@@ -13,11 +14,34 @@ import httpx
 from homeostasis_v3.contracts import canonical, digest
 from homeostasis_v4.dialogue import SYSTEM_INSTRUCTION, REPLY, parse_reply
 from homeostasis_v4.evidence import EvidenceRun, read_record, verify
-from homeostasis_v4.local_observation import execute, prepare, replay, same_identity, LocalExchange
+from homeostasis_v4.local_observation import execute, prepare, replay, same_identity, LocalExchange, local_reply_format
 from tests.v3.test_v4_dialogue import empty, offer, respond
 
 
 class LocalPilotTests(unittest.TestCase):
+    def test_local_grammar_preserves_activity_alternatives_and_arbitrary_arguments(self):
+        from jsonschema import Draft202012Validator
+        original = deepcopy(REPLY)
+        converted = local_reply_format()
+        old = Draft202012Validator(REPLY['properties']['activities']['items'])
+        item = converted['properties']['activities']['items']
+        new = Draft202012Validator(item)
+        self.assertEqual(set(item), {'anyOf'})
+        for branch in item['anyOf']:
+            self.assertTrue(branch['properties']['arguments']['additionalProperties'])
+            self.assertFalse(branch['additionalProperties'])
+        absent = object()
+        for body, operation, arguments, extra in itertools.product(
+                (absent, '', 'Unlisted idea', 7), (absent, 'novel_operation', None),
+                (absent, {}, {'arbitrary': [1, 'x', {'new': True}]}, 'invalid'), (False, True)):
+            value = {k: v for k, v in [('body', body), ('operation', operation), ('arguments', arguments)]
+                     if v is not absent}
+            if extra:value['unexpected'] = 'invalid protocol field'
+            self.assertEqual(old.is_valid(value), new.is_valid(value), value)
+        for value in (None, [], 'not an object'):
+            self.assertEqual(old.is_valid(value), new.is_valid(value))
+        self.assertEqual(REPLY, original)
+
     def test_prepared_runtime_limits_drive_cli_and_stop_new_calls(self):
         from tools import run_v4_local as cli
         with tempfile.TemporaryDirectory() as tmp, self.provider() as client:
@@ -47,14 +71,14 @@ class LocalPilotTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp, self.provider() as client:
             settings = prepare(client, model='qwen3:1.7b', seed=73, turns=2,
                                synthetic=True, structured_output=True)
-            self.assertEqual(settings['generation_config']['format'], REPLY)
+            self.assertEqual(settings['generation_config']['format'], local_reply_format())
             self.assertIsNot(settings['generation_config']['format'], REPLY)
             path = Path(tmp) / 'run'
             result = execute(path, settings, protocol_digest=digest(settings), client=client,
                              telemetry=lambda c, m: {'timestamp': 'fixture', 'measurements': {}})
             self.assertEqual(result['status'], 'success')
             self.assertEqual(replay(path)['replayed_turns'], 2)
-            self.assertTrue(all(c['format'] == REPLY for c in self.calls))
+            self.assertTrue(all(c['format'] == local_reply_format() for c in self.calls))
             view = json.loads(self.calls[0]['prompt'])['view']
             proposals = {'outgoing': [], 'private_note': 'A freely chosen note', 'activities': [
                 {'body': 'An institution not defined by the environment',
