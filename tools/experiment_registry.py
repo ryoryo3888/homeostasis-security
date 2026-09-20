@@ -13,6 +13,7 @@ from jsonschema import Draft202012Validator, FormatChecker
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from tools.secret_scan import has_secret
+from tools.v2_metrics_position_revision import original_anchor
 SCHEMA=ROOT/'research/experiments/registry.schema.json'
 ALLOWLIST=ROOT/'research/experiments/artifact_allowlist.json'
 REGISTRY=ROOT/'research/experiments/registry.json'
@@ -76,7 +77,14 @@ def validate_registry(registry,root=ROOT,allowlist=None):
         require(item['classification'] in ('representative_run','comparison_study','formal_research','failed','invalidated','documentation','publication_source'),'Unapproved artifact classification')
         require(type(item['source_eligible']) is bool and bool(re.fullmatch('[0-9a-f]{64}',item['sha256'])),'Invalid artifact approval')
         p=safe_path(root,name,tracked);raw=p.read_bytes()
-        require(hashlib.sha256(raw).hexdigest()==item['sha256'],'Artifact hash mismatch')
+        checked=raw
+        # The retained publication source permits only Rio's exact V2 anchor
+        # revision. Research data, evidence text and the catalog stay immutable.
+        if (name=='homeostasis-research-layer.js' and item['classification']=='publication_source'
+                and not item['source_eligible'] and hashlib.sha256(raw).hexdigest()!=item['sha256']):
+            try:checked=original_anchor(raw)
+            except ValueError:raise RegistryError('Unapproved publication source revision') from None
+        require(hashlib.sha256(checked).hexdigest()==item['sha256'],'Artifact hash mismatch')
         require(not has_secret(raw.decode()),'Artifact secret scan failed')
         artifacts[name]=(item,load_json(p) if p.suffix=='.json' else None)
     def resolve(ref,version,source=False,status=None):

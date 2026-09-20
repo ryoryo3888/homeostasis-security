@@ -26,6 +26,7 @@ def follow_version_link(browser, session, href):
 
 def check(base):
     data = json.loads((ROOT / 'results/v2-five-runs/data.json').read_text())
+    original_v2 = json.loads((ROOT / 'v2_first_run.json').read_text())
     out = ROOT / '.artifacts/layout'
     out.mkdir(parents=True, exist_ok=True)
     records = []
@@ -119,10 +120,39 @@ def check(base):
                         overlap:boxes.some((a,i)=>boxes.slice(i+1).some(b=>a.left<b.right && a.right>b.left && a.top<b.bottom && a.bottom>b.top))};
                 })()''', session)
                 assert nav == {'count':3,'inside':True,'overlap':False}, (name,version,nav)
+                if version == 'v2':
+                    # Original V2: retain its own six scores and bars, directly
+                    # below Earth and above the V1 → 16 conditions → V2 narrative.
+                    for saved_turn in original_v2['turns']:
+                        t = saved_turn['turn']
+                        browser.evaluate(f"document.querySelector('[data-turn=\"{t}\"]').click()",session)
+                        browser.wait(f"document.querySelector('#turnNumber').textContent.trim()==='{t}'",session)
+                        actual = browser.evaluate('''(() => {
+                            const m=document.querySelector('#metrics'), h=m.previousElementSibling,
+                                world=document.querySelector('.hero'), r=document.querySelector('#homeostasisResearchLayer');
+                            return {order:h.previousElementSibling===world && m.nextElementSibling===r,
+                                title:h.textContent,
+                                below:h.getBoundingClientRect().top>=world.getBoundingClientRect().bottom,
+                                before:m.getBoundingClientRect().bottom<=r.getBoundingClientRect().top,
+                                labels:[...m.querySelectorAll('.metric>span')].map(n=>n.textContent),
+                                values:[...m.querySelectorAll('strong')].map(n=>n.textContent),
+                                bars:[...m.querySelectorAll('.mini i')].map(n=>n.style.width)};
+                        })()''',session)
+                        values = [saved_turn['world_state'][k] for k in
+                                  ('food','energy','economy','environment','international_trust','conflict_load')]
+                        assert actual == {'order':True,'title':'GLOBAL STATE｜地球全体の6指標',
+                            'below':True,'before':True,
+                            'labels':['食料','エネルギー','経済','環境','国際信頼','紛争負荷'],
+                            'values':[f'{v:.1f}' for v in values],
+                            'bars':[f'{v}%' for v in values]}, (name,t,actual)
+                        if t == 2:
+                            browser.evaluate("document.querySelector('#metrics').previousElementSibling.scrollIntoView({block:'center',behavior:'instant'})",session)
+                            shot=browser.call('Page.captureScreenshot',{'format':'png'},session)['data']
+                            (out / f'v2-global-metrics-{name}.png').write_bytes(base64.b64decode(shot))
                 follow_version_link(browser, session, 'results/v2-five-runs/index.html')
                 browser.wait("location.pathname.endsWith('/results/v2-five-runs/index.html') && document.body?.dataset.observationReady === 'true'", session)
                 assert browser.evaluate("document.querySelector('#trialSelect').options.length",session) == 5
-            records.append({'viewport':name,'selections_verified':40,'original_messages_verified':163,'return_journeys':['v1','v2']})
+            records.append({'viewport':name,'selections_verified':40,'original_messages_verified':163,'return_journeys':['v1','v2'],'original_v2_metric_turns':5})
             browser.call('Target.closeTarget', {'targetId':target})
         # Entry point remains the existing V2 page and its approved content slot.
         target = browser.call('Target.createTarget', {'url':'about:blank'})['targetId']
@@ -135,7 +165,7 @@ def check(base):
         browser.evaluate('window.HomeostasisLayout.assertIntegrity()',session)
         assert not browser.blocked, browser.blocked
     (out/'v2-observation.json').write_text(json.dumps(records,indent=2)+'\n')
-    print('V2 observation: 120 selections, original text, saved-record counts, deep links and V1/V2 return journeys PASS')
+    print('V2 observation: 120 selections, saved-record counts, V1/V2 return journeys and original V2 metrics across 15 viewport/turn states PASS')
 
 
 def main():
