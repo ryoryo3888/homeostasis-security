@@ -25,13 +25,14 @@ from homeostasis_v5.nation_generation_contract import (
 )
 from homeostasis_v5.persona_generation import GenerationError, account_usage, _extract_persona, _runtime, price
 from homeostasis_v5.life_first_generation import wire_bytes
+from homeostasis_v5.nation_topology import build_topology_request, compile_topology, TopologyError
 from model_response_json import load_response_object
 from v2_autonomous import Journal
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = 'gemini-3.6-flash'
 ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/' + MODEL
-VERSION = 'v5-nation-initialization-1'
+VERSION = 'v5-nation-initialization-2-shared-boundaries'
 LIMITS = {'map': {'input': 12000, 'output': 12288}, 'nation': {'input': 64000, 'output': 16384}}
 CEILING = Decimal('1.50')
 IDS = [f'nation-{n:03d}' for n in range(1, 13)]
@@ -44,7 +45,7 @@ def ensure(condition, code):
 
 def source_hashes():
     names = ('homeostasis_v5/nation_generation.py', 'homeostasis_v5/nation_generation_contract.py',
-             'homeostasis_v5/nation_geometry.py', 'homeostasis_v5/nation_valuation.py',
+             'homeostasis_v5/nation_geometry.py', 'homeostasis_v5/nation_valuation.py', 'homeostasis_v5/nation_topology.py',
              'homeostasis_v5/life_first_generation.py', 'homeostasis_v5/persona_generation.py',
              'homeostasis_core/execution_lock.py', 'homeostasis_v4/evidence.py',
              'homeostasis_v3/contracts.py', 'model_response_json.py', 'v2_autonomous.py', 'v2_dialogue.py',
@@ -99,27 +100,29 @@ def permutation(seed, leader_ids):
     return values
 
 
-def prepare(directory, *, catalog, leader_references, reference_archive):
+def prepare(directory, *, catalog, leader_references, reference_archive, predecessor=None):
     from jsonschema import Draft202012Validator
     Draft202012Validator(schema_for('catalog')).validate(catalog)
     ensure(len(leader_references) == 12 and len({r['leader_id'] for r in leader_references}) == 12,
            'TWELVE_FROZEN_LEADER_REFERENCES_REQUIRED')
     directory = Path(directory)
     ensure(date.today() <= date(2026, 12, 31), 'PRICE_WINDOW_EXPIRED')
+    prior = _predecessor(predecessor, catalog, leader_references) if predecessor is not None else None
     with exclusive_execution(directory):
         ensure(not directory.exists() and not directory.is_symlink(), 'NEW_BATCH_REQUIRED')
         total = price(**{'input_tokens':12000, 'output_tokens':12288}) + 12 * price(64000,16384)
-        ensure(total <= CEILING, 'BUDGET_NOT_SUFFICIENT')
+        ensure(total + Decimal(prior['reserved_usd'] if prior else '0') <= CEILING, 'BUDGET_NOT_SUFFICIENT')
         plan = {'version': VERSION, 'batch_id': 'v5-nations-' + uuid.uuid4().hex,
                 'created_at': timestamp(), 'world_id': 'v5-world-' + uuid.uuid4().hex,
                 'nation_ids': IDS, 'model': MODEL, 'limits': LIMITS, 'usd_stop_limit': str(CEILING),
                 'maximum_reserved_usd': str(total), 'max_generation_calls': 13, 'max_count_calls': 13,
-                'retry_count': 0, 'concurrency': 1, 'valuation': 'V-A-new-equivalent-full-specification',
+                'retry_count': 0, 'concurrency': 1, 'predecessor':prior,
+                'map_method':'shared-boundaries-v1', 'valuation': 'V-A-new-equivalent-full-specification',
                 'source_hashes': source_hashes(), 'runtime': _runtime(),
                 'source_commit': subprocess.check_output(['git','rev-parse','HEAD'], cwd=ROOT, text=True).strip(),
                 'catalog_sha256': record_hash(catalog), 'reference_archive': reference_archive,
                 'leader_references': leader_references,
-                'assignment': {'method':'sha256-rejection-fisher-yates-1','seed_hex':secrets.token_hex(32),
+                'assignment': prior['assignment'] if prior else {'method':'sha256-rejection-fisher-yates-1','seed_hex':secrets.token_hex(32),
                                'leader_id_order':[r['leader_id'] for r in leader_references], 'nation_id_order':IDS},
                 'pricing':{'input_usd_per_million':'0.75','output_usd_per_million':'3.75',
                            'valid_through':'2026-12-31','tier':'standard_default'},
@@ -135,6 +138,40 @@ def prepare(directory, *, catalog, leader_references, reference_archive):
         return {'status':'prepared','plan_sha256':digest(plan),'maximum_reserved_usd':str(total)}
 
 
+
+def _predecessor(directory, catalog, leader_references):
+    """Read the one rejected coordinate-map trial; never reopen or edit it."""
+    directory=Path(directory)
+    plan=read_record(directory/'plan.json')
+    ensure(plan['version']=='v5-nation-initialization-1','UNSUPPORTED_PREDECESSOR')
+    ensure(len(list(directory.glob('attempt-*')))==1 and (directory/'blocked-01.json').exists(),
+           'PREDECESSOR_MUST_BE_STOPPED_AFTER_MAP')
+    ensure(not (directory/'assignment.json').exists(),'PREDECESSOR_ASSIGNMENT_ALREADY_USED')
+    evidence=verify(directory/'attempt-01')
+    ensure(evidence['status']=='success','PREDECESSOR_RESPONSE_INCOMPLETE')
+    review=read_record(directory/'attempt-01/DERIVED/content-review.json')['report']
+    ensure(review['accepted'] is False and review['evidence_hash']==evidence['evidence_hash'],
+           'PREDECESSOR_REJECTION_NOT_VERIFIED')
+    ensure(record_hash(catalog)==plan['catalog_sha256']
+           and leader_references==plan['leader_references'],'PREDECESSOR_FIXED_INPUTS_CHANGED')
+    reservation=read_record(directory/'reservation-01.json')
+    ensure(Decimal(reservation['usd'])==price(12000,12288),'PREDECESSOR_RESERVATION_CHANGED')
+    receipt=read_record(directory/'attempt-01/RAW/receipt.json')
+    return {'directory':str(directory),'plan_sha256':digest(plan),
+            'evidence_hash':evidence['evidence_hash'],'reserved_usd':reservation['usd'],
+            'reported_cost_usd':receipt['accounting']['estimated_cost_usd'],
+            'assignment':plan['assignment'],'reason':'Authorized separate trial with shared boundary representation'}
+
+
+def _map_output(root, plan):
+    raw=_output(root)
+    result=compile_topology(raw,expected_world_id=plan['world_id'],expected_nation_ids=IDS)
+    saved=read_record(root/'DERIVED/canonical-map.json')['report']
+    ensure(saved['map']==result['map'] and saved['map_sha256']==record_hash(result['map'])
+           and saved['raw_topology_sha256']==record_hash(raw),'CANONICAL_MAP_CHANGED')
+    return result['map']
+
+
 def _plan(directory):
     ensure(not directory.is_symlink() and directory.is_dir() and not directory.stat().st_mode & 0o077,
            'PRIVATE_BATCH_REQUIRED')
@@ -143,9 +180,14 @@ def _plan(directory):
     ensure(plan['version']==VERSION and plan['model']==MODEL and plan['limits']==LIMITS
            and plan['usd_stop_limit']==str(CEILING) and plan['nation_ids']==IDS
            and plan['max_generation_calls']==13 and plan['max_count_calls']==13
-           and plan['retry_count']==0 and plan['concurrency']==1, 'PLAN_SCOPE_CHANGED')
+           and plan['retry_count']==0 and plan['concurrency']==1
+           and plan['map_method']=='shared-boundaries-v1', 'PLAN_SCOPE_CHANGED')
     ensure(plan['source_hashes']==source_hashes() and plan['runtime']==_runtime(), 'SOURCE_OR_RUNTIME_CHANGED')
-    ensure(record_hash(Journal(directory).read('catalog.json'))==plan['catalog_sha256'], 'CATALOG_CHANGED')
+    catalog=Journal(directory).read('catalog.json')
+    ensure(record_hash(catalog)==plan['catalog_sha256'], 'CATALOG_CHANGED')
+    if plan.get('predecessor'):
+        ensure(_predecessor(plan['predecessor']['directory'],catalog,plan['leader_references'])==plan['predecessor'],
+               'PREDECESSOR_CHANGED')
     return plan
 
 
@@ -158,8 +200,8 @@ def _output(root):
 
 def _package(directory, plan, index):
     if index==1:
-        return build_map_request(plan['world_id'],IDS)
-    m=_output(directory/'attempt-01')
+        return build_topology_request(plan['world_id'],IDS)
+    m=_map_output(directory/'attempt-01',plan)
     c=Journal(directory).read('catalog.json')
     return build_nation_request(m,IDS[index-2],c,expected_map_hash=record_hash(m),expected_catalog_hash=plan['catalog_sha256'])
 
@@ -191,6 +233,7 @@ def _history(directory, plan, *, allow_unreviewed=False):
 
 
 def _error(exc):
+    if isinstance(exc,TopologyError):return exc.code
     if isinstance(exc,(GenerationError,NationContractError)):
         return str(exc)
     if isinstance(exc,httpx.TimeoutException):return 'TRANSPORT_TIMEOUT'
@@ -213,6 +256,7 @@ def generate_next(directory, *, credential, transport):
         stage_name=package['stage']
         maximum=price(LIMITS[stage_name]['input'],LIMITS[stage_name]['output'])
         reserved=sum((Decimal(read_record(p)['usd']) for p in directory.glob('reservation-*.json')),Decimal(0))
+        reserved += Decimal(plan['predecessor']['reserved_usd'] if plan.get('predecessor') else '0')
         ensure(reserved+maximum<=CEILING,'BUDGET_EXHAUSTED')
         ensure(not (directory/f'reservation-{index:02d}.json').exists(),'UNRESOLVED_RESERVATION')
         manifest={'format':FORMAT,'run_id':f"{plan['batch_id']}-{index:02d}",'started_at':timestamp(),
@@ -266,7 +310,8 @@ def generate_next(directory, *, credential, transport):
             stage='validate_output'
             output=_extract_persona(response)
             if index==1:
-                validation=inspect_map_output(output,expected_world_id=plan['world_id'],expected_nation_ids=IDS)
+                compiled=compile_topology(output,expected_world_id=plan['world_id'],expected_nation_ids=IDS)
+                validation=compiled['report']
             else:
                 validation=inspect_nation_output(output,package)
             # Success means the generation completed; final world acceptance remains separate.
@@ -274,12 +319,19 @@ def generate_next(directory, *, credential, transport):
             stage='save_derived'
             run.derive('output.json',{'output':output,'raw_response_path':'RAW/generation.response.json'})
             run.derive('structural-validation.json',validation)
+            if index==1:
+                run.derive('canonical-map.json',{'map':compiled['map'],
+                    'map_sha256':record_hash(compiled['map']),
+                    'raw_topology_sha256':record_hash(output),
+                    'source':'RAW/generation.response.json'})
             return {**result,'index':index,'stage':stage_name,'estimated_cost_usd':actual,'content_review_required':True}
         except (Exception,KeyboardInterrupt) as exc:
             error={'code':_error(exc),'exception_type':type(exc).__name__,'stage':stage,'generation_attempted':attempted}
             if not (run.root/'terminal.json').exists():
                 run.write('error.json',error)
                 run.finish('interrupted' if isinstance(exc,KeyboardInterrupt) else 'failure',completed_turns=0,error=error)
+            if isinstance(exc,TopologyError):
+                run.derive('topology-validation-failure.json',exc.report)
             Journal(directory).write(f'blocked-{index:02d}.json',error)
             return {'status':'failure','index':index,'error':error,'estimated_cost_usd':actual}
 
@@ -296,7 +348,7 @@ def review_last(directory, *, accepted, review_notes, balance_review_notes=None)
         if accepted:
             if index==1:
                 from homeostasis_v5.nation_geometry import derive_geometry
-                check=derive_geometry(output)
+                check=derive_geometry(_map_output(root,plan))
                 ensure(check['accepted_for_nation_context'],'GEOMETRY_NOT_ACCEPTED')
             else:
                 from homeostasis_v5.nation_valuation import evaluate_initial_holdings

@@ -9,6 +9,7 @@ import httpx
 from homeostasis_v4.evidence import read_record,verify
 from homeostasis_v5 import nation_generation as run
 from test_nation_generation_contract import catalog,geography
+from test_nation_topology import from_map_fixture
 
 
 class NationGenerationTests(unittest.TestCase):
@@ -31,7 +32,7 @@ class NationGenerationTests(unittest.TestCase):
             if mode=='http':return httpx.Response(400,json={'error':{'code':400,'message':'synthetic schema error'}})
             context=json.loads(body['contents'][0]['parts'][1]['text'])
             m=geography();m['world_id']=context['world_id']
-            text=json.dumps(m) if mode!='invalid_json' else '{bad'
+            text=json.dumps(from_map_fixture(m)) if mode!='invalid_json' else '{bad'
             if mode=='incomplete':reason='MAX_TOKENS'
             else:reason='STOP'
             return httpx.Response(200,json={'candidates':[{'finishReason':reason,'content':{'parts':[{'text':text}]}}],
@@ -61,6 +62,37 @@ class NationGenerationTests(unittest.TestCase):
         with self.assertRaisesRegex(run.GenerationError,'CONTENT_REVIEW_REQUIRED'):self.invoke()
         self.assertEqual(len(self.requests),2)
         self.assertEqual(verify(self.root/'attempt-01')['status'],'success')
+
+    def test_map_raw_is_distinct_from_canonical_and_required_for_country_input(self):
+        result=self.invoke();self.assertEqual(result['status'],'success')
+        root=self.root/'attempt-01'
+        original=run._output(root)
+        self.assertIn('vertices',original)
+        derived=read_record(root/'DERIVED/canonical-map.json')['report']
+        self.assertNotIn('vertices',derived['map'])
+        plan=read_record(self.root/'plan.json')
+        self.assertEqual(run._map_output(root,plan),derived['map'])
+        package=run._package(self.root,plan,2)
+        self.assertIn(derived['map_sha256'],json.dumps(package))
+        raw_before=(root/'RAW/generation.response.json').read_bytes()
+        altered={**derived,'map_sha256':'0'*64}
+        with patch.object(run,'read_record',side_effect=lambda p: {'report':altered} if str(p).endswith('canonical-map.json') else read_record(p)):
+            with self.assertRaisesRegex(run.GenerationError,'CANONICAL_MAP_CHANGED'):
+                run._map_output(root,plan)
+        self.assertEqual(raw_before,(root/'RAW/generation.response.json').read_bytes())
+
+    def test_predecessor_reservation_and_assignment_are_retained(self):
+        prior={'reserved_usd':'0.05508','assignment':{'method':'fixed synthetic','seed_hex':'ab'*32}}
+        self.root=Path(self.tmp.name)/'batch-with-predecessor'
+        with patch.object(run,'_predecessor',return_value=prior),patch.object(run.secrets,'token_hex',side_effect=AssertionError('must not redraw')):
+            run.prepare(self.root,catalog=catalog(),leader_references=self.leaders,reference_archive={},predecessor='synthetic')
+        plan=read_record(self.root/'plan.json')
+        self.assertEqual(plan['assignment'],prior['assignment'])
+        self.assertEqual(plan['predecessor']['reserved_usd'],'0.05508')
+        too_large={**prior,'reserved_usd':'0.20'}
+        with patch.object(run,'_predecessor',return_value=too_large):
+            with self.assertRaisesRegex(run.GenerationError,'BUDGET_NOT_SUFFICIENT'):
+                run.prepare(Path(self.tmp.name)/'over',catalog=catalog(),leader_references=self.leaders,reference_archive={},predecessor='synthetic')
 
     def test_input_over_limit_never_generates_or_retries(self):
         result=self.invoke(count=12001);self.assertEqual(result['status'],'failure')
