@@ -81,6 +81,21 @@ class NationGenerationTests(unittest.TestCase):
                 run._map_output(root,plan)
         self.assertEqual(raw_before,(root/'RAW/generation.response.json').read_bytes())
 
+    def test_nation_wire_supplies_and_pins_the_expected_reference_hash(self):
+        self.invoke()
+        plan=read_record(self.root/'plan.json')
+        package=run._package(self.root,plan,2)
+        original=run.record_hash(package)
+        body=run.http_body(package)
+        context=json.loads(body['contents'][0]['parts'][1]['text'])
+        self.assertEqual(context['input_references'],package['input_references'])
+        actual=context['input_references']['map_sha256']
+        self.assertEqual(body['generationConfig']['responseJsonSchema']['properties']['geography_ref']['properties']['map_sha256']['enum'],[actual])
+        self.assertEqual(run.record_hash(package),original)
+        self.assertEqual(actual,run.record_hash(context['common_geography']))
+        self.assertNotIn('leader_references',context)
+        self.assertNotIn('predecessor',context)
+
     def test_predecessor_reservation_and_assignment_are_retained(self):
         prior={'reserved_usd':'0.05508','assignment':{'method':'fixed synthetic','seed_hex':'ab'*32}}
         self.root=Path(self.tmp.name)/'batch-with-predecessor'

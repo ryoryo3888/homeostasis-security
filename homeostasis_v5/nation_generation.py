@@ -32,7 +32,7 @@ from v2_autonomous import Journal
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = 'gemini-3.6-flash'
 ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/' + MODEL
-VERSION = 'v5-nation-initialization-3-complete-map'
+VERSION = 'v5-nation-initialization-4-reference-binding'
 LIMITS = {'map': {'input': 12000, 'output': 12288}, 'nation': {'input': 64000, 'output': 16384}}
 CEILING = Decimal('1.50')
 IDS = [f'nation-{n:03d}' for n in range(1, 13)]
@@ -71,11 +71,20 @@ def http_body(package):
     """Explicit adapter; no offline flags or approval records become API fields."""
     stage = package['stage']
     ensure(stage in LIMITS, 'INVALID_STAGE')
+    context=dict(package['context'])
+    prompt=package['prompt']
+    schema=provider_schema(package['response_schema'])
+    if stage=='nation':
+        references=dict(package['input_references'])
+        ensure(set(references)=={'map_sha256','catalog_sha256'},'REFERENCE_BINDING_REQUIRED')
+        context['input_references']=references
+        schema['properties']['geography_ref']['properties']['map_sha256']['enum']=[references['map_sha256']]
+        prompt+='\ngeography_ref.map_sha256にはinput_references.map_sha256をそのまま転記してください。識別値を新しく生成・推測・再計算しません。'
     return {'contents': [{'role': 'user', 'parts': [
-        {'text': package['prompt']},
-        {'text': json.dumps(package['context'], ensure_ascii=False, separators=(',', ':'))}]}],
+        {'text': prompt},
+        {'text': json.dumps(context, ensure_ascii=False, separators=(',', ':'))}]}],
         'generationConfig': {'responseMimeType': 'application/json',
-                             'responseJsonSchema': provider_schema(package['response_schema']),
+                             'responseJsonSchema': schema,
                              'temperature': 1.0, 'candidateCount': 1,
                              'maxOutputTokens': LIMITS[stage]['output'],
                              'thinkingConfig': {'thinkingLevel': 'LOW', 'includeThoughts': False}}}
