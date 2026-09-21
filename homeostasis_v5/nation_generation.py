@@ -32,7 +32,7 @@ from v2_autonomous import Journal
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = 'gemini-3.6-flash'
 ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/' + MODEL
-VERSION = 'v5-nation-initialization-4-reference-binding'
+VERSION = 'v5-nation-initialization-5-frozen-map-continuation'
 LIMITS = {'map': {'input': 12000, 'output': 12288}, 'nation': {'input': 64000, 'output': 16384}}
 CEILING = Decimal('1.50')
 IDS = [f'nation-{n:03d}' for n in range(1, 13)]
@@ -189,6 +189,128 @@ def _predecessor(directory, catalog, leader_references):
             'assignment':plan['assignment'],'reason':'Authorized separate trial with shared boundary representation'}
 
 
+def _frozen_source(directory):
+    """Read-only import of the accepted map and the diagnosed failed request.
+
+    Completed responses with verified usage settle their reservation at the
+    reported estimate. Unknown/incomplete costs keep their full reservation.
+    Every original reservation, receipt and RAW remains immutable.
+    """
+    directory=Path(directory)
+    plan=read_record(directory/'plan.json')
+    ensure(plan['version']=='v5-nation-initialization-3-complete-map', 'UNSUPPORTED_FROZEN_SOURCE')
+    ensure({p.name for p in directory.glob('attempt-*')}=={'attempt-01','attempt-02'}
+           and (directory/'blocked-02.json').exists() and not (directory/'assignment.json').exists(),
+           'FROZEN_SOURCE_SCOPE_CHANGED')
+    ensure({p.name for p in directory.glob('reservation-*.json')}=={'reservation-01.json','reservation-02.json'},
+           'FROZEN_RESERVATION_SET_CHANGED')
+    for index,stage in ((1,'map'),(2,'nation')):
+        root=directory/f'attempt-{index:02d}'
+        manifest=read_record(root/'manifest.json')
+        request=read_record(root/'RAW/generation.request.json')
+        reservation=read_record(directory/f'reservation-{index:02d}.json')
+        ensure(manifest['experiment_config']['plan_sha256']==digest(plan)
+               and manifest['experiment_config']['index']==index
+               and manifest['experiment_config']['stage']==stage
+               and manifest['experiment_config']['request_sha256']==digest(request),
+               'FROZEN_MANIFEST_PLAN_MISMATCH')
+        ensure(reservation['index']==index and reservation['request_sha256']==digest(request)
+               and Decimal(reservation['usd'])==price(LIMITS[stage]['input'],LIMITS[stage]['output']),
+               'FROZEN_RESERVATION_CHANGED')
+    map_evidence=verify(directory/'attempt-01')
+    failed_evidence=verify(directory/'attempt-02')
+    ensure(map_evidence['status']=='success' and failed_evidence['status']=='failure','FROZEN_SOURCE_STATUS_CHANGED')
+    review=read_record(directory/'attempt-01/DERIVED/content-review.json')['report']
+    ensure(review['accepted'] is True and review['evidence_hash']==map_evidence['evidence_hash'],
+           'FROZEN_MAP_NOT_ACCEPTED')
+    failure=read_record(directory/'attempt-02/RAW/error.json')
+    ensure(failure['code']=='MAP_REFERENCE_MISMATCH' and failure['stage']=='validate_output',
+           'UNSUPPORTED_FROZEN_FAILURE')
+    geography=_map_output(directory/'attempt-01',plan)
+    catalog=read_record(directory/'catalog.json')
+    ensure(record_hash(catalog)==plan['catalog_sha256'],'FROZEN_CATALOG_CHANGED')
+    ensure(plan.get('predecessor') is not None,'FROZEN_ANCESTRY_REQUIRED')
+    ensure(_predecessor(plan['predecessor']['directory'],catalog,plan['leader_references'])==plan['predecessor'],
+           'FROZEN_ANCESTRY_CHANGED')
+    # Independently verify the adapter failure before permitting its retry.
+    failed_package=read_record(directory/'attempt-02/RAW/offline-package.json')
+    map_hash=record_hash(geography)
+    ensure(failed_package['input_references']['map_sha256']==map_hash
+           and map_hash not in json.dumps(read_record(directory/'attempt-02/RAW/generation.request.json')),
+           'FROZEN_ADAPTER_DIAGNOSIS_CHANGED')
+    ledger=[]
+    cursor=directory
+    visited=set()
+    while cursor is not None:
+        ensure(str(cursor.resolve()) not in visited,'FROZEN_ANCESTRY_CYCLE')
+        visited.add(str(cursor.resolve()))
+        current=read_record(cursor/'plan.json')
+        for reservation_path in sorted(cursor.glob('reservation-*.json')):
+            reservation=read_record(reservation_path)
+            evidence_root=cursor/f"attempt-{reservation['index']:02d}"
+            evidence=verify(evidence_root)
+            maximum=Decimal(reservation['usd'])
+            receipt_path=evidence_root/'RAW/receipt.json'
+            charge=maximum;basis='unsettled_full_reservation'
+            if evidence['completion_record_present'] and receipt_path.exists():
+                receipt=read_record(receipt_path)
+                wire=read_record(evidence_root/'RAW/generation.response.json')
+                raw=base64.b64decode(wire['body_base64'],validate=True)
+                ensure(wire['status']==200 and hashlib.sha256(raw).hexdigest()==wire['body_sha256'],
+                       'FROZEN_USAGE_RESPONSE_CHANGED')
+                response=load_response_object(raw.decode('utf-8'))
+                accounting=account_usage(response.get('usageMetadata'))
+                ensure(receipt['accounting']==accounting,'FROZEN_USAGE_RECEIPT_CHANGED')
+                charge=Decimal(accounting['estimated_cost_usd'])
+                ensure(charge<=maximum,'FROZEN_USAGE_EXCEEDED_RESERVATION')
+                basis='verified_response_usage_estimate_not_invoice'
+            ledger.append({'directory':str(evidence_root),'evidence_hash':evidence['evidence_hash'],
+                           'original_reservation_usd':str(maximum),'charged_usd':str(charge),'basis':basis})
+        parent=current.get('predecessor')
+        cursor=Path(parent['directory']) if parent else None
+    return {'directory':str(directory),'plan_sha256':digest(plan),'world_id':plan['world_id'],
+            'map_evidence_hash':map_evidence['evidence_hash'],'failed_nation_evidence_hash':failed_evidence['evidence_hash'],
+            'map_sha256':map_hash,'content_review_sha256':digest(review),'catalog_sha256':plan['catalog_sha256'],
+            'assignment':plan['assignment'],'leader_references':plan['leader_references'],
+            'reference_archive':plan['reference_archive'],'ledger':ledger,
+            'charged_usd':str(sum((Decimal(x['charged_usd']) for x in ledger),Decimal(0)))}
+
+
+def prepare_continuation(directory, *, frozen_source):
+    """Create a new nation-only batch; never regenerate/import RAW as a new call."""
+    source=_frozen_source(frozen_source)
+    prior_plan=read_record(Path(frozen_source)/'plan.json')
+    directory=Path(directory)
+    with exclusive_execution(directory):
+        ensure(not directory.exists() and not directory.is_symlink(),'NEW_BATCH_REQUIRED')
+        ensure(date.today()<=date(2026,12,31),'PRICE_WINDOW_EXPIRED')
+        maximum=12*price(LIMITS['nation']['input'],LIMITS['nation']['output'])
+        ensure(maximum+Decimal(source['charged_usd'])<=CEILING,'BUDGET_NOT_SUFFICIENT')
+        plan={**prior_plan,'version':VERSION,'batch_id':'v5-nations-'+uuid.uuid4().hex,
+              'created_at':timestamp(),'maximum_reserved_usd':str(maximum),
+              'max_generation_calls':12,'max_count_calls':12,'predecessor':None,'frozen_source':source,
+              'source_hashes':source_hashes(),'runtime':_runtime(),
+              'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+              'continuation':'nation-initialization-after-reference-adapter-fix',
+              'prior_cost_basis':'verified_response_usage_or_unsettled_reservation'}
+        ensure(plan['model']==MODEL and plan['limits']==LIMITS and plan['usd_stop_limit']==str(CEILING)
+               and plan['nation_ids']==IDS and plan['retry_count']==0 and plan['concurrency']==1,
+               'FROZEN_GENERATION_CONDITIONS_CHANGED')
+        directory.mkdir(mode=0o700)
+        Journal(directory).write('catalog.json',read_record(Path(frozen_source)/'catalog.json'))
+        Journal(directory).write('plan.json',plan)
+        return {'status':'prepared','plan_sha256':digest(plan),'maximum_reserved_usd':str(maximum),
+                'prior_charged_usd':source['charged_usd'],'map_generation_calls':0}
+
+
+def _first_index(plan):
+    return 2 if plan.get('frozen_source') else 1
+
+
+def _map_root(directory,plan):
+    return Path(plan['frozen_source']['directory'])/'attempt-01' if plan.get('frozen_source') else directory/'attempt-01'
+
+
 def _map_output(root, plan):
     raw=_output(root)
     result=compile_topology(raw,expected_world_id=plan['world_id'],expected_nation_ids=IDS)
@@ -205,7 +327,8 @@ def _plan(directory):
     ensure(date.today() <= date(2026,12,31), 'PRICE_WINDOW_EXPIRED')
     ensure(plan['version']==VERSION and plan['model']==MODEL and plan['limits']==LIMITS
            and plan['usd_stop_limit']==str(CEILING) and plan['nation_ids']==IDS
-           and plan['max_generation_calls']==13 and plan['max_count_calls']==13
+           and plan['max_generation_calls']==(12 if plan.get('frozen_source') else 13)
+           and plan['max_count_calls']==plan['max_generation_calls']
            and plan['retry_count']==0 and plan['concurrency']==1
            and plan['map_method']=='shared-boundaries-v2-complete-slots', 'PLAN_SCOPE_CHANGED')
     ensure(plan['source_hashes']==source_hashes() and plan['runtime']==_runtime(), 'SOURCE_OR_RUNTIME_CHANGED')
@@ -214,6 +337,12 @@ def _plan(directory):
     if plan.get('predecessor'):
         ensure(_predecessor(plan['predecessor']['directory'],catalog,plan['leader_references'])==plan['predecessor'],
                'PREDECESSOR_CHANGED')
+    if plan.get('frozen_source'):
+        source=_frozen_source(plan['frozen_source']['directory'])
+        ensure(source==plan['frozen_source'],'FROZEN_SOURCE_CHANGED')
+        ensure(plan['world_id']==source['world_id'] and plan['assignment']==source['assignment']
+               and plan['leader_references']==source['leader_references']
+               and plan['catalog_sha256']==source['catalog_sha256'],'FROZEN_FIXED_INPUTS_CHANGED')
     return plan
 
 
@@ -227,7 +356,7 @@ def _output(root):
 def _package(directory, plan, index):
     if index==1:
         return build_topology_request(plan['world_id'],IDS)
-    m=_map_output(directory/'attempt-01',plan)
+    m=_map_output(_map_root(directory,plan),plan)
     c=Journal(directory).read('catalog.json')
     return build_nation_request(m,IDS[index-2],c,expected_map_hash=record_hash(m),expected_catalog_hash=plan['catalog_sha256'])
 
@@ -235,7 +364,7 @@ def _package(directory, plan, index):
 def _history(directory, plan, *, allow_unreviewed=False):
     ensure(not list(directory.glob('blocked-*.json')), 'BATCH_BLOCKED')
     result=[]
-    for i in range(1,14):
+    for i in range(_first_index(plan),14):
         root=directory/f'attempt-{i:02d}'
         if not root.exists():
             ensure(not any((directory/f'attempt-{j:02d}').exists() for j in range(i+1,14)),'HISTORY_GAP')
@@ -275,7 +404,7 @@ def generate_next(directory, *, credential, transport):
     with exclusive_execution(directory):
         plan=_plan(directory)
         history=_history(directory,plan)
-        index=len(history)+1
+        index=len(history)+_first_index(plan)
         ensure(index<=13,'BATCH_COMPLETE')
         package=_package(directory,plan,index)
         body=http_body(package)
@@ -283,6 +412,7 @@ def generate_next(directory, *, credential, transport):
         maximum=price(LIMITS[stage_name]['input'],LIMITS[stage_name]['output'])
         reserved=sum((Decimal(read_record(p)['usd']) for p in directory.glob('reservation-*.json')),Decimal(0))
         reserved += Decimal(plan['predecessor']['reserved_usd'] if plan.get('predecessor') else '0')
+        reserved += Decimal(plan['frozen_source']['charged_usd'] if plan.get('frozen_source') else '0')
         ensure(reserved+maximum<=CEILING,'BUDGET_EXHAUSTED')
         ensure(not (directory/f'reservation-{index:02d}.json').exists(),'UNRESOLVED_RESERVATION')
         manifest={'format':FORMAT,'run_id':f"{plan['batch_id']}-{index:02d}",'started_at':timestamp(),
@@ -293,7 +423,8 @@ def generate_next(directory, *, credential, transport):
                                        'plan_sha256':digest(plan),'request_sha256':digest(body)},
                   'world_config':plan['conditions'],
                   'provenance':{'source_hashes':plan['source_hashes'],'source_commit':plan['source_commit'],
-                                'runtime':plan['runtime'],'parent_evidence_hash':history[0]['verification']['evidence_hash'] if history else None,
+                                'runtime':plan['runtime'],'parent_evidence_hash':(plan['frozen_source']['map_evidence_hash']
+                                    if plan.get('frozen_source') else history[0]['verification']['evidence_hash'] if history else None),
                                 'purpose':'Preserve generated geography or one independently initialized nation'}}
         run=EvidenceRun(directory/f'attempt-{index:02d}',manifest)
         stage='save_request';attempted=False;actual=None

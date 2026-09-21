@@ -33,3 +33,21 @@ The follow-up uses a separate batch and version, preserving both prior map attem
 The completed twelve-territory map passed validation. The first nation response then failed its map-reference check: the provider adapter had sent the common map but omitted the expected reference hashes, which existed only in the local request package. The model's reported hash was therefore not a supplied identifier. This is an adapter defect, not evidence of a different world state or a leader judgement.
 
 A separate source revision now transmits the reference hashes in the nation context and pins the expected map hash with a singleton output-schema enum. The generation content, geography and acquisition rules are unchanged. Offline regression tests check the outgoing payload, metadata binding and unchanged local package. The failed RAW and its batch stay frozen; this correction does not retroactively accept the failed nation or initiate a paid retry.
+
+
+## Authorized nation-only continuation
+
+After explicit execution authorization, a new batch imports the accepted map
+by reference and starts with the first nation. No new map call is made. The
+original world ID, canonical map, catalogue, twelve persona references and
+assignment draw remain fixed; the failed nation's output is not an input.
+Every request verifies the frozen source and uses the corrected reference
+binding. Earlier RAW, failed status and acceptance records remain immutable.
+
+Prior completed requests with a verified usage receipt are settled in the new
+ledger at their reported usage estimate, retaining original reservations and
+invoice uncertainty. Unsettled requests keep their maximum reservation. The
+execution ceiling is unchanged. New calls continue to reserve their full
+maximum and stop after the first technical or unresolved content failure.
+This continuation initializes nations only; it does not run the simulation,
+add sea or transport routes, or publish the working evidence.

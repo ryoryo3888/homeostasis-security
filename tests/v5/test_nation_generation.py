@@ -8,7 +8,7 @@ from unittest.mock import patch
 import httpx
 from homeostasis_v4.evidence import read_record,verify
 from homeostasis_v5 import nation_generation as run
-from test_nation_generation_contract import catalog,geography
+from test_nation_generation_contract import catalog,geography,nation
 from test_nation_topology import from_map_fixture
 
 
@@ -108,6 +108,92 @@ class NationGenerationTests(unittest.TestCase):
         with patch.object(run,'_predecessor',return_value=too_large):
             with self.assertRaisesRegex(run.GenerationError,'BUDGET_NOT_SUFFICIENT'):
                 run.prepare(Path(self.tmp.name)/'over',catalog=catalog(),leader_references=self.leaders,reference_archive={},predecessor='synthetic')
+
+
+    def continuation(self):
+        self.invoke()
+        run.review_last(self.root,accepted=True,review_notes=['Synthetic fixture only'])
+        old=self.root
+        plan=read_record(old/'plan.json')
+        v=verify(old/'attempt-01')
+        source={'directory':str(old),'world_id':plan['world_id'],'map_evidence_hash':v['evidence_hash'],
+                'assignment':plan['assignment'],'leader_references':plan['leader_references'],
+                'catalog_sha256':plan['catalog_sha256'],'charged_usd':'0.057411',
+                'ledger':[{'basis':'synthetic-only'}]}
+        imported=patch.object(run,'_frozen_source',return_value=source)
+        imported.start();self.addCleanup(imported.stop)
+        self.root=Path(self.tmp.name)/'continuation'
+        run.prepare_continuation(self.root,frozen_source=old)
+        return old,source
+
+    def nation_transport(self,*,wrong_reference=False):
+        def handle(request):
+            self.requests.append(request)
+            body=json.loads(request.content)
+            if request.url.path.endswith(':countTokens'):
+                return httpx.Response(200,json={'totalTokens':100})
+            context=json.loads(body['contents'][0]['parts'][1]['text'])
+            record=nation()
+            record['world_id']=context['common_geography']['world_id']
+            record['nation_id']=context['own_nation_id']
+            slot=next(s for s in context['common_geography']['nation_slots'] if s['nation_id']==record['nation_id'])
+            record['geography_ref']={'map_sha256':'0'*64 if wrong_reference else context['input_references']['map_sha256'],
+                                     'territory_region_ids':slot['territory_region_ids']}
+            return httpx.Response(200,json={'candidates':[{'finishReason':'STOP','content':{'parts':[{'text':json.dumps(record)}]}}],
+                'usageMetadata':{'promptTokenCount':100,'candidatesTokenCount':200,'totalTokenCount':300}})
+        return httpx.MockTransport(handle)
+
+    def test_continuation_uses_only_frozen_map_and_twelve_nation_calls(self):
+        old,source=self.continuation()
+        raw_before={str(p):p.read_bytes() for p in old.rglob('*') if p.is_file()}
+        self.requests=[]
+        plan=read_record(self.root/'plan.json')
+        self.assertEqual(plan['assignment'],read_record(old/'plan.json')['assignment'])
+        self.assertEqual(plan['maximum_reserved_usd'],'1.31328')
+        for i in range(2,14):
+            result=run.generate_next(self.root,credential='SYNTHETIC_SECRET',transport=self.nation_transport())
+            self.assertEqual((result['status'],result['stage'],result['index']),('success','nation',i))
+            manifest=read_record(self.root/f'attempt-{i:02d}/manifest.json')
+            self.assertEqual(manifest['provenance']['parent_evidence_hash'],source['map_evidence_hash'])
+            self.assertEqual(json.loads(self.requests[-2].content)['generateContentRequest']['contents'],
+                             json.loads(self.requests[-1].content)['contents'])
+            context=json.loads(json.loads(self.requests[-1].content)['contents'][0]['parts'][1]['text'])
+            self.assertNotIn('leader_references',context)
+            self.assertNotIn('previous_nations',context)
+            run.review_last(self.root,accepted=True,review_notes=['Synthetic fixture only'])
+        self.assertEqual(len(self.requests),24)
+        self.assertFalse((self.root/'attempt-01').exists())
+        assignment=read_record(self.root/'assignment.json')
+        self.assertEqual(len(assignment['pairs']),12)
+        self.assertEqual({p['nation_id'] for p in assignment['pairs']},set(run.IDS))
+        with self.assertRaisesRegex(run.GenerationError,'BATCH_COMPLETE'):
+            run.generate_next(self.root,credential='SYNTHETIC_SECRET',transport=self.nation_transport())
+        self.assertEqual(len(self.requests),24)
+        self.assertEqual(raw_before,{str(p):p.read_bytes() for p in old.rglob('*') if p.is_file()})
+
+    def test_continuation_failure_never_retries_or_changes_frozen_map(self):
+        old,_=self.continuation();self.requests=[]
+        old_hash=verify(old/'attempt-01')['evidence_hash']
+        result=run.generate_next(self.root,credential='SYNTHETIC_SECRET',transport=self.nation_transport(wrong_reference=True))
+        self.assertEqual(result['error']['code'],'MAP_REFERENCE_MISMATCH')
+        self.assertEqual(result['index'],2)
+        with self.assertRaisesRegex(run.GenerationError,'BATCH_BLOCKED'):
+            run.generate_next(self.root,credential='SYNTHETIC_SECRET',transport=self.nation_transport())
+        self.assertEqual(len(self.requests),2)
+        self.assertEqual(verify(old/'attempt-01')['evidence_hash'],old_hash)
+
+    def test_continuation_cost_ceiling_includes_settled_prior_usage(self):
+        old,source=self.continuation()
+        with patch.object(run,'_frozen_source',return_value={**source,'charged_usd':'0.20'}):
+            with self.assertRaisesRegex(run.GenerationError,'BUDGET_NOT_SUFFICIENT'):
+                run.prepare_continuation(Path(self.tmp.name)/'too-expensive',frozen_source=old)
+
+    def test_continuation_pin_change_blocks_before_transport(self):
+        _,source=self.continuation();self.requests=[]
+        with patch.object(run,'_frozen_source',return_value={**source,'map_evidence_hash':'0'*64}):
+            with self.assertRaisesRegex(run.GenerationError,'FROZEN_SOURCE_CHANGED'):
+                run.generate_next(self.root,credential='SYNTHETIC_SECRET',transport=self.nation_transport())
+        self.assertEqual(self.requests,[])
 
     def test_input_over_limit_never_generates_or_retries(self):
         result=self.invoke(count=12001);self.assertEqual(result['status'],'failure')
