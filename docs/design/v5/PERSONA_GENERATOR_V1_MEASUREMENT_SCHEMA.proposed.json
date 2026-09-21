@@ -1,0 +1,835 @@
+{
+  "title": "Proposed life-first-v1 Phase 3 assessment schema 1 — not execution approved",
+  "description": "17軸による人物記述の事後LLM評定。心理検査の実測値ではない。総和・相関の制約なし。ratedとnull・根拠参照の整合性は実装前に別検証を用意する提案。",
+  "type": "object",
+  "properties": {
+    "assessments": {
+      "type": "object",
+      "properties": {
+        "empathy": {
+          "type": "object",
+          "description": "共感性：他者の立場や苦痛を感じ取り意識に留める傾向。救援を選ぶかとは別。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "initial_trust": {
+          "type": "object",
+          "description": "他者への初期信頼：情報が少ない相手の言葉や意図を信用する初期期待。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "vigilance": {
+          "type": "object",
+          "description": "警戒心：隠れた危険や裏付け不足に注意し、確認を求める傾向。初期信頼とは別軸。逆数や相関制約で自動決定しない。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "risk_tolerance": {
+          "type": "object",
+          "description": "リスク許容：見積もれる損失可能性を受け入れる傾向。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "ambiguity_tolerance": {
+          "type": "object",
+          "description": "不確実性耐性：確率や状況自体が分からない状態を抱えて判断できる傾向。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "instrumental_harm_tolerance": {
+          "type": "object",
+          "description": "非情さ：必要と考えた目的のため、認識した他者の損害を受け入れ得る傾向。加害の喜びや目標ではない。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "compromise_readiness": {
+          "type": "object",
+          "description": "妥協性：自分の要求の一部を調整できる傾向。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "retaliation_tendency": {
+          "type": "object",
+          "description": "報復傾向：被害や裏切りと認識した後、対抗的に応じる傾向。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "norm_commitment": {
+          "type": "object",
+          "description": "規範遵守：約束・規則そのものを判断理由として重んじる傾向。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "outcome_orientation": {
+          "type": "object",
+          "description": "結果重視：選択がもたらす帰結を比較し、判断理由とする傾向。全体利益最大化の命令ではない。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "future_orientation": {
+          "type": "object",
+          "description": "長期思考：遠い将来の影響を現在の判断に含める傾向。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "information_openness": {
+          "type": "object",
+          "description": "情報共有傾向：自分が知る情報を伝える基本姿勢。低値は秘匿寄り、高値は共有寄り。個別の例外は条件付き原則に残す。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "power_seeking": {
+          "type": "object",
+          "description": "権力欲：権限・影響力を得て維持すること自体への欲求。能力とは別。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "responsibility_ownership": {
+          "type": "object",
+          "description": "責任感：自分の役割や決定の結果を引き受けようとする傾向。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "national_interest_weight": {
+          "type": "object",
+          "description": "自国利益の重み：自国の利益・安全を判断に含める強さ。常に他国に優先する命令ではない。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "external_welfare_weight": {
+          "type": "object",
+          "description": "他国への配慮：他国の損失や生活を判断に含める強さ。自国利益と同時に高くてよい。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        "decision_speed": {
+          "type": "object",
+          "description": "意思決定速度：同程度の情報・判断機会で、低値は確認・熟慮を長く続け、高値は早く決断を確定する傾向。能力・正確さ・API応答時間ではない。状況差は人物の原則と根拠に残す。 完成済み人物記述の事後評定。人物生成への入力値ではない。",
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "評定できる場合0〜100。根拠不足はnull。0や50で補わない。"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "rated",
+                "insufficient_evidence"
+              ]
+            },
+            "supporting_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "渡された人生史・現在人物・判断原則の有効な参照。ratedは1件以上。"
+            },
+            "rationale": {
+              "type": "string",
+              "description": "記述からの評定理由。根拠不足ならその理由。人物に新たな経験を足さない。"
+            },
+            "counterevidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "supporting_refs",
+            "rationale",
+            "counterevidence_refs"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "empathy",
+        "initial_trust",
+        "vigilance",
+        "risk_tolerance",
+        "ambiguity_tolerance",
+        "instrumental_harm_tolerance",
+        "compromise_readiness",
+        "retaliation_tendency",
+        "norm_commitment",
+        "outcome_orientation",
+        "future_orientation",
+        "information_openness",
+        "power_seeking",
+        "responsibility_ownership",
+        "national_interest_weight",
+        "external_welfare_weight",
+        "decision_speed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "assessments"
+  ],
+  "additionalProperties": false
+}
