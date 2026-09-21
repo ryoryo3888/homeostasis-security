@@ -1,6 +1,6 @@
 {
   "document_type": "design_proposal_not_runtime_catalog",
-  "version": "v5-asset-reference-proposal-20260922-3",
+  "version": "v5-asset-reference-proposal-20260922-4",
   "state": "proposed_no_generation_use",
   "scope": "external price references and derived point quotes; not simulation RAW or an adopted action menu",
   "confirmed_basis": {
@@ -70,6 +70,62 @@
       "id": "missouri_hydroponics_2024",
       "url": "https://extension.missouri.edu/sites/default/files/legacy_media/wysiwyg/Extensiondata/Pub/pdf/agguides/agecon/g00695.pdf",
       "publication": "g695 October 2024 planning budget based on April 2024 forecasts, Tables 1-3",
+      "source_document_sha256": null,
+      "archive_status": "URL and extracted values only; original source file not archived"
+    },
+    {
+      "id": "deere_5075e_2024",
+      "url": "https://www.deere.com/assets/pdfs/region-4/industries/government-and-military-sales/contracts/price-pages/agricultural/Tractors_5050E_5060E_5067E_5075E_01Feb2024.pdf",
+      "publication": "2024-02-01 manufacturer price and specification list; 5075E open operator station, code 08C0LV; PDF pages 89-91, 93, 98-99",
+      "source_document_sha256": null,
+      "archive_status": "URL and extracted values only; original source file not archived"
+    },
+    {
+      "id": "pilot_point_tank_2024",
+      "url": "https://www.pilotpointtx.gov/Blog.aspx?tag=burks+street+water+tower",
+      "publication": "2024-04-25 municipal project report; 2024-02-08 bid acceptance and projected construction cost",
+      "source_document_sha256": null,
+      "archive_status": "URL and extracted values only; original source file not archived"
+    },
+    {
+      "id": "chatham_cat_bid_2024",
+      "url": "https://cms.chathamcountyga.gov/api/assets/purchasing-website/adb0f295-c62f-40da-9b1c-8a4a71f750a0?download=0",
+      "publication": "2024-01-11 bid tabulation 23-0160-4; Yancey CAT D150GC generator set and freight",
+      "source_document_sha256": null,
+      "archive_status": "URL and extracted values only; original source file not archived"
+    },
+    {
+      "id": "cat_d150gc_spec_2021",
+      "url": "https://www.toromontpowersystems.com/docs/librariesprovider4/gc-contractor-serie---specs-2021/lehe2665-01_d150-gc.pdf",
+      "publication": "Caterpillar LEHE2665-01, January 2021; manufacturer-authored specification hosted by Toromont Power Systems; not a 2024 price source",
+      "source_document_sha256": null,
+      "archive_status": "URL and extracted values only; original source file not archived"
+    },
+    {
+      "id": "yamaha_wlx322_2024",
+      "url": "https://www.yamaha.com/ja/news_release/files/news/24011701/pdf/2401170101.pdf",
+      "publication": "2024-01-17 manufacturer release; WLX322 price excluding tax and product specifications",
+      "source_document_sha256": null,
+      "archive_status": "URL and extracted values only; original source file not archived"
+    },
+    {
+      "id": "unicef_bcg_2024",
+      "url": "https://www.unicef.org/supply/media/23211/file/BCG-vaccine-prices-11032025.pdf",
+      "publication": "2025-03-11 UNICEF contract price table; 2024 Japan BCG Laboratory, 20-dose presentation, FCA price per dose",
+      "source_document_sha256": null,
+      "archive_status": "URL and extracted values only; original source file not archived"
+    },
+    {
+      "id": "isuzu_elf_2t_2024",
+      "url": "https://www.isuzu-global.com/ja/newsroom/20240122_1.html",
+      "publication": "2024-01-22 manufacturer release; ELF 2TG-NJR88AF wooden flat-body specification and price excluding tax",
+      "source_document_sha256": null,
+      "archive_status": "URL and extracted values only; original source file not archived"
+    },
+    {
+      "id": "tjjd_body_armor_lot_2024",
+      "url": "https://www2.tjjd.texas.gov/procurementfiles/PURCHASE%20ORDERS/Central%20Office%20%20Puchase%20Orders/FY24/64400_24-0006655_1.pdf",
+      "publication": "FY2024 Texas Juvenile Justice Department purchase order 64400_24-0006655_1; USD 1030 per LOT; exact publication date unverified",
       "source_document_sha256": null,
       "archive_status": "URL and extracted values only; original source file not archived"
     }
@@ -423,7 +479,7 @@
     "handling_proposal": "Preserve original proposal and identifiers. Map only when specification equivalence is established. If no common specification/price exists, keep unresolved and stop; never invent free capacity, replace the proposal, discard it, or reroll.",
     "unknown_price": null,
     "unknown_effect": null,
-    "handling_adopted": false
+    "handling_adopted": true
   },
   "coverage_gaps_ja": [
     "食料生産設備・加工",
@@ -515,6 +571,282 @@
         "annual_heating_gas": "1166 thousand cubic feet assumed"
       },
       "unresolved_ja": "水量・人時・1株重量・栄養は未確定。年費用は取得費と別。モデル仮定を実測能力やV5の保証生産量にしない。",
+      "price_adopted": false,
+      "physical_spec_adopted": false,
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/deere_5075e_open_station_2wd",
+      "label_ja": "John Deere 5075E開放運転席・2WD基本機",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "tractor"
+      },
+      "reference_cost": {
+        "value": "35041",
+        "currency": "USD",
+        "year": 2024,
+        "source_id": "deere_5075e_2024",
+        "kind": "manufacturer_base_machine_list_price_not_transaction"
+      },
+      "derived_point_equivalent": {
+        "value": "0.0035041",
+        "formula": "reference_cost_usd / 10000000",
+        "meaning": "arithmetic reference only, not an adopted purchase quote"
+      },
+      "source_scope_and_assumptions": {
+        "included_configuration": "08C0LV; open operator station; 2WD; 9F/3R SyncShuttle; 540 rpm PTO; base tires",
+        "engine_power_kW": "55.0",
+        "pto_power_kW": "45.0",
+        "rated_engine_speed_rpm": "2100",
+        "fuel": "diesel",
+        "fuel_tank_capacity_litres": "74",
+        "fuel_consumption_litres_per_hour": null,
+        "annual_operating_cost": null,
+        "agricultural_implements_included": false,
+        "working_area_per_day": null,
+        "food_output_tonnes_per_day": null
+      },
+      "unresolved_ja": "メーカー定価であり実購入額ではない。税・運賃等の取得範囲、燃料消費、人員、保守年額、作業機・作業幅・速度・土壌条件は未確定。74Lは燃料タンク容量で消費量ではない。出力kWを作業面積・食料収量へ変換しない。",
+      "price_adopted": false,
+      "physical_spec_adopted": false,
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/pilot_point_elevated_water_tank",
+      "label_ja": "Pilot Point市・高架貯水タンク建設案件",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "construction_project"
+      },
+      "reference_cost": {
+        "value": "6540000",
+        "currency": "USD",
+        "year": 2024,
+        "source_id": "pilot_point_tank_2024",
+        "kind": "municipal_projected_construction_cost_with_bid_accepted_not_final_payment"
+      },
+      "derived_point_equivalent": {
+        "value": "0.654",
+        "formula": "reference_cost_usd / 10000000",
+        "meaning": "arithmetic reference only, not an adopted purchase quote"
+      },
+      "source_scope_and_assumptions": {
+        "storage_capacity_us_gallons": "1000000",
+        "derived_storage_capacity_cubic_metres": "3785.411784",
+        "storage_conversion_formula": "1000000 * 0.003785411784",
+        "quantity_type": "storage_stock_capacity_not_production_flow",
+        "separate_well_renovations": "seven wells renovated by municipal staff; not part of the tank construction bid as reported",
+        "pump_and_treatment_scope": null,
+        "water_source": null,
+        "electricity_use": null,
+        "staffing": null,
+        "annual_operating_cost": null
+      },
+      "unresolved_ja": "公表予定建設総額であり完成後の確定支払額ではない。設計・造成・付帯工事の費目境界、ポンプ・送水量・揚程・処理・水源・電力・人員・保守は未確定。貯蔵容量を日産量やTURN産出量にしない。同規模の普遍単価や他規模への比例単価として採用しない。",
+      "price_adopted": false,
+      "physical_spec_adopted": false,
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/cat_d150gc_standby_generator",
+      "label_ja": "CAT D150GCディーゼル非常用発電機一式",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "generator_package"
+      },
+      "reference_cost": {
+        "value": "79900",
+        "currency": "USD",
+        "year": 2024,
+        "source_id": "chatham_cat_bid_2024",
+        "kind": "public_bid_quote_with_freight_not_award_or_payment"
+      },
+      "derived_point_equivalent": {
+        "value": "0.00799",
+        "formula": "reference_cost_usd / 10000000",
+        "meaning": "arithmetic reference only, not an adopted purchase quote"
+      },
+      "source_scope_and_assumptions": {
+        "quoted_equipment_cost_usd": "78900",
+        "quoted_freight_usd": "1000",
+        "cost_sum_formula": "78900 + 1000",
+        "included_scope": "generator, enclosure, fuel tank, automatic transfer switch and freight",
+        "standby_rating_kW": "150",
+        "fuel": "diesel",
+        "historical_model_specification": {
+          "source_id": "cat_d150gc_spec_2021",
+          "year": 2021,
+          "match_to_2024_bid_configuration_verified": false,
+          "full_load_fuel_consumption_litres_per_hour": "37.8",
+          "derived_full_load_fuel_litres_per_kWh": "0.252",
+          "derived_fuel_formula": "37.8 / 150",
+          "rating_type": "standby_not_continuous",
+          "turn_continuous_output_adopted": false
+        },
+        "installation_scope": null,
+        "annual_operating_cost": null
+      },
+      "unresolved_ja": "入札見積であり落札・支払実績ではない。2021年同型性能資料と2024年調達構成の最終照合、据付・配線・接地の包含範囲、燃料単価・保守・人員・稼働時間は未確定。全負荷の燃料係数を全負荷率へ適用せず、非常用150kWを720時間/TURNの常用供給へ転用しない。",
+      "price_adopted": false,
+      "physical_spec_adopted": false,
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/yamaha_wlx322",
+      "label_ja": "Yamaha WLX322無線LAN機器",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "access_point"
+      },
+      "reference_cost": {
+        "value": "85000",
+        "currency": "JPY",
+        "year": 2024,
+        "source_id": "yamaha_wlx322_2024",
+        "kind": "manufacturer_list_price_excluding_tax_not_transaction"
+      },
+      "derived_point_equivalent": {
+        "value": null,
+        "exact_fraction": {
+          "numerator": "85",
+          "denominator": "1514551"
+        },
+        "approximate_value": "0.00005612224348998482",
+        "formula": "85000 / 151.4551 / 10000000",
+        "fx_reference": {
+          "jpy_per_usd": "151.4551",
+          "source_id": "fed_fx_2024",
+          "year": 2024
+        },
+        "rounding": "approximation is display only; accounting rounding not adopted",
+        "meaning": "arithmetic reference only, not an adopted purchase quote"
+      },
+      "source_scope_and_assumptions": {
+        "maximum_connected_terminals": "170",
+        "maximum_lan_link_rate_Gbps": "2.5",
+        "maximum_power_consumption_W": "16",
+        "power_supply_scope": null,
+        "upstream_connection": null,
+        "communication_contract_cost": null,
+        "installation_scope": null,
+        "annual_operating_cost": null
+      },
+      "unresolved_ja": "メーカー税別価格。電源・上位回線・通信契約・施工は別途確認が必要。最大端末数・LAN規格速度は実効速度、同時利用成果、国家間通信網の能力を意味しない。",
+      "price_adopted": false,
+      "physical_spec_adopted": false,
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/bcg_vaccine_10000_doses",
+      "label_ja": "BCGワクチン10,000回分",
+      "reference_quantity": {
+        "value": "10000",
+        "unit": "dose"
+      },
+      "reference_cost": {
+        "value": "1955",
+        "currency": "USD",
+        "year": 2024,
+        "source_id": "unicef_bcg_2024",
+        "kind": "contract_unit_price_times_reference_quantity_not_purchase_record"
+      },
+      "derived_point_equivalent": {
+        "value": "0.0001955",
+        "formula": "reference_cost_usd / 10000000",
+        "meaning": "arithmetic reference only, not an adopted purchase quote"
+      },
+      "source_scope_and_assumptions": {
+        "manufacturer": "Japan BCG Laboratory",
+        "contract_unit_price_usd_per_dose": "0.1955",
+        "cost_sum_formula": "0.1955 * 10000",
+        "presentation_doses": "20",
+        "trade_terms": "FCA",
+        "cold_chain_scope": null,
+        "administration_equipment_scope": null,
+        "clinical_staffing": null,
+        "operating_cost": null,
+        "treatment_or_immunization_outcome": null
+      },
+      "unresolved_ja": "2024年契約単価の算術換算であり10,000回分の実購入記録ではない。FCA条件の外の輸送・保冷・器材・接種人員等は別途定義が必要。在庫回数を治癒数や免疫獲得数へ直結しない。",
+      "price_adopted": false,
+      "physical_spec_adopted": false,
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/isuzu_elf_2tg_njr88af_2t",
+      "label_ja": "いすゞエルフ2TG-NJR88AF木製平ボディ",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "vehicle"
+      },
+      "reference_cost": {
+        "value": "5647000",
+        "currency": "JPY",
+        "year": 2024,
+        "source_id": "isuzu_elf_2t_2024",
+        "kind": "manufacturer_published_price_excluding_tax_not_transaction"
+      },
+      "derived_point_equivalent": {
+        "value": null,
+        "exact_fraction": {
+          "numerator": "5647",
+          "denominator": "1514551"
+        },
+        "approximate_value": "0.003728497752799344",
+        "formula": "5647000 / 151.4551 / 10000000",
+        "fx_reference": {
+          "jpy_per_usd": "151.4551",
+          "source_id": "fed_fx_2024",
+          "year": 2024
+        },
+        "rounding": "approximation is display only; accounting rounding not adopted",
+        "meaning": "arithmetic reference only, not an adopted purchase quote"
+      },
+      "source_scope_and_assumptions": {
+        "model": "2TG-NJR88AF",
+        "body": "wooden flat body",
+        "maximum_payload_kg": "2000",
+        "gross_vehicle_mass_kg": "4455",
+        "passenger_capacity": "3",
+        "fuel_consumption_for_this_spec": null,
+        "annual_operating_cost": null,
+        "transport_output_per_turn": null
+      },
+      "unresolved_ja": "メーカー税別価格。運転・燃料・道路・積卸し・距離・整備条件は未確定。価格掲載仕様と別仕様の燃費を混ぜず、積載上限をTURN配送量へ直結しない。",
+      "price_adopted": false,
+      "physical_spec_adopted": false,
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/tjjd_body_armor_unresolved_lot",
+      "label_ja": "防弾ベスト購入注文書の内訳未確認LOT",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "LOT_as_reported"
+      },
+      "reference_cost": {
+        "value": "1030",
+        "currency": "USD",
+        "year": 2024,
+        "source_id": "tjjd_body_armor_lot_2024",
+        "kind": "purchase_order_price_per_unresolved_lot_not_per_vest"
+      },
+      "derived_point_equivalent": {
+        "value": "0.000103",
+        "formula": "reference_cost_usd / 10000000",
+        "meaning": "arithmetic reference only, not an adopted purchase quote"
+      },
+      "source_scope_and_assumptions": {
+        "lot_contents": null,
+        "vest_quantity_per_lot": null,
+        "model": null,
+        "protection_level": null,
+        "physical_capability": null,
+        "operating_cost": null,
+        "evaluation_status": "unresolved_hold"
+      },
+      "unresolved_ja": "LOTの内訳・型式・防護等級が不足している。1着の価格として採用せず、数量・防護能力を推測や0で補わない。未評価のまま保留する。",
       "price_adopted": false,
       "physical_spec_adopted": false,
       "executable": false
