@@ -176,6 +176,14 @@ th,td{border-color:rgba(91,220,247,.16)!important}
 #homeostasisResearchLayer .rn-turns::before{flex:0 0 100%}
 #homeostasisResearchLayer .rn-turns>.rn-turn{flex:1 1 205px}
 </style>
+
+<style id="bottom-version-nav-style">
+.bottom-version-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;width:100%;margin:28px auto 12px;padding:16px 0 4px;border-top:1px solid rgba(103,232,249,.16)}
+.bottom-version-nav a{padding:8px 14px;border:1px solid #28445f;border-radius:8px;background:rgba(8,29,44,.72);color:#b9ced7;text-decoration:none;font-size:12px;font-weight:700;line-height:1.2;transition:border-color .15s,color .15s,background .15s}
+.bottom-version-nav a:hover,.bottom-version-nav a:focus-visible{border-color:#67e8f9;color:#eaffff}
+.bottom-version-nav a[aria-current="page"]{background:#0e4556;color:#eaffff;border-color:#67e8f9;box-shadow:0 0 14px rgba(103,232,249,.16)}
+@media(max-width:600px){.bottom-version-nav{gap:6px}.bottom-version-nav a{padding:7px 9px;font-size:11px}}
+</style>
 </head>
 <body>
 <main class="shell">
@@ -435,5 +443,6 @@ function run(){if(enhance())return;let i=0,t=setInterval(()=>{if(enhance()||++i>
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',run):run();
 })();
 </script>
+<nav class="version-switch bottom-version-nav" aria-label="ページ下部 バージョン切替"><a href="dashboard_v1.html">V1：二国間</a><a href="dashboard_v2.html" aria-current="page">V2：地球規模</a><a href="results/v2-five-runs/index.html">V3：自由対話</a><a href="dashboard_v4.html">V4：相互依存</a></nav>
 </body>
 </html>

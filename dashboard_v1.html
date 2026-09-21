@@ -384,6 +384,14 @@ th,td{border-color:rgba(91,220,247,.16)!important}
 .origin .impact strong{font-size:0!important}.origin .impact strong::after{content:"年間8,000tの米生産能力を喪失（V1から引き継いだ初期被害）";font-size:14px;line-height:1.55}.origin::after{content:"実験条件（人が設定）　B国が「農地復旧」を選ぶと、1ターンにつき2,000t回復\A AIの判断　B国は農地復旧を継続\A 観測結果　8,000 → 6,000 → 4,000 → 2,000 → 0　／　4ターン目に復旧";white-space:pre-line;grid-column:1/-1;display:block;background:#071b2a;color:#dce9ee;padding:10px 14px;border-top:1px solid rgba(103,232,249,.16);font-size:12px;line-height:1.7}.origin::after:first-line{color:#67e8f9;font-weight:800}.rn-chain::before{content:"実験条件（人が設定）　初期被害：年間生産能力8,000t喪失 ／ B国が「農地復旧」を選ぶと1ターン2,000t回復";display:block;text-align:left;padding:9px 11px;margin-bottom:5px;border-left:3px solid #fbbf24;background:rgba(71,52,11,.28);color:#f7e7ad;font-size:11px;line-height:1.6}.rn-chain::after{content:"↑ ここまでが、AIの判断と相互作用から実際に観測された流れです。";display:block;text-align:left;padding:8px 10px;margin-top:5px;border-left:3px solid #34d399;background:rgba(8,63,51,.25);color:#bdf5df;font-size:11px}.rn-metrics::before{content:"観測結果";grid-column:1/-1;color:#34d399;font-size:10px;font-weight:800;letter-spacing:.12em}.rn-turns::before{content:"AIの判断とターンごとの差分";grid-column:1/-1;color:#d88cff;font-size:10px;font-weight:800;letter-spacing:.12em}.rn-say::before{content:"観測から分かったこと／まだ確かめていないこと";grid-column:1/-1;color:#67e8f9;font-size:10px;font-weight:800;letter-spacing:.1em}
 @media(max-width:760px){.rn-intro,.rn-say{grid-template-columns:1fr}.rn-metrics{grid-template-columns:1fr}.rn-findings{grid-template-columns:1fr}.rn-compare{grid-template-columns:1fr}.rn-compare i{padding:4px}.rn-bridge{grid-template-columns:90px 1fr}.research-narrative{padding:14px!important}.origin::after{font-size:11px}}
 </style>
+
+<style id="bottom-version-nav-style">
+.bottom-version-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;width:100%;margin:28px auto 12px;padding:16px 0 4px;border-top:1px solid rgba(103,232,249,.16)}
+.bottom-version-nav a{padding:8px 14px;border:1px solid #28445f;border-radius:8px;background:rgba(8,29,44,.72);color:#b9ced7;text-decoration:none;font-size:12px;font-weight:700;line-height:1.2;transition:border-color .15s,color .15s,background .15s}
+.bottom-version-nav a:hover,.bottom-version-nav a:focus-visible{border-color:#67e8f9;color:#eaffff}
+.bottom-version-nav a[aria-current="page"]{background:#0e4556;color:#eaffff;border-color:#67e8f9;box-shadow:0 0 14px rgba(103,232,249,.16)}
+@media(max-width:600px){.bottom-version-nav{gap:6px}.bottom-version-nav a{padding:7px 9px;font-size:11px}}
+</style>
 </head><body><main>
 
 <header class="topbar">
@@ -770,4 +778,5 @@ function run(){if(enhance())return;let i=0,t=setInterval(()=>{if(enhance()||++i>
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',run):run();
 })();
 </script>
+<nav class="version-switch bottom-version-nav" aria-label="ページ下部 バージョン切替"><a href="dashboard_v1.html" aria-current="page">V1：二国間</a><a href="dashboard_v2.html">V2：地球規模</a><a href="results/v2-five-runs/index.html">V3：自由対話</a><a href="dashboard_v4.html">V4：相互依存</a></nav>
 </body></html>
