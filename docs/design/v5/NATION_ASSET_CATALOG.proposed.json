@@ -1,6 +1,6 @@
 {
   "document_type": "design_proposal_not_runtime_catalog",
-  "version": "v5-asset-reference-proposal-20260922-1",
+  "version": "v5-asset-reference-proposal-20260922-2",
   "state": "proposed_no_generation_use",
   "scope": "external price references and derived point quotes; not simulation RAW or an adopted action menu",
   "confirmed_basis": {
@@ -9,7 +9,19 @@
     "usd_per_point": "10000000",
     "points_per_nation": "1000",
     "initial_reference_usd_per_nation": "10000000000",
-    "nation_count": 12
+    "nation_count": 12,
+    "unspent_point_policy": {
+      "decision": "retain_as_nation_owned_point_asset",
+      "full_spending_required": false,
+      "unspent_balance_forfeited": false,
+      "initial_accounting_identity": "acquired_asset_points + retained_point_balance = 1000",
+      "record_separately_from_purchased_holdings": true,
+      "balance_source": "AssetEstimate.unused_points only when status == within_budget",
+      "unknown_invalid_or_over_budget": "do not finalize a nation balance",
+      "world_state_connection": "planned_not_implemented",
+      "usage_rules_status": "undecided; ownership is adopted, purchase/transfer/exchange/interest/value-change/visibility rules are not",
+      "reference_usd_convertibility": "initial valuation scale only; no real-currency redemption rule"
+    }
   },
   "sources": [
     {
