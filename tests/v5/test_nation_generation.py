@@ -1,0 +1,124 @@
+"""Transport and evidence checks with synthetic fixtures, never live model calls."""
+import base64
+import json
+from pathlib import Path
+import tempfile
+import unittest
+from unittest.mock import patch
+import httpx
+from homeostasis_v4.evidence import read_record,verify
+from homeostasis_v5 import nation_generation as run
+from test_nation_generation_contract import catalog,geography
+
+
+class NationGenerationTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
+        self.root=Path(self.tmp.name)/'batch'
+        self.patch=patch.object(run,'source_hashes',return_value={'synthetic.py':'a'*64})
+        self.patch.start();self.addCleanup(self.patch.stop)
+        self.leaders=[{'leader_id':f'leader-{i:03d}','freeze_sha256':'a'*64} for i in range(1,13)]
+        run.prepare(self.root,catalog=catalog(),leader_references=self.leaders,reference_archive={'synthetic':True})
+        self.requests=[]
+
+    def transport(self,*,count=100,mode='success'):
+        def handle(request):
+            self.requests.append(request)
+            body=json.loads(request.content)
+            if request.url.path.endswith(':countTokens'):
+                return httpx.Response(200,json={'totalTokens':count})
+            if mode=='timeout':raise httpx.ReadTimeout('DO_NOT_SERIALIZE_SECRET',request=request)
+            if mode=='http':return httpx.Response(400,json={'error':{'code':400,'message':'synthetic schema error'}})
+            context=json.loads(body['contents'][0]['parts'][1]['text'])
+            m=geography();m['world_id']=context['world_id']
+            text=json.dumps(m) if mode!='invalid_json' else '{bad'
+            if mode=='incomplete':reason='MAX_TOKENS'
+            else:reason='STOP'
+            return httpx.Response(200,json={'candidates':[{'finishReason':reason,'content':{'parts':[{'text':text}]}}],
+                'usageMetadata':{'promptTokenCount':100,'candidatesTokenCount':200,'thoughtsTokenCount':50,'totalTokenCount':350},
+                'modelVersion':run.MODEL,'responseId':'synthetic-response'})
+        return httpx.MockTransport(handle)
+
+    def invoke(self,**kwargs):
+        return run.generate_next(self.root,credential='SYNTHETIC_SECRET',transport=self.transport(**kwargs))
+
+    def test_provider_constant_is_equivalent_singleton_enum(self):
+        schema={"type":"object","properties":{"coordinate_system":{"const":"planar_cartesian_km"}}}
+        converted=run.provider_schema(schema)
+        self.assertEqual(converted["properties"]["coordinate_system"],{"type":"string","enum":["planar_cartesian_km"]})
+        self.assertEqual(schema["properties"]["coordinate_system"],{"const":"planar_cartesian_km"})
+
+    def test_count_matches_wire_generation_and_review_blocks_successor(self):
+        result=self.invoke();self.assertEqual(result['status'],'success')
+        self.assertTrue(result['content_review_required'])
+        counted=json.loads(self.requests[0].content)['generateContentRequest']
+        model=counted.pop('model');self.assertEqual(model,'models/'+run.MODEL)
+        self.assertEqual(run.wire_bytes(counted),self.requests[1].content)
+        saved=read_record(self.root/'attempt-01/RAW/generation.wire.json')
+        self.assertEqual(base64.b64decode(saved['body_base64']),self.requests[1].content)
+        alltext=''.join(p.read_text() for p in self.root.rglob('*.json'))
+        self.assertNotIn('SYNTHETIC_SECRET',alltext)
+        with self.assertRaisesRegex(run.GenerationError,'CONTENT_REVIEW_REQUIRED'):self.invoke()
+        self.assertEqual(len(self.requests),2)
+        self.assertEqual(verify(self.root/'attempt-01')['status'],'success')
+
+    def test_input_over_limit_never_generates_or_retries(self):
+        result=self.invoke(count=12001);self.assertEqual(result['status'],'failure')
+        self.assertFalse(result['error']['generation_attempted']);self.assertEqual(len(self.requests),1)
+        self.assertFalse(list(self.root.glob('reservation-*.json')))
+        with self.assertRaisesRegex(run.GenerationError,'BATCH_BLOCKED'):self.invoke()
+        self.assertEqual(len(self.requests),1)
+
+    def test_http_failure_preserves_response_and_reservation(self):
+        result=self.invoke(mode='http');self.assertEqual(result['error']['code'],'GENERATION_HTTP_ERROR')
+        raw=read_record(self.root/'attempt-01/RAW/generation.response.json')
+        self.assertEqual(raw['status'],400)
+        self.assertIn(b'synthetic schema error',base64.b64decode(raw['body_base64']))
+        self.assertTrue((self.root/'reservation-01.json').exists())
+        with self.assertRaisesRegex(run.GenerationError,'BATCH_BLOCKED'):self.invoke()
+        self.assertEqual(len(self.requests),2)
+
+    def test_timeout_records_type_not_exception_secret_and_keeps_reservation(self):
+        result=self.invoke(mode='timeout');self.assertEqual(result['error']['code'],'TRANSPORT_TIMEOUT')
+        self.assertEqual(result['error']['exception_type'],'ReadTimeout')
+        self.assertTrue((self.root/'reservation-01.json').exists())
+        self.assertNotIn('DO_NOT_SERIALIZE_SECRET',''.join(p.read_text() for p in self.root.rglob('*.json')))
+        self.assertEqual(verify(self.root/'attempt-01')['status'],'failure')
+
+    def test_invalid_or_incomplete_output_preserves_received_bytes(self):
+        for mode in ('invalid_json','incomplete'):
+            if mode=='incomplete':
+                self.root=Path(self.tmp.name)/'batch2'
+                run.prepare(self.root,catalog=catalog(),leader_references=self.leaders,reference_archive={})
+            result=self.invoke(mode=mode)
+            self.assertEqual(result['status'],'failure')
+            self.assertTrue((self.root/'attempt-01/RAW/generation.response.json').exists())
+            self.assertTrue((self.root/'attempt-01/RAW/receipt.json').exists())
+
+    def test_save_failure_sends_nothing(self):
+        with patch.object(run.EvidenceRun,'write',side_effect=OSError('synthetic full disk')):
+            with self.assertRaises(OSError):self.invoke()
+        self.assertEqual(self.requests,[])
+        self.assertEqual(verify(self.root/'attempt-01')['status'],'unfinalized')
+        with self.assertRaisesRegex(run.GenerationError,'PRIOR_ATTEMPT_NOT_SUCCESSFUL'):self.invoke()
+
+    def test_fourteenth_call_is_refused(self):
+        with patch.object(run,'_history',return_value=[{}]*13):
+            with self.assertRaisesRegex(run.GenerationError,'BATCH_COMPLETE'):self.invoke()
+        self.assertEqual(self.requests,[])
+
+    def test_reservation_ceiling_has_no_cli_override(self):
+        plan=read_record(self.root/'plan.json')
+        self.assertEqual(plan['maximum_reserved_usd'],'1.36836')
+        self.assertEqual(plan['usd_stop_limit'],'1.50')
+        self.assertEqual(plan['max_generation_calls'],13)
+        self.assertEqual(plan['max_count_calls'],13)
+
+    def test_assignment_reproducible_and_all_twelve_used_once(self):
+        ids=[r['leader_id'] for r in self.leaders]
+        first=run.permutation('ab'*32,ids)
+        self.assertEqual(first,run.permutation('ab'*32,ids))
+        self.assertEqual(set(first),set(ids));self.assertEqual(ids,[r['leader_id'] for r in self.leaders])
+
+
+if __name__=='__main__':unittest.main()
