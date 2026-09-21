@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>HOMEOSTASIS SECURITY — Research Evolution</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#030b14;--panel:#071827;--panel-2:#0a2232;--ink:#edf7fb;
+  --muted:#9db3be;--line:rgba(103,232,249,.2);--cyan:#67e8f9;
+  --pink:#d88cff;--gold:#fbbf24;--green:#34d399;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+  radial-gradient(circle at 50% -12%,#15374d 0,transparent 46%),
+  radial-gradient(circle at 85% 30%,rgba(126,80,170,.12),transparent 32%),
+  var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Segoe UI",sans-serif;
+  line-height:1.7}
+a{color:var(--cyan);text-underline-offset:4px}
+a:hover{color:#d9fbff}
+.shell{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:22px 0 70px}
+.top{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(8,29,44,.96),rgba(3,15,25,.96));padding:28px 30px 24px;box-shadow:0 18px 55px rgba(0,0,0,.24)}
+.eyebrow{color:var(--cyan);font:800 11px/1.2 ui-monospace,SFMono-Regular,monospace;letter-spacing:.18em}
+h1{font-size:clamp(32px,6vw,64px);line-height:1.08;letter-spacing:.025em;margin:8px 0 12px}
+.lead{max-width:780px;color:#c7d9df;font-size:clamp(15px,2vw,19px);margin:0}
+.sublead{max-width:760px;color:var(--muted);font-size:13px;margin:10px 0 0}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.nav a{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:9px;background:rgba(8,29,44,.65);padding:7px 11px;color:#c8e6ed;font-size:12px;font-weight:800;text-decoration:none}
+.nav a:hover,.nav a:focus-visible{border-color:var(--cyan);background:#0d3b4d;outline:none}
+.path{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:10px;margin:26px 0 4px}
+.path-item{border:1px solid var(--line);border-radius:11px;background:rgba(6,24,38,.72);padding:13px 14px}
+.path-item small{display:block;color:var(--muted);font:800 10px/1.3 ui-monospace,SFMono-Regular,monospace;letter-spacing:.12em}
+.path-item b{display:block;margin-top:4px;font-size:14px}
+.path-item.path-future{border-color:rgba(216,140,255,.34);background:rgba(39,20,53,.35)}
+.path-arrow{color:var(--cyan);font-size:22px;text-align:center}
+main{display:grid;gap:16px;margin-top:18px}
+.section{border:1px solid var(--line);border-radius:16px;background:rgba(5,20,33,.82);padding:25px 26px}
+.section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:18px}
+.section-index{color:var(--cyan);font:800 11px/1.3 ui-monospace,SFMono-Regular,monospace;letter-spacing:.14em}
+h2{font-size:clamp(22px,3vw,32px);line-height:1.2;margin:4px 0 0}
+h3{font-size:17px;line-height:1.35;margin:0 0 7px}
+p{margin:8px 0;color:#c8d9df;font-size:14px}
+.note{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.card{border:1px solid rgba(103,232,249,.16);border-radius:11px;background:linear-gradient(165deg,rgba(8,31,47,.9),rgba(5,19,31,.86));padding:16px}
+.card .tag{color:var(--cyan);font:800 10px/1.3 ui-monospace,SFMono-Regular,monospace;letter-spacing:.12em}
+.card p{font-size:13px;margin-top:8px}
+.card a{font-size:12px;font-weight:800}
+.accent-pink{border-color:rgba(216,140,255,.3)}
+.accent-pink .tag{color:var(--pink)}
+.accent-gold{border-color:rgba(251,191,36,.32)}
+.accent-gold .tag{color:var(--gold)}
+.accent-green{border-color:rgba(52,211,153,.3)}
+.accent-green .tag{color:var(--green)}
+.direction{display:flex;align-items:center;justify-content:center;gap:16px;border:1px solid rgba(216,140,255,.25);border-radius:12px;background:linear-gradient(90deg,rgba(8,32,49,.9),rgba(39,18,53,.42),rgba(8,32,49,.9));padding:18px;margin-top:16px}
+.direction strong{font-size:20px;letter-spacing:.08em;color:#f1d9ff}
+.direction span{color:var(--muted);font-size:12px}
+.evidence-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.evidence-item{border-left:3px solid var(--cyan);background:rgba(7,27,42,.68);padding:13px 15px}
+.evidence-item h3{font-size:14px}
+.evidence-item p{font-size:12px;margin:5px 0}
+.metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.metric{border:1px solid rgba(103,232,249,.15);border-radius:10px;background:#061a2a;padding:13px}
+.metric b{display:block;color:var(--cyan);font-size:23px;line-height:1.2}
+.metric span{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.update-card{border:1px solid rgba(103,232,249,.18);border-radius:12px;background:rgba(6,25,40,.8);padding:18px}
+.update-card h3{color:#e8fbff}
+.update-card .result{border-left:3px solid var(--cyan);padding:9px 12px;margin:12px 0;background:rgba(12,57,70,.25);color:#d8f5f8;font-size:13px}
+.update-card .caution{border-left:3px solid var(--gold);padding:9px 12px;margin-top:11px;background:rgba(78,54,8,.2);color:#f4e5b2;font-size:12px}
+.chain{display:grid;grid-template-columns:repeat(3,1fr);align-items:stretch;gap:8px;margin:14px 0}
+.chain div{border:1px solid rgba(103,232,249,.18);border-radius:9px;background:#061a2a;text-align:center;padding:11px 9px;font-size:12px}
+.chain div strong{display:block;color:var(--cyan);font-size:15px;margin-bottom:4px}
+.future{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.future-card{border:1px solid rgba(216,140,255,.28);border-radius:13px;background:linear-gradient(150deg,rgba(39,19,54,.58),rgba(8,24,39,.8));padding:20px}
+.future-card .label{color:var(--pink);font:800 10px/1.3 ui-monospace,SFMono-Regular,monospace;letter-spacing:.14em}
+.future-card h3{font-size:21px;margin-top:7px}
+.planned{display:inline-block;color:#f3dbff;border:1px solid rgba(216,140,255,.38);border-radius:999px;padding:2px 8px;font:800 10px ui-monospace,SFMono-Regular,monospace}
+.definitions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.definitions div{border-top:1px solid rgba(103,232,249,.14);padding-top:8px}
+.definitions b{color:#dffaff;font-size:12px}
+.definitions span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+footer{display:flex;justify-content:space-between;gap:15px;border-top:1px solid var(--line);margin-top:17px;padding-top:18px;color:#7893a0;font-size:11px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.grid-3,.evidence-grid{grid-template-columns:1fr 1fr}.path{grid-template-columns:1fr auto 1fr}.path .future-item{grid-column:1/-1}}
+@media(max-width:620px){.shell{width:min(100% - 18px,1180px);padding-top:9px}.top,.section{padding:18px 16px}.grid,.grid-3,.evidence-grid,.future,.metric-row,.definitions,.chain{grid-template-columns:1fr}.path{display:block}.path-item{margin:7px 0}.path-arrow{transform:rotate(90deg);margin:3px}.chain div{margin:6px 0}.direction{display:block;text-align:center}.direction span{display:block;margin:5px 0}footer{display:block}footer span{display:block;margin-top:5px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="top" id="top">
+    <div class="eyebrow">HOMEOSTASIS SECURITY / RESEARCH TIMELINE</div>
+    <h1>Research Evolution</h1>
+    <p class="lead">HOMEOSTASIS SECURITYが、現実社会を基盤にした恒常性研究から、AIが未来社会を生成する研究へ進むまでの流れをまとめています。</p>
+    <p class="sublead">V1〜V4は完成した現実基盤型の研究系列です。このページは既存ページを置き換えず、研究の問い・証拠・次の方向を一つにつなぎます。</p>
+    <nav class="nav" aria-label="研究ページ">
+      <a href="dashboard_v1.html?layout-final=1">V1 二国間</a>
+      <a href="dashboard_v2.html">V2 地球規模</a>
+      <a href="results/v2-five-runs/index.html">V3 自由対話</a>
+      <a href="dashboard_v4.html">V4 相互依存</a>
+      <a href="results/evidence/">RAW Evidence</a>
+      <a href="research-evolution.html" aria-current="page">研究系譜（現在地）</a>
+    </nav>
+    <div class="path" aria-label="研究の流れ">
+      <div class="path-item"><small>REALITY-BASED</small><b>V1 → V2 → V3 → V4</b></div>
+      <div class="path-arrow" aria-hidden="true">→</div>
+      <div class="path-item"><small>TRANSPARENCY</small><b>追跡・検証できる研究基盤</b></div>
+      <div class="path-arrow" aria-hidden="true">→</div>
+      <div class="path-item future-item path-future"><small>FUTURE-BASED</small><b>V5 → V6</b></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="reality">
+      <div class="section-head"><div><div class="section-index">01 / REALITY-BASED RESEARCH</div><h2>現実を基盤にAI社会を観測する</h2></div></div>
+      <p>V1〜V4では、現実に存在する制度や制約を抽象化し、AIエージェントの相互作用から恒常性がどう維持・変化するかを段階的に観測しました。国家や制度の結末を先に決めるのではなく、条件を置いた後の判断・対話・結果を記録する系列です。</p>
+      <div class="grid">
+        <article class="card"><div class="tag">V1 / LOCAL SECURITY</div><h3>二国間の恒常性</h3><p>国家間の安全保障、脅威認識、国際法、Hotlineなどの制度が、反応と回復にどう関係するかを観測します。</p><a href="dashboard_v1.html?layout-final=1">V1の詳細を見る →</a></article>
+        <article class="card"><div class="tag">V2 / GLOBAL SCALE</div><h3>地球規模の恒常性</h3><p>二国間の問題をより広い社会の相互作用へ広げ、食料・経済・信頼などの波及を観測します。</p><a href="dashboard_v2.html">V2の詳細を見る →</a></article>
+        <article class="card accent-pink"><div class="tag">V3 / FREE DIALOGUE</div><h3>自由な対話と関係</h3><p>AIエージェント間の対話、提案、同意・拒否、履歴依存、相互関係がどのように生まれるかを観測します。</p><a href="results/v2-five-runs/index.html">V3の詳細を見る →</a></article>
+        <article class="card accent-gold"><div class="tag">V4 / INTERDEPENDENCE</div><h3>有限資源と物理作用</h3><p>合意が物流や資源移転へ接続する世界で、提案から物理的な結果までの連鎖を観測します。</p><a href="dashboard_v4.html">V4の詳細を見る →</a></article>
+      </div>
+      <div class="direction"><strong>現実 → AI社会</strong><span>現実の制度・関係・制約を抽象化し、AIエージェント社会の恒常性を観測する。</span></div>
+    </section>
+
+    <section class="section" id="transparency">
+      <div class="section-head"><div><div class="section-index">02 / TRANSPARENCY &amp; VERIFIABILITY</div><h2>結果の根拠までたどれるようにする</h2></div></div>
+      <p>研究基盤も大幅に再設計しました。結果だけを見せるのではなく、「その結果はどこから来たのか」を第三者が確認できる階層を整えています。</p>
+      <div class="evidence-grid">
+        <article class="evidence-item"><h3>RAW Evidence</h3><p>入力、Agent応答、ターン、world stateなど、加工前の生の実験記録を公開しています。</p><a href="results/evidence/">保存済みEvidenceを見る →</a></article>
+        <article class="evidence-item"><h3>RAW / DERIVEDの分離</h3><p>RAW（観測された記録）と、そこから計算したDERIVED（後処理分析）を別物として保持しています。</p><a href="docs/architecture/EVIDENCE_FORMAT_V1.md">Evidence形式を見る →</a></article>
+        <article class="evidence-item"><h3>横断inventory</h3><p>V1〜V4とLocal pilotを世代・実行群ごとに分け、対象範囲と位置づけを確認できます。</p><a href="results/evidence/">Evidence inventoryを見る →</a></article>
+        <article class="evidence-item"><h3>追跡可能性</h3><p>実験 → run（同じ条件で世界を動かした1回）→ TURN → Agent → RAWの順に追跡します。</p><a href="docs/architecture/OBSERVATION_TRANSPARENCY.md">観測の透明化を見る →</a></article>
+        <article class="evidence-item"><h3>改変確認と再検証</h3><p>SHA-256などのハッシュ、replay、verifierを使い、保存物が変わっていないかを確認できる形にしています。</p><a href="results/evidence/">完全性記録を見る →</a></article>
+        <article class="evidence-item"><h3>成功例だけにしない</h3><p>失敗、部分再現、技術停止も研究結果と混同せず、別の記録として残します。privacy scanとsecret scanも行います。</p><a href="results/evidence/">公開範囲の記録を見る →</a></article>
+      </div>
+      <p class="note">公開Evidenceには実験記録を含めます。開発相談や私的な会話、認証情報、個人情報は研究生データに含めません。</p>
+    </section>
+
+    <section class="section" id="update">
+      <div class="section-head"><div><div class="section-index">03 / RESEARCH UPDATE — 2026-09-21</div><h2>完成した研究資産から、さらに何が見えるか</h2></div></div>
+      <p>V1〜V4で蓄積したEvidenceを使い、追加の横断解析と独立検証を行いました。これは既存Versionの救済や修正ではなく、完成した研究から次の問いを掘り出すための追加研究です。</p>
+      <div class="grid-3">
+        <article class="update-card"><h3>① Hotlineの作用方向</h3><p>国際法の有無によって、Hotlineの安定化方向が本当に逆になるのかを、条件を揃えた別の世界で確認しました。</p><div class="metric-row"><div class="metric"><b>12</b><span>独立比較（4条件 × 3 seed）</span></div><div class="metric"><b>8</b><span>各runのTURN</span></div><div class="metric"><b>288</b><span>Gemini logical calls</span></div></div><p class="result">12/12完走。予測方向の反転は3組中1組だけで、判定は<strong>部分再現：1/3</strong>です。</p><p class="note">seed 4101：ON +2 / OFF +10　｜　seed 4102：ON +1 / OFF 0　｜　seed 4103：ON −3 / OFF +1</p><div class="caution">現時点で安定した一般則・因果関係・Hotlineの優劣とはしていません。</div></article>
+        <article class="update-card"><h3>② 有限資源世界の独立観測</h3><p>同じ条件の世界を5回動かし、Agentの提案が実際の資源移転まで到達するかを観測しました。</p><div class="metric-row"><div class="metric"><b>5/5</b><span>完走</span></div><div class="metric"><b>4/5</b><span>物理移転 0</span></div><div class="metric"><b>1/5</b><span>6単位・1件到着</span></div></div><p class="result">提案数は seed 53：12、59：44、61：82、67：46、71：78。提案数の多さだけでは、物理移転成立を説明できませんでした。</p><p class="note">seedや数字は保存された実験記録を示す識別子です。ここから因果関係を断定していません。</p></article>
+        <article class="update-card"><h3>③ 一点を変える反実仮想</h3><p>保存済み世界の一点だけを変え、「もしそこだけ違っていたら未来も変わったか」を物理結果まで比較しました。輸送成功世界（乱数起点：seed 61）の4ターン目の食料提案と、輸送失敗比較世界（乱数起点：seed 71）を使ったオフライン再生です。</p><div class="chain"><div><strong>A / 削除</strong>成功世界のT4食料提案<br><b>発送0・到着0</b></div><div><strong>B / 置換</strong>失敗側の対応状態<br><b>発送0・到着0</b></div><div><strong>C / 移植</strong>比較世界へ成功側の提案<br><b>発送6・到着6</b></div></div><p class="result">価値はSingularityの発見ではなく、保存点を一つ変えて差を再生・比較できる検証機構を確認したことです。</p><p class="note">A：削除 0/0、B：対応状態へ置換 0/0、C：成功側の提案を移植 6/6（発送／到着）。反実仮想＝過去の一点だけを変え、「もし違っていたら」を比較する実験。</p></article>
+      </div>
+      <div class="card accent-gold" style="margin-top:12px"><div class="tag">TECHNICAL NOTE</div><p>追加探索10runは最初のモデル要求で実行環境上の技術障害が起き、有効観測なし。研究結果には含めていません。大規模なLocal LLM探索も計算環境と実行時間の制約から将来研究として保留しています。どちらもV1〜V4の研究成否とは結びつけません。</p></div>
+    </section>
+
+    <section class="section" id="future">
+      <div class="section-head"><div><div class="section-index">04 / FROM REALITY TO FUTURE</div><h2>次は、AIに未来社会を生成させる</h2></div></div>
+      <p>V1〜V4では、現実社会をAIで観測しました。次のV5では方向を反転し、AI自身に国家・国家リーダー人格・国家資源構造を生成させ、まだ存在しない未来社会の恒常性を研究します。</p>
+      <div class="direction"><strong>現実 → AI社会</strong><span class="path-arrow">→</span><strong>AI → 未来社会</strong></div>
+    </section>
+
+    <section class="section" id="v5">
+      <div class="section-head"><div><div class="section-index">05 / NEXT RESEARCH</div><h2>V5 — Generated Nations <span class="planned">PLANNED</span></h2></div></div>
+      <p><strong>まだ実装していません。</strong>ここでは、V1〜V4の蓄積から自然に生まれた次期研究の問いだけを示します。</p>
+      <div class="future">
+        <article class="future-card"><div class="label">RESEARCH QUESTION</div><h3>AIが生成した異なる人格を持つ国家リーダーたちは、同一の恒常性危機に対して、社会をどのような安定状態へ導くのか？</h3><p>人間が決めるのは研究の器です。国家数、世界の基本法則、資源カテゴリ、各国家の初期資源総量（1000ポイント）、共通の危機、観測方法を固定します。</p></article>
+        <article class="future-card"><div class="label">GENERATED BY AI</div><h3>国家ごとの違いを先に生成する</h3><p>AIが国家リーダーの人格、1000ポイントの資源配分、強み、弱み、特殊資産を生成します。人格と資源は可能な限り独立に生成し、人格に都合のよい国家が自動で生まれる偏りを避けます。</p><p>行動、交渉、協力、拒否、制度形成、社会の結末は脚本化しません。</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="v6">
+      <div class="section-head"><div><div class="section-index">06 / FUTURE CONCEPT</div><h2>V6 — Homeostasis Singularity <span class="planned">FUTURE</span></h2></div></div>
+      <p>V6は構想だけです。V5で生成・観測された未来国家、リーダー人格、社会秩序の中から、通常の軌道を大きく越えて世界全体の恒常性を変える非自明な分岐構造が現れた場合に、その構造を検証する将来研究として位置づけます。</p>
+      <div class="card accent-pink"><p><strong>V6の答えをV5へ仕込みません。</strong>V5の観測結果が、V6で何を研究するかを生みます。現時点では、非自明なHomeostasis Singularityは未観測であり、大規模探索は将来研究として保留しています。</p></div>
+    </section>
+
+    <section class="section" id="terms">
+      <div class="section-head"><div><div class="section-index">TERMS / はじめて読む人へ</div><h2>記録を読むための短い説明</h2></div></div>
+      <div class="definitions">
+        <div><b>run</b><span>同じ条件で世界を最初から最後まで動かした1回の実験。</span></div>
+        <div><b>seed</b><span>乱数を生成する起点番号。同じ条件の世界を区別するために使います。</span></div>
+        <div><b>TURN</b><span>世界内部の時間進行単位。</span></div>
+        <div><b>RAW</b><span>加工前の生の実験記録。観測された入力・応答・状態です。</span></div>
+        <div><b>DERIVED</b><span>RAWから後処理で計算・抽出した分析結果。</span></div>
+        <div><b>反実仮想</b><span>過去の一点だけを変え、「もし違っていたら」を比較する実験。</span></div>
+      </div>
+    </section>
+  </main>
+  <footer><span>HOMEOSTASIS SECURITY / Research Evolution</span><span><a href="#top">ページ上部へ戻る ↑</a></span></footer>
+</div>
+</body>
+</html>
