@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "gender_identity": {"type": "string", "description": "新たに生成した性自認の自由記述。固定の分類・性別選択肢は設けない。"},
+    "sexual_orientation": {"type": "string", "description": "新たに生成した性的指向の自由記述。固定の分類・選択肢は設けない。"}
+  },
+  "required": ["gender_identity", "sexual_orientation"],
+  "additionalProperties": false
+}
