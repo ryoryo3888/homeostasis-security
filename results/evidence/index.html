@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>HOMEOSTASIS SECURITY — Evidence Archive</title>
+<style>
+:root{color-scheme:dark;--bg:#030b14;--panel:#071827;--panel-2:#0a2232;--ink:#edf7fb;--muted:#9db3be;--line:rgba(103,232,249,.2);--cyan:#67e8f9;--pink:#d88cff;--gold:#fbbf24;--green:#34d399}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 50% -15%,#15374d 0,transparent 44%),radial-gradient(circle at 90% 25%,rgba(126,80,170,.12),transparent 32%),var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Segoe UI",sans-serif;line-height:1.7}
+a{color:var(--cyan);text-underline-offset:4px}
+a:hover{color:#e0fcff}
+.shell{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:22px 0 70px}
+.hero,.section{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(8,29,44,.96),rgba(3,15,25,.94));box-shadow:0 18px 55px rgba(0,0,0,.22)}
+.hero{padding:30px 32px 25px}
+.eyebrow,.section-index,.tag{color:var(--cyan);font:800 11px/1.25 ui-monospace,SFMono-Regular,monospace;letter-spacing:.16em}
+h1{font-size:clamp(32px,6vw,62px);line-height:1.05;letter-spacing:.025em;margin:9px 0 12px}
+.lead{max-width:820px;color:#c8dbe1;font-size:clamp(15px,2vw,19px);margin:0}
+.sublead{max-width:820px;color:var(--muted);font-size:13px;margin:9px 0 0}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.nav a,.button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:9px;background:rgba(8,29,44,.7);padding:8px 12px;color:#c8e6ed;font-size:12px;font-weight:800;text-decoration:none}
+.nav a:hover,.nav a:focus-visible,.button:hover,.button:focus-visible{border-color:var(--cyan);background:#0d3b4d;outline:none}
+.nav a[aria-current=page]{border-color:var(--cyan);color:#e9fdff;box-shadow:0 0 18px rgba(103,232,249,.14)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.hero-meta span{border:1px solid rgba(52,211,153,.26);border-radius:999px;padding:3px 9px;color:#baf6df;font:800 10px ui-monospace,SFMono-Regular,monospace;letter-spacing:.04em}
+main{display:grid;gap:16px;margin-top:18px}
+.section{padding:25px 26px;background:rgba(5,20,33,.86)}
+.section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}
+h2{font-size:clamp(22px,3vw,32px);line-height:1.2;margin:4px 0 0}
+h3{font-size:17px;line-height:1.35;margin:0 0 7px}
+p{margin:8px 0;color:#c8d9df;font-size:14px}
+.note{color:var(--muted);font-size:12px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+.card{border:1px solid rgba(103,232,249,.17);border-radius:12px;background:linear-gradient(165deg,rgba(8,31,47,.9),rgba(5,19,31,.87));padding:17px}
+.card p{font-size:13px;margin-top:8px}
+.card .tag{font-size:10px}
+.card h3{font-size:18px;margin-top:6px}
+.card.pink{border-color:rgba(216,140,255,.3)}.card.pink .tag{color:var(--pink)}
+.card.gold{border-color:rgba(251,191,36,.32)}.card.gold .tag{color:var(--gold)}
+.card.green{border-color:rgba(52,211,153,.3)}.card.green .tag{color:var(--green)}
+.button{margin-top:7px;color:#dbfaff}
+.minor{display:inline-block;margin:8px 0 0 8px;color:var(--muted);font-size:11px}
+.callout{border-left:3px solid var(--cyan);background:rgba(12,57,70,.25);padding:12px 14px;margin-top:14px;color:#d8f5f8;font-size:13px}
+.integrity{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+.integrity div{border:1px solid rgba(103,232,249,.15);border-radius:10px;background:#061a2a;padding:12px}
+.integrity b{display:block;color:var(--cyan);font-size:20px;line-height:1.25}
+.integrity span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.chain{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));align-items:center;gap:6px;margin:13px 0}
+.chain div{border:1px solid rgba(103,232,249,.18);border-radius:9px;background:#061a2a;text-align:center;padding:11px 7px;font-size:11px}
+.chain div strong{display:block;color:var(--cyan);font-size:14px;margin-bottom:3px}
+.chain .arrow{border:0;background:none;color:var(--pink);font-size:19px;padding:0}
+.archive-card{min-height:170px}
+footer{display:flex;justify-content:space-between;gap:15px;border-top:1px solid var(--line);margin-top:17px;padding-top:18px;color:#7893a0;font-size:11px}
+@media(max-width:980px){.grid-5{grid-template-columns:repeat(3,1fr)}.integrity{grid-template-columns:repeat(3,1fr)}.chain{grid-template-columns:repeat(7,1fr)}.chain .arrow{display:none}}
+@media(max-width:650px){.shell{width:min(100% - 18px,1180px);padding-top:9px}.hero,.section{padding:18px 16px}.grid-3,.grid-5,.integrity,.chain{grid-template-columns:1fr}.chain .arrow{display:none}.archive-card{min-height:0}.minor{display:block;margin:8px 0 0}.hero-meta{gap:6px}footer{display:block}footer span{display:block;margin-top:5px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="hero" id="top">
+    <div class="eyebrow">HOMEOSTASIS SECURITY / EVIDENCE ARCHIVE</div>
+    <h1>EVIDENCE ARCHIVE</h1>
+    <p class="lead">保存済み実験の生ログと検証資料</p>
+    <p class="sublead">このArchiveは、HOMEOSTASIS SECURITYで保存された実験記録を第三者が確認できるよう公開するためのEvidence保管庫です。このページを開いても、新しいAPI実行やシミュレーションは行われません。</p>
+    <nav class="nav" aria-label="HOMEOSTASIS SECURITY共通ナビゲーション">
+      <a href="../../dashboard_v1.html?layout-final=1">V1：二国間</a>
+      <a href="../../dashboard_v2.html">V2：地球規模</a>
+      <a href="../../results/v2-five-runs/index.html">V3：自由対話</a>
+      <a href="../../dashboard_v4.html">V4：相互依存</a>
+      <a href="../../research-evolution.html">研究系譜</a>
+      <a href="index.html" aria-current="page">Evidence Archive</a>
+    </nav>
+    <div class="hero-meta"><span>NEW API EXECUTION：なし</span><span>RAW：IMMUTABLE</span><span>RAW / DERIVED：分離</span></div>
+  </header>
+
+  <main>
+    <section class="section" id="entry">
+      <div class="section-head"><div><div class="section-index">01 / ARCHIVE ENTRANCE</div><h2>保存物へ入る</h2></div></div>
+      <p>入口では人間向けに全体像を示し、奥では保存されたファイルへ直接到達できるようにしています。RAWの内容、DERIVEDの計算結果、出典情報を同じものとして扱いません。</p>
+      <div class="grid-3">
+        <article class="card archive-card"><div class="tag">RAW / OBSERVED</div><h3>生の実験記録</h3><p>AI Agentへの入力、応答、世界状態、ターン、checkpoint、journalなど、加工前の保存済み実験記録です。</p><a class="button" href="raw/v1/model-runs/20260919T072326653124Z-v1/engine/result.json">RAW Evidenceを見る →</a><a class="minor" href="derived/raw-inventory.json">全RAWのinventoryを見る</a></article>
+        <article class="card pink archive-card"><div class="tag">DERIVED / VERIFICATION</div><h3>RAWから作成した検証資料</h3><p>RAW inventory、SHA-256対応表、完全性記録、privacy / secret scanなど、RAWから作成した検証用資料です。</p><p class="note">DERIVEDはRAWそのものではありません。</p><a class="button" href="derived/raw-integrity.json">検証資料を見る →</a><a class="minor" href="derived/secret-privacy-scan.json">scan記録を見る</a></article>
+        <article class="card gold archive-card"><div class="tag">PROVENANCE / ORIGIN</div><h3>出典・由来</h3><p>EvidenceがどのVersion・実験・実行群から生まれたのかを確認する情報です。現在の出典対応表はinventoryに記録しています。</p><a class="button" href="derived/raw-inventory.json">出典情報を見る →</a></article>
+      </div>
+      <div class="callout"><strong>入口と中身を分けています。</strong> このHTMLはEvidenceへ入るための表示だけを担当します。RAW / JSON / JSONL / inventory / hashは、保存されたまま直接確認できます。</div>
+    </section>
+
+    <section class="section" id="structure">
+      <div class="section-head"><div><div class="section-index">02 / EVIDENCE TRACE</div><h2>研究結果からRAWまで</h2></div></div>
+      <p>研究上の主張を、保存記録のどこから確認できるかを人間向けに示した階層です。</p>
+      <div class="chain" aria-label="Evidenceの階層"><div><strong>Research Result</strong>研究結果</div><div class="arrow" aria-hidden="true">→</div><div><strong>Experiment</strong>実験</div><div class="arrow" aria-hidden="true">→</div><div><strong>run</strong>1回の実験</div><div class="arrow" aria-hidden="true">→</div><div><strong>TURN</strong>時間進行</div><div class="arrow" aria-hidden="true">→</div><div><strong>Agent</strong>判断主体</div><div class="arrow" aria-hidden="true">→</div><div><strong>RAW</strong>観測記録</div><div class="arrow" aria-hidden="true">→</div><div><strong>SHA-256</strong>完全性</div></div>
+      <p class="note">全ファイルの公開パス、由来、SHA-256、公開コピーとの一致状況は <a href="derived/raw-inventory.json">raw-inventory.json</a> で追跡できます。</p>
+    </section>
+
+    <section class="section" id="versions">
+      <div class="section-head"><div><div class="section-index">03 / VERSION &amp; GENERATION</div><h2>世代別の保存Evidence</h2></div></div>
+      <p>各入口は、現在保存構造に存在する代表的なRAWファイルへつながっています。全ファイルはinventoryから確認できます。</p>
+      <div class="grid-5">
+        <article class="card"><div class="tag">V1</div><h3>二国間の恒常性</h3><p>安全保障、脅威認識、制度条件、回復の観測。</p><a href="raw/v1/model-runs/20260919T072326653124Z-v1/engine/result.json">保存済みEvidenceを見る →</a></article>
+        <article class="card"><div class="tag">V2</div><h3>地球規模の恒常性</h3><p>食料、経済、国際信頼、第三国への波及。</p><a href="raw/v2/model-runs/20260919T072638155900Z-v2/engine/result.json">保存済みEvidenceを見る →</a></article>
+        <article class="card pink"><div class="tag">V3</div><h3>自由対話</h3><p>発言、提案、同意・拒否、履歴依存の記録。</p><a href="raw/v3/model-runs/20260919-v3-unchanged-input-replay/checkpoints/HEAD.json">保存済みEvidenceを見る →</a></article>
+        <article class="card gold"><div class="tag">V4</div><h3>相互依存・有限資源</h3><p>提案から資源移転、dispatch、arrivalまでの記録。</p><a href="raw/v4/free-dialogue/live-observation/agent-000.request.json">保存済みEvidenceを見る →</a></article>
+        <article class="card green"><div class="tag">LOCAL PILOT</div><h3>ローカル環境の小規模試行</h3><p>実行環境の成立性を確認する技術試行。正式研究観測とは分けて保存。</p><a href="raw/local/v4-pilot/pilot-01-qwen3-1.7b/RAW/failure.json">保存済みEvidenceを見る →</a></article>
+      </div>
+    </section>
+
+    <section class="section" id="integrity">
+      <div class="section-head"><div><div class="section-index">04 / DATA INTEGRITY</div><h2>保存状態と公開前確認</h2></div></div>
+      <p>以下は保存済みのinventoryとscan結果から確認できる事実です。入口UIの追加によって、Evidence本体は変更していません。</p>
+      <div class="integrity">
+        <div><b>変更なし</b><span>元RAWはimmutable</span></div>
+        <div><b>分離保存</b><span>RAW / DERIVED</span></div>
+        <div><b>3,439</b><span>byte完全一致ファイル</span></div>
+        <div><b>0</b><span>公開コピーのsecret検出</span></div>
+        <div><b>0</b><span>公開コピーのprivacy残存finding</span></div>
+      </div>
+      <div class="callout"><strong>公開前確認済み：</strong> source file count 3,447、公開コピーでのsecret pattern 0、privacy finding残存 0、scan status PASS。Local pilotの一部ホスト上モデル親パスは公開コピーで伏せ、その対応をinventoryに記録しています。</div>
+      <div class="nav" aria-label="完全性資料"><a href="derived/raw-integrity.json">完全性記録</a><a href="derived/secret-privacy-scan.json">secret / privacy scan</a><a href="derived/raw-inventory.json">SHA-256 inventory</a></div>
+    </section>
+
+    <section class="section" id="classification">
+      <div class="section-head"><div><div class="section-index">05 / RESEARCH VS TECHNICAL VALIDATION</div><h2>研究記録と技術検証を分ける</h2></div></div>
+      <p>システムが正しく動くか確認するための技術テストと、研究結果として扱う実験は別々に保存しています。</p>
+      <div class="grid-3">
+        <article class="card"><div class="tag">FORMAL OBSERVATION</div><h3>正式な研究観測</h3><p>V1〜V4の研究目的に沿った世界、Agent、ターン、判断、world stateの保存記録です。</p></article>
+        <article class="card pink"><div class="tag">TECHNICAL VALIDATION</div><h3>技術検証</h3><p>V3のpreflight、V4のsdk-validationなど、実行経路や保存形式の確認です。正式な研究結論には自動集計していません。</p></article>
+        <article class="card gold"><div class="tag">LOCAL PILOT</div><h3>ローカル試行</h3><p>ローカル環境での小規模試行は、成立・失敗を含むengineering evidenceとして保持しています。Gemini観測と同一母集団には混ぜません。</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="terms">
+      <div class="section-head"><div><div class="section-index">06 / はじめてEvidenceを見る人へ</div><h2>用語を短く説明します</h2></div></div>
+      <div class="grid-5">
+        <article class="card"><h3>RAW</h3><p>加工前の生の実験記録。観測された入力・応答・状態です。</p></article>
+        <article class="card"><h3>DERIVED</h3><p>RAWから後で作成した一覧・分析・検証資料です。</p></article>
+        <article class="card"><h3>run</h3><p>同じ条件で世界を最初から最後まで動かした1回の実験です。</p></article>
+        <article class="card"><h3>seed</h3><p>乱数を生成する起点番号。同じ条件の世界を区別します。</p></article>
+        <article class="card"><h3>TURN</h3><p>シミュレーション内部の時間進行単位です。</p></article>
+      </div>
+      <div class="callout"><strong>SHA-256：</strong> 保存したデータが変わっていないかを確認するための識別値です。入口の見た目を変えても、保存済みEvidenceのSHA-256対応表は変更しません。</div>
+    </section>
+  </main>
+
+  <footer><span>HOMEOSTASIS SECURITY / Evidence Archive</span><span><a href="../../research-evolution.html">← Research Evolution / 研究系譜</a>　<a href="#top">上へ ↑</a></span></footer>
+</div>
+</body>
+</html>
