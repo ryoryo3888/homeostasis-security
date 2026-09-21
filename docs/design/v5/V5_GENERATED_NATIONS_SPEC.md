@@ -1,7 +1,7 @@
 # HOMEOSTASIS SECURITY V5 — Generated Nations
 
 **現在状態:** 12国家で構成される単一世界に、人生起点方式の国家Leaderを1名ずつ計12名配置し、その世界を3 TURN観測する設計へ更新。旧方式v0の8名と追加設定は予備記録として保留。v1の新規12名・48生成工程は完了・固定し、原記録を照合済み。評定の留保を含む詳細は[進捗](V5_PROGRESS_AND_NATION_PREPARATION.md)と保存済みEvidenceを参照。国家生成・担当割当・Simulationは未実行。
-**次工程:** [現在の進捗と国家生成前の確認事項](V5_PROGRESS_AND_NATION_PREPARATION.md)。国家生成の未決定条件は確認前に採用しない。
+**次工程:** [国家生成前の一括確認案](NATION_GENERATION_BUNDLED_REVIEW.md)と[現在の進捗](V5_PROGRESS_AND_NATION_PREPARATION.md)。国家生成の未決定条件は確認前に採用しない。
 **既存版:** V1〜V4のコード、RAW、DERIVED、Evidence、Dashboardは変更しない
 
 **人格生成方式の更新:** 直接生成した8名はPersona Generator v0として原状保存。人生起点方式v1は[実行手順](LIFE_FIRST_EXECUTION.md)とバッチの固定済み入力・schemaに従う。[専用設計案](PERSONA_GENERATOR_V1_PROPOSAL.md)は比較経緯として保持する。17軸は完成人物の事後LLM評定であり、心理検査や実際の行動測定値ではない。本文の16軸＋Cはv0時点の採用記録であり、元のEvidenceは変更しない。v1評定値のSimulation接続は未実行。
