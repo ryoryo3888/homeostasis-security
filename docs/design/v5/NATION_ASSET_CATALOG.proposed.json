@@ -1,0 +1,414 @@
+{
+  "document_type": "design_proposal_not_runtime_catalog",
+  "version": "v5-asset-reference-proposal-20260922-1",
+  "state": "proposed_no_generation_use",
+  "scope": "external price references and derived point quotes; not simulation RAW or an adopted action menu",
+  "confirmed_basis": {
+    "reference_year": 2024,
+    "scale": "B",
+    "usd_per_point": "10000000",
+    "points_per_nation": "1000",
+    "initial_reference_usd_per_nation": "10000000000",
+    "nation_count": 12
+  },
+  "sources": [
+    {
+      "id": "wb_2024",
+      "url": "https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/related/CMO-Pink-Sheet-September-2026.pdf",
+      "publication": "September 2026 Pink Sheet; 2024 annual column",
+      "source_document_sha256": null,
+      "archive_status": "URL and extracted values only; original source file not archived"
+    },
+    {
+      "id": "irena_2024",
+      "url": "https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2025/Jul/IRENA_TEC_RPGC_in_2024_Summary_2025.pdf",
+      "publication": "IRENA 2025 summary of 2024 costs; Table S1",
+      "source_document_sha256": null,
+      "archive_status": "URL and extracted values only; original source file not archived"
+    },
+    {
+      "id": "isuzu_2024",
+      "url": "https://www.isuzu-global.com/ja/newsroom/20240724_1.html",
+      "publication": "2024-07-24 release; major-model specifications and Tokyo recommended retail price",
+      "source_document_sha256": null,
+      "archive_status": "URL and extracted values only; original source file not archived"
+    },
+    {
+      "id": "fed_fx_2024",
+      "url": "https://www.federalreserve.gov/releases/g5a/20250106/",
+      "publication": "2025-01-06 G.5A release; Japan 2024 average",
+      "source_document_sha256": null,
+      "archive_status": "URL and extracted values only; original source file not archived"
+    }
+  ],
+  "entries": [
+    {
+      "reference_id": "v5-reference-2024/wheat_hrw",
+      "label_ja": "小麦・米国HRW",
+      "asset_kind": "inventory",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "metric_tonne"
+      },
+      "source_price": {
+        "value": "268.7",
+        "currency": "USD",
+        "year": 2024,
+        "source_id": "wb_2024",
+        "page": "1",
+        "series": "Wheat, U.S., HRW",
+        "kind": "annual_commodity_reference"
+      },
+      "point_quote": {
+        "value": "0.00002687",
+        "unit": "point_per_reference_unit",
+        "formula": "source_price_usd / 10000000",
+        "rounding": "none"
+      },
+      "review": {
+        "source_price_checked": true,
+        "price_adopted": false,
+        "physical_spec_adopted": false,
+        "world_law_ref": null,
+        "unresolved_ja": "品位・水分・取引条件・保管条件、食用への加工・栄養換算"
+      },
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/maize",
+      "label_ja": "トウモロコシ",
+      "asset_kind": "inventory",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "metric_tonne"
+      },
+      "source_price": {
+        "value": "190.6",
+        "currency": "USD",
+        "year": 2024,
+        "source_id": "wb_2024",
+        "page": "1",
+        "series": "Maize",
+        "kind": "annual_commodity_reference"
+      },
+      "point_quote": {
+        "value": "0.00001906",
+        "unit": "point_per_reference_unit",
+        "formula": "source_price_usd / 10000000",
+        "rounding": "none"
+      },
+      "review": {
+        "source_price_checked": true,
+        "price_adopted": false,
+        "physical_spec_adopted": false,
+        "world_law_ref": null,
+        "unresolved_ja": "品位・取引条件・用途・保管条件、加工と栄養換算"
+      },
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/rice_thailand_5",
+      "label_ja": "米・タイ（砕米率5%）",
+      "asset_kind": "inventory",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "metric_tonne"
+      },
+      "source_price": {
+        "value": "588.4",
+        "currency": "USD",
+        "year": 2024,
+        "source_id": "wb_2024",
+        "page": "1",
+        "series": "Rice, Thailand 5%",
+        "kind": "annual_commodity_reference"
+      },
+      "point_quote": {
+        "value": "0.00005884",
+        "unit": "point_per_reference_unit",
+        "formula": "source_price_usd / 10000000",
+        "rounding": "none"
+      },
+      "review": {
+        "source_price_checked": true,
+        "price_adopted": false,
+        "physical_spec_adopted": false,
+        "world_law_ref": null,
+        "unresolved_ja": "品位・取引条件・保管条件、栄養換算"
+      },
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/coal_australia",
+      "label_ja": "石炭・豪州",
+      "asset_kind": "inventory",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "metric_tonne"
+      },
+      "source_price": {
+        "value": "136.1",
+        "currency": "USD",
+        "year": 2024,
+        "source_id": "wb_2024",
+        "page": "1",
+        "series": "Coal, Australia",
+        "kind": "annual_commodity_reference"
+      },
+      "point_quote": {
+        "value": "0.00001361",
+        "unit": "point_per_reference_unit",
+        "formula": "source_price_usd / 10000000",
+        "rounding": "none"
+      },
+      "review": {
+        "source_price_checked": true,
+        "price_adopted": false,
+        "physical_spec_adopted": false,
+        "world_law_ref": null,
+        "unresolved_ja": "炭種・発熱量・取引条件・保管条件、燃焼設備と変換効率"
+      },
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/urea_e_europe",
+      "label_ja": "尿素・東欧",
+      "asset_kind": "inventory",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "metric_tonne"
+      },
+      "source_price": {
+        "value": "338.3",
+        "currency": "USD",
+        "year": 2024,
+        "source_id": "wb_2024",
+        "page": "2",
+        "series": "Urea, E. Europe",
+        "kind": "annual_commodity_reference"
+      },
+      "point_quote": {
+        "value": "0.00003383",
+        "unit": "point_per_reference_unit",
+        "formula": "source_price_usd / 10000000",
+        "rounding": "none"
+      },
+      "review": {
+        "source_price_checked": true,
+        "price_adopted": false,
+        "physical_spec_adopted": false,
+        "world_law_ref": null,
+        "unresolved_ja": "品質・取引条件・保管条件、使用量・対象作物・作期"
+      },
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/copper",
+      "label_ja": "銅",
+      "asset_kind": "inventory",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "metric_tonne"
+      },
+      "source_price": {
+        "value": "9142",
+        "currency": "USD",
+        "year": 2024,
+        "source_id": "wb_2024",
+        "page": "2",
+        "series": "Copper",
+        "kind": "annual_commodity_reference"
+      },
+      "point_quote": {
+        "value": "0.0009142",
+        "unit": "point_per_reference_unit",
+        "formula": "source_price_usd / 10000000",
+        "rounding": "none"
+      },
+      "review": {
+        "source_price_checked": true,
+        "price_adopted": false,
+        "physical_spec_adopted": false,
+        "world_law_ref": null,
+        "unresolved_ja": "品位・形状・取引条件・保管条件、加工工程"
+      },
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/solar_pv",
+      "label_ja": "太陽光PV設備",
+      "asset_kind": "equipment",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "kW_as_reported"
+      },
+      "source_price": {
+        "value": "691",
+        "currency": "USD",
+        "year": 2024,
+        "source_id": "irena_2024",
+        "page": "printed page 4, zero-based PDF index 3",
+        "series": "Solar photovoltaic",
+        "kind": "global_weighted_average_total_installed_cost"
+      },
+      "point_quote": {
+        "value": "0.0000691",
+        "unit": "point_per_reference_unit",
+        "formula": "source_price_usd / 10000000",
+        "rounding": "none"
+      },
+      "review": {
+        "source_price_checked": true,
+        "price_adopted": false,
+        "physical_spec_adopted": false,
+        "world_law_ref": null,
+        "unresolved_ja": "容量のAC/DC基準、設備方式・立地・自然入力・接続・保守・稼働開始・設置費の包含範囲"
+      },
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/onshore_wind",
+      "label_ja": "陸上風力設備",
+      "asset_kind": "equipment",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "kW_as_reported"
+      },
+      "source_price": {
+        "value": "1041",
+        "currency": "USD",
+        "year": 2024,
+        "source_id": "irena_2024",
+        "page": "printed page 4, zero-based PDF index 3",
+        "series": "Onshore wind",
+        "kind": "global_weighted_average_total_installed_cost"
+      },
+      "point_quote": {
+        "value": "0.0001041",
+        "unit": "point_per_reference_unit",
+        "formula": "source_price_usd / 10000000",
+        "rounding": "none"
+      },
+      "review": {
+        "source_price_checked": true,
+        "price_adopted": false,
+        "physical_spec_adopted": false,
+        "world_law_ref": null,
+        "unresolved_ja": "定格・設備方式・風況・立地・接続・保守・稼働開始・設置費の包含範囲"
+      },
+      "executable": false
+    },
+    {
+      "reference_id": "v5-reference-2024/elf_mio_major_model",
+      "label_ja": "小型ディーゼルトラック・2024年主要モデル",
+      "asset_kind": "equipment",
+      "reference_quantity": {
+        "value": "1",
+        "unit": "vehicle"
+      },
+      "source_price": {
+        "value": "3655000",
+        "currency": "JPY",
+        "year": 2024,
+        "source_id": "isuzu_2024",
+        "page": "major-model specification and Tokyo price tables",
+        "series": "ELF Mio 3DF-NHR87AF, single cab, flat body, flat-low",
+        "kind": "published_tokyo_recommended_retail_price_excluding_tax"
+      },
+      "point_quote": {
+        "value": null,
+        "unit": "point_per_reference_unit",
+        "exact_fraction": {
+          "numerator": "3655",
+          "denominator": "1514551"
+        },
+        "approximate_value": "0.00241325647",
+        "formula": "3655000 / 151.4551 / 10000000",
+        "fx_reference": {
+          "jpy_per_usd": "151.4551",
+          "source_id": "fed_fx_2024",
+          "year": 2024
+        },
+        "rounding": "approximation is display only; accounting rounding not adopted"
+      },
+      "published_physical_spec": {
+        "source_id": "isuzu_2024",
+        "payload_kg": "1300",
+        "gross_vehicle_mass_kg": "3435",
+        "passenger_capacity": "3",
+        "bed_dimensions_mm": [
+          "3120",
+          "1620",
+          "380"
+        ],
+        "fuel": "diesel",
+        "fuel_consumption_for_this_spec": null
+      },
+      "review": {
+        "source_price_checked": true,
+        "price_adopted": false,
+        "physical_spec_adopted": false,
+        "world_law_ref": null,
+        "unresolved_ja": "採用する具体購入仕様と税・取得範囲。型式内の別仕様にある1.35tや燃費を混ぜない。燃料・道路・運転・整備・距離・時間・積卸しを定義し、参考積載量を毎TURN輸送量へ直結しない。"
+      },
+      "executable": false
+    }
+  ],
+  "unmatched_price_references": [
+    {
+      "reference_id": "v5-reference-2024/canter_2RGFBA20",
+      "label_ja": "小型トラック・2024年価格掲載仕様",
+      "source_url": "https://www.mitsubishi-fuso.com/ja/news-main/press-release/2024/02/21/小型トラック「キャンター」新型モデルを発売-2/",
+      "native_price": {
+        "value": "6526300",
+        "currency": "JPY",
+        "year": 2024,
+        "tax": "includes 10 percent consumption tax",
+        "scope": "Tokyo published sale price; standard cab, wooden standard body, full low floor"
+      },
+      "conversion_reference": {
+        "jpy_per_usd": "151.4551",
+        "year": 2024,
+        "source_url": "https://www.federalreserve.gov/releases/g5a/20250106/"
+      },
+      "alternative_quote_formulas": {
+        "tax_inclusive_points": "6526300 / 151.4551 / 10000000",
+        "tax_exclusive_points": "6526300 / 1.10 / 151.4551 / 10000000"
+      },
+      "payload_tonnes": null,
+      "fuel_use": null,
+      "unresolved_ja": "価格掲載車と諸元の同一仕様対応、税・登録・運行・燃料・道路・整備条件。税抜価格を自動採用しない。",
+      "price_adopted": false,
+      "physical_spec_adopted": false,
+      "executable": false,
+      "followup_source_url": "https://assets.mitsubishi-fuso.com/fusoassets/2019/07/MY24_CanterCargo_BR_webversion_D796014.pdf",
+      "followup_status": "Official MY24 catalog found, but exact release vehicle and specification-column match remains unverified. No payload or fuel-economy value imported."
+    }
+  ],
+  "free_proposals": {
+    "allowed": true,
+    "handling_proposal": "Preserve original proposal and identifiers. Map only when specification equivalence is established. If no common specification/price exists, keep unresolved and stop; never invent free capacity, replace the proposal, discard it, or reroll.",
+    "unknown_price": null,
+    "unknown_effect": null,
+    "handling_adopted": false
+  },
+  "coverage_gaps_ja": [
+    "食料生産設備・加工",
+    "水・貯蔵・冷蔵",
+    "道路・港・輸送",
+    "燃料供給・再生可能以外を含む発電",
+    "通信",
+    "医療",
+    "技術・研究",
+    "行政基盤",
+    "防護・安全保障"
+  ],
+  "coverage_note_ja": "不足分を世界から除外しない。ここにある資産だけを選択肢として国家生成へ渡さない。",
+  "before_runtime_use": [
+    "Review and adopt complete price/specification boundaries",
+    "Record and hash referenced source snapshots",
+    "Freeze rounding and acquisition-scope rules",
+    "Define physical dependencies and world laws",
+    "Keep raw generation and derived accounting separate"
+  ]
+}
