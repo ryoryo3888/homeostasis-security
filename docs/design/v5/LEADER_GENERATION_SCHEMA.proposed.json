@@ -1,0 +1,76 @@
+{
+  "title": "V5 leader persona — proposed generation schema v1",
+  "type": "object",
+  "properties": {
+    "layer1": {
+      "type": "object",
+      "properties": {
+        "person_profile": {
+          "type": "object",
+          "properties": {
+            "fictional_name": {"type": "string", "description": "架空の人物名。"},
+            "age_years": {"type": "integer", "minimum": 0, "description": "人物設定上の年齢。年齢による優劣は設けない。"},
+            "life_history": {"type": "array", "items": {"type": "string"}, "minItems": 1, "description": "人物を形作った経歴。担当国家の設定を含めない。"},
+            "values_and_beliefs": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+            "relationship_style": {"type": "string"},
+            "tensions_and_vulnerabilities": {"type": "array", "items": {"type": "string"}, "description": "内的葛藤・弱点。無理な矛盾の創作を求めず、空配列も保持する。"},
+            "additional_personal_context": {"type": ["string", "null"]}
+          },
+          "required": ["fictional_name", "age_years", "life_history", "values_and_beliefs", "relationship_style", "tensions_and_vulnerabilities", "additional_personal_context"],
+          "additionalProperties": false
+        },
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "empathy": {"type": "integer", "minimum": 0, "maximum": 100, "description": "共感性：他者の立場や苦痛を感じ取り意識に留める傾向。救援を選ぶかとは別。"},
+            "initial_trust": {"type": "integer", "minimum": 0, "maximum": 100, "description": "他者への初期信頼：情報が少ない相手の言葉や意図を信用する初期期待。"},
+            "vigilance": {"type": "integer", "minimum": 0, "maximum": 100, "description": "警戒心：隠れた危険や裏付け不足に注意し、確認を求める傾向。初期信頼とは別軸。逆数や相関制約で自動決定しない。"},
+            "risk_tolerance": {"type": "integer", "minimum": 0, "maximum": 100, "description": "リスク許容：見積もれる損失可能性を受け入れる傾向。"},
+            "ambiguity_tolerance": {"type": "integer", "minimum": 0, "maximum": 100, "description": "不確実性耐性：確率や状況自体が分からない状態を抱えて判断できる傾向。"},
+            "instrumental_harm_tolerance": {"type": "integer", "minimum": 0, "maximum": 100, "description": "非情さ：必要と考えた目的のため、認識した他者の損害を受け入れ得る傾向。加害の喜びや目標ではない。"},
+            "compromise_readiness": {"type": "integer", "minimum": 0, "maximum": 100, "description": "妥協性：自分の要求の一部を調整できる傾向。"},
+            "retaliation_tendency": {"type": "integer", "minimum": 0, "maximum": 100, "description": "報復傾向：被害や裏切りと認識した後、対抗的に応じる傾向。"},
+            "norm_commitment": {"type": "integer", "minimum": 0, "maximum": 100, "description": "規範遵守：約束・規則そのものを判断理由として重んじる傾向。"},
+            "outcome_orientation": {"type": "integer", "minimum": 0, "maximum": 100, "description": "結果重視：選択がもたらす帰結を比較し、判断理由とする傾向。全体利益最大化の命令ではない。"},
+            "future_orientation": {"type": "integer", "minimum": 0, "maximum": 100, "description": "長期思考：遠い将来の影響を現在の判断に含める傾向。"},
+            "information_openness": {"type": "integer", "minimum": 0, "maximum": 100, "description": "情報共有傾向：自分が知る情報を伝える基本姿勢。低値は秘匿寄り、高値は共有寄り。個別の例外は条件付き原則に残す。"},
+            "power_seeking": {"type": "integer", "minimum": 0, "maximum": 100, "description": "権力欲：権限・影響力を得て維持すること自体への欲求。能力とは別。"},
+            "responsibility_ownership": {"type": "integer", "minimum": 0, "maximum": 100, "description": "責任感：自分の役割や決定の結果を引き受けようとする傾向。"},
+            "national_interest_weight": {"type": "integer", "minimum": 0, "maximum": 100, "description": "自国利益の重み：自国の利益・安全を判断に含める強さ。常に他国に優先する命令ではない。"},
+            "external_welfare_weight": {"type": "integer", "minimum": 0, "maximum": 100, "description": "他国への配慮：他国の損失や生活を判断に含める強さ。自国利益と同時に高くてよい。"}
+          },
+          "required": ["empathy", "initial_trust", "vigilance", "risk_tolerance", "ambiguity_tolerance", "instrumental_harm_tolerance", "compromise_readiness", "retaliation_tendency", "norm_commitment", "outcome_orientation", "future_orientation", "information_openness", "power_seeking", "responsibility_ownership", "national_interest_weight", "external_welfare_weight"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["person_profile", "parameters"],
+      "additionalProperties": false
+    },
+    "layer2": {
+      "type": "object",
+      "properties": {
+        "text": {"type": "string", "description": "本人が他国Leaderへ初めて語る一人称の自己紹介。日本語200〜300文字程度。内部パラメータ数値を列挙しない。"}
+      },
+      "required": ["text"],
+      "additionalProperties": false
+    },
+    "layer3": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "perceived_condition": {"type": "string", "description": "本人がどういう状況だと認識した場合か。世界の真の状態を自動的に知るという意味ではない。"},
+          "what_matters": {"type": "string"},
+          "judgment_tendency": {"type": "string"},
+          "deliberation_style": {"type": "string", "description": "確認・待機・決断の進め方。固定の意思決定速度点数にしない。"},
+          "exceptions_and_tensions": {"type": ["string", "null"]}
+        },
+        "required": ["perceived_condition", "what_matters", "judgment_tendency", "deliberation_style", "exceptions_and_tensions"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["layer1", "layer2", "layer3"],
+  "additionalProperties": false
+}
