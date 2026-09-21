@@ -75,3 +75,21 @@ Collection completion means twelve saved proposals, not twelve accepted initial
 nations. This mode cannot finalize nation acceptance or the leader assignment,
 start simulation, or publish the evidence. The separate protocol records the
 post-generation change to the stopping rule without rewriting earlier RAW.
+
+
+### Asset review is separate from proposal identity validation
+
+The first collection implementation also stopped on duplicate asset source
+labels. A completed response used the same catalogue-source label for two
+distinct holding IDs. Its original failure remains preserved; it is not silently
+changed into a successfully validated nation. A continuation may import that
+schema-valid, correctly identified response as an unaccepted proposal and move
+asset-content checks to the bundled review. No model output is regenerated.
+
+Duplicate asset IDs or source claims, unresolved asset references, asset-unit
+mismatches and invalid claimed quantities or balances remain review errors;
+they do not grant valid holdings or canonical balances. JSON structure and
+world, nation, map and territory identity remain mandatory. The revised
+collection validator cannot defer transport, parsing, schema or identity errors.
+The amendment and imported original statuses are recorded in a new plan;
+outgoing prompts, schemas and generation settings remain the same.

@@ -65,6 +65,20 @@ class NationCollectionTests(unittest.TestCase):
                     'quantity': {'value': None, 'unit': None}, 'related_holding_ids': ['h1'],
                     'unresolved_fields': ['quantity', 'price'],
                 }]
+            if mode.startswith('duplicate_source'):
+                record['holdings'] = [{
+                    'holding_id': f'h{number}', 'source_id': 'shared_catalog_name',
+                    'name': f'distinct synthetic asset {number}', 'spec_id': 'synthetic-stock',
+                    'asset_kind': 'inventory', 'quantity': {'value': str(number), 'unit': 'test_unit'},
+                    'region_ids': slot['territory_region_ids'], 'state_description': 'record only',
+                    'capability_claim': 'unaccepted claim', 'dependencies': [], 'proposal_id': None,
+                } for number in (1, 2)]
+            if mode == 'duplicate_source_unknown_region':
+                record['holdings'][1]['region_ids'] = ['unavailable-region']
+            if mode == 'duplicate_source_unknown_nation':
+                record['external_relation_claims'] = [{'nation_ids': ['nation-unavailable'], 'claim_text': 'unverified relation'}]
+            if mode == 'duplicate_source_wrong_identity':
+                record['nation_id'] = 'nation-unexpected'
             if mode == 'wrong_reference':
                 record['geography_ref']['map_sha256'] = '0' * 64
             if mode == 'invalid_schema':
@@ -128,6 +142,81 @@ class NationCollectionTests(unittest.TestCase):
         self.assertFalse((self.root / 'attempt-03/DERIVED/content-review.json').exists())
         self.assertFalse((self.root / 'assignment.json').exists())
         self.assertEqual(len(self.requests), 2)
+
+    def test_duplicate_source_remains_unaccepted_but_does_not_block_collection(self):
+        first = self.invoke(mode='duplicate_source')
+        self.assertEqual(first['status'], 'success')
+        raw = run._output(self.root / 'attempt-03')
+        self.assertEqual([h['source_id'] for h in raw['holdings']], ['shared_catalog_name'] * 2)
+        report = read_record(self.root / 'attempt-03/DERIVED/structural-validation.json')['report']
+        self.assertEqual(report['asset_contract_issue'], 'DUPLICATE_SOURCE_CLAIM')
+        self.assertFalse(report['accepted_initial_nation'])
+        self.assertIsNone(report['accepted_retained_points'])
+        accounting = read_record(self.root / 'attempt-03/DERIVED/accounting-review.json')['report']
+        self.assertFalse(accounting['accepted_initial_accounting'])
+        self.assertIsNone(accounting['exact_retained_points'])
+        second = self.invoke(mode='balance_mismatch')
+        self.assertEqual((second['status'], second['index']), ('success', 4))
+        self.assertEqual(len(self.requests), 4)
+        self.assertFalse((self.root / 'assignment.json').exists())
+
+    def test_duplicate_source_never_hides_wrong_nation_identity(self):
+        result = self.invoke(mode='duplicate_source_wrong_identity')
+        self.assertEqual(result['error']['code'], 'NATION_IDENTITY_MISMATCH')
+        with self.assertRaisesRegex(run.GenerationError, 'BATCH_BLOCKED'):
+            self.invoke()
+        self.assertEqual(len(self.requests), 2)
+
+    def test_duplicate_source_never_hides_unknown_asset_region(self):
+        result = self.invoke(mode='duplicate_source_unknown_region')
+        self.assertEqual(result['error']['code'], 'UNKNOWN_REGION_REFERENCE')
+        with self.assertRaisesRegex(run.GenerationError, 'BATCH_BLOCKED'):
+            self.invoke()
+        self.assertEqual(len(self.requests), 2)
+
+    def test_duplicate_source_never_hides_unknown_external_nation(self):
+        result = self.invoke(mode='duplicate_source_unknown_nation')
+        self.assertEqual(result['error']['code'], 'UNKNOWN_NATION_REFERENCE')
+        with self.assertRaisesRegex(run.GenerationError, 'BATCH_BLOCKED'):
+            self.invoke()
+        self.assertEqual(len(self.requests), 2)
+
+    def test_stopped_collection_imports_three_proposals_without_retrying_failed_raw(self):
+        old = Path(self.fixture.tmp.name) / 'old-collection-v6'
+        # Recreate the old validator behavior with immutable synthetic evidence.
+        with patch.object(run, 'VERSION', 'v5-nation-initialization-6-proposal-collection'), \
+             patch.object(run, 'inspect_collection_output', side_effect=run.inspect_nation_output):
+            run.prepare_collection(old, proposal_source=self.source)
+            result = run.generate_next(old, credential='SYNTHETIC_SECRET',
+                                       transport=self.transport(mode='balance_mismatch'))
+            self.assertEqual(result['status'], 'success')
+            result = run.generate_next(old, credential='SYNTHETIC_SECRET',
+                                       transport=self.transport(mode='duplicate_source'))
+            self.assertEqual(result['error']['code'], 'DUPLICATE_SOURCE_CLAIM')
+            self.assertEqual(result['index'], 4)
+        immutable_before = {str(p): p.read_bytes() for p in old.rglob('*') if p.is_file()}
+        self.assertEqual(verify(old / 'attempt-04')['status'], 'failure')
+        target = Path(self.fixture.tmp.name) / 'extended-collection'
+        prepared = run.prepare_collection(target, proposal_source=old)
+        self.assertEqual(prepared['imported_proposals'], 3)
+        self.assertEqual(prepared['new_proposals'], 9)
+        self.assertEqual(prepared['map_generation_calls'], 0)
+        plan = read_record(target / 'plan.json')
+        self.assertEqual(plan['max_generation_calls'], 9)
+        self.assertEqual(plan['max_count_calls'], 9)
+        self.assertEqual(run._first_index(plan), 5)
+        self.assertEqual([p['nation_id'] for p in plan['collection_source']['collected_proposals']], run.IDS[:3])
+        self.assertEqual(plan['collection_source']['collected_proposals'][-1]['original_status'], 'failure')
+        self.requests = []
+        result = run.generate_next(target, credential='SYNTHETIC_SECRET',
+                                   transport=self.transport(mode='balance_mismatch'))
+        self.assertEqual((result['status'], result['index']), ('success', 5))
+        self.assertEqual(len(self.requests), 2)
+        context = json.loads(json.loads(self.requests[-1].content)['contents'][0]['parts'][1]['text'])
+        self.assertEqual(context['own_nation_id'], 'nation-004')
+        self.assertEqual(immutable_before, {str(p): p.read_bytes() for p in old.rglob('*') if p.is_file()})
+        self.assertEqual(verify(old / 'attempt-04')['status'], 'failure')
+        self.assertFalse((target / 'assignment.json').exists())
 
     def test_reference_failure_blocks_without_retry_or_reroll(self):
         result = self.invoke(mode='wrong_reference')

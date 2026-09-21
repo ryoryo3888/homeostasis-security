@@ -32,7 +32,7 @@ from v2_autonomous import Journal
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = 'gemini-3.6-flash'
 ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/' + MODEL
-VERSION = 'v5-nation-initialization-6-proposal-collection'
+VERSION = 'v5-nation-initialization-7-deferred-asset-review'
 LIMITS = {'map': {'input': 12000, 'output': 12288}, 'nation': {'input': 64000, 'output': 16384}}
 CEILING = Decimal('1.50')
 IDS = [f'nation-{n:03d}' for n in range(1, 13)]
@@ -307,6 +307,8 @@ def _collection_source(directory):
     """Import one unaccepted proposal; do not undo its earlier stop record."""
     directory=Path(directory)
     plan=read_record(directory/'plan.json')
+    if plan['version']=='v5-nation-initialization-6-proposal-collection':
+        return _extended_collection_source(directory,plan)
     ensure(plan['version']=='v5-nation-initialization-5-frozen-map-continuation',
            'UNSUPPORTED_COLLECTION_SOURCE')
     ensure({p.name for p in directory.glob('attempt-*')}=={'attempt-02'}
@@ -356,6 +358,101 @@ def _collection_source(directory):
             'proposal_status':'unaccepted_original_proposal','reroll':False}
 
 
+DEFERRED_ASSET_ERRORS=frozenset((
+    'DUPLICATE_HOLDING_ID','DUPLICATE_SOURCE_CLAIM','DUPLICATE_PROPOSAL_ID',
+    'NEGATIVE_QUANTITY','UNKNOWN_PROPOSAL_REFERENCE',
+    'HOLDING_UNIT_MISMATCH','UNKNOWN_HOLDING_REFERENCE',
+    'NEGATIVE_REPORTED_BALANCE'))
+
+
+def inspect_collection_output(output,package):
+    """Only asset-content failures move to review; identity/schema stay fatal."""
+    try:
+        return inspect_nation_output(output,package)
+    except NationContractError as exc:
+        if str(exc) not in DEFERRED_ASSET_ERRORS:
+            raise
+        # A first asset error must not hide later references outside this world.
+        geography=package['context']['common_geography']
+        regions={r['region_id'] for r in geography['regions']}
+        nations={n['nation_id'] for n in geography['nation_slots']}
+        if any(not set(item['region_ids'])<=regions for item in (*output['natural_resources'],*output['holdings'])):
+            raise NationContractError('UNKNOWN_REGION_REFERENCE') from exc
+        if any(not set(claim['nation_ids'])<=nations for claim in output['external_relation_claims']):
+            raise NationContractError('UNKNOWN_NATION_REFERENCE') from exc
+        # inspect_nation_output validates JSON shape and world/nation/map/
+        # territory identity before it can raise any of these asset errors.
+        return {'structurally_valid':False,'schema_and_nation_identity_valid':True,
+                'accepted_initial_nation':False,'accepted_retained_points':None,
+                'requires_stop_before_acceptance':True,'content_review_deferred':True,
+                'asset_contract_issue':str(exc),'record_sha256':record_hash(output),
+                'validation_coverage':'first_asset_contract_error_only; additional accounting and content review required'}
+
+
+def _extended_collection_source(directory,plan):
+    """Retain the completed proposals from a collection stopped on asset review."""
+    inherited=_collection_source(plan['collection_source']['directory'])
+    ensure(inherited==plan['collection_source'],'COLLECTION_ANCESTOR_CHANGED')
+    frozen=_frozen_source(plan['frozen_source']['directory'])
+    ensure(frozen==plan['frozen_source'] and plan['world_id']==frozen['world_id']
+           and plan['catalog_sha256']==frozen['catalog_sha256']
+           and plan['assignment']==frozen['assignment'] and plan['leader_references']==frozen['leader_references'],
+           'COLLECTION_FIXED_INPUTS_CHANGED')
+    ensure(record_hash(read_record(directory/'catalog.json'))==plan['catalog_sha256'],'COLLECTION_CATALOG_CHANGED')
+    roots=sorted(directory.glob('attempt-*'))
+    ensure(0<len(roots)<11 and not (directory/'assignment.json').exists(),'COLLECTION_EXTENSION_SCOPE_CHANGED')
+    indices=list(range(3,3+len(roots)))
+    ensure([p.name for p in roots]==[f'attempt-{i:02d}' for i in indices]
+           and {p.name for p in directory.glob('reservation-*.json')}=={f'reservation-{i:02d}.json' for i in indices},
+           'COLLECTION_EXTENSION_HISTORY_GAP')
+    ensure({p.name for p in directory.glob('blocked-*.json')}=={f'blocked-{indices[-1]:02d}.json'},
+           'COLLECTION_EXTENSION_STOP_REQUIRED')
+    proposals=[{'nation_id':IDS[0],'directory':inherited['proposal_directory'],
+                'evidence_hash':inherited['proposal_evidence_hash'],'original_status':'success'}]
+    cost=Decimal(inherited['charged_usd'])
+    ledger=[]
+    for index,root in zip(indices,roots):
+        evidence=verify(root)
+        manifest=read_record(root/'manifest.json')
+        package=_package(directory,plan,index);body=http_body(package)
+        ensure(manifest['experiment_config']['plan_sha256']==digest(plan)
+               and manifest['experiment_config']['index']==index
+               and manifest['experiment_config']['stage']=='nation'
+               and manifest['experiment_config']['request_sha256']==digest(body)
+               and read_record(root/'RAW/generation.request.json')==body
+               and base64.b64decode(read_record(root/'RAW/generation.wire.json')['body_base64'],validate=True)==wire_bytes(body),
+               'COLLECTION_EXTENSION_INPUT_CHANGED')
+        output=_output(root)
+        validation=inspect_collection_output(output,package)
+        if index==indices[-1]:
+            error=read_record(root/'RAW/error.json')
+            ensure(evidence['status']=='failure' and error['code'] in DEFERRED_ASSET_ERRORS
+                   and error['stage']=='validate_output' and error['generation_attempted'] is True
+                   and read_record(directory/f'blocked-{index:02d}.json')==error,
+                   'COLLECTION_EXTENSION_FAILURE_NOT_ASSET_REVIEW')
+        else:
+            ensure(evidence['status']=='success','COLLECTION_EXTENSION_PRIOR_INCOMPLETE')
+        reservation=read_record(directory/f'reservation-{index:02d}.json')
+        ensure(reservation['index']==index and reservation['request_sha256']==digest(body)
+               and Decimal(reservation['usd'])==price(64000,16384),'COLLECTION_RESERVATION_CHANGED')
+        receipt=read_record(root/'RAW/receipt.json')
+        wire=read_record(root/'RAW/generation.response.json')
+        response=load_response_object(base64.b64decode(wire['body_base64'],validate=True).decode('utf-8'))
+        usage=account_usage(response.get('usageMetadata'))
+        ensure(receipt['accounting']==usage and Decimal(usage['estimated_cost_usd'])<=Decimal(reservation['usd']),
+               'COLLECTION_USAGE_CHANGED')
+        cost+=Decimal(usage['estimated_cost_usd'])
+        ledger.append({'directory':str(root),'evidence_hash':evidence['evidence_hash'],
+                       'charged_usd':usage['estimated_cost_usd'],'original_reservation_usd':reservation['usd']})
+        proposals.append({'nation_id':output['nation_id'],'directory':str(root),
+                          'evidence_hash':evidence['evidence_hash'],'original_status':evidence['status'],
+                          'collection_validation':validation})
+    return {'directory':str(directory),'plan_sha256':digest(plan),'inherited':inherited,
+            'collected_proposals':proposals,'additional_ledger':ledger,'charged_usd':str(cost),
+            'next_index':indices[-1]+1,'proposal_status':'unaccepted_original_proposals',
+            'amendment':'asset_content_errors_deferred_after_schema_and_identity_validation','reroll':False}
+
+
 def prepare_collection(directory, *, proposal_source):
     """Option 1: collect the remaining eleven proposals before content review."""
     source=_collection_source(proposal_source)
@@ -364,17 +461,20 @@ def prepare_collection(directory, *, proposal_source):
     with exclusive_execution(directory):
         ensure(not directory.exists() and not directory.is_symlink(),'NEW_BATCH_REQUIRED')
         ensure(date.today()<=date(2026,12,31),'PRICE_WINDOW_EXPIRED')
-        maximum=11*price(LIMITS['nation']['input'],LIMITS['nation']['output'])
+        first=source.get('next_index',3)
+        remaining=14-first
+        maximum=remaining*price(LIMITS['nation']['input'],LIMITS['nation']['output'])
         already=Decimal(prior['frozen_source']['charged_usd'])+Decimal(source['charged_usd'])
         ensure(maximum+already<=CEILING,'BUDGET_NOT_SUFFICIENT')
         plan={**prior,'version':VERSION,'batch_id':'v5-nations-'+uuid.uuid4().hex,
               'created_at':timestamp(),'maximum_reserved_usd':str(maximum),
-              'max_generation_calls':11,'max_count_calls':11,'collection_source':source,
+              'max_generation_calls':remaining,'max_count_calls':remaining,'collection_source':source,
               'source_hashes':source_hashes(),'runtime':_runtime(),
               'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
               'continuation':'collect-remaining-proposals-before-bundled-review',
               'collection_policy':{'version':'proposal-collection-1','target_proposals':12,
-                  'imported_proposals':1,'new_proposals':11,'defer_content_acceptance':True,
+                  'imported_proposals':first-2,'new_proposals':remaining,'defer_content_acceptance':True,
+                  'deferred_asset_errors':sorted(DEFERRED_ASSET_ERRORS),
                   'unresolved_assets':'preserve_for_bundled_review','balance_errors':'derive_without_rewriting_raw',
                   'technical_errors':'preserve_and_stop','assignment_eligible':False,
                   'simulation_eligible':False,'supplemental_generation_authorized':False,
@@ -388,11 +488,11 @@ def prepare_collection(directory, *, proposal_source):
         Journal(directory).write('catalog.json',read_record(Path(proposal_source)/'catalog.json'))
         Journal(directory).write('plan.json',plan)
         return {'status':'prepared','plan_sha256':digest(plan),'maximum_reserved_usd':str(maximum),
-                'prior_charged_usd':str(already),'map_generation_calls':0,'imported_proposals':1,'new_proposals':11}
+                'prior_charged_usd':str(already),'map_generation_calls':0,'imported_proposals':first-2,'new_proposals':remaining}
 
 
 def _first_index(plan):
-    return 3 if plan.get('collection_source') else 2 if plan.get('frozen_source') else 1
+    return plan['collection_source'].get('next_index',3) if plan.get('collection_source') else 2 if plan.get('frozen_source') else 1
 
 
 def _map_root(directory,plan):
@@ -415,7 +515,7 @@ def _plan(directory):
     ensure(date.today() <= date(2026,12,31), 'PRICE_WINDOW_EXPIRED')
     ensure(plan['version']==VERSION and plan['model']==MODEL and plan['limits']==LIMITS
            and plan['usd_stop_limit']==str(CEILING) and plan['nation_ids']==IDS
-           and plan['max_generation_calls']==(11 if plan.get('collection_source') else 12 if plan.get('frozen_source') else 13)
+           and plan['max_generation_calls']==(14-_first_index(plan) if plan.get('collection_source') else 12 if plan.get('frozen_source') else 13)
            and plan['max_count_calls']==plan['max_generation_calls']
            and plan['retry_count']==0 and plan['concurrency']==1
            and plan['map_method']=='shared-boundaries-v2-complete-slots', 'PLAN_SCOPE_CHANGED')
@@ -567,7 +667,8 @@ def generate_next(directory, *, credential, transport):
                 compiled=compile_topology(output,expected_world_id=plan['world_id'],expected_nation_ids=IDS)
                 validation=compiled['report']
             else:
-                validation=inspect_nation_output(output,package)
+                validation=(inspect_collection_output(output,package) if plan.get('collection_source')
+                            else inspect_nation_output(output,package))
             # Success means the generation completed; final world acceptance remains separate.
             result=run.finish('success',completed_turns=0)
             stage='save_derived'
