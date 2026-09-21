@@ -51,3 +51,27 @@ execution ceiling is unchanged. New calls continue to reserve their full
 maximum and stop after the first technical or unresolved content failure.
 This continuation initializes nations only; it does not run the simulation,
 add sea or transport routes, or publish the working evidence.
+
+
+## Collect proposals before bundled acceptance review
+
+A subsequent operator decision separates proposal collection from nation
+acceptance. The first structurally valid nation proposal is retained by
+reference, including its original content rejection and unresolved warehouse.
+A new protocol collects only the eleven remaining nation proposals. The map,
+world ID, catalogue, nation-generation prompt, response schema, generation
+settings, twelve persona references and assignment seed remain fixed.
+The earlier proposal and its problems are not supplied to the other nations.
+
+Unresolved asset specifications and accounting discrepancies are preserved for
+one bundled review after collection. They do not grant a free asset, a zero
+price, a settled balance, or executable capacity. The existing catalogue stop
+rule still prevents acceptance and physical use of unresolved assets; the
+amendment changes when proposal collection pauses. Transport, malformed output,
+reference, evidence-integrity and execution-limit failures still stop the batch.
+No automatic retry, supplemental generation or replacement choice is added.
+
+Collection completion means twelve saved proposals, not twelve accepted initial
+nations. This mode cannot finalize nation acceptance or the leader assignment,
+start simulation, or publish the evidence. The separate protocol records the
+post-generation change to the stopping rule without rewriting earlier RAW.

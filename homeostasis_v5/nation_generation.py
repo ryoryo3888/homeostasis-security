@@ -32,7 +32,7 @@ from v2_autonomous import Journal
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = 'gemini-3.6-flash'
 ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/' + MODEL
-VERSION = 'v5-nation-initialization-5-frozen-map-continuation'
+VERSION = 'v5-nation-initialization-6-proposal-collection'
 LIMITS = {'map': {'input': 12000, 'output': 12288}, 'nation': {'input': 64000, 'output': 16384}}
 CEILING = Decimal('1.50')
 IDS = [f'nation-{n:03d}' for n in range(1, 13)]
@@ -303,8 +303,96 @@ def prepare_continuation(directory, *, frozen_source):
                 'prior_charged_usd':source['charged_usd'],'map_generation_calls':0}
 
 
+def _collection_source(directory):
+    """Import one unaccepted proposal; do not undo its earlier stop record."""
+    directory=Path(directory)
+    plan=read_record(directory/'plan.json')
+    ensure(plan['version']=='v5-nation-initialization-5-frozen-map-continuation',
+           'UNSUPPORTED_COLLECTION_SOURCE')
+    ensure({p.name for p in directory.glob('attempt-*')}=={'attempt-02'}
+           and {p.name for p in directory.glob('reservation-*.json')}=={'reservation-02.json'}
+           and not (directory/'assignment.json').exists(),'COLLECTION_SOURCE_SCOPE_CHANGED')
+    frozen=_frozen_source(plan['frozen_source']['directory'])
+    ensure(frozen==plan['frozen_source'],'COLLECTION_MAP_SOURCE_CHANGED')
+    ensure(plan['world_id']==frozen['world_id'] and plan['catalog_sha256']==frozen['catalog_sha256']
+           and plan['assignment']==frozen['assignment'] and plan['leader_references']==frozen['leader_references'],
+           'COLLECTION_FIXED_INPUTS_CHANGED')
+    catalog=read_record(directory/'catalog.json')
+    ensure(record_hash(catalog)==plan['catalog_sha256'],'COLLECTION_CATALOG_CHANGED')
+    root=directory/'attempt-02'
+    evidence=verify(root)
+    ensure(evidence['status']=='success','COLLECTION_PROPOSAL_NOT_COMPLETE')
+    manifest=read_record(root/'manifest.json')
+    package=_package(directory,plan,2)
+    body=http_body(package)
+    ensure(manifest['experiment_config']['plan_sha256']==digest(plan)
+           and manifest['experiment_config']['index']==2
+           and manifest['experiment_config']['stage']=='nation'
+           and manifest['experiment_config']['request_sha256']==digest(body),
+           'COLLECTION_MANIFEST_MISMATCH')
+    ensure(read_record(root/'RAW/generation.request.json')==body
+           and base64.b64decode(read_record(root/'RAW/generation.wire.json')['body_base64'],validate=True)==wire_bytes(body),
+           'COLLECTION_REQUEST_CHANGED')
+    inspect_nation_output(_output(root),package)
+    reservation=read_record(directory/'reservation-02.json')
+    ensure(reservation['index']==2 and reservation['request_sha256']==digest(body)
+           and Decimal(reservation['usd'])==price(64000,16384),'COLLECTION_RESERVATION_CHANGED')
+    review=read_record(root/'DERIVED/content-review.json')['report']
+    ensure(review['accepted'] is False and review['evidence_hash']==evidence['evidence_hash']
+           and read_record(directory/'blocked-02.json')['code']=='CONTENT_REVIEW_REJECTED',
+           'COLLECTION_SOURCE_REVIEW_CHANGED')
+    receipt=read_record(root/'RAW/receipt.json')
+    wire=read_record(root/'RAW/generation.response.json')
+    response=load_response_object(base64.b64decode(wire['body_base64'],validate=True).decode('utf-8'))
+    accounting=account_usage(response.get('usageMetadata'))
+    ensure(receipt['accounting']==accounting
+           and Decimal(accounting['estimated_cost_usd'])<=Decimal(reservation['usd']),
+           'COLLECTION_USAGE_CHANGED')
+    return {'directory':str(directory),'plan_sha256':digest(plan),
+            'proposal_directory':str(root),'nation_id':IDS[0],
+            'proposal_evidence_hash':evidence['evidence_hash'],
+            'content_review_sha256':digest(review),'charged_usd':accounting['estimated_cost_usd'],
+            'original_reservation_usd':reservation['usd'],
+            'proposal_status':'unaccepted_original_proposal','reroll':False}
+
+
+def prepare_collection(directory, *, proposal_source):
+    """Option 1: collect the remaining eleven proposals before content review."""
+    source=_collection_source(proposal_source)
+    prior=read_record(Path(proposal_source)/'plan.json')
+    directory=Path(directory)
+    with exclusive_execution(directory):
+        ensure(not directory.exists() and not directory.is_symlink(),'NEW_BATCH_REQUIRED')
+        ensure(date.today()<=date(2026,12,31),'PRICE_WINDOW_EXPIRED')
+        maximum=11*price(LIMITS['nation']['input'],LIMITS['nation']['output'])
+        already=Decimal(prior['frozen_source']['charged_usd'])+Decimal(source['charged_usd'])
+        ensure(maximum+already<=CEILING,'BUDGET_NOT_SUFFICIENT')
+        plan={**prior,'version':VERSION,'batch_id':'v5-nations-'+uuid.uuid4().hex,
+              'created_at':timestamp(),'maximum_reserved_usd':str(maximum),
+              'max_generation_calls':11,'max_count_calls':11,'collection_source':source,
+              'source_hashes':source_hashes(),'runtime':_runtime(),
+              'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+              'continuation':'collect-remaining-proposals-before-bundled-review',
+              'collection_policy':{'version':'proposal-collection-1','target_proposals':12,
+                  'imported_proposals':1,'new_proposals':11,'defer_content_acceptance':True,
+                  'unresolved_assets':'preserve_for_bundled_review','balance_errors':'derive_without_rewriting_raw',
+                  'technical_errors':'preserve_and_stop','assignment_eligible':False,
+                  'simulation_eligible':False,'supplemental_generation_authorized':False,
+                  'catalog_stop_rule_scope':'stop_acceptance_and_physical_use_not_proposal_collection'},
+              'conditions':{**prior['conditions'],'free_proposals':'preserve_and_stop_before_acceptance',
+                            'proposal_collection_only':True}}
+        ensure(plan['model']==MODEL and plan['limits']==LIMITS and plan['usd_stop_limit']==str(CEILING)
+               and plan['nation_ids']==IDS and plan['retry_count']==0 and plan['concurrency']==1,
+               'COLLECTION_GENERATION_CONDITIONS_CHANGED')
+        directory.mkdir(mode=0o700)
+        Journal(directory).write('catalog.json',read_record(Path(proposal_source)/'catalog.json'))
+        Journal(directory).write('plan.json',plan)
+        return {'status':'prepared','plan_sha256':digest(plan),'maximum_reserved_usd':str(maximum),
+                'prior_charged_usd':str(already),'map_generation_calls':0,'imported_proposals':1,'new_proposals':11}
+
+
 def _first_index(plan):
-    return 2 if plan.get('frozen_source') else 1
+    return 3 if plan.get('collection_source') else 2 if plan.get('frozen_source') else 1
 
 
 def _map_root(directory,plan):
@@ -327,7 +415,7 @@ def _plan(directory):
     ensure(date.today() <= date(2026,12,31), 'PRICE_WINDOW_EXPIRED')
     ensure(plan['version']==VERSION and plan['model']==MODEL and plan['limits']==LIMITS
            and plan['usd_stop_limit']==str(CEILING) and plan['nation_ids']==IDS
-           and plan['max_generation_calls']==(12 if plan.get('frozen_source') else 13)
+           and plan['max_generation_calls']==(11 if plan.get('collection_source') else 12 if plan.get('frozen_source') else 13)
            and plan['max_count_calls']==plan['max_generation_calls']
            and plan['retry_count']==0 and plan['concurrency']==1
            and plan['map_method']=='shared-boundaries-v2-complete-slots', 'PLAN_SCOPE_CHANGED')
@@ -343,6 +431,12 @@ def _plan(directory):
         ensure(plan['world_id']==source['world_id'] and plan['assignment']==source['assignment']
                and plan['leader_references']==source['leader_references']
                and plan['catalog_sha256']==source['catalog_sha256'],'FROZEN_FIXED_INPUTS_CHANGED')
+    if plan.get('collection_source'):
+        ensure(_collection_source(plan['collection_source']['directory'])==plan['collection_source'],
+               'COLLECTION_SOURCE_CHANGED')
+        ensure(plan['collection_policy']['defer_content_acceptance'] is True
+               and plan['collection_policy']['assignment_eligible'] is False
+               and plan['collection_policy']['simulation_eligible'] is False,'COLLECTION_POLICY_CHANGED')
     return plan
 
 
@@ -378,7 +472,9 @@ def _history(directory, plan, *, allow_unreviewed=False):
         wire=read_record(root/'RAW/generation.wire.json')
         ensure(base64.b64decode(wire['body_base64'],validate=True)==wire_bytes(body),'PRIOR_WIRE_CHANGED')
         review=root/'DERIVED/content-review.json'
-        if review.exists():
+        if plan.get('collection_source'):
+            ensure(not review.exists(),'COLLECTION_MUST_NOT_ACCEPT_NATIONS')
+        elif review.exists():
             report=read_record(review)['report']
             ensure(report['accepted'] is True and report['evidence_hash']==verified['evidence_hash'], 'CONTENT_REVIEW_REJECTED')
         else:
@@ -413,6 +509,7 @@ def generate_next(directory, *, credential, transport):
         reserved=sum((Decimal(read_record(p)['usd']) for p in directory.glob('reservation-*.json')),Decimal(0))
         reserved += Decimal(plan['predecessor']['reserved_usd'] if plan.get('predecessor') else '0')
         reserved += Decimal(plan['frozen_source']['charged_usd'] if plan.get('frozen_source') else '0')
+        reserved += Decimal(plan['collection_source']['charged_usd'] if plan.get('collection_source') else '0')
         ensure(reserved+maximum<=CEILING,'BUDGET_EXHAUSTED')
         ensure(not (directory/f'reservation-{index:02d}.json').exists(),'UNRESOLVED_RESERVATION')
         manifest={'format':FORMAT,'run_id':f"{plan['batch_id']}-{index:02d}",'started_at':timestamp(),
@@ -476,12 +573,20 @@ def generate_next(directory, *, credential, transport):
             stage='save_derived'
             run.derive('output.json',{'output':output,'raw_response_path':'RAW/generation.response.json'})
             run.derive('structural-validation.json',validation)
+            if plan.get('collection_source'):
+                from homeostasis_v5.nation_valuation import evaluate_initial_holdings
+                run.derive('accounting-review.json',evaluate_initial_holdings(output,Journal(directory).read('catalog.json')))
+                run.derive('proposal-status.json',{'status':'collected_pending_bundled_review',
+                    'accepted_initial_nation':False,'world_physics_approved':False,
+                    'raw_output_modified':False,'content_review_deferred':True})
             if index==1:
                 run.derive('canonical-map.json',{'map':compiled['map'],
                     'map_sha256':record_hash(compiled['map']),
                     'raw_topology_sha256':record_hash(output),
                     'source':'RAW/generation.response.json'})
-            return {**result,'index':index,'stage':stage_name,'estimated_cost_usd':actual,'content_review_required':True}
+            return {**result,'index':index,'stage':stage_name,'estimated_cost_usd':actual,
+                    'content_review_required':True,'proposal_collection_only':bool(plan.get('collection_source')),
+                    'accepted_initial_nation':False}
         except (Exception,KeyboardInterrupt) as exc:
             error={'code':_error(exc),'exception_type':type(exc).__name__,'stage':stage,'generation_attempted':attempted}
             if not (run.root/'terminal.json').exists():
@@ -497,7 +602,9 @@ def review_last(directory, *, accepted, review_notes, balance_review_notes=None)
     """Human-assisted content gate: mechanical checks cannot grant semantic approval."""
     directory=Path(directory)
     with exclusive_execution(directory):
-        plan=_plan(directory);history=_history(directory,plan,allow_unreviewed=True)
+        plan=_plan(directory)
+        ensure(not plan.get('collection_source'),'COLLECTION_ACCEPTANCE_DEFERRED')
+        history=_history(directory,plan,allow_unreviewed=True)
         ensure(bool(history),'NO_GENERATION')
         last=history[-1];root=last['root'];index=last['index'];output=_output(root)
         ensure(not (root/'DERIVED/content-review.json').exists(),'ALREADY_REVIEWED')
