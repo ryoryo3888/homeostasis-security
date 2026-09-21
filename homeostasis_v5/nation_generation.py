@@ -32,7 +32,7 @@ from v2_autonomous import Journal
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = 'gemini-3.6-flash'
 ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/' + MODEL
-VERSION = 'v5-nation-initialization-2-shared-boundaries'
+VERSION = 'v5-nation-initialization-3-complete-map'
 LIMITS = {'map': {'input': 12000, 'output': 12288}, 'nation': {'input': 64000, 'output': 16384}}
 CEILING = Decimal('1.50')
 IDS = [f'nation-{n:03d}' for n in range(1, 13)]
@@ -117,7 +117,7 @@ def prepare(directory, *, catalog, leader_references, reference_archive, predece
                 'nation_ids': IDS, 'model': MODEL, 'limits': LIMITS, 'usd_stop_limit': str(CEILING),
                 'maximum_reserved_usd': str(total), 'max_generation_calls': 13, 'max_count_calls': 13,
                 'retry_count': 0, 'concurrency': 1, 'predecessor':prior,
-                'map_method':'shared-boundaries-v1', 'valuation': 'V-A-new-equivalent-full-specification',
+                'map_method':'shared-boundaries-v2-complete-slots', 'valuation': 'V-A-new-equivalent-full-specification',
                 'source_hashes': source_hashes(), 'runtime': _runtime(),
                 'source_commit': subprocess.check_output(['git','rev-parse','HEAD'], cwd=ROOT, text=True).strip(),
                 'catalog_sha256': record_hash(catalog), 'reference_archive': reference_archive,
@@ -140,25 +140,42 @@ def prepare(directory, *, catalog, leader_references, reference_archive, predece
 
 
 def _predecessor(directory, catalog, leader_references):
-    """Read the one rejected coordinate-map trial; never reopen or edit it."""
+    """Verify the two known stopped map trials; never reopen or edit them."""
     directory=Path(directory)
     plan=read_record(directory/'plan.json')
-    ensure(plan['version']=='v5-nation-initialization-1','UNSUPPORTED_PREDECESSOR')
+    previous_version=plan['version']
+    ensure(previous_version in ('v5-nation-initialization-1','v5-nation-initialization-2-shared-boundaries'),
+           'UNSUPPORTED_PREDECESSOR')
     ensure(len(list(directory.glob('attempt-*')))==1 and (directory/'blocked-01.json').exists(),
            'PREDECESSOR_MUST_BE_STOPPED_AFTER_MAP')
     ensure(not (directory/'assignment.json').exists(),'PREDECESSOR_ASSIGNMENT_ALREADY_USED')
     evidence=verify(directory/'attempt-01')
-    ensure(evidence['status']=='success','PREDECESSOR_RESPONSE_INCOMPLETE')
-    review=read_record(directory/'attempt-01/DERIVED/content-review.json')['report']
-    ensure(review['accepted'] is False and review['evidence_hash']==evidence['evidence_hash'],
-           'PREDECESSOR_REJECTION_NOT_VERIFIED')
+    if previous_version=='v5-nation-initialization-1':
+        ensure(evidence['status']=='success','PREDECESSOR_RESPONSE_INCOMPLETE')
+        review=read_record(directory/'attempt-01/DERIVED/content-review.json')['report']
+        ensure(review['accepted'] is False and review['evidence_hash']==evidence['evidence_hash'],
+               'PREDECESSOR_REJECTION_NOT_VERIFIED')
+    else:
+        ensure(evidence['status']=='failure','PREDECESSOR_FAILURE_REQUIRED')
+        error=read_record(directory/'attempt-01/RAW/error.json')
+        ensure(error['code']=='COMPILED_MAP_GEOMETRY_REJECTED' and error['stage']=='validate_output',
+               'UNSUPPORTED_PREDECESSOR_FAILURE')
+        report=read_record(directory/'attempt-01/DERIVED/topology-validation-failure.json')['report']
+        ensure(bool(report['stop_reasons']) and all(r['code']=='EMPTY_TERRITORY_REQUIRES_CONTENT_REVIEW'
+               for r in report['stop_reasons']),'UNSUPPORTED_PREDECESSOR_FAILURE')
+        ensure(plan.get('predecessor') is not None,'ORIGINAL_TRIAL_REFERENCE_REQUIRED')
     ensure(record_hash(catalog)==plan['catalog_sha256']
            and leader_references==plan['leader_references'],'PREDECESSOR_FIXED_INPUTS_CHANGED')
     reservation=read_record(directory/'reservation-01.json')
     ensure(Decimal(reservation['usd'])==price(12000,12288),'PREDECESSOR_RESERVATION_CHANGED')
+    accumulated=Decimal(reservation['usd'])
+    if plan.get('predecessor'):
+        ancestor=_predecessor(plan['predecessor']['directory'],catalog,leader_references)
+        ensure(ancestor==plan['predecessor'],'PREDECESSOR_ANCESTOR_CHANGED')
+        accumulated+=Decimal(ancestor['reserved_usd'])
     receipt=read_record(directory/'attempt-01/RAW/receipt.json')
     return {'directory':str(directory),'plan_sha256':digest(plan),
-            'evidence_hash':evidence['evidence_hash'],'reserved_usd':reservation['usd'],
+            'evidence_hash':evidence['evidence_hash'],'reserved_usd':str(accumulated),
             'reported_cost_usd':receipt['accounting']['estimated_cost_usd'],
             'assignment':plan['assignment'],'reason':'Authorized separate trial with shared boundary representation'}
 
@@ -181,7 +198,7 @@ def _plan(directory):
            and plan['usd_stop_limit']==str(CEILING) and plan['nation_ids']==IDS
            and plan['max_generation_calls']==13 and plan['max_count_calls']==13
            and plan['retry_count']==0 and plan['concurrency']==1
-           and plan['map_method']=='shared-boundaries-v1', 'PLAN_SCOPE_CHANGED')
+           and plan['map_method']=='shared-boundaries-v2-complete-slots', 'PLAN_SCOPE_CHANGED')
     ensure(plan['source_hashes']==source_hashes() and plan['runtime']==_runtime(), 'SOURCE_OR_RUNTIME_CHANGED')
     catalog=Journal(directory).read('catalog.json')
     ensure(record_hash(catalog)==plan['catalog_sha256'], 'CATALOG_CHANGED')

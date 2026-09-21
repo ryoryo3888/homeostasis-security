@@ -5,6 +5,8 @@ import socket
 import unittest
 from unittest.mock import patch
 
+from jsonschema import Draft202012Validator
+
 from homeostasis_v5.nation_generation_contract import record_hash
 from homeostasis_v5 import nation_topology as topology
 
@@ -179,10 +181,36 @@ class NationTopologyTests(unittest.TestCase):
         record['nation_slots'][1]['territory_region_ids'].append('r0')
         self.assertRejected(record)
 
-    def test_empty_territory_is_retained_but_not_approved(self):
+    def test_empty_territory_is_rejected_by_generation_schema_without_inventing_land(self):
         record = fixture(); record['nation_slots'][0]['territory_region_ids'] = []
-        self.assertRejected(record)
+        errors = list(Draft202012Validator(topology.topology_schema()).iter_errors(record))
+        self.assertTrue(any(list(error.absolute_path) == ['nation_slots', 0, 'territory_region_ids']
+                            and error.validator == 'minItems' for error in errors))
+        error = self.assertRejected(record)
+        self.assertEqual(error.code, 'TOPOLOGY_SCHEMA_ERROR')
         self.assertEqual(record['nation_slots'][0]['territory_region_ids'], [])
+
+    def test_completed_twelve_territories_need_not_be_equal_or_connected(self):
+        record = fixture()
+        for vertex in record['vertices']:
+            if vertex['vertex_id'] in ('p11-1', 'p11-2'):
+                vertex['position_km'][0] = '43'
+        report = compile_record(record)['report']
+        nations = report['geometry']['nation_territories']
+        self.assertEqual(len(nations), 12)
+        first_area = nations[0]['area_km2']
+        last_area = nations[-1]['area_km2']
+        self.assertEqual(first_area, {'numerator': '4', 'denominator': '1'})
+        self.assertEqual(last_area, {'numerator': '8', 'denominator': '1'})
+        self.assertTrue(any(row['adjacency'] == 'disjoint' for row in report['geometry']['nation_pairs']))
+        schema = topology.topology_schema()
+        refs = schema['properties']['nation_slots']['items']['properties']['territory_region_ids']
+        self.assertEqual(refs['minItems'], 1)
+        self.assertNotIn('maxItems', refs)
+        # The earlier preliminary contract remains immutable and more permissive.
+        from homeostasis_v5.nation_generation_contract import schema_for
+        old_refs = schema_for('map')['properties']['nation_slots']['items']['properties']['territory_region_ids']
+        self.assertNotIn('minItems', old_refs)
 
     def test_holes_and_disconnected_parts_remain_possible(self):
         record = fixture()

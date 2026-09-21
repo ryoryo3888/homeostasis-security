@@ -21,3 +21,9 @@ Model output remains RAW topology. Compiled polygon geometry is DERIVED, with bo
 Each request stores outgoing bytes, incoming bytes, status, usage and validation results. A topology or geometry error preserves its diagnostic and stops the batch. Requests are serial; no automatic model repair or retry is performed. A failed map is an initialization failure, not a simulated worldline or a conclusion about leader behaviour.
 
 The previous trial's reservation remains included in the execution cap. Detailed operational cost records are private. Any further redesign or trial is recorded separately rather than rewriting the source or acceptance rules of an already started batch.
+
+## Complete initial nation slots
+
+The first shared-boundary response passed edge and overlap checks but left nine nation territories unspecified. Its complete RAW and rejection remain frozen at their original revision. A new revision aligns the input contract with the existing completion gate: every one of the twelve initial nation slots must reference at least one valid territory region in the response. No area, shape, distribution, connectivity or initial resource allocation is prescribed. This is an initial-world completeness condition; it does not prohibit loss of territory or other subsequent political phenomena.
+
+The follow-up uses a separate batch and version, preserving both prior map attempts, their cost reservations, the original catalogue, personas and assignment seed. Only one further map request is included in this corrective trial; no failed response is repaired or overwritten. Shared-boundary generation is not claimed universally reliable from these trials.

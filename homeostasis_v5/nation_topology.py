@@ -28,12 +28,14 @@ from homeostasis_v5.nation_geometry import (
 )
 
 
-TOPOLOGY_VERSION = 'shared-boundary-map-1'
+TOPOLOGY_VERSION = 'shared-boundary-map-2-complete-slots'
 MAX_GRAPH_VERTICES = MAX_TOTAL_VERTICES
 MAX_GRAPH_EDGES = MAX_TOTAL_VERTICES
 
 TOPOLOGY_PROMPT = '''同じ単一世界にある12の国家枠について、共通境界を使う平面km地図を生成してください。
 世界の広さ、海陸、地形、領域を生成し、入力の国家枠IDをそのまま使ってください。
+今回の応答で12国家すべての初期領域を完成させてください。国家枠だけを作り、領域割当や拠点を後回しにしないでください。
+各国家のterritory_region_idsへ、少なくとも1つの有効な領域IDを記録してください。国土の広さ・形・分布・連結性は指定しません。
 人口、国家の社会・制度・保有資産、国家Leaderはこの工程では生成しません。
 座標はverticesの共通頂点表に一度だけ書き、edgesは始点と終点のvertex_idを参照します。
 各領域のpolygonは、edge_idとforward/reverseで辺を順番に参照する閉路で表現します。
@@ -65,6 +67,7 @@ def _obj(properties, description=''):
 def topology_schema():
     """Return an independent schema; no caller may mutate the old map contract."""
     result = schema_for('map')
+    result['properties']['nation_slots']['items']['properties']['territory_region_ids']['minItems'] = 1
     identifier = deepcopy(result['properties']['regions']['items']['properties']['region_id'])
     point = deepcopy(result['properties']['regions']['items']['properties']['polygons']['items']['properties']['exterior']['items'])
     reference = _obj({'edge_id': deepcopy(identifier),
