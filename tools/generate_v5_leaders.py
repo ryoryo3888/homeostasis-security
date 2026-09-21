@@ -15,11 +15,14 @@ def main():
     parser.add_argument('action', choices=['prepare', 'generate-next', 'review'])
     parser.add_argument('--directory', type=Path, required=True)
     parser.add_argument('--key-file', type=Path)
+    parser.add_argument('--continue-from', type=Path)
+    parser.add_argument('--parent-evidence-hash')
     parser.add_argument('--accept', action='store_true')
     parser.add_argument('--notes', default='')
     args = parser.parse_args()
     if args.action == 'prepare':
-        result = prepare_batch(args.directory)
+        result = prepare_batch(args.directory, continuation_from=args.continue_from,
+                               expected_parent_evidence_hash=args.parent_evidence_hash)
     elif args.action == 'review':
         result = review_last(args.directory, accepted=args.accept, notes=args.notes)
     else:

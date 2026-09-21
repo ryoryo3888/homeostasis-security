@@ -57,6 +57,46 @@ def price(input_tokens, output_tokens):
     return (Decimal(input_tokens) * INPUT_PRICE + Decimal(output_tokens) * OUTPUT_PRICE) / 1000000
 
 
+def account_usage(usage):
+    """Text-only, one-candidate accounting; preserve omitted RAW fields as omitted.
+
+    Provider definition: totalTokenCount = prompt + thoughts + candidates.
+    https://ai.google.dev/api/generate-content#UsageMetadata
+    """
+    ensure(isinstance(usage, dict), 'USAGE_UNKNOWN')
+    values = [usage.get(k) for k in ('promptTokenCount', 'candidatesTokenCount', 'totalTokenCount')]
+    ensure(all(type(v) is int and v >= 0 for v in values), 'USAGE_UNKNOWN')
+    prompt, candidates, total = values
+    ensure(total >= prompt + candidates, 'USAGE_INCONSISTENT')
+    thoughts = usage.get('thoughtsTokenCount')
+    if 'thoughtsTokenCount' in usage:
+        ensure(type(thoughts) is int and thoughts >= 0, 'USAGE_UNKNOWN')
+        ensure(prompt + candidates + thoughts == total, 'USAGE_INCONSISTENT')
+    if 'toolUsePromptTokenCount' in usage:
+        ensure(type(usage['toolUsePromptTokenCount']) is int and usage['toolUsePromptTokenCount'] == 0,
+               'UNEXPECTED_TOOL_USAGE')
+    if 'serviceTier' in usage:
+        ensure(usage['serviceTier'] in ('standard', 'STANDARD'), 'UNEXPECTED_SERVICE_TIER')
+    generated = total - prompt
+    return {'version': 'v5-token-accounting-2', 'input_tokens': prompt,
+            'candidate_tokens': candidates, 'generated_tokens_including_thoughts': generated,
+            'thoughts_token_count': thoughts, 'thoughts_explicitly_returned': 'thoughtsTokenCount' in usage,
+            'basis': 'reported_total_minus_prompt', 'estimated_cost_usd': str(price(prompt, generated))}
+
+
+def _extract_persona(response):
+    candidates = response.get('candidates')
+    ensure(isinstance(candidates, list) and len(candidates) == 1, 'MISSING_OR_MULTIPLE_CANDIDATES')
+    candidate = candidates[0]
+    ensure(candidate.get('finishReason') == 'STOP', 'INCOMPLETE_PROVIDER_RESPONSE')
+    parts = candidate.get('content', {}).get('parts')
+    ensure(isinstance(parts, list) and bool(parts), 'MISSING_RESPONSE_PARTS')
+    ensure(all(isinstance(p, dict) and not p.get('thought') and isinstance(p.get('text'), str)
+               and not any(k in p for k in ('functionCall', 'executableCode', 'inlineData')) for p in parts),
+           'UNEXPECTED_RESPONSE_PART')
+    return load_response_object(''.join(part['text'] for part in parts))
+
+
 def source_hashes():
     paths = [
         'homeostasis_v5/__init__.py', 'homeostasis_v5/persona_generation.py',
@@ -118,7 +158,7 @@ def _runtime():
             'jsonschema': importlib.metadata.version('jsonschema')}
 
 
-def prepare_batch(directory):
+def _prepare_batch(directory, *, continuation=None):
     """No credentials or network; refuse existing output including failed batches."""
     ensure(date.today() <= date(2026, 12, 31), 'PRICE_WINDOW_EXPIRED')
     directory = Path(directory)
@@ -143,11 +183,96 @@ def prepare_batch(directory):
         'price_valid_through': '2026-12-31',
         'source_hashes': source_hashes(), 'source_commit': commit, 'runtime': _runtime(),
         'publication': 'private_unpublished',
+        'completed_before': 0, 'prior_reserved_usd': '0', 'continuation': None,
     }
+    if continuation is not None:
+        parent, recovered = continuation
+        ensure(directory.parent.resolve() == parent.parent.resolve() and directory.name != parent.name,
+               'CONTINUATION_MUST_BE_NEW_SIBLING')
+        plan.update({
+            'approval_scope': 'Approved accounting-only repair; retain first persona and generate remaining seven',
+            'completed_before': 1, 'max_generation_calls': 7, 'max_count_calls': 7,
+            'prior_reserved_usd': recovered['prior_reserved_usd'],
+            'continuation': {
+                'parent_directory_name': parent.name, 'parent_plan_sha256': recovered['parent_plan_sha256'],
+                'parent_evidence_hash': recovered['parent_evidence_hash'],
+                'recovered_persona_sha256': digest(recovered),
+                'accounting_version': 'v5-token-accounting-2',
+            },
+        })
+        plan['generation_ids'][0] = recovered['generation_id']
     ensure(price(MAX_INPUT, MAX_OUTPUT) * MAX_PERSONAS <= LIMIT_USD, 'BATCH_PRICE_LIMIT')
     directory.mkdir(mode=0o700)
     Journal(directory).write('plan.json', plan)
-    return {'status': 'prepared', 'max_personas': MAX_PERSONAS, 'plan_sha256': digest(plan)}
+    if continuation is not None:
+        Journal(directory).write('recovered-leader-01.json', recovered)
+    return {'status': 'prepared', 'max_personas': MAX_PERSONAS,
+            'additional_generations': plan['max_generation_calls'], 'plan_sha256': digest(plan)}
+
+
+def _recover_first(parent, expected_evidence_hash):
+    """Read-only recovery of the one specific omitted-usage failure, never regeneration."""
+    parent = Path(parent)
+    ensure(not parent.is_symlink(), 'PARENT_SYMLINK')
+    original = Journal(parent).read('plan.json')
+    ensure(original.get('continuation') is None and original['model'] == MODEL
+           and original['max_generation_calls'] == 8 and original['usd_stop_limit'] == str(LIMIT_USD),
+           'PARENT_SCOPE_MISMATCH')
+    ensure(original['request'] == build_request() and original['request_sha256'] == digest(build_request()),
+           'PARENT_INPUT_MISMATCH')
+    ensure({p.name for p in parent.glob('generation-*')} == {'generation-01'}
+           and {p.name for p in parent.glob('reservation-*.json')} == {'reservation-01.json'}
+           and not list(parent.glob('blocked-*.json')), 'PARENT_HAS_OTHER_ATTEMPTS')
+    root = parent / 'generation-01'
+    result = verify(root, expected_evidence_hash=expected_evidence_hash)
+    terminal = read_record(root / 'terminal.json')
+    ensure(result['status'] == 'failure' and terminal['error']['code'] == 'USAGE_UNKNOWN'
+           and terminal['error']['stage'] == 'validate_provider_response', 'PARENT_FAILURE_NOT_RECOVERABLE')
+    ensure(read_record(root / 'RAW/generation.request.json') == original['request'], 'PARENT_REQUEST_CHANGED')
+    reservation = Journal(parent).read('reservation-01.json')
+    ensure(reservation['generation_id'] == result['run_id']
+           and reservation['request_sha256'] == original['request_sha256']
+           and Decimal(reservation['usd']) == price(MAX_INPUT, MAX_OUTPUT), 'PARENT_RESERVATION_MISMATCH')
+    wire = read_record(root / 'RAW/generation.response.json')
+    raw = base64.b64decode(wire['body_base64'], validate=True)
+    ensure(wire['status'] == 200 and hashlib.sha256(raw).hexdigest() == wire['body_sha256'], 'PARENT_RESPONSE_MISMATCH')
+    response = load_response_object(raw.decode())
+    ensure('thoughtsTokenCount' not in response.get('usageMetadata', {}), 'NOT_OMITTED_THOUGHTS_CASE')
+    accounting = account_usage(response.get('usageMetadata'))
+    ensure(accounting['input_tokens'] <= MAX_INPUT and accounting['generated_tokens_including_thoughts'] <= MAX_OUTPUT
+           and Decimal(accounting['estimated_cost_usd']) <= price(MAX_INPUT, MAX_OUTPUT), 'PARENT_USAGE_OVER_LIMIT')
+    persona = _extract_persona(response)
+    validation = validate_persona(persona, schema=original['request']['generationConfig']['responseJsonSchema'])
+    review = read_record(root / 'DERIVED/recovery-content-review.json')
+    ensure(review['raw_evidence_hash'] == result['raw_evidence_hash']
+           and review['report']['accepted'] is True
+           and review['report']['evidence_hash'] == result['evidence_hash'], 'RECOVERY_CONTENT_REVIEW_REQUIRED')
+    return {'kind': 'offline_accounting_recovery', 'generation_id': result['run_id'],
+            'leader_id': 'leader-01', 'parent_plan_sha256': digest(original),
+            'parent_evidence_hash': result['evidence_hash'], 'parent_raw_evidence_hash': result['raw_evidence_hash'],
+            'parent_terminal_status': 'failure', 'parent_terminal_preserved': True,
+            'parent_response_body_sha256': wire['body_sha256'], 'request_sha256': original['request_sha256'],
+            'prior_reserved_usd': reservation['usd'], 'accounting': accounting,
+            'persona': persona, 'validation': validation, 'content_review': review['report'], 'regeneration_calls': 0}
+
+
+def prepare_batch(directory, *, continuation_from=None, expected_parent_evidence_hash=None):
+    if continuation_from is None:
+        ensure(expected_parent_evidence_hash is None, 'UNEXPECTED_PARENT_PIN')
+        return _prepare_batch(directory)
+    parent = Path(continuation_from)
+    ensure(isinstance(expected_parent_evidence_hash, str) and len(expected_parent_evidence_hash) == 64,
+           'PARENT_PIN_REQUIRED')
+    with exclusive_execution(parent):
+        ensure(not (parent / 'continuation-claim.json').exists(), 'PARENT_ALREADY_HAS_CONTINUATION')
+        recovered = _recover_first(parent, expected_parent_evidence_hash)
+        result = _prepare_batch(directory, continuation=(parent, recovered))
+        # New batch metadata only; original manifest/RAW/terminal remain byte-identical.
+        Journal(parent).write('continuation-claim.json', {
+            'child_directory_name': Path(directory).name, 'child_plan_sha256': result['plan_sha256'],
+            'parent_evidence_hash': expected_parent_evidence_hash, 'created_at': timestamp(),
+        })
+        return result
 
 
 def _plan(directory):
@@ -159,17 +284,36 @@ def _plan(directory):
     ensure(plan['source_hashes'] == source_hashes() and plan['runtime'] == _runtime(), 'SOURCE_OR_RUNTIME_CHANGED')
     ensure(plan['request'] == build_request() and plan['request_sha256'] == digest(build_request()),
            'APPROVED_INPUT_CHANGED')
-    ensure(plan['max_generation_calls'] == MAX_PERSONAS and plan['max_count_calls'] == MAX_PERSONAS
+    prior = plan.get('completed_before', 0)
+    ensure(type(prior) is int and prior in (0, 1), 'INVALID_PRIOR_COUNT')
+    ensure(plan['max_generation_calls'] == MAX_PERSONAS - prior and plan['max_count_calls'] == MAX_PERSONAS - prior
            and plan['usd_stop_limit'] == str(LIMIT_USD)
            and plan['model'] == MODEL, 'PLAN_LIMIT_CHANGED')
+    if prior:
+        ref = plan['continuation']
+        ensure(Path(ref['parent_directory_name']).name == ref['parent_directory_name'], 'INVALID_PARENT_REFERENCE')
+        parent = directory.parent / ref['parent_directory_name']
+        recovered = _recover_first(parent, ref['parent_evidence_hash'])
+        ensure(recovered['parent_plan_sha256'] == ref['parent_plan_sha256']
+               and digest(recovered) == ref['recovered_persona_sha256']
+               and Journal(directory).read('recovered-leader-01.json') == recovered
+               and plan['prior_reserved_usd'] == recovered['prior_reserved_usd'], 'RECOVERY_CHANGED')
+        claim = Journal(parent).read('continuation-claim.json')
+        ensure(claim['child_directory_name'] == directory.name and claim['child_plan_sha256'] == digest(plan)
+               and claim['parent_evidence_hash'] == ref['parent_evidence_hash'], 'CONTINUATION_CLAIM_MISMATCH')
+    else:
+        ensure(plan.get('continuation') is None and Decimal(plan.get('prior_reserved_usd', '0')) == 0,
+               'UNEXPECTED_CONTINUATION')
     return plan
 
 
-def _history(directory):
+def _history(directory, *, completed_before=0):
     """A pending, failed, interrupted or rejected generation blocks all successors."""
     ensure(not list(Path(directory).glob('blocked-*.json')), 'BATCH_BLOCKED')
     records = []
-    for index in range(1, MAX_PERSONAS + 1):
+    ensure(not any((Path(directory) / f'generation-{n:02d}').exists() for n in range(1, completed_before + 1)),
+           'RECOVERED_PERSONA_MUST_NOT_BE_REGENERATED')
+    for index in range(completed_before + 1, MAX_PERSONAS + 1):
         path = Path(directory) / f'generation-{index:02d}'
         if not path.exists():
             ensure(not any((Path(directory) / f'generation-{n:02d}').exists()
@@ -202,7 +346,8 @@ def _manifest(plan, generation_id):
         'world_config': {'status': 'not_generated', 'assigned_nation': None,
                          'other_personas_provided': False, 'simulation_run': False},
         'provenance': {'source_hashes': plan['source_hashes'], 'source_commit': plan['source_commit'],
-                       'runtime': plan['runtime'], 'parent_evidence_hash': None,
+                       'runtime': plan['runtime'],
+                       'parent_evidence_hash': plan['continuation']['parent_evidence_hash'] if plan.get('continuation') else None,
                        'purpose': 'Generate and preserve one fictional leader with three personality layers'},
     }
 
@@ -230,13 +375,15 @@ def generate_next(directory, *, transport: httpx.BaseTransport, credential: str)
     ensure(isinstance(credential, str) and bool(credential.strip()), 'CREDENTIAL_REQUIRED')
     with exclusive_execution(directory):
         plan = _plan(directory)
-        history = _history(directory)
-        ensure(len(history) < MAX_PERSONAS, 'BATCH_ALREADY_COMPLETE')
-        index = len(history) + 1
+        prior = plan.get('completed_before', 0)
+        history = _history(directory, completed_before=prior)
+        ensure(len(history) + prior < MAX_PERSONAS, 'BATCH_ALREADY_COMPLETE')
+        index = len(history) + prior + 1
         generation_id = plan['generation_ids'][index - 1]
         reservation_name = f'reservation-{index:02d}.json'
         ensure(not (directory / reservation_name).exists(), 'UNRESOLVED_PAID_RESERVATION')
-        reserved = sum((Decimal(read_record(p)['usd']) for p in directory.glob('reservation-*.json')), Decimal(0))
+        reserved = sum((Decimal(read_record(p)['usd']) for p in directory.glob('reservation-*.json')),
+                       Decimal(plan.get('prior_reserved_usd', '0')))
         upper = price(MAX_INPUT, MAX_OUTPUT)
         ensure(reserved + upper <= LIMIT_USD, 'BUDGET_EXHAUSTED')
         run = EvidenceRun(directory / f'generation-{index:02d}', _manifest(plan, generation_id))
@@ -283,31 +430,25 @@ def generate_next(directory, *, transport: httpx.BaseTransport, credential: str)
 
             stage = 'validate_provider_response'
             usage = response.get('usageMetadata', {})
-            keys = ('promptTokenCount', 'candidatesTokenCount', 'thoughtsTokenCount')
-            values = [usage.get(k) for k in keys]
-            known = all(type(value) is int and value >= 0 for value in values)
-            if known:
-                actual_cost = str(price(values[0], values[1] + values[2]))
+            accounting = None
+            accounting_error = None
+            try:
+                accounting = account_usage(usage)
+                actual_cost = accounting['estimated_cost_usd']
+            except GenerationError as exc:
+                accounting_error = str(exc)
             run.write('receipt.json', {
-                'usage_metadata': usage, 'usage_complete': known, 'estimated_cost_usd': actual_cost,
+                'usage_metadata': usage, 'accounting': accounting, 'accounting_error': accounting_error,
+                'usage_accountable': accounting is not None, 'estimated_cost_usd': actual_cost,
                 'billing_verified': False, 'reservation_usd': str(upper),
                 'model_version': response.get('modelVersion'),
                 'model_version_missing_reason': None if response.get('modelVersion') else 'Not returned by provider',
                 'response_id': response.get('responseId'),
             })
-            ensure(known, 'USAGE_UNKNOWN')
-            ensure(values[0] <= MAX_INPUT and values[1] + values[2] <= MAX_OUTPUT
+            ensure(accounting is not None, accounting_error or 'USAGE_UNKNOWN')
+            ensure(accounting['input_tokens'] <= MAX_INPUT and accounting['generated_tokens_including_thoughts'] <= MAX_OUTPUT
                    and Decimal(actual_cost) <= upper, 'USAGE_OUTSIDE_RESERVED_LIMIT')
-            candidates = response.get('candidates')
-            ensure(isinstance(candidates, list) and len(candidates) == 1, 'MISSING_OR_MULTIPLE_CANDIDATES')
-            candidate = candidates[0]
-            ensure(candidate.get('finishReason') == 'STOP', 'INCOMPLETE_PROVIDER_RESPONSE')
-            parts = candidate.get('content', {}).get('parts')
-            ensure(isinstance(parts, list) and bool(parts), 'MISSING_RESPONSE_PARTS')
-            ensure(all(isinstance(p, dict) and not p.get('thought') and isinstance(p.get('text'), str)
-                       and not any(k in p for k in ('functionCall', 'executableCode', 'inlineData')) for p in parts),
-                   'UNEXPECTED_RESPONSE_PART')
-            persona = load_response_object(''.join(part['text'] for part in parts))
+            persona = _extract_persona(response)
             stage = 'validate_persona'
             validation = validate_persona(persona, schema=plan['request']['generationConfig']['responseJsonSchema'])
             result = run.finish('success', completed_turns=0)
@@ -349,7 +490,7 @@ def review_last(directory, *, accepted: bool, notes: str = ''):
     ensure(type(accepted) is bool and isinstance(notes, str), 'INVALID_REVIEW')
     directory = Path(directory)
     with exclusive_execution(directory):
-        _plan(directory)
+        plan = _plan(directory)
         ensure(not list(directory.glob('blocked-*.json')), 'BATCH_BLOCKED')
         existing = [directory / f'generation-{i:02d}' for i in range(1, MAX_PERSONAS + 1)
                     if (directory / f'generation-{i:02d}').exists()]
@@ -368,5 +509,6 @@ def review_last(directory, *, accepted: bool, notes: str = ''):
                        'reviewer': 'implementation_assistant', 'extra_model_calls': 0,
                        'personality_quality_scored': False},
         })
+        completed = len(existing) + plan.get('completed_before', 0)
         return {'generation_id': result['run_id'], 'accepted': accepted,
-                'completed_personas': len(existing), 'batch_complete': len(existing) == MAX_PERSONAS and accepted}
+                'completed_personas': completed, 'batch_complete': completed == MAX_PERSONAS and accepted}
