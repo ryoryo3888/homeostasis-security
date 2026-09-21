@@ -39,4 +39,4 @@
 - エネルギー：一次エネルギー、変換、最終需要を分ける。[IEA Understanding and using the Energy Balance](https://www.iea.org/commentaries/understanding-and-using-the-energy-balance)
 - 物流：貨物量と輸送距離を組み合わせたトンキロを、設備の積載能力や配送日数と区別する。[UNECE Freight volume](https://w3.unece.org/SDG/en/Indicator?id=88)
 
-共通ポイント価格は、現実の取得費・価格比を参照し、実単位で定義した資産へ全国家共通の尺度で換算する方式に決定。参照価格を使うことは、架空国家の実際の取引価格を測定した意味ではない。[価格基準年・換算尺度の比較](NATION_PRICE_REFERENCE_DRAFT.md)は未採用の確認資料であり、人口需要・物理法則は別途定義する。一覧外の資産を共通能力へ対応させる方式は[資産評価の決定記録](NATION_ASSET_VALUATION_OPTIONS.md)に分離する。
+共通ポイント価格は、現実の取得費・価格比を参照し、実単位で定義した資産へ全国家共通の尺度で換算する方式に決定。換算尺度Bとして、各国1000ポイント＝100億USD相当、1ポイント＝1000万USD相当を採用した。参照価格を使うことは、架空国家の実際の取引価格を測定した意味ではない。[価格基準年・換算尺度の比較](NATION_PRICE_REFERENCE_DRAFT.md)では価格基準年と個別単価は未採用であり、人口需要・物理法則は別途定義する。一覧外の資産を共通能力へ対応させる方式は[資産評価の決定記録](NATION_ASSET_VALUATION_OPTIONS.md)に分離する。
