@@ -35,6 +35,7 @@
 <section class="section panel">
   <div class="eyebrow">00 / PERSONA GENERATION</div><h2>12名の国家Leaderは人生史から生成された</h2>
   <p id="personaSummary" class="sublead"></p>
+  <p id="personaBiasNote" class="small"></p>
   <div><span class="tag">人間が年齢・性別を指定しない</span><span class="tag">人生史 → 現在人格</span><span class="tag">17軸は後測定</span><span class="tag">自己紹介は初回外交時</span></div>
   <div class="story-grid" id="leaderStories"></div>
 </section>
@@ -78,6 +79,7 @@ fetch('results/v5-generated-nations/data.json').then(r=>r.json()).then(data=>{
  document.getElementById('metrics').innerHTML=[metric('Leader判断',m.leader_decisions,'good'),metric('外交通信',m.messages),metric('提案',m.proposals),metric('双方向関係',m.reciprocal_pairs,'good'),metric('接触エッジ',m.directed_edges),metric('完全孤立',m.isolated_nations,'good'),metric('物理変化',m.physical_changes,'warn'),metric('世界数',data.scope.worlds)].join('');
  const pg=data.persona_generation || {};
  document.getElementById('personaSummary').textContent=`${pg.summary || ''} ${pg.visibility || ''}`;
+ document.getElementById('personaBiasNote').textContent=pg.bias_note || '';
  document.getElementById('leaderStories').innerHTML=(pg.leaders || []).map(l=>`<article class="card persona-card"><h3>${esc(l.leader_id)}：${esc(l.generated_name)}</h3><div class="persona-meta"><span class="tag">担当：${esc(l.nation_name)}</span><span class="tag">年齢：${esc(l.generated_age)}</span><span class="tag">性別表現：${esc(l.generated_gender)}</span></div><p>${esc(l.present_person)}</p><details><summary>生成された人生史を見る</summary>${(l.life_periods||[]).map(p=>`<div class="life-line"><b>${p.index}. ${esc(p.elapsed_years)}年</b><br>${esc(p.narrative)}</div>`).join('')}<p class="small"><b>本人の自己紹介：</b>${esc(l.self_introduction)}</p></details></article>`).join('');
  document.getElementById('observations').innerHTML=data.observations.map(o=>`<article class="card"><h3>${esc(o.title)}</h3><p>${esc(o.interpretation)}</p><p class="small">限界：${esc(o.limitations)}</p></article>`).join('');
  document.getElementById('topActivity').innerHTML=data.top_activity.slice(0,6).map(n=>`<div class="edge"><b>${esc(n.nation_id)} ${esc(n.nation_name)}</b><span>in ${n.incoming_contact_events} / out ${n.outgoing_contact_events}</span></div>`).join('');
