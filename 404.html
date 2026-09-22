@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOMEOSTASIS SECURITY</title>
+<style>
+:root{color-scheme:dark;--bg:#030911;--panel:#071928;--line:#17465a;--cyan:#67e8f9;--ink:#e8f4fb;--muted:#9db3c3}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(circle at 20% 0%,rgba(34,211,238,.16),transparent 32%),linear-gradient(180deg,#02060c,#05131d);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.7}.panel{width:min(760px,calc(100% - 32px));border:1px solid var(--line);border-radius:24px;background:linear-gradient(135deg,rgba(7,25,40,.96),rgba(4,13,22,.88));padding:28px;box-shadow:0 18px 60px rgba(0,0,0,.28)}.eyebrow{color:var(--cyan);letter-spacing:.16em;font-weight:900;font-size:13px}h1{margin:8px 0 12px;font-size:clamp(30px,6vw,56px);line-height:1.1}p{color:var(--muted);margin:0 0 18px}.button{display:inline-block;border:1px solid var(--line);border-radius:14px;color:#ecfeff;text-decoration:none;padding:10px 15px;font-weight:900;background:rgba(34,211,238,.12)}
+</style>
+<script>
+(function(){
+  var base = '/homeostasis-security/';
+  var path = decodeURIComponent(location.pathname);
+  var cleaned = path.replace(/[\s\u3000]+$/g, '');
+  if (path !== cleaned) {
+    location.replace(cleaned + location.search + location.hash);
+    return;
+  }
+  if (path === base.slice(0, -1)) {
+    location.replace(base + location.search + location.hash);
+  }
+})();
+</script>
+</head>
+<body>
+  <main class="panel">
+    <div class="eyebrow">HOMEOSTASIS SECURITY</div>
+    <h1>ページが見つかりません</h1>
+    <p>URLの末尾に空白などが入っている場合は、自動で正しいURLへ戻します。</p>
+    <a class="button" href="/homeostasis-security/">トップへ戻る</a>
+  </main>
+</body>
+</html>
