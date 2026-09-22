@@ -42,7 +42,7 @@
 
 <section class="section panel">
   <div class="eyebrow">00 / 主要観測</div><h2>36ターン版 要約</h2>
-  <p class="sublead">このページでは、36ターンまで継続した観測記録を先に示します。初回観測や12名の人物紹介などの生成過程は、観測結果を支える参考資料として後段にまとめています。</p>
+  <p class="sublead">このページでは、12国家・12名の国家リーダーによる1〜36ターンの観測結果を示します。固定ペアや専用仲介役を置かない条件で、危機下の外交・提案・安全維持の変化を記録しました。</p>
   <div class="two">
     <article class="card story-card"><strong id="initialLabel"></strong><h3 id="initialHeadline"></h3><p id="initialSummary"></p></article>
     <article class="card story-card"><strong id="extendedLabel"></strong><h3 id="extendedHeadline"></h3><p id="extendedSummary"></p></article>
@@ -134,7 +134,7 @@ fetch('results/v5-generated-nations/data.json').then(r=>r.json()).then(data=>{
  const phases=long.phases || [];
  document.getElementById('storyTurns').innerHTML=phases.map(c=>`<article class="card turn story-card"><strong>${esc(c.label)}</strong><h3>${esc(c.title)}</h3><p>${esc(c.body)}</p></article>`).join('');
  document.getElementById('roleDifferentiation').innerHTML=(long.main_findings || []).slice(0,3).map(r=>`<article class="card"><h3>${esc(r.title)}</h3><p class="small">${esc(r.body)}</p></article>`).join('');
- document.getElementById('storyFraming').textContent='36ターン版をV5ページの主役にし、初回観測と人物生成は参考資料として後段へ移動しています。';
+ document.getElementById('storyFraming').textContent='この要約は、発言・提案・接触の観測をまとめたものです。物資の到着や復旧などの物理的な成立判定とは分けて扱います。';
  document.getElementById('storyInterpretation').innerHTML=`${esc(long.note_ja || '')} <a href="${esc(long.derived_summary_path || 'results/v5-generated-nations/turns_1_36_waterborne_illness_continuation_summary.json')}">36 ターン 要約JSONを見る</a>`;
  const examples=long.examples || {};
  document.getElementById('healthExamples').innerHTML=(examples.health || []).map(x=>`<div class="edge"><b>観測</b><span>${esc(x)}</span></div>`).join('');
