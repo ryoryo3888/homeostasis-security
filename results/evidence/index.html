@@ -123,6 +123,16 @@ footer{display:flex;justify-content:space-between;gap:15px;border-top:1px solid 
       <div class="callout"><strong>入口と中身を分けています。</strong> このHTMLはEvidenceへ入るための表示だけを担当します。RAW / JSON / JSONL / inventory / hashは、保存されたまま直接確認できます。</div>
     </section>
 
+    <section class="section" id="v5-diplomacy-ablation">
+      <div class="section-head"><div><div class="section-index">01B / PREREGISTERED EXPERIMENT</div><h2>V5 Diplomacy Ablation</h2></div></div>
+      <p>V5のTURN 1〜29世界について、NORMAL（外交通信あり）とNO-DIPLOMACY（外交通信なし）を同じ10 seedで対応させる20run比較実験を、実行前に固定したEvidenceです。</p>
+      <div class="grid-3">
+        <article class="card archive-card"><div class="tag">PREREGISTERED</div><h3>まだ実行していない比較実験</h3><p>Primary/Secondary Outcomes、TURN別イベント系列、A/B invariant、world-law settlement条件、停止条件、20 manifestsを保存しています。</p><a class="button" href="derived/v5-diplomacy-ablation-preregistration-20260922/README.md">Preregistrationを見る →</a></article>
+        <article class="card pink archive-card"><div class="tag">NOT YET EXECUTED</div><h3>結果前の境界</h3><p>このEvidenceには20runの結果は含まれていません。API実行前に条件を固定したことを示すための保存物です。</p></article>
+        <article class="card gold archive-card"><div class="tag">PAIRED CONDITIONS</div><h3>10 seed × 2条件</h3><p>各seedごとにNORMAL / NO-DIPLOMACYを対応させ、外交通信の有無だけを主要差分として比較できるようにしています。</p></article>
+      </div>
+    </section>
+
     <section class="section" id="structure">
       <div class="section-head"><div><div class="section-index">02 / EVIDENCE TRACE</div><h2>研究結果からRAWまで</h2></div></div>
       <p>研究上の主張を、保存記録のどこから確認できるかを人間向けに示した階層です。</p>
