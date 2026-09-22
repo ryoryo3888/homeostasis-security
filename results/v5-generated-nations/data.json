@@ -1,0 +1,775 @@
+{
+  "version": "v5-public-derived-1",
+  "title": "V5 — Generated Nations",
+  "subtitle": "12国家で構成される単一世界の初回3 TURN観測",
+  "scope": {
+    "worlds": 1,
+    "nations": 12,
+    "leaders": 12,
+    "turns": 3,
+    "fixed_pairs": false,
+    "dedicated_mediator": false,
+    "forced_all_to_all": false,
+    "physical_world_state_changed": false
+  },
+  "headline_metrics": {
+    "leader_decisions": "36 / 36",
+    "messages": 76,
+    "proposals": 47,
+    "directed_edges": 52,
+    "reciprocal_pairs": 22,
+    "isolated_nations": 0,
+    "physical_changes": 0
+  },
+  "observations": [
+    {
+      "id": "v5-observation-001",
+      "title": "固定ペアなしでも全12国家が接触ネットワークへ参加した",
+      "raw_basis": "36 leader decisions across 3 turns",
+      "derived_basis": {
+        "directed_edge_count": 52,
+        "reciprocal_pair_count": 22,
+        "isolated_nation_count": 0,
+        "unreached_nation_count": 0
+      },
+      "interpretation": "交流相手を人間が固定しなくても、少なくとも初回3 TURNでは未到達・完全孤立が発生しなかった。",
+      "limitations": "1 world / 3 turns only. Contact existence does not imply trust, agreement, or physical cooperation."
+    },
+    {
+      "id": "v5-observation-002",
+      "title": "接触は均等ではなく、一部国家へ集中した",
+      "raw_basis": "messages and proposals target distribution",
+      "derived_basis": {
+        "top_activity_nations": [
+          {
+            "nation_id": "nation-001",
+            "nation_name": "湿原平原共和国",
+            "outgoing_contact_events": 13,
+            "incoming_contact_events": 35,
+            "unique_nations_contacted": 6,
+            "unique_nations_reaching_it": 9,
+            "network_activity_score": 48,
+            "possible_broker_score": 12,
+            "isolated": false,
+            "silent_sender": false,
+            "unreached": false
+          },
+          {
+            "nation_id": "nation-012",
+            "nation_name": "北東沿岸自治連合",
+            "outgoing_contact_events": 19,
+            "incoming_contact_events": 22,
+            "unique_nations_contacted": 7,
+            "unique_nations_reaching_it": 7,
+            "network_activity_score": 41,
+            "possible_broker_score": 13,
+            "isolated": false,
+            "silent_sender": false,
+            "unreached": false
+          },
+          {
+            "nation_id": "nation-010",
+            "nation_name": "高山鉱嶺国",
+            "outgoing_contact_events": 13,
+            "incoming_contact_events": 22,
+            "unique_nations_contacted": 5,
+            "unique_nations_reaching_it": 5,
+            "network_activity_score": 35,
+            "possible_broker_score": 10,
+            "isolated": false,
+            "silent_sender": false,
+            "unreached": false
+          },
+          {
+            "nation_id": "nation-004",
+            "nation_name": "ソルトコースト公国",
+            "outgoing_contact_events": 14,
+            "incoming_contact_events": 21,
+            "unique_nations_contacted": 4,
+            "unique_nations_reaching_it": 7,
+            "network_activity_score": 35,
+            "possible_broker_score": 8,
+            "isolated": false,
+            "silent_sender": false,
+            "unreached": false
+          },
+          {
+            "nation_id": "nation-011",
+            "nation_name": "ヴァルンド高地共和国",
+            "outgoing_contact_events": 20,
+            "incoming_contact_events": 12,
+            "unique_nations_contacted": 5,
+            "unique_nations_reaching_it": 5,
+            "network_activity_score": 32,
+            "possible_broker_score": 10,
+            "isolated": false,
+            "silent_sender": false,
+            "unreached": false
+          }
+        ]
+      },
+      "interpretation": "固定の中心Agentを置いていないにもかかわらず、湿原平原共和国・北東沿岸自治連合・高山鉱嶺国などが接触上の中心候補として現れた。",
+      "limitations": "中心性は接触数由来であり、影響力・Leadership・因果ではない。"
+    },
+    {
+      "id": "v5-observation-003",
+      "title": "対話は増えたが物理世界はまだ変化しなかった",
+      "raw_basis": "76 messages, 47 proposals",
+      "derived_basis": {
+        "message_count": 76,
+        "proposal_count": 47,
+        "physical_settled_count": 0,
+        "settlement_counts": {
+          "communication_only": 45,
+          "not_physically_settled": 2
+        }
+      },
+      "interpretation": "3 TURNでは情報交換・協議提案が中心で、資源量・経路・輸送能力・相手同意が揃う物理移転には至らなかった。",
+      "limitations": "これは失敗ではなく、発言と物理成立を分離したV5世界法則の結果。長期化すれば変わる可能性がある。"
+    }
+  ],
+  "provisional_question": "12国家を同じ世界へ置き、接触相手を固定しない場合、初期3 TURNで国家間ネットワークは自然形成されるか。",
+  "provisional_answer": "この1世界では、全国家が接触ネットワークへ参加し、22組の双方向関係と一部国家への接触集中が観測された。ただし物理的な世界状態変更はまだ成立していない。",
+  "top_activity": [
+    {
+      "nation_id": "nation-001",
+      "nation_name": "湿原平原共和国",
+      "outgoing_contact_events": 13,
+      "incoming_contact_events": 35,
+      "unique_nations_contacted": 6,
+      "unique_nations_reaching_it": 9,
+      "network_activity_score": 48,
+      "possible_broker_score": 12,
+      "isolated": false,
+      "silent_sender": false,
+      "unreached": false
+    },
+    {
+      "nation_id": "nation-012",
+      "nation_name": "北東沿岸自治連合",
+      "outgoing_contact_events": 19,
+      "incoming_contact_events": 22,
+      "unique_nations_contacted": 7,
+      "unique_nations_reaching_it": 7,
+      "network_activity_score": 41,
+      "possible_broker_score": 13,
+      "isolated": false,
+      "silent_sender": false,
+      "unreached": false
+    },
+    {
+      "nation_id": "nation-010",
+      "nation_name": "高山鉱嶺国",
+      "outgoing_contact_events": 13,
+      "incoming_contact_events": 22,
+      "unique_nations_contacted": 5,
+      "unique_nations_reaching_it": 5,
+      "network_activity_score": 35,
+      "possible_broker_score": 10,
+      "isolated": false,
+      "silent_sender": false,
+      "unreached": false
+    },
+    {
+      "nation_id": "nation-004",
+      "nation_name": "ソルトコースト公国",
+      "outgoing_contact_events": 14,
+      "incoming_contact_events": 21,
+      "unique_nations_contacted": 4,
+      "unique_nations_reaching_it": 7,
+      "network_activity_score": 35,
+      "possible_broker_score": 8,
+      "isolated": false,
+      "silent_sender": false,
+      "unreached": false
+    },
+    {
+      "nation_id": "nation-011",
+      "nation_name": "ヴァルンド高地共和国",
+      "outgoing_contact_events": 20,
+      "incoming_contact_events": 12,
+      "unique_nations_contacted": 5,
+      "unique_nations_reaching_it": 5,
+      "network_activity_score": 32,
+      "possible_broker_score": 10,
+      "isolated": false,
+      "silent_sender": false,
+      "unreached": false
+    },
+    {
+      "nation_id": "nation-007",
+      "nation_name": "セントラル・バシン共和国",
+      "outgoing_contact_events": 14,
+      "incoming_contact_events": 17,
+      "unique_nations_contacted": 4,
+      "unique_nations_reaching_it": 4,
+      "network_activity_score": 31,
+      "possible_broker_score": 8,
+      "isolated": false,
+      "silent_sender": false,
+      "unreached": false
+    },
+    {
+      "nation_id": "nation-005",
+      "nation_name": "シルヴァニア公国",
+      "outgoing_contact_events": 16,
+      "incoming_contact_events": 6,
+      "unique_nations_contacted": 4,
+      "unique_nations_reaching_it": 3,
+      "network_activity_score": 22,
+      "possible_broker_score": 6,
+      "isolated": false,
+      "silent_sender": false,
+      "unreached": false
+    },
+    {
+      "nation_id": "nation-002",
+      "nation_name": "湿原の小国",
+      "outgoing_contact_events": 10,
+      "incoming_contact_events": 9,
+      "unique_nations_contacted": 3,
+      "unique_nations_reaching_it": 3,
+      "network_activity_score": 19,
+      "possible_broker_score": 6,
+      "isolated": false,
+      "silent_sender": false,
+      "unreached": false
+    }
+  ],
+  "mediator_candidates": [
+    {
+      "nation_id": "nation-012",
+      "nation_name": "北東沿岸自治連合",
+      "outgoing_contact_events": 19,
+      "incoming_contact_events": 22,
+      "unique_nations_contacted": 7,
+      "unique_nations_reaching_it": 7,
+      "network_activity_score": 41,
+      "possible_broker_score": 13,
+      "isolated": false,
+      "silent_sender": false,
+      "unreached": false
+    },
+    {
+      "nation_id": "nation-001",
+      "nation_name": "湿原平原共和国",
+      "outgoing_contact_events": 13,
+      "incoming_contact_events": 35,
+      "unique_nations_contacted": 6,
+      "unique_nations_reaching_it": 9,
+      "network_activity_score": 48,
+      "possible_broker_score": 12,
+      "isolated": false,
+      "silent_sender": false,
+      "unreached": false
+    },
+    {
+      "nation_id": "nation-010",
+      "nation_name": "高山鉱嶺国",
+      "outgoing_contact_events": 13,
+      "incoming_contact_events": 22,
+      "unique_nations_contacted": 5,
+      "unique_nations_reaching_it": 5,
+      "network_activity_score": 35,
+      "possible_broker_score": 10,
+      "isolated": false,
+      "silent_sender": false,
+      "unreached": false
+    },
+    {
+      "nation_id": "nation-011",
+      "nation_name": "ヴァルンド高地共和国",
+      "outgoing_contact_events": 20,
+      "incoming_contact_events": 12,
+      "unique_nations_contacted": 5,
+      "unique_nations_reaching_it": 5,
+      "network_activity_score": 32,
+      "possible_broker_score": 10,
+      "isolated": false,
+      "silent_sender": false,
+      "unreached": false
+    },
+    {
+      "nation_id": "nation-004",
+      "nation_name": "ソルトコースト公国",
+      "outgoing_contact_events": 14,
+      "incoming_contact_events": 21,
+      "unique_nations_contacted": 4,
+      "unique_nations_reaching_it": 7,
+      "network_activity_score": 35,
+      "possible_broker_score": 8,
+      "isolated": false,
+      "silent_sender": false,
+      "unreached": false
+    }
+  ],
+  "reciprocal_pairs": [
+    {
+      "nation_a": "nation-001",
+      "nation_b": "nation-007",
+      "a_to_b": 3,
+      "b_to_a": 6,
+      "total": 9,
+      "nation_a_name": "湿原平原共和国",
+      "nation_b_name": "セントラル・バシン共和国"
+    },
+    {
+      "nation_a": "nation-002",
+      "nation_b": "nation-004",
+      "a_to_b": 5,
+      "b_to_a": 4,
+      "total": 9,
+      "nation_a_name": "湿原の小国",
+      "nation_b_name": "ソルトコースト公国"
+    },
+    {
+      "nation_a": "nation-005",
+      "nation_b": "nation-007",
+      "a_to_b": 6,
+      "b_to_a": 3,
+      "total": 9,
+      "nation_a_name": "シルヴァニア公国",
+      "nation_b_name": "セントラル・バシン共和国"
+    },
+    {
+      "nation_a": "nation-011",
+      "nation_b": "nation-012",
+      "a_to_b": 6,
+      "b_to_a": 3,
+      "total": 9,
+      "nation_a_name": "ヴァルンド高地共和国",
+      "nation_b_name": "北東沿岸自治連合"
+    },
+    {
+      "nation_a": "nation-001",
+      "nation_b": "nation-002",
+      "a_to_b": 4,
+      "b_to_a": 4,
+      "total": 8,
+      "nation_a_name": "湿原平原共和国",
+      "nation_b_name": "湿原の小国"
+    },
+    {
+      "nation_a": "nation-008",
+      "nation_b": "nation-010",
+      "a_to_b": 6,
+      "b_to_a": 2,
+      "total": 8,
+      "nation_a_name": "東山麓自治共同体",
+      "nation_b_name": "高山鉱嶺国"
+    },
+    {
+      "nation_a": "nation-009",
+      "nation_b": "nation-010",
+      "a_to_b": 6,
+      "b_to_a": 2,
+      "total": 8,
+      "nation_a_name": "フロストピア連邦",
+      "nation_b_name": "高山鉱嶺国"
+    },
+    {
+      "nation_a": "nation-010",
+      "nation_b": "nation-011",
+      "a_to_b": 2,
+      "b_to_a": 6,
+      "total": 8,
+      "nation_a_name": "高山鉱嶺国",
+      "nation_b_name": "ヴァルンド高地共和国"
+    },
+    {
+      "nation_a": "nation-004",
+      "nation_b": "nation-007",
+      "a_to_b": 4,
+      "b_to_a": 3,
+      "total": 7,
+      "nation_a_name": "ソルトコースト公国",
+      "nation_b_name": "セントラル・バシン共和国"
+    },
+    {
+      "nation_a": "nation-009",
+      "nation_b": "nation-011",
+      "a_to_b": 4,
+      "b_to_a": 3,
+      "total": 7,
+      "nation_a_name": "フロストピア連邦",
+      "nation_b_name": "ヴァルンド高地共和国"
+    }
+  ],
+  "top_edges": [
+    {
+      "from": "nation-003",
+      "from_name": "ヒルサイド公国",
+      "to": "nation-001",
+      "to_name": "湿原平原共和国",
+      "total_count": 6,
+      "message_count": 3,
+      "proposal_count": 3
+    },
+    {
+      "from": "nation-005",
+      "from_name": "シルヴァニア公国",
+      "to": "nation-007",
+      "to_name": "セントラル・バシン共和国",
+      "total_count": 6,
+      "message_count": 3,
+      "proposal_count": 3
+    },
+    {
+      "from": "nation-007",
+      "from_name": "セントラル・バシン共和国",
+      "to": "nation-001",
+      "to_name": "湿原平原共和国",
+      "total_count": 6,
+      "message_count": 3,
+      "proposal_count": 3
+    },
+    {
+      "from": "nation-008",
+      "from_name": "東山麓自治共同体",
+      "to": "nation-010",
+      "to_name": "高山鉱嶺国",
+      "total_count": 6,
+      "message_count": 3,
+      "proposal_count": 3
+    },
+    {
+      "from": "nation-009",
+      "from_name": "フロストピア連邦",
+      "to": "nation-010",
+      "to_name": "高山鉱嶺国",
+      "total_count": 6,
+      "message_count": 3,
+      "proposal_count": 3
+    },
+    {
+      "from": "nation-011",
+      "from_name": "ヴァルンド高地共和国",
+      "to": "nation-010",
+      "to_name": "高山鉱嶺国",
+      "total_count": 6,
+      "message_count": 3,
+      "proposal_count": 3
+    },
+    {
+      "from": "nation-011",
+      "from_name": "ヴァルンド高地共和国",
+      "to": "nation-012",
+      "to_name": "北東沿岸自治連合",
+      "total_count": 6,
+      "message_count": 3,
+      "proposal_count": 3
+    },
+    {
+      "from": "nation-002",
+      "from_name": "湿原の小国",
+      "to": "nation-004",
+      "to_name": "ソルトコースト公国",
+      "total_count": 5,
+      "message_count": 3,
+      "proposal_count": 2
+    },
+    {
+      "from": "nation-001",
+      "from_name": "湿原平原共和国",
+      "to": "nation-002",
+      "to_name": "湿原の小国",
+      "total_count": 4,
+      "message_count": 2,
+      "proposal_count": 2
+    },
+    {
+      "from": "nation-002",
+      "from_name": "湿原の小国",
+      "to": "nation-001",
+      "to_name": "湿原平原共和国",
+      "total_count": 4,
+      "message_count": 2,
+      "proposal_count": 2
+    },
+    {
+      "from": "nation-004",
+      "from_name": "ソルトコースト公国",
+      "to": "nation-001",
+      "to_name": "湿原平原共和国",
+      "total_count": 4,
+      "message_count": 2,
+      "proposal_count": 2
+    },
+    {
+      "from": "nation-004",
+      "from_name": "ソルトコースト公国",
+      "to": "nation-002",
+      "to_name": "湿原の小国",
+      "total_count": 4,
+      "message_count": 2,
+      "proposal_count": 2
+    }
+  ],
+  "turn_dynamics": [
+    {
+      "turn": 1,
+      "messages": 20,
+      "proposals": 14,
+      "top_activity": [
+        {
+          "nation_id": "nation-001",
+          "nation_name": "湿原平原共和国",
+          "incoming": 15,
+          "outgoing": 3,
+          "activity": 18
+        },
+        {
+          "nation_id": "nation-004",
+          "nation_name": "ソルトコースト公国",
+          "incoming": 9,
+          "outgoing": 6,
+          "activity": 15
+        },
+        {
+          "nation_id": "nation-012",
+          "nation_name": "北東沿岸自治連合",
+          "incoming": 7,
+          "outgoing": 6,
+          "activity": 13
+        },
+        {
+          "nation_id": "nation-007",
+          "nation_name": "セントラル・バシン共和国",
+          "incoming": 7,
+          "outgoing": 3,
+          "activity": 10
+        },
+        {
+          "nation_id": "nation-010",
+          "nation_name": "高山鉱嶺国",
+          "incoming": 6,
+          "outgoing": 3,
+          "activity": 9
+        }
+      ],
+      "top_changed_from_previous": null,
+      "top_nation_id": "nation-001",
+      "top_nation_name": "湿原平原共和国",
+      "resource_offers": []
+    },
+    {
+      "turn": 2,
+      "messages": 27,
+      "proposals": 15,
+      "top_activity": [
+        {
+          "nation_id": "nation-001",
+          "nation_name": "湿原平原共和国",
+          "incoming": 10,
+          "outgoing": 6,
+          "activity": 16
+        },
+        {
+          "nation_id": "nation-010",
+          "nation_name": "高山鉱嶺国",
+          "incoming": 10,
+          "outgoing": 6,
+          "activity": 16
+        },
+        {
+          "nation_id": "nation-011",
+          "nation_name": "ヴァルンド高地共和国",
+          "incoming": 9,
+          "outgoing": 6,
+          "activity": 15
+        },
+        {
+          "nation_id": "nation-012",
+          "nation_name": "北東沿岸自治連合",
+          "incoming": 6,
+          "outgoing": 8,
+          "activity": 14
+        },
+        {
+          "nation_id": "nation-004",
+          "nation_name": "ソルトコースト公国",
+          "incoming": 8,
+          "outgoing": 4,
+          "activity": 12
+        }
+      ],
+      "top_changed_from_previous": false,
+      "top_nation_id": "nation-001",
+      "top_nation_name": "湿原平原共和国",
+      "resource_offers": [
+        {
+          "turn": 2,
+          "attempt_index": 16,
+          "from_nation_id": "nation-004",
+          "from_nation_name": "ソルトコースト公国",
+          "to_nation_ids": [
+            "nation-002"
+          ],
+          "to_nation_names": [
+            "湿原の小国"
+          ],
+          "proposal_id": "prop-004-turn2-002",
+          "body": "当国の塩資源・港湾ルートと貴国の水資源・輸送アセットを念頭においた、将来的な物品・物流協力に関する意見交換の提案。",
+          "requested_world_effect": null,
+          "source_evidence_hash": "661e9250c8ab37ee254832b1960390df5b2cee57b868839e11dadbcab0c58c30",
+          "raw_evidence_hash": "6cfa4e3a5ac6bb21bb5576d9eeedc0dc39b15f9e474588993c48cd162616e329",
+          "missing_conditions": [
+            "explicit settled quantity",
+            "counterparty acceptance in settlement window",
+            "route/capacity eligibility",
+            "world-law executable requested_world_effect"
+          ]
+        }
+      ]
+    },
+    {
+      "turn": 3,
+      "messages": 29,
+      "proposals": 18,
+      "top_activity": [
+        {
+          "nation_id": "nation-001",
+          "nation_name": "湿原平原共和国",
+          "incoming": 10,
+          "outgoing": 4,
+          "activity": 14
+        },
+        {
+          "nation_id": "nation-012",
+          "nation_name": "北東沿岸自治連合",
+          "incoming": 9,
+          "outgoing": 5,
+          "activity": 14
+        },
+        {
+          "nation_id": "nation-011",
+          "nation_name": "ヴァルンド高地共和国",
+          "incoming": 3,
+          "outgoing": 8,
+          "activity": 11
+        },
+        {
+          "nation_id": "nation-007",
+          "nation_name": "セントラル・バシン共和国",
+          "incoming": 7,
+          "outgoing": 3,
+          "activity": 10
+        },
+        {
+          "nation_id": "nation-010",
+          "nation_name": "高山鉱嶺国",
+          "incoming": 6,
+          "outgoing": 4,
+          "activity": 10
+        }
+      ],
+      "top_changed_from_previous": false,
+      "top_nation_id": "nation-001",
+      "top_nation_name": "湿原平原共和国",
+      "resource_offers": [
+        {
+          "turn": 3,
+          "attempt_index": 34,
+          "from_nation_id": "nation-010",
+          "from_nation_name": "高山鉱嶺国",
+          "to_nation_ids": [
+            "nation-001"
+          ],
+          "to_nation_names": [
+            "湿原平原共和国"
+          ],
+          "proposal_id": "prop-010-t3-001",
+          "body": "高山鉱嶺国の石炭資源（備蓄1,000トンのうち一部）と湿原平原共和国の食料（小麦備蓄）との間の試験的交易および協議枠組みの立ち上げ提案。",
+          "requested_world_effect": null,
+          "source_evidence_hash": "49524d54b32bb94e352760e485d2a8c72489813c34ed25f622c67789c4775726",
+          "raw_evidence_hash": "0c3618fce3b6366f40727d5c013ba4d81c5e8b1b9b2498b3f97433ec70fbf007",
+          "missing_conditions": [
+            "explicit settled quantity",
+            "counterparty acceptance in settlement window",
+            "route/capacity eligibility",
+            "world-law executable requested_world_effect"
+          ]
+        }
+      ]
+    }
+  ],
+  "resource_offers": [
+    {
+      "turn": 2,
+      "attempt_index": 16,
+      "from_nation_id": "nation-004",
+      "from_nation_name": "ソルトコースト公国",
+      "to_nation_ids": [
+        "nation-002"
+      ],
+      "to_nation_names": [
+        "湿原の小国"
+      ],
+      "proposal_id": "prop-004-turn2-002",
+      "body": "当国の塩資源・港湾ルートと貴国の水資源・輸送アセットを念頭においた、将来的な物品・物流協力に関する意見交換の提案。",
+      "requested_world_effect": null,
+      "source_evidence_hash": "661e9250c8ab37ee254832b1960390df5b2cee57b868839e11dadbcab0c58c30",
+      "raw_evidence_hash": "6cfa4e3a5ac6bb21bb5576d9eeedc0dc39b15f9e474588993c48cd162616e329",
+      "missing_conditions": [
+        "explicit settled quantity",
+        "counterparty acceptance in settlement window",
+        "route/capacity eligibility",
+        "world-law executable requested_world_effect"
+      ]
+    },
+    {
+      "turn": 3,
+      "attempt_index": 34,
+      "from_nation_id": "nation-010",
+      "from_nation_name": "高山鉱嶺国",
+      "to_nation_ids": [
+        "nation-001"
+      ],
+      "to_nation_names": [
+        "湿原平原共和国"
+      ],
+      "proposal_id": "prop-010-t3-001",
+      "body": "高山鉱嶺国の石炭資源（備蓄1,000トンのうち一部）と湿原平原共和国の食料（小麦備蓄）との間の試験的交易および協議枠組みの立ち上げ提案。",
+      "requested_world_effect": null,
+      "source_evidence_hash": "49524d54b32bb94e352760e485d2a8c72489813c34ed25f622c67789c4775726",
+      "raw_evidence_hash": "0c3618fce3b6366f40727d5c013ba4d81c5e8b1b9b2498b3f97433ec70fbf007",
+      "missing_conditions": [
+        "explicit settled quantity",
+        "counterparty acceptance in settlement window",
+        "route/capacity eligibility",
+        "world-law executable requested_world_effect"
+      ]
+    }
+  ],
+  "settlement_counts": {
+    "communication_only": 45,
+    "not_physically_settled": 2
+  },
+  "proposal_type_counts": {
+    "information_request": 22,
+    "information_share": 22,
+    "message_only": 1,
+    "resource_offer": 2
+  },
+  "do_not_claim": [
+    "Leadership発見",
+    "因果関係",
+    "一般則",
+    "物理協力成立",
+    "Singularity"
+  ],
+  "evidence_files": [
+    {
+      "label": "Contact network analysis",
+      "path": "results/v5-generated-nations/data.json#contact-network"
+    },
+    {
+      "label": "Turn dynamics and unsettled offers",
+      "path": "results/v5-generated-nations/data.json#turn-dynamics"
+    },
+    {
+      "label": "First observation memo",
+      "path": "results/v5-generated-nations/data.json#observation-memo"
+    }
+  ]
+}
