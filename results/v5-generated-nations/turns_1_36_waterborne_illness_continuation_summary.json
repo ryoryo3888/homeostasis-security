@@ -1,0 +1,508 @@
+{
+  "summary_type": "v5 turns 1-36 waterborne illness continuation",
+  "total_leader_judgments": 432,
+  "turn_counts": {
+    "1": 12,
+    "2": 12,
+    "3": 12,
+    "4": 12,
+    "5": 12,
+    "6": 12,
+    "7": 12,
+    "8": 12,
+    "9": 12,
+    "10": 12,
+    "11": 12,
+    "12": 12,
+    "13": 12,
+    "14": 12,
+    "15": 12,
+    "16": 12,
+    "17": 12,
+    "18": 12,
+    "19": 12,
+    "20": 12,
+    "21": 12,
+    "22": 12,
+    "23": 12,
+    "24": 12,
+    "25": 12,
+    "26": 12,
+    "27": 12,
+    "28": 12,
+    "29": 12,
+    "30": 12,
+    "31": 12,
+    "32": 12,
+    "33": 12,
+    "34": 12,
+    "35": 12,
+    "36": 12
+  },
+  "total_estimated_cost_usd": "5.65804425",
+  "batch_estimated_cost_usd": {
+    "v5-fixed-persona-turns-20260922-run2": "0.16935225",
+    "v5-fixed-persona-turns-4-6-20260922": "0.23013375",
+    "v5-fixed-persona-turns-7-9-20260922": "0.27849150",
+    "v5-fixed-persona-turns-10-12-vegetable-fresh-produce-comms-20260922": "0.34343025",
+    "v5-fixed-persona-turns-13-15-vegetable-event-20260922": "0.40238475",
+    "v5-fixed-persona-turns-16-20-vegetable-event-20260922": "0.81053925",
+    "v5-fixed-persona-turns-21-23-security-action-space-20260922": "0.51940875",
+    "v5-fixed-persona-turns-24-26-waterborne-illness-event-20260922-v2": "0.57891900",
+    "v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922": "2.32538475"
+  },
+  "total_outgoing_messages": 1026,
+  "total_message_recipients": 1321,
+  "total_proposals": 730,
+  "action_type_counts": {
+    "information_share": 495,
+    "joint_statement": 65,
+    "resource_offer": 59,
+    "route_protection": 45,
+    "information_request": 32,
+    "multilateral_meeting_proposal": 20,
+    "other_diplomatic_proposal": 8,
+    "message_only": 3,
+    "protective_patrol": 3
+  },
+  "security_action_type_counts": {
+    "route_protection": 45,
+    "protective_patrol": 3
+  },
+  "turn_27_36": {
+    "estimated_cost_usd": "2.32538475",
+    "leader_judgments": 120,
+    "outgoing_messages": 290,
+    "proposals": 235,
+    "action_type_counts_by_turn": {
+      "27": {
+        "information_share": 19,
+        "resource_offer": 4,
+        "route_protection": 3
+      },
+      "28": {
+        "information_share": 19,
+        "resource_offer": 2,
+        "route_protection": 2,
+        "joint_statement": 1
+      },
+      "29": {
+        "information_share": 17,
+        "resource_offer": 2,
+        "route_protection": 2,
+        "protective_patrol": 1
+      },
+      "30": {
+        "information_share": 18,
+        "joint_statement": 2,
+        "resource_offer": 2,
+        "route_protection": 2
+      },
+      "31": {
+        "information_share": 20,
+        "resource_offer": 2,
+        "route_protection": 1,
+        "joint_statement": 1
+      },
+      "32": {
+        "information_share": 15,
+        "resource_offer": 2,
+        "route_protection": 1,
+        "joint_statement": 1
+      },
+      "33": {
+        "information_share": 17,
+        "resource_offer": 3,
+        "route_protection": 3,
+        "joint_statement": 1
+      },
+      "34": {
+        "information_share": 20,
+        "resource_offer": 3,
+        "route_protection": 2
+      },
+      "35": {
+        "information_share": 17,
+        "resource_offer": 4,
+        "joint_statement": 2,
+        "route_protection": 2
+      },
+      "36": {
+        "information_share": 19,
+        "route_protection": 2,
+        "protective_patrol": 1
+      }
+    },
+    "security_action_counts_by_turn": {
+      "27": {
+        "route_protection": 3
+      },
+      "28": {
+        "route_protection": 2
+      },
+      "29": {
+        "route_protection": 2,
+        "protective_patrol": 1
+      },
+      "30": {
+        "route_protection": 2
+      },
+      "31": {
+        "route_protection": 1
+      },
+      "32": {
+        "route_protection": 1
+      },
+      "33": {
+        "route_protection": 3
+      },
+      "34": {
+        "route_protection": 2
+      },
+      "35": {
+        "route_protection": 2
+      },
+      "36": {
+        "route_protection": 2,
+        "protective_patrol": 1
+      }
+    },
+    "keyword_hits_in_messages_and_proposals": {
+      "communication": 120,
+      "water": 89,
+      "patrol": 50,
+      "fuel": 47,
+      "trust": 1
+    }
+  },
+  "turn_27_36_health_examples": [
+    {
+      "turn": 27,
+      "nation_id": "nation-001",
+      "leader_id": "leader-001",
+      "action_type": "information_share",
+      "body": "湿原の小国との境界泥炭地道路における定時水理観測データおよび路面安全確認情報の定期相互共有の継続提案。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-01/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-001",
+      "leader_id": "leader-001",
+      "action_type": "resource_offer",
+      "body": "ヒルサイド公国との高台受渡拠点における非通信下プロトコル（固定日時・視認合図）に基づく小麦・水資源と石材・輸送力の小規模試行交易の継続提案。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-01/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-001",
+      "leader_id": "leader-001",
+      "action_type": "route_protection",
+      "body": "セントラル・バシン共和国および東山麓自治共同体との通信途絶時定期連絡ダイアグラムに基づく広域水理データ共有、中継点巡回、および非常時迂回物流路の安全維持継続提案。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-01/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-002",
+      "leader_id": "leader-002",
+      "action_type": "information_share",
+      "body": "湿原平原共和国との境界付近における泥炭地道路の状況確認および水理観測データの定期相互共有プロトコルの確認。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-02/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-002",
+      "leader_id": "leader-002",
+      "action_type": "information_share",
+      "body": "アルトプラノ高台協同体との高台・低地間定期輸送ルートにおける悪路走行時の安全運行基準および燃料融通プロトコルに関する情報共有の継続。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-02/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-003",
+      "leader_id": "leader-003",
+      "action_type": "resource_offer",
+      "body": "湿原平原共和国との高台受渡拠点において、非通信下プロトコル（固定日時・視認合図）に基づく小型トラック20台を活用した石材・建材の提供および試行交易の安全運用を継続することの確認提案。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-03/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-005",
+      "leader_id": "leader-005",
+      "action_type": "information_share",
+      "body": "北東沿岸自治連合との水産資源・港湾アクセスと木材・陸上輸送網を繋ぐ陸海物流連携に向け、試行輸送の準備窓口を維持する共有提案。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-05/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-006",
+      "leader_id": "leader-006",
+      "action_type": "information_share",
+      "body": "湿原の小国との間での、悪天候下における定期輸送ルートの安全運行基準および燃料調達・融通条件に関する実務情報共有の継続。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-06/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-006",
+      "leader_id": "leader-006",
+      "action_type": "information_share",
+      "body": "東山麓自治共同体および高山鉱嶺国との3国間における『通信障害下での緊急電源確保・山道共同点検アジェンダ』に基づく定期巡回および電源・燃料相互協力手順の維持・情報共有。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-06/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-007",
+      "leader_id": "leader-007",
+      "action_type": "information_share",
+      "body": "湿原平原共和国および東山麓自治共同体に対し、通信途絶時定期連絡ダイアグラムに基づいた流域水利・道路状況の共有および小麦100トンの備蓄状況の確認・情報共有を継続して提案いたします。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-07/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-008",
+      "leader_id": "leader-008",
+      "action_type": "information_share",
+      "body": "山麓部の湧水観測データおよび地滑り危険区域の巡回情報の共有と、通信途絶時ダイアグラムに基づく定期連絡の継続運用。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-08/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-009",
+      "leader_id": "leader-009",
+      "action_type": "information_share",
+      "body": "寒冷地風力発電（500kW）の保全手順と低帯域通信用軽量化データ照合フォーマットの共有準備",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-09/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-011",
+      "leader_id": "leader-011",
+      "action_type": "information_share",
+      "body": "寒冷地・高地における風力発電設備（500kW/100kW）の運用保全ログおよび局地気象観測データに関する、通信制限対応の低負荷要約フォーマットの擦り合わせと情報共有の継続協議。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-11/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-011",
+      "leader_id": "leader-011",
+      "action_type": "information_share",
+      "body": "太陽光PV（100kW）と風力発電（100kW）の特性相互補完および低帯域通信下の分散型エネルギー管理手法に関する技術データ照合の継続協議。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-11/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-012",
+      "leader_id": "leader-012",
+      "action_type": "information_share",
+      "body": "沿岸水産資源・港湾アクセスと木材資材・トラック輸送網を連携させた陸海物流構想に向けた、復旧後の試験輸送条件および防護用木材規格の事前すり合わせ。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-12/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-012",
+      "leader_id": "leader-012",
+      "action_type": "information_share",
+      "body": "太陽光PVと風力発電の出力補完運用および通信制約下での分散型データ管理仕様に関する技術的課題整理と情報共有。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-12/DERIVED/output.json"
+    },
+    {
+      "turn": 28,
+      "nation_id": "nation-001",
+      "leader_id": "leader-001",
+      "action_type": "information_share",
+      "body": "湿原の小国（nation-002）との間で、境界泥炭地道路の可動状況および最新の水理観測データを非通信合図プロトコルに基づき相互共有・更新する提案。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-13/DERIVED/output.json"
+    },
+    {
+      "turn": 28,
+      "nation_id": "nation-001",
+      "leader_id": "leader-001",
+      "action_type": "resource_offer",
+      "body": "ヒルサイド公国（nation-003）に対し、非通信下プロトコルに準拠して高台受渡拠点での小麦・水資源と石材・建材の小規模試行交易を定時に実施・継続する提案。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-13/DERIVED/output.json"
+    },
+    {
+      "turn": 28,
+      "nation_id": "nation-001",
+      "leader_id": "leader-001",
+      "action_type": "information_share",
+      "body": "セントラル・バシン共和国（nation-007）および東山麓自治共同体（nation-008）に対し、3国間の通信途絶時定期連絡ダイアグラムに基づく流域水理・道路障害状況の定期確認と穀物備蓄相互支援体制の維持を申し出る提案。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-13/DERIVED/output.json"
+    },
+    {
+      "turn": 28,
+      "nation_id": "nation-002",
+      "leader_id": "leader-002",
+      "action_type": "information_share",
+      "body": "湿原平原共和国との境界付近における泥炭地道路の泥濘状況および水位観測データに関する定時相互共有プロトコルの継続。通信途絶時には事前の非通信合図（旗・照明等）による安全確認を実施する。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-14/DERIVED/output.json"
+    }
+  ],
+  "turn_27_36_security_examples": [
+    {
+      "turn": 27,
+      "nation_id": "nation-001",
+      "leader_id": "leader-001",
+      "action_type": "route_protection",
+      "body": "セントラル・バシン共和国および東山麓自治共同体との通信途絶時定期連絡ダイアグラムに基づく広域水理データ共有、中継点巡回、および非常時迂回物流路の安全維持継続提案。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-01/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-004",
+      "leader_id": "leader-004",
+      "action_type": "route_protection",
+      "body": "セントラル・バシン共和国との間において、長雨・悪路時における中継受渡拠点の安全確保および現場ドライバー・作業員の安全保護手続の共同確認を提案します。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-04/DERIVED/output.json"
+    },
+    {
+      "turn": 27,
+      "nation_id": "nation-008",
+      "leader_id": "leader-008",
+      "action_type": "route_protection",
+      "body": "山岳・高台・山麓を結ぶ主要アクセス路における地滑り警戒区域の共同点検および悪天候下での安全な物流・巡回ルートの維持に関する実務協力協議。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-08/DERIVED/output.json"
+    },
+    {
+      "turn": 28,
+      "nation_id": "nation-006",
+      "leader_id": "leader-006",
+      "action_type": "route_protection",
+      "body": "東山麓自治共同体（nation-008）および高山鉱嶺国（nation-010）との3国共同で、『通信障害下での緊急電源確保・山道共同点検アジェンダ』に基づき山麓・高台・高山間を結ぶアクセス路の点検・安全維持プロトコルを相互に確認し継続運用する提案。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-18/DERIVED/output.json"
+    },
+    {
+      "turn": 28,
+      "nation_id": "nation-007",
+      "leader_id": "leader-007",
+      "action_type": "route_protection",
+      "body": "ソルトコースト公国に対し、内陸・沿岸部間の中継受渡拠点および陸上輸送ルートにおける運行安全基準・定期巡回手順の適用を共同で確認・維持することを提案する。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-19/DERIVED/output.json"
+    },
+    {
+      "turn": 29,
+      "nation_id": "nation-006",
+      "leader_id": "leader-006",
+      "action_type": "protective_patrol",
+      "body": "東山麓自治共同体および高山鉱嶺国との間で、山道・アクセス路の崩落・悪路状況を監視し安全な通行を確保するための共同点検・巡回体制を維持する提案。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-30/DERIVED/output.json"
+    },
+    {
+      "turn": 29,
+      "nation_id": "nation-007",
+      "leader_id": "leader-007",
+      "action_type": "route_protection",
+      "body": "【内陸-沿岸陸上輸送中継受渡拠点の安全点検・運行維持提案】悪天候および悪路下におけるドライバーと現場作業員の安全確保を徹底し、中継拠点での検収・受渡プロトコルに基づく安全点検・路面監視の連携維持を提案します。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-31/DERIVED/output.json"
+    },
+    {
+      "turn": 29,
+      "nation_id": "nation-010",
+      "leader_id": "leader-010",
+      "action_type": "route_protection",
+      "body": "長雨および悪天候下における高台・山麓・高山間の山道・アクセス路の安全確保と共同点検巡回の継続。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-34/DERIVED/output.json"
+    },
+    {
+      "turn": 30,
+      "nation_id": "nation-003",
+      "leader_id": "leader-003",
+      "action_type": "route_protection",
+      "body": "湿原平原共和国との高台受渡拠点および接続輸送ルートにおいて、長雨や悪天候下での安全確保と現場作業員の保護を徹底するため、非武装の点検・巡回態勢の定期的実施について協調の継続を提案いたします。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-39/DERIVED/output.json"
+    },
+    {
+      "turn": 30,
+      "nation_id": "nation-010",
+      "leader_id": "leader-010",
+      "action_type": "route_protection",
+      "body": "『通信障害下での緊急電源確保・山道共同点検アジェンダ』に基づき、山麓・高台・高山を結ぶ輸送・アクセス路の共同点検と巡回保護を継続することを提案いたします。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-46/DERIVED/output.json"
+    },
+    {
+      "turn": 31,
+      "nation_id": "nation-002",
+      "leader_id": "leader-002",
+      "action_type": "route_protection",
+      "body": "高台・低地間定期輸送ルートにおける悪路走行時の安全管理と燃料融通協力体制の継続確認。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-50/DERIVED/output.json"
+    },
+    {
+      "turn": 32,
+      "nation_id": "nation-003",
+      "leader_id": "leader-003",
+      "action_type": "route_protection",
+      "body": "高台一次受渡拠点および接続輸送ルートにおいて、長雨による悪路や視界不良に備えた安全巡回と輸送隊の相互保護体制の点検・維持を継続することを提案します。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-63/DERIVED/output.json"
+    },
+    {
+      "turn": 33,
+      "nation_id": "nation-004",
+      "leader_id": "leader-004",
+      "action_type": "route_protection",
+      "body": "セントラル・バシン共和国とソルトコースト公国を結ぶ陸上中継受渡拠点における、悪天候・通信障害下での現場作業員および輸送車両の安全確保・点検手順の維持。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-76/DERIVED/output.json"
+    },
+    {
+      "turn": 33,
+      "nation_id": "nation-007",
+      "leader_id": "leader-007",
+      "action_type": "route_protection",
+      "body": "通信障害および長雨に伴う悪路化に備え、上・中・下流を結ぶ迂回輸送路および中継確認点において、各国の定期巡回要員によるルート状況確認と安全維持（route_protection）を現場主義で継続実施することを相互確認する提案。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-79/DERIVED/output.json"
+    },
+    {
+      "turn": 33,
+      "nation_id": "nation-008",
+      "leader_id": "leader-008",
+      "action_type": "route_protection",
+      "body": "山麓・高台・高山を結ぶアクセス路における巡回点検の継続と、通信障害下での非常用電源・燃料相互支援プロトコルの維持確認。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-80/DERIVED/output.json"
+    },
+    {
+      "turn": 34,
+      "nation_id": "nation-008",
+      "leader_id": "leader-008",
+      "action_type": "route_protection",
+      "body": "通信障害および悪天候下における山麓・高台・高山間アクセス路の共同維持・点検巡回プロトコルの維持確認。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-92/DERIVED/output.json"
+    },
+    {
+      "turn": 34,
+      "nation_id": "nation-010",
+      "leader_id": "leader-010",
+      "action_type": "route_protection",
+      "body": "長雨および通信障害の継続に伴い、高山・高台・山麓エリアを結ぶ主要アクセス路およびインフラ保守ルートの巡回・点検・安全維持を共同で強化・継続することを提案します。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-94/DERIVED/output.json"
+    },
+    {
+      "turn": 35,
+      "nation_id": "nation-004",
+      "leader_id": "leader-004",
+      "action_type": "route_protection",
+      "body": "内陸・沿岸間の中継受渡拠点における現場作業員・ドライバーの安全確保および悪天候・通信障害下での定期運行手順の共同維持。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-100/DERIVED/output.json"
+    },
+    {
+      "turn": 35,
+      "nation_id": "nation-010",
+      "leader_id": "leader-010",
+      "action_type": "route_protection",
+      "body": "『通信障害下での緊急電源確保・山道共同点検アジェンダ』に基づき、山麓〜高台〜高山帯を結ぶ主要アクセス路およびインフラ保守ルートの安全性維持と巡回確認を引き続き共同で維持・実施することを提案します。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-106/DERIVED/output.json"
+    },
+    {
+      "turn": 36,
+      "nation_id": "nation-002",
+      "leader_id": "leader-002",
+      "action_type": "route_protection",
+      "body": "アルトプラノ高台協同体との高台・低地間定期輸送ルートにおける泥濘路安全運行基準遵守およびディーゼル燃料融通プロトコルの維持確認。",
+      "path": "/Users/mk/.codex/.chatgpt-projects/g-p-6aaa878f0bb08191b79262fa642e3801/homeostasis-security/.artifacts/v5-fixed-persona-turns-27-36-waterborne-illness-continuation-20260922/attempt-110/DERIVED/output.json"
+    }
+  ],
+  "physical_settlement_executed": false,
+  "technical_notes": [
+    "At attempt 101, runner history sorting was amended from lexicographic to numeric order after attempt-100 exposed a local HISTORY_GAP check issue. No generated RAW was modified.",
+    "At attempt 120, reservation stop limit was raised from 8.0 to 8.5 USD to allow the final preplanned call; actual estimated batch cost is recorded separately."
+  ],
+  "note_ja": "TURN 27〜36は、水系感染症流行イベントを継続した10ターン延長観測。物理settlementは実行していないため、回復・到着・感染者数変化は未判定。"
+}

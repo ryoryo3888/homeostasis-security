@@ -6,7 +6,7 @@
     "worlds": 1,
     "nations": 12,
     "leaders": 12,
-    "turns": 3,
+    "turns": 36,
     "fixed_pairs": false,
     "dedicated_mediator": false,
     "forced_all_to_all": false,
@@ -125,7 +125,7 @@
         }
       },
       "interpretation": "3 TURNでは情報交換・協議提案が中心で、資源量・経路・輸送能力・相手同意が揃う物理移転には至らなかった。",
-      "limitations": "これは失敗ではなく、発言と物理成立を分離したV5世界法則の結果。長期化すれば変わる可能性がある。"
+      "limitations": "これは観測の否定ではなく、発言と物理成立を分離したV5世界法則の結果。長期化すれば変わる可能性がある。"
     }
   ],
   "provisional_question": "12国家を同じ世界へ置き、接触相手を固定しない場合、初期3 TURNで国家間ネットワークは自然形成されるか。",
@@ -1481,5 +1481,126 @@
       "物理的な資源移転はまだ成立していない。",
       "TURN 7以降はまだ実行していない。"
     ]
+  },
+  "long_observation_36_turns": {
+    "title": "36 TURN版 DERIVED要約",
+    "subtitle": "12国家・12名のLeaderを同じ単一世界に置き、TURN 1〜36まで継続観測した世界線。",
+    "turn_range": "1〜36",
+    "total_leader_judgments": 432,
+    "total_outgoing_messages": 1026,
+    "total_message_recipients": 1321,
+    "total_proposals": 730,
+    "resource_offers": 59,
+    "security_actions": 48,
+    "physical_settlement_executed": false,
+    "derived_summary_path": "results/v5-generated-nations/turns_1_36_waterborne_illness_continuation_summary.json",
+    "phases": [
+      {
+        "label": "TURN 1〜3",
+        "title": "接触先を固定しない世界で、外交ネットワークが立ち上がる",
+        "body": "12国家は固定ペアや専用仲介役を持たず、各Leaderが接触先を選び始めた。初回から完全孤立は発生せず、接触エッジと双方向関係が形成された。"
+      },
+      {
+        "label": "TURN 4〜9",
+        "title": "関係の継続と役割分化が始まる",
+        "body": "一部国家に情報共有・橋渡し・調整の発言が集まり、事前に置いていない仲介的な位置が観測された。ただしLeadershipや因果とはまだ呼ばない。"
+      },
+      {
+        "label": "TURN 10〜20",
+        "title": "長雨による野菜・生鮮作物の供給不安と通信不安定化",
+        "body": "食料・物流・通信をめぐる提案や共有が増えた。ここでは発言上の協力が増えたが、物理settlement前のため、到着・価格低下・供給不安解消は未判定。"
+      },
+      {
+        "label": "TURN 21〜23",
+        "title": "現実世界に存在し得る安全保障行動空間を追加",
+        "body": "安全保障・制裁・封鎖・警備強化・武力衝突リスクを、特定結果へ誘導しない行動空間として追加。経路保護や警備に関する提案が観測された。"
+      },
+      {
+        "label": "TURN 24〜36",
+        "title": "水系感染症流行下で、水・通信・燃料・巡回への注意が集中",
+        "body": "TURN 27〜36だけで120件のLeader判断、290件の外交通信、235件の提案が記録された。通信・水・巡回・燃料に関する語が高頻度で現れた。"
+      }
+    ],
+    "main_findings": [
+      {
+        "title": "外交量は減衰せず、危機下でも接触は継続した",
+        "body": "TURN 1〜36合計で外交通信1026件、宛先延べ1321件、提案730件が記録された。"
+      },
+      {
+        "title": "固定ペアなしでも関係ネットワークが形成された",
+        "body": "人間側は固定ペア・専用仲介役・中央Leaderを配置していない。それでも双方向関係や接触集中が観測された。"
+      },
+      {
+        "title": "協力発言と物理変化は分離されている",
+        "body": "資源提案は59件あったが、この36 TURN要約では物理settlementは未実行。発言だけで物資到着や回復とは扱わない。"
+      },
+      {
+        "title": "安全保障行動は存在したが、攻撃的展開へ固定されなかった",
+        "body": "経路保護45件、警備巡回3件が観測された。これらは攻撃を誘導した結果ではなく、行動空間内で出た反応として記録する。"
+      },
+      {
+        "title": "感染症流行期に、通信・水・燃料・巡回が焦点化した",
+        "body": "TURN 27〜36のキーワード集計では communication 120、water 89、patrol 50、fuel 47 が確認された。"
+      }
+    ],
+    "examples": {
+      "health": [
+        "水系感染症流行イベント後、水・衛生・通信回復をめぐる情報共有が増えた。",
+        "生鮮作物イベント後の供給不安は、外交上の支援提案として残っているが、物理的解消は未判定。"
+      ],
+      "network": [
+        "複数国家が同じ相手へ情報共有や調整を向け、事前配置なしの接触集中が生じた。",
+        "孤立国家を作る設定はしていないが、全国家総当たりも強制していない。接触先選択そのものが観測対象。"
+      ],
+      "security": [
+        "route_protection が45件、protective_patrol が3件記録された。",
+        "安全保障行動空間は現実に存在し得る選択肢として追加され、特定の衝突を起こすための指示ではない。"
+      ]
+    },
+    "note_ja": "TURN 27〜36は、水系感染症流行イベントを継続した10ターン延長観測。物理settlementは実行していないため、回復・到着・感染者数変化は未判定。",
+    "technical_notes": [
+      "At attempt 101, runner history sorting was amended from lexicographic to numeric order after attempt-100 exposed a local HISTORY_GAP check issue. No generated RAW was modified.",
+      "At attempt 120, reservation stop limit was raised from 8.0 to 8.5 USD to allow the final preplanned call; actual estimated batch cost is recorded separately."
+    ],
+    "estimated_cost_usd": "5.65804425"
+  },
+  "headline_metrics_36_turns": {
+    "turns": "1〜36",
+    "leader_decisions": 432,
+    "messages": 1026,
+    "proposals": 730,
+    "resource_offers": 59,
+    "security_actions": 48,
+    "physical_settlement": "未実行",
+    "worlds": 1
+  },
+  "reference_generation_batches": {
+    "aoi_batch": {
+      "title": "Persona Generator v2 参考生成バッチ",
+      "status": "正式12人・36TURN世界線には混ぜない参考資料",
+      "summary": "Leader情報を後から開示する二段階方式の検討中に、同一名「佐藤 葵」や日本語圏名への反復が観測された。これは正式世界の人物として採用せず、生成器の挙動を確認する参考記録として保持する。",
+      "observed_biases": [
+        "同一名「佐藤 葵」の反復",
+        "佐藤姓への集中",
+        "日本語圏名への偏り",
+        "同一バッチ内での氏名体系反復"
+      ],
+      "counts": {
+        "batch_v5_persona_v2_12_human_first": {
+          "derived_files": 27,
+          "files_containing_sato": 20,
+          "files_containing_sato_aoi": 20,
+          "extracted_name_sato_aoi": 6
+        },
+        "batch_v5_persona_v2_1_12_human_first": {
+          "derived_files": 60,
+          "files_containing_sato": 39,
+          "files_containing_sato_aoi": 36,
+          "extracted_name_sato_aoi": 11,
+          "extracted_name_sato_haruka": 1
+        }
+      },
+      "handling": "氏名・文化圏の重複を避けるための参考にするが、多様性を人間側が固定配分する目的では使わない。"
+    }
   }
 }

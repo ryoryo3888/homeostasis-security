@@ -17,8 +17,8 @@
     <div class="hero-copy">
       <div class="eyebrow">HOMEOSTASIS SECURITY / V5 EMERGENT SOCIETY</div>
       <h1>Emergent Society</h1>
-      <p class="lead">AIが生成した12国家と12名の国家Leaderを同じ1つの世界に置き、関係ネットワークがどう形成されたかを観測。</p>
-      <p class="sublead">固定ペア、専用仲介役、総当たり通信、結末誘導を置かず、各Leaderが誰へ接触するかを選びました。発言と物理的成立は分離し、世界法則で成立条件を確認しています。</p>
+      <p class="lead">AIが生成した12国家と12名の国家Leaderを同じ1つの世界に置き、TURN 1〜36まで継続観測したV5の主世界線。</p>
+      <p class="sublead">固定ペア、専用仲介役、総当たり通信、結末誘導を置かず、各Leaderが誰へ接触するかを選びました。長雨、生鮮作物の供給不安、通信不安定化、安全維持、水系感染症流行を経て、外交ネットワークと行動がどう変化したかをDERIVED要約として示します。</p>
     </div>
     <div class="hero-visual" aria-label="V5の単一世界を象徴する装飾的な地球ビジュアル">
       <div class="v5-earth" aria-hidden="true"><div class="v5-earth-core"><img src="earth_japan_network_v2.png" alt=""></div><div class="v5-aurora"></div><div class="v5-satellite one"></div><div class="v5-satellite two"></div></div>
@@ -41,8 +41,8 @@
 </header>
 
 <section class="section panel">
-  <div class="eyebrow">00 / OBSERVED WORLDLINE</div><h2>V5で観測された世界の動き</h2>
-  <p class="sublead">このページでは、12名の人物紹介ではなく、同じ1つの世界に置かれた12国家がどのように接触し、関係ネットワークを形成したかを先に示します。Leader生成は、この観測を支える前提資料として後段にまとめています。</p>
+  <div class="eyebrow">00 / MAIN OBSERVATION</div><h2>36 TURN版DERIVED要約</h2>
+  <p class="sublead">このページでは、36 TURNまで継続した主世界線を先に示します。初回pilot、12名の人物紹介、佐藤葵バッチなどの生成過程は、観測結果を支える参考資料として後段にまとめています。</p>
   <div class="two">
     <article class="card story-card"><strong id="initialLabel"></strong><h3 id="initialHeadline"></h3><p id="initialSummary"></p></article>
     <article class="card story-card"><strong id="extendedLabel"></strong><h3 id="extendedHeadline"></h3><p id="extendedSummary"></p></article>
@@ -55,33 +55,44 @@
   <p id="storyInterpretation" class="small"></p>
 </section>
 
+<section class="section two">
+  <div class="panel"><div class="eyebrow">36 TURN / HEALTH AND SUPPLY</div><h2>水・通信・食料をめぐる反応</h2><div id="healthExamples"></div></div>
+  <div class="panel"><div class="eyebrow">36 TURN / NETWORK AND SECURITY</div><h2>ネットワークと安全維持</h2><div id="networkSecurityExamples"></div></div>
+</section>
+
 <section class="section panel">
-  <div class="eyebrow">01 / EMERGENCE</div><h2>初回観測で見えた3つのこと</h2>
+  <div class="eyebrow">01 / 36 TURN FINDINGS</div><h2>36 TURNで見えた主要観測</h2>
   <div class="grid" id="observations"></div>
 </section>
 
 <section class="section two">
-  <div class="panel"><div class="eyebrow">02 / NETWORK CENTER</div><h2>接触が集中した国家</h2><p class="small">接触数から見た中心候補です。Leadershipや因果とはまだ呼びません。</p><div id="topActivity"></div></div>
-  <div class="panel"><div class="eyebrow">03 / MEDIATOR CANDIDATES</div><h2>仲介候補</h2><p class="small">人間側で仲介役は置いていません。ここではネットワーク位置だけを見ています。</p><div id="mediators"></div></div>
+  <div class="panel"><div class="eyebrow">REFERENCE / INITIAL NETWORK CENTER</div><h2>初回3 TURNの接触集中（参考）</h2><p class="small">初回pilot時点の接触数から見た中心候補です。36 TURN本編の主張ではなく、前段資料として置きます。</p><div id="topActivity"></div></div>
+  <div class="panel"><div class="eyebrow">REFERENCE / INITIAL MEDIATOR CANDIDATES</div><h2>初回3 TURNの仲介候補（参考）</h2><p class="small">人間側で仲介役は置いていません。初回pilotのネットワーク位置だけを参考として見ています。</p><div id="mediators"></div></div>
 </section>
 
 <section class="section panel">
-  <div class="eyebrow">04 / TURN DYNAMICS</div><h2>TURNごとの中心候補</h2>
+  <div class="eyebrow">REFERENCE / INITIAL TURN DYNAMICS</div><h2>初回3 TURNの中心候補（参考）</h2>
   <div class="turns" id="turnDynamics"></div>
 </section>
 
 <section class="section two">
-  <div class="panel"><div class="eyebrow">05 / RECIPROCAL RELATIONS</div><h2>強い双方向関係</h2><div id="reciprocal"></div></div>
-  <div class="panel"><div class="eyebrow">06 / WORLD LAW</div><h2>未成立の資源提案</h2><p class="small">発言だけでは資源は移動しません。数量・同意・経路・輸送能力が揃うまでworld stateは変更しません。</p><div id="offers"></div></div>
+  <div class="panel"><div class="eyebrow">REFERENCE / INITIAL RECIPROCAL RELATIONS</div><h2>初回3 TURNの双方向関係（参考）</h2><div id="reciprocal"></div></div>
+  <div class="panel"><div class="eyebrow">REFERENCE / INITIAL WORLD LAW</div><h2>初回3 TURNの未成立資源提案（参考）</h2><p class="small">発言だけでは資源は移動しません。数量・同意・経路・輸送能力が揃うまでworld stateは変更しません。</p><div id="offers"></div></div>
 </section>
 
 <section class="section panel">
-  <div class="eyebrow">REFERENCE / PERSONA GENERATION</div><h2>12名の国家Leader生成記録</h2>
-  <p class="sublead">このセクションは観測結果の主役ではなく、V5世界に投入された12名のLeaderがどのように生成されたかを確認するための資料です。</p>
+  <div class="eyebrow">REFERENCE / PERSONA GENERATION</div><h2>初回pilot・12名の国家Leader生成記録</h2>
+  <p class="sublead">このセクションは観測結果の主役ではなく、V5世界に投入された12名のLeaderがどのように生成されたかを確認するための参考資料です。</p>
   <p id="personaSummary" class="sublead"></p>
   <p id="personaBiasNote" class="small"></p>
   <div><span class="tag">人間が年齢・性別を指定しない</span><span class="tag">人生史 → 現在人格</span><span class="tag">17軸は後測定</span><span class="tag">自己紹介は初回外交時</span></div>
   <div class="story-grid" id="leaderStories"></div>
+</section>
+
+<section class="section panel">
+  <div class="eyebrow">REFERENCE / PERSONA GENERATOR v2 BATCH</div><h2>佐藤葵バッチの参考記録</h2>
+  <p class="sublead" id="aoiBatchSummary"></p>
+  <div class="grid" id="aoiBatchDetails"></div>
 </section>
 
 <section class="section panel no-claim">
@@ -98,35 +109,51 @@ const yen = new Intl.NumberFormat('ja-JP');
 function esc(s){return String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function metric(label,value,cls=''){return `<div class="metric ${cls}"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`}
 fetch('results/v5-generated-nations/data.json').then(r=>r.json()).then(data=>{
- document.getElementById('answer').textContent=data.provisional_answer;
- const m=data.headline_metrics;
- document.getElementById('metrics').innerHTML=[metric('Leader判断',m.leader_decisions,'good'),metric('外交通信',m.messages),metric('提案',m.proposals),metric('双方向関係',m.reciprocal_pairs,'good'),metric('接触エッジ',m.directed_edges),metric('完全孤立',m.isolated_nations,'good'),metric('物理変化',m.physical_changes,'warn'),metric('世界数',data.scope.worlds)].join('');
+ const long=data.long_observation_36_turns || {};
+ document.getElementById('answer').textContent=long.subtitle || data.provisional_answer;
+ const m=data.headline_metrics_36_turns || data.headline_metrics;
+ document.getElementById('metrics').innerHTML=[
+   metric('TURN',m.turns || data.scope.turns,'good'),
+   metric('Leader判断',m.leader_decisions,'good'),
+   metric('外交通信',m.messages),
+   metric('提案',m.proposals),
+   metric('資源提案',m.resource_offers),
+   metric('安全維持',m.security_actions),
+   metric('物理settlement',m.physical_settlement,'warn'),
+   metric('世界数',m.worlds || data.scope.worlds,'good')
+ ].join('');
  const pg=data.persona_generation || {};
  document.getElementById('personaSummary').textContent=`${pg.summary || ''} ${pg.visibility || ''}`;
  document.getElementById('personaBiasNote').textContent=pg.bias_note || '';
- const story=data.observation_story || {};
- const init=story.initial_pilot || {};
- const ext=story.extended_observation || {};
- document.getElementById('storyFraming').textContent=story.framing || '';
- document.getElementById('initialLabel').textContent=init.label || '';
- document.getElementById('initialHeadline').textContent=init.headline || '';
- document.getElementById('initialSummary').textContent=init.summary || '';
- document.getElementById('extendedLabel').textContent=ext.label || '';
- document.getElementById('extendedHeadline').textContent=ext.headline || '';
- document.getElementById('extendedSummary').textContent=ext.summary || '';
- const cards=[...(init.turn_cards||[]),...(ext.turn_cards||[])];
- document.getElementById('storyTurns').innerHTML=cards.map(c=>`<article class="card turn story-card"><strong>TURN ${esc(c.turn)}</strong><h3>${esc(c.title)}</h3><p>${esc(c.body)}</p><p class="small">中心候補：${esc(c.top_nation)} / activity ${esc(c.activity)}</p></article>`).join('');
- document.getElementById('roleDifferentiation').innerHTML=(ext.role_differentiation||[]).map(r=>`<article class="card"><h3>${esc(r.nation)}</h3><p><b>${esc(r.role)}</b></p><p class="small">${esc(r.evidence)}</p></article>`).join('');
- document.getElementById('storyInterpretation').textContent=story.interpretation || '';
- document.getElementById('leaderStories').innerHTML=(pg.leaders || []).map(l=>`<article class="card persona-card"><h3>${esc(l.leader_id)}：${esc(l.generated_name)}</h3><div class="persona-meta"><span class="tag">担当：${esc(l.nation_name)}</span><span class="tag">年齢：${esc(l.generated_age)}</span><span class="tag">性別表現：${esc(l.generated_gender)}</span></div><p>${esc(l.present_person)}</p><details><summary>生成された人生史を見る</summary>${(l.life_periods||[]).map(p=>`<div class="life-line"><b>${p.index}. ${esc(p.elapsed_years)}年</b><br>${esc(p.narrative)}</div>`).join('')}<p class="small"><b>本人の自己紹介：</b>${esc(l.self_introduction)}</p></details></article>`).join('');
- document.getElementById('observations').innerHTML=data.observations.map(o=>`<article class="card"><h3>${esc(o.title)}</h3><p>${esc(o.interpretation)}</p><p class="small">限界：${esc(o.limitations)}</p></article>`).join('');
+ document.getElementById('initialLabel').textContent='TURN 1〜20';
+ document.getElementById('initialHeadline').textContent='ネットワーク形成から供給不安へ';
+ document.getElementById('initialSummary').textContent='固定ペアなしの12国家世界で外交ネットワークが立ち上がり、長雨による野菜・生鮮作物の供給不安と通信不安定化へ対応が広がった。';
+ document.getElementById('extendedLabel').textContent='TURN 21〜36';
+ document.getElementById('extendedHeadline').textContent='安全維持と水系感染症流行下の継続観測';
+ document.getElementById('extendedSummary').textContent='安全保障行動空間を加えた後、水系感染症流行の中で通信・水・巡回・燃料が焦点化した。物理settlementはまだ実行していない。';
+ const phases=long.phases || [];
+ document.getElementById('storyTurns').innerHTML=phases.map(c=>`<article class="card turn story-card"><strong>${esc(c.label)}</strong><h3>${esc(c.title)}</h3><p>${esc(c.body)}</p></article>`).join('');
+ document.getElementById('roleDifferentiation').innerHTML=(long.main_findings || []).slice(0,3).map(r=>`<article class="card"><h3>${esc(r.title)}</h3><p class="small">${esc(r.body)}</p></article>`).join('');
+ document.getElementById('storyFraming').textContent='36 TURN版をV5ページの主役にし、初回pilotと人物生成は参考資料として後段へ移動しています。';
+ document.getElementById('storyInterpretation').innerHTML=`${esc(long.note_ja || '')} <a href="${esc(long.derived_summary_path || 'results/v5-generated-nations/turns_1_36_waterborne_illness_continuation_summary.json')}">36 TURN DERIVED要約JSONを見る</a>`;
+ const examples=long.examples || {};
+ document.getElementById('healthExamples').innerHTML=(examples.health || []).map(x=>`<div class="edge"><b>観測</b><span>${esc(x)}</span></div>`).join('');
+ document.getElementById('networkSecurityExamples').innerHTML=[...(examples.network || []),...(examples.security || [])].map(x=>`<div class="edge"><b>観測</b><span>${esc(x)}</span></div>`).join('');
+ document.getElementById('observations').innerHTML=(long.main_findings || data.observations).map(o=>`<article class="card"><h3>${esc(o.title)}</h3><p>${esc(o.body || o.interpretation)}</p>${o.limitations?`<p class="small">限界：${esc(o.limitations)}</p>`:''}</article>`).join('');
  document.getElementById('topActivity').innerHTML=data.top_activity.slice(0,6).map(n=>`<div class="edge"><b>${esc(n.nation_id)} ${esc(n.nation_name)}</b><span>in ${n.incoming_contact_events} / out ${n.outgoing_contact_events}</span></div>`).join('');
  document.getElementById('mediators').innerHTML=data.mediator_candidates.map(n=>`<div class="edge"><b>${esc(n.nation_id)} ${esc(n.nation_name)}</b><span>score ${n.possible_broker_score}</span></div>`).join('');
  document.getElementById('turnDynamics').innerHTML=data.turn_dynamics.map(t=>`<article class="card turn"><strong>TURN ${t.turn}</strong><h3>${esc(t.top_nation_id)} ${esc(t.top_nation_name)}</h3><p class="small">中心候補：${t.top_changed_from_previous===null?'初回':(t.top_changed_from_previous?'変化':'継続')}</p>${t.top_activity.slice(0,3).map(n=>`<div class="edge"><b>${esc(n.nation_name)}</b><span>${n.activity}</span></div>`).join('')}</article>`).join('');
  document.getElementById('reciprocal').innerHTML=data.reciprocal_pairs.slice(0,8).map(p=>`<div class="edge"><b>${esc(p.nation_a_name)} ↔ ${esc(p.nation_b_name)}</b><span>${p.a_to_b} / ${p.b_to_a}</span></div>`).join('');
  document.getElementById('offers').innerHTML=data.resource_offers.map(o=>`<article class="card offer"><h3>TURN ${o.turn} ${esc(o.from_nation_name)}</h3><p>${esc(o.body)}</p><p class="small">不足条件：明示数量、相手同意、経路・輸送能力、実行可能なworld effect</p></article>`).join('');
+ document.getElementById('leaderStories').innerHTML=(pg.leaders || []).map(l=>`<article class="card persona-card"><h3>${esc(l.leader_id)}：${esc(l.generated_name)}</h3><div class="persona-meta"><span class="tag">担当：${esc(l.nation_name)}</span><span class="tag">年齢：${esc(l.generated_age)}</span><span class="tag">性別表現：${esc(l.generated_gender)}</span></div><p>${esc(l.present_person)}</p><details><summary>生成された人生史を見る</summary>${(l.life_periods||[]).map(p=>`<div class="life-line"><b>${p.index}. ${esc(p.elapsed_years)}年</b><br>${esc(p.narrative)}</div>`).join('')}<p class="small"><b>本人の自己紹介：</b>${esc(l.self_introduction)}</p></details></article>`).join('');
+ const aoi=(data.reference_generation_batches || {}).aoi_batch || {};
+ document.getElementById('aoiBatchSummary').textContent=aoi.summary || '';
+ document.getElementById('aoiBatchDetails').innerHTML=[
+   `<article class="card"><h3>扱い</h3><p>${esc(aoi.status || '')}</p><p class="small">${esc(aoi.handling || '')}</p></article>`,
+   `<article class="card"><h3>観測された反復</h3><p>${esc((aoi.observed_biases || []).join(' / '))}</p></article>`,
+   `<article class="card"><h3>記録件数</h3><p>佐藤を含むファイル：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.files_containing_sato)} / 佐藤葵を含むファイル：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.files_containing_sato_aoi)}</p></article>`
+ ].join('');
  document.getElementById('limits').innerHTML=data.do_not_claim.map(x=>`<li>${esc(x)}</li>`).join('');
-});
-</script>
+});</script>
 </body>
 </html>
