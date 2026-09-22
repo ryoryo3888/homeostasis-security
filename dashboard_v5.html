@@ -82,12 +82,15 @@
   <p class="sublead" id="offlineComparisonSummary"></p>
   <div class="comparison-table" id="offlineComparisonTable"></div>
   <p class="small" id="offlineComparisonInterpretation"></p>
-  <div class="ablation-block" id="scaffoldingAblation"></div>
 </section>
 
 <section class="section panel reference-section" id="reference-index">
   <h2>補足資料</h2>
   <div class="reference-group">
+    <details class="reference-fold" id="reference-ablation">
+      <summary>制約除去観測・参考記録の扱い</summary>
+      <div class="reference-fold-body"><div class="ablation-block" id="scaffoldingAblation"></div></div>
+    </details>
     <details class="reference-fold" id="reference-initial-turns">
       <summary>初回3ターンの参考記録</summary>
       <div class="reference-fold-body">
@@ -195,7 +198,7 @@ fetch('results/v5-generated-nations/data.json').then(r=>r.json()).then(data=>{
  document.getElementById('offlineComparisonInterpretation').textContent=offline.interpretation || '';
  const ablation=data.scaffolding_ablation_observation || {};
  document.getElementById('scaffoldingAblation').innerHTML=ablation.title ? `
-   <article class="card ablation-lead"><div class="eyebrow">制約除去観測</div><h3>${esc(ablation.title)}</h3><p>${esc(ablation.lead || '')}</p><p><b>${esc(ablation.v5_summary || '')}</b></p></article>
+   <article class="card ablation-lead"><h3>${esc(ablation.title)}</h3><p>${esc(ablation.lead || '')}</p><p><b>${esc(ablation.v5_summary || '')}</b></p></article>
    <div class="scope-grid ablation-findings">${(ablation.findings || []).map((x,i)=>`<article class="scope-card"><h3>${i+1}. ${esc(x)}</h3></article>`).join('')}</div>
    <div class="grid ablation-categories">${(ablation.categories || []).map(x=>`<article class="card"><h3>${esc(x.title)}</h3><p class="small">${esc(x.label || '')}</p><p>${esc(x.body || '')}</p></article>`).join('')}</div>
    <p class="small ablation-note">${esc(ablation.reference_note || '')}</p>` : '';
