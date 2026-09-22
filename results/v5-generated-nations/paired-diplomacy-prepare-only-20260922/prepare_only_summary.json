@@ -1,0 +1,243 @@
+{
+  "document_type": "v5-paired-diplomacy-prepare-only-summary",
+  "created_at": "2026-09-22T13:26:38.018987+00:00",
+  "api_executed": false,
+  "preregistration_path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/preregistration.json",
+  "preregistration_sha256": "e1acbefe285f0736371ab2d4345dbd39c9ca2911405d8db22aa4fb3ad1006d39",
+  "manifest_count": 20,
+  "seed_pairs": [
+    {
+      "pair_index": 1,
+      "seed_label": "seed-01",
+      "seed_value": 9201,
+      "normal_run_id": "seed-01-A-NORMAL",
+      "no_diplomacy_run_id": "seed-01-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 2,
+      "seed_label": "seed-02",
+      "seed_value": 9203,
+      "normal_run_id": "seed-02-A-NORMAL",
+      "no_diplomacy_run_id": "seed-02-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 3,
+      "seed_label": "seed-03",
+      "seed_value": 9209,
+      "normal_run_id": "seed-03-A-NORMAL",
+      "no_diplomacy_run_id": "seed-03-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 4,
+      "seed_label": "seed-04",
+      "seed_value": 9221,
+      "normal_run_id": "seed-04-A-NORMAL",
+      "no_diplomacy_run_id": "seed-04-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 5,
+      "seed_label": "seed-05",
+      "seed_value": 9227,
+      "normal_run_id": "seed-05-A-NORMAL",
+      "no_diplomacy_run_id": "seed-05-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 6,
+      "seed_label": "seed-06",
+      "seed_value": 9239,
+      "normal_run_id": "seed-06-A-NORMAL",
+      "no_diplomacy_run_id": "seed-06-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 7,
+      "seed_label": "seed-07",
+      "seed_value": 9241,
+      "normal_run_id": "seed-07-A-NORMAL",
+      "no_diplomacy_run_id": "seed-07-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 8,
+      "seed_label": "seed-08",
+      "seed_value": 9257,
+      "normal_run_id": "seed-08-A-NORMAL",
+      "no_diplomacy_run_id": "seed-08-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 9,
+      "seed_label": "seed-09",
+      "seed_value": 9277,
+      "normal_run_id": "seed-09-A-NORMAL",
+      "no_diplomacy_run_id": "seed-09-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 10,
+      "seed_label": "seed-10",
+      "seed_value": 9281,
+      "normal_run_id": "seed-10-A-NORMAL",
+      "no_diplomacy_run_id": "seed-10-B-NO-DIPLOMACY"
+    }
+  ],
+  "manifests": [
+    {
+      "run_id": "seed-01-A-NORMAL",
+      "condition": "NORMAL",
+      "seed_label": "seed-01",
+      "seed_value": 9201,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-01-A-NORMAL.json",
+      "manifest_sha256": "b4a10a330abbd3688aed383aab8e82716d33f72c63a1ebebf59ec5f70f23e229"
+    },
+    {
+      "run_id": "seed-01-B-NO-DIPLOMACY",
+      "condition": "NO-DIPLOMACY",
+      "seed_label": "seed-01",
+      "seed_value": 9201,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-01-B-NO-DIPLOMACY.json",
+      "manifest_sha256": "8ea7015ba34fbe5b4f24a27557a76fe362f456dad2212699434a6b634df7b0bb"
+    },
+    {
+      "run_id": "seed-02-A-NORMAL",
+      "condition": "NORMAL",
+      "seed_label": "seed-02",
+      "seed_value": 9203,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-02-A-NORMAL.json",
+      "manifest_sha256": "63526d2c3abb283a1e97b383dd10c98e41537edaf223d19b90a7394ff5d66330"
+    },
+    {
+      "run_id": "seed-02-B-NO-DIPLOMACY",
+      "condition": "NO-DIPLOMACY",
+      "seed_label": "seed-02",
+      "seed_value": 9203,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-02-B-NO-DIPLOMACY.json",
+      "manifest_sha256": "ae69066d6d5457b47044ffad19b1fef128688da234a752c5c5bd7d148df6dd4e"
+    },
+    {
+      "run_id": "seed-03-A-NORMAL",
+      "condition": "NORMAL",
+      "seed_label": "seed-03",
+      "seed_value": 9209,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-03-A-NORMAL.json",
+      "manifest_sha256": "35708946b7df4f0b0614fb0c66c9f12bc00071b3524049de383fa2a2ebedd237"
+    },
+    {
+      "run_id": "seed-03-B-NO-DIPLOMACY",
+      "condition": "NO-DIPLOMACY",
+      "seed_label": "seed-03",
+      "seed_value": 9209,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-03-B-NO-DIPLOMACY.json",
+      "manifest_sha256": "04e226002699df5f4098c64861ae0d1f8bf14594ab84193c5f683992b728f49e"
+    },
+    {
+      "run_id": "seed-04-A-NORMAL",
+      "condition": "NORMAL",
+      "seed_label": "seed-04",
+      "seed_value": 9221,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-04-A-NORMAL.json",
+      "manifest_sha256": "8e3e7dc15b47e5009346c567b43267f379802fa4b871dafe4e1c3e88936e7596"
+    },
+    {
+      "run_id": "seed-04-B-NO-DIPLOMACY",
+      "condition": "NO-DIPLOMACY",
+      "seed_label": "seed-04",
+      "seed_value": 9221,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-04-B-NO-DIPLOMACY.json",
+      "manifest_sha256": "abb5add6dfa6732cc0603b498ce43a4557b373f294b4966439277206a31753a7"
+    },
+    {
+      "run_id": "seed-05-A-NORMAL",
+      "condition": "NORMAL",
+      "seed_label": "seed-05",
+      "seed_value": 9227,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-05-A-NORMAL.json",
+      "manifest_sha256": "8d2d3fb5d3beee567c3b6ffe154f534dc79e0566e0723571e67c4a737e948571"
+    },
+    {
+      "run_id": "seed-05-B-NO-DIPLOMACY",
+      "condition": "NO-DIPLOMACY",
+      "seed_label": "seed-05",
+      "seed_value": 9227,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-05-B-NO-DIPLOMACY.json",
+      "manifest_sha256": "0d1486f1102d049614e8422e0bff5f9298db7f999906c167cd37e4a75387b09e"
+    },
+    {
+      "run_id": "seed-06-A-NORMAL",
+      "condition": "NORMAL",
+      "seed_label": "seed-06",
+      "seed_value": 9239,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-06-A-NORMAL.json",
+      "manifest_sha256": "3eb777f030e6c13777ac457495c6ea23c796c01fe385e1d64e157e0c2d53129a"
+    },
+    {
+      "run_id": "seed-06-B-NO-DIPLOMACY",
+      "condition": "NO-DIPLOMACY",
+      "seed_label": "seed-06",
+      "seed_value": 9239,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-06-B-NO-DIPLOMACY.json",
+      "manifest_sha256": "fde3f165f49df6abda039699c7463e096ac63958e63528b1fae9f85e77acee1d"
+    },
+    {
+      "run_id": "seed-07-A-NORMAL",
+      "condition": "NORMAL",
+      "seed_label": "seed-07",
+      "seed_value": 9241,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-07-A-NORMAL.json",
+      "manifest_sha256": "18765ca298e842c310f41227cde1c0c058765a64e7051cb2fd5ddcd584127b61"
+    },
+    {
+      "run_id": "seed-07-B-NO-DIPLOMACY",
+      "condition": "NO-DIPLOMACY",
+      "seed_label": "seed-07",
+      "seed_value": 9241,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-07-B-NO-DIPLOMACY.json",
+      "manifest_sha256": "18e5c6318bb4f2ecca4c1b59ed4c1d92fd7fca8d55f9c9e8abaafd8b42314978"
+    },
+    {
+      "run_id": "seed-08-A-NORMAL",
+      "condition": "NORMAL",
+      "seed_label": "seed-08",
+      "seed_value": 9257,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-08-A-NORMAL.json",
+      "manifest_sha256": "fbd131fc67b16cbc0f8044edea5aaa649713b471bb88158fd447ba9e596147fc"
+    },
+    {
+      "run_id": "seed-08-B-NO-DIPLOMACY",
+      "condition": "NO-DIPLOMACY",
+      "seed_label": "seed-08",
+      "seed_value": 9257,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-08-B-NO-DIPLOMACY.json",
+      "manifest_sha256": "4da71b2e0c9b7335990dcf48663d9ee8cfdf1cc9d9ac05700cd055ada8a1846a"
+    },
+    {
+      "run_id": "seed-09-A-NORMAL",
+      "condition": "NORMAL",
+      "seed_label": "seed-09",
+      "seed_value": 9277,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-09-A-NORMAL.json",
+      "manifest_sha256": "8f7019fa564698c9a82d87afd2b77f2d47015613052225623035a403dda94835"
+    },
+    {
+      "run_id": "seed-09-B-NO-DIPLOMACY",
+      "condition": "NO-DIPLOMACY",
+      "seed_label": "seed-09",
+      "seed_value": 9277,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-09-B-NO-DIPLOMACY.json",
+      "manifest_sha256": "1985c9234c71aa7bf481d9cfcebf270c913a0844e1c489e6763d527aeb16142c"
+    },
+    {
+      "run_id": "seed-10-A-NORMAL",
+      "condition": "NORMAL",
+      "seed_label": "seed-10",
+      "seed_value": 9281,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-10-A-NORMAL.json",
+      "manifest_sha256": "e5516f282047a9113b2c3598120d348a162c05800f80592f979c0c07ab7421a8"
+    },
+    {
+      "run_id": "seed-10-B-NO-DIPLOMACY",
+      "condition": "NO-DIPLOMACY",
+      "seed_label": "seed-10",
+      "seed_value": 9281,
+      "path": "homeostasis-security/.artifacts/v5-paired-diplomacy-experiment-preregistration-20260922/manifests/seed-10-B-NO-DIPLOMACY.json",
+      "manifest_sha256": "888c26040274c95202fec6f7e316baa92c8d0d027d92a7fe9aed56d1bf7dc58f"
+    }
+  ],
+  "summary_sha256": "835fe485417ac2f2aab00cfeb6c93666aa37efd3ebd597e526296d96d45432fc"
+}

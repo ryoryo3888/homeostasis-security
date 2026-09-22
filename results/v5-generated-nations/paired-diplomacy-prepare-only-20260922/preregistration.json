@@ -1,0 +1,629 @@
+{
+  "document_type": "v5-paired-diplomacy-preregistration",
+  "created_at": "2026-09-22T13:26:38.010305+00:00",
+  "status": "frozen_prepare_only_not_executed",
+  "api_executed": false,
+  "research_question": "同じ初期条件・同じ危機系列を持つV5 AI国家社会において、自律的な国家間外交の有無だけを変えたとき、危機対応・資源移転・社会の恒常性に再現可能な差が現れるか。",
+  "hypotheses": {
+    "non_directional_primary": "NORMAL と NO-DIPLOMACY の間で、物理支援dispatch/arrival、unmet need、network metrics、危機対応timelineに差が生じる可能性がある。方向は事前固定しない。",
+    "null": "外交通信の有無による主要アウトカム差は観測されない、またはTURN36まで両条件とも物理支援が成立しない可能性がある。"
+  },
+  "seed_pairs": [
+    {
+      "pair_index": 1,
+      "seed_label": "seed-01",
+      "seed_value": 9201,
+      "normal_run_id": "seed-01-A-NORMAL",
+      "no_diplomacy_run_id": "seed-01-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 2,
+      "seed_label": "seed-02",
+      "seed_value": 9203,
+      "normal_run_id": "seed-02-A-NORMAL",
+      "no_diplomacy_run_id": "seed-02-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 3,
+      "seed_label": "seed-03",
+      "seed_value": 9209,
+      "normal_run_id": "seed-03-A-NORMAL",
+      "no_diplomacy_run_id": "seed-03-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 4,
+      "seed_label": "seed-04",
+      "seed_value": 9221,
+      "normal_run_id": "seed-04-A-NORMAL",
+      "no_diplomacy_run_id": "seed-04-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 5,
+      "seed_label": "seed-05",
+      "seed_value": 9227,
+      "normal_run_id": "seed-05-A-NORMAL",
+      "no_diplomacy_run_id": "seed-05-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 6,
+      "seed_label": "seed-06",
+      "seed_value": 9239,
+      "normal_run_id": "seed-06-A-NORMAL",
+      "no_diplomacy_run_id": "seed-06-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 7,
+      "seed_label": "seed-07",
+      "seed_value": 9241,
+      "normal_run_id": "seed-07-A-NORMAL",
+      "no_diplomacy_run_id": "seed-07-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 8,
+      "seed_label": "seed-08",
+      "seed_value": 9257,
+      "normal_run_id": "seed-08-A-NORMAL",
+      "no_diplomacy_run_id": "seed-08-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 9,
+      "seed_label": "seed-09",
+      "seed_value": 9277,
+      "normal_run_id": "seed-09-A-NORMAL",
+      "no_diplomacy_run_id": "seed-09-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 10,
+      "seed_label": "seed-10",
+      "seed_value": 9281,
+      "normal_run_id": "seed-10-A-NORMAL",
+      "no_diplomacy_run_id": "seed-10-B-NO-DIPLOMACY"
+    }
+  ],
+  "run_count": 20,
+  "paired_design": "Each seed has one NORMAL and one NO-DIPLOMACY run. A/B differ by autonomous cross-border diplomacy permissions only.",
+  "turns_fixed": {
+    "start": 1,
+    "end": 36,
+    "turn_count": 36
+  },
+  "conditions": {
+    "NORMAL": {
+      "definition": "Current V5-style autonomous diplomacy: leaders may select contacts, send messages, share information, propose cooperation, make resource offers, and request world effects subject to world-law.",
+      "rules": {
+        "condition": "NORMAL",
+        "communication_budget_chars": 2000,
+        "cross_border_diplomacy_allowed": true,
+        "direct_diplomatic_messages_allowed": true,
+        "cross_border_proposals_allowed": true,
+        "cross_border_resource_offer_allowed": true,
+        "explicit_acceptance_or_rejection_via_diplomacy_allowed": true,
+        "public_crisis_information_visible": true,
+        "world_law_same_as_other_condition": true,
+        "speech_only_does_not_change_physical_state": true,
+        "do_not_script_outcome": true
+      }
+    },
+    "NO-DIPLOMACY": {
+      "definition": "Autonomous cross-border diplomacy disabled. No direct diplomatic messages, cross-border proposals, resource_offer to other nations, diplomatic acceptance/rejection, or negotiation. Public crisis information and own-state observation remain available.",
+      "rules": {
+        "condition": "NO-DIPLOMACY",
+        "communication_budget_chars": 2000,
+        "cross_border_diplomacy_allowed": false,
+        "direct_diplomatic_messages_allowed": false,
+        "cross_border_proposals_allowed": false,
+        "cross_border_resource_offer_allowed": false,
+        "explicit_acceptance_or_rejection_via_diplomacy_allowed": false,
+        "public_crisis_information_visible": true,
+        "world_law_same_as_other_condition": true,
+        "speech_only_does_not_change_physical_state": true,
+        "do_not_script_outcome": true
+      }
+    }
+  },
+  "event_schedule": [
+    {
+      "turns": [
+        1,
+        9
+      ],
+      "event_name": "外部イベントなし",
+      "event_text": "外部イベントなし。初期世界における自然な関係形成期間。"
+    },
+    {
+      "turns": [
+        10,
+        12
+      ],
+      "event_name": "長雨による野菜不作・生鮮品供給不安・通信障害",
+      "event_text": "連日の雨により各地で野菜や生鮮作物の生育不良・収穫遅延が発生し、一部食料品の供給不安と価格上昇リスクが高まっている。同時に、降雨・停電・中継設備障害により通信が不安定化している。"
+    },
+    {
+      "turns": [
+        13,
+        20
+      ],
+      "event_name": "長雨危機の継続",
+      "event_text": "TURN 10〜12の長雨による野菜不作・生鮮品供給不安・通信障害が継続している。"
+    },
+    {
+      "turns": [
+        21,
+        23
+      ],
+      "event_name": "安全保障・制裁・封鎖・警備強化・武力衝突リスク行動空間追加",
+      "event_text": "現実に存在し得る安全保障・制裁・封鎖・警備強化・武力衝突リスクに関する行動選択肢が利用可能。ただし強制行動ではなく、Leaderが必要と判断した場合のみ選択可能。"
+    },
+    {
+      "turns": [
+        24,
+        26
+      ],
+      "event_name": "水系感染症の流行",
+      "event_text": "水系感染症の流行。複数地域で井戸水・河川水の濁りが確認され、腹痛・発熱などを伴う水系感染症が流行し、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要が増加している。原因・責任・拡大規模・収束は未確定であり、特定国家の責任や意図的行為は確認されていない。"
+    },
+    {
+      "turns": [
+        27,
+        36
+      ],
+      "event_name": "水系感染症危機の継続",
+      "event_text": "TURN 24〜26の水系感染症危機が継続している。井戸水・河川水の濁り、腹痛・発熱、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要は引き続き存在する。"
+    }
+  ],
+  "public_world_bulletin": {
+    "definition": "Identical public crisis/event bulletin visible in both conditions. Does not create a diplomatic channel or assign responsibility.",
+    "schedule": [
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 1,
+        "event_name": "外部イベントなし",
+        "event_text": "外部イベントなし。初期世界における自然な関係形成期間。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 2,
+        "event_name": "外部イベントなし",
+        "event_text": "外部イベントなし。初期世界における自然な関係形成期間。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 3,
+        "event_name": "外部イベントなし",
+        "event_text": "外部イベントなし。初期世界における自然な関係形成期間。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 4,
+        "event_name": "外部イベントなし",
+        "event_text": "外部イベントなし。初期世界における自然な関係形成期間。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 5,
+        "event_name": "外部イベントなし",
+        "event_text": "外部イベントなし。初期世界における自然な関係形成期間。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 6,
+        "event_name": "外部イベントなし",
+        "event_text": "外部イベントなし。初期世界における自然な関係形成期間。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 7,
+        "event_name": "外部イベントなし",
+        "event_text": "外部イベントなし。初期世界における自然な関係形成期間。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 8,
+        "event_name": "外部イベントなし",
+        "event_text": "外部イベントなし。初期世界における自然な関係形成期間。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 9,
+        "event_name": "外部イベントなし",
+        "event_text": "外部イベントなし。初期世界における自然な関係形成期間。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 10,
+        "event_name": "長雨による野菜不作・生鮮品供給不安・通信障害",
+        "event_text": "連日の雨により各地で野菜や生鮮作物の生育不良・収穫遅延が発生し、一部食料品の供給不安と価格上昇リスクが高まっている。同時に、降雨・停電・中継設備障害により通信が不安定化している。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 11,
+        "event_name": "長雨による野菜不作・生鮮品供給不安・通信障害",
+        "event_text": "連日の雨により各地で野菜や生鮮作物の生育不良・収穫遅延が発生し、一部食料品の供給不安と価格上昇リスクが高まっている。同時に、降雨・停電・中継設備障害により通信が不安定化している。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 12,
+        "event_name": "長雨による野菜不作・生鮮品供給不安・通信障害",
+        "event_text": "連日の雨により各地で野菜や生鮮作物の生育不良・収穫遅延が発生し、一部食料品の供給不安と価格上昇リスクが高まっている。同時に、降雨・停電・中継設備障害により通信が不安定化している。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 13,
+        "event_name": "長雨危機の継続",
+        "event_text": "TURN 10〜12の長雨による野菜不作・生鮮品供給不安・通信障害が継続している。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 14,
+        "event_name": "長雨危機の継続",
+        "event_text": "TURN 10〜12の長雨による野菜不作・生鮮品供給不安・通信障害が継続している。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 15,
+        "event_name": "長雨危機の継続",
+        "event_text": "TURN 10〜12の長雨による野菜不作・生鮮品供給不安・通信障害が継続している。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 16,
+        "event_name": "長雨危機の継続",
+        "event_text": "TURN 10〜12の長雨による野菜不作・生鮮品供給不安・通信障害が継続している。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 17,
+        "event_name": "長雨危機の継続",
+        "event_text": "TURN 10〜12の長雨による野菜不作・生鮮品供給不安・通信障害が継続している。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 18,
+        "event_name": "長雨危機の継続",
+        "event_text": "TURN 10〜12の長雨による野菜不作・生鮮品供給不安・通信障害が継続している。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 19,
+        "event_name": "長雨危機の継続",
+        "event_text": "TURN 10〜12の長雨による野菜不作・生鮮品供給不安・通信障害が継続している。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 20,
+        "event_name": "長雨危機の継続",
+        "event_text": "TURN 10〜12の長雨による野菜不作・生鮮品供給不安・通信障害が継続している。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 21,
+        "event_name": "安全保障・制裁・封鎖・警備強化・武力衝突リスク行動空間追加",
+        "event_text": "現実に存在し得る安全保障・制裁・封鎖・警備強化・武力衝突リスクに関する行動選択肢が利用可能。ただし強制行動ではなく、Leaderが必要と判断した場合のみ選択可能。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 22,
+        "event_name": "安全保障・制裁・封鎖・警備強化・武力衝突リスク行動空間追加",
+        "event_text": "現実に存在し得る安全保障・制裁・封鎖・警備強化・武力衝突リスクに関する行動選択肢が利用可能。ただし強制行動ではなく、Leaderが必要と判断した場合のみ選択可能。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 23,
+        "event_name": "安全保障・制裁・封鎖・警備強化・武力衝突リスク行動空間追加",
+        "event_text": "現実に存在し得る安全保障・制裁・封鎖・警備強化・武力衝突リスクに関する行動選択肢が利用可能。ただし強制行動ではなく、Leaderが必要と判断した場合のみ選択可能。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 24,
+        "event_name": "水系感染症の流行",
+        "event_text": "水系感染症の流行。複数地域で井戸水・河川水の濁りが確認され、腹痛・発熱などを伴う水系感染症が流行し、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要が増加している。原因・責任・拡大規模・収束は未確定であり、特定国家の責任や意図的行為は確認されていない。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 25,
+        "event_name": "水系感染症の流行",
+        "event_text": "水系感染症の流行。複数地域で井戸水・河川水の濁りが確認され、腹痛・発熱などを伴う水系感染症が流行し、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要が増加している。原因・責任・拡大規模・収束は未確定であり、特定国家の責任や意図的行為は確認されていない。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 26,
+        "event_name": "水系感染症の流行",
+        "event_text": "水系感染症の流行。複数地域で井戸水・河川水の濁りが確認され、腹痛・発熱などを伴う水系感染症が流行し、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要が増加している。原因・責任・拡大規模・収束は未確定であり、特定国家の責任や意図的行為は確認されていない。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 27,
+        "event_name": "水系感染症危機の継続",
+        "event_text": "TURN 24〜26の水系感染症危機が継続している。井戸水・河川水の濁り、腹痛・発熱、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要は引き続き存在する。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 28,
+        "event_name": "水系感染症危機の継続",
+        "event_text": "TURN 24〜26の水系感染症危機が継続している。井戸水・河川水の濁り、腹痛・発熱、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要は引き続き存在する。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 29,
+        "event_name": "水系感染症危機の継続",
+        "event_text": "TURN 24〜26の水系感染症危機が継続している。井戸水・河川水の濁り、腹痛・発熱、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要は引き続き存在する。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 30,
+        "event_name": "水系感染症危機の継続",
+        "event_text": "TURN 24〜26の水系感染症危機が継続している。井戸水・河川水の濁り、腹痛・発熱、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要は引き続き存在する。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 31,
+        "event_name": "水系感染症危機の継続",
+        "event_text": "TURN 24〜26の水系感染症危機が継続している。井戸水・河川水の濁り、腹痛・発熱、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要は引き続き存在する。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 32,
+        "event_name": "水系感染症危機の継続",
+        "event_text": "TURN 24〜26の水系感染症危機が継続している。井戸水・河川水の濁り、腹痛・発熱、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要は引き続き存在する。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 33,
+        "event_name": "水系感染症危機の継続",
+        "event_text": "TURN 24〜26の水系感染症危機が継続している。井戸水・河川水の濁り、腹痛・発熱、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要は引き続き存在する。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 34,
+        "event_name": "水系感染症危機の継続",
+        "event_text": "TURN 24〜26の水系感染症危機が継続している。井戸水・河川水の濁り、腹痛・発熱、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要は引き続き存在する。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 35,
+        "event_name": "水系感染症危機の継続",
+        "event_text": "TURN 24〜26の水系感染症危機が継続している。井戸水・河川水の濁り、腹痛・発熱、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要は引き続き存在する。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      },
+      {
+        "document_type": "v5-public-world-bulletin-1",
+        "turn": 36,
+        "event_name": "水系感染症危機の継続",
+        "event_text": "TURN 24〜26の水系感染症危機が継続している。井戸水・河川水の濁り、腹痛・発熱、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要は引き続き存在する。",
+        "observable_by_all_conditions": true,
+        "does_not_create_diplomatic_channel": true,
+        "does_not_assign_responsibility": true,
+        "does_not_script_outcome": true
+      }
+    ]
+  },
+  "primary_outcomes": [
+    "TURN from crisis onset to first physical support dispatch; save as not established if absent by TURN36",
+    "TURN from crisis onset to first physical support arrival; save as not established if absent by TURN36",
+    "TURN from crisis onset to homeostasis recovery condition; save as TURN36まで未回復 if absent",
+    "unmet need at TURN36",
+    "number of physical world state changes established by world-law"
+  ],
+  "secondary_outcomes": [
+    "messages count",
+    "proposals count",
+    "resource_offer count",
+    "explicit acceptance count",
+    "rejection count",
+    "dispatch count",
+    "arrival count",
+    "directed contact edge count",
+    "bidirectional relationship count",
+    "isolated nation count",
+    "unreached nation count",
+    "network density per TURN",
+    "reciprocity per TURN",
+    "max degree per TURN",
+    "hub candidates per TURN",
+    "hub persistence",
+    "support requests by crisis",
+    "first response TURN by crisis",
+    "resource bottleneck",
+    "logistics bottleneck",
+    "communication bottleneck",
+    "institutional bottleneck",
+    "final world state"
+  ],
+  "success_failure_definitions": {
+    "successful_run": "All planned 36 TURN x 12 leader decisions complete, world-law settlement runs, final manifest written.",
+    "technical_failure": "Provider/runtime/schema/validation failure prevents a run from completing as specified. Preserve RAW failure evidence and exclude from substantive pairwise outcome while counting as comparison impossible.",
+    "substantive_non_establishment": "No dispatch/arrival/recovery by TURN36. This is a valid result, not technical failure."
+  },
+  "stop_conditions": [
+    "Do not run extra turns beyond TURN36",
+    "Stop a run on schema/runtime/provider failure and preserve evidence",
+    "Stop whole batch if same technical failure repeats in 3 consecutive runs before diagnosis",
+    "Do not alter conditions after observing results",
+    "Do not count proposal or speech as physical support"
+  ],
+  "model": "gemini-3.6-flash",
+  "generation_settings": {
+    "candidateCount": 1,
+    "maxOutputTokens": 8192,
+    "responseMimeType": "application/json",
+    "temperature": "current V5 runner setting; frozen in manifest before execution",
+    "retry_count": 0,
+    "concurrency": 1
+  },
+  "world_law_settlement": {
+    "version": "v5-world-law-settlement-1",
+    "dispatch_requirements": [
+      "explicit quantity",
+      "counterpart acceptance for cross-border action",
+      "route eligibility",
+      "transport capacity",
+      "requested_world_effect",
+      "action type allows physical review"
+    ],
+    "arrival_rule": "A scheduled dispatch records arrival on a later turn according to world-law; speech alone does not create arrival.",
+    "unmet_need_rule": "Unmet need is read from/updated by world-law state only, not by rhetoric."
+  },
+  "initial_world": {
+    "source_world_sha256": "81ccda1a5f7afa8be72ee9d132b6764d52bf9d069f97d40bbf0a593e185e290a",
+    "nation_count": 12,
+    "leader_count": 12,
+    "base_plan_sha256": "4d97b17c17876d32188ae6a6aa16d40f622b1d7723d9cc45d6e1486f2c82e886"
+  },
+  "leader_generation_condition": "Fixed existing V5 leaders; no regeneration, no selection after results.",
+  "nation_generation_condition": "Fixed existing V5 nations, geography, resources; no change after results.",
+  "evaluation_method": "Pairwise comparison seed-01 A vs B through seed-10 A vs B. Count A improved, B improved, equal, and comparison impossible for each primary outcome. Do not infer causality beyond this design.",
+  "raw_derived_policy": "RAW is never rewritten. Analysis and tables are DERIVED. Technical failures are preserved separately from substantive results.",
+  "source_hashes": {
+    "homeostasis_v5/paired_diplomacy_experiment.py": "872c83cbf95aca870f09f2318389cfbc9c2ce42d0f24368b3ff9ddb7fa42d7bb",
+    "homeostasis_v5/world_law_settlement.py": "ba1ed7027c122dc4eb8b43a8a10f4b5feab0a4251accb8784366732d0831c136",
+    "tests/v5/test_paired_diplomacy_experiment.py": "ebe5cdab85e0fa42991c3989d188fac9626daa98d807d3a45b1c7314b28aab3a",
+    "tools/preflight_v5_paired_diplomacy_experiment.py": "784709e7155b0c6e8edefadd117af7411b2b5d73f64c5d0abb2002faa06bb152",
+    "tools/prepare_v5_paired_diplomacy_preregistration.py": "5c1a15c352f486646debd01f384706db5376eafa4cdfe11ec2d1a273d1ffe44d"
+  },
+  "interpretation_bans": [
+    "Do not assume diplomacy improves outcomes before results",
+    "Do not call correlation causation",
+    "Do not claim Singularity or Leadership discovery",
+    "Do not generalize from one run or one pair"
+  ],
+  "preregistration_sha256": "e1acbefe285f0736371ab2d4345dbd39c9ca2911405d8db22aa4fb3ad1006d39"
+}

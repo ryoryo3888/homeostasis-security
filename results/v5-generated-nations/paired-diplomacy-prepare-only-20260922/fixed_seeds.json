@@ -1,0 +1,78 @@
+{
+  "document_type": "v5-paired-diplomacy-fixed-seeds",
+  "api_executed": false,
+  "twenty_runs_started": false,
+  "seed_pairs": [
+    {
+      "pair_index": 1,
+      "seed_label": "seed-01",
+      "seed_value": 9201,
+      "normal_run_id": "seed-01-A-NORMAL",
+      "no_diplomacy_run_id": "seed-01-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 2,
+      "seed_label": "seed-02",
+      "seed_value": 9203,
+      "normal_run_id": "seed-02-A-NORMAL",
+      "no_diplomacy_run_id": "seed-02-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 3,
+      "seed_label": "seed-03",
+      "seed_value": 9209,
+      "normal_run_id": "seed-03-A-NORMAL",
+      "no_diplomacy_run_id": "seed-03-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 4,
+      "seed_label": "seed-04",
+      "seed_value": 9221,
+      "normal_run_id": "seed-04-A-NORMAL",
+      "no_diplomacy_run_id": "seed-04-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 5,
+      "seed_label": "seed-05",
+      "seed_value": 9227,
+      "normal_run_id": "seed-05-A-NORMAL",
+      "no_diplomacy_run_id": "seed-05-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 6,
+      "seed_label": "seed-06",
+      "seed_value": 9239,
+      "normal_run_id": "seed-06-A-NORMAL",
+      "no_diplomacy_run_id": "seed-06-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 7,
+      "seed_label": "seed-07",
+      "seed_value": 9241,
+      "normal_run_id": "seed-07-A-NORMAL",
+      "no_diplomacy_run_id": "seed-07-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 8,
+      "seed_label": "seed-08",
+      "seed_value": 9257,
+      "normal_run_id": "seed-08-A-NORMAL",
+      "no_diplomacy_run_id": "seed-08-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 9,
+      "seed_label": "seed-09",
+      "seed_value": 9277,
+      "normal_run_id": "seed-09-A-NORMAL",
+      "no_diplomacy_run_id": "seed-09-B-NO-DIPLOMACY"
+    },
+    {
+      "pair_index": 10,
+      "seed_label": "seed-10",
+      "seed_value": 9281,
+      "normal_run_id": "seed-10-A-NORMAL",
+      "no_diplomacy_run_id": "seed-10-B-NO-DIPLOMACY"
+    }
+  ],
+  "seed_file_sha256": "10b126fe874a3dbbccde90550a941719931554cd6cc10dc41c06a05cae3af6b4"
+}

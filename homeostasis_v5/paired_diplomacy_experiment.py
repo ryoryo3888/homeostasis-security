@@ -84,7 +84,7 @@ def ensure(condition: bool, code: str):
 VERSION = "v5-paired-diplomacy-experiment-contract-1"
 DOCUMENT_TYPE = "v5-paired-leader-turn-decision-1"
 TURN_MIN = 1
-TURN_MAX = 29
+TURN_MAX = 36
 NORMAL = "NORMAL"
 NO_DIPLOMACY = "NO-DIPLOMACY"
 CONDITIONS = (NORMAL, NO_DIPLOMACY)
@@ -133,7 +133,7 @@ EVENT_SCHEDULE = [
         "event_text": "水系感染症の流行。複数地域で井戸水・河川水の濁りが確認され、腹痛・発熱などを伴う水系感染症が流行し、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要が増加している。原因・責任・拡大規模・収束は未確定であり、特定国家の責任や意図的行為は確認されていない。",
     },
     {
-        "turns": [27, 29],
+        "turns": [27, 36],
         "event_name": "水系感染症危機の継続",
         "event_text": "TURN 24〜26の水系感染症危機が継続している。井戸水・河川水の濁り、腹痛・発熱、簡易浄水材、医療相談、衛生用品、患者搬送、通信復旧への需要は引き続き存在する。",
     },
