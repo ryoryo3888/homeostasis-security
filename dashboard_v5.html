@@ -18,7 +18,7 @@
       <div class="eyebrow">HOMEOSTASIS SECURITY / V5 EMERGENT SOCIETY</div>
       <h1>Emergent Society</h1>
       <p class="lead">AIが生成した12国家と12名の国家リーダーを同じ1つの世界に置き、1〜36ターンまで継続して観測した記録。</p>
-      <p class="sublead">固定ペアや専用の仲介役を置かず、各リーダーが誰に連絡するかを選びました。長雨、生鮮作物の供給不安、連絡の不安定化、安全維持、水系感染症流行を経て、関係の網と行動がどう変化したかを要約として示します。</p>
+      <p class="sublead">固定ペアや専用の仲介役を置かず、各リーダーがどの国へ外交通信を送るかを選びました。長雨、生鮮作物の供給不安、通信の不安定化、安全維持、水系感染症流行を経て、外交ネットワークと行動がどう変化したかを要約として示します。</p>
     </div>
     <div class="hero-visual" aria-label="V5の単一世界を象徴する装飾的な地球ビジュアル">
       <div class="v5-earth" aria-hidden="true"><div class="v5-earth-core"><img src="earth_japan_network_v2.png" alt=""></div><div class="v5-aurora"></div><div class="v5-satellite one"></div><div class="v5-satellite two"></div></div>
@@ -56,7 +56,7 @@
 </section>
 
 <section class="section two">
-  <div class="panel"><div class="eyebrow">36ターン / 水・連絡・食料</div><h2>水・連絡・食料をめぐる反応</h2><div id="healthExamples"></div></div>
+  <div class="panel"><div class="eyebrow">36ターン / 水・通信・食料</div><h2>水・通信・食料をめぐる反応</h2><div id="healthExamples"></div></div>
   <div class="panel"><div class="eyebrow">36ターン / 関係網と安全維持</div><h2>ネットワークと安全維持</h2><div id="networkSecurityExamples"></div></div>
 </section>
 
@@ -66,7 +66,7 @@
 </section>
 
 <section class="section two">
-  <div class="panel"><div class="eyebrow">参考資料 / 初回観測の連絡の集中</div><h2>初回3ターンの連絡の集中（参考）</h2><p class="small">初回観測時点の連絡数から見た中心候補です。36ターン観測の主張ではなく、前段資料として置きます。</p><div id="topActivity"></div></div>
+  <div class="panel"><div class="eyebrow">参考資料 / 初回観測の外交通信の集中</div><h2>初回3ターンの外交通信の集中（参考）</h2><p class="small">初回観測時点の外交通信数から見た中心候補です。36ターン観測の主張ではなく、前段資料として置きます。</p><div id="topActivity"></div></div>
   <div class="panel"><div class="eyebrow">参考資料 / 初回観測の仲介候補</div><h2>初回3ターンの仲介候補（参考）</h2><p class="small">人間側で仲介役は置いていません。初回観測のネットワーク位置だけを参考として見ています。</p><div id="mediators"></div></div>
 </section>
 
@@ -115,7 +115,7 @@ fetch('results/v5-generated-nations/data.json').then(r=>r.json()).then(data=>{
  document.getElementById('metrics').innerHTML=[
    metric('ターン',m.turns || data.scope.turns,'good'),
    metric('リーダー判断',m.leader_decisions,'good'),
-   metric('国どうしのやり取り',m.messages),
+   metric('外交通信',m.messages),
    metric('提案',m.proposals),
    metric('資源提案',m.resource_offers),
    metric('安全維持',m.security_actions),
@@ -127,14 +127,14 @@ fetch('results/v5-generated-nations/data.json').then(r=>r.json()).then(data=>{
  document.getElementById('personaBiasNote').textContent=pg.bias_note || '';
  document.getElementById('initialLabel').textContent='1〜20ターン';
  document.getElementById('initialHeadline').textContent='ネットワーク形成から供給不安へ';
- document.getElementById('initialSummary').textContent='固定ペアなしの12国家世界で関係の網が立ち上がり、長雨による野菜・生鮮作物の供給不安と連絡の不安定化へ対応が広がった。';
+ document.getElementById('initialSummary').textContent='固定ペアなしの12国家世界で外交ネットワークが立ち上がり、長雨による野菜・生鮮作物の供給不安と通信の不安定化へ対応が広がった。';
  document.getElementById('extendedLabel').textContent='21〜36ターン';
  document.getElementById('extendedHeadline').textContent='安全維持と水系感染症流行下の継続観測';
- document.getElementById('extendedSummary').textContent='安全保障行動空間を加えた後、水系感染症流行の中で連絡・水・巡回・燃料が焦点化した。物理成立判定はまだ実行していない。';
+ document.getElementById('extendedSummary').textContent='安全保障行動空間を加えた後、水系感染症流行の中で通信・水・巡回・燃料が焦点化した。物理成立判定はまだ実行していない。';
  const phases=long.phases || [];
  document.getElementById('storyTurns').innerHTML=phases.map(c=>`<article class="card turn story-card"><strong>${esc(c.label)}</strong><h3>${esc(c.title)}</h3><p>${esc(c.body)}</p></article>`).join('');
  document.getElementById('roleDifferentiation').innerHTML=(long.main_findings || []).slice(0,3).map(r=>`<article class="card"><h3>${esc(r.title)}</h3><p class="small">${esc(r.body)}</p></article>`).join('');
- document.getElementById('storyFraming').textContent='この要約は、発言・提案・連絡先の選び方の観測をまとめたものです。物資の到着や復旧などの物理的な成立判定とは分けて扱います。';
+ document.getElementById('storyFraming').textContent='この要約は、発言・提案・通信先の選び方の観測をまとめたものです。物資の到着や復旧などの物理的な成立判定とは分けて扱います。';
  document.getElementById('storyInterpretation').innerHTML=`${esc(long.note_ja || '')} <a href="${esc(long.derived_summary_path || 'results/v5-generated-nations/turns_1_36_waterborne_illness_continuation_summary.json')}">36 ターン 要約JSONを見る</a>`;
  const examples=long.examples || {};
  document.getElementById('healthExamples').innerHTML=(examples.health || []).map(x=>`<div class="edge"><b>観測</b><span>${esc(x)}</span></div>`).join('');
