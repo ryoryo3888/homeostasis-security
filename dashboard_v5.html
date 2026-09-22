@@ -107,6 +107,9 @@
         <div class="eyebrow">人物生成器v2</div>
         <p class="sublead" id="aoiBatchSummary"></p>
         <div class="grid" id="aoiBatchDetails"></div>
+        <h3 id="aoiProfilesTitle" style="margin-top:18px"></h3>
+        <p class="small" id="aoiProfilesNote"></p>
+        <div class="story-grid" id="aoiBatchProfiles"></div>
       </div>
     </details>
   </div>
@@ -173,6 +176,9 @@ fetch('results/v5-generated-nations/data.json').then(r=>r.json()).then(data=>{
    `<article class="card"><h3>観測された反復</h3><p>${esc((aoi.observed_biases || []).join(' / '))}</p></article>`,
    `<article class="card"><h3>記録件数</h3><p>佐藤姓を含む記録：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.files_containing_sato)} / 佐藤葵を含む記録：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.files_containing_sato_aoi)} / 佐藤遥を含む記録：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.extracted_name_sato_haruka)}</p></article>`
  ].join('');
+ document.getElementById('aoiProfilesTitle').textContent=aoi.profiles_title || '';
+ document.getElementById('aoiProfilesNote').textContent=aoi.profiles_note || '';
+ document.getElementById('aoiBatchProfiles').innerHTML=(aoi.profiles || []).map(p=>`<article class="card persona-card"><h3>v2-${String(p.leader_index).padStart(2,'0')}：${esc(p.name)}</h3><div class="persona-meta"><span class="tag">年齢：${esc(p.age_years)}</span><span class="tag">性別表現：${esc(p.gender_description)}</span></div><p>${esc(p.present_person)}</p><details><summary>生成された人生史を見る</summary><p class="small"><b>30歳まで：</b>${esc((p.early_life_periods || []).map(x=>x.narrative).join(' / '))}</p><p class="small"><b>30歳以降：</b>${esc((p.later_life_periods || []).map(x=>x.narrative).join(' / '))}</p><p class="small"><b>Leader化の経路：</b>${esc(p.path_to_leadership)}</p><p class="small"><b>本人の自己紹介：</b>${esc(p.self_introduction)}</p></details></article>`).join('');
  document.getElementById('limits').innerHTML=data.do_not_claim.map(x=>`<li>${esc(x)}</li>`).join('');
 });</script>
 </body>
