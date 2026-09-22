@@ -42,7 +42,7 @@
 
 <section class="section panel">
   <div class="eyebrow">00 / 主要観測</div><h2>36ターン版 要約</h2>
-  <p class="sublead">このページでは、36ターンまで継続した観測記録を先に示します。初回観測、12名の人物紹介、佐藤葵バッチなどの生成過程は、観測結果を支える参考資料として後段にまとめています。</p>
+  <p class="sublead">このページでは、36ターンまで継続した観測記録を先に示します。初回観測や12名の人物紹介などの生成過程は、観測結果を支える参考資料として後段にまとめています。</p>
   <div class="two">
     <article class="card story-card"><strong id="initialLabel"></strong><h3 id="initialHeadline"></h3><p id="initialSummary"></p></article>
     <article class="card story-card"><strong id="extendedLabel"></strong><h3 id="extendedHeadline"></h3><p id="extendedSummary"></p></article>
@@ -90,7 +90,7 @@
 </section>
 
 <section class="section panel">
-  <div class="eyebrow">参考資料 / 人物生成器v2バッチ</div><h2>佐藤葵バッチの参考記録</h2>
+  <div class="eyebrow">参考資料 / 人物生成器v2</div><h2>人物生成器v2の参考記録</h2>
   <p class="sublead" id="aoiBatchSummary"></p>
   <div class="grid" id="aoiBatchDetails"></div>
 </section>
@@ -151,7 +151,7 @@ fetch('results/v5-generated-nations/data.json').then(r=>r.json()).then(data=>{
  document.getElementById('aoiBatchDetails').innerHTML=[
    `<article class="card"><h3>扱い</h3><p>${esc(aoi.status || '')}</p><p class="small">${esc(aoi.handling || '')}</p></article>`,
    `<article class="card"><h3>観測された反復</h3><p>${esc((aoi.observed_biases || []).join(' / '))}</p></article>`,
-   `<article class="card"><h3>記録件数</h3><p>佐藤を含むファイル：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.files_containing_sato)} / 佐藤葵を含むファイル：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.files_containing_sato_aoi)}</p></article>`
+   `<article class="card"><h3>記録件数</h3><p>同一姓を含む記録：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.files_containing_sato)} / 同一名を含む記録：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.files_containing_sato_aoi)}</p></article>`
  ].join('');
  document.getElementById('limits').innerHTML=data.do_not_claim.map(x=>`<li>${esc(x)}</li>`).join('');
 });</script>
