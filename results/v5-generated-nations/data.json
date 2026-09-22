@@ -1,5 +1,5 @@
 {
-  "version": "v5-public-derived-2",
+  "version": "v5-public-derived-3",
   "title": "V5 — Generated Nations",
   "subtitle": "12国家で構成される単一世界の初回3 TURN観測",
   "scope": {
@@ -1317,5 +1317,169 @@
       }
     ],
     "bias_note": "V5初回pilotの12名Leaderは、人間側が年齢・性別・経歴を指定せず人生史から生成した。ただし生成結果には、農村出身・行政／政治キャリアへの収束、氏名の重複などの偏りが見られた。これは観測された生成バイアスとして保持し、次回のPersona Generator改善課題とする。"
+  },
+  "observation_story": {
+    "title": "TURN 1〜6で世界はどう動いたか",
+    "framing": "これは脚本ではなく、保存済みLeader判断ログと接触ネットワークから作成した観測ストーリーである。",
+    "initial_pilot": {
+      "label": "Initial Pilot｜TURN 1〜3",
+      "headline": "ネットワークが生まれた。",
+      "summary": "固定ペアも専用仲介役も置かない状態で、12国家すべてが外交ネットワークへ参加した。初期には湿原平原共和国へ接触が集中したが、これはLeader誕生ではなく、湿原・平原・水資源・食料という接触しやすい国家条件が影響した可能性がある。resource_offerは発生したが、数量・同意・輸送条件などが揃わず、物理的なworld state変更は成立しなかった。",
+      "turn_cards": [
+        {
+          "turn": 1,
+          "title": "接触先を探す",
+          "body": "各国が公開連絡先一覧と自国事情をもとに、最初の相手を選んだ。湿原平原共和国へ接触が集中し、初期の対話ハブ候補になった。",
+          "top_nation": "湿原平原共和国",
+          "activity": 18
+        },
+        {
+          "turn": 2,
+          "title": "初期集中が継続する",
+          "body": "湿原平原共和国が引き続き上位に残る一方、高山鉱嶺国やヴァルンド高地共和国も接触量を増やした。中心は完全固定ではなく、複数候補が見え始めた。",
+          "top_nation": "湿原平原共和国／高山鉱嶺国",
+          "activity": 16
+        },
+        {
+          "turn": 3,
+          "title": "資源交渉の芽が出る",
+          "body": "高山鉱嶺国から湿原平原共和国への食料・石炭交換の提案が出た。ただし物理移転にはまだ必要条件が足りなかった。",
+          "top_nation": "湿原平原共和国／北東沿岸自治連合",
+          "activity": 14
+        }
+      ]
+    },
+    "extended_observation": {
+      "label": "Extended Observation｜TURN 4〜6",
+      "headline": "ネットワークが役割分化し始めた。",
+      "summary": "同じ12国家・12名LeaderでTURN 4〜6を追加観測した結果、中心候補は湿原平原共和国に固定されず、北東沿岸自治連合・高山鉱嶺国・ヴァルンド高地共和国へ移った。世界は挨拶段階から、データ共有、試行交易、多国間ワーキンググループ、共同声明案へ進んだ。単独Leaderの誕生ではなく、実務ネットワーク上の役割分化の芽が観測された。",
+      "metrics": {
+        "leader_decisions": "36 / 36",
+        "messages": 93,
+        "proposals": 48,
+        "directed_contact_events": 190,
+        "physical_changes": 0
+      },
+      "turn_cards": [
+        {
+          "turn": 4,
+          "title": "技術協力へ進む",
+          "body": "北東沿岸自治連合、ヴァルンド高地共和国、高山鉱嶺国が上位に出た。沿岸PV、気象データ、高地・寒冷地インフラなど、技術情報共有の話が具体化した。",
+          "top_nation": "北東沿岸自治連合／ヴァルンド高地共和国",
+          "activity": 18
+        },
+        {
+          "turn": 5,
+          "title": "ワーキンググループの輪郭",
+          "body": "高山鉱嶺国が資源交換の軸として強まり、北東沿岸自治連合はデータ共有フォーマットを具体化した。湿原平原共和国は交渉相手として残るが、唯一の中心ではなくなった。",
+          "top_nation": "高山鉱嶺国",
+          "activity": 17
+        },
+        {
+          "turn": 6,
+          "title": "共同声明案が出る",
+          "body": "ヴァルンド高地共和国が複数国に対して技術情報共有ワーキンググループの共同声明案を提示した。北東沿岸自治連合は共通データフォーマットを提案し、ネットワークは役割分化を深めた。",
+          "top_nation": "北東沿岸自治連合",
+          "activity": 21
+        }
+      ],
+      "role_differentiation": [
+        {
+          "nation": "北東沿岸自治連合",
+          "role": "データ・技術仕様の整理役",
+          "evidence": "太陽光PV、潮汐、塩害、気象データ、共通フォーマットを複数国へ提案。"
+        },
+        {
+          "nation": "ヴァルンド高地共和国",
+          "role": "多国間WGの形成役",
+          "evidence": "気象・環境データおよび電力インフラに関する技術情報共有ワーキンググループと共同声明案を提示。"
+        },
+        {
+          "nation": "高山鉱嶺国",
+          "role": "資源交換・燃料交渉の軸",
+          "evidence": "石炭を軸に、食料・寒冷地技術・高地データとの交換条件を深めた。"
+        },
+        {
+          "nation": "湿原平原共和国",
+          "role": "食料・水資源を持つ重要交渉相手",
+          "evidence": "初期中心候補から、試行交易や水資源協議の参加国へ位置が変化。"
+        },
+        {
+          "nation": "セントラル・バシン共和国",
+          "role": "水資源・インフラ協議の場づくり",
+          "evidence": "水資源管理と地域インフラ維持の多国間協議を継続提案。"
+        }
+      ],
+      "overall_top_activity": [
+        {
+          "nation_id": "nation-012",
+          "nation_name": "北東沿岸自治連合",
+          "incoming": 36,
+          "outgoing": 18,
+          "activity": 54,
+          "incoming_unique": 8,
+          "outgoing_unique": 5
+        },
+        {
+          "nation_id": "nation-010",
+          "nation_name": "高山鉱嶺国",
+          "incoming": 25,
+          "outgoing": 24,
+          "activity": 49,
+          "incoming_unique": 5,
+          "outgoing_unique": 6
+        },
+        {
+          "nation_id": "nation-011",
+          "nation_name": "ヴァルンド高地共和国",
+          "incoming": 26,
+          "outgoing": 22,
+          "activity": 48,
+          "incoming_unique": 5,
+          "outgoing_unique": 5
+        },
+        {
+          "nation_id": "nation-001",
+          "nation_name": "湿原平原共和国",
+          "incoming": 18,
+          "outgoing": 15,
+          "activity": 33,
+          "incoming_unique": 6,
+          "outgoing_unique": 5
+        },
+        {
+          "nation_id": "nation-007",
+          "nation_name": "セントラル・バシン共和国",
+          "incoming": 14,
+          "outgoing": 19,
+          "activity": 33,
+          "incoming_unique": 4,
+          "outgoing_unique": 4
+        },
+        {
+          "nation_id": "nation-006",
+          "nation_name": "アルトプラノ高台協同体",
+          "incoming": 13,
+          "outgoing": 16,
+          "activity": 29,
+          "incoming_unique": 5,
+          "outgoing_unique": 6
+        }
+      ],
+      "proposal_type_counts": {
+        "resource_offer": 7,
+        "information_share": 29,
+        "multilateral_meeting_proposal": 8,
+        "information_request": 2,
+        "joint_statement": 2
+      }
+    },
+    "interpretation": "V5のTURN 1〜6では、単独Leaderの誕生ではなく、接触集中から役割分化へ進む過程が見えた。これはLeadershipやSingularityの証明ではなく、次の長期観測で検証すべき候補である。",
+    "do_not_claim": [
+      "AIがリーダーを生んだとはまだ言わない。",
+      "国家間秩序が自然発生したとはまだ言わない。",
+      "物理的な資源移転はまだ成立していない。",
+      "TURN 7以降はまだ実行していない。"
+    ]
   }
 }
