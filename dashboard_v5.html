@@ -65,6 +65,13 @@
   <div class="grid findings-grid" id="observations"></div>
 </section>
 
+
+<section class="section panel" id="main-leaders">
+  <div class="eyebrow">02 / 36ターン観測の12名</div><h2>36ターン観測の主役になった12名</h2>
+  <p class="sublead" id="mainLeadersSummary"></p>
+  <div class="story-grid" id="mainLeaderCards"></div>
+</section>
+
 <section class="section panel" id="reference-index">
   <div class="eyebrow">参考資料</div><h2>補足資料</h2>
   <p class="sublead">36ターン観測の本文から分けて、生成過程や初回観測の補足を折りたたみで置いています。</p>
@@ -156,6 +163,9 @@ fetch('results/v5-generated-nations/data.json').then(r=>r.json()).then(data=>{
  document.getElementById('healthExamples').innerHTML=(examples.health || []).map(x=>`<div class="edge"><b>観測</b><span>${esc(x)}</span></div>`).join('');
  document.getElementById('networkSecurityExamples').innerHTML=[...(examples.network || []),...(examples.security || [])].map(x=>`<div class="edge"><b>観測</b><span>${esc(x)}</span></div>`).join('');
  document.getElementById('observations').innerHTML=(long.main_findings || data.observations).map(o=>`<article class="card"><h3>${esc(o.title)}</h3><p>${esc(o.body || o.interpretation)}</p>${o.limitations?`<p class="small">限界：${esc(o.limitations)}</p>`:''}</article>`).join('');
+ const mainLeaders=data.main_leaders_36_turns || {};
+ document.getElementById('mainLeadersSummary').textContent=mainLeaders.summary || '';
+ document.getElementById('mainLeaderCards').innerHTML=(mainLeaders.leaders || []).map(l=>`<article class="card persona-card"><h3>${esc(l.leader_id)}：${esc(l.display_name_ja)} / ${esc(l.name)}</h3><div class="persona-meta"><span class="tag">担当：${esc(l.nation_name)}</span><span class="tag">年齢：${esc(l.age)}</span><span class="tag">性別表現：${esc(l.gender)}</span><span class="tag">出身：${esc(l.origin)}</span></div><p>${esc(l.family)}。${esc(l.education)}を経て、${esc(l.work)}に関わってきた。転機：${esc(l.turning_point)}</p><details><summary>本人の自己紹介を見る</summary><p>${esc(l.self_introduction)}</p><p class="small"><b>経済状況：</b>${esc(l.economic_status)}</p></details></article>`).join('');
  document.getElementById('topActivity').innerHTML=data.top_activity.slice(0,6).map(n=>`<div class="edge"><b>${esc(n.nation_id)} ${esc(n.nation_name)}</b><span>受信 ${n.incoming_contact_events} / 送信 ${n.outgoing_contact_events}</span></div>`).join('');
  document.getElementById('mediators').innerHTML=data.mediator_candidates.map(n=>`<div class="edge"><b>${esc(n.nation_id)} ${esc(n.nation_name)}</b><span>値 ${n.possible_broker_score}</span></div>`).join('');
  document.getElementById('turnDynamics').innerHTML=data.turn_dynamics.map(t=>`<article class="card turn"><strong>ターン ${t.turn}</strong><h3>${esc(t.top_nation_id)} ${esc(t.top_nation_name)}</h3><p class="small">中心候補：${t.top_changed_from_previous===null?'初回':(t.top_changed_from_previous?'変化':'継続')}</p>${t.top_activity.slice(0,3).map(n=>`<div class="edge"><b>${esc(n.nation_name)}</b><span>${n.activity}</span></div>`).join('')}</article>`).join('');
