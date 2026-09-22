@@ -2387,5 +2387,64 @@
       "title": "5. 物理協力へ向かう前段階",
       "body": "協力方針は多数生まれた。次に見るべき焦点は、その方針が数量・受諾・輸送・到着まで進み、物資到着、通信復旧、感染収束などの物理協力成立へ接続される過程である。"
     }
-  ]
+  ],
+  "offline_paired_diplomacy": {
+    "title": "外交通信あり／なしのオフライン派生比較",
+    "summary": "既存の36ターン観測を使い、外交通信を残した場合と、同じ記録から他国宛の通信・提案だけを取り除いた場合を比較した。新しいLeader判断は生成していない。",
+    "source": "TURN 1〜36 / Leader判断432件 / API未使用",
+    "rows": [
+      {
+        "label": "外交通信",
+        "normal": 1026,
+        "no_diplomacy": 0,
+        "difference": 1026
+      },
+      {
+        "label": "通信宛先延べ",
+        "normal": 1321,
+        "no_diplomacy": 0,
+        "difference": 1321
+      },
+      {
+        "label": "提案",
+        "normal": 730,
+        "no_diplomacy": 0,
+        "difference": 730
+      },
+      {
+        "label": "接触エッジ",
+        "normal": 49,
+        "no_diplomacy": 0,
+        "difference": 49
+      },
+      {
+        "label": "双方向関係",
+        "normal": 21,
+        "no_diplomacy": 0,
+        "difference": 21
+      },
+      {
+        "label": "孤立国家",
+        "normal": 0,
+        "no_diplomacy": 12,
+        "difference": -12
+      },
+      {
+        "label": "物理dispatch成立",
+        "normal": 0,
+        "no_diplomacy": 0,
+        "difference": 0
+      },
+      {
+        "label": "到着",
+        "normal": 0,
+        "no_diplomacy": 0,
+        "difference": 0
+      }
+    ],
+    "interpretation": "外交通信を残すと、12国家すべてが接触網に参加し、49本の接触エッジと21組の双方向関係が見える。外交通信を取り除くと、国家間の接触構造は消える。この比較は、V5で観測された関係網が外交通信の積み重なりとして現れていたことを示す。",
+    "evidence_path": "results/v5-generated-nations/offline-paired-diplomacy-derived-20260922/offline_paired_diplomacy_summary.json",
+    "summary_sha256": "daa25d7f9c2dbaa424da71f8b11260284a91439bf944e02b1f8fac49b6de1da6",
+    "api_executed": false
+  }
 }
