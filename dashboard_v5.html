@@ -151,7 +151,7 @@ fetch('results/v5-generated-nations/data.json').then(r=>r.json()).then(data=>{
  document.getElementById('aoiBatchDetails').innerHTML=[
    `<article class="card"><h3>扱い</h3><p>${esc(aoi.status || '')}</p><p class="small">${esc(aoi.handling || '')}</p></article>`,
    `<article class="card"><h3>観測された反復</h3><p>${esc((aoi.observed_biases || []).join(' / '))}</p></article>`,
-   `<article class="card"><h3>記録件数</h3><p>同一姓を含む記録：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.files_containing_sato)} / 同一名を含む記録：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.files_containing_sato_aoi)}</p></article>`
+   `<article class="card"><h3>記録件数</h3><p>佐藤姓を含む記録：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.files_containing_sato)} / 佐藤葵を含む記録：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.files_containing_sato_aoi)} / 佐藤遥を含む記録：${esc(aoi.counts?.batch_v5_persona_v2_1_12_human_first?.extracted_name_sato_haruka)}</p></article>`
  ].join('');
  document.getElementById('limits').innerHTML=data.do_not_claim.map(x=>`<li>${esc(x)}</li>`).join('');
 });</script>
