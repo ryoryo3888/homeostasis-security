@@ -1,7 +1,7 @@
 {
   "document_type": "v5-paired-diplomacy-preregistration",
   "created_at": "2026-09-22T11:01:17.990980+00:00",
-  "status": "frozen_prepare_only_not_executed",
+  "status": "old_plan_unexecuted_gemini_main_experiment_prepare_only",
   "api_executed": false,
   "research_question": "同じ初期条件・同じ危機系列を持つV5 AI国家社会において、自律的な国家間外交の有無だけを変えたとき、危機対応・資源移転・社会の恒常性に再現可能な差が現れるか。",
   "hypotheses": {
@@ -555,5 +555,14 @@
     "Do not claim Singularity or Leadership discovery",
     "Do not generalize from one run or one pair"
   ],
-  "preregistration_sha256": "3ac45b87900fb0040cca3f0e265c853110e1013df759a275d65073ecfe16d088"
+  "preregistration_sha256": "3ac45b87900fb0040cca3f0e265c853110e1013df759a275d65073ecfe16d088",
+  "archive_note": {
+    "archive_status": "old_plan_unexecuted",
+    "archive_label_ja": "旧計画・未実行",
+    "intended_execution": "Gemini本実験としての10 seed × A/B = 20 runを想定したprepare-only preregistration",
+    "not_deleted_reason": "研究履歴として保存するため。後続のオフライン派生比較とは別計画として扱う。",
+    "superseded_by": "results/v5-generated-nations/offline-paired-diplomacy-preregistration-20260923/preregistration.json",
+    "api_executed": false,
+    "run_executed": false
+  }
 }

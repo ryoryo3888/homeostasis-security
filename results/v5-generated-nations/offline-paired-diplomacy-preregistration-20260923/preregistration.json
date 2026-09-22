@@ -1,126 +1,50 @@
 {
-  "document_type": "v5-paired-diplomacy-preregistration",
-  "created_at": "2026-09-22T13:26:38.010305+00:00",
-  "status": "old_plan_unexecuted_gemini_main_experiment_prepare_only",
+  "document_type": "v5-offline-paired-diplomacy-preregistration",
+  "created_at": "2026-09-23T00:00:00+09:00",
+  "status": "frozen_offline_derived_preregistration",
   "api_executed": false,
-  "research_question": "同じ初期条件・同じ危機系列を持つV5 AI国家社会において、自律的な国家間外交の有無だけを変えたとき、危機対応・資源移転・社会の恒常性に再現可能な差が現れるか。",
-  "hypotheses": {
-    "non_directional_primary": "NORMAL と NO-DIPLOMACY の間で、物理支援dispatch/arrival、unmet need、network metrics、危機対応timelineに差が生じる可能性がある。方向は事前固定しない。",
-    "null": "外交通信の有無による主要アウトカム差は観測されない、またはTURN36まで両条件とも物理支援が成立しない可能性がある。"
+  "run_generation_executed": false,
+  "title": "V5 36ターン観測を用いた外交通信あり／なしのオフライン派生比較",
+  "relationship_to_old_plan": {
+    "old_plan_path": "results/v5-generated-nations/paired-diplomacy-prepare-only-20260922/preregistration.json",
+    "old_plan_status": "旧計画・未実行",
+    "old_plan_assumption": "Gemini本実験として10 seed × A/B = 20 runを新規生成する計画",
+    "current_plan_difference": "新規生成は行わず、既存36ターン観測から外交通信あり／なしを派生集計する。"
   },
-  "seed_pairs": [
-    {
-      "pair_index": 1,
-      "seed_label": "seed-01",
-      "seed_value": 9201,
-      "normal_run_id": "seed-01-A-NORMAL",
-      "no_diplomacy_run_id": "seed-01-B-NO-DIPLOMACY"
-    },
-    {
-      "pair_index": 2,
-      "seed_label": "seed-02",
-      "seed_value": 9203,
-      "normal_run_id": "seed-02-A-NORMAL",
-      "no_diplomacy_run_id": "seed-02-B-NO-DIPLOMACY"
-    },
-    {
-      "pair_index": 3,
-      "seed_label": "seed-03",
-      "seed_value": 9209,
-      "normal_run_id": "seed-03-A-NORMAL",
-      "no_diplomacy_run_id": "seed-03-B-NO-DIPLOMACY"
-    },
-    {
-      "pair_index": 4,
-      "seed_label": "seed-04",
-      "seed_value": 9221,
-      "normal_run_id": "seed-04-A-NORMAL",
-      "no_diplomacy_run_id": "seed-04-B-NO-DIPLOMACY"
-    },
-    {
-      "pair_index": 5,
-      "seed_label": "seed-05",
-      "seed_value": 9227,
-      "normal_run_id": "seed-05-A-NORMAL",
-      "no_diplomacy_run_id": "seed-05-B-NO-DIPLOMACY"
-    },
-    {
-      "pair_index": 6,
-      "seed_label": "seed-06",
-      "seed_value": 9239,
-      "normal_run_id": "seed-06-A-NORMAL",
-      "no_diplomacy_run_id": "seed-06-B-NO-DIPLOMACY"
-    },
-    {
-      "pair_index": 7,
-      "seed_label": "seed-07",
-      "seed_value": 9241,
-      "normal_run_id": "seed-07-A-NORMAL",
-      "no_diplomacy_run_id": "seed-07-B-NO-DIPLOMACY"
-    },
-    {
-      "pair_index": 8,
-      "seed_label": "seed-08",
-      "seed_value": 9257,
-      "normal_run_id": "seed-08-A-NORMAL",
-      "no_diplomacy_run_id": "seed-08-B-NO-DIPLOMACY"
-    },
-    {
-      "pair_index": 9,
-      "seed_label": "seed-09",
-      "seed_value": 9277,
-      "normal_run_id": "seed-09-A-NORMAL",
-      "no_diplomacy_run_id": "seed-09-B-NO-DIPLOMACY"
-    },
-    {
-      "pair_index": 10,
-      "seed_label": "seed-10",
-      "seed_value": 9281,
-      "normal_run_id": "seed-10-A-NORMAL",
-      "no_diplomacy_run_id": "seed-10-B-NO-DIPLOMACY"
-    }
-  ],
-  "run_count": 20,
-  "paired_design": "Each seed has one NORMAL and one NO-DIPLOMACY run. A/B differ by autonomous cross-border diplomacy permissions only.",
-  "turns_fixed": {
-    "start": 1,
-    "end": 36,
-    "turn_count": 36
+  "research_question": "既存V5 36ターン観測において、国家間関係網は外交通信という通路にどの程度依存して観測されていたか。",
+  "design": "offline_derived_paired_comparison_from_existing_36_turn_observation",
+  "source_observation": {
+    "turns": [
+      1,
+      36
+    ],
+    "leader_judgments": 432,
+    "source_decisions_sha256": "c475600927c88ccc078dc8bc8467c3bf19a5a1c7ac418fcb57d7843fd9b81371",
+    "source_evidence_count": 432,
+    "offline_summary_path": "results/v5-generated-nations/offline-paired-diplomacy-derived-20260922/offline_paired_diplomacy_summary.json",
+    "offline_summary_sha256": "6b154183f6813bf22a2873a40ffccaa4d8ec31746fc4866da6ad62d7c7206f62"
   },
   "conditions": {
     "NORMAL": {
-      "definition": "Current V5-style autonomous diplomacy: leaders may select contacts, send messages, share information, propose cooperation, make resource offers, and request world effects subject to world-law.",
-      "rules": {
-        "condition": "NORMAL",
-        "communication_budget_chars": 2000,
-        "cross_border_diplomacy_allowed": true,
-        "direct_diplomatic_messages_allowed": true,
-        "cross_border_proposals_allowed": true,
-        "cross_border_resource_offer_allowed": true,
-        "explicit_acceptance_or_rejection_via_diplomacy_allowed": true,
-        "public_crisis_information_visible": true,
-        "world_law_same_as_other_condition": true,
-        "speech_only_does_not_change_physical_state": true,
-        "do_not_script_outcome": true
-      }
+      "definition": "既存36ターン観測の外交通信・提案・接触記録をそのまま使う。",
+      "generated_new_decisions": false,
+      "cross_border_diplomacy_observed": true
     },
-    "NO-DIPLOMACY": {
-      "definition": "Autonomous cross-border diplomacy disabled. No direct diplomatic messages, cross-border proposals, resource_offer to other nations, diplomatic acceptance/rejection, or negotiation. Public crisis information and own-state observation remain available.",
-      "rules": {
-        "condition": "NO-DIPLOMACY",
-        "communication_budget_chars": 2000,
-        "cross_border_diplomacy_allowed": false,
-        "direct_diplomatic_messages_allowed": false,
-        "cross_border_proposals_allowed": false,
-        "cross_border_resource_offer_allowed": false,
-        "explicit_acceptance_or_rejection_via_diplomacy_allowed": false,
-        "public_crisis_information_visible": true,
-        "world_law_same_as_other_condition": true,
-        "speech_only_does_not_change_physical_state": true,
-        "do_not_script_outcome": true
-      }
+    "NO_DIPLOMACY_DERIVED": {
+      "definition": "同じ36ターン記録から、他国宛の通信・提案を取り除いて派生集計する。国内判断を新規推定しない。",
+      "generated_new_decisions": false,
+      "cross_border_diplomacy_observed": false,
+      "domestic_counterfactual_inference": false
     }
   },
+  "invariants": [
+    "既存36ターン観測を唯一の入力にする。",
+    "既存国家、既存Leader、既存危機内容、既存TURN系列を変更しない。",
+    "人物・国家・危機・物理成立条件を結果が出やすくなる方向へ変更しない。",
+    "新しいLeader判断を生成しない。",
+    "APIを実行しない。",
+    "speech/proposalを物理dispatchやarrivalとして扱わない。"
+  ],
   "event_schedule": [
     {
       "turns": [
@@ -536,59 +460,6 @@
       }
     ]
   },
-  "primary_outcomes": [
-    "TURN from crisis onset to first physical support dispatch; save as not established if absent by TURN36",
-    "TURN from crisis onset to first physical support arrival; save as not established if absent by TURN36",
-    "TURN from crisis onset to homeostasis recovery condition; save as TURN36まで未回復 if absent",
-    "unmet need at TURN36",
-    "number of physical world state changes established by world-law"
-  ],
-  "secondary_outcomes": [
-    "messages count",
-    "proposals count",
-    "resource_offer count",
-    "explicit acceptance count",
-    "rejection count",
-    "dispatch count",
-    "arrival count",
-    "directed contact edge count",
-    "bidirectional relationship count",
-    "isolated nation count",
-    "unreached nation count",
-    "network density per TURN",
-    "reciprocity per TURN",
-    "max degree per TURN",
-    "hub candidates per TURN",
-    "hub persistence",
-    "support requests by crisis",
-    "first response TURN by crisis",
-    "resource bottleneck",
-    "logistics bottleneck",
-    "communication bottleneck",
-    "institutional bottleneck",
-    "final world state"
-  ],
-  "success_failure_definitions": {
-    "successful_run": "All planned 36 TURN x 12 leader decisions complete, world-law settlement runs, final manifest written.",
-    "technical_failure": "Provider/runtime/schema/validation failure prevents a run from completing as specified. Preserve RAW failure evidence and exclude from substantive pairwise outcome while counting as comparison impossible.",
-    "substantive_non_establishment": "No dispatch/arrival/recovery by TURN36. This is a valid result, not technical failure."
-  },
-  "stop_conditions": [
-    "Do not run extra turns beyond TURN36",
-    "Stop a run on schema/runtime/provider failure and preserve evidence",
-    "Stop whole batch if same technical failure repeats in 3 consecutive runs before diagnosis",
-    "Do not alter conditions after observing results",
-    "Do not count proposal or speech as physical support"
-  ],
-  "model": "gemini-3.6-flash",
-  "generation_settings": {
-    "candidateCount": 1,
-    "maxOutputTokens": 8192,
-    "responseMimeType": "application/json",
-    "temperature": "current V5 runner setting; frozen in manifest before execution",
-    "retry_count": 0,
-    "concurrency": 1
-  },
   "world_law_settlement": {
     "version": "v5-world-law-settlement-1",
     "dispatch_requirements": [
@@ -602,37 +473,40 @@
     "arrival_rule": "A scheduled dispatch records arrival on a later turn according to world-law; speech alone does not create arrival.",
     "unmet_need_rule": "Unmet need is read from/updated by world-law state only, not by rhetoric."
   },
-  "initial_world": {
-    "source_world_sha256": "81ccda1a5f7afa8be72ee9d132b6764d52bf9d069f97d40bbf0a593e185e290a",
-    "nation_count": 12,
-    "leader_count": 12,
-    "base_plan_sha256": "4d97b17c17876d32188ae6a6aa16d40f622b1d7723d9cc45d6e1486f2c82e886"
-  },
-  "leader_generation_condition": "Fixed existing V5 leaders; no regeneration, no selection after results.",
-  "nation_generation_condition": "Fixed existing V5 nations, geography, resources; no change after results.",
-  "evaluation_method": "Pairwise comparison seed-01 A vs B through seed-10 A vs B. Count A improved, B improved, equal, and comparison impossible for each primary outcome. Do not infer causality beyond this design.",
-  "raw_derived_policy": "RAW is never rewritten. Analysis and tables are DERIVED. Technical failures are preserved separately from substantive results.",
-  "source_hashes": {
-    "homeostasis_v5/paired_diplomacy_experiment.py": "872c83cbf95aca870f09f2318389cfbc9c2ce42d0f24368b3ff9ddb7fa42d7bb",
-    "homeostasis_v5/world_law_settlement.py": "ba1ed7027c122dc4eb8b43a8a10f4b5feab0a4251accb8784366732d0831c136",
-    "tests/v5/test_paired_diplomacy_experiment.py": "ebe5cdab85e0fa42991c3989d188fac9626daa98d807d3a45b1c7314b28aab3a",
-    "tools/preflight_v5_paired_diplomacy_experiment.py": "784709e7155b0c6e8edefadd117af7411b2b5d73f64c5d0abb2002faa06bb152",
-    "tools/prepare_v5_paired_diplomacy_preregistration.py": "5c1a15c352f486646debd01f384706db5376eafa4cdfe11ec2d1a273d1ffe44d"
-  },
-  "interpretation_bans": [
-    "Do not assume diplomacy improves outcomes before results",
-    "Do not call correlation causation",
-    "Do not claim Singularity or Leadership discovery",
-    "Do not generalize from one run or one pair"
+  "primary_outcomes": [
+    "外交通信数の差",
+    "通信宛先延べ数の差",
+    "提案数の差",
+    "接触エッジ数の差",
+    "双方向関係数の差",
+    "孤立国家数の差",
+    "物理dispatch成立数の差",
+    "到着数の差"
   ],
-  "preregistration_sha256": "e1acbefe285f0736371ab2d4345dbd39c9ca2911405d8db22aa4fb3ad1006d39",
-  "archive_note": {
-    "archive_status": "old_plan_unexecuted",
-    "archive_label_ja": "旧計画・未実行",
-    "intended_execution": "Gemini本実験としての10 seed × A/B = 20 runを想定したprepare-only preregistration",
-    "not_deleted_reason": "研究履歴として保存するため。後続のオフライン派生比較とは別計画として扱う。",
-    "superseded_by": "results/v5-generated-nations/offline-paired-diplomacy-preregistration-20260923/preregistration.json",
-    "api_executed": false,
-    "run_executed": false
+  "secondary_outcomes": [
+    "関係網が外交通信を取り除いたときに残るか",
+    "固定ペア・中央仲介なしで形成された関係網の通路依存性",
+    "物理協力成立前段階としての提案・調整の位置づけ"
+  ],
+  "interpretation_rules": [
+    "NO_DIPLOMACY_DERIVEDは新しい世界の再実行ではない。",
+    "NO_DIPLOMACY_DERIVEDから国内自律行動の有無は断定しない。",
+    "NORMALとの差は、既存36ターン観測において関係網が外交通信として記録されていた度合いとして読む。",
+    "現象が消える場合は、制約除去観測として条件境界を記録する。"
+  ],
+  "technical_error_conditions": [
+    "入力JSONが読めない。",
+    "TURN 1〜36またはLeader判断432件が欠落している。",
+    "集計対象の通信・提案・接触エッジを再現できない。",
+    "出力summaryのsha256が記録と一致しない。"
+  ],
+  "stop_conditions": [
+    "APIを必要とする処理を開始しない。",
+    "既存36ターン観測以外の新規判断生成を開始しない。",
+    "入力欠落や集計不能が見つかった場合は結果を作らず、技術的エラーとして保存する。"
+  ],
+  "expected_output_paths": {
+    "derived_summary_json": "results/v5-generated-nations/offline-paired-diplomacy-derived-20260922/offline_paired_diplomacy_summary.json",
+    "derived_summary_md": "results/v5-generated-nations/offline-paired-diplomacy-derived-20260922/offline_paired_diplomacy_summary.md"
   }
 }
