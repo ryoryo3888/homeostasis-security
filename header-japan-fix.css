@@ -1,0 +1,8 @@
+/* Header: reserve a real row for the globe so the navigation never crosses it. */
+.header{height:148px;grid-template-columns:minmax(0,1fr) 158px 238px;align-items:center}
+.globe{width:148px;height:148px}
+.globe img{width:128px;height:128px}
+.nav{margin-top:8px;position:relative;z-index:5}
+/* Japan: enlarge the island group and keep its coastline visible behind the JPN node. */
+.japan-landmark{transform:translate(-11px,-10px) scale(1.22);transform-origin:890px 245px;stroke-width:2.2}
+@media(max-width:720px){.header{height:112px;grid-template-columns:1fr 92px}.globe{width:90px;height:90px}.globe img{width:78px;height:78px}}

@@ -1,0 +1,51 @@
+/* Keep routes readable while showing more of the network. */
+.route{stroke-width:1.8;filter:drop-shadow(0 0 3px var(--color));animation:none}
+.route.context{opacity:.48;stroke-width:1.1;stroke-dasharray:2 5}
+.route.proposal{stroke-dasharray:4 5}
+.route.logistics{stroke-dasharray:3 4;stroke-width:2}
+.route.rejection{stroke-dasharray:2 4}
+.signal{filter:drop-shadow(0 0 4px var(--color));animation:none}
+/* Keep the supplied Japan silhouette as the single Japan map shape. */
+.node[data-id="JPN"]{display:none}
+#nodes .node[data-id="JPN"]{display:none !important}
+/* Restore the Japanese leader marker while keeping the duplicate map shape hidden. */
+#nodes .node[data-id="JPN"]{display:block !important}
+/* Visible baseline for the fixed preview. */
+#nodes .node{display:block !important}
+#nodes .node[data-id="JPN"]{display:block !important}
+#routes .route{display:block !important;opacity:.8 !important}
+/* Moving route signals: flowing dashes and pulsing event dots. */
+#routes .route{animation:routeFlow 2.4s linear infinite;stroke-dasharray:6 7}
+#routes .route.agreement{stroke-dasharray:1 6;stroke-linecap:round}
+#routes .route.logistics{stroke-dasharray:7 5}
+#routes .route.proposal{stroke-dasharray:4 6}
+@keyframes routeFlow{to{stroke-dashoffset:-52}}
+#routes .signal{animation:signalPulse 1.2s ease-in-out infinite alternate}
+@keyframes signalPulse{from{opacity:.45}to{opacity:1}}
+.vehicle{font-size:10px;fill:#fff7b0;filter:drop-shadow(0 0 4px currentColor);paint-order:stroke;stroke:#061722;stroke-width:1px}
+.vehicle.satellite{fill:#bda6ff;font-size:11px}
+.vehicle.plane{fill:#fff1a0}
+#routes .vehicle{display:block!important;font-size:15px!important;visibility:visible!important;opacity:1!important}
+#routes .vehicle{font-family:Arial,sans-serif;pointer-events:none;paint-order:stroke;stroke:#03131e;stroke-width:2px;filter:drop-shadow(0 0 5px currentColor);opacity:1!important;visibility:visible!important}
+#routes .vehicle text{font-size:16px;dominant-baseline:middle;text-anchor:middle}
+#routes .vehicle.plane{color:#ffe89a;fill:#ffe89a}
+#routes .vehicle.satellite{color:#cda8ff;fill:#cda8ff}
+/* Remove the temporary plane/satellite glyphs from the visual design. */
+#routes .vehicle{display:none !important}
+/* V2-inspired satellite orbit around the header Earth. */
+.globe{position:relative;overflow:visible}
+.satellite-orbit{position:absolute;inset:-14px;border:1px solid #63e6ff66;border-radius:50%;font-style:normal;color:#d9f5ff;font-size:10px;animation:satelliteOrbit 5s linear infinite;transform-origin:50% 50%;text-shadow:0 0 6px #8eefff;z-index:4}
+.satellite-orbit::first-letter{position:absolute}
+@keyframes satelliteOrbit{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.satellite-orbit{font-size:0}
+.satellite-orbit::before{content:'◆';position:absolute;left:50%;top:-7px;font-size:11px;transform:translateX(-50%)}
+/* Keep the satellite orbit inside the globe so it cannot overlap navigation buttons. */
+.satellite-orbit{inset:4px;border-color:#63e6ff55}
+.satellite-orbit::before{content:'🛰️';top:-7px;font-size:14px;text-shadow:0 0 6px #8eefff}
+/* Slower orbit and a single cyan satellite tone. */
+.satellite-orbit{animation-duration:14s}
+.satellite-orbit::before{filter:grayscale(1) brightness(1.5) sepia(1) hue-rotate(145deg) saturate(5);color:#63e6ff}
+.satellite-orbit{animation-duration:22s;opacity:.62}
+.satellite-orbit::before{font-size:12px;text-shadow:0 0 2px #63e6ff;filter:grayscale(1) brightness(1.25) sepia(1) hue-rotate(145deg) saturate(3)}
+/* Brighten the satellite panels to white. */
+.satellite-orbit::before{filter:grayscale(1) brightness(2.35);color:#ffffff;text-shadow:0 0 2px #bfefff}

@@ -1,0 +1,7 @@
+/* Subtle warm incandescent lights over the dark satellite map. */
+.night-lights{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;background-color:transparent;background-image:
+ radial-gradient(circle at 22% 57%,rgba(255,190,80,.9) 0 1px,transparent 1.8px),radial-gradient(circle at 25% 56%,rgba(255,210,105,.85) 0 1px,transparent 1.7px),radial-gradient(circle at 29% 61%,rgba(255,183,70,.82) 0 1px,transparent 1.8px),radial-gradient(circle at 44% 49%,rgba(255,198,85,.88) 0 1px,transparent 1.8px),radial-gradient(circle at 48% 52%,rgba(255,220,120,.8) 0 1px,transparent 1.7px),radial-gradient(circle at 53% 56%,rgba(255,185,72,.82) 0 1px,transparent 1.8px),radial-gradient(circle at 67% 49%,rgba(255,204,92,.88) 0 1px,transparent 1.8px),radial-gradient(circle at 71% 53%,rgba(255,185,70,.82) 0 1px,transparent 1.8px),radial-gradient(circle at 76% 57%,rgba(255,214,105,.78) 0 1px,transparent 1.7px),radial-gradient(circle at 82% 48%,rgba(255,195,82,.82) 0 1px,transparent 1.8px),radial-gradient(circle at 37% 71%,rgba(255,180,68,.7) 0 1px,transparent 1.8px),radial-gradient(circle at 58% 68%,rgba(255,205,95,.72) 0 1px,transparent 1.8px);
+filter:blur(.2px);mix-blend-mode:screen;animation:cityLights 10s ease-in-out infinite}
+@keyframes cityLights{0%,45%,100%{opacity:0}50%,95%{opacity:.72}}
+@media(prefers-reduced-motion:reduce){.night-lights{animation:none;opacity:0}}
+.map:before{display:none}

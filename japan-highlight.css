@@ -1,0 +1,11 @@
+#landmarks{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
+.japan-landmark{fill:#36eaff3d;stroke:#9cffff;stroke-width:1.8;filter:drop-shadow(0 0 5px #36efff);animation:japanGlow 3s ease-in-out infinite}
+@keyframes japanGlow{0%,100%{opacity:.7}50%{opacity:1}}
+#routes{z-index:2}
+#nodes{z-index:3}
+.japan-real{position:absolute;z-index:2;pointer-events:none;right:6.5%;top:18%;width:8.5%;height:48%;object-fit:contain;filter:drop-shadow(0 0 4px #55f58c) saturate(1.1);opacity:.95}
+#landmarks{z-index:1}
+#routes{z-index:3}
+#nodes{z-index:4}
+/* The supplied silhouette is the authoritative Japan shape for this preview. */
+.japan-landmark{display:none}

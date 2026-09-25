@@ -1,0 +1,6 @@
+/* Clean baseline: no masks or map patches. */
+.japan-cover{display:none!important}
+#landmarks .japan-landmark{display:none!important}
+.japan-real{display:block!important;position:absolute;z-index:2;right:5%;top:13%;width:10.5%;height:58%;object-fit:contain;pointer-events:none}
+/* Small base-map Japan only: narrow ocean patch beneath the large overlay. */
+.japan-cover{display:block !important;position:absolute;z-index:1;left:85%;top:35%;width:8%;height:16%;background:#031a29;clip-path:polygon(55% 0,75% 18%,68% 35%,80% 52%,66% 70%,52% 88%,35% 100%,20% 80%,32% 60%,40% 38%);opacity:1}

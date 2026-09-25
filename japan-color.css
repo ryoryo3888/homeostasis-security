@@ -1,0 +1,2 @@
+/* Softer pastel green to match the globe highlight. */
+.japan-real{filter:drop-shadow(0 0 5px #b6f1d2) hue-rotate(-12deg) saturate(.48) brightness(1.22);}
