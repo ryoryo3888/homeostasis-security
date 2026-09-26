@@ -30,3 +30,9 @@
 #research-paper > .paper-title-line{font-size:6px}
 #research-paper .paper-metadata{font-size:5px}
 #research-paper > details > summary,#research-paper > .paper-links{font-size:6px}
+
+/* Midpoint between the compact and half-size paper entry. */
+#research-paper > h2{font-size:13.5px}
+#research-paper > .paper-title-line{font-size:9px}
+#research-paper .paper-metadata{font-size:7.5px}
+#research-paper > details > summary,#research-paper > .paper-links{font-size:9px}
