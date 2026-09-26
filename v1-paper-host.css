@@ -1,0 +1,7 @@
+/* V6 host rules scoped to the V1 paper only; shared v6-paper.css is unchanged. */
+#research-paper{border:1px solid #09627c!important;background:#00101acc!important;border-radius:8px!important;box-shadow:inset 0 0 10px #16cbe80a!important;font-family:Arial,'Hiragino Kaku Gothic ProN',sans-serif;font-size:16px}
+#research-paper a{font:inherit;border:1px solid #104a61;color:#e3f4fa;background:#01131e;border-radius:5px}
+/* Isolate the existing V1 data-table rules from the paper. */
+#research-paper table{min-width:0}
+#research-paper th:first-child,#research-paper td:first-child{position:static;background:transparent}
+#research-paper .paper-table{max-width:100%}

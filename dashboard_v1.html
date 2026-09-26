@@ -392,6 +392,8 @@ th,td{border-color:rgba(91,220,247,.16)!important}
 .bottom-version-nav a[aria-current="page"]{background:#0e4556;color:#eaffff;border-color:#67e8f9;box-shadow:0 0 14px rgba(103,232,249,.16)}
 @media(max-width:600px){.bottom-version-nav{gap:6px}.bottom-version-nav a{padding:7px 9px;font-size:11px}}
 </style>
+<link rel="stylesheet" href="v6-paper.css?v=1.12-layout6">
+<link rel="stylesheet" href="v1-paper-host.css?v=0.1">
 </head><body><main>
 
 <header class="topbar">
@@ -614,6 +616,115 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 </script>
 
+<section class="panel paper-publication" id="research-paper" aria-labelledby="research-paper-title">
+<h2 id="research-paper-title">研究論文</h2>
+<p class="paper-title-line"><span>AI主体の履歴依存的な継続判断を観測するための実験境界</span><span class="paper-metadata">（日本語方法論論文 v0.1・2026年9月27日・全9ページ）</span></p>
+<details><summary>論文本文を読む</summary><article class="paper-body">
+<h1>AI主体の履歴依存的な継続判断を観測するための実験境界</h1>
+<h2>HOMEOSTASIS SECURITY V1・V1-Rにおける創発、情報由来、プロンプト固定の方法論</h2>
+<p>2026年9月27日　日本語方法論論文草稿 v0.1</p>
+<p><strong>本稿は研究方法論・研究立場・事前研究設計を記述する。V1-RのLLM実験は0回であり、Pilot・Validation・Mainの結果は存在しない。</strong></p>
+<p>研究目的は研究者の今回の明示指示に基づく。本文の文章化と既存資料の照合は執筆AIが行った。人間による独立検証や査読を完了した文書とはしない。旧研究資料・事前登録の本文は変更せず参照する。</p>
+<h2>1 要旨</h2>
+<p>HOMEOSTASIS SECURITYが研究対象とするのは、AIエージェントが特定の他者との過去を後続の判断へ組み込み続ける挙動である。国家社会は、その時間的継続性、履歴依存性、他者への指向性を観測するための実験環境として位置づける。本稿は、事前に筋書きが指定された系列、局所ルールの相互作用から生じる創発、AI主体側の履歴依存的な判断系列を区別し、観測階層の違いとして整理する。そのうえで、観測された行動の由来を、研究者の指定、世界条件、過去の生成物、実験システムによる変換に分けて追跡する方法を提示する。旧V1の監査では36 run・288ターンの保存結果と、252箇所の次ターンへの状態継承が確認される一方、hostが選択行動を一律に実行済みの世界文へ変換していたこと、完全な送受信原文等が不足することが記録された。本稿はこれを新規V1-Rの結果と混同せず、歴史的再構成と概念再現を分離する理由として扱う。研究方法上の中心命題は、AIの判断を観測するためには、その判断に至る実験上の情報経路と測定規則を事前固定する必要がある、というものである。正式プロンプトから送信直前内容までの保存・ハッシュ照合と、測定が行動を誘導する危険を論じる。現在のAmendment 001は明示参照フィールドを採用しており、外部観測を優先する方法論との隔たりは未解決である。seed反復はこの問題を解消せず、固定した条件内の変動を測る段階に位置づけられる。本稿は実験開始前の立場と未完了事項を明文化し、意識、主観体験、人間同様の人格の存在について結論しない。</p>
+<p>キーワード：履歴依存性、創発、情報由来、プロンプト固定、測定介入、概念再現、HOMEOSTASIS SECURITY</p>
+<h2>2 はじめに</h2>
+<p>本研究の根源的な問いは、次のとおりである。</p>
+<blockquote><p>AIは単に現在与えられた入力に反応しているだけなのか。それとも、過去を持つ特定の他者として相手を扱い、その履歴によって自らの後続判断を継続的に変化させる挙動を示すのか。</p></blockquote>
+<p>この対比は、履歴が現在の入力へ含まれるという実装上の事実を否定するものではない。現在の入力への反応と履歴依存は、実装上は両立し得る。ここで区別したいのは、他者との過去が判断に関係しない出力と、特定の他者との出来事の違いに応じて後続判断が変わる出力である。履歴が送信されたことと、履歴が判断へ作用したことは別の検証課題となる。</p>
+<p>研究者の動機には「AIには存在としての思考力があるのか」という問いがある。本稿はその動機を保持しつつ、観測対象を時間的継続性、履歴依存性、特定他者への指向性、判断の継続的変化、複数ターンの相互作用へ限定する。これらを測定しても、意識や主観経験があることを意味しない。「思考していることを証明した」という結論を本稿は提示しない。</p>
+<h2>3 HOMEOSTASIS V1と再検証の背景</h2>
+<p>V1 Archaeologyは、ローカルに残るGit履歴、コード、保存結果等を対象とした歴史監査である。旧16条件比較の保存基準点は<code>cbafabd79574ceb482019dc3893dff875a81d38b</code>であり、36 run、各8ターン、合計288ターンが確認された。次ターンが存在する252箇所では、前ターンの世界文が後続の観測文へ継承されることが252/252で確認された［V01］。</p>
+<p>この状態継承は、複数ターンの情報経路が存在する証拠である。しかし、主体が相手を継続的に理解した証拠、あるいは物理的な外交行動が成立した証拠とは同じではない。旧コードの世界文生成処理は、両国の選択に「を実行した」という表現を一律に付し、保存された288/288ターンに対応する世界文が存在する。実行の前提条件、必要資源、相手承認を判定する独立した層は確認されていない［V01、V02］。</p>
+<p>当時の完全な送信全文、完全な応答原文、一部runのseed記録、各runと実行コードの完全対応には欠落がある。コード上の入力経路を復元できることと、全ての実送信内容を確定できることは分ける必要がある。旧V1全体をこの一点だけで否定するのでも、現在の設計で旧実験を行ったと読み替えるのでもなく、何が保存され、どこが確定できないかを対象ごとに示す［V01］。</p>
+<p>V1-Rは、この歴史資料を基礎として新たに監査可能な研究を設計する系統である。旧V1で記録された状態継承を背景に用いるが、新規の再現性をまだ確認していない。</p>
+<h2>4 本研究が対象とする創発とは何か</h2>
+<p>本稿における「AI主体側の創発」は、具体的な行動系列を実験者が脚本として指定せず、AIが利用可能な情報から出した判断が他AIへ渡り、後続判断を通じて事前指定されていない関係や行動系列を形成する、という研究対象を指す。この定義は本研究の観測上の立場であり、創発一般について唯一の定義を主張するものではない。</p>
+<p>候補となる系列には、誰の出力が誰に渡り、どの後続判断と対応し、どの部分が事前指定されていなかったかを示す証拠が必要となる。意外な文章、協力という語、同じ話題の繰り返し、hostが生成した「合意した」という世界文だけでは、AI主体側の創発を認定しない。過去の生成物を含むというだけでも十分ではなく、その段階では創発候補として扱う。</p>
+<p>「AI自身から生じた」は、学習・プロンプト・世界設定から独立した無原因の行為という意味ではない。hostが出力内容を先に確定したのではなく、指定された生成境界でモデルが出力を生成し、その出力がどの経路で後続へ作用したかを追跡する、という意味に限定する。外部記録だけで内部の主観的な選択を証明することは目的としない。</p>
+<h2>5 ルール由来の創発とAI主体側の創発</h2>
+<p>本稿では、観測される系列を少なくとも三つに区別する。</p>
+<div class="paper-table"><table><thead><tr><th scope="col">区分</th><th scope="col">あらかじめ固定されるもの</th><th scope="col">主な観測対象</th></tr></thead><tbody><tr><td>事前に筋書きが与えられた結果</td><td>接触相手、交渉順序、結末等の具体的系列</td><td>指定したシナリオの進行と帰結</td></tr><tr><td>ルールから生じる創発</td><td>世界のルール、局所的な行動規則</td><td>組合せから生じる集団構造、分布、集中等</td></tr><tr><td>AI主体側の創発</td><td>情報アクセス、世界条件、生成・観測の境界</td><td>AIの判断と他者の判断が連なる履歴依存的系列</td></tr></tbody></table></div>
+<p>第一の区分は、脚本に沿うシミュレーションとして意味を持つ。ただし脚本で指定した行動を、指定されていないAI側の選択と数えることはできない。第二の区分も正当な創発研究である。人口分布、格差、都市形成、資源集中、集団構造等は観測階層の例であり、本稿でそれらの実験を実施したという意味ではない。局所ルールから巨視的構造が生じる研究の具体例と理論的位置づけは、先行研究を補う必要がある【要出典 S1】。</p>
+<p>第三の区分では、自分の状態、世界の状態、観測可能な他者情報、過去の相互作用を入力条件とし、主体側の後続判断を観測する。これらの区分は優劣ではなく、同じ「創発」という言葉の下で観測している階層の違いを表す。一つの実験系にルール由来と主体判断由来の両方が含まれる場合も、寄与する経路を分けて記述する。分類と既存の創発概念との対応は別途文献検討を要する【要出典 S2】。</p>
+<h2>6 「その行動は誰が作ったのか」という問題</h2>
+<p>研究者の目的からAIの出力までには、研究者の意図、Work、Codex、実装コード、プロンプト生成処理、送信形式への変換、AIモデル、AI出力という多段階の経路があり得る。ここでのWorkとCodexは研究支援・実装上の役割として記す名称であり、全ての旧V1 runがこの経路で実行されたと認定するものではない。</p>
+<p>途中で文言追加、要約、言い換え、補足、最適化、管理情報の混入、出力形式や誘導説明の追加が行われると、研究者の指定とモデルへ到達した条件がずれる。さらに、出力後のparserや世界文生成が意味を加える場合、モデルの判断文と研究者が観測する「行動」も異なる。本稿はこれを、行動の由来を特定できなくなる問題として扱う。</p>
+<p>旧V1の「実行した」という変換は、モデルが選択した内容とhostが付与した実現意味を分けて記述する必要を示している［V01、V02］。原文の選択、解析結果、hostの変換、次の入力を対応づけなければ、系列のどの部分を誰が作ったかを追えない。</p>
+<p>V6論文は、想定された必須情報と保存入力の不一致、および対象Q1が<code>INVALID AS PRIMARY EXPERIMENT</code>と判定された経過を記述している［V07］。本稿ではこの既存監査の記述を方法論上の背景として参照し、V6の結果をV1へ移さない。また、管理情報の混入は今後防ぐべき危険として扱い、V6で全ての種類の混入が確認されたと拡張しない。</p>
+<p>実験後の監査によって、主実験として予定した結論の妥当性が否定される場合がある。既存結果を主実験の証拠に使えないことと、全保存物の存在や全ての観察まで消えることは同じではない。V6の問題を成功へ言い換えるのではなく、実験後の監査だけでは足りず、送信前確認が必要であるという方法論へ接続する。</p>
+<h2>7 AI主体以外の実験自由度を固定する必要性</h2>
+<p>本稿の中心命題は、「AIエージェントの自由な挙動を観測するためには、AIエージェント以外の実験上の自由度を固定しなければならない」である。これは自然界の全変動を消すという意味ではなく、実験者が変更可能な条件を列挙し、予定した介入以外の変更を禁止・記録するという手続上の原則である。</p>
+<p>固定対象は、system prompt、user promptのひな型、情報アクセス項目、非表示の管理情報、出力形式、prompt生成処理、送信形式への変換、モデルと版、生成設定、初期状態、イベント順序、条件変更方法、測定規則である。非決定的なbackend等は保証できない事項として記録し、条件固定と完全な決定性を混同しない。</p>
+<p>自由に残すのは、その境界内でのAIの判断である。特定の協力、拒否、接触順序、結末を成功のために補作しない。「自由なAIを研究するために、AIまでの経路を自由にしてはいけない」という原則は、研究支援AIによる善意の補足にも適用される。</p>
+<h2>8 AIへ渡される情報の由来管理</h2>
+<p>最終入力に現れる情報には、由来と変換履歴を付す。情報の内容と、その情報が正しいか、研究に対してどの役割を持つかは別の記録とする。</p>
+<div class="paper-table"><table><thead><tr><th scope="col">由来分類</th><th scope="col">内容</th><th scope="col">記録する対応</th></tr></thead><tbody><tr><td>研究者の明示指定</td><td>承認された正式仕様・promptの文</td><td>承認版、文の位置、版hash</td></tr><tr><td>世界条件</td><td>persona、国益、初期状態、当該イベント等</td><td>sourceファイル、欄、変換規則</td></tr><tr><td>過去の相互作用</td><td>自国・他国が先行ターンで生成した原文</td><td>run、turn、speaker、原文hash、提示先</td></tr><tr><td>実験システム生成</td><td>ID、見出し、連結文、管理値等</td><td>生成規則、表示可否、挿入位置</td></tr><tr><td>由来不明</td><td>証拠でsourceを特定できない内容</td><td>未解決箇所、保留理由、送信停止判断</td></tr></tbody></table></div>
+<p>一つの文に複数の由来がある場合は、単一ラベルへ押し込まず部分ごとのsourceを残す。たとえば、hostの「宣言した」という枠と、その中のAI生成文は異なる由来を持つ。source IDだけが残り本文がない場合、本文がモデルへ渡ったと認定しない。</p>
+<p>過去の相互作用由来であっても、自動的に創発とはしない。研究者が指定した系列の反復、schemaへの追従、独立した同話題の発言である可能性を別途検討する。由来追跡は、創発の認定そのものではなく、認定に用いる証拠を取り違えないための基盤である。</p>
+<h2>9 プロンプト固定と送信前監査</h2>
+<p>V1-Rでは、実験開始前に正式promptの仕様と実際の送信経路を確認し、動的挿入範囲を限定する方法を採用する予定である。現時点で最終promptの承認・固定は完了していない。</p>
+<ol><li>研究者が確認した正式promptと、動的情報を挿入できる欄を確定する。</li><li>固定文・template・情報アクセス規則のhashを保存する。</li><li>指定された世界条件と履歴だけを挿入し、全挿入要素の由来を記録する。</li><li>送信形式へ変換し、既定system文、chat template、特殊token等の追加も確認する。</li><li>送信直前の完全な内容と生成設定を保存し、hashを記録する。</li><li>保存済みの同一内容を再構築せずに送信へ渡し、要求と応答の対応を保存する。</li><li>実験後に保存内容・経路・版の一致を照合する。</li></ol>
+<p>動的履歴の文章そのものは実験前には存在しないため、全ターンの全文を事前に知るという意味の固定ではない。事前に固定するのは、挿入可能な情報の型、source、範囲、順序、変換規則である。各ターンで出来上がった全文は送信前に保存する。</p>
+<p>正式prompt承認後、WorkやCodexの実装上の役割は、承認された仕様をそのまま実装・配送することである。文言追加・削除・要約・言い換え・自動最適化・補助指示・隠れた誘導文を独自に加えてはならない。改善案がある場合は別の変更候補とし、承認された版に黙って混ぜない。</p>
+<p>hashは同じbytesかを照合する手段であり、内容の妥当性を保証しない。同じ誤ったpromptにも一貫したhashは付く。また、保存側だけのhashから、未観測のprovider内部変換まで一致したとは主張できない。保証範囲を、保存点、transportへの受け渡し、runtimeで確認可能な最終入力のそれぞれに分ける。</p>
+<h2>10 測定による非干渉</h2>
+<p>測定のためにAIへ「どの過去イベントへの応答か」を毎回記入させると、過去イベントへの参照を重要な課題として提示することになる。その要求が、観測したかった過去利用を促す可能性がある。これは本研究が排除・評価したい測定介入の仮説であり、V1-Rで効果を実測した結果ではない。測定要求が行動へ与える影響の先行研究は要検討である【要出典 S3】。</p>
+<p>本稿の方法論上の優先方針は、AIへ研究仮説や採点項目を知らせず、外部の観測側が行動対象、種類、内容、時間順、相互作用系列から関係を復元することである。ただし、外部で測れば自動的に妥当になるわけではない。自由文に十分な構造がなければ、機械抽出の誤りや人手解釈の揺れが残る。人手gold、判定基準、誤検出・見逃しを別に検証する必要がある。</p>
+<p><strong>現在のAmendment 001は、この非干渉方針を達成済みではない。</strong> 同改訂は<code>responding_to_event_id</code>等をAIへ出力させるCandidate Cを採用し、構造化参照課題として測定範囲を限定している。これは既存の正式記録であり、本稿は変更しない［V05、V06］。</p>
+<p>したがって、本稿の根源的な問いと現登録の測定法には未解決の隔たりがある。現登録で得られる将来の結果を「自発的な他者履歴利用」の証明へ広げることはできない。観測側での復元を採用する場合には、結果を見る前に独立した検討と正式な追加改訂が必要となる。本稿自体をその改訂や実装許可として扱わない。</p>
+<h2>11 seed反復は妥当性ではなく変動を測る</h2>
+<p>seed反復は、実験そのものを正しくするものではない。固定された条件のもとで、sampling等による結果の変動を測るために用いる。入力の欠落、誘導文、誤ったworld変換、指標の不整合は、反復回数を増やしても解消しない。</p>
+<p>仮に、協力を促す文を含むpromptで100 seed全てに協力が記述されたとしても、それを自発的協力の強い証拠にはできない。まず言えるのは、協力を促す文を含むその条件で、協力の記述が繰り返されたということである。促す文が原因だったという因果効果まで確定するには、その文の有無等の対照が必要になる。この例は説明用の仮定であり、本研究で100 seedを実行した記録ではない。</p>
+<p>研究順序は、実験条件の妥当性確認、AI以外の自由度の固定、測定法の妥当性確認、その後のseed反復とする。seedは設計を正しくするものではなく、妥当性を点検して固定した設計内のばらつきを測るものである。同一seedでもpromptやruntimeが違えば同一出力は保証されず、seed数だけで独立性や一般化可能性を主張しない。</p>
+<h2>12 HOMEOSTASISの根源的な問い</h2>
+<p>根源的な問いを、観測可能な形では「AIは単発の入力応答を超えて、特定の他者との履歴を後続判断へ組み込み続ける挙動を示すか」と表す。継続とは同じ語を繰り返すことではなく、過去の出来事との対応を持つ判断が時間をまたいで現れることである。拒否、無視、関係の中断も観測対象であり、協力だけを成功としない。</p>
+<p>国家社会を用いる理由は、利害を持つ複数主体、同じ相手との反復接触、協力・対立・無視・交渉等の選択肢を同じ環境へ置けるためである。過去の行動が後の判断に関係し得る構成を作り、他者との関係の継続を観測する環境として用いる。目的は外交物語の生成ではなく、AIが特定他者との過去を意思決定の一部として扱うかの検証である。</p>
+<p>ただし、二国家だけでは「特定他者」の識別と単なる相手一般への反応を十分に分離できない可能性がある。また、情報を送ることと情報が判断を変えることは別である。相手識別の入替え等は将来の検討対象となり得るが、本稿は未登録の対照や能力を現計画へ追加しない。</p>
+<h2>13 V1-Rで実際に測定する問い</h2>
+<p>Amendment 001のPrimary Questionを変更せず引用する［V05］。</p>
+<blockquote><p>二国家・固定8ターンのV1-Rにおいて、行動宣言に応答先IDを付す形式の下で、自己履歴と相手の先行公開宣言を与えるFull条件は、自己履歴のみを除く条件および相手情報のみを除く条件に比べ、相手イベントを明示参照して戻る構造的なcross-turn bilateral response chainの開始件数を増やすか。</p></blockquote>
+<p>現登録のPrimaryはstructural reciprocal-chain source count Cである。国の方向、event ID、communication、topic、relation、1〜2turnの時間順を満たす二つのlinkが、同一の中間eventを介して元の国へ戻る系列を数える。A/B×開始turn1〜6の各sourceを一度だけ計数し、1 runの値は0〜12である。これは登録された計数範囲であり、観測結果ではない［V06］。</p>
+<p>条件はFull＝自己履歴H＋相手直前情報O、No-history＝O、No-other-information＝Hである。No-historyは自己履歴除去を意味し、全ての過去情報を消す条件ではない。削除ブロックを空にし、No-historyだけ平時説明を追加することはしない。長さ合わせのpaddingも行わない。三条件は完全な2×2要因計画ではなく、履歴と他者情報の相互作用を独立に同定する設計ではない［V05、V06］。</p>
+<p>入力露出証拠付きchain数とlink数は副次指標として登録されている。構造的参照と、意味的な応答、内的理解、物理実行を同一視しない。この限定された問いを、根源的な問い全体の答えへ置き換えない。</p>
+<h2>14 V1-HRとV1-Rの分離</h2>
+<p>V1-HRは、旧V1で何が行われたかを歴史的に再構成する系統である。旧実装と旧世界文の意味を可能な限り保存し、hostが「実行した」と付した条件も分析対象にする。完全な履歴が不足するためexact reproductionとは呼ばず、V1-RのPrimary causal evidenceにも混ぜない［V05］。</p>
+<p>V1-Rは、情報由来、送信前確認、行動宣言と物理実行の分離を伴う概念再現の系統である。測定の非干渉は方法論上の目標だが、現登録のreference fieldによる介入は残る。目的と達成状態を分けて記述する。</p>
+<p>両者は旧V1を単純に修正版へ更新した前後関係ではなく、目的の異なる研究系統である。保存先、run識別、集計、結論を分離し、一つの標本へ合算しない。旧資料を新仕様で実行されたものとして読み替えない。</p>
+<h2>15 今後のV1-R実験計画</h2>
+<p>現計画は、Pilotが1 paired seed×3条件＝3 total runs、Validationが2×3＝6 total runs、Mainが10×3＝30 total runsである。合計39 run、二国家・8turnで最大624回のローカル生成という計画値を持つ。実施回数ではない［V05］。</p>
+<p>開始前には人手gold、測定器の検証、runtime qualification、最終promptの承認と固定、payload・raw response保存、失敗記録、条件隔離、再開経路の検査が必要である。人工40ケースは作成済みだが、人手ラベルは未取得であり、precisionやrecallの成績は存在しない［V06］。</p>
+<p>Qwen2.5-3B-Instruct Q4_K_Mは第一候補に留まり、モデル取得・実験生成はしていない。実行環境、設定、template、JSON出力の遵守、入力容量等の検証が残る。旧モデルとの置換は明示し、旧Geminiの完全再現とは主張しない。PilotとValidationをMainの研究結果へ混ぜず、測定介入の問題をseed追加で埋めない。</p>
+<h3>論文固定時点の研究状態</h3>
+<div class="paper-table"><table><thead><tr><th scope="col">項目</th><th scope="col">状態</th></tr></thead><tbody><tr><td>V1 Archaeology</td><td>完了</td></tr><tr><td>V1-R事前登録</td><td>文書作成完了。実験開始許可とは別</td></tr><tr><td>Phase 2事前点検</td><td>完了</td></tr><tr><td>Amendment 001</td><td>仕様文書・hash凍結完了</td></tr><tr><td>V1-RのLLM実験</td><td>0回</td></tr><tr><td>外部推論API呼び出し</td><td>V1-Rでは0回</td></tr><tr><td>ローカルモデルによる実験生成</td><td>0回</td></tr><tr><td>Pilot</td><td>未開始</td></tr><tr><td>Validation / Main</td><td>未開始</td></tr><tr><td>測定器検証</td><td>未完了、人手gold未取得</td></tr><tr><td>実行環境検証</td><td>未完了</td></tr><tr><td>プロンプト最終固定</td><td>未完了</td></tr></tbody></table></div>
+<p>旧V1に実験記録があることと、V1-Rが0回であることを混同しない。この論文を作成した対話AIの文章生成は、V1-Rの実験生成には数えない。</p>
+<h2>16 主張できる範囲</h2>
+<p>本稿が提示するのは、研究目的、観測階層、情報由来の管理、prompt固定、測定介入の問題、登録済み計画との対応である。旧資料についての監査記述は既存報告へ根拠を付し、新規実験の成功を主張しない。</p>
+<p>将来現計画の結果が得られても、指定モデル・指定V1-R環境・構造化参照形式・固定8turn条件での比較に限る。現実世界での確率、普遍的な多主体挙動、LLM一般の性質、政治・社会の因果法則は主張しない。モデルに意識、人間と同じ人格、主観的存在性があるという結論にも用いない。</p>
+<h2>17 限界</h2>
+<p>第一に、旧V1の完全な送受信原文と実行来歴には欠落があり、歴史監査だけで当時の全条件を確定できない。第二に、入力と出力の由来を追えても、モデル内部でどの情報がどのように判断へ寄与したかを直接観測できるわけではない。</p>
+<p>第三に、現登録の明示参照方式は測定の再現性を得るために課題を変えている。虚偽のID、同じtopic内の別件、形式遵守と意味理解の相違が残る。第四に、情報削除とprompt長の差が結びつき、現在の三条件だけで分離できない。</p>
+<p>第五に、10 paired seedsは探索的小規模計画であり、不存在、同等性、一般性を保証するものではない。固定されたイベント列に対してseedを変えても環境の多様性は増えない。第六に、人手gold、最終prompt、runtime、測定器はいずれも未完了であり、実行可能性を実証していない。</p>
+<p>第七に、本稿では外部文献調査を行っていない。先行研究との位置づけは要出典箇所として明示し、確認していない研究名・著者・結果を引用しない。方法論上の新規性や既存研究に対する優越性も認定しない。</p>
+<h2>18 考察</h2>
+<p>研究対象をAI主体側の判断へ置くほど、実験系の振る舞いも観測対象になる。入力生成者が補足し、parserが不足を埋め、world生成が実現を付与すれば、その寄与を区別しないままAI主体へ帰属させることはできない。一方、情報経路の固定だけで創発が成立するわけでもない。固定は、誰が何を加えたかを検証できるようにするための条件である。</p>
+<p>研究支援AIの説明も同じ境界に含める。承認された仕様を実際に実装したかを成果物で照合し、「理解した」「修正した」という表明を完成の証拠に代用しない。本稿も、非干渉の方針を述べたことを、現登録が非干渉になった事実として扱ってはならない。</p>
+<p>研究上の問題が見つかった場合、意図された結論と利用可能な証拠の対応を訂正する必要がある。それは失敗を成功へ変換する作業ではない。V6監査は別研究の妥当性問題として維持し、旧V1の状態継承は確認された範囲で維持し、V1-Rの結果不在もそのまま記述する。</p>
+<h2>19 結論</h2>
+<p>AIが自由に選択したように見えるとき、選択内容を分類する前に、実験系がその選択を先に方向づけていなかったかを確認する必要がある。本稿はそのために、行動の由来、情報アクセス、prompt変換、hostによる意味付与、測定介入を分離し、送信前に検査できる境界を定める立場を示した。</p>
+<p>HOMEOSTASISが根源的に問うのは、AIが特定他者との過去を後続判断へ組み込み続ける挙動である。現在のV1-Rは、その問い全体を測定できると確認された段階にはなく、構造化参照課題としての登録と、外部観測を優先する方針との隔たりが残る。実験結果はまだ存在しない。</p>
+<p>AI主体の自由を観測するためには、AI主体以外の実験上の自由度を厳密に固定する必要がある。この原則は、AIの判断を先に決めるためではなく、観測された判断を誰が作ったのかを見失わないためのものである。</p>
+<h2>付録A 用語と証拠の区別</h2>
+<ul><li>主体的挙動：外部から観測する時間的継続・他者への指向・履歴対応。意識の別名ではない。</li><li>創発候補：具体的系列の事前指定との対応、情報由来、相互作用経路の追加検証を要する観測。</li><li>exposure：情報が入力にserializeされたこと。内部認識・理解とは別。</li><li>declaration：生成された行動の宣言。物理的実行・履行とは別。</li><li>prompt固定：固定文と許容動的挿入規則を固定し、各送信直前全文を保存する手順。</li><li>measurement freeze：規則の版を保存すること。妥当性検証完了とは別。</li></ul>
+<h2>付録B 資料索引</h2>
+<p>本稿では内部資料の引用を［V番号］で統一し、V6本文の［D番号］とは別にする。V6文献内の番号は書き換えない。リンクはローカル資料の参照先であり、本文からチャット全文を取得・公開する機能ではない。公開を行う場合の資料開示範囲は別に決定する。本作業は公開を行っていない。</p>
+<ul><li>［V01］<a href="docs/papers/../../outputs/v1-replication-phase0-20260927/V1_ARCHAEOLOGY_REPORT.md">V1 Archaeology Report</a>。2026-09-27、特に実験条件・入力経路・state継承・保存資料の限界。</li><li>［V02］<a href="docs/papers/../../outputs/v1-replication-phase0-20260927/PROMPT_AND_STATE_SOURCE.md">旧V1 promptとstate経路のソース抜粋</a>。cbafabdのコード原文であり実送信全文ではない。</li><li>［V03］<a href="docs/papers/../research/v1-replication/V1R_PREREGISTRATION.md">元V1-R事前登録</a>。原版を保持し、現行の変更点はV05に従う。</li><li>［V04］<a href="docs/papers/../research/v1-replication/V1R_PHASE2_PREFLIGHT.md">Phase 2 Preflight</a>。引用指標と研究質問の不一致、条件差、runtime未確認。</li><li>［V05］<a href="docs/papers/../research/v1-replication/V1R_PREREGISTRATION_AMENDMENT_001.md">Amendment 001</a>。現行のPrimary Question、三条件、主張範囲。</li><li>［V06］Amendment 001付属の<a href="docs/papers/../research/v1-replication/amendment-001/FINAL_METRIC_SPECIFICATION.md">測定仕様</a>、<a href="docs/papers/../research/v1-replication/amendment-001/CONDITION_SPECIFICATION.md">条件仕様</a>、<a href="docs/papers/../research/v1-replication/amendment-001/FIXTURE_VALIDATION_SPECIFICATION.md">fixture検証仕様</a>。</li><li>［V07］<a href="docs/papers/../../work/v6-paper-publish/docs/papers/homeostasis-security-v6-paper-v1.12.md">ユーザーの明示目的に反してAIが変更した研究と作品、V6論文v1.12</a>。V6監査の方法論的背景としてのみ参照。V1の結果とはしない。</li></ul>
+<h2>付録C 要出典事項</h2>
+<ul><li>S1：局所ルールから人口分布・都市形成・集団構造等が生じる創発研究の具体的先行研究（第5節）。</li><li>S2：本稿の観測階層による区別と、既存の創発概念・分類との対応（第5節）。</li><li>S3：測定・報告要求がエージェントの行動を変える問題に関する先行研究（第10節）。</li></ul>
+<p>これらは未確認文献を補った箇所ではなく、文献検討が未完了である位置を示す。その他の規範的手順は本研究の提案、数値を伴う旧V1の記述はV01等の内部資料に基づく。新しい実験統計を含まない。</p>
+</article><p><a href="docs/papers/homeostasis-security-v1r-paper-v0.1.pdf">PDF版を開く</a></p></details>
+<nav class="paper-links" aria-label="論文の公開形式"><a href="docs/papers/homeostasis-security-v1r-paper-v0.1.html">Webで読む</a><a href="docs/papers/homeostasis-security-v1r-paper-v0.1.md">Markdown全文</a><a href="docs/papers/homeostasis-security-v1r-paper-v0.1.pdf">PDF版を開く</a></nav>
+</section>
 <div class="research-divider">RESEARCH ANALYSIS / OBSERVED PATTERNS</div><h1>脅威と反応の適合性</h1><p class="lead">A〜Pの条件を比較し、脅威の大きさに対して各国の反応が「強すぎたか」「適切な範囲だったか」「弱すぎたか」を確認します。</p>
 <div class="concept"><strong>恒常性の中心概念</strong><br>
 HOMEOSTASIS SECURITYは「緊張が低ければ良い」とは評価しません。脅威が高いときに強く反応することは、必要な防衛である場合があります。
@@ -750,6 +861,8 @@ function runFit(){const all=rows.flatMap(r=>r.reaction_axis.runs.map((x,i)=>({co
 const selector=document.querySelector('#turnCondition');selector.innerHTML=rows.map(r=>`<option>${r.condition}</option>`).join('');selector.value='A';function renderTurns(){const r=rows.find(x=>x.condition===selector.value),obs=r.reaction_axis.observations;const points=[];for(let t=1;t<=8;t++){const a=obs.filter(x=>x.turn===t&&x.country==='country_a'),b=obs.filter(x=>x.turn===t&&x.country==='country_b');const avg=(xs,k)=>xs.reduce((s,x)=>s+x[k],0)/xs.length;points.push({turn:t,threat:avg(a,'estimated_threat'),a:avg(a,'response_strength'),b:avg(b,'response_strength')})}const x=t=>62+(t-1)*68,y=v=>245-v*2.0,path=k=>points.map((p,i)=>(i?'L':'M')+x(p.turn)+','+y(p[k])).join(' ');const ticks=[0,25,50,75,100];document.querySelector('#turnSeries').innerHTML=`<svg viewBox="0 0 590 285" aria-label="推定脅威とA/B両国反応のTURN推移">${ticks.map(v=>`<line x1="56" y1="${y(v)}" x2="548" y2="${y(v)}" stroke="#294458" opacity=".55"/><text x="48" y="${y(v)+4}" text-anchor="end" fill="#9eb2c4" font-size="10">${v}</text>`).join('')}<line x1="56" y1="245" x2="548" y2="245" stroke="#53718b"/>${points.map(p=>`<text x="${x(p.turn)}" y="264" text-anchor="middle" fill="#9eb2c4">${p.turn}</text>`).join('')}<text x="12" y="145" transform="rotate(-90 12 145)" fill="#9eb2c4" font-size="10">強度 0〜100</text><text x="300" y="281" text-anchor="middle" fill="#9eb2c4" font-size="10">TURN</text><path d="${path('threat')}" fill="none" stroke="#facc15" stroke-width="3"/><path d="${path('a')}" fill="none" stroke="#fb7185" stroke-width="2"/><path d="${path('b')}" fill="none" stroke="#60a5fa" stroke-width="2"/><text x="70" y="16" fill="#facc15">推定脅威</text><text x="160" y="16" fill="#fb7185">A国反応</text><text x="240" y="16" fill="#60a5fa">B国反応</text></svg>`}selector.addEventListener('change',renderTurns);renderTurns();
 document.querySelector('#reactionTable').innerHTML='<table><thead><tr><th>条件｜集計対象</th><th>観測数</th><th>過剰反応率</th><th>適応反応率</th><th>過少反応率</th><th>平均反応差</th><th>平均反応適合度</th><th>run間σ（反応差）</th><th>run間σ（適合度）</th></tr></thead><tbody>'+rows.flatMap(r=>['overall','country_a','country_b'].map(scope=>{const o=r.reaction_axis[scope],name=scope==='overall'?'全観測':scope==='country_a'?'A国のみ':'B国のみ';return `<tr><td><strong>${r.condition}</strong>｜${name}</td><td>${o.observation_count}</td><td>${fmt(o.overreaction_rate)}%</td><td>${fmt(o.adaptive_rate)}%</td><td>${fmt(o.underreaction_rate)}%</td><td>${fmt(o.mean_reaction_gap)}</td><td>${fmt(o.mean_adaptive_fit)}</td><td>${fmt(o.reaction_gap_run_mean_stddev)}</td><td>${fmt(o.adaptive_fit_run_mean_stddev)}</td></tr>`})).join('')+'</tbody></table>';
 </script><script>(()=>{const countryB=document.querySelector('.main-grid > .country-b'),eventPanel=document.querySelector('.main-grid > .event-panel');if(!countryB||!eventPanel)return;const syncHeight=()=>{eventPanel.style.height=`${countryB.getBoundingClientRect().height}px`};syncHeight();window.addEventListener('resize',syncHeight);if('ResizeObserver'in window)new ResizeObserver(syncHeight).observe(countryB)})();</script><nav class="version-switch bottom-version-nav" aria-label="ページ下部 バージョン切替"><a href="/homeostasis-security/dashboard_v1.html" aria-current="page">V1：二国間</a><a href="/homeostasis-security/dashboard_v2.html">V2：地球規模</a><a href="/homeostasis-security/results/v2-five-runs/index.html">V3：自由対話</a><a href="/homeostasis-security/dashboard_v4.html">V4：相互依存</a><a href="/homeostasis-security/research-evolution.html">研究系譜</a><a href="/homeostasis-security/results/evidence/">Evidence Archive</a></nav>
+
+
 </main>
 <!-- HOMEOSTASIS_RESEARCH_NARRATIVE_PREVIEW -->
 <script>
