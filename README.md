@@ -17,6 +17,14 @@ AI Agentが状況を受け取り、何を話し、何を選び、その後に何
 `dashboard_v3.html`もV4への互換入口として残しています。
 [番号整理の記録](docs/architecture/VERSION_NUMBERING_REVISION.md)で対応を確認できます。
 
+## V6研究論文
+
+ユーザーの明示目的に反してAIが変更した研究と作品（v1.12／2026年9月26日／全20ページ）
+
+- [Webで読む](https://ryoryo3888.github.io/homeostasis-security/docs/papers/homeostasis-security-v6-paper-v1.12.html)
+- [Markdown全文](https://ryoryo3888.github.io/homeostasis-security/docs/papers/homeostasis-security-v6-paper-v1.12.md)
+- [PDF固定版](https://ryoryo3888.github.io/homeostasis-security/docs/papers/homeostasis-security-v6-paper-v1.12.pdf)
+
 ## 作業と資料の入口
 
 | 目的 | 入口 |

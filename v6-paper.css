@@ -1,0 +1,16 @@
+/* Scoped to the published paper; no WORLD STAGE selectors. */
+.paper-publication{margin-top:14px;padding:20px;line-height:1.85;overflow-wrap:anywhere;color:#e6f5fb}
+.paper-publication h2,.paper-publication h3,.paper-publication h4{line-height:1.5;margin:1.6em 0 .7em}
+.paper-publication p{margin:.8em 0}.paper-publication .paper-links{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0}
+.paper-publication a{display:inline-block;padding:8px 12px;text-decoration:underline;text-underline-offset:3px}
+.paper-publication summary{cursor:pointer;padding:12px;border:1px solid #37778d;border-radius:5px;font-weight:bold;list-style:none}
+.paper-publication summary::-webkit-details-marker{display:none}.paper-publication summary::after{content:' ▼'}.paper-publication details[open]>summary::after{content:' ▲'}
+.paper-publication summary:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.paper-publication .paper-body{padding-top:16px}.paper-publication .paper-body h1{font-size:1.8em;line-height:1.5;letter-spacing:normal}
+.paper-publication .paper-body h2{font-size:1.4em}.paper-publication .paper-body h3{font-size:1.15em}
+.paper-publication .paper-table{overflow-x:auto}.paper-publication table{border-collapse:collapse;width:100%;margin:16px 0}
+.paper-publication th,.paper-publication td{border:1px solid #37778d;padding:10px;text-align:left;vertical-align:top}
+.paper-publication li{margin:.5em 0}.paper-reader{margin:0;background:#06121c;font-family:system-ui,sans-serif}
+.paper-reader>main{max-width:900px;margin:auto;padding:24px}
+.paper-reader a{color:#8de7ff}.paper-reader .paper-publication{margin:0;padding:0}
+@media print{.paper-reader{background:white}.paper-reader .paper-publication,.paper-reader a{color:black}.paper-publication details>summary{display:none}}
