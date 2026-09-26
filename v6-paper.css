@@ -24,3 +24,9 @@
 #research-paper > .paper-title-line{font-size:12px}
 #research-paper .paper-metadata{font-size:10px}
 #research-paper > details > summary,#research-paper > .paper-links{font-size:12px}
+
+/* Halve the current paper-entry text at the user’s request. */
+#research-paper > h2{font-size:9px}
+#research-paper > .paper-title-line{font-size:6px}
+#research-paper .paper-metadata{font-size:5px}
+#research-paper > details > summary,#research-paper > .paper-links{font-size:6px}
