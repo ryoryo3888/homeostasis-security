@@ -14,3 +14,7 @@
 .paper-reader>main{max-width:900px;margin:auto;padding:24px}
 .paper-reader a{color:#8de7ff}.paper-reader .paper-publication{margin:0;padding:0}
 @media print{.paper-reader{background:white}.paper-reader .paper-publication,.paper-reader a{color:black}.paper-publication details>summary{display:none}}
+
+#research-paper > h2{margin-top:0}
+#research-paper .paper-title-line{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+#research-paper .paper-metadata{font-size:12px;white-space:nowrap}
