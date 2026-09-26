@@ -18,3 +18,9 @@
 #research-paper > h2{margin-top:0}
 #research-paper .paper-title-line{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 #research-paper .paper-metadata{font-size:12px;white-space:nowrap}
+
+/* Compact typography for the WORLD STAGE paper entry only. */
+#research-paper > h2{font-size:18px}
+#research-paper > .paper-title-line{font-size:12px}
+#research-paper .paper-metadata{font-size:10px}
+#research-paper > details > summary,#research-paper > .paper-links{font-size:12px}
