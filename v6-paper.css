@@ -31,8 +31,8 @@
 #research-paper .paper-metadata{font-size:5px}
 #research-paper > details > summary,#research-paper > .paper-links{font-size:6px}
 
-/* Paper entry at 80 percent of the previous displayed size, for V1 and V6. */
-#research-paper > h2{font-size:11.52px}
-#research-paper > .paper-title-line{font-size:7.68px}
-#research-paper .paper-metadata{font-size:6.4px}
-#research-paper > details > summary,#research-paper > .paper-links{font-size:7.68px}
+/* Paper entry at 120 percent of the size before the previous 80-percent change. */
+#research-paper > h2{font-size:17.28px}
+#research-paper > .paper-title-line{font-size:11.52px}
+#research-paper .paper-metadata{font-size:9.6px}
+#research-paper > details > summary,#research-paper > .paper-links{font-size:11.52px}
