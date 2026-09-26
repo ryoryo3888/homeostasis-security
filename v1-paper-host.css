@@ -5,3 +5,9 @@
 #research-paper table{min-width:0}
 #research-paper th:first-child,#research-paper td:first-child{position:static;background:transparent}
 #research-paper .paper-table{max-width:100%}
+
+/* V1 paper entry: 110 percent of its previous displayed size. */
+#research-paper > h2{font-size:19.008px}
+#research-paper > .paper-title-line{font-size:12.672px}
+#research-paper .paper-metadata{font-size:10.56px}
+#research-paper > details > summary,#research-paper > .paper-links{font-size:12.672px}
