@@ -2,3 +2,14 @@
 .venv/
 __pycache__/
 *.pyc
+
+# Private prompt configuration and full research evidence (never publish).
+private_config/
+private_runs/
+private_prompts/
+**/RAW/
+**/raw/
+*.checkpoint
+*.sdk.json
+*.request.json
+*.wire.json

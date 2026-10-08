@@ -1,3 +1,5 @@
+from prompt_interface.audit import private_checkpoint, private_receipts
+from prompt_interface import configuration_path
 import json,subprocess,tempfile,unittest
 from pathlib import Path
 from google.genai import types
@@ -76,14 +78,14 @@ class GeminiFinalTests(unittest.TestCase):
             self.assertEqual(c.models.payloads,[]);self.assertEqual(p.read_text(),"old")
     def test_checkpoint_requires_explicit_resume(self):
         with tempfile.TemporaryDirectory() as d:
-            p=Path(d)/"x.json";p.with_suffix(".json.checkpoint").write_text('{"completed_runs":[]}');c=Client()
+            p=Path(d)/"x.json";private_checkpoint(p).parent.mkdir(parents=True,exist_ok=True);private_checkpoint(p).write_text('{"completed_runs":[]}');c=Client()
             with self.assertRaises(FileExistsError):run_live(c,p,1,1,False)
             self.assertEqual(c.models.payloads,[])
     def test_explicit_resume_from_empty_checkpoint_completes_eight_turns(self):
         with tempfile.TemporaryDirectory() as d:
-            p=Path(d)/"x.json";p.with_suffix(".json.checkpoint").write_text('{"completed_runs":[]}');c=Client()
+            p=Path(d)/"x.json";private_checkpoint(p).parent.mkdir(parents=True,exist_ok=True);private_checkpoint(p).write_text('{"completed_runs":[]}');c=Client()
             result=run_live(c,p,1,7,True)
-            run=result["runs"][0];self.assertEqual(len(run["turns"]),8);self.assertEqual(len(run["call_audit"]),80);self.assertEqual(run["token_usage"]["total_tokens"],1200);self.assertTrue(p.exists());self.assertFalse(p.with_suffix(".json.checkpoint").exists())
+            run=result["runs"][0];self.assertEqual(len(run["turns"]),8);self.assertEqual(len(run["call_audit"]),80);self.assertEqual(run["token_usage"]["total_tokens"],1200);self.assertTrue(p.exists());self.assertFalse(private_checkpoint(p).exists())
             receipts=ResponseReceipts.for_output(p)
             self.assertEqual(len(list(receipts.directory.glob("*.json"))),80)
             receipts.verify(run["call_audit"])
@@ -96,14 +98,14 @@ class GeminiFinalTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/"x.json";first=InterruptingClient(20)
             with self.assertRaises(KeyboardInterrupt):run_live(first,p,1,7)
-            checkpoint=json.loads(p.with_suffix(".json.checkpoint").read_text())
+            checkpoint=json.loads(private_checkpoint(p).read_text())
             self.assertEqual(checkpoint["active_run"]["completed_turn"],2)
-            original=p.with_suffix(".json.checkpoint").read_bytes()
+            original=private_checkpoint(p).read_bytes()
             second=Client()
             with self.assertRaisesRegex(ValueError,"RESUME_UNCOMMITTED_DECISION"):
                 run_live(second,p,1,7,True)
             self.assertEqual(second.models.payloads,[])
-            self.assertEqual(p.with_suffix(".json.checkpoint").read_bytes(),original)
+            self.assertEqual(private_checkpoint(p).read_bytes(),original)
             self.assertFalse(p.exists())
     def test_cli_defaults_to_dry_run_without_output(self):
         with tempfile.TemporaryDirectory() as d:

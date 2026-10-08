@@ -4,6 +4,7 @@ All inputs in one round precede that round's outputs. No Observer, evaluator,
 model callback or political action classifier participates in delivery.
 """
 from __future__ import annotations
+from prompt_interface import private_text
 
 import hashlib
 import json
@@ -118,7 +119,7 @@ class Dialogue:
             result[actor] = {
                 "actor": actor, "participants": list(ACTORS),
                 "round": state["round"] + 1,
-                "role": state["initial"]["roles"][actor],
+                "role": state[private_text('v2_dialogue.py:121:30')][private_text('v2_dialogue.py:121:41')][actor],
                 "initial_conditions": state["initial"],
                 "events": [event for event in state["events"]
                            if actor in event["visible_to"]],

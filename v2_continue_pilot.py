@@ -4,6 +4,7 @@ Old requests and replies are replayed locally. The parent remains read-only;
 new paid requests use the original per-call budget guard and Agent protocol.
 """
 from __future__ import annotations
+from prompt_interface import private_text
 
 import argparse
 import base64
@@ -80,8 +81,8 @@ def verify_parent(parent, expected_sha256):
             counted = journal.read(f"count-{sequence:02d}.request.json")["generateContentRequest"].copy()
             require(counted.pop("model") == "models/" + pilot.MODEL
                     and counted == reservation["request"], "PARENT_WIRE_REQUEST_MISMATCH")
-            expected_wire = {"contents": [{"parts": [{"text": request["kwargs"]["contents"]}], "role": "user"}],
-                "systemInstruction": {"parts": [{"text": manifest["system_instruction"]}], "role": "user"},
+            expected_wire = {"contents": [{"parts": [{"text": request["kwargs"]["contents"]}], "role": private_text('v2_continue_pilot.py:83:103')}],
+                "systemInstruction": {"parts": [{"text": manifest["system_instruction"]}], "role": private_text('v2_continue_pilot.py:84:99')},
                 "generationConfig": {"responseMimeType": "application/json", "maxOutputTokens": pilot.OUTPUT_LIMIT}}
             require(counted == expected_wire, "PARENT_WIRE_INPUT_MISMATCH")
             count = journal.read(f"count-{sequence:02d}.response.json")

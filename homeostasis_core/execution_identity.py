@@ -6,6 +6,7 @@ proof of which code executed, model determinism, or a tamper-proof signature.
 from __future__ import annotations
 
 import hashlib
+from prompt_interface import prompt_identity, configuration_path
 from importlib.metadata import version
 from pathlib import Path
 import platform
@@ -29,8 +30,9 @@ def execution_identity(source_root: Path, inputs: dict[str, Path], settings: dic
         "format": "homeostasis_resume_identity_v1",
         "source_sha256": {str(path.relative_to(source_root)): hashlib.sha256(path.read_bytes()).hexdigest()
                           for path in sources},
-        "input_sha256": {name: hashlib.sha256(path.read_bytes()).hexdigest()
+        "input_sha256": {name: hashlib.sha256(configuration_path(path).read_bytes()).hexdigest()
                          for name, path in sorted(inputs.items())},
         "runtime": runtime_identity(),
+        "private_prompt_identity": prompt_identity(),
         "settings": settings,
     }

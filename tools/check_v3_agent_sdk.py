@@ -8,6 +8,7 @@ import sys
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
+from prompt_interface import private_text
 
 
 def main():
@@ -58,7 +59,7 @@ def main():
                     answer.update(initiatives=intents,extension_requests=[])
                 else:
                     answer.update(decisions=[],consents={c['choice_id']:mode!='all_refuse' for c in request['payload']['choices']})
-                return httpx.Response(200,json={'candidates':[{'content':{'role':'model','parts':[{'text':canonical(answer)}]},'finishReason':'STOP'}]})
+                return httpx.Response(200,json={'candidates':[{'content':{'role':private_text('tools/check_v3_agent_sdk.py:61:81'),'parts':[{'text':canonical(answer)}]},'finishReason':'STOP'}]})
             exchange=OfflineGeminiExchange(handler=handler,journal_path=path/'attempts.sqlite',
                                             model='offline-model',max_calls=48)
             try:

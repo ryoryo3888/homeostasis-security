@@ -84,7 +84,7 @@ footer{display:flex;justify-content:space-between;gap:15px;border-top:1px solid 
       <div class="hero-copy">
         <div class="eyebrow">HOMEOSTASIS SECURITY / EVIDENCE ARCHIVE</div>
         <h1>EVIDENCE ARCHIVE</h1>
-        <p class="lead">保存済み実験の生ログと検証資料</p>
+        <p class="lead">保存済み実験の監査情報と検証資料</p>
         <p class="sublead">このArchiveは、HOMEOSTASIS SECURITYで保存された実験記録を第三者が確認できるよう公開するためのEvidence保管庫です。このページを開いても、新しいAPI実行やシミュレーションは行われません。</p>
       </div>
       <div class="hero-visual" aria-label="Evidence Archiveを象徴する装飾的な地球ビジュアル">
@@ -114,13 +114,13 @@ footer{display:flex;justify-content:space-between;gap:15px;border-top:1px solid 
 
     <section class="section" id="entry">
       <div class="section-head"><div><div class="section-index">01 / ARCHIVE ENTRANCE</div><h2>保存物へ入る</h2></div></div>
-      <p>入口では人間向けに全体像を示し、奥では保存されたファイルへ直接到達できるようにしています。RAWの内容、DERIVEDの計算結果、出典情報を同じものとして扱いません。</p>
+      <p>入口では全体像を示し、公開可能な監査情報と検証資料へ接続します。完全RAWは非公開で保全し、公開資料とは区別します。</p>
       <div class="grid-3">
-        <article class="card archive-card"><div class="tag">RAW / OBSERVED</div><h3>生の実験記録</h3><p>AI Agentへの入力、応答、世界状態、ターン、checkpoint、journalなど、加工前の保存済み実験記録です。</p><a class="button" href="raw/v1/model-runs/20260919T072326653124Z-v1/engine/result.json">RAW Evidenceを見る →</a><a class="minor" href="derived/raw-inventory.json">全RAWのinventoryを見る</a></article>
+        <article class="card archive-card"><div class="tag">AUDIT / METADATA</div><h3>原本の監査情報</h3><p>非公開で保全した実験原本のSHA-256と、確認可能な研究メタデータです。入力全文・完全RAWは含みません。</p><a class="button" href="../public-audit/4a758f269154fc8268e2ae31.json">監査情報 · SHA-256 27b055d87845</a><a class="minor" href="derived/raw-inventory.json">公開監査用inventoryを見る</a></article>
         <article class="card pink archive-card"><div class="tag">DERIVED / VERIFICATION</div><h3>RAWから作成した検証資料</h3><p>RAW inventory、SHA-256対応表、完全性記録、privacy / secret scanなど、RAWから作成した検証用資料です。</p><p class="note">DERIVEDはRAWそのものではありません。</p><a class="button" href="derived/raw-integrity.json">検証資料を見る →</a><a class="minor" href="derived/secret-privacy-scan.json">scan記録を見る</a></article>
         <article class="card gold archive-card"><div class="tag">PROVENANCE / ORIGIN</div><h3>出典・由来</h3><p>EvidenceがどのVersion・実験・実行群から生まれたのかを確認する情報です。現在の出典対応表はinventoryに記録しています。</p><a class="button" href="derived/raw-inventory.json">出典情報を見る →</a></article>
       </div>
-      <div class="callout"><strong>入口と中身を分けています。</strong> このHTMLはEvidenceへ入るための表示だけを担当します。RAW / JSON / JSONL / inventory / hashは、保存されたまま直接確認できます。</div>
+      <div class="callout"><strong>入口と中身を分けています。</strong> このHTMLは公開Evidenceへの入口です。監査メタデータ・inventory・hashを確認できます。完全RAWは非公開で保全しています。</div>
     </section>
 
     <section class="section" id="v5-diplomacy-ablation">
@@ -134,35 +134,35 @@ footer{display:flex;justify-content:space-between;gap:15px;border-top:1px solid 
     </section>
 
     <section class="section" id="structure">
-      <div class="section-head"><div><div class="section-index">02 / EVIDENCE TRACE</div><h2>研究結果からRAWまで</h2></div></div>
+      <div class="section-head"><div><div class="section-index">02 / EVIDENCE TRACE</div><h2>研究結果から原本の指紋まで</h2></div></div>
       <p>研究上の主張を、保存記録のどこから確認できるかを人間向けに示した階層です。</p>
       <div class="chain" aria-label="Evidenceの階層"><div><strong>Research Result</strong>研究結果</div><div class="arrow" aria-hidden="true">→</div><div><strong>Experiment</strong>実験</div><div class="arrow" aria-hidden="true">→</div><div><strong>run</strong>1回の実験</div><div class="arrow" aria-hidden="true">→</div><div><strong>TURN</strong>時間進行</div><div class="arrow" aria-hidden="true">→</div><div><strong>Agent</strong>判断主体</div><div class="arrow" aria-hidden="true">→</div><div><strong>RAW</strong>観測記録</div><div class="arrow" aria-hidden="true">→</div><div><strong>SHA-256</strong>完全性</div></div>
-      <p class="note">全ファイルの公開パス、由来、SHA-256、公開コピーとの一致状況は <a href="derived/raw-inventory.json">raw-inventory.json</a> で追跡できます。</p>
+      <p class="note">以前の公開パス、由来、SHA-256、当時のコピー照合記録は <a href="derived/raw-inventory.json">raw-inventory.json</a> で確認できます。現在のRAW公開を意味しません。</p>
     </section>
 
     <section class="section" id="versions">
       <div class="section-head"><div><div class="section-index">03 / VERSION &amp; GENERATION</div><h2>世代別の保存Evidence</h2></div></div>
-      <p>各入口は、現在保存構造に存在する代表的なRAWファイルへつながっています。全ファイルはinventoryから確認できます。</p>
+      <p>各入口は、非公開原本から生成した公開監査情報へつながっています。原本一覧はinventoryから確認できます。</p>
       <div class="grid-5">
-        <article class="card"><div class="tag">V1</div><h3>二国間の恒常性</h3><p>安全保障、脅威認識、制度条件、回復の観測。</p><a href="raw/v1/model-runs/20260919T072326653124Z-v1/engine/result.json">保存済みEvidenceを見る →</a></article>
-        <article class="card"><div class="tag">V2</div><h3>地球規模の恒常性</h3><p>食料、経済、国際信頼、第三国への波及。</p><a href="raw/v2/model-runs/20260919T072638155900Z-v2/engine/result.json">保存済みEvidenceを見る →</a></article>
-        <article class="card pink"><div class="tag">V3</div><h3>自由対話</h3><p>発言、提案、同意・拒否、履歴依存の記録。</p><a href="raw/v3/model-runs/20260919-v3-unchanged-input-replay/checkpoints/HEAD.json">保存済みEvidenceを見る →</a></article>
-        <article class="card gold"><div class="tag">V4</div><h3>相互依存・有限資源</h3><p>提案から資源移転、dispatch、arrivalまでの記録。</p><a href="raw/v4/free-dialogue/live-observation/agent-000.request.json">保存済みEvidenceを見る →</a></article>
-        <article class="card green"><div class="tag">LOCAL PILOT</div><h3>ローカル環境の小規模試行</h3><p>実行環境の成立性を確認する技術試行。正式研究観測とは分けて保存。</p><a href="raw/local/v4-pilot/pilot-01-qwen3-1.7b/RAW/failure.json">保存済みEvidenceを見る →</a></article>
+        <article class="card"><div class="tag">V1</div><h3>二国間の恒常性</h3><p>安全保障、脅威認識、制度条件、回復の観測。</p><a href="../public-audit/4a758f269154fc8268e2ae31.json">監査情報 · SHA-256 27b055d87845</a></article>
+        <article class="card"><div class="tag">V2</div><h3>地球規模の恒常性</h3><p>食料、経済、国際信頼、第三国への波及。</p><a href="../public-audit/5e6536c352018bab57f93375.json">監査情報 · SHA-256 1abb760669a1</a></article>
+        <article class="card pink"><div class="tag">V3</div><h3>自由対話</h3><p>発言、提案、同意・拒否、履歴依存の記録。</p><a href="../public-audit/316ad46889c23f1349f4489e.json">監査情報 · SHA-256 d9b3ed2d5f55</a></article>
+        <article class="card gold"><div class="tag">V4</div><h3>相互依存・有限資源</h3><p>提案から資源移転、dispatch、arrivalまでの記録。</p><a href="../public-audit/c66b94cab4b9275969bbfc9b.json">監査情報 · SHA-256 fe5cd1f8f524</a></article>
+        <article class="card green"><div class="tag">LOCAL PILOT</div><h3>ローカル環境の小規模試行</h3><p>実行環境の成立性を確認する技術試行。正式研究観測とは分けて保存。</p><a href="../public-audit/7a146393bbefffc7d417938e.json">監査情報 · SHA-256 52460505f762</a></article>
       </div>
     </section>
 
     <section class="section" id="integrity">
       <div class="section-head"><div><div class="section-index">04 / DATA INTEGRITY</div><h2>保存状態と公開前確認</h2></div></div>
-      <p>以下は保存済みのinventoryとscan結果から確認できる事実です。入口UIの追加によって、Evidence本体は変更していません。</p>
+      <p>以下は公開可能な監査inventoryと、過去のscan結果の記録です。現在の公開範囲を表すものではありません。原本は非公開で保全しています。</p>
       <div class="integrity">
         <div><b>変更なし</b><span>元RAWはimmutable</span></div>
         <div><b>分離保存</b><span>RAW / DERIVED</span></div>
-        <div><b>3,439</b><span>byte完全一致ファイル</span></div>
-        <div><b>0</b><span>公開コピーのsecret検出</span></div>
-        <div><b>0</b><span>公開コピーのprivacy残存finding</span></div>
+        <div><b>3,439</b><span>当時のbyte一致ファイル</span></div>
+        <div><b>0</b><span>当時のsecret検出</span></div>
+        <div><b>0</b><span>当時のprivacy検出</span></div>
       </div>
-      <div class="callout"><strong>公開前確認済み：</strong> source file count 3,447、公開コピーでのsecret pattern 0、privacy finding残存 0、scan status PASS。Local pilotの一部ホスト上モデル親パスは公開コピーで伏せ、その対応をinventoryに記録しています。</div>
+      <div class="callout"><strong>過去の公開前確認記録：</strong> source file count 3,447、公開コピーでのsecret pattern 0、privacy finding残存 0、scan status PASS。Local pilotの一部ホスト上モデル親パスは公開コピーで伏せ、その対応をinventoryに記録しています。</div>
       <div class="nav" aria-label="完全性資料"><a href="derived/raw-integrity.json">完全性記録</a><a href="derived/secret-privacy-scan.json">secret / privacy scan</a><a href="derived/raw-inventory.json">SHA-256 inventory</a></div>
     </section>
 
@@ -179,7 +179,7 @@ footer{display:flex;justify-content:space-between;gap:15px;border-top:1px solid 
     <section class="section" id="terms">
       <div class="section-head"><div><div class="section-index">06 / はじめてEvidenceを見る人へ</div><h2>用語を短く説明します</h2></div></div>
       <div class="grid-5">
-        <article class="card"><h3>RAW</h3><p>加工前の生の実験記録。観測された入力・応答・状態です。</p></article>
+        <article class="card"><h3>RAW</h3><p>完全な入力・内部指示・RAWは非公開で保全し、公開側には検証用指紋と監査メタデータのみを表示します。</p></article>
         <article class="card"><h3>DERIVED</h3><p>RAWから後で作成した一覧・分析・検証資料です。</p></article>
         <article class="card"><h3>run</h3><p>同じ条件で世界を最初から最後まで動かした1回の実験です。</p></article>
         <article class="card"><h3>seed</h3><p>乱数を生成する起点番号。同じ条件の世界を区別します。</p></article>

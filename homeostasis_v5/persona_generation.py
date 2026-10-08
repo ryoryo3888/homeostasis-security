@@ -4,6 +4,7 @@ No simulation, repair, fallback model, automatic retry, or publication path.
 Each completed generation requires a recorded content review before the next.
 """
 from __future__ import annotations
+from prompt_interface import private_text, private_file
 
 import base64
 from datetime import date
@@ -106,7 +107,7 @@ def source_hashes():
         'docs/design/v5/LEADER_GENERATION_PROMPT.txt',
         'docs/design/v5/LEADER_GENERATION_SCHEMA.proposed.json',
     ]
-    return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in paths}
+    return {name: hashlib.sha256((private_file(name) if name.endswith('_PROMPT.txt') else ROOT / name).read_bytes()).hexdigest() for name in paths}
 
 
 def build_request():
@@ -116,7 +117,7 @@ def build_request():
     ensure(list(params['properties']) == list(AXES) and params['required'] == list(AXES),
            'APPROVED_AXES_MISMATCH')
     return {
-        'contents': [{'role': 'user', 'parts': [{'text': (DESIGN / 'LEADER_GENERATION_PROMPT.txt').read_text()}]}],
+        'contents': [{'role': private_text('homeostasis_v5/persona_generation.py:119:30'), 'parts': [{'text': private_file('docs/design/v5/LEADER_GENERATION_PROMPT.txt').read_text()}]}],
         'generationConfig': {
             'responseMimeType': 'application/json', 'responseJsonSchema': schema,
             'temperature': 1.0, 'candidateCount': 1, 'maxOutputTokens': MAX_OUTPUT,

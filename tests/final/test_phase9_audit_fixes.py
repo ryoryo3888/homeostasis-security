@@ -1,3 +1,4 @@
+from prompt_interface import original_file
 import hashlib,json,tempfile,unittest
 from pathlib import Path
 from test_simulation import sdk_reply
@@ -58,7 +59,7 @@ class AuditFixTests(unittest.TestCase):
         with self.assertRaises(ValueError):apply_structured_actions(self.states,{"MIL":valid,"FOOD":invalid},{"food":55,"energy":60,"economy":65,"environment":70,"international_trust":60,"conflict_load":30},0)
         self.assertEqual(self.states,before)
     def test_aborted_second_pilot_manifest_preserves_checkpoint(self):
-        root=Path(__file__).parents[2];cp=root/"results/final/gemini-run-20260915-02.json.checkpoint";manifest=root/"results/final/gemini-run-20260915-02.audit.json";audit=json.loads(manifest.read_text())
+        root=Path(__file__).parents[2];cp=original_file("results/final/gemini-run-20260915-02.json.checkpoint");manifest=root/"results/final/gemini-run-20260915-02.audit.json";audit=json.loads(manifest.read_text())
         self.assertEqual(hashlib.sha256(cp.read_bytes()).hexdigest(),audit["checkpoint_sha256"]);self.assertEqual(audit["status"],"aborted");self.assertEqual(audit["stopped_at"],"turn_2_action_validation");self.assertFalse(audit["include_in_research_aggregation"]);self.assertFalse(audit["include_in_dashboard"])
     def test_world_pool_persists_and_distributes_without_creation(self):
         donate={"MIL":self.response("MIL","PROVIDE_RESOURCE","ACCEPT",{"recipient_type":"world_pool","resource":"food","amount":10,"target_country":None}),"FOOD":self.response("FOOD")};world={"food":55,"energy":60,"economy":65,"environment":70,"international_trust":60,"conflict_load":30}
@@ -85,16 +86,16 @@ class AuditFixTests(unittest.TestCase):
         for schema in (coordinator_response_schema(),country_response_schema(("MIL","FOOD")),evaluator_response_schema()):
             self.assertFalse(schema["additionalProperties"]);self.assertEqual(set(schema["required"]),set(schema["properties"]))
     def test_aborted_fifth_pilot_is_immutable_and_excluded(self):
-        root=Path(__file__).parents[2];cp=root/"results/final/gemini-run-20260916-05.json.checkpoint";manifest=root/"results/final/gemini-run-20260916-05.audit.json";audit=json.loads(manifest.read_text())
+        root=Path(__file__).parents[2];cp=original_file("results/final/gemini-run-20260916-05.json.checkpoint");manifest=root/"results/final/gemini-run-20260916-05.audit.json";audit=json.loads(manifest.read_text())
         self.assertEqual(hashlib.sha256(cp.read_bytes()).hexdigest(),audit["checkpoint_sha256"]);self.assertEqual(audit["status"],"aborted");self.assertFalse(audit["include_in_research_aggregation"]);self.assertFalse(audit["include_in_dashboard"]);self.assertFalse(audit["resume_allowed"]);self.assertNotIn(cp.name,(root/"dashboard_final.html").read_text())
     def test_rejected_third_pilot_is_immutable_and_excluded(self):
-        root=Path(__file__).parents[2];result=root/"results/final/gemini-run-20260915-03.json";manifest=root/"results/final/gemini-run-20260915-03.audit.json";audit=json.loads(manifest.read_text())
+        root=Path(__file__).parents[2];result=original_file("results/final/gemini-run-20260915-03.json");manifest=root/"results/final/gemini-run-20260915-03.audit.json";audit=json.loads(manifest.read_text())
         self.assertEqual(hashlib.sha256(result.read_bytes()).hexdigest(),audit["result_sha256"]);self.assertEqual(audit["status"],"rejected");self.assertFalse(audit["include_in_research_aggregation"]);self.assertFalse(audit["include_in_dashboard"]);self.assertNotIn(result,eligible_result_paths(result.parent));self.assertNotIn(result.name,(root/"dashboard_final.html").read_text())
     def test_target_country_is_required_by_sdk_schema(self):
         schema=country_response_schema(("MIL","FOOD"));params=schema["properties"]["action"]["properties"]["parameters"]
         self.assertIn("target_country",params["required"]);self.assertEqual(params["properties"]["target_country"]["type"],["string","null"])
     def test_aborted_fourth_pilot_is_immutable_and_excluded(self):
-        root=Path(__file__).parents[2];cp=root/"results/final/gemini-run-20260915-04.json.checkpoint";manifest=root/"results/final/gemini-run-20260915-04.audit.json";audit=json.loads(manifest.read_text())
+        root=Path(__file__).parents[2];cp=original_file("results/final/gemini-run-20260915-04.json.checkpoint");manifest=root/"results/final/gemini-run-20260915-04.audit.json";audit=json.loads(manifest.read_text())
         self.assertEqual(hashlib.sha256(cp.read_bytes()).hexdigest(),audit["checkpoint_sha256"]);self.assertEqual(audit["status"],"aborted");self.assertFalse(audit["include_in_research_aggregation"]);self.assertFalse(audit["include_in_dashboard"]);self.assertNotIn(cp.name,(root/"dashboard_final.html").read_text())
     def test_phase2_network_moves_resources_and_supply_stop_persists(self):
         network=ResourceNetwork(1,(SupplyLink("mil-food","MIL","FOOD","food",10,100,100,True),),{},("food",))

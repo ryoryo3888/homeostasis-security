@@ -4,6 +4,8 @@ No live client factory, secret loading, or paid execution entry point exists.
 The journal is a conservative POSIX/SQLite attempt ledger: an interrupted or
 failed attempt blocks later requests until an explicit new protocol is chosen.
 """
+from prompt_interface.audit import require_private_path
+from prompt_interface import private_text
 from copy import deepcopy
 from contextlib import closing
 import json
@@ -15,16 +17,7 @@ from .autonomous import INITIATIVE_RESPONSE
 from .choices import ensure, check, TechnicalFailure
 from .contracts import canonical, digest, ID
 
-SYSTEM_INSTRUCTION = '''あなたは合成世界の独立した一国家です。requestのstate_idだけについて判断します。
-観測、在庫、需要、生産、資源依存、輸送制約を踏まえ、自国の必須機能と意思決定の余地、他国と世界への影響を検討してください。
-協力、拒否、条件付き取引、不作為のいずれも予定されていません。強硬・慎重・協力・自立をあらかじめ善悪に分類しません。
-initiativeでは自国が所有するopportunityを選び、数量、最低成立量、部分履行、成立条件を自ら提案できます。
-他国の提案を予想して成立したと扱わず、他国の同意を作らないでください。空のinitiativesも有効です。
-未実装の行動や新しい法則の提案はextension_requestsに記録できますが、そのTURNに実行されたとは扱いません。
-consentでは提示された実際の取引だけについて受諾・拒否を判断します。ここで新しい取引や条件を密かに書き加えてはいけません。
-経路や画像の装飾を実流量と解釈せず、回復・危機・協力の結末を予定しません。世界の状態を直接書き換えてはいけません。
-指定されたJSONだけを返し、request_digestとstate_idを正確に返してください。理由は公開用の簡潔な説明とし、内部推論は出力しないでください。
-'''
+SYSTEM_INSTRUCTION = private_text('homeostasis_v3/gemini_preflight.py:18:21')
 
 
 class AttemptJournal:
@@ -34,7 +27,7 @@ class AttemptJournal:
     They are SDK-decoded evidence, not original HTTP bytes or research results.
     """
     def __init__(self, path, *, configuration):
-        self.path=Path(path); self.path.parent.mkdir(parents=True,exist_ok=True)
+        self.path=require_private_path(path); self.path.parent.mkdir(parents=True,exist_ok=True)
         self.configuration=json.loads(canonical(configuration))
         self.configuration_hash=digest(self.configuration)
         with closing(self._connect()) as db, db:

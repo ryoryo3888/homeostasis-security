@@ -1,4 +1,6 @@
 """Concurrent resumes must not dispatch the same Agent decision twice."""
+from prompt_interface.audit import private_checkpoint, private_receipts
+from prompt_interface import configuration_path
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 import os
@@ -32,7 +34,7 @@ class ExecutionLockTests(unittest.TestCase):
                 raise KeyboardInterrupt('synthetic boundary stop')
         with patch.object(runner, '_checkpoint', side_effect=stop):
             with self.assertRaises(KeyboardInterrupt): runner.run_live(self.client(), self.output, 1, 7)
-        before = self.output.with_suffix('.json.checkpoint').read_bytes()
+        before = private_checkpoint(self.output).read_bytes()
         prepare = ResponseReceipts.prepare
         ready, release = threading.Event(), threading.Event()
         def pause_owner(store, **kwargs):
@@ -47,7 +49,7 @@ class ExecutionLockTests(unittest.TestCase):
                 with self.assertRaisesRegex(FileExistsError, 'execution already active'):
                     runner.run_live(second, self.output, 1, 7, True)
                 self.assertEqual(second.models.payloads, [])
-                self.assertEqual(self.output.with_suffix('.json.checkpoint').read_bytes(), before)
+                self.assertEqual(private_checkpoint(self.output).read_bytes(), before)
                 self.assertEqual(first.models.payloads, [])
             finally: release.set()
             result = future.result(timeout=15)

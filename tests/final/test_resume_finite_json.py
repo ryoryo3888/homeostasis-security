@@ -1,4 +1,6 @@
 """Non-finite checkpoint values must stop before another model call or publish."""
+from prompt_interface.audit import private_checkpoint, private_receipts
+from prompt_interface import configuration_path
 from contextlib import redirect_stdout
 import io
 import json
@@ -17,7 +19,8 @@ class ResumeFiniteJsonTests(unittest.TestCase):
     def setUp(self):
         temporary = tempfile.TemporaryDirectory(); self.addCleanup(temporary.cleanup)
         self.output = Path(temporary.name) / 'synthetic.json'
-        self.path = self.output.with_suffix('.json.checkpoint')
+        self.path = private_checkpoint(self.output)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
         self.params = dict(runs=1, seed=7, turn_count=2, model='test-model', country_ids=('A',))
 
     def test_all_nonfinite_tokens_are_rejected_in_completed_and_active_records(self):

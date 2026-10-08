@@ -1,4 +1,6 @@
 """JSON booleans and numeric types must not substitute for saved evidence."""
+from prompt_interface.audit import private_checkpoint, private_receipts
+from prompt_interface import configuration_path
 from copy import deepcopy
 from contextlib import redirect_stdout
 import io
@@ -18,7 +20,8 @@ class ResumeJsonTypeTests(unittest.TestCase):
     def setUp(self):
         temporary = tempfile.TemporaryDirectory(); self.addCleanup(temporary.cleanup)
         self.output = Path(temporary.name) / 'synthetic.json'
-        self.path = self.output.with_suffix('.json.checkpoint')
+        self.path = private_checkpoint(self.output)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
         self.params = dict(runs=1, seed=7, turn_count=2, model='test-model', country_ids=('A',))
 
     def fixture(self):

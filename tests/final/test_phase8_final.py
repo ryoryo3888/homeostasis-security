@@ -1,3 +1,4 @@
+from prompt_interface import original_file
 from tools.visual_baseline import protected_bytes
 import hashlib,json,subprocess,unittest
 from pathlib import Path
@@ -82,7 +83,7 @@ class Phase8Tests(unittest.TestCase):
             if name.startswith('__pycache__/'):folder='legacy-bytecode'
             self.assertEqual(item['path'],f'archive/{folder}/{Path(name).name}')
             self.assertFalse((ROOT/name).exists())
-            path=ROOT/item['path']
+            path=original_file(item['path'])
             self.assertFalse(path.is_symlink())
             original=subprocess.check_output(['git','show',base+':'+name],cwd=ROOT)
             self.assertEqual(path.read_bytes(),original,name)

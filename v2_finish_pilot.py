@@ -4,6 +4,7 @@ Only the remaining three rounds are generated. Prior confirmed spend plus all
 new reservations must stay within the originally approved $0.95328 allowance.
 """
 from __future__ import annotations
+from prompt_interface import private_text
 
 import argparse
 import base64
@@ -33,8 +34,8 @@ def sources():
 
 
 def wire_request(request, manifest):
-    return {"contents": [{"parts": [{"text": request["kwargs"]["contents"]}], "role": "user"}],
-            "systemInstruction": {"parts": [{"text": manifest["system_instruction"]}], "role": "user"},
+    return {"contents": [{"parts": [{"text": request["kwargs"]["contents"]}], "role": private_text('v2_finish_pilot.py:36:86')}],
+            "systemInstruction": {"parts": [{"text": manifest["system_instruction"]}], "role": private_text('v2_finish_pilot.py:37:95')},
             "generationConfig": {"responseMimeType": "application/json", "maxOutputTokens": pilot.OUTPUT_LIMIT}}
 
 

@@ -4,6 +4,7 @@ An injected HTTP transport runs the same SDK path without credentials/network
 in tests. Live execution requires an exact prepared protocol digest.
 """
 from __future__ import annotations
+from prompt_interface import private_text
 
 import base64
 from datetime import date
@@ -68,8 +69,8 @@ def price(settings, input_tokens, output_tokens):
 
 
 def request_body(raw, settings):
-    return {'contents': [{'parts': [{'text': raw}], 'role': 'user'}],
-            'systemInstruction': {'parts': [{'text': SYSTEM_INSTRUCTION}], 'role': 'user'},
+    return {'contents': [{'parts': [{'text': raw}], 'role': private_text('homeostasis_v4/observation_run.py:71:60')}],
+            'systemInstruction': {'parts': [{'text': SYSTEM_INSTRUCTION}], 'role': private_text('homeostasis_v4/observation_run.py:72:83')},
             'generationConfig': {'responseMimeType': 'application/json',
                 'maxOutputTokens': settings['max_output_tokens_including_thoughts']}}
 

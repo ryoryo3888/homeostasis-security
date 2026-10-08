@@ -1,3 +1,4 @@
+from prompt_interface import original_file
 import hashlib,json,unittest
 from pathlib import Path
 
@@ -41,7 +42,7 @@ class DecisionDiversityTests(unittest.TestCase):
         choices=feasible_actions("A",states,{"food":100},network,{})
         self.assertFalse([x for x in choices if x["recipient_type"]=="world_pool" and x["resource"]=="food"])
     def test_rejected_eighth_pilot_is_immutable_and_excluded(self):
-        root=Path(__file__).parents[2];result=root/"results/final/gemini-run-20260916-08.json";manifest=root/"results/final/gemini-run-20260916-08.audit.json";audit=json.loads(manifest.read_text())
+        root=Path(__file__).parents[2];result=original_file("results/final/gemini-run-20260916-08.json");manifest=root/"results/final/gemini-run-20260916-08.audit.json";audit=json.loads(manifest.read_text())
         self.assertEqual(hashlib.sha256(result.read_bytes()).hexdigest(),audit["result_sha256"]);self.assertEqual(audit["status"],"rejected");self.assertFalse(audit["include_in_research_aggregation"]);self.assertFalse(audit["include_in_dashboard"]);self.assertFalse(pilot_is_eligible(result,manifest))
 
 if __name__=="__main__":unittest.main()

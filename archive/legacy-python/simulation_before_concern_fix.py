@@ -1,3 +1,4 @@
+from prompt_interface import private_value, private_text
 from dataclasses import dataclass, field
 from getpass import getpass
 from typing import Dict, List
@@ -25,29 +26,18 @@ class Agent:
     memory: List[str] = field(default_factory=list)
 
     def context(self) -> str:
-        relationships_text = "\n".join(
-            f"- {country}: {status}"
+        relationships_text = private_text('context:archive/legacy-python/simulation_before_concern_fix.py:29:29').join(
+            f"{private_text('context:archive/legacy-python/simulation_before_concern_fix.py:30:12:0')}{country}{private_text('context:archive/legacy-python/simulation_before_concern_fix.py:30:12:2')}{status}"
             for country, status in self.relationships.items()
         )
 
         memory_text = (
-            "\n".join(f"- {item}" for item in self.memory)
+            private_text('context:archive/legacy-python/simulation_before_concern_fix.py:35:12').join(f"{private_text('context:archive/legacy-python/simulation_before_concern_fix.py:35:22:0')}{item}" for item in self.memory)
             if self.memory
-            else "- まだ記憶はありません。"
+            else private_text('context:archive/legacy-python/simulation_before_concern_fix.py:37:17')
         )
 
-        return f"""
-国家名: {self.name}
-
-最優先目標:
-{self.goal}
-
-他国との関係:
-{relationships_text}
-
-これまでの記憶:
-{memory_text}
-""".strip()
+        return f"{private_text('context:archive/legacy-python/simulation_before_concern_fix.py:40:15:0')}{self.name}{private_text('context:archive/legacy-python/simulation_before_concern_fix.py:40:15:2')}{self.goal}{private_text('context:archive/legacy-python/simulation_before_concern_fix.py:40:15:4')}{relationships_text}{private_text('context:archive/legacy-python/simulation_before_concern_fix.py:40:15:6')}{memory_text}{private_text('context:archive/legacy-python/simulation_before_concern_fix.py:40:15:8')}".strip()
 
 
 def call_agent(
@@ -56,51 +46,7 @@ def call_agent(
     world_state: str,
     communication_context: str,
 ) -> str:
-    prompt = f"""
-あなたは架空国家 {agent.name} の意思決定Agentです。
-
-重要:
-あなたは自国について与えられた情報と、
-両国から観測可能な世界状況だけを使って判断してください。
-
-相手国の本当の目的・内部の判断理由・非公開情報・記憶は見えません。
-分からないことは推測として扱い、事実と混同しないでください。
-相手の行動には複数の可能な意図があることを考慮してください。
-
-====================
-あなた自身の状態
-====================
-{agent.context()}
-
-====================
-現在観測できる世界状況
-====================
-{world_state}
-
-====================
-利用可能な通信環境
-====================
-{communication_context}
-
-通信手段が存在する場合も、相手の本音が自動的に分かるわけではありません。
-必要なら、その通信手段を使って相手へ確認する行動を選ぶことができます。
-
-次に自国が取る行動を1つだけ決めてください。
-
-必ず次の形式で答えてください。
-
-現在認識:
-行動:
-理由:
-
-理由には、
-・現在何を観測しているか
-・相手の意図をどう推測しているか
-・どんな誤認リスクがあるか
-・なぜその行動を選ぶのか
-・次に何が起こる可能性があるか
-を自然な文章で含めてください。
-""".strip()
+    prompt = f"{private_text('archive/legacy-python/simulation_before_concern_fix.py:59:13:0')}{agent.name}{private_text('archive/legacy-python/simulation_before_concern_fix.py:59:13:2')}{agent.context()}{private_text('archive/legacy-python/simulation_before_concern_fix.py:59:13:4')}{world_state}{private_text('archive/legacy-python/simulation_before_concern_fix.py:59:13:6')}{communication_context}{private_text('archive/legacy-python/simulation_before_concern_fix.py:59:13:8')}".strip()
 
     while True:
         try:
@@ -353,18 +299,18 @@ def main():
         client = genai.Client(api_key=api_key)
 
     country_a = Agent(
-        name="A国",
-        goal="国家の安全と主権を守りながら、不要な武力衝突を避けること。",
+        name=private_text('context:archive/legacy-python/simulation_before_concern_fix.py:313:13'),
+        goal=private_text('context:archive/legacy-python/simulation_before_concern_fix.py:314:13'),
         relationships={
-            "B国": "中立",
+            private_text('context:archive/legacy-python/simulation_before_concern_fix.py:316:12'): private_text('context:archive/legacy-python/simulation_before_concern_fix.py:316:20'),
         },
     )
 
     country_b = Agent(
-        name="B国",
-        goal="国家の安全と主権を守りながら、自国に対する脅威を早期に察知すること。",
+        name=private_text('context:archive/legacy-python/simulation_before_concern_fix.py:321:13'),
+        goal=private_text('context:archive/legacy-python/simulation_before_concern_fix.py:322:13'),
         relationships={
-            "A国": "中立",
+            private_text('context:archive/legacy-python/simulation_before_concern_fix.py:324:12'): private_text('context:archive/legacy-python/simulation_before_concern_fix.py:324:20'),
         },
     )
 

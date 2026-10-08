@@ -1,3 +1,4 @@
+from prompt_interface import original_file
 import copy,hashlib,json,math,random,unittest
 from pathlib import Path
 
@@ -38,7 +39,7 @@ class AtomicSettlementTests(unittest.TestCase):
             before=math.fsum(s["resources"]["food"] for s in states.values())+pool["food"];after=math.fsum(s["resources"]["food"] for s in one["country_states"].values())+one["world_pool"]["food"]
             self.assertAlmostEqual(before,after,places=8)
     def test_aborted_seventh_pilot_is_immutable_and_excluded(self):
-        root=Path(__file__).parents[2];cp=root/"results/final/gemini-run-20260916-07.json.checkpoint";manifest=root/"results/final/gemini-run-20260916-07.audit.json";audit=json.loads(manifest.read_text())
+        root=Path(__file__).parents[2];cp=original_file("results/final/gemini-run-20260916-07.json.checkpoint");manifest=root/"results/final/gemini-run-20260916-07.audit.json";audit=json.loads(manifest.read_text())
         self.assertEqual(hashlib.sha256(cp.read_bytes()).hexdigest(),audit["checkpoint_sha256"]);self.assertEqual(audit["status"],"aborted");self.assertFalse(audit["include_in_research_aggregation"]);self.assertFalse(audit["include_in_dashboard"]);self.assertFalse(audit["resume_allowed"]);self.assertFalse(pilot_is_eligible(cp,manifest));self.assertNotIn(cp,eligible_result_paths(cp.parent))
 
 if __name__=="__main__":unittest.main()

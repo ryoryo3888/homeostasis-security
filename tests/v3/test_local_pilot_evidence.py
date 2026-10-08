@@ -1,4 +1,5 @@
 """The published failure remains a failure, with replayable unmodified evidence."""
+from prompt_interface import original_file
 import base64
 from collections import Counter
 import json
@@ -11,7 +12,7 @@ from homeostasis_v4.local_observation import replay
 from tools.secret_scan import has_secret
 
 ROOT = Path(__file__).resolve().parents[2]
-RUN = ROOT / 'results/local-v4/local-3630a0e5-68c9-4ea8-b17f-aa3a0c035585'
+RUN = original_file('results/local-v4/local-3630a0e5-68c9-4ea8-b17f-aa3a0c035585/manifest.json').parent
 PIN = 'ed43c801793f83af4223f067841e27c7bbbfcbf9610831ba32d932e891869314'
 
 

@@ -3,6 +3,7 @@
 Integrity is not provider authentication. An absent terminal record is an
 unfinalized attempt, never a successful run. No model or network is used here.
 """
+from prompt_interface.audit import require_private_path
 from datetime import datetime, timezone
 import hashlib
 from pathlib import Path
@@ -125,7 +126,7 @@ class EvidenceRun:
     def __init__(self, directory, manifest):
         Draft202012Validator(MANIFEST).validate(manifest)
         _time(manifest['started_at'])
-        self.root = Path(directory)
+        self.root = require_private_path(directory)
         self.root.mkdir(mode=0o700)
         (self.root / 'RAW').mkdir(mode=0o700)
         (self.root / 'DERIVED').mkdir(mode=0o700)

@@ -1,4 +1,6 @@
 """Technical synthetic fixtures only; no external API or research outcomes."""
+from prompt_interface.audit import private_checkpoint, private_receipts
+from prompt_interface import configuration_path
 from copy import deepcopy
 import hashlib
 import importlib.util
@@ -301,7 +303,7 @@ class RunnerResumeIntegrationTests(unittest.TestCase):
         with patch.object(self.runner, '_checkpoint', side_effect=stop_at_boundary):
             with self.assertRaises(KeyboardInterrupt):
                 self.runner.run_live(self.client(), self.output, 1, 7)
-        checkpoint = self.output.with_suffix('.json.checkpoint')
+        checkpoint = private_checkpoint(self.output)
         before = checkpoint.read_bytes()
         receipts = ResponseReceipts.for_output(self.output)
         path = next(receipts.directory.glob('*.json'))
@@ -327,7 +329,7 @@ class RunnerResumeIntegrationTests(unittest.TestCase):
         with patch.object(self.runner, '_checkpoint', side_effect=stop_in_next_turn):
             with self.assertRaises(KeyboardInterrupt):
                 self.runner.run_live(self.client(), self.output, 1, 7)
-        cp = self.output.with_suffix('.json.checkpoint'); before = cp.read_bytes()
+        cp = private_checkpoint(self.output); before = cp.read_bytes()
         second = self.client()
         with self.assertRaisesRegex(ValueError, 'UNCOMMITTED_DECISION'):
             self.runner.run_live(second, self.output, 1, 7, True)
@@ -344,7 +346,7 @@ class RunnerResumeIntegrationTests(unittest.TestCase):
         with patch.object(self.runner, '_checkpoint', side_effect=stop_at_boundary):
             with self.assertRaises(KeyboardInterrupt):
                 self.runner.run_live(self.client(), self.output, 1, 7)
-        cp = self.output.with_suffix('.json.checkpoint')
+        cp = private_checkpoint(self.output)
         saved = json.loads(cp.read_text())
         for kind in ('memory', 'history'):
             with self.subTest(kind=kind):
@@ -393,7 +395,7 @@ class RunnerResumeIntegrationTests(unittest.TestCase):
         with patch.object(self.runner, '_checkpoint', side_effect=stop_at_boundary):
             with self.assertRaises(KeyboardInterrupt):
                 self.runner.run_live(self.client(), self.output, 1, 7)
-        cp = self.output.with_suffix('.json.checkpoint')
+        cp = private_checkpoint(self.output)
         data = json.loads(cp.read_text())
         for entry in data['active_run']['call_audit']:
             entry['schema_version'] = 2

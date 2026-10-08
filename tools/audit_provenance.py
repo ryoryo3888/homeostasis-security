@@ -7,6 +7,9 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from prompt_interface import configuration_path
 
 ROOT = Path(__file__).resolve().parents[1]
 SYSTEMS = {
@@ -59,8 +62,9 @@ def describe_file(root, relative):
         raise ValueError('unsafe evidence path')
     if not path.resolve().is_relative_to(root) or any(p.is_symlink() for p in (path, *path.parents) if p != root and p.is_relative_to(root)):
         raise ValueError('symlink evidence rejected')
-    raw = path.read_bytes()
-    return {'path': relative, 'sha256': hashlib.sha256(raw).hexdigest(), 'bytes': len(raw)}
+    actual = configuration_path(path)
+    raw = actual.read_bytes()
+    return {'path': relative, 'sha256': hashlib.sha256(raw).hexdigest(), 'bytes': len(raw), **({'storage': 'private'} if actual != path else {})}
 
 
 def build_report(root=ROOT):

@@ -4,6 +4,7 @@ Ollama 0.34.2 is pinned for truncate=false and shift=false. Thinking uses chat
 because generate applies the output grammar before reasoning (Ollama #17544).
 This adapter never starts servers, pulls models or loads secrets.
 """
+from prompt_interface import private_text
 import base64
 from copy import deepcopy
 import hashlib
@@ -204,8 +205,8 @@ def exchange_request(settings, raw, index):
     ensure(not config['think'] or endpoint == '/api/chat', 'LOCAL_THINKING_REQUIRES_CHAT')
     body = {**config, 'options': {**config['options'], 'seed': settings['seed'] + index}}
     if endpoint == '/api/chat':
-        body['messages'] = [{'role': 'system', 'content': SYSTEM_INSTRUCTION},
-                            {'role': 'user', 'content': raw}]
+        body['messages'] = [{'role': private_text('homeostasis_v4/local_observation.py:207:37'), 'content': SYSTEM_INSTRUCTION},
+                            {'role': private_text('homeostasis_v4/local_observation.py:208:37'), 'content': raw}]
     else:
         body.update(system=SYSTEM_INSTRUCTION, prompt=raw)
     return endpoint, body

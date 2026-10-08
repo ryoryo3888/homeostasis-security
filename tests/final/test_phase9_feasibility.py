@@ -1,3 +1,4 @@
+from prompt_interface import original_file
 import copy,hashlib,json,random,unittest
 from pathlib import Path
 
@@ -58,7 +59,7 @@ class FeasibilityTests(unittest.TestCase):
         with self.assertRaises(ValueError):apply_structured_actions(self.states,{"A":answer,"B":reject},{"food":50,"energy":50,"economy":50,"environment":50,"international_trust":50,"conflict_load":50},0,world_pool={},resource_network=self.network)
         self.assertEqual(self.states,before)
     def test_aborted_sixth_pilot_is_immutable_and_excluded(self):
-        root=Path(__file__).parents[2];cp=root/"results/final/gemini-run-20260916-06.json.checkpoint";manifest=root/"results/final/gemini-run-20260916-06.audit.json";audit=json.loads(manifest.read_text())
+        root=Path(__file__).parents[2];cp=original_file("results/final/gemini-run-20260916-06.json.checkpoint");manifest=root/"results/final/gemini-run-20260916-06.audit.json";audit=json.loads(manifest.read_text())
         self.assertEqual(hashlib.sha256(cp.read_bytes()).hexdigest(),audit["checkpoint_sha256"]);self.assertEqual(audit["status"],"aborted");self.assertFalse(audit["include_in_research_aggregation"]);self.assertFalse(audit["include_in_dashboard"]);self.assertFalse(audit["resume_allowed"]);self.assertFalse(pilot_is_eligible(cp,manifest))
 
 if __name__=="__main__":unittest.main()

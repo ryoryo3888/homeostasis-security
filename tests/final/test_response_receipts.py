@@ -1,4 +1,6 @@
 """Synthetic SDK replies only; no network or model decisions are generated."""
+from prompt_interface.audit import private_checkpoint, private_receipts
+from prompt_interface import configuration_path
 from copy import deepcopy
 import json
 from pathlib import Path
@@ -149,7 +151,7 @@ class ResponseReceiptTests(unittest.TestCase):
         generate = Mock(return_value=response(' {"unreadable": '))
         client = SimpleNamespace(models=SimpleNamespace(generate_content=generate))
         with self.assertRaises(RuntimeError): runner.run_live(client, destination, 1, 7)
-        checkpoint = destination.with_suffix(".json.checkpoint")
+        checkpoint = private_checkpoint(destination)
         saved = json.loads(checkpoint.read_bytes())
         self.assertEqual(saved["active_run"]["completed_turn"], 0)
         self.assertEqual(saved["active_run"]["turns"], [])

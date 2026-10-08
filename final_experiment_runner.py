@@ -10,6 +10,7 @@ import argparse,json,os,tempfile,statistics
 from getpass import getpass
 from pathlib import Path
 from response_receipts import ResponseReceipts
+from prompt_interface.audit import private_checkpoint, public_result, preserve, reject_legacy_checkpoint
 from homeostasis_core.emergent_dynamics import (
     AFFECTED_COUNTRY, INITIAL_EVENT, initial_damage_from_scenario,
     initial_world_from_scenario, reconstruction_step,
@@ -78,13 +79,15 @@ def _recovery_turn(turn_rows):
     return None
 
 def run_live(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
+    reject_legacy_checkpoint(output)
     if os.path.lexists(output):raise FileExistsError("output already exists")
     with exclusive_execution(output):
         return _run_live_locked(client,output,runs,seed,resume)
 
 def _run_live_locked(client,output:Path,runs:int,seed:int,resume:bool=False)->dict:
+    reject_legacy_checkpoint(output)
     if os.path.lexists(output):raise FileExistsError("output already exists")
-    estimate(runs);checkpoint=output.with_suffix(output.suffix+".checkpoint");completed=[];active=None
+    estimate(runs);checkpoint=private_checkpoint(output);completed=[];active=None
     scenario=_load_scenario()
     identity=_execution_identity(runs,seed)
     if resume:
@@ -197,7 +200,8 @@ def _run_live_locked(client,output:Path,runs:int,seed:int,resume:bool=False)->di
              "recovery_rate":100*sum(x["recovered"] for x in rows)/len(rows),
              "sovereignty_maintenance_rate":statistics.fmean(sovereignty),
              "average_recovery_turns":statistics.fmean(recovered_turns) if recovered_turns else None}
-    save_result_atomic(ResearchResult(metadata,rows,summary),output)
+    preserve({"metadata":metadata,"rows":rows,"summary":summary}, "completed")
+    save_result_atomic(ResearchResult(metadata,tuple(public_result(list(rows))),summary),output)
     checkpoint.unlink(missing_ok=True);return {"metadata":metadata,"runs":completed}
 
 def parse_args():
@@ -211,8 +215,11 @@ def main():
     if not a.execute:return
     if a.confirm!="YES":raise SystemExit("本番実行には --execute --confirm YES が必要です。APIは呼び出していません。")
     if os.path.lexists(a.output):raise SystemExit("出力先が存在します。APIは呼び出していません。")
+    reject_legacy_checkpoint(a.output)
+    checkpoint = private_checkpoint(a.output)
+    if not a.resume and checkpoint.exists():raise FileExistsError("checkpoint exists; use --resume")
     if a.resume:
-        read_resumable_checkpoint(a.output.with_suffix(a.output.suffix+".checkpoint"),
+        read_resumable_checkpoint(checkpoint,
                                   runs=runs,seed=a.seed,turn_count=TURNS,
                                   model=MODEL_NAME,country_ids=COUNTRIES,schema_version=SCHEMA_VERSION,
                                   execution_identity=_execution_identity(runs,a.seed))

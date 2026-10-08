@@ -1,3 +1,4 @@
+from prompt_interface import private_text, private_value
 from dataclasses import dataclass, field
 from getpass import getpass
 from typing import Dict, List
@@ -85,18 +86,18 @@ def main():
     client = genai.Client(api_key=api_key)
 
     country_a = Agent(
-        name="A国",
-        goal="国家の安全と主権を守りながら、不要な武力衝突を避けること。",
+        name=private_text('context:archive/legacy-python/simulation_backup.py:88:13'),
+        goal=private_text('context:archive/legacy-python/simulation_backup.py:89:13'),
         relationships={
-            "B国": "中立",
+            private_text('context:archive/legacy-python/simulation_backup.py:91:12'): private_text('context:archive/legacy-python/simulation_backup.py:91:20'),
         },
     )
 
     country_b = Agent(
-        name="B国",
-        goal="国家の安全と主権を守りながら、自国に対する脅威を早期に察知すること。",
+        name=private_text('context:archive/legacy-python/simulation_backup.py:96:13'),
+        goal=private_text('context:archive/legacy-python/simulation_backup.py:97:13'),
         relationships={
-            "A国": "中立",
+            private_text('context:archive/legacy-python/simulation_backup.py:99:12'): private_text('context:archive/legacy-python/simulation_backup.py:99:20'),
         },
     )
 

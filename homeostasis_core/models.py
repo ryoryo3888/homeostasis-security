@@ -1,6 +1,7 @@
 """Serializable domain models with no fixed country or scenario assumptions."""
 
 from __future__ import annotations
+from prompt_interface import configuration_path
 
 from dataclasses import dataclass, field, fields, is_dataclass
 import json
@@ -105,7 +106,7 @@ def _exact_keys(
 
 def _read_json_object(path: str | Path) -> Mapping[str, Any]:
     try:
-        with Path(path).open("r", encoding="utf-8") as stream:
+        with configuration_path(path).open("r", encoding="utf-8") as stream:
             data = json.load(stream)
     except (OSError, json.JSONDecodeError) as error:
         raise ValueError(f"cannot load JSON configuration: {path}") from error

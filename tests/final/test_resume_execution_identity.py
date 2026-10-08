@@ -1,4 +1,6 @@
 """A resumed worldline cannot silently cross different execution conditions."""
+from prompt_interface.audit import private_checkpoint, private_receipts
+from prompt_interface import configuration_path
 from contextlib import ExitStack, redirect_stdout
 import io
 import json
@@ -20,7 +22,7 @@ class ResumeExecutionIdentityTests(unittest.TestCase):
         temporary = tempfile.TemporaryDirectory(); self.addCleanup(temporary.cleanup)
         self.root = Path(temporary.name)
         self.output = self.root / 'synthetic.json'
-        self.checkpoint = self.output.with_suffix('.json.checkpoint')
+        self.checkpoint = private_checkpoint(self.output)
         stack = ExitStack(); self.addCleanup(stack.close)
         stack.enter_context(patch.object(socket, 'create_connection', side_effect=AssertionError('NO_NETWORK')))
         source = runner.SOURCE_ROOT
@@ -35,7 +37,7 @@ class ResumeExecutionIdentityTests(unittest.TestCase):
         for name in ('SCENARIO_PATH', 'COUNTRY_CONFIGURATION_PATH', 'RESOURCE_NETWORK_PATH'):
             original = getattr(runner, name)
             copy = self.root / original.name
-            shutil.copyfile(original, copy); self.inputs.append(copy)
+            shutil.copyfile(configuration_path(original), copy); self.inputs.append(copy)
             stack.enter_context(patch.object(runner, name, copy))
 
     def client(self):
@@ -54,7 +56,7 @@ class ResumeExecutionIdentityTests(unittest.TestCase):
 
     def assert_refused(self, code='EXECUTION_IDENTITY_MISMATCH', *, runs=1):
         before = self.checkpoint.read_bytes()
-        receipts = {path: path.read_bytes() for path in (self.root / '.artifacts').rglob('*.json') if path.is_file()}
+        receipts = {path: path.read_bytes() for path in private_receipts(self.output).rglob('*.json') if path.is_file()}
         client = self.client()
         with self.assertRaisesRegex(ValueError, code): runner.run_live(client, self.output, runs, 7, True)
         self.assertEqual(client.models.payloads, [])
@@ -66,7 +68,7 @@ class ResumeExecutionIdentityTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, code): runner.main()
         key.assert_not_called(); create.assert_not_called()
         self.assertEqual(self.checkpoint.read_bytes(), before)
-        self.assertEqual({path: path.read_bytes() for path in (self.root / '.artifacts').rglob('*.json') if path.is_file()}, receipts)
+        self.assertEqual({path: path.read_bytes() for path in private_receipts(self.output).rglob('*.json') if path.is_file()}, receipts)
         self.assertFalse(self.output.exists())
 
     def test_each_changed_input_stops_before_new_call(self):

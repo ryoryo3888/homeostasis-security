@@ -1,0 +1,16 @@
+{
+  "run_id": null,
+  "turn": null,
+  "model": null,
+  "schema_version": null,
+  "seed": null,
+  "commit_sha": null,
+  "timestamp": null,
+  "artifact_sha256": "27b055d8784536ed2fc9ae1230bc25a165fce0e6932ef317d4a3051a249df25e",
+  "source_path": "results/evidence/raw/v1/model-runs/20260919T072326653124Z-v1/engine/result.json",
+  "status": "full_record_retained_privately",
+  "fingerprint_scope": "artifact_sha256: exact original file bytes; input fingerprints: explicitly identified saved input only; null: not established",
+  "request_sha256": null,
+  "prompt_sha256": null,
+  "observation_sha256": null
+}

@@ -3,6 +3,7 @@
 All people and provider responses below are synthetic test fixtures. No API
 credential is loaded, and every HTTP request is handled by MockTransport.
 """
+from prompt_interface import original_file
 import base64
 import copy
 from decimal import Decimal
@@ -137,7 +138,7 @@ class PersonaGenerationTests(unittest.TestCase):
     def test_approved_input_exact_and_model_configuration_unchanged(self):
         request = build_request()
         text_parts = [part['text'] for content in request['contents'] for part in content['parts'] if 'text' in part]
-        self.assertEqual(text_parts, [(ROOT / 'docs/design/v5/LEADER_GENERATION_PROMPT.txt').read_text()])
+        self.assertEqual(text_parts, [original_file('docs/design/v5/LEADER_GENERATION_PROMPT.txt').read_text()])
         config = request['generationConfig']
         self.assertEqual(config['temperature'], 1.0)
         self.assertEqual(config['candidateCount'], 1)

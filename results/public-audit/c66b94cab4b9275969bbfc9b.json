@@ -1,0 +1,16 @@
+{
+  "run_id": null,
+  "turn": null,
+  "model": null,
+  "schema_version": null,
+  "seed": null,
+  "commit_sha": null,
+  "timestamp": null,
+  "artifact_sha256": "fe5cd1f8f5243040ff27e7359d5798c07daf0885b1881bf3e0dd93a584e4a530",
+  "source_path": "results/evidence/raw/v4/free-dialogue/live-observation/agent-000.request.json",
+  "status": "full_record_retained_privately",
+  "fingerprint_scope": "artifact_sha256: exact original file bytes; input fingerprints: explicitly identified saved input only; null: not established",
+  "request_sha256": null,
+  "prompt_sha256": null,
+  "observation_sha256": null
+}

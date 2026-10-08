@@ -5,6 +5,7 @@ possible only through the explicit CLI entry point at the bottom of this file.
 """
 
 from __future__ import annotations
+from prompt_interface import private_value, private_text
 
 import argparse
 from copy import deepcopy
@@ -72,27 +73,27 @@ class AgentSpec:
     def private_context(self) -> str:
         # Historical interests/action lists remain available as provenance;
         # they are not instructions governing a new Agent's judgment.
-        return f"役割: {self.role}"
+        return f"{private_text('context:simulation_v2.py:76:15:0')}{self.role}"
 
 
 AGENTS = {
     "A": AgentSpec(
-        "A",
-        "事件を発生させた国家",
-        ("国家安全保障", "国際的立場", "自国民の保護"),
-        COUNTRY_ACTIONS["A"],
+        private_text('context:simulation_v2.py:81:8'),
+        private_text('context:simulation_v2.py:82:8'),
+        (private_text('context:simulation_v2.py:83:9'), private_text('context:simulation_v2.py:83:31'), private_text('context:simulation_v2.py:83:50')),
+        COUNTRY_ACTIONS[private_text('context:simulation_v2.py:84:24')],
     ),
     "B": AgentSpec(
-        "B",
-        "農地への直接被害を受けた国家",
-        ("食料供給", "民間人保護", "領土と主権"),
-        COUNTRY_ACTIONS["B"],
+        private_text('context:simulation_v2.py:87:8'),
+        private_text('context:simulation_v2.py:88:8'),
+        (private_text('context:simulation_v2.py:89:9'), private_text('context:simulation_v2.py:89:25'), private_text('context:simulation_v2.py:89:44')),
+        COUNTRY_ACTIONS[private_text('context:simulation_v2.py:90:24')],
     ),
     "C": AgentSpec(
-        "C",
-        "食料価格・経済への二次的影響を受ける第三国",
-        ("国内物価", "供給安定", "外交的自律性"),
-        COUNTRY_ACTIONS["C"],
+        private_text('context:simulation_v2.py:93:8'),
+        private_text('context:simulation_v2.py:94:8'),
+        (private_text('context:simulation_v2.py:95:9'), private_text('context:simulation_v2.py:95:25'), private_text('context:simulation_v2.py:95:41')),
+        COUNTRY_ACTIONS[private_text('context:simulation_v2.py:96:24')],
     ),
 }
 
@@ -237,12 +238,7 @@ def call_json(client: Any, prompt: str) -> str:
 
 
 def call_coordinator(client: Any, observation: dict[str, Any]) -> dict[str, str]:
-    prompt = f"""ROLE: COORDINATOR
-あなたは強制権を持たない地球調整機関です。国家へ命令せず、最終判断を上書きしません。
-公開観測: {json.dumps(observation, ensure_ascii=False)}
-何を考え、伝え、試みるかはあなた自身が判断します。
-JSONのみを返す: {{"proposal":"自由な発言。発言しない場合は空文字", "reason":"自分用の記録。空文字でもよい"}}
-"""
+    prompt = f"{private_text('simulation_v2.py:240:13:0')}{json.dumps(observation, ensure_ascii=False)}{private_text('simulation_v2.py:240:13:2')}"
     return parse_coordinator_response(call_json(client, prompt))
 
 
@@ -254,15 +250,7 @@ def call_country(
 ) -> dict[str, str]:
     # This prompt contains only this country's private context plus public facts.
     # It never contains another country's private prompt, reasoning, or decision.
-    prompt = f"""ROLE: COUNTRY {agent.code}
-あなたは{agent.code}国の独立した意思決定Agentです。他Agentの非公開思考は見えません。
-{agent.private_context()}
-公開観測: {json.dumps(observation, ensure_ascii=False)}
-調整機関から届いた発言: {proposal}
-何を考え、伝え、試みるかはあなた自身が判断します。
-JSONのみを返す: {{"observation":"自分の認識", "action":"自由な意図・活動の記述", "proposal_response":"自由な返答", "reason":"自分用の記録"}}
-各欄は自由文です。記述・返答をしない欄は空文字で返せます。
-"""
+    prompt = f"{private_text('simulation_v2.py:257:13:0')}{agent.code}{private_text('simulation_v2.py:257:13:2')}{agent.code}{private_text('simulation_v2.py:257:13:4')}{agent.private_context()}{private_text('simulation_v2.py:257:13:6')}{json.dumps(observation, ensure_ascii=False)}{private_text('simulation_v2.py:257:13:8')}{proposal}{private_text('simulation_v2.py:257:13:10')}"
     return parse_country_response(call_json(client, prompt), agent.code)
 
 
@@ -278,15 +266,7 @@ def call_evaluator(
         code: {"action": result["action"], "proposal_response": result["proposal_response"]}
         for code, result in countries.items()
     }
-    prompt = f"""ROLE: EVALUATOR
-あなたは独立したEvaluatorです。公開された世界状態と行動結果を0〜100で評価します。
-行動前観測: {json.dumps(observation, ensure_ascii=False)}
-調整機関の提案: {json.dumps(proposal, ensure_ascii=False)}
-公開された各国の結果: {json.dumps(public_outcomes, ensure_ascii=False)}
-行動後の農地生産能力喪失: {damage_after_actions}t
-必須数値: {', '.join(EVALUATOR_FIELDS)}
-JSONのみを返す。必須数値に加え、"assessment"へ短い評価を書く。
-"""
+    prompt = f"{private_text('simulation_v2.py:281:13:0')}{json.dumps(observation, ensure_ascii=False)}{private_text('simulation_v2.py:281:13:2')}{json.dumps(proposal, ensure_ascii=False)}{private_text('simulation_v2.py:281:13:4')}{json.dumps(public_outcomes, ensure_ascii=False)}{private_text('simulation_v2.py:281:13:6')}{damage_after_actions}{private_text('simulation_v2.py:281:13:8')}{', '.join(EVALUATOR_FIELDS)}{private_text('simulation_v2.py:281:13:10')}"
     return parse_evaluator_response(call_json(client, prompt))
 
 

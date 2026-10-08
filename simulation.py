@@ -1,3 +1,4 @@
+from prompt_interface import private_value, private_text
 from dataclasses import dataclass, field
 from getpass import getpass
 from typing import Dict, List, Optional
@@ -37,14 +38,14 @@ class LeaderProfile:
     prestige_orientation: float
 
     def context(self) -> str:
-        return "\n".join(
+        return private_text('context:simulation.py:41:15').join(
             [
-                f"- profile_name: {self.name}",
-                f"- threat_sensitivity: {self.threat_sensitivity:.2f}",
-                f"- risk_tolerance: {self.risk_tolerance:.2f}",
-                f"- trust_bias: {self.trust_bias:.2f}",
-                f"- legal_restraint: {self.legal_restraint:.2f}",
-                f"- prestige_orientation: {self.prestige_orientation:.2f}",
+                f"{private_text('context:simulation.py:43:16:0')}{self.name}",
+                f"{private_text('context:simulation.py:44:16:0')}{self.threat_sensitivity:.2f}",
+                f"{private_text('context:simulation.py:45:16:0')}{self.risk_tolerance:.2f}",
+                f"{private_text('context:simulation.py:46:16:0')}{self.trust_bias:.2f}",
+                f"{private_text('context:simulation.py:47:16:0')}{self.legal_restraint:.2f}",
+                f"{private_text('context:simulation.py:48:16:0')}{self.prestige_orientation:.2f}",
             ]
         )
 
@@ -66,13 +67,11 @@ class InternationalLaw:
 
     def context(self) -> str:
         if not self.enabled:
-            return "この実験条件では、共通の国際法制度は存在しません。"
+            return private_text('context:simulation.py:70:19')
 
-        principles_text = "\n".join(f"- {item}" for item in self.principles)
+        principles_text = private_text('context:simulation.py:72:26').join(f"{private_text('context:simulation.py:72:36:0')}{item}" for item in self.principles)
         return (
-            "以下は世界に存在する制度的制約です。行動を技術的に禁止するものではありませんが、"
-            "違反には法的・外交的・評判上の帰結が生じ得ます。\n"
-            f"{principles_text}"
+            f"{private_text('context:simulation.py:74:12:0')}{principles_text}"
         )
 
     def to_dict(self) -> dict:
@@ -101,21 +100,21 @@ class ExternalEvent:
 
 
 CAUTIOUS_DIPLOMAT = LeaderProfile(
-    name="慎重外交型",
-    threat_sensitivity=0.45,
-    risk_tolerance=0.30,
-    trust_bias=0.60,
-    legal_restraint=0.85,
-    prestige_orientation=0.35,
+    name=private_text('context:simulation.py:105:9'),
+    threat_sensitivity=private_value('context:simulation.py:106:23'),
+    risk_tolerance=private_value('context:simulation.py:107:19'),
+    trust_bias=private_value('context:simulation.py:108:15'),
+    legal_restraint=private_value('context:simulation.py:109:20'),
+    prestige_orientation=private_value('context:simulation.py:110:25'),
 )
 
 SECURITY_HARDLINER = LeaderProfile(
-    name="安全保障強硬型",
-    threat_sensitivity=0.80,
-    risk_tolerance=0.65,
-    trust_bias=0.25,
-    legal_restraint=0.55,
-    prestige_orientation=0.80,
+    name=private_text('context:simulation.py:114:9'),
+    threat_sensitivity=private_value('context:simulation.py:115:23'),
+    risk_tolerance=private_value('context:simulation.py:116:19'),
+    trust_bias=private_value('context:simulation.py:117:15'),
+    legal_restraint=private_value('context:simulation.py:118:20'),
+    prestige_orientation=private_value('context:simulation.py:119:25'),
 )
 
 INTERNATIONAL_LAW = InternationalLaw(
@@ -207,37 +206,20 @@ class Agent:
     memory: List[str] = field(default_factory=list)
 
     def context(self) -> str:
-        relationships_text = "\n".join(
-            f"- {country}: {status}"
+        relationships_text = private_text('context:simulation.py:211:29').join(
+            f"{private_text('context:simulation.py:212:12:0')}{country}{private_text('context:simulation.py:212:12:2')}{status}"
             for country, status in self.relationships.items()
         )
 
         memory_text = (
-            "\n".join(f"- {item}" for item in self.memory)
+            private_text('context:simulation.py:217:12').join(f"{private_text('context:simulation.py:217:22:0')}{item}" for item in self.memory)
             if self.memory
-            else "- まだ記憶はありません。"
+            else private_text('context:simulation.py:219:17')
         )
 
-        interests_text = "\n".join(f"- {item}" for item in self.national_interests)
+        interests_text = private_text('context:simulation.py:222:25').join(f"{private_text('context:simulation.py:222:35:0')}{item}" for item in self.national_interests)
 
-        return f"""
-国家名: {self.name}
-
-国家目標:
-{self.goal}
-
-国家利益:
-{interests_text}
-
-リーダー特性（0.0〜1.0の判断傾向であり、行動を固定する規則ではない）:
-{self.leader_profile.context()}
-
-他国との関係:
-{relationships_text}
-
-これまでの記憶:
-{memory_text}
-""".strip()
+        return f"{private_text('context:simulation.py:224:15:0')}{self.name}{private_text('context:simulation.py:224:15:2')}{self.goal}{private_text('context:simulation.py:224:15:4')}{interests_text}{private_text('context:simulation.py:224:15:6')}{self.leader_profile.context()}{private_text('context:simulation.py:224:15:8')}{relationships_text}{private_text('context:simulation.py:224:15:10')}{memory_text}{private_text('context:simulation.py:224:15:12')}".strip()
 
 
 def generate_content_with_retry(client: genai.Client, *, response_recorder=None, **kwargs):
@@ -296,47 +278,7 @@ def call_agent(
     international_law: InternationalLaw,
     response_recorder=None,
 ) -> str:
-    prompt = f"""
-あなたは架空国家 {agent.name} の意思決定Agentです。
-
-あなたは自国について与えられた情報と、観測可能な世界状況だけを使って判断します。
-相手国の内部意図、非公開情報、内部の判断理由、非公開の記憶は見えません。
-
-====================
-あなた自身の状態
-====================
-{agent.context()}
-
-====================
-現在観測できる世界状況
-====================
-{world_state}
-
-====================
-利用可能な通信環境
-====================
-{communication_context}
-
-====================
-国際法上の制度的環境
-====================
-{international_law.context()}
-
-自国の利益、法的制約、安全保障リスク、観測情報、過去の経験、リーダー特性を踏まえ、
-次に自国が取る行動を自由に1つだけ決めてください。
-外交、静観、監視、制裁、軍事展開、威嚇、防衛、攻撃、国際機関への提起など、
-行動の種類は限定されません。特定の結末へ向かう必要もありません。
-
-必ず次の形式で答えてください。
-
-現在認識:
-懸念:
-行動:
-理由:
-
-現在認識と懸念は、あなた自身が実際に持った認識だけを書いてください。
-理由には、観測情報、国家利益、リーダー特性、法的制約のうち、実際に判断へ影響したものを自然な文章で含めてください。
-""".strip()
+    prompt = f"{private_text('simulation.py:299:13:0')}{agent.name}{private_text('simulation.py:299:13:2')}{agent.context()}{private_text('simulation.py:299:13:4')}{world_state}{private_text('simulation.py:299:13:6')}{communication_context}{private_text('simulation.py:299:13:8')}{international_law.context()}{private_text('simulation.py:299:13:10')}".strip()
 
     response = generate_content_with_retry(
         client,
@@ -402,68 +344,7 @@ def call_evaluator(
     international_law: InternationalLaw,
     response_recorder=None,
 ) -> dict:
-    prompt = f"""
-あなたは国家間相互作用を観測する中立Evaluatorです。
-平和か、善い世界か、好ましい政策かを採点してはいけません。
-文章中の特定単語の出現回数でも採点してはいけません。
-
-観測状況、外部イベントの実態、両国の認識と行動の意味的関係だけを評価し、
-指定された11項目を0〜100の整数で返してください。
-以下の行動はAgentの選択・宣言です。実行、通信の送受信、交渉の成立を確認した記録ではありません。
-行動に関する採点は宣言内容についての推定であり、実現済みの世界状態とは扱わないでください。
-
-評価原則:
-- actual_threat_level: 外部イベントの実態と両国の今回行動が生む、現時点の客観的危険度。
-- perceived_threat_a/b: 各国が判断時に認識していた脅威度。
-- immune_response_strength_a/b: 警戒、制裁、展開、威嚇、防衛、攻撃等を含む国家反応の強度。外交的行動も強度0とは限らない。
-- legal_alignment_a/b: 行動が提示された国際法上どの程度正当化可能か。武力行使でも必要性・比例性を満たす自衛なら高くできる。
-- escalation_pressure: 両行動の組合せが次の相互反応を増幅させる圧力。
-- clarification_quality: 今回行動によって事実関係を識別できる度合い。外交という語だけで加点しない。
-- trust_signal: 今回観測された行動が相互信頼へ与える信号。50を中立とする。
-- recovery_capacity: 損傷や緊張が生じた後も制度・通信・運用を回復できる能力。
-
-攻撃という語だけで減点せず、実際の脅威との必要性・比例性を見ること。
-平和的な表現でも、重大な脅威を放置する反応なら低い免疫反応として評価すること。
-
-外部イベント（公開情報）:
-{event.observable_description}
-
-外部イベントの評価用実態（Agentには非公開）:
-- base_threat_level: {event.base_threat_level}
-- information_reliability: {event.information_reliability}
-- hidden_context: {event.hidden_context}
-
-行動前の観測可能状況:
-{world_state_before}
-
-A国:
-- 現在認識: {belief_a}
-- 行動: {action_a}
-- 理由: {reason_a}
-
-B国:
-- 現在認識: {belief_b}
-- 行動: {action_b}
-- 理由: {reason_b}
-
-国際法:
-{international_law.context()}
-
-説明文や総合的な善悪評価は返さず、次のJSONオブジェクトだけを返してください:
-{{
-  "actual_threat_level": 0,
-  "perceived_threat_a": 0,
-  "perceived_threat_b": 0,
-  "immune_response_strength_a": 0,
-  "immune_response_strength_b": 0,
-  "legal_alignment_a": 0,
-  "legal_alignment_b": 0,
-  "escalation_pressure": 0,
-  "clarification_quality": 0,
-  "trust_signal": 50,
-  "recovery_capacity": 0
-}}
-""".strip()
+    prompt = f"{private_text('simulation.py:405:13:0')}{event.observable_description}{private_text('simulation.py:405:13:2')}{event.base_threat_level}{private_text('simulation.py:405:13:4')}{event.information_reliability}{private_text('simulation.py:405:13:6')}{event.hidden_context}{private_text('simulation.py:405:13:8')}{world_state_before}{private_text('simulation.py:405:13:10')}{belief_a}{private_text('simulation.py:405:13:12')}{action_a}{private_text('simulation.py:405:13:14')}{reason_a}{private_text('simulation.py:405:13:16')}{belief_b}{private_text('simulation.py:405:13:18')}{action_b}{private_text('simulation.py:405:13:20')}{reason_b}{private_text('simulation.py:405:13:22')}{international_law.context()}{private_text('simulation.py:405:13:24')}".strip()
 
     response = generate_content_with_retry(
         client,
@@ -853,30 +734,30 @@ def main(*, receipt_output=None, receipt_run=1):
         return preserve
 
     country_a = Agent(
-        name="A国",
-        goal="国家の安全、主権、国民の生命、国際的立場を守ること。",
+        name=private_text('context:simulation.py:756:13'),
+        goal=private_text('context:simulation.py:757:13'),
         relationships={
-            "B国": "中立",
+            private_text('context:simulation.py:759:12'): private_text('context:simulation.py:759:20'),
         },
         leader_profile=CAUTIOUS_DIPLOMAT,
         national_interests=[
-            "領土と主権の維持",
-            "国民および国境地域の安全",
-            "防衛能力と国際的信用の維持",
+            private_text('context:simulation.py:763:12'),
+            private_text('context:simulation.py:764:12'),
+            private_text('context:simulation.py:765:12'),
         ],
     )
 
     country_b = Agent(
-        name="B国",
-        goal="国家の安全、主権、国民の生命、経済的安定を守ること。",
+        name=private_text('context:simulation.py:770:13'),
+        goal=private_text('context:simulation.py:771:13'),
         relationships={
-            "A国": "中立",
+            private_text('context:simulation.py:773:12'): private_text('context:simulation.py:773:20'),
         },
         leader_profile=CAUTIOUS_DIPLOMAT,
         national_interests=[
-            "領土と主権の維持",
-            "国民および国境地域の安全",
-            "経済活動と外交関係の安定",
+            private_text('context:simulation.py:777:12'),
+            private_text('context:simulation.py:778:12'),
+            private_text('context:simulation.py:779:12'),
         ],
     )
 

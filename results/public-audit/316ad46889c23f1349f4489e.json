@@ -1,0 +1,16 @@
+{
+  "run_id": null,
+  "turn": null,
+  "model": null,
+  "schema_version": null,
+  "seed": null,
+  "commit_sha": null,
+  "timestamp": null,
+  "artifact_sha256": "d9b3ed2d5f55bad8862e2b5489c7f7351b1c648a797ef110d23e9153b5d0b5fc",
+  "source_path": "results/evidence/raw/v3/model-runs/20260919-v3-unchanged-input-replay/checkpoints/HEAD.json",
+  "status": "full_record_retained_privately",
+  "fingerprint_scope": "artifact_sha256: exact original file bytes; input fingerprints: explicitly identified saved input only; null: not established",
+  "request_sha256": null,
+  "prompt_sha256": null,
+  "observation_sha256": null
+}

@@ -5,6 +5,7 @@ A successful response is still a proposal until its separate content review.
 No simulation, resource effects, publishing, or persona generation exists here.
 """
 from __future__ import annotations
+from prompt_interface import private_text
 import base64
 from datetime import date
 from decimal import Decimal
@@ -79,8 +80,8 @@ def http_body(package):
         ensure(set(references)=={'map_sha256','catalog_sha256'},'REFERENCE_BINDING_REQUIRED')
         context['input_references']=references
         schema['properties']['geography_ref']['properties']['map_sha256']['enum']=[references['map_sha256']]
-        prompt+='\ngeography_ref.map_sha256にはinput_references.map_sha256をそのまま転記してください。識別値を新しく生成・推測・再計算しません。'
-    return {'contents': [{'role': 'user', 'parts': [
+        prompt+=private_text('homeostasis_v5/nation_generation.py:82:16')
+    return {'contents': [{'role': private_text('homeostasis_v5/nation_generation.py:83:34'), 'parts': [
         {'text': prompt},
         {'text': json.dumps(context, ensure_ascii=False, separators=(',', ':'))}]}],
         'generationConfig': {'responseMimeType': 'application/json',

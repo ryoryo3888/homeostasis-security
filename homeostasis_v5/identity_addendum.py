@@ -1,4 +1,5 @@
 """Bounded post-hoc fictional identity creation; no original persona mutation."""
+from prompt_interface import private_text, private_file
 import base64
 from datetime import date
 from decimal import Decimal
@@ -31,7 +32,7 @@ def source_hashes():
     paths = ('homeostasis_v5/identity_addendum.py', 'tools/generate_v5_identity_addenda.py',
              'docs/design/v5/IDENTITY_ADDENDUM_PROMPT.txt', 'docs/design/v5/IDENTITY_ADDENDUM_SCHEMA.json',
              'docs/design/v5/IDENTITY_ADDENDUM_PLAN.md')
-    return {**original.source_hashes(), **{p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in paths}}
+    return {**original.source_hashes(), **{p: hashlib.sha256((private_file(p) if p.endswith('_PROMPT.txt') else ROOT / p).read_bytes()).hexdigest() for p in paths}}
 
 
 def load_sources(source):
@@ -68,8 +69,8 @@ def load_sources(source):
 def build_request(persona):
     schema = load_response_object((DESIGN / 'IDENTITY_ADDENDUM_SCHEMA.json').read_text())
     Draft202012Validator.check_schema(schema)
-    return {'contents': [{'role': 'user', 'parts': [
-        {'text': (DESIGN / 'IDENTITY_ADDENDUM_PROMPT.txt').read_text()},
+    return {'contents': [{'role': private_text('homeostasis_v5/identity_addendum.py:71:34'), 'parts': [
+        {'text': private_file('docs/design/v5/IDENTITY_ADDENDUM_PROMPT.txt').read_text()},
         {'text': '参照データ（この一人の保存済み人格）\n' + canonical(persona)},
     ]}], 'generationConfig': {'responseMimeType': 'application/json', 'responseJsonSchema': schema,
         'temperature': 1.0, 'candidateCount': 1, 'maxOutputTokens': MAX_OUTPUT,

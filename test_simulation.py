@@ -274,7 +274,7 @@ class SimulationTest(unittest.TestCase):
                             ):
                                 with self.assertRaises(ValueError):
                                     simulation.main()
-                            self.assertEqual(os.listdir(directory), ['.artifacts'])
+                            self.assertEqual(os.listdir(directory), [])  # SDK receipts are outside the public output directory.
                             store = ResponseReceipts.for_output(Path(directory)/'simulation_result_independent_agents_no_hotline.json')
                             self.assertEqual(len(list(store.directory.glob('*.json'))), invalid_call)
                         finally:

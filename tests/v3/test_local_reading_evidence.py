@@ -1,4 +1,5 @@
 """Published diagnostic keeps its failed reply and unattempted cases distinct."""
+from prompt_interface import original_file
 import base64
 import json
 from pathlib import Path
@@ -9,8 +10,8 @@ from model_response_json import load_response_object
 from tools.secret_scan import has_secret
 
 ROOT = Path(__file__).resolve().parents[2]
-RUN = ROOT / 'results/local-v4/diagnostic-reading-3aaf1ecc-ed57-46b4-b21c-1f3dacf315fe'
-PARENT = ROOT / 'results/local-v4/local-3630a0e5-68c9-4ea8-b17f-aa3a0c035585'
+RUN = original_file('results/local-v4/diagnostic-reading-3aaf1ecc-ed57-46b4-b21c-1f3dacf315fe/manifest.json').parent
+PARENT = original_file('results/local-v4/local-3630a0e5-68c9-4ea8-b17f-aa3a0c035585/manifest.json').parent
 PIN = 'd6010e8e797faaec9a3a18fc114c42bf0ea04a15e0998505553849d96713f612'
 
 

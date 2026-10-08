@@ -1,3 +1,4 @@
+from prompt_interface import private_value, private_text
 from dataclasses import dataclass, field
 from getpass import getpass
 from typing import Dict, List
@@ -20,29 +21,18 @@ class Agent:
     memory: List[str] = field(default_factory=list)
 
     def context(self) -> str:
-        relationships_text = "\n".join(
-            f"- {country}: {status}"
+        relationships_text = private_text('context:archive/legacy-python/simulation_before_independent_agents.py:24:29').join(
+            f"{private_text('context:archive/legacy-python/simulation_before_independent_agents.py:25:12:0')}{country}{private_text('context:archive/legacy-python/simulation_before_independent_agents.py:25:12:2')}{status}"
             for country, status in self.relationships.items()
         )
 
         memory_text = (
-            "\n".join(f"- {item}" for item in self.memory)
+            private_text('context:archive/legacy-python/simulation_before_independent_agents.py:30:12').join(f"{private_text('context:archive/legacy-python/simulation_before_independent_agents.py:30:22:0')}{item}" for item in self.memory)
             if self.memory
-            else "- まだ記憶はありません。"
+            else private_text('context:archive/legacy-python/simulation_before_independent_agents.py:32:17')
         )
 
-        return f"""
-国家名: {self.name}
-
-最優先目標:
-{self.goal}
-
-他国との関係:
-{relationships_text}
-
-これまでの記憶:
-{memory_text}
-""".strip()
+        return f"{private_text('context:archive/legacy-python/simulation_before_independent_agents.py:35:15:0')}{self.name}{private_text('context:archive/legacy-python/simulation_before_independent_agents.py:35:15:2')}{self.goal}{private_text('context:archive/legacy-python/simulation_before_independent_agents.py:35:15:4')}{relationships_text}{private_text('context:archive/legacy-python/simulation_before_independent_agents.py:35:15:6')}{memory_text}{private_text('context:archive/legacy-python/simulation_before_independent_agents.py:35:15:8')}".strip()
 
 
 def call_gemini(
@@ -51,43 +41,7 @@ def call_gemini(
     country_b: Agent,
     world_state: str,
 ) -> str:
-    prompt = f"""
-あなたは2つの架空国家を動かすシミュレーションエンジンです。
-
-重要:
-A国とB国は独立したAgentです。
-それぞれ、自国が知っている情報だけを使って判断してください。
-相手国の内部的な判断理由や非公開情報を使ってはいけません。
-
-====================
-A国
-====================
-{country_a.context()}
-
-====================
-B国
-====================
-{country_b.context()}
-
-====================
-両国が観測できる現在の世界状況
-====================
-{world_state}
-
-A国とB国それぞれについて、
-次に取る行動を1つだけ決めてください。
-
-必ず次の形式で答えてください。
-行動と理由は必ず両方とも空欄にせず、具体的な文章で書いてください。
-ただし、判断の根拠・リスク評価・相手の意図の推測・次の展開への備えは省略せず、思考の深さを保ってください。文章を自然で読みやすく、人が現状に意識を持てるように表現してください。
-=== A国 ===
-行動:
-理由:
-
-=== B国 ===
-行動:
-理由:
-""".strip()
+    prompt = f"{private_text('archive/legacy-python/simulation_before_independent_agents.py:54:13:0')}{country_a.context()}{private_text('archive/legacy-python/simulation_before_independent_agents.py:54:13:2')}{country_b.context()}{private_text('archive/legacy-python/simulation_before_independent_agents.py:54:13:4')}{world_state}{private_text('archive/legacy-python/simulation_before_independent_agents.py:54:13:6')}".strip()
 
     while True:
         try:
@@ -204,18 +158,18 @@ def main():
         client = genai.Client(api_key=api_key)
 
     country_a = Agent(
-        name="A国",
-        goal="国家の安全と主権を守りながら、不要な武力衝突を避けること。",
+        name=private_text('context:archive/legacy-python/simulation_before_independent_agents.py:172:13'),
+        goal=private_text('context:archive/legacy-python/simulation_before_independent_agents.py:173:13'),
         relationships={
-            "B国": "中立",
+            private_text('context:archive/legacy-python/simulation_before_independent_agents.py:175:12'): private_text('context:archive/legacy-python/simulation_before_independent_agents.py:175:20'),
         },
     )
 
     country_b = Agent(
-        name="B国",
-        goal="国家の安全と主権を守りながら、自国に対する脅威を早期に察知すること。",
+        name=private_text('context:archive/legacy-python/simulation_before_independent_agents.py:180:13'),
+        goal=private_text('context:archive/legacy-python/simulation_before_independent_agents.py:181:13'),
         relationships={
-            "A国": "中立",
+            private_text('context:archive/legacy-python/simulation_before_independent_agents.py:183:12'): private_text('context:archive/legacy-python/simulation_before_independent_agents.py:183:20'),
         },
     )
 

@@ -1,0 +1,16 @@
+{
+  "run_id": null,
+  "turn": null,
+  "model": null,
+  "schema_version": null,
+  "seed": null,
+  "commit_sha": null,
+  "timestamp": null,
+  "artifact_sha256": "52460505f762ba00f4363828f5e7a9924e717b7e76ec823dd949872dfad5e248",
+  "source_path": "results/evidence/raw/local/v4-pilot/pilot-01-qwen3-1.7b/RAW/failure.json",
+  "status": "full_record_retained_privately",
+  "fingerprint_scope": "artifact_sha256: exact original file bytes; input fingerprints: explicitly identified saved input only; null: not established",
+  "request_sha256": null,
+  "prompt_sha256": null,
+  "observation_sha256": null
+}

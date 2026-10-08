@@ -3,6 +3,7 @@
 These are SDK-decoded responses, not original HTTP bytes. Transport headers
 are excluded. Missing historical receipts are never reconstructed.
 """
+from prompt_interface.audit import require_private_path, private_receipts
 import hashlib
 import json
 import os
@@ -26,12 +27,12 @@ def _identity(audit):
 
 class ResponseReceipts:
     def __init__(self, directory):
-        self.directory = Path(directory)
+        self.directory = require_private_path(directory)
 
     @classmethod
     def for_output(cls, output):
         output = Path(output)
-        return cls(output.parent / ".artifacts" / "response-receipts" / output.name)
+        return cls(private_receipts(output))
 
     def prepare(self, *, resume=False):
         # A fresh execution must not reuse another execution's evidence.
