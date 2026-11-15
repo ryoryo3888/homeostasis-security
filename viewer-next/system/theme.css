@@ -21,3 +21,38 @@ input[type=checkbox]{accent-color:#a6b5b0}
 .common-input .input-heading{align-items:center;flex-wrap:wrap}.composer-size-toggle{font-size:12px;padding:8px 12px}.input-content[hidden]{display:none}
 .input-content>label{display:block;font-size:13px;margin-bottom:8px}
 dialog{background:#12191d;color:var(--hs-text);border-color:var(--hs-border)}
+
+/* Public display study: neutral metal, a larger illustrative globe, no live data. */
+:root{--hs-bg:#080909;--hs-panel:#252728;--hs-panel-dark:#101213;--hs-text:#f0f1ef;--hs-muted:#bbc0bd;--hs-border:#747a78}
+body{background:radial-gradient(ellipse at 50% 18%,#343d3426,transparent 55%),#080909}
+header{background:linear-gradient(105deg,#353838,#141617 55%,#272a2a);border-bottom:1px solid #969c98}
+.identity b{letter-spacing:.11em}.identity span{margin-top:6px}
+.panel{border-radius:4px;border:1px solid #747a78;background:linear-gradient(140deg,#2e3131 0%,#1a1d1d 15%,#101313 85%);box-shadow:inset 0 1px #d7dcd04d,inset 1px 0 #abb3ac26,inset 0 -2px #000,0 5px 16px #0008}
+.panel:before{background:#a4aaa5;border-color:#353a37;box-shadow:0 1px 2px #000}
+.panel h2{letter-spacing:.06em;border-bottom:1px solid #68706b;padding-bottom:10px}
+button{min-height:44px;border-radius:3px;border-color:#858c87;background:linear-gradient(#3b403d,#202522 55%,#181c19);box-shadow:inset 0 1px #d8ded333}
+button[aria-pressed=true],.display-controls button[aria-pressed=true]{color:#fff;border-color:#cad1c8;background:linear-gradient(#515a50,#2b332b);box-shadow:inset 0 -2px #a5b09d}
+button:hover:not(:disabled){border-color:#e2e6df;background:linear-gradient(#4c544b,#272e27)}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #e1eacb;outline-offset:4px}
+.scope-note{border-left-color:#aab49d;background:#24291f;color:#e1e5d9}
+.development-status{color:#e3e7dc;border-color:#9aa18e;white-space:normal;line-height:1.6}
+#layout-columns{gap:14px}.layout-heading{border-top:3px solid #aab1a5}.layout-heading h1{font-size:20px}
+.geography-panel{background:radial-gradient(ellipse at 50% 42%,#34403266,transparent 65%),linear-gradient(145deg,#181e1a,#080c09);overflow:hidden}
+.geographic-layout{grid-template-columns:minmax(0,1fr);gap:20px;min-height:480px;padding:12px 0}
+.geographic-layout .primary{grid-column:1;grid-row:1}.geographic-layout .secondary{grid-column:1;grid-row:2;width:min(230px,100%);justify-self:end}
+.geography-panel .wire-globe,.geography-panel .separated-primary .wire-globe{width:min(440px,100%);max-width:100%;border:1px solid #a4b39a;background:radial-gradient(circle at 29% 25%,#a4b89155,transparent 36%),radial-gradient(circle at 36% 31%,#607c4a,#243921 54%,#060d08 78%);box-shadow:inset -45px -24px 65px #000b,inset 4px 3px 12px #d2e4ba55,0 0 0 7px #a8b69709,0 0 0 8px #a8b69722,0 0 48px #8caa6722}
+.wire-globe:before,.wire-globe:after,.wire-globe i{border-color:#9cae7f66}
+.geography-panel .secondary .wire-globe,.secondary-geographic-viewport .wire-globe{width:125px}
+.geography-panel .primary .wire-map,.geography-panel .separated-primary .primary .wire-map{height:320px}
+.wire-map{border-color:#8c9a84;background:repeating-linear-gradient(0deg,transparent 0 23px,#8fa28233 23px 24px),repeating-linear-gradient(90deg,#111b13 0 31px,#8fa28233 31px 32px)}
+.visual strong{font-size:15px;letter-spacing:.12em}.visual span,.visual small,.secondary small{font-size:12px;line-height:1.7;max-width:100%;color:#c1cbbc}
+.geographic-layout.separated-primary{min-height:500px}
+.branch-card{background:linear-gradient(135deg,#303630,#131713);border-color:#7d8976;border-radius:3px}
+.layout-panel th,.table-scroll th:first-child{background:#30362f}.layout-panel td,.layout-panel th{border-color:#646e61}
+.empty-chart{background:repeating-linear-gradient(0deg,transparent 0 24px,#89957e22 24px 25px);border-color:#7e8a74;color:#c1cbbb}
+.readonly-note{grid-column:1/-1;border-left:3px solid #a9b39c;line-height:1.8}.readonly-note p{margin-bottom:0}
+.layout-panel dt,.layout-panel dd{line-height:1.8}.layout-panel dd{color:#e1e5dd}footer{line-height:1.9}
+@media(min-width:1101px){#layout-columns{grid-template-columns:minmax(190px,235px) minmax(0,1fr) minmax(200px,255px)}.geography-panel{grid-row:1/4}.geography-panel .wire-globe{width:min(440px,34vw)}body[data-layout=report] .geographic-layout{min-height:0}body[data-layout=report] .geography-panel .wire-globe{width:125px}body[data-layout=detail] .geography-panel .wire-globe{width:min(380px,30vw)}}
+@media(min-width:701px) and (max-width:1100px){#layout-columns{grid-template-columns:minmax(180px,220px) minmax(0,1fr)}.geography-panel .wire-globe,.geography-panel .separated-primary .wire-globe{width:min(390px,100%)}.geographic-layout{min-height:410px}.geographic-layout.separated-primary{min-height:410px}body[data-layout=report] .geographic-layout{min-height:0}body[data-layout=report] .geography-panel .wire-globe{width:125px}}
+@media(max-width:700px){header{gap:12px}.identity b{font-size:clamp(16px,4.8vw,22px);letter-spacing:.06em}.scope-note{font-size:12px}nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}nav button{text-align:left;line-height:1.5;min-height:48px}nav button:last-child{grid-column:1/-1}.layout-heading h1{font-size:18px}.layout-heading p{overflow-wrap:anywhere}.layout-heading button{width:100%}.geographic-layout,.geographic-layout.separated-primary{min-height:0;gap:24px;padding:14px 0}.geography-panel .wire-globe,.geography-panel .separated-primary .wire-globe{width:min(330px,100%)}.geography-panel .secondary .wire-globe{width:100px}.geographic-layout .secondary{justify-self:center;width:min(210px,100%)}.geography-panel .primary .wire-map,.geography-panel .separated-primary .primary .wire-map{height:220px}.visual small,.secondary small{font-size:12px}.layout-panel{padding:14px}.layout-panel h2{font-size:15px;line-height:1.7}.readonly-note{padding:16px}.readonly-note p{font-size:13px}body[data-layout=report] .geography-panel .wire-globe{width:100px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
