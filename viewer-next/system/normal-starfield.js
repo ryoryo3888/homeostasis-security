@@ -90,8 +90,8 @@ function mount(host,options={}){
  };
  const scalePoint=(x,y)=>[x/BW*W,y/BH*H];
  const drawSprite=(c,x,y,r)=>ctx.drawImage(c,x-r,y-r,r*2,r*2);
- // Use the same two approved lengths, speeds and warm/cool looks, at new
- // positions. A single event is scheduled on the running animation clock.
+ // Keep the approved crossing speeds. Choose only slanted paths in the
+ // open sky beside the globe, not in the narrow gaps above and below it.
  const between=(min,max)=>min+(max-min)*Math.random();
  const looks=[
   {reference:[324,145],duration:2*(3.45-1.82),power:280,tone:[1,.86,.63]},
@@ -99,24 +99,51 @@ function mount(host,options={}){
  ];
  let nextMeteor=between(2.6,5.8),activeMeteor=null,lastLane=-1;
  const spawnMeteor=start=>{
-  let lane=Math.floor(between(0,lastLane<0?4:3));
-  if(lastLane>=0&&lane>=lastLane)lane++;
-  lastLane=lane;
-  const side=lane<2,inset=side?between(.075,.125):between(.027,.034),along=between(.26,.74);
-  const x=BW*(side?(lane===0?inset:1-inset):along);
-  const y=BH*(side?along:(lane===2?inset:1-inset));
-  const angle=(side?Math.PI/2:0)+(side?between(-.24,.24):between(-.05,.05))+(Math.random()<.5?0:Math.PI);
-  const look=looks[Math.floor(between(0,looks.length))];
-  const ax=Math.cos(angle),ay=Math.sin(angle),sx=W/BW,sy=H/BH;
-  const [rx,ry]=look.reference;
-  const length=Math.hypot(rx*sx,ry*sy)/Math.hypot(ax*sx,ay*sy);
-  const dx=ax*length,dy=ay*length;
-  return {...look,length,start,x:x-dx/2,y:y-dy/2,dx,dy,curve:side?between(-8,8):between(-3.5,3.5)};
+  const sx=W/BW,sy=H/BH;
+  const safe=(x,y,lane)=>{
+   if(x<.055*W||x>.945*W||y<.11*H||y>.89*H)return false;
+   if(lane<2?x>.415*W:x<.585*W)return false;
+   return Math.hypot(x-W/2,y-H/2)>.47*Math.min(W,H);
+  };
+  // Give diagonals room to breathe. Reject tracks that graze the globe or
+  // are clipped by the panel; never substitute a vertical edge track.
+  for(let attempt=0;attempt<240;attempt++){
+   let lane=Math.floor(between(0,lastLane<0?4:3));
+   if(lastLane>=0&&lane>=lastLane)lane++;
+   const ax=BW*between(.09,.35),ay=BH*between(.22,.43);
+   const cx=lane<2?ax:BW-ax,cy=lane%2===0?ay:BH-ay;
+   const angle=between(18,37)*Math.PI/180;
+   const direction=Math.random()<.5?-1:1;
+   const look=looks[Math.floor(between(0,looks.length))];
+   const [rx,ry]=look.reference;
+   const span=between(attempt<45?.87:.72,1);
+   const speed=Math.hypot(rx*sx,ry*sy)/look.duration;
+   const duration=look.duration*span;
+   const dx=direction*Math.cos(angle)*speed*duration/sx;
+   const dy=Math.sin(angle)*speed*duration/sy;
+   const length=Math.hypot(dx,dy),curve=between(-7,7);
+   const x=cx-dx/2,y=cy-dy/2;
+   let fits=true;
+   for(let j=0;j<=16&&fits;j++){
+    const u=j/16, bend=curve*4*u*(1-u);
+    const px=x+dx*u-dy/length*bend,py=y+dy*u+dx/length*bend;
+    fits=safe(px*sx,py*sy,lane);
+    // The tail is faint near the start; check its glowing portion once
+    // the meteor becomes readable so it does not appear at a panel edge.
+    if(fits&&u>=.1875){
+     const vx=dx-dy/length*curve*4*(1-2*u),vy=dy+dx/length*curve*4*(1-2*u);
+     const trail=Math.min(123,25+length*u*.78)*.56/Math.hypot(vx,vy);
+     fits=safe((px-vx*trail)*sx,(py-vy*trail)*sy,lane);
+    }
+   }
+   if(fits){lastLane=lane;return {...look,length,start,x,y,dx,dy,curve,duration};}
+  }
+  return null;
  };
  const meteors=t=>{
   if(t>=nextMeteor){
    activeMeteor=spawnMeteor(t);
-   nextMeteor=t+between(5.8,12.2);
+   nextMeteor=t+(activeMeteor?between(5.8,12.2):between(.7,1.4));
   }
   if(!activeMeteor)return;
   const {start,x,y,dx,dy,length,duration,curve,power,tone}=activeMeteor;
