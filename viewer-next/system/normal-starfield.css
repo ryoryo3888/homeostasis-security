@@ -1,0 +1,15 @@
+/* The normal monitor supplies a dedicated decorative host behind the Earth. */
+.hs-normal-starfield {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+  background: #050a10;
+}
+.hs-normal-starfield-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}

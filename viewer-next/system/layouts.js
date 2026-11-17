@@ -53,7 +53,7 @@
     }
     spaces.append(fields,unready('空間の表示選択だけです。実データ・3次元位置・空間間の関係は未接続で、配置確認用の図形は描き分けません。'));element.append(spaces);return element;
   };
-  const geographyPanel = () => {const element=panel('地理表示｜配置確認用','geography-panel');element.append(geography);return element;};
+  const geographyPanel = () => {const element=panel(layout==='normal'?'地理表示｜過去の衛星合成・表示確認用':'地理表示｜配置確認用','geography-panel');element.append(geography);return element;};
   const secondaryGeographyPanel=()=>{const element=panel('地理サブ表示｜配置確認用','secondary-geography-panel');secondaryViewport=node('div',undefined,'secondary-geographic-viewport');element.append(secondaryViewport);return element;};
   const comparisonTable = () => {
     const element=panel('比較指標・同一条件の照合','comparison-table-panel');

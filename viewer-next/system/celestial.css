@@ -1,0 +1,32 @@
+/* Normal monitor only. No filtering is applied to the globe or stars. */
+body[data-layout=normal] {background:#080808;color:#eee;color-scheme:dark}
+body[data-layout=normal] > header {background:linear-gradient(120deg,#303030,#101010 55%,#202020);border-color:#858585}
+body[data-layout=normal] :is(.identity span,.quiet,footer,.visual span,.visual small){color:#bcbcbc}
+body[data-layout=normal] :is(.panel,.branch-card){background:linear-gradient(125deg,#222,#080808);border-color:#444;box-shadow:inset 0 1px 1px #fff2,0 6px 14px #0008}
+body[data-layout=normal] .panel:before{border-color:#aaa;background:#242424}
+body[data-layout=normal] :is(.scope-note,.development-status,fieldset,th,td,.time-rail,.time-lanes,.time-lane,.unconnected-series){border-color:#727272}
+body[data-layout=normal] :is(.scope-note,.development-status,td,.time-status,.time-lane,.unconnected-series,dt){color:#c5c5c5}
+body[data-layout=normal] .scope-note{background:#1c1c1c}
+body[data-layout=normal] :is(.time-rail,th){background:#292929}
+body[data-layout=normal] a{color:#eee}
+body[data-layout=normal] input[type=checkbox]{accent-color:#888}
+body[data-layout=normal] button{background:linear-gradient(#232323,#090909);border-color:#666;color:#eee;box-shadow:none}
+body[data-layout=normal] button[aria-pressed=true]{border-color:#aaa;box-shadow:inset 0 -2px #888}
+body[data-layout=normal] button:hover:not(:disabled){background:#343434;border-color:#aaa}
+body[data-layout=normal] :is(button,a,summary,input):focus-visible{outline-color:#eee}
+body[data-layout=normal] .wire-globe{border-color:#777;background:#141414;box-shadow:none}
+body[data-layout=normal] .wire-globe:before,body[data-layout=normal] .wire-globe:after,body[data-layout=normal] .wire-globe i{border-color:#777}
+body[data-layout=normal] .wire-map{border-color:#777;background:repeating-linear-gradient(0deg,transparent 0 19px,#7777 19px 20px),repeating-linear-gradient(90deg,#111 0 29px,#7777 29px 30px)}
+.hs-celestial{display:none}
+body[data-layout=normal] #globe.primary[data-celestial-ready="true"] .wire-globe{display:none}
+body[data-layout=normal] #globe.primary[data-celestial-ready="true"] .hs-celestial{display:grid;gap:7px;width:min(100%,840px)}
+body[data-layout=normal] #globe.primary[data-celestial-ready="true"] > .hs-wire-caption{display:none}
+.hs-celestial-view{position:relative;isolation:isolate;aspect-ratio:4 / 3;overflow:hidden;background:#05060a;border-radius:5px;border:1px solid #353535}
+.hs-celestial canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hs-celestial .hs-earth-arcs{pointer-events:none}
+.hs-celestial .hs-earth-render{touch-action:pan-y;cursor:grab}
+.hs-celestial .hs-earth-render:active{cursor:grabbing}
+.hs-celestial .hs-earth-render:focus-visible{outline:2px solid #eee;outline-offset:-3px}
+.hs-earth-controls{display:flex;flex-wrap:wrap;justify-content:center;gap:5px}
+.hs-earth-controls button{min-height:44px;min-width:44px;padding:5px 9px;font-size:12px}
+.hs-celestial small{max-width:none}
