@@ -31,8 +31,15 @@
   const wrap=x=>((x+180)%360+360)%360-180;
   const clamp=(x,min,max)=>Math.min(max,Math.max(min,x));
   const stars=globalThis.HS_NORMAL_STARFIELD?.mount(sky);
-  const gl=planet.getContext('webgl2',{alpha:true,premultipliedAlpha:false,antialias:false});
-  if(!gl){stars?.destroy();return;}
+  // Keep the interactive element independent of graphics backends so focus,
+  // pointer capture and the camera survive WebGL initialization or context loss.
+  const output=planet.getContext('2d');
+  if(!output){stars?.destroy();return;}
+  const gpuCanvas=document.createElement('canvas');
+  let gl=null;
+  try {gl=gpuCanvas.getContext('webgl2',{alpha:true,premultipliedAlpha:false,antialias:false,preserveDrawingBuffer:true});}
+  catch {} // Restricted browser: use the CPU renderer.
+  let gpu=null,cpu=null,archives=null;
   const vertex=`#version 300 es
   const vec2 positions[3]=vec2[3](vec2(-1,-1),vec2(3,-1),vec2(-1,3));
   void main(){gl_Position=vec4(positions[gl_VertexID],0,1);}`;
@@ -114,24 +121,125 @@
     if(!gl.getShaderParameter(id,gl.COMPILE_STATUS)){gl.deleteShader(id);return null;}
     return id;
   }
-  const vs=shader(gl.VERTEX_SHADER,vertex),fs=shader(gl.FRAGMENT_SHADER,fragment);
-  if(!vs||!fs){stars?.destroy();return;}
-  const program=gl.createProgram();
-  gl.attachShader(program,vs);gl.attachShader(program,fs);gl.linkProgram(program);
-  gl.deleteShader(vs);gl.deleteShader(fs);
-  if(!gl.getProgramParameter(program,gl.LINK_STATUS)){stars?.destroy();return;}
-  gl.useProgram(program);
-  const locate=n=>gl.getUniformLocation(program,n);
-  const size=locate('uSize'),camera=locate('uCamera');
-  const distance=locate('uZoom'),sun=locate('uSun');
-  gl.uniform1i(locate('uDay'),0);gl.uniform1i(locate('uNight'),1);
   // Geographic Sun direction is fixed to the approved presentation reference,
   // rather than following the frame count, terminal clock or simulated world.
   const angle=2*Math.PI/365*(172+(1-12)/24);
   const equation=229.18*(.000075+.001868*Math.cos(angle)-.032077*Math.sin(angle)-.014615*Math.cos(2*angle)-.040849*Math.sin(2*angle));
   const declination=.006918-.399912*Math.cos(angle)+.070257*Math.sin(angle)-.006758*Math.cos(2*angle)+.000907*Math.sin(2*angle)-.002697*Math.cos(3*angle)+.00148*Math.sin(3*angle);
   const radians=Math.PI/180;
-  gl.uniform2f(sun,declination,(165-equation/4)*radians);
+  const sunLon=(165-equation/4)*radians;
+  function initGPU(images){
+    if(!gl||gl.isContextLost())return null;
+    const max=gl.getParameter(gl.MAX_TEXTURE_SIZE);
+    if(images.some(i=>i.naturalWidth>max||i.naturalHeight>max))return null;
+    const vs=shader(gl.VERTEX_SHADER,vertex),fs=shader(gl.FRAGMENT_SHADER,fragment);
+    if(!vs||!fs)return null;
+    const program=gl.createProgram();
+    gl.attachShader(program,vs);gl.attachShader(program,fs);gl.linkProgram(program);
+    gl.deleteShader(vs);gl.deleteShader(fs);
+    if(!gl.getProgramParameter(program,gl.LINK_STATUS))return null;
+    gl.useProgram(program);
+    const locate=n=>gl.getUniformLocation(program,n);
+    gl.uniform1i(locate('uDay'),0);gl.uniform1i(locate('uNight'),1);
+    gl.uniform2f(locate('uSun'),declination,sunLon);
+    images.forEach(upload);
+    return gl.getError()===gl.NO_ERROR?{
+      size:locate('uSize'),camera:locate('uCamera'),zoom:locate('uZoom')
+    }:null;
+  }
+  function initCPU(images){
+    try {
+      const textures=images.map((image,i)=>{
+        const scratch=document.createElement('canvas');
+        scratch.width=i===0?1536:1024;scratch.height=scratch.width/2;
+        const context=scratch.getContext('2d',{willReadFrequently:true});
+        if(!context)throw new Error('canvas unavailable');
+        context.drawImage(image,0,0,scratch.width,scratch.height);
+        return {data:context.getImageData(0,0,scratch.width,scratch.height).data,
+          width:scratch.width,height:scratch.height};
+      });
+      const emitter=document.createElement('canvas'),ink=emitter.getContext('2d');
+      return ink?{textures,emitter,ink}:null;
+    } catch { return null; }
+  }
+  const sm=(x)=>{x=clamp(x,0,1);return x*x*(3-2*x);};
+  const cobaltRamp=[[2,7,53],[3,8,82],[6,10,114],[12,20,143],[16,29,163],[25,87,187]];
+  const shadingLUT=Float32Array.from({length:256},(_,i)=>(i/255)**2.18);
+  function texOffset(tex,lat,lon){
+    const q=lon/(2*Math.PI)+.5;
+    return 4*(clamp(Math.floor((.5-lat/Math.PI)*tex.height),0,tex.height-1)*tex.width+
+      Math.floor((q-Math.floor(q))*tex.width));
+  }
+  function cpuDraw(width,height){
+    const {textures:[day,night],emitter,ink}=cpu;
+    const ratio=Math.min(1,320/Math.max(width,height));
+    const w=Math.max(1,Math.round(width*ratio)),h=Math.max(1,Math.round(height*ratio));
+    if(emitter.width!==w||emitter.height!==h){
+      emitter.width=w;emitter.height=h;cpu.pixels=null;
+    }
+    if(!cpu.pixels)cpu.pixels=ink.createImageData(w,h);
+    const pix=cpu.pixels.data, radius=Math.min(w,h)*.45*zoom;
+    const p=latitude*radians,l=longitude*radians,cp=Math.cos(p),sp=Math.sin(p);
+    const sunP=Math.sin(declination),sunE=Math.cos(declination);
+    for(let y=0,i=0;y<h;y++){
+      const v=(h/2-y-.5)/radius,vv=v*v;
+      for(let x=0;x<w;x++,i+=4){
+        const u=(x+.5-w/2)/radius,q2=u*u+vv;
+        if(q2>1.095){pix[i+3]=0;continue;}
+        const z=Math.sqrt(Math.max(0,1-q2));
+        const sinLat=clamp(v*cp+z*sp,-1,1);
+        const lat=Math.asin(sinLat),lon=l+Math.atan2(u,z*cp-v*sp);
+        const mu=sinLat*sunP+Math.sqrt(Math.max(0,1-sinLat*sinLat))*sunE*Math.cos(lon-sunLon);
+        const side=.10+.90*sm((mu+.24)/1.02);
+        if(q2>1){
+          const fringe=(Math.sqrt(q2)-1)*radius,scale=Math.max(radius/410,.52);
+          pix[i]=77;pix[i+1]=135;pix[i+2]=214;
+          pix[i+3]=255*side*(.58*Math.exp(-fringe/(2*scale))+.125*Math.exp(-fringe/(8.7*scale)));
+          continue;
+        }
+        const d=texOffset(day,lat,lon),n=texOffset(night,lat,lon);
+        let r=day.data[d],g=day.data[d+1],b=day.data[d+2];
+        const water=sm(((b-r)/255-.021)/.22)*sm(((b-g)/255+.038)/.16);
+        const warm=sm(((r-b)/255-.03)/.29)*(1-sm((r/255-.62)/.35));
+        r=shadingLUT[Math.round(r*(1-.24*water-.11*warm))];
+        g=shadingLUT[Math.round(g*(1-.20*water))];
+        b=shadingLUT[clamp(Math.round(b*(1-.045*water)+8.16*warm),0,255)];
+        const exp=.010+.25*sm((mu+.018)/.57)+.69*Math.max(0,mu)**.62;
+        const dens=clamp(((night.data[n]+night.data[n+1])/255-.095)/1.1,0,1);
+        const city=(1-sm((Math.abs(lat)-1.10)/.20))*(1-sm((mu+.19)/.24))*
+          (.034*sm(dens/.31)+.53*sm((dens-.12)/.72));
+        r=r*exp*.987*(1-city)+.97*city;
+        g=g*exp*1.011*(1-city)+.59*city;
+        b=b*exp*1.034*(1-city)+.21*city;
+        const limb=side*(1-z)**17,scatter=side*(1-z)**4.5;
+        r=clamp(r+(1-r)*(.41*limb+.005*scatter),0,1)**(1/2.20);
+        g=clamp(g+(1-g)*(.69*limb+.027*scatter),0,1)**(1/2.20);
+        b=clamp(b+(1-b)*(.97*limb+.061*scatter),0,1)**(1/2.20);
+        const strength=.99*sm((water-.16)/.71)*sm((b-r-.022)/.19)*
+          (1-sm((r-.25)/.28))*(1-.94*sm((1-z-.66)/.34))*sm((b-.06)/.17)*
+          (1-.48*sm((g-.45)/.49)*sm((b-.41)/.47));
+        const c=clamp((.85*b+.15*g-.115)/.65,0,1)*5,idx=Math.min(4,Math.floor(c)),f=c-idx;
+        const a=cobaltRamp[idx],j=cobaltRamp[idx+1],t=1-strength;
+        pix[i]=255*r*t+strength*(a[0]+(j[0]-a[0])*f);
+        pix[i+1]=255*g*t+strength*(a[1]+(j[1]-a[1])*f);
+        pix[i+2]=255*b*t+strength*(a[2]+(j[2]-a[2])*f);
+        pix[i+3]=255;
+      }
+    }
+    ink.putImageData(cpu.pixels,0,0);
+    return emitter;
+  }
+  function chooseRenderer(){
+    try {gpu=initGPU(archives);} catch {gpu=null;}
+    if(!gpu)cpu=initCPU(archives);
+    ready=Boolean(gpu||cpu);
+    if(ready){
+      globe.dataset.celestialReady='true';
+      globe.dataset.celestialRenderer=gpu?'webgl2':'canvas2d';
+    } else {
+      delete globe.dataset.celestialReady;delete globe.dataset.celestialRenderer;
+    }
+  }
   const arcContext=lines.getContext('2d');
   const vector=(p,l)=>[Math.cos(p)*Math.cos(l),Math.cos(p)*Math.sin(l),Math.sin(p)];
   const dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
@@ -190,21 +298,30 @@
     const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=path;
   });
   function draw(){
-    if(!ready||!active||gl.isContextLost())return;
+    if(!ready||!active)return;
     const area=view.getBoundingClientRect();
     if(area.width<1||area.height<1)return;
     const scale=Math.min(window.devicePixelRatio||1,960/Math.max(area.width,area.height));
     const w=Math.max(1,Math.round(area.width*scale)),h=Math.max(1,Math.round(area.height*scale));
     if(planet.width!==w)planet.width=w;
     if(planet.height!==h)planet.height=h;
-    gl.viewport(0,0,w,h);
-    gl.uniform2f(size,w,h);gl.uniform2f(camera,latitude*radians,longitude*radians);
-    gl.uniform1f(distance,zoom);gl.drawArrays(gl.TRIANGLES,0,3);drawArcs(w,h);
+    let image;
+    if(gpu&&!gl.isContextLost()){
+      if(gpuCanvas.width!==w)gpuCanvas.width=w;
+      if(gpuCanvas.height!==h)gpuCanvas.height=h;
+      gl.viewport(0,0,w,h);
+      gl.uniform2f(gpu.size,w,h);gl.uniform2f(gpu.camera,latitude*radians,longitude*radians);
+      gl.uniform1f(gpu.zoom,zoom);gl.drawArrays(gl.TRIANGLES,0,3);
+      image=gpuCanvas;
+    } else if(cpu)image=cpuDraw(w,h);
+    if(image){
+      output.clearRect(0,0,w,h);output.drawImage(image,0,0,w,h);drawArcs(w,h);
+    }
   }
   function stop(){cancelAnimationFrame(frame);frame=0;last=0;}
   function animate(t){
     if(!active||manual||motion.matches||document.hidden){stop();return;}
-    if(!last||t-last>=1000/28){
+    if(!last||t-last>=1000/(gpu?28:12)){
       if(last)longitude=wrap(longitude+.844*Math.min(180,t-last)/1000);
       last=t;draw();
     }
@@ -243,8 +360,14 @@
     if(delta){e.preventDefault();interact();longitude=wrap(longitude+delta[0]);latitude=clamp(latitude+delta[1],-84,84);draw();}
     if(['+','=','-'].includes(e.key)){e.preventDefault();changeZoom(e.key==='-'?-.16:.16);}
   });
-  planet.addEventListener('webglcontextlost',()=>{
-    ready=false;delete globe.dataset.celestialReady;sync();
+  gpuCanvas.addEventListener('webglcontextlost',()=>{
+    if(!archives)return;
+    gpu=null;
+    if(!cpu)cpu=initCPU(archives);
+    ready=Boolean(cpu);
+    if(ready)globe.dataset.celestialRenderer='canvas2d';
+    else {delete globe.dataset.celestialReady;delete globe.dataset.celestialRenderer;}
+    sync();
   });
   const observer=new MutationObserver(sync);
   observer.observe(globe,{attributes:true,attributeFilter:['class']});
@@ -254,9 +377,6 @@
   document.addEventListener('visibilitychange',sync);
   motion.addEventListener('change',()=>{if(motion.matches)stop();sync();});
   Promise.all([load('assets/globe-surface.webp'),load('assets/normal-night-2016.webp')]).then(images=>{
-    const max=gl.getParameter(gl.MAX_TEXTURE_SIZE);
-    if(images.some(i=>i.naturalWidth>max||i.naturalHeight>max)||gl.isContextLost())return;
-    images.forEach(upload);if(gl.getError()!==gl.NO_ERROR)return;
-    ready=true;globe.dataset.celestialReady='true';sync();stars?.redraw();
+    archives=images;chooseRenderer();sync();stars?.redraw();
   }).catch(()=>{}); // Keep the existing accessible wireframe if local assets or WebGL fail.
 })();

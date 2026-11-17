@@ -4,7 +4,7 @@
 
 These derivatives are made locally from the cited historical sources. The globe is from NASA/GSFC SVS; nighttime lights use NASA Earth Observatory archival imagery. The inputs are from different periods and are not synchronized or current observations. No internal asset is included and no external runtime requests are required.
 
-- `normal-night-2016.webp` — offline 1800 × 900 derivative of the archived **2016 Black Marble** source linked below (ImageMagick proportional resize, metadata stripped, WebP quality 90, SHA-256 `a8bc75a4acfd61ba1a19da5a701a2f17412f5ad3ac98132cb8edb6555e1c1922`). Its proximity to the daylight texture is a display composite only, not a single capture or current night. Amber is a display grade, not a measurement or an event marker. Normal-monitor globe only. If either texture or WebGL2 is unavailable, the original wireframe placeholder remains.
+- `normal-night-2016.webp` — offline 1800 × 900 derivative of the archived **2016 Black Marble** source linked below (ImageMagick proportional resize, metadata stripped, WebP quality 90, SHA-256 `a8bc75a4acfd61ba1a19da5a701a2f17412f5ad3ac98132cb8edb6555e1c1922`). Its proximity to the daylight texture is a display composite only, not a single capture or current night. Amber is a display grade, not a measurement or an event marker. Normal-monitor globe only. When WebGL2 is unavailable the viewer uses a lower-resolution Canvas 2D globe. If the archival textures or both renderers cannot load, the original wireframe placeholder remains.
 
 ## Sources and attribution
 
