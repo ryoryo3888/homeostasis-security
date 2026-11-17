@@ -90,30 +90,55 @@ function mount(host,options={}){
  };
  const scalePoint=(x,y)=>[x/BW*W,y/BH*H];
  const drawSprite=(c,x,y,r)=>ctx.drawImage(c,x-r,y-r,r*2,r*2);
- const meteors=(t,trail)=>{
-  for(const [start,end,a,b,power,tone] of [
-   [1.82,3.45,[1382,386],[1058,531],280,[1,.86,.63]],
-   [5.84,7.30,[178,200],[43,367],258,[.89,.96,1]],
-  ]){
-   const u=(t-start)/(end-start);if(!(u>0&&u<1))continue;
-   const dx=b[0]-a[0],dy=b[1]-a[1],length=Math.hypot(dx,dy),curve=7.5;
-   const px=a[0]+dx*u-dy/length*curve*4*u*(1-u);
-   const py=a[1]+dy*u+dx/length*curve*4*u*(1-u);
-   const ddx=dx-dy/length*curve*4*(1-2*u),ddy=dy+dx/length*curve*4*(1-2*u);
-   const tangent=Math.hypot(ddx,ddy),ux=ddx/tangent,uy=ddy/tangent;
-   const c=scalePoint(px,py),r=Math.min(W/BW,H/BH);
-   if(typeof options.allowMeteorAt==='function'&&!options.allowMeteorAt(px/BW,py/BH))continue;
-   const len=Math.min(123,25+length*u*.78),q=clamp(power/255*Math.sin(Math.PI*u)**.69,0,1);
-   const tail=scalePoint(px-ux*len,py-uy*len);
-   const fade=ctx.createLinearGradient(...tail,...c);
-   fade.addColorStop(0,rgba(tone,0));fade.addColorStop(.45,rgba(tone,q*.15));fade.addColorStop(1,rgba(tone,q*.83));
-   ctx.globalAlpha=trail;ctx.strokeStyle=fade;ctx.lineWidth=Math.max(.65,r*1.25);
-   ctx.beginPath();ctx.moveTo(...tail);ctx.lineTo(...c);ctx.stroke();
-   const radius=Math.max(1,7.6*r);
-   const head=ctx.createRadialGradient(...c,0,...c,radius);
-   head.addColorStop(0,rgba(tone,q));head.addColorStop(.38,rgba(tone,q*.63));head.addColorStop(1,rgba(tone,0));
-   ctx.fillStyle=head;ctx.fillRect(c[0]-radius,c[1]-radius,2*radius,2*radius);
+ // Use the same two approved lengths, speeds and warm/cool looks, at new
+ // positions. A single event is scheduled on the running animation clock.
+ const between=(min,max)=>min+(max-min)*Math.random();
+ const looks=[
+  {reference:[324,145],duration:2*(3.45-1.82),power:280,tone:[1,.86,.63]},
+  {reference:[135,167],duration:2*(7.30-5.84),power:258,tone:[.89,.96,1]},
+ ];
+ let nextMeteor=between(2.6,5.8),activeMeteor=null,lastLane=-1;
+ const spawnMeteor=start=>{
+  let lane=Math.floor(between(0,lastLane<0?4:3));
+  if(lastLane>=0&&lane>=lastLane)lane++;
+  lastLane=lane;
+  const side=lane<2,inset=side?between(.075,.125):between(.027,.034),along=between(.26,.74);
+  const x=BW*(side?(lane===0?inset:1-inset):along);
+  const y=BH*(side?along:(lane===2?inset:1-inset));
+  const angle=(side?Math.PI/2:0)+(side?between(-.24,.24):between(-.05,.05))+(Math.random()<.5?0:Math.PI);
+  const look=looks[Math.floor(between(0,looks.length))];
+  const ax=Math.cos(angle),ay=Math.sin(angle),sx=W/BW,sy=H/BH;
+  const [rx,ry]=look.reference;
+  const length=Math.hypot(rx*sx,ry*sy)/Math.hypot(ax*sx,ay*sy);
+  const dx=ax*length,dy=ay*length;
+  return {...look,length,start,x:x-dx/2,y:y-dy/2,dx,dy,curve:side?between(-8,8):between(-3.5,3.5)};
+ };
+ const meteors=t=>{
+  if(t>=nextMeteor){
+   activeMeteor=spawnMeteor(t);
+   nextMeteor=t+between(5.8,12.2);
   }
+  if(!activeMeteor)return;
+  const {start,x,y,dx,dy,length,duration,curve,power,tone}=activeMeteor;
+  const u=(t-start)/duration;
+  if(u>=1){activeMeteor=null;return;}
+  if(!(u>0))return;
+  const px=x+dx*u-dy/length*curve*4*u*(1-u);
+  const py=y+dy*u+dx/length*curve*4*u*(1-u);
+  const ddx=dx-dy/length*curve*4*(1-2*u),ddy=dy+dx/length*curve*4*(1-2*u);
+  const tangent=Math.hypot(ddx,ddy),ux=ddx/tangent,uy=ddy/tangent;
+  const c=scalePoint(px,py),r=Math.min(W/BW,H/BH);
+  if(typeof options.allowMeteorAt==='function'&&!options.allowMeteorAt(px/BW,py/BH))return;
+  const len=Math.min(123,25+length*u*.78),q=clamp(power/255*Math.sin(Math.PI*u)**.69,0,1);
+  const tail=scalePoint(px-ux*len,py-uy*len);
+  const fade=ctx.createLinearGradient(...tail,...c);
+  fade.addColorStop(0,rgba(tone,0));fade.addColorStop(.45,rgba(tone,q*.15));fade.addColorStop(1,rgba(tone,q*.83));
+  ctx.globalAlpha=1;ctx.strokeStyle=fade;ctx.lineWidth=Math.max(.65,r*1.25);
+  ctx.beginPath();ctx.moveTo(...tail);ctx.lineTo(...c);ctx.stroke();
+  const radius=Math.max(1,7.6*r);
+  const head=ctx.createRadialGradient(...c,0,...c,radius);
+  head.addColorStop(0,rgba(tone,q));head.addColorStop(.38,rgba(tone,q*.63));head.addColorStop(1,rgba(tone,0));
+  ctx.fillStyle=head;ctx.fillRect(c[0]-radius,c[1]-radius,2*radius,2*radius);
  };
  function paint(seconds=elapsed){
   if(stopped||!size())return;
@@ -153,7 +178,7 @@ function mount(host,options={}){
    ctx.globalAlpha=Math.min(1,bright);
    drawSprite(glint?near[pi]:normal[pi],px,py,Math.max(.48,a*3.1));
   }
-  if(!reduced&&options.meteors!==false)meteors(phase,1);
+  if(!reduced&&options.meteors!==false)meteors(seconds);
   ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
  }
  const shouldRun=()=>!stopped&&!userPause&&!doc.hidden&&displayed&&!mql?.matches;
