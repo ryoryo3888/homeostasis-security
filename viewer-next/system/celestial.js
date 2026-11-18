@@ -328,7 +328,8 @@
     frame=requestAnimationFrame(animate);
   }
   function sync(){
-    active=ready&&visible&&!document.hidden&&document.body.dataset.layout==='normal'&&globe.classList.contains('primary');
+    const layout=document.body.dataset.layout;
+    active=ready&&visible&&!document.hidden&&(layout==='normal'||layout==='globe')&&globe.classList.contains('primary');
     stars?.setActive(active&&!manual&&!motion.matches);
     cancel.disabled=motion.matches||manual;
     cancel.textContent=manual||motion.matches?'自動演出停止中':'自動演出を停止';
