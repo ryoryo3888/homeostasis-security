@@ -30,6 +30,7 @@
   globe.insertBefore(stage,globe.firstChild);
   const analysisLayouts=new Set(['emergency','comparison','comparison-detail','crisis']);
   const playingAnalysis=new Set();
+  const isCompanion=()=>document.body.dataset.layout==='map'&&globe.classList.contains('secondary');
   const isAnalysis=()=>analysisLayouts.has(document.body.dataset.layout);
   const paused=()=>isAnalysis()?!playingAnalysis.has(document.body.dataset.layout):manual;
   let ready=false,visible=true,active=false,manual=false,frame=0,last=0;
@@ -399,7 +400,7 @@
     } else if(cpu)image=cpuDraw(w,h);
     if(image){
       output.clearRect(0,0,w,h);output.drawImage(image,0,0,w,h);
-      if(isAnalysis())arcContext?.clearRect(0,0,lines.width,lines.height);
+      if(isAnalysis()||isCompanion())arcContext?.clearRect(0,0,lines.width,lines.height);
       else drawArcs(w,h);
     }
   }
@@ -414,8 +415,9 @@
   }
   function sync(){
     const layout=document.body.dataset.layout;
-    active=ready&&visible&&!document.hidden&&(layout==='normal'||layout==='globe'||analysisLayouts.has(layout))&&globe.classList.contains('primary');
-    const play=active&&!paused()&&!motion.matches;
+    active=ready&&visible&&!document.hidden&&(isCompanion()||((layout==='normal'||layout==='globe'||analysisLayouts.has(layout))&&globe.classList.contains('primary')));
+    const play=active&&!isCompanion()&&!paused()&&!motion.matches;
+    planet.tabIndex=isCompanion()?-1:0;
     stars?.setActive(play&&!isAnalysis());
     cancel.disabled=motion.matches;
     cancel.textContent=motion.matches?'自動演出停止中':isAnalysis()?(play?'自動回転を停止':'自動回転を開始'):manual?'自動演出を再開':'自動演出を停止';
