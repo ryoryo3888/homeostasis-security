@@ -15,6 +15,8 @@
   lines.setAttribute('aria-hidden','true');
   const controls=node('div','hs-earth-controls');
   const caption=node('small',null,'過去の衛星合成画像：');
+  const twinCaption=node('small',null,'デジタルツイン表示（地理・配色の見本）｜Natural Earth 1:50m。シアン実線：輪郭・国境、シアン点線：経緯線、暖色破線：係争・管理線など。現在の観測・演算結果ではありません。');
+  twinCaption.hidden=true;
   const nasaDay=node('a',null,'NASA/GSFC SVS'),nasaNight=node('a',null,'NASA Earth Observatory');
   nasaDay.href='https://svs.gsfc.nasa.gov/3615';
   nasaNight.href='https://science.nasa.gov/earth/earth-observatory/earth-at-night/maps/';
@@ -23,7 +25,7 @@
   planet.setAttribute('aria-label','地球儀の向き：矢印キーで回転、プラスとマイナスで拡大縮小');
   caption.append(nasaDay,'・',nasaNight,'｜照明基準：2026/06/21 10:00 JST（演出）。星・光の弧は装飾。観測未接続。');
   view.append(sky,planet,lines);
-  stage.append(view,controls,caption);
+  stage.append(view,controls,caption,twinCaption);
   globe.querySelector('span')?.classList.add('hs-wire-caption');
   globe.insertBefore(stage,globe.firstChild);
   let ready=false,visible=true,active=false,manual=false,frame=0,last=0;
@@ -284,6 +286,82 @@
       }
     }
   }
+  let twin=false,geography=null;
+  const twinGrid=document.createElement('canvas'), twinGridInk=twinGrid.getContext('2d');
+  function packVector(points){
+    const xyz=new Float32Array(points.length*3);
+    for(let i=0;i<points.length;i++)xyz.set(vector(points[i][1]*radians,points[i][0]*radians),i*3);
+    return xyz;
+  }
+  function unpackTwin(raw){
+    const bytes=atob(raw); let i=0;
+    const int=()=>{let v=0,k=0,b;do{
+      if(i>=bytes.length||k>27)throw new Error('Invalid geography');
+      b=bytes.charCodeAt(i++);v|=(b&127)<<k;k+=7;
+    }while(b&128);return v&1?-(v+1)/2:v/2;};
+    const sets=Array.from({length:4},()=>Array.from({length:int()},()=>{
+      let x=0,y=0;
+      return packVector(Array.from({length:int()},()=>{x+=int();y+=int();return [x/10000,y/10000];}));
+    }));
+    if(i!==bytes.length)throw new Error('Invalid geography length');
+    const grid=[];
+    for(let y=-80;y<=80;y+=10)grid.push(packVector(Array.from({length:721},(_,j)=>[j/2-180,y])));
+    for(let x=-180;x<180;x+=10)grid.push(packVector(Array.from({length:361},(_,j)=>[x,j/2-90])));
+    return {sets,grid};
+  }
+  function drawTwin(w,h,scale){
+    const c=output, g=twinGridInk;
+    const r=Math.min(w,h)*.45*zoom,x0=w/2,y0=h/2;
+    const p=latitude*radians,l=longitude*radians;
+    const xe=-Math.sin(l),ye=Math.cos(l),xn=-Math.sin(p)*Math.cos(l),yn=-Math.sin(p)*Math.sin(l),zn=Math.cos(p);
+    const [xf,yf,zf]=vector(p,l);
+    const clipDepth=.007;
+    function shape(ctx, group){
+      ctx.beginPath();
+      for(const path of group){
+        let px=0,py=0,pz=-2;
+        for(let i=0;i<path.length;i+=3){
+          const a=path[i],b=path[i+1],k=path[i+2];
+          const x=x0+r*(a*xe+b*ye),y=y0-r*(a*xn+b*yn+k*zn),z=a*xf+b*yf+k*zf;
+          if(i===0){if(z>=clipDepth)ctx.moveTo(x,y);}
+          else if(z>=clipDepth && pz>=clipDepth)ctx.lineTo(x,y);
+          else if((z>=clipDepth)!==(pz>=clipDepth)){
+            const tm=(clipDepth-pz)/(z-pz),cx=px+(x-px)*tm,cy=py+(y-py)*tm;
+            if(z>=clipDepth){ctx.moveTo(cx,cy);ctx.lineTo(x,y);}
+            else ctx.lineTo(cx,cy);
+          }
+          px=x;py=y;pz=z;
+        }
+      }
+    }
+    function disk(ctx){ctx.beginPath();ctx.arc(x0,y0,r,0,Math.PI*2);}
+    const [outlines,borders,flagged,disputed]=geography.sets;
+    c.clearRect(0,0,w,h);
+    arcContext?.clearRect(0,0,lines.width,lines.height);
+    const halo=c.createRadialGradient(x0,y0,r*.98,x0,y0,r*1.12);
+    halo.addColorStop(0,'rgba(41,145,209,.30)');halo.addColorStop(.17,'rgba(41,145,209,.25)');halo.addColorStop(1,'rgba(19,101,183,0)');
+    c.fillStyle=halo;c.fillRect(0,0,w,h);
+    const ocean=c.createRadialGradient(x0-r*.38,y0-r*.37,r*.04,x0-r*.16,y0-r*.12,r*1.20);
+    ocean.addColorStop(0,'#05293e');ocean.addColorStop(.66,'#041727');ocean.addColorStop(.92,'#0a2543');ocean.addColorStop(1,'#133954');
+    disk(c);c.fillStyle=ocean;c.fill();
+    c.save();disk(c);c.clip();
+    if(g){
+      if(twinGrid.width!==w)twinGrid.width=w;
+      if(twinGrid.height!==h)twinGrid.height=h;
+      g.clearRect(0,0,w,h);
+      g.save();g.strokeStyle='rgba(31,169,230,.40)';g.lineWidth=Math.max(.65,.69*scale);
+      g.setLineDash([3.5*scale,4*scale]);shape(g,geography.grid);g.stroke();
+      g.globalCompositeOperation='destination-out';g.strokeStyle='#000';g.lineWidth=5.5*scale;g.setLineDash([]);
+      shape(g,outlines);g.stroke();shape(g,borders);g.stroke();shape(g,flagged);g.stroke();shape(g,disputed);g.stroke();
+      g.restore();c.drawImage(twinGrid,0,0);
+    }
+    c.lineJoin='round';c.lineWidth=Math.min(.85*scale,r*.0044);c.strokeStyle='#6de0f9';shape(c,outlines);c.stroke();
+    c.strokeStyle='#3287b7';c.lineWidth=.7*scale;shape(c,borders);c.stroke();
+    c.strokeStyle='#e6c7a4';c.lineWidth=.85*scale;c.setLineDash([3.5*scale,3.5*scale]);
+    shape(c,flagged);c.stroke();shape(c,disputed);c.stroke();
+    c.restore();disk(c);c.strokeStyle='#55c9ed';c.lineWidth=.85*scale;c.stroke();
+  }
+
   function upload(image,unit){
     gl.activeTexture(gl.TEXTURE0+unit);
     const tex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tex);
@@ -305,6 +383,7 @@
     const w=Math.max(1,Math.round(area.width*scale)),h=Math.max(1,Math.round(area.height*scale));
     if(planet.width!==w)planet.width=w;
     if(planet.height!==h)planet.height=h;
+    if(twin){drawTwin(w,h,scale);return;}
     let image;
     if(gpu&&!gl.isContextLost()){
       if(gpuCanvas.width!==w)gpuCanvas.width=w;
@@ -321,7 +400,7 @@
   function stop(){cancelAnimationFrame(frame);frame=0;last=0;}
   function animate(t){
     if(!active||manual||motion.matches||document.hidden){stop();return;}
-    if(!last||t-last>=1000/(gpu?28:12)){
+    if(!last||t-last>=1000/(twin?12:gpu?28:12)){
       if(last)longitude=wrap(longitude+.844*Math.min(180,t-last)/1000);
       last=t;draw();
     }
@@ -343,6 +422,20 @@
     element.addEventListener('click',fn);controls.append(element);return element;
   }
   const cancel=button('自動演出を停止',interact);
+  if(typeof globalThis.HS_TWIN_GEOGRAPHY==='string'){
+    const mode=button('デジタルツイン',()=>{
+      if(!twin&&!geography){
+        try {geography=unpackTwin(globalThis.HS_TWIN_GEOGRAPHY);}
+        catch {mode.disabled=true;return;}
+      }
+      twin=!twin; mode.setAttribute('aria-pressed',String(twin));
+      globe.dataset.celestialMode=twin?'twin':'real';
+      caption.hidden=twin; twinCaption.hidden=!twin;
+      // Do not call interact(): changing layers keeps the current camera and its motion.
+      draw();
+    });
+    mode.setAttribute('aria-pressed','false');
+  }
   button('拡大',()=>changeZoom(.16));button('縮小',()=>changeZoom(-.16));
   button('初期位置',()=>{interact();longitude=118.928;latitude=1.704;zoom=1;draw();});
   planet.addEventListener('pointerdown',e=>{
