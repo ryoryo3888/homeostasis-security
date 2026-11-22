@@ -53,8 +53,8 @@
     }
     spaces.append(fields,unready('空間の表示選択だけです。実データ・3次元位置・空間間の関係は未接続で、配置確認用の図形は描き分けません。'));element.append(spaces);return element;
   };
-  const geographyPanel = () => {const element=panel(layout==='normal'?'地理表示｜過去の衛星合成・表示確認用':layout==='globe'?'地理表示｜地球儀・表示確認用':['emergency','comparison','comparison-detail','crisis'].includes(layout)?'地理表示｜地球儀・観測未接続':'地理表示｜配置確認用','geography-panel');element.append(geography);return element;};
-  const secondaryGeographyPanel=()=>{const element=panel('地理サブ表示｜配置確認用','secondary-geography-panel');secondaryViewport=node('div',undefined,'secondary-geographic-viewport');element.append(secondaryViewport);return element;};
+  const geographyPanel = () => {const element=panel(layout==='normal'?'地理表示｜過去の衛星合成・表示確認用':layout==='globe'?'地理表示｜地球儀・表示確認用':layout==='map'?'世界地図｜地理表示・観測未接続':['emergency','comparison','comparison-detail','crisis'].includes(layout)?'地理表示｜地球儀・観測未接続':'地理表示｜配置確認用','geography-panel');element.append(geography);return element;};
+  const secondaryGeographyPanel=()=>{const element=panel(layout==='map'?'地球儀｜参照表示':'地理サブ表示｜配置確認用','secondary-geography-panel');secondaryViewport=node('div',undefined,'secondary-geographic-viewport');element.append(secondaryViewport);return element;};
   const comparisonTable = () => {
     const element=panel('比較指標・同一条件の照合','comparison-table-panel');
     const table=node('table');const head=node('tr');for(const text of ['比較項目','実行','非実行','別選択'])head.append(node('th',text));table.append(head);
@@ -98,7 +98,7 @@
       if(key==='comparison-detail')stage.append(comparisonTable(),detailPanels.risk(),timeline());
       else stage.append(sourcePanel(),timeline());
     }
-    message.textContent='9画面のレイアウト制作途中です。地理データ・地球状態の実観測・演算表示・予測・認証の接続は未成立で、世界状態は変更しません。各機能は開発・検証の途中です。';
+    message.textContent=key==='map'?'世界地図の衛星合成・地理情報は参照用です。観測データ・予測・世界状態の更新には接続していません。':'9画面のレイアウト制作途中です。地理データ・地球状態の実観測・演算表示・予測・認証の接続は未成立で、世界状態は変更しません。各機能は開発・検証の途中です。';
     document.querySelectorAll('[data-layout]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.layout===key)));
     renderContext();timeDisplay.refresh();
   };
