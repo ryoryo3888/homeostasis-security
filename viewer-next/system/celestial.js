@@ -28,6 +28,10 @@
   stage.append(view,controls,caption,twinCaption);
   globe.querySelector('span')?.classList.add('hs-wire-caption');
   globe.insertBefore(stage,globe.firstChild);
+  const analysisLayouts=new Set(['emergency','comparison','comparison-detail','crisis']);
+  const playingAnalysis=new Set();
+  const isAnalysis=()=>analysisLayouts.has(document.body.dataset.layout);
+  const paused=()=>isAnalysis()?!playingAnalysis.has(document.body.dataset.layout):manual;
   let ready=false,visible=true,active=false,manual=false,frame=0,last=0;
   let latitude=1.704,longitude=118.928,zoom=1,drag=null;
   const wrap=x=>((x+180)%360+360)%360-180;
@@ -394,12 +398,14 @@
       image=gpuCanvas;
     } else if(cpu)image=cpuDraw(w,h);
     if(image){
-      output.clearRect(0,0,w,h);output.drawImage(image,0,0,w,h);drawArcs(w,h);
+      output.clearRect(0,0,w,h);output.drawImage(image,0,0,w,h);
+      if(isAnalysis())arcContext?.clearRect(0,0,lines.width,lines.height);
+      else drawArcs(w,h);
     }
   }
   function stop(){cancelAnimationFrame(frame);frame=0;last=0;}
   function animate(t){
-    if(!active||manual||motion.matches||document.hidden){stop();return;}
+    if(!active||paused()||motion.matches||document.hidden){stop();return;}
     if(!last||t-last>=1000/(twin?12:gpu?28:12)){
       if(last)longitude=wrap(longitude+.844*Math.min(180,t-last)/1000);
       last=t;draw();
@@ -408,14 +414,15 @@
   }
   function sync(){
     const layout=document.body.dataset.layout;
-    active=ready&&visible&&!document.hidden&&(layout==='normal'||layout==='globe')&&globe.classList.contains('primary');
-    stars?.setActive(active&&!manual&&!motion.matches);
+    active=ready&&visible&&!document.hidden&&(layout==='normal'||layout==='globe'||analysisLayouts.has(layout))&&globe.classList.contains('primary');
+    const play=active&&!paused()&&!motion.matches;
+    stars?.setActive(play&&!isAnalysis());
     cancel.disabled=motion.matches;
-    cancel.textContent=motion.matches?'自動演出停止中':manual?'自動演出を再開':'自動演出を停止';
-    if(active){draw();if(!frame&&!manual&&!motion.matches)frame=requestAnimationFrame(animate);}
-    if(!active)stop();
+    cancel.textContent=motion.matches?'自動演出停止中':isAnalysis()?(play?'自動回転を停止':'自動回転を開始'):manual?'自動演出を再開':'自動演出を停止';
+    if(!play)stop();
+    if(active){draw();if(play&&!frame)frame=requestAnimationFrame(animate);}
   }
-  function interact(){manual=true;stop();sync();}
+  function interact(){if(isAnalysis())playingAnalysis.delete(document.body.dataset.layout);else manual=true;stop();sync();}
   function changeZoom(diff){interact();zoom=clamp(zoom+diff,1,1.8);draw();}
   function button(label,fn){
     const element=node('button',null,label);element.type='button';
@@ -423,7 +430,10 @@
   }
   const cancel=button('自動演出を停止',()=>{
     if(motion.matches)return;
-    if(manual){manual=false;sync();}
+    if(isAnalysis()){
+      if(paused()){playingAnalysis.add(document.body.dataset.layout);sync();}
+      else interact();
+    } else if(manual){manual=false;sync();}
     else interact();
   });
   if(typeof globalThis.HS_TWIN_GEOGRAPHY==='string'){

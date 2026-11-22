@@ -18,9 +18,9 @@ body[data-layout=normal] .wire-globe{border-color:#777;background:#141414;box-sh
 body[data-layout=normal] .wire-globe:before,body[data-layout=normal] .wire-globe:after,body[data-layout=normal] .wire-globe i{border-color:#777}
 body[data-layout=normal] .wire-map{border-color:#777;background:repeating-linear-gradient(0deg,transparent 0 19px,#7777 19px 20px),repeating-linear-gradient(90deg,#111 0 29px,#7777 29px 30px)}
 .hs-celestial{display:none}
-body:is([data-layout=normal],[data-layout=globe]) #globe.primary[data-celestial-ready="true"] .wire-globe{display:none}
-body:is([data-layout=normal],[data-layout=globe]) #globe.primary[data-celestial-ready="true"] .hs-celestial{display:grid;gap:7px;width:min(100%,840px)}
-body:is([data-layout=normal],[data-layout=globe]) #globe.primary[data-celestial-ready="true"] > .hs-wire-caption{display:none}
+body:is([data-layout=normal],[data-layout=globe],[data-layout=emergency],[data-layout=comparison],[data-layout=comparison-detail],[data-layout=crisis]) #globe.primary[data-celestial-ready="true"] .wire-globe{display:none}
+body:is([data-layout=normal],[data-layout=globe],[data-layout=emergency],[data-layout=comparison],[data-layout=comparison-detail],[data-layout=crisis]) #globe.primary[data-celestial-ready="true"] .hs-celestial{display:grid;gap:7px;width:min(100%,840px)}
+body:is([data-layout=normal],[data-layout=globe],[data-layout=emergency],[data-layout=comparison],[data-layout=comparison-detail],[data-layout=crisis]) #globe.primary[data-celestial-ready="true"] > .hs-wire-caption{display:none}
 .hs-celestial-view{position:relative;isolation:isolate;aspect-ratio:4 / 3;overflow:hidden;background:#05060a;border-radius:5px;border:1px solid #353535}
 .hs-celestial canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .hs-celestial .hs-earth-arcs{pointer-events:none}
@@ -30,3 +30,6 @@ body:is([data-layout=normal],[data-layout=globe]) #globe.primary[data-celestial-
 .hs-earth-controls{display:flex;flex-wrap:wrap;justify-content:center;gap:5px}
 .hs-earth-controls button{min-height:44px;min-width:44px;padding:5px 9px;font-size:12px}
 .hs-celestial small{max-width:none}
+
+/* Decision and comparison pages retain space for the information panels. */
+@media(max-width:700px){body:is([data-layout=emergency],[data-layout=comparison],[data-layout=comparison-detail]) #globe.primary .hs-celestial-view{aspect-ratio:16/9;max-height:210px}}
