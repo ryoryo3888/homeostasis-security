@@ -410,8 +410,8 @@
     const layout=document.body.dataset.layout;
     active=ready&&visible&&!document.hidden&&(layout==='normal'||layout==='globe')&&globe.classList.contains('primary');
     stars?.setActive(active&&!manual&&!motion.matches);
-    cancel.disabled=motion.matches||manual;
-    cancel.textContent=manual||motion.matches?'自動演出停止中':'自動演出を停止';
+    cancel.disabled=motion.matches;
+    cancel.textContent=motion.matches?'自動演出停止中':manual?'自動演出を再開':'自動演出を停止';
     if(active){draw();if(!frame&&!manual&&!motion.matches)frame=requestAnimationFrame(animate);}
     if(!active)stop();
   }
@@ -421,7 +421,11 @@
     const element=node('button',null,label);element.type='button';
     element.addEventListener('click',fn);controls.append(element);return element;
   }
-  const cancel=button('自動演出を停止',interact);
+  const cancel=button('自動演出を停止',()=>{
+    if(motion.matches)return;
+    if(manual){manual=false;sync();}
+    else interact();
+  });
   if(typeof globalThis.HS_TWIN_GEOGRAPHY==='string'){
     const mode=button('デジタルツイン',()=>{
       if(!twin&&!geography){
