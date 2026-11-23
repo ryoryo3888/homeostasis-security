@@ -75,6 +75,14 @@
     const scope='表示対象：'+(snapshot.spaces.join('・')||'選択なし')+'｜全空間の取得状態は未成立';
     for(const id of ['globe-scope','map-scope'])document.getElementById(id).textContent=scope;
   };
+  const openEvidence = () => {
+    if (layout !== 'emergency') render('emergency');
+    const target = document.getElementById('judgment-evidence');
+    target.querySelector('details').open = true;
+    target.focus({preventScroll:true});
+    target.scrollIntoView({block:'start'});
+  };
+  const evidenceEntry = (description,label) => emergencyPanels.entry(description,label,openEvidence);
   const render = key => {
     if (!Object.hasOwn(titles,key)) return;
     layout=key;secondaryViewport=null;geography.classList.toggle('separated-primary',['map','globe'].includes(key)); document.body.dataset.layout=key;heading.textContent=titles[key];
@@ -83,18 +91,36 @@
     const holding=document.createDocumentFragment();holding.append(geography);stage.replaceChildren();
     const left=key==='emergency'?emergencyPanels.request():panel('現在の参照条件','reference-panel');
     if(key!=='emergency')left.append(frameInfo());
+    if(key==='emergency')left.append(evidenceEntry('判断要求を裏付ける基準・当時の説明・証拠区分を確認できます。','判断根拠の見本を開く'));
     if(key==='report')stage.append(left,reportPanel(),geographyPanel(),metrics(),sourcePanel());
-    else if(key==='detail')stage.append(detailPanels.detailSummary(),detailPanels.detailNavigation(),detailPanel(),geographyPanel(),sourcePanel(),timeline(),detailPanels.related());
+    else if(key==='detail'){
+      const related=detailPanels.related();
+      related.append(evidenceEntry('個別事象と判断根拠の結び方の見本です。実事象は選択されていません。','事象に関する判断根拠の見本'));
+      stage.append(detailPanels.detailSummary(),detailPanels.detailNavigation(),detailPanel(),geographyPanel(),sourcePanel(),timeline(),related);
+    }
     else {
       stage.append(left,geographyPanel());
       if(['map','globe'].includes(key))stage.append(secondaryGeographyPanel());
-      stage.append(key==='emergency'?emergencyPanels.authority():metrics());
+      if(key==='emergency'){
+        const authority=emergencyPanels.authority();
+        authority.append(evidenceEntry('確認画面の導線だけです。判断の送信・登録・再認証はできません。','判断前の根拠確認（見本）'));
+        stage.append(authority);
+      }else stage.append(metrics());
       if(key==='emergency')stage.append(emergencyPanels.history());
-      stage.append(layerPanel());
+      if(key!=='emergency')stage.append(layerPanel());
       if(['comparison','comparison-detail','crisis','emergency'].includes(key))stage.append(branches());
       if(['normal','map','globe'].includes(key))stage.append(monitoringPanels.overview());
-      if(key==='crisis')stage.append(monitoringPanels.crisis());
-      if(['comparison','comparison-detail'].includes(key)){stage.append(comparisonContext());}
+      if(key==='emergency')stage.append(emergencyPanels.evidence(),layerPanel());
+      if(key==='crisis'){
+        const crisis=monitoringPanels.crisis();
+        crisis.querySelector('.proposal-evidence-panel').append(evidenceEntry('対応案の適用条件と、人間が判断するときに確認する根拠は別に表示します。','判断根拠の見本を見る'));
+        stage.append(crisis);
+      }
+      if(['comparison','comparison-detail'].includes(key)){
+        const context=comparisonContext();
+        context.append(evidenceEntry(key==='comparison'?'未来の比較結果と、人間が選択するときに確認する根拠は別です。':'比較条件・参照版と、人間の判断時に提示された根拠を区別します。','人間の判断根拠の見本'));
+        stage.append(context);
+      }
       if(key==='comparison-detail')stage.append(comparisonTable(),detailPanels.risk(),timeline());
       else stage.append(sourcePanel(),timeline());
     }

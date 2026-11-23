@@ -51,3 +51,22 @@ body[data-layout=normal] .source-panel,body[data-layout=map] .source-panel,body[
 .atomic-history-panel .table-scroll th:first-child{width:120px;white-space:normal;overflow-wrap:anywhere}
 .sound-trial { border-top: 1px solid var(--line, #53656e); margin-top: 1rem; padding-top: .8rem; }
 .sound-trial button { display: block; max-width: 100%; white-space: normal; overflow-wrap: anywhere; text-align: left; margin: .4rem 0; }
+
+/* Public judgment-evidence sample: scoped to the approved read-only panels. */
+.judgment-entry{margin-top:12px;border-top:1px solid #4e555b;padding-top:10px}
+.judgment-entry p,.judgment-evidence p{margin:0 0 7px;font-size:12px;line-height:1.65;color:#cbd1d5}
+.judgment-entry button{min-height:44px;padding:10px 15px;border:1px solid #646b71;border-radius:5px;background:#212427;color:#f4f5f6;font-size:12px}
+.judgment-evidence{grid-column:1/-1;grid-row:4;scroll-margin-top:12px;border-color:#444950;background:linear-gradient(135deg,#151719,#101113);color:#eef0f2}
+.judgment-evidence h2{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:5px}
+.judgment-preview-badge{padding:2px 7px;border:1px solid #737880;border-radius:2px;color:#e7e9eb;font-size:11px;font-weight:500}
+.judgment-evidence details{margin-top:12px;border-top:1px solid #444950;padding-top:10px}
+.judgment-evidence summary{font-size:12px;font-weight:600;cursor:pointer;line-height:1.8}
+.judgment-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:13px}
+.judgment-grid>section{min-width:0;padding:10px;border:1px solid #41474e;border-radius:4px;background:#141618}
+.judgment-grid h3{font-size:14px;margin:0 0 8px}
+.judgment-grid dl{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:5px 9px;margin:0 0 4px}
+.judgment-grid dt{color:#d1d6d9}
+.judgment-grid dd{color:#eef0f2}
+@media(min-width:701px){body[data-layout=emergency] .layer-panel,body[data-layout=emergency] .source-panel{grid-row:5}}
+@media(min-width:701px) and (max-width:1100px){.judgment-evidence{grid-row:5}.judgment-grid{grid-template-columns:repeat(2,minmax(0,1fr))}body[data-layout=emergency] .layer-panel,body[data-layout=emergency] .source-panel{grid-row:6}}
+@media(max-width:700px){.judgment-grid,.judgment-grid dl{grid-template-columns:1fr}.judgment-grid dt{margin-top:5px}}
