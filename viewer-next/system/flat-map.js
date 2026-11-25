@@ -233,18 +233,42 @@
   function prepareColor(){
     if(styledPhoto||!photoReady||!paths)return;
     const surface=document.createElement("canvas");surface.width=photo.naturalWidth;surface.height=photo.naturalHeight;
-    const pixels=surface.getContext("2d");
-    if(!pixels||!("filter" in pixels))return;
-    pixels.filter="saturate(1.10) contrast(1.06)";
+    const pixels=surface.getContext("2d",{willReadFrequently:true});
+    if(!pixels)return;
     pixels.drawImage(photo,0,0);
-    const oceanMask=new Path2D();oceanMask.rect(-180,-90,360,180);oceanMask.addPath(paths[0]);
-    // Shade only geography-backed ocean in the palette of the globe. Never classify land from RGB.
-    const unit=surface.width/360;
-    pixels.setTransform(unit,0,0,unit,surface.width*.5,surface.height*.5);
-    pixels.clip(oceanMask,"evenodd");
-    pixels.setTransform(1,0,0,1,0,0);
-    pixels.filter="hue-rotate(23deg) saturate(1.22) contrast(1.11)";
-    pixels.drawImage(photo,0,0);
+    const width=surface.width,height=surface.height;
+    // Use the same daytime texture as the globe. Geography alone decides where
+    // the cobalt grade applies; warm pixels are not treated as a cover class.
+    const mask=document.createElement("canvas");mask.width=width;mask.height=height;
+    const cover=mask.getContext("2d",{willReadFrequently:true});if(!cover)return;
+    const unit=width/360;
+    cover.setTransform(unit,0,0,unit,width*.5,height*.5);
+    cover.fill(paths[0],"evenodd");
+    const smooth=x=>{x=clamp(x,0,1);return x*x*(3-2*x);};
+    const cobalt=[[2,7,53],[3,8,82],[6,10,114],[12,20,143],[16,29,163],[25,87,187]];
+    for(let y=0;y<height;y+=128){
+      const rows=Math.min(128,height-y);
+      const frame=pixels.getImageData(0,y,width,rows),data=frame.data;
+      const land=cover.getImageData(0,y,width,rows).data;
+      for(let p=0;p<data.length;p+=4){
+        const r=data[p],g=data[p+1],b=data[p+2],hi=Math.max(r,g,b),lo=Math.min(r,g,b);
+        const ocean=1-land[p+3]/255,bright=smooth((hi-142)/100);
+        const chroma=smooth((hi-lo-12)/86),blue=smooth((b-r-13)/92);
+        // Preserve neutral clouds/ice and texture. Bring blue ocean midtones
+        // toward the globe's cobalt ramp without importing globe lighting.
+        const mix=ocean*(.18+.57*blue)*chroma*(1-.86*bright);
+        const v=5*clamp((.85*b+.15*g-20)/158,0,1),i=Math.min(4,Math.floor(v)),t=v-i;
+        const luminance=.2126*r+.7152*g+.0722*b;
+        const green=smooth((g-r+7)/48)*smooth((g-b+4)/42)*(1-ocean);
+        const warm=smooth((r-b-8)/75)*(1-ocean)*(1-.62*bright);
+        const saturation=1+.08*green;
+        data[p]=(luminance+(r-luminance)*saturation-7*warm)*(1-mix)+(cobalt[i][0]+(cobalt[i+1][0]-cobalt[i][0])*t)*mix;
+        data[p+1]=(luminance+(g-luminance)*saturation+4*green)*(1-mix)+(cobalt[i][1]+(cobalt[i+1][1]-cobalt[i][1])*t)*mix;
+        data[p+2]=(luminance+(b-luminance)*saturation+4*warm)*(1-mix)+(cobalt[i][2]+(cobalt[i+1][2]-cobalt[i][2])*t)*mix;
+      }
+      pixels.putImageData(frame,0,y);
+    }
+    mask.width=mask.height=1;
     styledPhoto=surface;
   }
   // Data and media are existing local assets; neither presentation mode fetches observations.
